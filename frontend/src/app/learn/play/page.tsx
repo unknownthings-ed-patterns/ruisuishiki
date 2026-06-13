@@ -1,14 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
+import {
+  clearSeriesHistory,
+  getResumeIndex,
+  loadSeriesHistory,
+  saveStepRecord,
+} from "@/lib/storage";
+import type { LearnerStep } from "@/lib/types";
 
 type Status = "answering" | "correct" | "incorrect" | "completed";
 
 export default function Play() {
   const series = RATIO_BASIC_SERIES;
   const [stepIndex, setStepIndex] = useState(0);
+  const [hasHydrated, setHasHydrated] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [attempts, setAttempts] = useState(0);
   const [hintsOpened, setHintsOpened] = useState<0 | 1 | 2 | 3>(0);
@@ -18,12 +26,42 @@ export default function Play() {
   const totalSteps = series.steps.length;
   const isLast = stepIndex === totalSteps - 1;
 
+  // 「比較せよ」のヒント表示用に、前題を取得
+  const comparedStep: LearnerStep | null = useMemo(() => {
+    if (!step.compareWithStepId) return null;
+    return series.steps.find((s) => s.id === step.compareWithStepId) ?? null;
+  }, [step.compareWithStepId, series.steps]);
+
+  // 初回マウント時に履歴から復元（or ?fresh=1 でクリア）
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("fresh") === "1") {
+      clearSeriesHistory(series.id);
+      // URL から fresh パラメータを取り除く（リロード時に常時クリアにならないように）
+      window.history.replaceState(null, "", window.location.pathname);
+      setStepIndex(0);
+    } else {
+      const history = loadSeriesHistory(series.id);
+      const resume = getResumeIndex(
+        history,
+        series.steps.map((s) => s.id),
+      );
+      if (resume >= series.steps.length) {
+        // 全問正答済み → 完了画面へ
+        setStatus("completed");
+      } else if (resume > 0) {
+        setStepIndex(resume);
+      }
+    }
+    setHasHydrated(true);
+  }, [series.id, series.steps]);
+
   // 問題が変わるたびに状態をリセット
   useEffect(() => {
     setUserAnswer("");
     setAttempts(0);
     setHintsOpened(0);
-    setStatus("answering");
+    setStatus((current) => (current === "completed" ? current : "answering"));
   }, [stepIndex]);
 
   function handleSubmit(e: React.FormEvent) {
@@ -34,9 +72,20 @@ export default function Play() {
     const parsed = parseFloat(userAnswer.replace(/[, ]/g, ""));
     if (Number.isNaN(parsed)) return;
 
-    setAttempts((a) => a + 1);
-    if (Math.abs(parsed - step.answer) < 1e-6) {
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
+    const isCorrect = Math.abs(parsed - step.answer) < 1e-6;
+
+    if (isCorrect) {
       setStatus("correct");
+      // 履歴に保存（F8予防：文型×オペレータ軸の素材を集計可能な形で）
+      saveStepRecord(series.id, {
+        stepId: step.id,
+        attempts: nextAttempts,
+        hintsOpened,
+        correct: true,
+        answeredAt: new Date().toISOString(),
+      });
     } else {
       setStatus("incorrect");
     }
@@ -64,6 +113,20 @@ export default function Play() {
     }
   }
 
+  // hydration 前の描画ちらつき防止（短時間の読み込み中表示）
+  if (!hasHydrated) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center px-6">
+        <p
+          className="text-muted"
+          style={{ fontSize: "13px", letterSpacing: "0.2em" }}
+        >
+          読み込んでいます…
+        </p>
+      </main>
+    );
+  }
+
   // 完了画面
   if (status === "completed") {
     return (
@@ -82,7 +145,7 @@ export default function Play() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Link
-              href="/learn/"
+              href="/learn/play/?fresh=1"
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
               style={{ letterSpacing: "0.2em" }}
             >
@@ -158,6 +221,76 @@ export default function Play() {
             </p>
           </section>
 
+          {/* 質的変化の正答時：「同じ仕組みだった」の発見演出
+              桝田の言う「喜びのグレードアップ」を、これまでの全式を並べることで支える */}
+          {status === "correct" && step.variationFromPrevious === "qualitative" && (
+            <section
+              className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in-slow"
+              style={{
+                background:
+                  "color-mix(in oklch, var(--surface) 75%, var(--accent-warm) 25%)",
+              }}
+              aria-label="同じ仕組みだった"
+            >
+              <p
+                className="font-serif text-foreground text-center"
+                style={{
+                  fontSize: "clamp(20px, 1.5rem, 24px)",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                気づいたかな?
+              </p>
+              <p
+                className="mt-4 text-foreground/85 text-center"
+                style={{ fontSize: "14px", lineHeight: 2 }}
+              >
+                ここまでの問題はすべて
+                <br />
+                <span className="font-serif">
+                  「もとの量　×　倍率　＝　求める量」
+                </span>
+                <br />
+                という同じ仕組みでした。
+              </p>
+              <ol
+                className="mt-6 flex flex-col gap-2.5 max-w-sm mx-auto tnum"
+                aria-label="解いた問題の式の一覧"
+              >
+                {series.steps.slice(0, stepIndex + 1).map((s, i) => (
+                  <li
+                    key={s.id}
+                    className="flex items-baseline justify-between animate-revelation-row"
+                    style={{
+                      animationDelay: `${300 + i * 120}ms`,
+                      opacity: 0,
+                      animationFillMode: "forwards",
+                    }}
+                  >
+                    <span
+                      className="text-muted shrink-0"
+                      style={{ fontSize: "11px", letterSpacing: "0.15em" }}
+                    >
+                      {s.position}.
+                    </span>
+                    <span
+                      className="flex-1 px-3 text-foreground text-center"
+                      style={{ fontSize: "15px" }}
+                    >
+                      {s.formulaPreview}
+                    </span>
+                    <span
+                      className="text-muted shrink-0"
+                      style={{ fontSize: "12px" }}
+                    >
+                      ({s.unit})
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
           {/* ヒント表示（問題文の真下に積層） */}
           {hintsOpened > 0 && (
             <section
@@ -165,26 +298,72 @@ export default function Play() {
               aria-label="ヒント"
             >
               {step.hints.slice(0, hintsOpened).map((hint) => (
-                <div
-                  key={hint.layer}
-                  className="px-5 py-4 rounded-lg border border-accent-soft animate-fade-in"
-                  style={{
-                    background: "color-mix(in oklch, var(--surface) 80%, var(--accent-soft) 20%)",
-                  }}
-                >
-                  <span
-                    className="text-muted"
-                    style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+                <Fragment key={hint.layer}>
+                  <div
+                    className="px-5 py-4 rounded-lg border border-accent-soft animate-fade-in"
+                    style={{
+                      background: "color-mix(in oklch, var(--surface) 80%, var(--accent-soft) 20%)",
+                    }}
                   >
-                    ヒント {hint.layer}
-                  </span>
-                  <p
-                    className="mt-1.5 text-foreground"
-                    style={{ fontSize: "15px", lineHeight: 1.8 }}
-                  >
-                    {hint.text}
-                  </p>
-                </div>
+                    <span
+                      className="text-muted"
+                      style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+                    >
+                      ヒント {hint.layer}
+                    </span>
+                    <p
+                      className="mt-1.5 text-foreground"
+                      style={{ fontSize: "15px", lineHeight: 1.8 }}
+                    >
+                      {hint.text}
+                    </p>
+                  </div>
+
+                  {/* ヒント1 の直後に、前題カードをスライドインで表示
+                      「比較せよ」を視覚で支える——推理式の核 */}
+                  {hint.layer === 1 && comparedStep && (
+                    <article
+                      className="relative px-5 py-4 rounded-lg border border-border animate-slide-in-left ml-4 sm:ml-8"
+                      style={{
+                        background: "var(--surface)",
+                      }}
+                      aria-label="前の問題（比較対象）"
+                    >
+                      {/* 左側の接続線（前題が「ここ」と紐づいている感を出す） */}
+                      <span
+                        className="absolute -left-4 sm:-left-8 top-1/2 block"
+                        style={{
+                          width: "1rem",
+                          borderTop: "1px solid var(--border)",
+                          transform: "translateY(-50%)",
+                        }}
+                        aria-hidden
+                      />
+                      <span
+                        className="text-muted"
+                        style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+                      >
+                        前の問題
+                      </span>
+                      <p
+                        className="mt-1.5 text-foreground/85"
+                        style={{ fontSize: "14px", lineHeight: 1.8 }}
+                      >
+                        {comparedStep.questionText}
+                      </p>
+                      <p
+                        className="mt-2 text-muted tnum"
+                        style={{ fontSize: "13px", letterSpacing: "0.05em" }}
+                      >
+                        → {comparedStep.unknownLabel}は{" "}
+                        <span className="text-foreground">
+                          {comparedStep.answer}
+                          {comparedStep.unit}
+                        </span>
+                      </p>
+                    </article>
+                  )}
+                </Fragment>
               ))}
             </section>
           )}
@@ -295,12 +474,37 @@ export default function Play() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes slide-in-left {
+          from { opacity: 0; transform: translateX(-24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-in-slow {
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes revelation-row {
+          from { opacity: 0; transform: translateX(-12px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
         .animate-fade-in {
           animation: fade-in 300ms var(--ease-smooth);
         }
+        .animate-slide-in-left {
+          animation: slide-in-left 500ms var(--ease-smooth);
+        }
+        .animate-fade-in-slow {
+          animation: fade-in-slow 700ms var(--ease-smooth);
+        }
+        .animate-revelation-row {
+          animation: revelation-row 400ms var(--ease-smooth);
+        }
         @media (prefers-reduced-motion: reduce) {
-          .animate-fade-in {
+          .animate-fade-in,
+          .animate-slide-in-left,
+          .animate-fade-in-slow,
+          .animate-revelation-row {
             animation: none;
+            opacity: 1 !important;
           }
         }
       `}</style>

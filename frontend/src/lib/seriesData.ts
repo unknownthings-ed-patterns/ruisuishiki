@@ -27,6 +27,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "代金",
       variationFromPrevious: null,
       compareWithStepId: null,
+      formulaPreview: "100 × 0.5 = 50",
       hints: [
         {
           layer: 1,
@@ -52,6 +53,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "代金",
       variationFromPrevious: "same",
       compareWithStepId: "step1",
+      formulaPreview: "200 × 0.5 = 100",
       hints: [
         {
           layer: 1,
@@ -77,6 +79,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "代金",
       variationFromPrevious: "same",
       compareWithStepId: "step2",
+      formulaPreview: "300 × 0.7 = 210",
       hints: [
         {
           layer: 1,
@@ -102,6 +105,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "代金",
       variationFromPrevious: "same",
       compareWithStepId: "step3",
+      formulaPreview: "800 × 0.9 = 720",
       hints: [
         {
           layer: 1,
@@ -127,6 +131,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "食べられた量",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
+      formulaPreview: "400 × 0.6 = 240",
       hints: [
         {
           layer: 1,

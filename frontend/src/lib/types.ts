@@ -37,6 +37,8 @@ export type LearnerStep = {
   variationFromPrevious: VariationOp | null;
   /** 「比較せよ」のヒントで参照する前題のid（基本は直前題）。 */
   compareWithStepId: string | null;
+  /** 質的変化到達時の「同じ仕組みだった」表示用。"100 × 0.5 = 50" 形式の構造的展開。 */
+  formulaPreview: string;
 };
 
 /** 学習者が歩く系列。 */
