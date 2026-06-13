@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Node / Next.js (段階2以降)
+node_modules/
+.next/
+out/
+.vercel/
+
+# DB
+*.db
+*.sqlite
+*.sqlite3
+
+# 環境変数（APIキー等）
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# ログ・一時ファイル
+*.log
+*.tmp
+tmp/
+logs/
+
+# 生成物（実行ごとに変わるもの）
+generated_problems/
+verification_logs/
