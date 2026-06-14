@@ -397,7 +397,201 @@ $x$ の係数は $b = -2p$、定数項は $c = p^2 + q$。
 これが、$x^2 + bx + c$ という6文字の式に隠されていた、**グラフ全体の地図** です。`,
 };
 
+/**
+ * 「★ 直線の方程式を読む」発展系列。
+ * 数Ⅱ・B「図形と方程式」第3章の中核 — 傾き・切片・中点・垂直。
+ *
+ * - step1-3: 2点を通る直線の傾き（基本原形・同）
+ * - step4:   同じ2点の直線の y 切片（+α）
+ * - step5:   点 (a, b) と傾き m から y 切片（同パターン）
+ * - step6:   ある直線と平行で点を通る直線の y 切片（+α）
+ * - step7:   2点の中点の x 座標（+α）
+ * - step8:   同じ2点の中点の y 座標（同）
+ * - step9:   傾き m に垂直な直線の傾き（逆／小数 0.5 等を許容）
+ * - step10:  質的変化：別変数名 or 別場面
+ */
+export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
+  id: "adv_line_equation_01",
+  title: "★ 直線の方程式を読む",
+  subtitle:
+    "数Ⅱ・B「図形と方程式」より — 傾き・切片・中点・垂直の10問。",
+  patternId: "LN1",
+  unit: "advanced",
+  revelationLabel: "傾き＝yの差／xの差。中点＝平均。垂直＝傾きの積が −1",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "2点 $(1, 2)$ と $(3, 8)$ を通る直線の **傾き** はいくつでしょう？",
+      answer: 3, unit: "", unknownLabel: "傾き",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "傾き $= \\dfrac{y\\text{ の差}}{x\\text{ の差}}$。" },
+        { layer: 2, text: "$\\dfrac{8 - 2}{3 - 1} = \\dfrac{6}{2}$。" },
+        { layer: 3, text: "$3$。" },
+      ],
+      formulaPreview: "(8−2)/(3−1) = 3",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "2点 $(2, 5)$ と $(5, 11)$ を通る直線の **傾き** はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "傾き",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "$\\dfrac{y\\text{ の差}}{x\\text{ の差}}$。" },
+        { layer: 2, text: "$\\dfrac{11 - 5}{5 - 2} = \\dfrac{6}{3}$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "(11−5)/(5−2) = 2",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "2点 $(0, 4)$ と $(3, -2)$ を通る直線の **傾き** はいくつでしょう？",
+      answer: -2, unit: "", unknownLabel: "傾き",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "符号にも注意。" },
+        { layer: 2, text: "$\\dfrac{-2 - 4}{3 - 0} = \\dfrac{-6}{3}$。" },
+        { layer: 3, text: "$-2$。" },
+      ],
+      formulaPreview: "(−2−4)/(3−0) = −2",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "2点 $(1, 2)$ と $(3, 8)$ を通る直線の **y 切片** はいくつでしょう？（step 1 と同じ2点で、今度は切片）",
+      answer: -1, unit: "", unknownLabel: "y 切片",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "傾き $m = 3$（step 1）。次に $y = mx + n$ に1点を代入。" },
+        { layer: 2, text: "$(1, 2)$ を入れて $2 = 3 \\cdot 1 + n$。" },
+        { layer: 3, text: "$n = -1$。" },
+      ],
+      formulaPreview: "2 = 3·1 + n → n = −1",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "点 $(2, 5)$ を通り、傾き $3$ の直線の **y 切片** はいくつでしょう？",
+      answer: -1, unit: "", unknownLabel: "y 切片",
+      variationFromPrevious: "same", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$y = mx + n$ に点を代入。" },
+        { layer: 2, text: "$5 = 3 \\cdot 2 + n$。" },
+        { layer: 3, text: "$n = -1$。" },
+      ],
+      formulaPreview: "5 = 6 + n → n = −1",
+    },
+    {
+      id: "step6", position: 6,
+      questionText: "$y = 2x + 7$ に **平行** で、点 $(1, 5)$ を通る直線の **y 切片** はいくつでしょう？",
+      answer: 3, unit: "", unknownLabel: "y 切片",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "平行な直線は **傾きが同じ**。だから $m = 2$。" },
+        { layer: 2, text: "$y = 2x + n$ に $(1, 5)$ を代入：$5 = 2 + n$。" },
+        { layer: 3, text: "$n = 3$。" },
+      ],
+      formulaPreview: "5 − 2·1 = 3",
+    },
+    {
+      id: "step7", position: 7,
+      questionText: "2点 $(1, 5)$ と $(7, 3)$ の **中点の x 座標** はいくつでしょう？",
+      answer: 4, unit: "", unknownLabel: "中点の x 座標",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "中点は両端の **平均**。" },
+        { layer: 2, text: "$\\dfrac{1 + 7}{2}$。" },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "(1+7)/2 = 4",
+    },
+    {
+      id: "step8", position: 8,
+      questionText: "2点 $(1, 5)$ と $(7, 3)$ の **中点の y 座標** はいくつでしょう？（step 7 と同じ2点）",
+      answer: 4, unit: "", unknownLabel: "中点の y 座標",
+      variationFromPrevious: "same", compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "y も同じく平均。" },
+        { layer: 2, text: "$\\dfrac{5 + 3}{2}$。" },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "(5+3)/2 = 4",
+    },
+    {
+      id: "step9", position: 9,
+      questionText: "傾き $2$ の直線に **垂直** な直線の傾きはいくつでしょう？（小数で答える）",
+      answer: -0.5, unit: "", unknownLabel: "垂直な直線の傾き",
+      variationFromPrevious: "inverse", compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "垂直なら $mm' = -1$。" },
+        { layer: 2, text: "$2 \\cdot m' = -1$ より $m' = -\\dfrac{1}{2}$。" },
+        { layer: 3, text: "$-0.5$。" },
+      ],
+      formulaPreview: "−1 / 2 = −0.5",
+    },
+    {
+      id: "step10", position: 10,
+      questionText: "傾き $-4$ の直線に **垂直** な直線の傾きはいくつでしょう？（小数で答える）",
+      answer: 0.25, unit: "", unknownLabel: "垂直な直線の傾き",
+      variationFromPrevious: "qualitative", compareWithStepId: "step9",
+      hints: [
+        { layer: 1, text: "$mm' = -1$。" },
+        { layer: 2, text: "$-4 \\cdot m' = -1$ より $m' = \\dfrac{1}{4}$。" },
+        { layer: 3, text: "$0.25$。" },
+      ],
+      formulaPreview: "−1 / (−4) = 0.25",
+    },
+  ],
+  derivation: `**直線の方程式は「傾き」と「通る点」で決まる**
+
+平面上の直線は、**傾き** と **通る1点**（あるいは通る2点）が決まれば、ぴったり1本に確定します。
+
+直線の標準形 $y = mx + n$ では、$m$ が傾き、$n$ が y 切片です。**y 切片** とは、グラフが y 軸と交わる点の y 座標——つまり $x = 0$ のときの $y$ の値。式に $x = 0$ を入れれば $y = n$ となるので、$n$ が y 切片そのものです。
+
+**2点から傾きを読む**
+
+2点 $(x_1, y_1)$ と $(x_2, y_2)$ が決まれば、傾きは
+
+$$m = \\frac{y_2 - y_1}{x_2 - x_1}$$
+
+「**y の差を x の差で割る**」——これは「x が 1 増えると y がどれだけ増えるか」をそのまま計算しています。
+
+**点と傾きから切片を読む**
+
+傾き $m$ がわかったら、$y = mx + n$ の $n$ を通る点から逆算します。たとえば点 $(a, b)$ を通るなら：
+
+$$b = m \\cdot a + n \\quad\\Longrightarrow\\quad n = b - m \\cdot a$$
+
+これが「点・傾き・切片」の三角関係。3つのうち2つが決まれば、残りの1つは必ず出ます。
+
+**中点は平均**
+
+線分 $AB$ の中点の座標は、両端の **平均** です：
+
+$$M = \\left(\\frac{x_1 + x_2}{2},\\ \\frac{y_1 + y_2}{2}\\right)$$
+
+x も y も別々に「真ん中」を取るだけ——これは数直線で「両端の真ん中」を考える発想を、x 軸 と y 軸に独立に適用したものです。
+
+**平行と垂直**
+
+2直線が **平行** なら、傾きが等しい：$m = m'$。
+2直線が **垂直** なら、傾きの **積が** $-1$：$m \\cdot m' = -1$。
+
+垂直のとき、片方の傾きを $m$ とすると、もう片方は $m' = -\\dfrac{1}{m}$ になります。だから、$m = 2$ の直線に垂直な直線の傾きは $-\\dfrac{1}{2}$。傾きが整数だった直線でも、**垂直な直線の傾きはほとんど分数（小数）になる** ことに注意してください。
+
+**この系列で扱った「読み方」**
+
+| 読み方 | 公式 |
+|---|---|
+| 2点から傾き | $m = (y_2 - y_1)/(x_2 - x_1)$ |
+| 点と傾きから y 切片 | $n = b - m \\cdot a$ |
+| 平行な直線 | 傾きが同じ |
+| 線分の中点 | 両端の平均 |
+| 垂直な直線 | $mm' = -1$ |
+
+直線の方程式は、たった5つの読み方で **「点・傾き・切片・中点・垂直」** の関係をすべて記述できます。$y = mx + n$ という6文字の式が、平面の上で1本の直線を完全に決める仕組み——これが「図形と方程式」という単元の名前の本当の意味です。`,
+};
+
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_QUAD_MIN_SERIES,
   ADV_QUAD_GRAPH_SERIES,
+  ADV_LINE_EQUATION_SERIES,
 ];

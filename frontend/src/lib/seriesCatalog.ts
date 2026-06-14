@@ -39,6 +39,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  ADV_LINE_EQUATION_SERIES,
   ADV_QUAD_GRAPH_SERIES,
   ADV_QUAD_MIN_SERIES,
   ADVANCED_SERIES_LIST,
@@ -386,6 +387,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "advanced",
     subjectLabel: "★ チャレンジ",
     shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
+  },
+  {
+    series: ADV_LINE_EQUATION_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription: "直線の方程式を読む — 傾き・切片・中点・垂直",
   },
 ];
 

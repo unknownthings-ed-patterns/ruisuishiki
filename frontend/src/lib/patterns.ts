@@ -27,7 +27,8 @@ export type PatternId =
   /* 数Ⅱ・B の追加2 */
   | "G1" | "G2" | "EXP1" | "VEC2"
   /* ★チャレンジ系列 */
-  | "VV1" | "GR1" | "GR2" | "GR3" | "GR4";
+  | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
+  | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7";
 
 /**
  * 変数の意味的役割。
@@ -941,6 +942,103 @@ const GR4: PatternSpec = {
   evaluate: (k) => ({ unknownName: "c", answer: k.p * k.p + k.q }),
 };
 
+/** LN1: 2点を通る直線の傾き */
+const LN1: PatternSpec = {
+  id: "LN1",
+  unit: "advanced",
+  naturalLanguage: "2点を通る直線の傾き",
+  formulaTemplate: "m = (y2 - y1) / (x2 - x1)",
+  variables: [
+    { name: "x1", role: "1点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "y1", role: "1点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "x2", role: "2点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "y2", role: "2点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "m", role: "傾き", unknown: true, domain: { kind: "integer", min: -20, max: 20 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "m", answer: (k.y2 - k.y1) / (k.x2 - k.x1) }),
+};
+
+/** LN2: 2点を通る直線の y 切片 */
+const LN2: PatternSpec = {
+  id: "LN2",
+  unit: "advanced",
+  naturalLanguage: "2点を通る直線の y 切片",
+  formulaTemplate: "n = y1 - m × x1, m = (y2-y1)/(x2-x1)",
+  variables: [
+    { name: "x1", role: "1点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "y1", role: "1点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "x2", role: "2点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "y2", role: "2点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "n", role: "y 切片", unknown: true, domain: { kind: "integer", min: -50, max: 50 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => {
+    const m = (k.y2 - k.y1) / (k.x2 - k.x1);
+    return { unknownName: "n", answer: k.y1 - m * k.x1 };
+  },
+};
+
+/** LN3: 点 (a, b) を通り傾き m の直線の y 切片 = b - ma */
+const LN3: PatternSpec = {
+  id: "LN3",
+  unit: "advanced",
+  naturalLanguage: "点 (a, b) を通り傾き m の直線の y 切片",
+  formulaTemplate: "n = b - m × a",
+  variables: [
+    { name: "a", role: "通る点の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "通る点の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "m", role: "傾き", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "n", role: "y 切片", unknown: true, domain: { kind: "integer", min: -50, max: 50 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "n", answer: k.b - k.m * k.a }),
+};
+
+/** LN5: 2点 A(x1,y1), B(x2,y2) の中点の x 座標 */
+const LN5: PatternSpec = {
+  id: "LN5",
+  unit: "advanced",
+  naturalLanguage: "2点の中点の x 座標",
+  formulaTemplate: "mx = (x1 + x2) / 2",
+  variables: [
+    { name: "x1", role: "1点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "x2", role: "2点目の x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "mx", role: "中点の x", unknown: true, domain: { kind: "decimal", min: -10, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "mx", answer: (k.x1 + k.x2) / 2 }),
+};
+
+/** LN6: 2点 A(x1,y1), B(x2,y2) の中点の y 座標 */
+const LN6: PatternSpec = {
+  id: "LN6",
+  unit: "advanced",
+  naturalLanguage: "2点の中点の y 座標",
+  formulaTemplate: "my = (y1 + y2) / 2",
+  variables: [
+    { name: "y1", role: "1点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "y2", role: "2点目の y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "my", role: "中点の y", unknown: true, domain: { kind: "decimal", min: -20, max: 20 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "my", answer: (k.y1 + k.y2) / 2 }),
+};
+
+/** LN7: 傾き m の直線に垂直な直線の傾き = -1/m */
+const LN7: PatternSpec = {
+  id: "LN7",
+  unit: "advanced",
+  naturalLanguage: "傾き m の直線に垂直な直線の傾き",
+  formulaTemplate: "m' = -1 / m",
+  variables: [
+    { name: "m", role: "もとの直線の傾き", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "mPerp", role: "垂直な直線の傾き", unknown: true, domain: { kind: "decimal", min: -10, max: 10 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "mPerp", answer: -1 / k.m }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -955,6 +1053,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
+  LN1, LN2, LN3, LN5, LN6, LN7,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -971,6 +1070,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
+  LN1, LN2, LN3, LN5, LN6, LN7,
 ];
 
 export const CONTEXT_CATEGORIES = [
