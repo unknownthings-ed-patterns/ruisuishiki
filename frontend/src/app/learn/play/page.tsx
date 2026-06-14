@@ -9,12 +9,13 @@ import {
   loadSeriesHistory,
   saveStepRecord,
 } from "@/lib/storage";
-import type { LearnerStep } from "@/lib/types";
+import { getTeacherSeries } from "@/lib/teacherStorage";
+import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
 type Status = "answering" | "correct" | "incorrect" | "completed";
 
 export default function Play() {
-  const series = RATIO_BASIC_SERIES;
+  const [series, setSeries] = useState<LearnerSeries>(RATIO_BASIC_SERIES);
   const [stepIndex, setStepIndex] = useState(0);
   const [hasHydrated, setHasHydrated] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
@@ -32,21 +33,38 @@ export default function Play() {
     return series.steps.find((s) => s.id === step.compareWithStepId) ?? null;
   }, [step.compareWithStepId, series.steps]);
 
-  // 初回マウント時に履歴から復元（or ?fresh=1 でクリア）
+  // 初回マウント時：URLパラメータで系列を選び、履歴から復元（or ?fresh=1 でクリア）
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+
+    // 教師作成の系列を読み込むかどうか
+    const seriesIdParam = params.get("seriesId");
+    let activeSeries: LearnerSeries = RATIO_BASIC_SERIES;
+    if (seriesIdParam) {
+      const teacherSeries = getTeacherSeries(seriesIdParam);
+      if (teacherSeries) {
+        activeSeries = teacherSeries;
+        setSeries(teacherSeries);
+      }
+    }
+
     if (params.get("fresh") === "1") {
-      clearSeriesHistory(series.id);
+      clearSeriesHistory(activeSeries.id);
       // URL から fresh パラメータを取り除く（リロード時に常時クリアにならないように）
-      window.history.replaceState(null, "", window.location.pathname);
+      const cleanQuery = seriesIdParam ? `?seriesId=${seriesIdParam}` : "";
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + cleanQuery,
+      );
       setStepIndex(0);
     } else {
-      const history = loadSeriesHistory(series.id);
+      const history = loadSeriesHistory(activeSeries.id);
       const resume = getResumeIndex(
         history,
-        series.steps.map((s) => s.id),
+        activeSeries.steps.map((s) => s.id),
       );
-      if (resume >= series.steps.length) {
+      if (resume >= activeSeries.steps.length) {
         // 全問正答済み → 完了画面へ
         setStatus("completed");
       } else if (resume > 0) {
@@ -54,7 +72,7 @@ export default function Play() {
       }
     }
     setHasHydrated(true);
-  }, [series.id, series.steps]);
+  }, []);
 
   // 問題が変わるたびに状態をリセット
   useEffect(() => {
