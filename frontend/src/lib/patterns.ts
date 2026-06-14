@@ -11,7 +11,11 @@
 
 export type PatternId =
   | "P1" | "P2" | "P3" | "P4" | "P5"
-  | "E1" | "E2" | "F1" | "R1" | "I1";
+  | "E1" | "E2" | "F1" | "R1" | "I1"
+  | "Q1" | "S1" | "V1" | "D1"
+  | "M1" | "PT1" | "PR1"
+  | "T1" | "L1"
+  | "ST1";
 
 /**
  * 変数の意味的役割。
@@ -233,14 +237,175 @@ const I1: PatternSpec = {
   evaluate: (k) => ({ unknownName: "c", answer: -k.b / k.a }),
 };
 
+/* === 数Ⅰ・A 追加 === */
+
+const Q1: PatternSpec = {
+  id: "Q1",
+  unit: "algebra_1",
+  naturalLanguage: "x²+bx+c=0 の解の和（解と係数の関係）",
+  formulaTemplate: "sumRoots = -b",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50, step: 1 } },
+    { name: "sumRoots", role: "解の和", unknown: true, domain: { kind: "integer", min: -20, max: 20 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "sumRoots", answer: -k.b }),
+};
+
+const S1: PatternSpec = {
+  id: "S1",
+  unit: "algebra_1",
+  naturalLanguage: "命題 A→B から、A は B の何の条件か（1:十分 2:必要 3:必要十分 4:どちらでもない）",
+  formulaTemplate: "code = 1|2|3|4",
+  variables: [
+    { name: "code", role: "条件の種別", unknown: true, domain: { kind: "integer", min: 1, max: 4 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "code", answer: k.code ?? 1 }),
+};
+
+const V1: PatternSpec = {
+  id: "V1",
+  unit: "algebra_1",
+  naturalLanguage: "f(x)=x²+bx+c の頂点の x 座標（平方完成）",
+  formulaTemplate: "vx = -b / 2",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20, step: 2 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50, step: 1 } },
+    { name: "vx", role: "頂点の x 座標", unknown: true, domain: { kind: "integer", min: -10, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "vx", answer: -k.b / 2 }),
+};
+
+const D1: PatternSpec = {
+  id: "D1",
+  unit: "algebra_1",
+  naturalLanguage: "5つの数の平均",
+  formulaTemplate: "mean = (a+b+c+d+e) / 5",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "c", role: "3番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "d", role: "4番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "e", role: "5番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "mean", role: "平均", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "mean", answer: (k.a + k.b + k.c + k.d + k.e) / 5 }),
+};
+
+/* === 中学数学 === */
+
+const M1: PatternSpec = {
+  id: "M1",
+  unit: "middle",
+  naturalLanguage: "連立方程式 x+y=p, x-y=q から x を求める",
+  formulaTemplate: "x = (p + q) / 2",
+  variables: [
+    { name: "p", role: "x+y", unknown: false, domain: { kind: "integer", min: 2, max: 30, step: 2 } },
+    { name: "q", role: "x-y", unknown: false, domain: { kind: "integer", min: 0, max: 20, step: 2 } },
+    { name: "x", role: "x の値", unknown: true, domain: { kind: "integer", min: 1, max: 25 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "x", answer: (k.p + k.q) / 2 }),
+};
+
+const PT1: PatternSpec = {
+  id: "PT1",
+  unit: "middle",
+  naturalLanguage: "ピタゴラスの定理：直角三角形の斜辺 c（a, b は2辺）",
+  formulaTemplate: "c = √(a² + b²)",
+  variables: [
+    { name: "a", role: "辺1", unknown: false, domain: { kind: "integer", min: 1, max: 30 } },
+    { name: "b", role: "辺2", unknown: false, domain: { kind: "integer", min: 1, max: 30 } },
+    { name: "c", role: "斜辺", unknown: true, domain: { kind: "integer", min: 1, max: 50 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "c", answer: Math.sqrt(k.a * k.a + k.b * k.b) }),
+};
+
+const PR1: PatternSpec = {
+  id: "PR1",
+  unit: "middle",
+  naturalLanguage: "組合せ C(n, 2)：n人から2人を選ぶ組合せ",
+  formulaTemplate: "combinations = n*(n-1) / 2",
+  variables: [
+    { name: "n", role: "全体の人数", unknown: false, domain: { kind: "integer", min: 2, max: 20 } },
+    { name: "combinations", role: "組合せの総数", unknown: true, domain: { kind: "integer", min: 1, max: 200 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "combinations", answer: (k.n * (k.n - 1)) / 2 }),
+};
+
+/* === 数Ⅱ・B === */
+
+const T1: PatternSpec = {
+  id: "T1",
+  unit: "algebra_2",
+  naturalLanguage: "三角関数の周期：x°を[0°,360°)の範囲に正規化",
+  formulaTemplate: "normalized = x mod 360",
+  variables: [
+    { name: "x", role: "角度（度）", unknown: false, domain: { kind: "integer", min: 360, max: 1080 } },
+    { name: "normalized", role: "正規化された角度", unknown: true, domain: { kind: "integer", min: 0, max: 359 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "normalized", answer: ((k.x % 360) + 360) % 360 }),
+};
+
+const L1: PatternSpec = {
+  id: "L1",
+  unit: "algebra_2",
+  naturalLanguage: "対数 log_base(value) を整数で求める",
+  formulaTemplate: "result = log_base(value)",
+  variables: [
+    { name: "base", role: "底", unknown: false, domain: { kind: "integer", min: 2, max: 10 } },
+    { name: "value", role: "真数", unknown: false, domain: { kind: "integer", min: 2, max: 1000 } },
+    { name: "result", role: "対数の値", unknown: true, domain: { kind: "integer", min: 1, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: Math.round(Math.log(k.value) / Math.log(k.base)) }),
+};
+
+/* === 統計 === */
+
+const ST1: PatternSpec = {
+  id: "ST1",
+  unit: "statistics",
+  naturalLanguage: "5つの数の中央値（並び替えて真ん中）",
+  formulaTemplate: "median = sort(a,b,c,d,e)[2]",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "c", role: "3番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "d", role: "4番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "e", role: "5番目", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "median", role: "中央値", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => {
+    const arr = [k.a, k.b, k.c, k.d, k.e].sort((x, y) => x - y);
+    return { unknownName: "median", answer: arr[2] };
+  },
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
+  Q1, S1, V1, D1,
+  M1, PT1, PR1,
+  T1, L1,
+  ST1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
+  Q1, S1, V1, D1,
+  M1, PT1, PR1,
+  T1, L1,
+  ST1,
 ];
 
 export const CONTEXT_CATEGORIES = [

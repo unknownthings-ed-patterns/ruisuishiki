@@ -675,6 +675,433 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
   ],
 };
 
+/** Q1: x²+bx+c=0 の解の和（解と係数の関係） */
+export const ALGEBRA_QUAD_SUM_SERIES: LearnerSeries = {
+  id: "algebra_quad_sum_01",
+  title: "解と係数の関係（和）",
+  subtitle:
+    "$x^2 + bx + c = 0$ の2つの解の和を求める5問。「和は -b」の発見。",
+  patternId: "Q1",
+  unit: "algebra_1",
+  revelationLabel: "x² + bx + c = 0 の解の和は、−b（解と係数の関係）",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$x^2 + 5x + 6 = 0$ の2つの解の和はいくつでしょう？",
+      answer: -5,
+      unit: "",
+      unknownLabel: "解の和",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "因数分解して 2 解を求めると、$(x+2)(x+3)=0$ より $x=-2, -3$。",
+        },
+        { layer: 2, text: "和は $-2 + (-3) = -5$。" },
+        {
+          layer: 3,
+          text: "解と係数の関係：解の和は $-b = -5$。",
+        },
+      ],
+      formulaPreview: "-(5) = -5",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$x^2 + 7x + 12 = 0$ の2つの解の和はいくつでしょう？",
+      answer: -7,
+      unit: "",
+      unknownLabel: "解の和",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前の問題と同じ。和は $-b$。" },
+        { layer: 2, text: "$b = 7$ なので和は $-7$。" },
+        { layer: 3, text: "$-7$。" },
+      ],
+      formulaPreview: "-(7) = -7",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$x^2 - 5x + 6 = 0$ の2つの解の和はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "解の和",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$b$ は今度は $-5$。和は $-b$。" },
+        { layer: 2, text: "$-(-5) = 5$。" },
+        { layer: 3, text: "$5$。" },
+      ],
+      formulaPreview: "-(-5) = 5",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$x^2 + 8x + 15 = 0$ の2つの解の和はいくつでしょう？",
+      answer: -8,
+      unit: "",
+      unknownLabel: "解の和",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "公式 $-b$。" },
+        { layer: 2, text: "$b = 8$ なので和は $-8$。" },
+        { layer: 3, text: "$-8$。" },
+      ],
+      formulaPreview: "-(8) = -8",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$y^2 + 9y + 20 = 0$ の2つの解の和はいくつでしょう？",
+      answer: -9,
+      unit: "",
+      unknownLabel: "解の和",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "$x$ が $y$ に変わっただけ。「解の和は $-b$」は同じ。",
+        },
+        { layer: 2, text: "$b = 9$。" },
+        { layer: 3, text: "$-9$。" },
+      ],
+      formulaPreview: "-(9) = -9",
+    },
+  ],
+};
+
+/** S1: 必要・十分条件の判定（1〜4から選ぶ） */
+export const ALGEBRA_NECESSARY_SUFFICIENT_SERIES: LearnerSeries = {
+  id: "algebra_necsuf_01",
+  title: "必要条件・十分条件",
+  subtitle:
+    "命題 A→B と B→A の真偽から、A が B にとって何の条件かを答える5問。1=十分のみ／2=必要のみ／3=必要十分／4=どちらでもない。",
+  patternId: "S1",
+  unit: "algebra_1",
+  revelationLabel: "A→B が真なら A は B の十分条件、B→A が真なら必要条件",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$x = 2$ は $x^2 = 4$ の何条件でしょう？（1=十分のみ／2=必要のみ／3=必要十分／4=どちらでもない）",
+      answer: 1,
+      unit: "",
+      unknownLabel: "条件の種別",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "$A: x=2$、$B: x^2=4$。$A \\Rightarrow B$ は真？" },
+        {
+          layer: 2,
+          text: "$x=2 \\Rightarrow x^2=4$ は真。逆 $x^2=4 \\Rightarrow x=2$ は偽（$x=-2$ もある）。",
+        },
+        {
+          layer: 3,
+          text: "A は B の十分条件（必要ではない）。答え 1。",
+        },
+      ],
+      formulaPreview: "A→B 真、B→A 偽 → 十分のみ",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$x > 3$ は $x > 1$ の何条件でしょう？（1=十分のみ／2=必要のみ／3=必要十分／4=どちらでもない）",
+      answer: 1,
+      unit: "",
+      unknownLabel: "条件の種別",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "$x>3 \\Rightarrow x>1$ は真。" },
+        {
+          layer: 2,
+          text: "逆 $x>1 \\Rightarrow x>3$ は偽（$x=2$ で反例）。",
+        },
+        { layer: 3, text: "十分のみ。答え 1。" },
+      ],
+      formulaPreview: "A→B 真、B→A 偽 → 十分のみ",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "「$|x| = 4$」は「$x = 4$ または $x = -4$」の何条件でしょう？（1=十分／2=必要／3=必要十分／4=どちらでもない）",
+      answer: 3,
+      unit: "",
+      unknownLabel: "条件の種別",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$A$ と $B$ は同じことを言っている。" },
+        {
+          layer: 2,
+          text: "$A \\Rightarrow B$ も $B \\Rightarrow A$ も真。",
+        },
+        { layer: 3, text: "必要十分。答え 3。" },
+      ],
+      formulaPreview: "A→B 真、B→A 真 → 必要十分",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$x$ が偶数 は $x$ が整数 の何条件でしょう？（1=十分／2=必要／3=必要十分／4=どちらでもない）",
+      answer: 1,
+      unit: "",
+      unknownLabel: "条件の種別",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "偶数なら整数（真）。整数なら偶数（偽、$x=3$ で反例）。" },
+        { layer: 2, text: "$A$ は $B$ より「強い」条件。" },
+        { layer: 3, text: "十分のみ。答え 1。" },
+      ],
+      formulaPreview: "A→B 真、B→A 偽 → 十分のみ",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$x$ が 4 の倍数 は $x$ が 2 の倍数 の何条件でしょう？（1=十分／2=必要／3=必要十分／4=どちらでもない）",
+      answer: 1,
+      unit: "",
+      unknownLabel: "条件の種別",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "「偶数 vs 整数」と同じ構造。「4 の倍数」は「2 の倍数」より強い。",
+        },
+        {
+          layer: 2,
+          text: "$A \\Rightarrow B$ は真。逆は偽（$x=2$ は 2 の倍数だが 4 の倍数でない）。",
+        },
+        { layer: 3, text: "十分のみ。答え 1。" },
+      ],
+      formulaPreview: "A→B 真、B→A 偽 → 十分のみ",
+    },
+  ],
+};
+
+/** V1: f(x)=x²+bx+c の頂点の x 座標 */
+export const ALGEBRA_QUAD_VERTEX_SERIES: LearnerSeries = {
+  id: "algebra_quad_vertex_01",
+  title: "2次関数の頂点（x 座標）",
+  subtitle:
+    "$f(x) = x^2 + bx + c$ の頂点の $x$ 座標を平方完成で求める5問。",
+  patternId: "V1",
+  unit: "algebra_1",
+  revelationLabel: "x² + bx + c の頂点の x 座標は −b / 2",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$f(x) = x^2 + 4x + 1$ の頂点の $x$ 座標はいくつでしょう？",
+      answer: -2,
+      unit: "",
+      unknownLabel: "頂点の x 座標",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "平方完成 $f(x) = (x+2)^2 - 3$。頂点は $(-2, -3)$。",
+        },
+        { layer: 2, text: "公式：頂点の x = $-b/2$。" },
+        { layer: 3, text: "$-4/2 = -2$。" },
+      ],
+      formulaPreview: "-(4) / 2 = -2",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$f(x) = x^2 + 6x + 5$ の頂点の $x$ 座標はいくつでしょう？",
+      answer: -3,
+      unit: "",
+      unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。$-b/2$。" },
+        { layer: 2, text: "$-6/2 = -3$。" },
+        { layer: 3, text: "$-3$。" },
+      ],
+      formulaPreview: "-(6) / 2 = -3",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$f(x) = x^2 - 4x + 3$ の頂点の $x$ 座標はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "今度は $b = -4$。" },
+        { layer: 2, text: "$-(-4)/2 = 4/2$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "-(-4) / 2 = 2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$f(x) = x^2 - 8x + 12$ の頂点の $x$ 座標はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$b = -8$。" },
+        { layer: 2, text: "$-(-8)/2 = 8/2$。" },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "-(-8) / 2 = 4",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$g(x) = x^2 + 2x - 3$ の頂点の $x$ 座標はいくつでしょう？",
+      answer: -1,
+      unit: "",
+      unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "関数名が $f$ から $g$ に変わっただけ。「頂点 = $-b/2$」は同じ。",
+        },
+        { layer: 2, text: "$-2/2$。" },
+        { layer: 3, text: "$-1$。" },
+      ],
+      formulaPreview: "-(2) / 2 = -1",
+    },
+  ],
+};
+
+/** D1: 5つの数の平均 */
+export const ALGEBRA_MEAN_SERIES: LearnerSeries = {
+  id: "algebra_mean_01",
+  title: "5つの数の平均",
+  subtitle: "5つの数の平均を求める5問。データ分析の入り口。",
+  patternId: "D1",
+  unit: "algebra_1",
+  revelationLabel: "平均 = 全部足して 5 で割る",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "5つの数 2, 4, 6, 8, 10 の平均はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "平均",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "全部足して 5 で割る。" },
+        { layer: 2, text: "$2+4+6+8+10 = 30$。" },
+        { layer: 3, text: "$30 / 5 = 6$。" },
+      ],
+      formulaPreview: "30 / 5 = 6",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "5つの数 1, 3, 5, 7, 9 の平均はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "平均",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "やり方は同じ。" },
+        { layer: 2, text: "$1+3+5+7+9 = 25$。" },
+        { layer: 3, text: "$25 / 5 = 5$。" },
+      ],
+      formulaPreview: "25 / 5 = 5",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "5つの数 10, 20, 30, 40, 50 の平均はいくつでしょう？",
+      answer: 30,
+      unit: "",
+      unknownLabel: "平均",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "全部足して 5 で割る。" },
+        { layer: 2, text: "$10+20+30+40+50 = 150$。" },
+        { layer: 3, text: "$150 / 5 = 30$。" },
+      ],
+      formulaPreview: "150 / 5 = 30",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "5つの数 -2, 0, 2, 4, 6 の平均はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "平均",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "負の数があるだけ。やり方は同じ。" },
+        { layer: 2, text: "$-2+0+2+4+6 = 10$。" },
+        { layer: 3, text: "$10 / 5 = 2$。" },
+      ],
+      formulaPreview: "10 / 5 = 2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "クラス 5 人のテストの点数 60, 70, 80, 90, 100 の平均は何点でしょう？",
+      answer: 80,
+      unit: "点",
+      unknownLabel: "平均点",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "「点」がついただけ。仕組みは同じ。",
+        },
+        { layer: 2, text: "$60+70+80+90+100 = 400$。" },
+        { layer: 3, text: "$400 / 5 = 80$。" },
+      ],
+      formulaPreview: "400 / 5 = 80",
+    },
+  ],
+};
+
 /** 数学Ⅰ・A の全系列リスト（将来拡張）。 */
 export const ALGEBRA_1_SERIES_LIST: LearnerSeries[] = [
   ALGEBRA_EXPANSION_AB_SERIES,
@@ -682,4 +1109,8 @@ export const ALGEBRA_1_SERIES_LIST: LearnerSeries[] = [
   ALGEBRA_FACTORING_SERIES,
   ALGEBRA_SQRT_SIMPLIFY_SERIES,
   ALGEBRA_LINEAR_INEQ_SERIES,
+  ALGEBRA_QUAD_SUM_SERIES,
+  ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
+  ALGEBRA_QUAD_VERTEX_SERIES,
+  ALGEBRA_MEAN_SERIES,
 ];
