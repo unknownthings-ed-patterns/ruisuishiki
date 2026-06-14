@@ -66,12 +66,17 @@ export function MathText({ text }: { text: string }) {
 /**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
+ *
+ * 注意：SVG の y 軸は下向きなので、数学的な「上向き」のお椀は
+ * SVG 座標では「頂点が下、左右が上」になる。式に -1 を掛けて
+ * 反転している。
  */
 export function ParabolaUp() {
-  // y = (x - 100)² / 80 + 50 で頂点 (100, 50) のお椀
+  // SVG 座標で「上向きのお椀」になるよう、頂点を下に置く
+  // y = -(x - 100)² / 80 + 125 で頂点 (100, 125) のお椀
   const points: string[] = [];
   for (let x = 20; x <= 180; x += 2) {
-    const y = ((x - 100) * (x - 100)) / 80 + 50;
+    const y = -((x - 100) * (x - 100)) / 80 + 125;
     points.push(`${x},${y}`);
   }
   const pathD = `M ${points.join(" L ")}`;
@@ -83,28 +88,28 @@ export function ParabolaUp() {
       role="img"
       aria-label="上向きの放物線。頂点が最小値"
     >
-      {/* x軸 */}
-      <line x1="15" y1="135" x2="195" y2="135" stroke="var(--muted)" strokeWidth="0.6" />
+      {/* x軸（頂点より少し下に） */}
+      <line x1="15" y1="140" x2="195" y2="140" stroke="var(--muted)" strokeWidth="0.6" />
       {/* y軸 */}
-      <line x1="100" y1="10" x2="100" y2="150" stroke="var(--muted)" strokeWidth="0.6" />
-      {/* x = -b/2 の点線 */}
-      <line x1="100" y1="50" x2="100" y2="135" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="3,3" />
+      <line x1="100" y1="10" x2="100" y2="155" stroke="var(--muted)" strokeWidth="0.6" />
+      {/* x = -b/2 の点線（頂点から x軸まで） */}
+      <line x1="100" y1="125" x2="100" y2="140" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="3,3" />
       {/* 放物線 */}
       <path d={pathD} fill="none" stroke="var(--accent)" strokeWidth="2" />
       {/* 頂点（最小値）の点 */}
-      <circle cx="100" cy="50" r="3.5" fill="var(--accent-warm)" />
-      {/* 頂点ラベル */}
-      <text x="106" y="46" fontSize="9" fill="var(--foreground)">
+      <circle cx="100" cy="125" r="3.5" fill="var(--accent-warm)" />
+      {/* 頂点ラベル（頂点の下に） */}
+      <text x="106" y="129" fontSize="9" fill="var(--foreground)">
         頂点（お椀の底）
       </text>
-      <text x="106" y="56" fontSize="8" fill="var(--muted)">
+      <text x="106" y="139" fontSize="8" fill="var(--muted)">
         ＝最小値
       </text>
       {/* 軸ラベル */}
-      <text x="192" y="131" fontSize="9" fill="var(--muted)">x</text>
+      <text x="192" y="136" fontSize="9" fill="var(--muted)">x</text>
       <text x="103" y="14" fontSize="9" fill="var(--muted)">y</text>
       {/* x = -b/2 のラベル */}
-      <text x="103" y="148" fontSize="8" fill="var(--muted)">
+      <text x="103" y="152" fontSize="8" fill="var(--muted)">
         x = -b/2
       </text>
     </svg>
