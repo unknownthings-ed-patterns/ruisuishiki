@@ -16,6 +16,38 @@ import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
 type Status = "answering" | "correct" | "incorrect" | "completed";
 
+/**
+ * 学習者の入力を数値として解釈する。
+ *
+ * 受け付ける形式：
+ * - 整数：「5」「-3」
+ * - 小数：「0.5」「-1.25」
+ * - 分数：「1/2」「-3/4」「6/4」（約分前でも比較は数値で）
+ *
+ * 半角・全角のスペースとカンマは無視。全角スラッシュ「／」も
+ * 半角「/」と同じく分数の区切りとして扱う。
+ *
+ * 不正な入力は null を返す（再評価しない）。
+ */
+function parseAnswer(input: string): number | null {
+  // 空白とカンマを除去、全角スラッシュを半角に
+  const cleaned = input.replace(/[,\s]/g, "").replace(/／/g, "/");
+  if (cleaned === "") return null;
+
+  // 分数形式：a/b（a, b はそれぞれ整数 or 小数で、符号も許容）
+  const fractionMatch = cleaned.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+  if (fractionMatch) {
+    const num = parseFloat(fractionMatch[1]);
+    const den = parseFloat(fractionMatch[2]);
+    if (den === 0 || Number.isNaN(num) || Number.isNaN(den)) return null;
+    return num / den;
+  }
+
+  // 通常の数値
+  const parsed = parseFloat(cleaned);
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
 export default function Play() {
   const [series, setSeries] = useState<LearnerSeries>(RATIO_BASIC_SERIES);
   const [stepIndex, setStepIndex] = useState(0);
@@ -143,8 +175,8 @@ export default function Play() {
     // 正答後は再評価しない（次へボタンで進む）
     if (status === "correct") return;
 
-    const parsed = parseFloat(userAnswer.replace(/[, ]/g, ""));
-    if (Number.isNaN(parsed)) return;
+    const parsed = parseAnswer(userAnswer);
+    if (parsed === null) return;
 
     const nextAttempts = attempts + 1;
     setAttempts(nextAttempts);
@@ -506,12 +538,13 @@ export default function Play() {
                 </span>
                 <input
                   type="text"
-                  inputMode="decimal"
+                  inputMode="text"
                   value={userAnswer}
                   onChange={handleAnswerChange}
                   autoFocus
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xl tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
                   aria-label={step.unknownLabel}
+                  placeholder="例：3 / 0.5 / 1/2"
                 />
                 <span
                   className="text-foreground shrink-0"
@@ -520,6 +553,13 @@ export default function Play() {
                   {step.unit}
                 </span>
               </div>
+
+              <p
+                className="text-muted"
+                style={{ fontSize: "11px", letterSpacing: "0.05em" }}
+              >
+                分数は <span className="tnum">1/2</span> のように書けます
+              </p>
 
               {status === "incorrect" && (
                 <p

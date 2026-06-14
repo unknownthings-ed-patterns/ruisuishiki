@@ -517,27 +517,27 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
     },
     {
       id: "step9", position: 9,
-      questionText: "傾き $2$ の直線に **垂直** な直線の傾きはいくつでしょう？（小数で答える）",
+      questionText: "傾き $2$ の直線に **垂直** な直線の傾きはいくつでしょう？（分数 $-1/2$ または小数 $-0.5$ で）",
       answer: -0.5, unit: "", unknownLabel: "垂直な直線の傾き",
       variationFromPrevious: "inverse", compareWithStepId: "step8",
       hints: [
         { layer: 1, text: "垂直なら $mm' = -1$。" },
         { layer: 2, text: "$2 \\cdot m' = -1$ より $m' = -\\dfrac{1}{2}$。" },
-        { layer: 3, text: "$-0.5$。" },
+        { layer: 3, text: "$-\\dfrac{1}{2}$（小数だと $-0.5$）。" },
       ],
-      formulaPreview: "−1 / 2 = −0.5",
+      formulaPreview: "−1 / 2 = −1/2",
     },
     {
       id: "step10", position: 10,
-      questionText: "傾き $-4$ の直線に **垂直** な直線の傾きはいくつでしょう？（小数で答える）",
+      questionText: "傾き $-4$ の直線に **垂直** な直線の傾きはいくつでしょう？（分数 $1/4$ または小数 $0.25$ で）",
       answer: 0.25, unit: "", unknownLabel: "垂直な直線の傾き",
       variationFromPrevious: "qualitative", compareWithStepId: "step9",
       hints: [
         { layer: 1, text: "$mm' = -1$。" },
         { layer: 2, text: "$-4 \\cdot m' = -1$ より $m' = \\dfrac{1}{4}$。" },
-        { layer: 3, text: "$0.25$。" },
+        { layer: 3, text: "$\\dfrac{1}{4}$（小数だと $0.25$）。" },
       ],
-      formulaPreview: "−1 / (−4) = 0.25",
+      formulaPreview: "−1 / (−4) = 1/4",
     },
   ],
   derivation: `**直線の方程式は「傾き」と「通る点」で決まる**
