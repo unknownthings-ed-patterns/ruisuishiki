@@ -15,7 +15,11 @@ export type PatternId =
   | "Q1" | "S1" | "V1" | "D1"
   | "M1" | "PT1" | "PR1"
   | "T1" | "L1"
-  | "ST1";
+  | "ST1"
+  /* 東京書籍5年生（年度通し復習＋予習） */
+  | "EL1" | "EL2" | "EL3" | "EL4" | "EL5"
+  | "EL6" | "EL7" | "EL8" | "EL9" | "EL10"
+  | "EL11" | "EL12" | "EL13" | "EL14";
 
 /**
  * 変数の意味的役割。
@@ -390,6 +394,237 @@ const ST1: PatternSpec = {
   },
 };
 
+/* === 小学校5年生・東京書籍順 === */
+
+/** EL1: 整数と小数（× 10, ÷ 10 の関係） */
+const EL1: PatternSpec = {
+  id: "EL1",
+  unit: "elementary_5",
+  naturalLanguage: "小数を 10 倍する（位の関係）",
+  formulaTemplate: "result = value * factor",
+  variables: [
+    { name: "value", role: "もとの数", unknown: false, domain: { kind: "decimal", min: 0.001, max: 100 } },
+    { name: "factor", role: "倍率", unknown: false, domain: { kind: "decimal", min: 0.01, max: 1000 } },
+    { name: "result", role: "答え", unknown: true, domain: { kind: "decimal", min: 0.00001, max: 100000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "result", answer: k.value * k.factor }),
+};
+
+/** EL2: 直方体の体積 */
+const EL2: PatternSpec = {
+  id: "EL2",
+  unit: "elementary_5",
+  naturalLanguage: "直方体の体積（縦×横×高さ）",
+  formulaTemplate: "V = l * w * h",
+  variables: [
+    { name: "l", role: "縦", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "w", role: "横", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "h", role: "高さ", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "V", role: "体積", unknown: true, domain: { kind: "integer", min: 1, max: 8000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "V", answer: k.l * k.w * k.h }),
+};
+
+/** EL3: 比例（y = k × x） */
+const EL3: PatternSpec = {
+  id: "EL3",
+  unit: "elementary_5",
+  naturalLanguage: "比例 y = k × x の y を求める",
+  formulaTemplate: "y = k * x",
+  variables: [
+    { name: "k", role: "比例定数", unknown: false, domain: { kind: "integer", min: 1, max: 100 } },
+    { name: "x", role: "x の値", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "y", role: "y の値", unknown: true, domain: { kind: "integer", min: 1, max: 2000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "y", answer: k.k * k.x }),
+};
+
+/** EL4: 小数 × 小数 */
+const EL4: PatternSpec = {
+  id: "EL4",
+  unit: "elementary_5",
+  naturalLanguage: "小数 × 小数",
+  formulaTemplate: "result = a * b",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "decimal", min: 0.1, max: 100 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "decimal", min: 0.1, max: 100 } },
+    { name: "result", role: "積", unknown: true, domain: { kind: "decimal", min: 0.01, max: 10000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "result", answer: k.a * k.b }),
+};
+
+/** EL5: 小数 ÷ 小数 */
+const EL5: PatternSpec = {
+  id: "EL5",
+  unit: "elementary_5",
+  naturalLanguage: "小数 ÷ 小数",
+  formulaTemplate: "result = a / b",
+  variables: [
+    { name: "a", role: "わられる数", unknown: false, domain: { kind: "decimal", min: 0.1, max: 100 } },
+    { name: "b", role: "わる数", unknown: false, domain: { kind: "decimal", min: 0.1, max: 100 } },
+    { name: "result", role: "商", unknown: true, domain: { kind: "decimal", min: 0.01, max: 1000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "result", answer: k.a / k.b }),
+};
+
+/** EL6: 最小公倍数 */
+const EL6: PatternSpec = {
+  id: "EL6",
+  unit: "elementary_5",
+  naturalLanguage: "最小公倍数（2つの数の最小公倍数）",
+  formulaTemplate: "lcm = lcm(a, b)",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "integer", min: 2, max: 30 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "integer", min: 2, max: 30 } },
+    { name: "lcm", role: "最小公倍数", unknown: true, domain: { kind: "integer", min: 2, max: 900 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => {
+    function gcd(x: number, y: number): number {
+      return y === 0 ? x : gcd(y, x % y);
+    }
+    return {
+      unknownName: "lcm",
+      answer: (k.a * k.b) / gcd(k.a, k.b),
+    };
+  },
+};
+
+/** EL7: 分数のたし算（最簡分数にした時の分子） */
+const EL7: PatternSpec = {
+  id: "EL7",
+  unit: "elementary_5",
+  naturalLanguage: "分数のたし算（通分→最簡分数の分子）",
+  formulaTemplate: "numerator = simplified(a/b + c/d).numerator",
+  variables: [
+    { name: "a", role: "1番目の分子", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "b", role: "1番目の分母", unknown: false, domain: { kind: "integer", min: 2, max: 12 } },
+    { name: "c", role: "2番目の分子", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "d", role: "2番目の分母", unknown: false, domain: { kind: "integer", min: 2, max: 12 } },
+    { name: "numerator", role: "最簡分子", unknown: true, domain: { kind: "integer", min: 1, max: 100 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => {
+    function gcd(x: number, y: number): number {
+      return y === 0 ? x : gcd(y, x % y);
+    }
+    const num = k.a * k.d + k.c * k.b;
+    const den = k.b * k.d;
+    const g = gcd(Math.abs(num), den);
+    return { unknownName: "numerator", answer: num / g };
+  },
+};
+
+/** EL8: 3つの数の平均 */
+const EL8: PatternSpec = {
+  id: "EL8",
+  unit: "elementary_5",
+  naturalLanguage: "3つの数の平均",
+  formulaTemplate: "mean = (a + b + c) / 3",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "integer", min: 0, max: 100 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "integer", min: 0, max: 100 } },
+    { name: "c", role: "3番目", unknown: false, domain: { kind: "integer", min: 0, max: 100 } },
+    { name: "mean", role: "平均", unknown: true, domain: { kind: "integer", min: 0, max: 100 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "mean", answer: (k.a + k.b + k.c) / 3 }),
+};
+
+/** EL9: 速さ＝道のり ÷ 時間 */
+const EL9: PatternSpec = {
+  id: "EL9",
+  unit: "elementary_5",
+  naturalLanguage: "速さ（道のり ÷ 時間）",
+  formulaTemplate: "speed = distance / time",
+  variables: [
+    { name: "distance", role: "道のり", unknown: false, domain: { kind: "integer", min: 1, max: 1000 } },
+    { name: "time", role: "時間", unknown: false, domain: { kind: "integer", min: 1, max: 100 } },
+    { name: "speed", role: "速さ", unknown: true, domain: { kind: "integer", min: 1, max: 1000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "speed", answer: k.distance / k.time }),
+};
+
+/** EL10: 多角形の内角の和（n - 2）× 180° */
+const EL10: PatternSpec = {
+  id: "EL10",
+  unit: "elementary_5",
+  naturalLanguage: "多角形の内角の和",
+  formulaTemplate: "sum = (n - 2) * 180",
+  variables: [
+    { name: "n", role: "辺の数", unknown: false, domain: { kind: "integer", min: 3, max: 12 } },
+    { name: "sum", role: "内角の和", unknown: true, domain: { kind: "integer", min: 180, max: 1800 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "sum", answer: (k.n - 2) * 180 }),
+};
+
+/** EL11: 円周 = 直径 × π */
+const EL11: PatternSpec = {
+  id: "EL11",
+  unit: "elementary_5",
+  naturalLanguage: "円周（直径 × 3.14）",
+  formulaTemplate: "C = d * 3.14",
+  variables: [
+    { name: "d", role: "直径", unknown: false, domain: { kind: "integer", min: 1, max: 100 } },
+    { name: "C", role: "円周", unknown: true, domain: { kind: "decimal", min: 1, max: 400 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "C", answer: k.d * 3.14 }),
+};
+
+/** EL12: 三角形の面積 */
+const EL12: PatternSpec = {
+  id: "EL12",
+  unit: "elementary_5",
+  naturalLanguage: "三角形の面積（底辺 × 高さ ÷ 2）",
+  formulaTemplate: "S = base * height / 2",
+  variables: [
+    { name: "base", role: "底辺", unknown: false, domain: { kind: "integer", min: 1, max: 30 } },
+    { name: "height", role: "高さ", unknown: false, domain: { kind: "integer", min: 2, max: 30, step: 2 } },
+    { name: "S", role: "面積", unknown: true, domain: { kind: "integer", min: 1, max: 500 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "S", answer: (k.base * k.height) / 2 }),
+};
+
+/** EL13: 平行四辺形の面積 */
+const EL13: PatternSpec = {
+  id: "EL13",
+  unit: "elementary_5",
+  naturalLanguage: "平行四辺形の面積（底辺 × 高さ）",
+  formulaTemplate: "S = base * height",
+  variables: [
+    { name: "base", role: "底辺", unknown: false, domain: { kind: "integer", min: 1, max: 30 } },
+    { name: "height", role: "高さ", unknown: false, domain: { kind: "integer", min: 1, max: 30 } },
+    { name: "S", role: "面積", unknown: true, domain: { kind: "integer", min: 1, max: 900 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "S", answer: k.base * k.height }),
+};
+
+/** EL14: 台形の面積（上底 + 下底）× 高さ ÷ 2 */
+const EL14: PatternSpec = {
+  id: "EL14",
+  unit: "elementary_5",
+  naturalLanguage: "台形の面積（(上底＋下底) × 高さ ÷ 2）",
+  formulaTemplate: "S = (a + b) * h / 2",
+  variables: [
+    { name: "a", role: "上底", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "b", role: "下底", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "h", role: "高さ", unknown: false, domain: { kind: "integer", min: 2, max: 20, step: 2 } },
+    { name: "S", role: "面積", unknown: true, domain: { kind: "integer", min: 1, max: 500 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "S", answer: ((k.a + k.b) * k.h) / 2 }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -397,6 +632,9 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   M1, PT1, PR1,
   T1, L1,
   ST1,
+  EL1, EL2, EL3, EL4, EL5,
+  EL6, EL7, EL8, EL9, EL10,
+  EL11, EL12, EL13, EL14,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -406,6 +644,9 @@ export const PATTERN_LIST: PatternSpec[] = [
   M1, PT1, PR1,
   T1, L1,
   ST1,
+  EL1, EL2, EL3, EL4, EL5,
+  EL6, EL7, EL8, EL9, EL10,
+  EL11, EL12, EL13, EL14,
 ];
 
 export const CONTEXT_CATEGORIES = [

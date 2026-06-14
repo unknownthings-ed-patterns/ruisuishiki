@@ -27,6 +27,23 @@ import {
 } from "./seriesAlgebra2";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
+  E5_CIRCUMFERENCE_SERIES,
+  E5_DECIMAL_DIV_SERIES,
+  E5_DECIMAL_MULT_SERIES,
+  E5_DECIMAL_PLACE_SERIES,
+  E5_FRACTION_ADD_SERIES,
+  E5_LCM_SERIES,
+  E5_MEAN_SERIES,
+  E5_PARALLELOGRAM_SERIES,
+  E5_POLYGON_ANGLE_SERIES,
+  E5_PROPORTION_SERIES,
+  E5_SPEED_SERIES,
+  E5_TRAPEZOID_AREA_SERIES,
+  E5_TRIANGLE_AREA_SERIES,
+  E5_VOLUME_SERIES,
+  ELEMENTARY_5_SERIES_LIST,
+} from "./seriesElementary5";
+import {
   MIDDLE_COMBINATION_SERIES,
   MIDDLE_PYTHAGOREAN_SERIES,
   MIDDLE_SCHOOL_SERIES_LIST,
@@ -74,11 +91,96 @@ export type CatalogEntry = {
 };
 
 export const STATIC_CATALOG: CatalogEntry[] = [
+  /* === 小学校5年・東京書籍順 === */
+  {
+    series: E5_DECIMAL_PLACE_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "1. 整数と小数（位の関係）",
+  },
+  {
+    series: E5_VOLUME_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "2. 直方体の体積",
+  },
+  {
+    series: E5_PROPORTION_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "3. 比例の入り口",
+  },
+  {
+    series: E5_DECIMAL_MULT_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "4. 小数のかけ算",
+  },
+  {
+    series: E5_DECIMAL_DIV_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "5. 小数のわり算（今ここ）",
+  },
+  {
+    series: E5_LCM_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "6. 整数の見方（最小公倍数）",
+  },
+  {
+    series: E5_FRACTION_ADD_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "7. 分数のたし算（通分）",
+  },
+  {
+    series: E5_MEAN_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "8. 平均",
+  },
+  {
+    series: E5_SPEED_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "9. 速さ（単位量あたり）",
+  },
+  {
+    series: E5_POLYGON_ANGLE_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "10. 多角形の角",
+  },
   {
     series: RATIO_BASIC_SERIES,
     subject: "elementary",
-    subjectLabel: "小学校算数",
-    shortDescription: "小学5年・割合の基本（B = A × p）",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "11. 割合の入り口",
+  },
+  {
+    series: E5_CIRCUMFERENCE_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "12. 円周の長さ",
+  },
+  {
+    series: E5_TRIANGLE_AREA_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "13. 三角形の面積",
+  },
+  {
+    series: E5_PARALLELOGRAM_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "14. 平行四辺形の面積",
+  },
+  {
+    series: E5_TRAPEZOID_AREA_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "15. 台形の面積",
   },
   {
     series: ALGEBRA_EXPANSION_AB_SERIES,
@@ -181,6 +283,7 @@ export function findStaticSeries(seriesId: string): LearnerSeries | null {
 }
 
 export const ALL_STATIC_SERIES: LearnerSeries[] = [
+  ...ELEMENTARY_5_SERIES_LIST,
   RATIO_BASIC_SERIES,
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
