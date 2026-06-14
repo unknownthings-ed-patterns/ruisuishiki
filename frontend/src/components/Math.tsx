@@ -64,11 +64,60 @@ export function MathText({ text }: { text: string }) {
 }
 
 /**
+ * 上向きの放物線（お椀の形）を描く SVG。
+ * 「公式の景色」で2次関数の最小値を視覚的に支える。
+ */
+export function ParabolaUp() {
+  // y = (x - 100)² / 80 + 50 で頂点 (100, 50) のお椀
+  const points: string[] = [];
+  for (let x = 20; x <= 180; x += 2) {
+    const y = ((x - 100) * (x - 100)) / 80 + 50;
+    points.push(`${x},${y}`);
+  }
+  const pathD = `M ${points.join(" L ")}`;
+  return (
+    <svg
+      viewBox="0 0 200 160"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ maxWidth: "260px", height: "auto" }}
+      role="img"
+      aria-label="上向きの放物線。頂点が最小値"
+    >
+      {/* x軸 */}
+      <line x1="15" y1="135" x2="195" y2="135" stroke="var(--muted)" strokeWidth="0.6" />
+      {/* y軸 */}
+      <line x1="100" y1="10" x2="100" y2="150" stroke="var(--muted)" strokeWidth="0.6" />
+      {/* x = -b/2 の点線 */}
+      <line x1="100" y1="50" x2="100" y2="135" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="3,3" />
+      {/* 放物線 */}
+      <path d={pathD} fill="none" stroke="var(--accent)" strokeWidth="2" />
+      {/* 頂点（最小値）の点 */}
+      <circle cx="100" cy="50" r="3.5" fill="var(--accent-warm)" />
+      {/* 頂点ラベル */}
+      <text x="106" y="46" fontSize="9" fill="var(--foreground)">
+        頂点（お椀の底）
+      </text>
+      <text x="106" y="56" fontSize="8" fill="var(--muted)">
+        ＝最小値
+      </text>
+      {/* 軸ラベル */}
+      <text x="192" y="131" fontSize="9" fill="var(--muted)">x</text>
+      <text x="103" y="14" fontSize="9" fill="var(--muted)">y</text>
+      {/* x = -b/2 のラベル */}
+      <text x="103" y="148" fontSize="8" fill="var(--muted)">
+        x = -b/2
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
  * - 段落は空行で区切る
  * - $$...$$ だけの行は BlockMath（中央寄せのディスプレイ数式）
+ * - <<PARABOLA_UP>> のような特殊マーカーは対応する図に置き換える
  * - 段落内の $...$ は InlineMath
  */
 export function MathBody({ text }: { text: string }) {
@@ -78,6 +127,14 @@ export function MathBody({ text }: { text: string }) {
     <>
       {paragraphs.map((p, i) => {
         const trimmed = p.trim();
+        // 特殊マーカー：図
+        if (trimmed === "<<PARABOLA_UP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaUp />
+            </div>
+          );
+        }
         // $$...$$ だけの段落は BlockMath
         const blockMatch = trimmed.match(/^\$\$([\s\S]+)\$\$$/);
         if (blockMatch) {
