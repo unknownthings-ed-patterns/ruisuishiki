@@ -31,7 +31,7 @@ export const ADV_QUAD_MIN_SERIES: LearnerSeries = {
       hints: [
         { layer: 1, text: "平方完成 $f(x) = (x+2)^2 + 1$。" },
         { layer: 2, text: "最小値 = $c - b^2/4 = 5 - 4$。" },
-        { layer: 3, text: "1。$x = -2$ で取る。" },
+        { layer: 3, text: "最小値は 1（$x = -2$ のとき）。" },
       ],
       formulaPreview: "5 − 16/4 = 1",
     },
@@ -79,7 +79,7 @@ export const ADV_QUAD_MIN_SERIES: LearnerSeries = {
       hints: [
         { layer: 1, text: "$5 - 4/4$。" },
         { layer: 2, text: "$5 - 1$。" },
-        { layer: 3, text: "4。$x = 1$ で取る。" },
+        { layer: 3, text: "最小値は 4（$x = 1$ のとき）。" },
       ],
       formulaPreview: "5 − 4/4 = 4",
     },
@@ -139,7 +139,7 @@ export const ADV_QUAD_MIN_SERIES: LearnerSeries = {
       hints: [
         { layer: 1, text: "変数 y、関数名 g。仕組みは同じ。" },
         { layer: 2, text: "$28 - 100/4 = 28 - 25$。" },
-        { layer: 3, text: "3。$y = 5$ で取る。" },
+        { layer: 3, text: "最小値は 3（$y = 5$ のとき）。" },
       ],
       formulaPreview: "28 − 100/4 = 3",
     },
