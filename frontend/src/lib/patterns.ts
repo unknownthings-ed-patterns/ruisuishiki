@@ -25,7 +25,9 @@ export type PatternId =
   /* 数Ⅱ・B の追加（網羅化） */
   | "A1" | "A2" | "VEC1" | "DIFF1"
   /* 数Ⅱ・B の追加2 */
-  | "G1" | "G2" | "EXP1" | "VEC2";
+  | "G1" | "G2" | "EXP1" | "VEC2"
+  /* ★チャレンジ系列 */
+  | "VV1";
 
 /**
  * 変数の意味的役割。
@@ -859,6 +861,26 @@ const VEC2: PatternSpec = {
   }),
 };
 
+/* === ★チャレンジ === */
+
+/**
+ * VV1: f(x) = x² + bx + c の最小値（a=1 限定、b は偶数で整数解）。
+ * 平方完成：f(x) = (x + b/2)² + (c - b²/4) より、最小値 = c - b²/4。
+ */
+const VV1: PatternSpec = {
+  id: "VV1",
+  unit: "advanced",
+  naturalLanguage: "f(x) = x² + bx + c の最小値（a=1, b偶数）",
+  formulaTemplate: "min = c - b² / 4",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20, step: 2 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 100 } },
+    { name: "min", role: "最小値", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "min", answer: k.c - (k.b * k.b) / 4 }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -872,6 +894,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
+  VV1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -887,6 +910,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
+  VV1,
 ];
 
 export const CONTEXT_CATEGORIES = [

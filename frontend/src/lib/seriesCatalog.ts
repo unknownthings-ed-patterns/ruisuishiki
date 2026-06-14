@@ -38,6 +38,10 @@ import {
   ALGEBRA2_TRIG_PERIOD_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
+import {
+  ADV_QUAD_MIN_SERIES,
+  ADVANCED_SERIES_LIST,
+} from "./seriesAdvanced";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
   E5_CIRCUMFERENCE_SERIES,
@@ -73,7 +77,8 @@ export type SeriesSubject =
   | "middle"
   | "secondary"
   | "secondary2"
-  | "tertiary";
+  | "tertiary"
+  | "advanced";
 
 /** subject の表示順（カタログでこの順に並べる）。 */
 export const SUBJECT_ORDER: SeriesSubject[] = [
@@ -82,6 +87,7 @@ export const SUBJECT_ORDER: SeriesSubject[] = [
   "secondary",
   "secondary2",
   "tertiary",
+  "advanced",
 ];
 
 /** subject ごとのグループ見出し（subjectLabel と独立に持つ）。 */
@@ -91,6 +97,7 @@ export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
   secondary: "高校数学Ⅰ・A",
   secondary2: "高校数学Ⅱ・B",
   tertiary: "統計・データ分析",
+  advanced: "★ チャレンジ（発展）",
 };
 
 export type CatalogEntry = {
@@ -366,6 +373,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "統計・データ分析",
     shortDescription: "中央値 — 並び替えて真ん中",
   },
+  /* ★ チャレンジ（発展） */
+  {
+    series: ADV_QUAD_MIN_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription: "2次関数の最小値 — 平方完成",
+  },
 ];
 
 export function findStaticSeries(seriesId: string): LearnerSeries | null {
@@ -380,4 +394,5 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
   ...STATISTICS_SERIES_LIST,
+  ...ADVANCED_SERIES_LIST,
 ];
