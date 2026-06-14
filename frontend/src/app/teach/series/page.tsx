@@ -143,8 +143,16 @@ export default function SeriesPreview() {
           </button>
           <button
             type="button"
+            onClick={() => window.print()}
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-accent text-accent transition-colors hover:bg-accent-soft/40 no-print"
+            style={{ letterSpacing: "0.1em" }}
+          >
+            印刷（PDF保存）
+          </button>
+          <button
+            type="button"
             onClick={() => setShowDeleteConfirm(true)}
-            className="inline-flex items-center justify-center px-6 py-3 text-muted hover:text-warning transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 text-muted hover:text-warning transition-colors no-print"
             style={{ letterSpacing: "0.1em" }}
           >
             削除
@@ -226,13 +234,28 @@ export default function SeriesPreview() {
                 >
                   <MathText text={step.questionText} />
                 </p>
+                {/* 解答欄：印刷では空欄になる */}
                 <p
-                  className="mt-2 text-muted tnum"
+                  className="mt-2 text-muted tnum print-hide-answer"
                   style={{ fontSize: "13px" }}
                 >
                   → {step.unknownLabel}: {step.answer}
                   {step.unit}
                 </p>
+                {/* 印刷時のみ：答え欄の枠 */}
+                <div
+                  className="print-only mt-3"
+                  style={{
+                    borderTop: "1px solid #999",
+                    paddingTop: "8mm",
+                    minHeight: "20mm",
+                  }}
+                  aria-hidden
+                >
+                  <span style={{ fontSize: "11pt", color: "#666" }}>
+                    答え（{step.unknownLabel}）：
+                  </span>
+                </div>
               </li>
             ))}
           </ol>

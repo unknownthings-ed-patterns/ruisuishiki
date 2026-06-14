@@ -23,7 +23,9 @@ export type PatternId =
   /* 数Ⅰ・A の追加（網羅化） */
   | "Q3" | "Q4" | "MM1" | "IT1" | "VAR1"
   /* 数Ⅱ・B の追加（網羅化） */
-  | "A1" | "A2" | "VEC1" | "DIFF1";
+  | "A1" | "A2" | "VEC1" | "DIFF1"
+  /* 数Ⅱ・B の追加2 */
+  | "G1" | "G2" | "EXP1" | "VEC2";
 
 /**
  * 変数の意味的役割。
@@ -787,6 +789,76 @@ const DIFF1: PatternSpec = {
   evaluate: (k) => ({ unknownName: "fprime1", answer: k.a * k.n }),
 };
 
+/* === 数Ⅱ・B の追加 2 === */
+
+/** G1: 等比数列の n 項目 a_n = a × r^(n-1) */
+const G1: PatternSpec = {
+  id: "G1",
+  unit: "algebra_2",
+  naturalLanguage: "等比数列の n 項目",
+  formulaTemplate: "an = a * r^(n-1)",
+  variables: [
+    { name: "a", role: "初項", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "r", role: "公比", unknown: false, domain: { kind: "integer", min: 2, max: 5 } },
+    { name: "n", role: "項数", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "an", role: "n 項目", unknown: true, domain: { kind: "integer", min: 1, max: 10000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "an", answer: k.a * k.r ** (k.n - 1) }),
+};
+
+/** G2: 等比数列の和 S_n = a(r^n - 1)/(r - 1) */
+const G2: PatternSpec = {
+  id: "G2",
+  unit: "algebra_2",
+  naturalLanguage: "等比数列の和",
+  formulaTemplate: "S = a * (r^n - 1) / (r - 1)",
+  variables: [
+    { name: "a", role: "初項", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "r", role: "公比", unknown: false, domain: { kind: "integer", min: 2, max: 5 } },
+    { name: "n", role: "項数", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "S", role: "和", unknown: true, domain: { kind: "integer", min: 1, max: 50000 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "S",
+    answer: (k.a * (k.r ** k.n - 1)) / (k.r - 1),
+  }),
+};
+
+/** EXP1: 指数関数 b^n */
+const EXP1: PatternSpec = {
+  id: "EXP1",
+  unit: "algebra_2",
+  naturalLanguage: "指数の値 b^n",
+  formulaTemplate: "result = b^n",
+  variables: [
+    { name: "b", role: "底", unknown: false, domain: { kind: "integer", min: 2, max: 10 } },
+    { name: "n", role: "指数", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "result", role: "値", unknown: true, domain: { kind: "integer", min: 1, max: 100000 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "result", answer: k.b ** k.n }),
+};
+
+/** VEC2: ベクトルの大きさ |v| = √(a²+b²)（整数結果ピタゴラス数） */
+const VEC2: PatternSpec = {
+  id: "VEC2",
+  unit: "algebra_2",
+  naturalLanguage: "ベクトルの大きさ |v| = √(a²+b²)",
+  formulaTemplate: "|v| = sqrt(a² + b²)",
+  variables: [
+    { name: "a", role: "x 成分", unknown: false, domain: { kind: "integer", min: 0, max: 30 } },
+    { name: "b", role: "y 成分", unknown: false, domain: { kind: "integer", min: 0, max: 30 } },
+    { name: "mag", role: "大きさ", unknown: true, domain: { kind: "integer", min: 0, max: 50 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({
+    unknownName: "mag",
+    answer: Math.sqrt(k.a * k.a + k.b * k.b),
+  }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -799,6 +871,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
+  G1, G2, EXP1, VEC2,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -813,6 +886,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
+  G1, G2, EXP1, VEC2,
 ];
 
 export const CONTEXT_CATEGORIES = [

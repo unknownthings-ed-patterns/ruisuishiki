@@ -132,18 +132,18 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "x が y に変わっただけ。文字の名前は何でもよい。",
-        },
-        {
-          layer: 2,
-          text: "「2つの定数の和」という関係は変わらない。a + b を計算しよう。",
-        },
+        { layer: 1, text: "x が y に変わっただけ。文字の名前は何でもよい。" },
+        { layer: 2, text: "「2つの定数の和」という関係は変わらない。a + b を計算しよう。" },
         { layer: 3, text: "4 + 6 = 10。" },
       ],
       formulaPreview: "4 + 6 = 10",
     },
+    // 6-10：難化（数が大きい・両方負・混合・複合）
+    { id: "step6", position: 6, questionText: "$(x+7)(x+9)$ を展開すると、$x^2 + \\square x + 63$ になります。$\\square$ は？", answer: 16, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "$a + b$ を求めるだけ。" }, { layer: 2, text: "$7 + 9$。" }, { layer: 3, text: "16。" }], formulaPreview: "7 + 9 = 16" },
+    { id: "step7", position: 7, questionText: "$(x-3)(x-5)$ を展開すると、$x^2 + \\square x + 15$ になります。$\\square$ は？", answer: -8, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "両方が負。$a = -3, b = -5$。" }, { layer: 2, text: "$(-3) + (-5)$。" }, { layer: 3, text: "$-8$。" }], formulaPreview: "(-3) + (-5) = -8" },
+    { id: "step8", position: 8, questionText: "$(x-7)(x+3)$ を展開すると、$x^2 + \\square x - 21$ になります。$\\square$ は？", answer: -4, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "$a = -7, b = 3$。" }, { layer: 2, text: "$(-7) + 3$。" }, { layer: 3, text: "$-4$。" }], formulaPreview: "(-7) + 3 = -4" },
+    { id: "step9", position: 9, questionText: "$(x-10)(x-2)$ を展開すると、$x^2 + \\square x + 20$ になります。$\\square$ は？", answer: -12, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "両方が負・数が大きい。" }, { layer: 2, text: "$(-10) + (-2)$。" }, { layer: 3, text: "$-12$。" }], formulaPreview: "(-10) + (-2) = -12" },
+    { id: "step10", position: 10, questionText: "$(a+8)(a-6)$ を展開すると、$a^2 + \\square a - 48$ になります。$\\square$ は？", answer: 2, unit: "", unknownLabel: "a の係数", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "変数記号が $a$。仕組みは同じ。" }, { layer: 2, text: "$8 + (-6)$。" }, { layer: 3, text: "2。" }], formulaPreview: "8 + (-6) = 2" },
   ],
 };
 
@@ -270,18 +270,18 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "x が y に変わっただけ。文字の名前は何でもよい。",
-        },
-        {
-          layer: 2,
-          text: "「2 × 定数」の関係は変わらない。2a を計算しよう。",
-        },
+        { layer: 1, text: "x が y に変わっただけ。" },
+        { layer: 2, text: "$2a$ を計算しよう。" },
         { layer: 3, text: "2 × 5 = 10。" },
       ],
       formulaPreview: "2 × 5 = 10",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$(x+6)^2$ を展開すると、$x^2 + \\square x + 36$ になります。$\\square$ は？", answer: 12, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "$2a$。" }, { layer: 2, text: "$2 \\times 6$。" }, { layer: 3, text: "12。" }], formulaPreview: "2 × 6 = 12" },
+    { id: "step7", position: 7, questionText: "$(x-5)^2$ を展開すると、$x^2 + \\square x + 25$ になります。$\\square$ は？", answer: -10, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "$a = -5$。" }, { layer: 2, text: "$2 \\times (-5)$。" }, { layer: 3, text: "$-10$。" }], formulaPreview: "2 × (-5) = -10" },
+    { id: "step8", position: 8, questionText: "$(x+8)^2$ を展開すると、$x^2 + \\square x + 64$ になります。$\\square$ は？", answer: 16, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "$2 \\times 8$。" }, { layer: 2, text: "16。" }, { layer: 3, text: "16。" }], formulaPreview: "2 × 8 = 16" },
+    { id: "step9", position: 9, questionText: "$(x-10)^2$ を展開すると、$x^2 + \\square x + 100$ になります。$\\square$ は？", answer: -20, unit: "", unknownLabel: "x の係数", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "$a = -10$。" }, { layer: 2, text: "$2 \\times (-10)$。" }, { layer: 3, text: "$-20$。" }], formulaPreview: "2 × (-10) = -20" },
+    { id: "step10", position: 10, questionText: "$(2x+3)^2$ を展開すると、$\\square x^2 + 12x + 9$ になります。$\\square$ は？", answer: 4, unit: "", unknownLabel: "x² の係数", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$(2x)^2 = 4x^2$。" }, { layer: 2, text: "$2 \\times 2 = 4$。" }, { layer: 3, text: "4。" }], formulaPreview: "2² = 4" },
   ],
 };
 
@@ -405,18 +405,18 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "x が y に変わっただけ。文字の名前は何でもよい。",
-        },
-        {
-          layer: 2,
-          text: "「和が真ん中、積が右端」の関係は同じ。和が 7、積が 12。",
-        },
-        { layer: 3, text: "3 + 4 = 7, 3 × 4 = 12。小さい方は 3。" },
+        { layer: 1, text: "x が y に変わっただけ。" },
+        { layer: 2, text: "和 7、積 12。" },
+        { layer: 3, text: "(3, 4)。小さい方は 3。" },
       ],
       formulaPreview: "和 7、積 12 → (3, 4)",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$x^2 + 10x + 21 = (x+a)(x+b)$。小さい方は？", answer: 3, unit: "", unknownLabel: "a と b のうち小さい方", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "和 10、積 21。" }, { layer: 2, text: "3 + 7 = 10、3 × 7 = 21。" }, { layer: 3, text: "3。" }], formulaPreview: "(3, 7)" },
+    { id: "step7", position: 7, questionText: "$x^2 - 7x + 12 = (x+a)(x+b)$。小さい方は？", answer: -4, unit: "", unknownLabel: "a と b のうち小さい方", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "和 -7、積 12。両方負。" }, { layer: 2, text: "(-3) + (-4) = -7。" }, { layer: 3, text: "$-4$。" }], formulaPreview: "(-4, -3)" },
+    { id: "step8", position: 8, questionText: "$x^2 + x - 12 = (x+a)(x+b)$。小さい方は？", answer: -3, unit: "", unknownLabel: "a と b のうち小さい方", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "和 1、積 -12。符号違う。" }, { layer: 2, text: "$(-3) + 4 = 1$、$(-3) \\times 4 = -12$。" }, { layer: 3, text: "$-3$。" }], formulaPreview: "(-3, 4)" },
+    { id: "step9", position: 9, questionText: "$x^2 - 2x - 15 = (x+a)(x+b)$。小さい方は？", answer: -5, unit: "", unknownLabel: "a と b のうち小さい方", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "和 -2、積 -15。" }, { layer: 2, text: "$(-5) + 3 = -2$。" }, { layer: 3, text: "$-5$。" }], formulaPreview: "(-5, 3)" },
+    { id: "step10", position: 10, questionText: "$y^2 - 9y + 20 = (y+a)(y+b)$。小さい方は？", answer: -5, unit: "", unknownLabel: "a と b のうち小さい方", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "変数記号が $y$。和 -9、積 20。" }, { layer: 2, text: "$(-4) + (-5) = -9$。" }, { layer: 3, text: "$-5$。" }], formulaPreview: "(-5, -4)" },
   ],
 };
 
@@ -533,15 +533,18 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "前の問題と同じ仕組み。75 の中の平方因子を見つけよう。",
-        },
-        { layer: 2, text: "75 = 25 × 3。 25 = 5²。" },
-        { layer: 3, text: "√75 = 5√3。a = 5。" },
+        { layer: 1, text: "75 = 25 × 3。" },
+        { layer: 2, text: "$\\sqrt{25} = 5$。" },
+        { layer: 3, text: "a = 5。" },
       ],
-      formulaPreview: "√75 = √(5² × 3) = 5√3",
+      formulaPreview: "√75 = 5√3",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$\\sqrt{98}$ を簡単にすると $a\\sqrt{2}$。$a$ は？", answer: 7, unit: "", unknownLabel: "根号の外", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "98 = 49 × 2。" }, { layer: 2, text: "$\\sqrt{49} = 7$。" }, { layer: 3, text: "7。" }], formulaPreview: "√98 = 7√2" },
+    { id: "step7", position: 7, questionText: "$\\sqrt{48}$ を簡単にすると $a\\sqrt{3}$。$a$ は？", answer: 4, unit: "", unknownLabel: "根号の外", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "48 = 16 × 3。" }, { layer: 2, text: "$\\sqrt{16} = 4$。" }, { layer: 3, text: "4。" }], formulaPreview: "√48 = 4√3" },
+    { id: "step8", position: 8, questionText: "$\\sqrt{200}$ を簡単にすると $a\\sqrt{2}$。$a$ は？", answer: 10, unit: "", unknownLabel: "根号の外", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "200 = 100 × 2。" }, { layer: 2, text: "$\\sqrt{100} = 10$。" }, { layer: 3, text: "10。" }], formulaPreview: "√200 = 10√2" },
+    { id: "step9", position: 9, questionText: "$\\sqrt{180}$ を簡単にすると $a\\sqrt{5}$。$a$ は？", answer: 6, unit: "", unknownLabel: "根号の外", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "180 = 36 × 5。" }, { layer: 2, text: "$\\sqrt{36} = 6$。" }, { layer: 3, text: "6。" }], formulaPreview: "√180 = 6√5" },
+    { id: "step10", position: 10, questionText: "$2\\sqrt{27}$ を簡単にすると $a\\sqrt{3}$。$a$ は？", answer: 6, unit: "", unknownLabel: "根号の外", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$\\sqrt{27} = 3\\sqrt{3}$。" }, { layer: 2, text: "$2 \\times 3 = 6$。" }, { layer: 3, text: "6。" }], formulaPreview: "2·3√3 = 6√3" },
   ],
 };
 
@@ -660,18 +663,18 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "x が y に変わっただけ。やり方は同じ。",
-        },
-        {
-          layer: 2,
-          text: "8 を右辺へ → 4y > 8。両辺を 4 で割る。",
-        },
-        { layer: 3, text: "y > 2。c = 2。" },
+        { layer: 1, text: "x が y に変わっただけ。" },
+        { layer: 2, text: "$4y > 8$。" },
+        { layer: 3, text: "$y > 2$。c = 2。" },
       ],
       formulaPreview: "y > 8 / 4 = 2",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$5x - 10 > 0$ の解 $x > c$ の $c$ は？", answer: 2, unit: "", unknownLabel: "境界値 c", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "$5x > 10$。" }, { layer: 2, text: "両辺 5 で割る。" }, { layer: 3, text: "2。" }], formulaPreview: "c = 10/5 = 2" },
+    { id: "step7", position: 7, questionText: "$3x + 12 > 0$ の解 $x > c$ の $c$ は？", answer: -4, unit: "", unknownLabel: "境界値 c", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "$3x > -12$。" }, { layer: 2, text: "両辺 3 で割る。" }, { layer: 3, text: "$-4$。" }], formulaPreview: "c = -12/3 = -4" },
+    { id: "step8", position: 8, questionText: "$2x + 8 > x + 5$ の解 $x > c$ の $c$ は？", answer: -3, unit: "", unknownLabel: "境界値 c", variationFromPrevious: "plus_alpha", compareWithStepId: "step7", hints: [{ layer: 1, text: "両辺を整理。$2x - x > 5 - 8$。" }, { layer: 2, text: "$x > -3$。" }, { layer: 3, text: "$-3$。" }], formulaPreview: "x > -3" },
+    { id: "step9", position: 9, questionText: "$5x - 1 > 2x + 14$ の解 $x > c$ の $c$ は？", answer: 5, unit: "", unknownLabel: "境界値 c", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "$3x > 15$。" }, { layer: 2, text: "両辺 3 で割る。" }, { layer: 3, text: "5。" }], formulaPreview: "c = 15/3 = 5" },
+    { id: "step10", position: 10, questionText: "$3(y + 2) > 18$ の解 $y > c$ の $c$ は？", answer: 4, unit: "", unknownLabel: "境界値 c", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$3y + 6 > 18$。" }, { layer: 2, text: "$3y > 12$。" }, { layer: 3, text: "4。" }], formulaPreview: "c = 4" },
   ],
 };
 
@@ -770,15 +773,18 @@ export const ALGEBRA_QUAD_SUM_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "$x$ が $y$ に変わっただけ。「解の和は $-b$」は同じ。",
-        },
+        { layer: 1, text: "$y$ に変わっただけ。和は $-b$。" },
         { layer: 2, text: "$b = 9$。" },
         { layer: 3, text: "$-9$。" },
       ],
       formulaPreview: "-(9) = -9",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$x^2 - 10x + 21 = 0$ の解の和は？", answer: 10, unit: "", unknownLabel: "解の和", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "和 = $-b$。" }, { layer: 2, text: "$-(-10)$。" }, { layer: 3, text: "10。" }], formulaPreview: "-(-10) = 10" },
+    { id: "step7", position: 7, questionText: "$x^2 + 11x - 12 = 0$ の解の和は？", answer: -11, unit: "", unknownLabel: "解の和", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "$b = 11$。" }, { layer: 2, text: "$-11$。" }, { layer: 3, text: "$-11$。" }], formulaPreview: "-(11) = -11" },
+    { id: "step8", position: 8, questionText: "$2x^2 + 10x + 8 = 0$ の解の和は？（係数 a で割って正規化）", answer: -5, unit: "", unknownLabel: "解の和", variationFromPrevious: "plus_alpha", compareWithStepId: "step7", hints: [{ layer: 1, text: "両辺を 2 で割る。$x^2 + 5x + 4 = 0$。" }, { layer: 2, text: "和 = $-5$。" }, { layer: 3, text: "$-5$。" }], formulaPreview: "-5/2 × 2 = -5" },
+    { id: "step9", position: 9, questionText: "$3x^2 - 12x + 9 = 0$ の解の和は？", answer: 4, unit: "", unknownLabel: "解の和", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "両辺を 3 で割る。$x^2 - 4x + 3 = 0$。" }, { layer: 2, text: "和 = $-(-4) = 4$。" }, { layer: 3, text: "4。" }], formulaPreview: "4" },
+    { id: "step10", position: 10, questionText: "$y^2 + 6y - 16 = 0$ の解の和は？", answer: -6, unit: "", unknownLabel: "解の和", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$y$ で書いてあるだけ。" }, { layer: 2, text: "$b = 6$。" }, { layer: 3, text: "$-6$。" }], formulaPreview: "-(6) = -6" },
   ],
 };
 
@@ -883,18 +889,18 @@ export const ALGEBRA_NECESSARY_SUFFICIENT_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "「偶数 vs 整数」と同じ構造。「4 の倍数」は「2 の倍数」より強い。",
-        },
-        {
-          layer: 2,
-          text: "$A \\Rightarrow B$ は真。逆は偽（$x=2$ は 2 の倍数だが 4 の倍数でない）。",
-        },
-        { layer: 3, text: "十分のみ。答え 1。" },
+        { layer: 1, text: "「4 の倍数」は「2 の倍数」より強い。" },
+        { layer: 2, text: "$A \\Rightarrow B$ 真、逆は偽。" },
+        { layer: 3, text: "1（十分のみ）。" },
       ],
-      formulaPreview: "A→B 真、B→A 偽 → 十分のみ",
+      formulaPreview: "十分のみ",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$x$ が整数 は $x$ が有理数 の何条件？（1〜4）", answer: 1, unit: "", unknownLabel: "条件の種別", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "整数 ⊂ 有理数。" }, { layer: 2, text: "$A \\Rightarrow B$ 真、逆は偽（$\\frac{1}{2}$ は有理数だが整数でない）。" }, { layer: 3, text: "1。" }], formulaPreview: "十分のみ" },
+    { id: "step7", position: 7, questionText: "$x^2 = 9$ は $x = \\pm 3$ の何条件？（1〜4）", answer: 3, unit: "", unknownLabel: "条件の種別", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "両方が同じことを言っている。" }, { layer: 2, text: "$A \\Leftrightarrow B$。" }, { layer: 3, text: "3（必要十分）。" }], formulaPreview: "必要十分" },
+    { id: "step8", position: 8, questionText: "$x > 0$ は $x \\geq 0$ の何条件？（1〜4）", answer: 1, unit: "", unknownLabel: "条件の種別", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "「0 より大」は「0 以上」より強い。" }, { layer: 2, text: "$A \\Rightarrow B$ 真、逆は偽（$x = 0$ で反例）。" }, { layer: 3, text: "1。" }], formulaPreview: "十分のみ" },
+    { id: "step9", position: 9, questionText: "「$x$ が素数」は「$x$ が奇数」の何条件？（1〜4）", answer: 4, unit: "", unknownLabel: "条件の種別", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "$x = 2$ は素数だが奇数でない（A→B 偽）。" }, { layer: 2, text: "$x = 9$ は奇数だが素数でない（B→A 偽）。" }, { layer: 3, text: "4（どちらでもない）。" }], formulaPreview: "どちらでもない" },
+    { id: "step10", position: 10, questionText: "$|x| = 5$ は $x^2 = 25$ の何条件？（1〜4）", answer: 3, unit: "", unknownLabel: "条件の種別", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$|x| = 5 \\Leftrightarrow x = \\pm 5 \\Leftrightarrow x^2 = 25$。" }, { layer: 2, text: "両方同じ。" }, { layer: 3, text: "3。" }], formulaPreview: "必要十分" },
   ],
 };
 
@@ -990,15 +996,18 @@ export const ALGEBRA_QUAD_VERTEX_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "関数名が $f$ から $g$ に変わっただけ。「頂点 = $-b/2$」は同じ。",
-        },
+        { layer: 1, text: "頂点 = $-b/2$。" },
         { layer: 2, text: "$-2/2$。" },
         { layer: 3, text: "$-1$。" },
       ],
       formulaPreview: "-(2) / 2 = -1",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$f(x) = x^2 - 10x + 7$ の頂点の x 座標は？", answer: 5, unit: "", unknownLabel: "頂点の x 座標", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "$-b/2$。" }, { layer: 2, text: "$10/2$。" }, { layer: 3, text: "5。" }], formulaPreview: "10/2 = 5" },
+    { id: "step7", position: 7, questionText: "$f(x) = x^2 + 12x + 5$ の頂点の x 座標は？", answer: -6, unit: "", unknownLabel: "頂点の x 座標", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "$-12/2$。" }, { layer: 2, text: "$-6$。" }, { layer: 3, text: "$-6$。" }], formulaPreview: "-12/2 = -6" },
+    { id: "step8", position: 8, questionText: "$f(x) = 2x^2 + 8x + 3$ の頂点の x 座標は？（係数 a あり）", answer: -2, unit: "", unknownLabel: "頂点の x 座標", variationFromPrevious: "plus_alpha", compareWithStepId: "step7", hints: [{ layer: 1, text: "$a \\neq 1$ なら頂点 = $-b/(2a)$。" }, { layer: 2, text: "$-8/(2 \\cdot 2) = -8/4$。" }, { layer: 3, text: "$-2$。" }], formulaPreview: "-8/4 = -2" },
+    { id: "step9", position: 9, questionText: "$f(x) = 3x^2 - 18x + 4$ の頂点の x 座標は？", answer: 3, unit: "", unknownLabel: "頂点の x 座標", variationFromPrevious: "same", compareWithStepId: "step8", hints: [{ layer: 1, text: "$-b/(2a) = -(-18)/(2 \\cdot 3)$。" }, { layer: 2, text: "$18/6$。" }, { layer: 3, text: "3。" }], formulaPreview: "18/6 = 3" },
+    { id: "step10", position: 10, questionText: "$h(t) = t^2 - 14t + 50$ の頂点の t 座標は？", answer: 7, unit: "", unknownLabel: "頂点の t 座標", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "変数 $t$、関数名 $h$。仕組み同じ。" }, { layer: 2, text: "$-(-14)/2$。" }, { layer: 3, text: "7。" }], formulaPreview: "14/2 = 7" },
   ],
 };
 
@@ -1239,12 +1248,18 @@ export const ALGEBRA_DISCRIMINANT_SERIES: LearnerSeries = {
       answer: 9, unit: "", unknownLabel: "判別式 D",
       variationFromPrevious: "qualitative", compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "$x$ が $y$ に変わっただけ。$D = b^2 - 4c$。" },
+        { layer: 1, text: "$D = b^2 - 4c$。" },
         { layer: 2, text: "$25 - 16$。" },
         { layer: 3, text: "9。" },
       ],
       formulaPreview: "25 - 16 = 9",
     },
+    // 6-10：難化
+    { id: "step6", position: 6, questionText: "$x^2 + 7x + 10 = 0$ の判別式 $D$ は？", answer: 9, unit: "", unknownLabel: "判別式 D", variationFromPrevious: "same", compareWithStepId: "step5", hints: [{ layer: 1, text: "$49 - 40$。" }, { layer: 2, text: "9。" }, { layer: 3, text: "9。" }], formulaPreview: "49 - 40 = 9" },
+    { id: "step7", position: 7, questionText: "$x^2 - 6x + 5 = 0$ の判別式 $D$ は？", answer: 16, unit: "", unknownLabel: "判別式 D", variationFromPrevious: "same", compareWithStepId: "step6", hints: [{ layer: 1, text: "$36 - 20$。" }, { layer: 2, text: "16。" }, { layer: 3, text: "16。" }], formulaPreview: "36 - 20 = 16" },
+    { id: "step8", position: 8, questionText: "$x^2 + 5x + 7 = 0$ の判別式 $D$ は？", answer: -3, unit: "", unknownLabel: "判別式 D", variationFromPrevious: "same", compareWithStepId: "step7", hints: [{ layer: 1, text: "$25 - 28$。" }, { layer: 2, text: "$-3$。実数解なし。" }, { layer: 3, text: "$-3$。" }], formulaPreview: "25 - 28 = -3" },
+    { id: "step9", position: 9, questionText: "$2x^2 + 4x - 6 = 0$ の判別式 $D = b^2 - 4ac$ は？", answer: 64, unit: "", unknownLabel: "判別式 D", variationFromPrevious: "plus_alpha", compareWithStepId: "step8", hints: [{ layer: 1, text: "$a = 2, b = 4, c = -6$。" }, { layer: 2, text: "$16 - 4 \\cdot 2 \\cdot (-6) = 16 + 48$。" }, { layer: 3, text: "64。" }], formulaPreview: "16 + 48 = 64" },
+    { id: "step10", position: 10, questionText: "$y^2 - 8y + 16 = 0$ の判別式 $D$ は？（重解になるはず）", answer: 0, unit: "", unknownLabel: "判別式 D", variationFromPrevious: "qualitative", compareWithStepId: "step9", hints: [{ layer: 1, text: "$64 - 64$。" }, { layer: 2, text: "0。重解の条件。" }, { layer: 3, text: "0。" }], formulaPreview: "64 - 64 = 0" },
   ],
 };
 

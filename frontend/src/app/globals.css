@@ -117,3 +117,61 @@ h1, h2, h3 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ====================================================================== */
+/* 印刷用スタイル：教師ビューの問題プレビューをプリントに最適化             */
+/* ====================================================================== */
+
+@media print {
+  @page {
+    margin: 15mm;
+    size: A4;
+  }
+  html, body {
+    background: white !important;
+    color: black !important;
+  }
+  /* ヘッダー・ボタン・ナビは印刷しない */
+  nav, .no-print, a[href^="/"]:not(.print-keep), button {
+    display: none !important;
+  }
+  /* 系列タイトルは印刷の見出しに */
+  h1, h2 {
+    color: black !important;
+    page-break-after: avoid;
+  }
+  /* 各問題は1〜2問ごとにキレイにまとまるよう */
+  ol > li {
+    page-break-inside: avoid;
+    border: 1px solid #999 !important;
+    background: white !important;
+    padding: 12mm 10mm !important;
+    margin-bottom: 8mm !important;
+  }
+  /* 答えは印刷時に隠す（解答欄として枠だけ残す） */
+  .print-hide-answer {
+    visibility: hidden;
+  }
+  /* MathText/KaTeX を黒で */
+  .katex {
+    color: black !important;
+  }
+  /* 問題文は読みやすく大きめに */
+  ol p {
+    font-size: 14pt !important;
+    line-height: 1.8 !important;
+    color: black !important;
+  }
+  /* 問題番号やラベルも黒 */
+  span {
+    color: black !important;
+  }
+  /* 印刷時のみ表示 */
+  .print-only {
+    display: block !important;
+  }
+}
+
+.print-only {
+  display: none;
+}

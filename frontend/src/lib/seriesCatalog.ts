@@ -31,8 +31,12 @@ import {
   ALGEBRA2_ARITH_SUM_SERIES,
   ALGEBRA2_DIFF_SERIES,
   ALGEBRA2_DOT_SERIES,
+  ALGEBRA2_EXP_SERIES,
+  ALGEBRA2_GEO_NTH_SERIES,
+  ALGEBRA2_GEO_SUM_SERIES,
   ALGEBRA2_LOG_SERIES,
   ALGEBRA2_TRIG_PERIOD_SERIES,
+  ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
@@ -324,6 +328,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     shortDescription: "ベクトルの内積 — ベクトル",
+  },
+  {
+    series: ALGEBRA2_GEO_NTH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "等比数列の n 項目 — 数列",
+  },
+  {
+    series: ALGEBRA2_GEO_SUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "等比数列の和 — 数列",
+  },
+  {
+    series: ALGEBRA2_EXP_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "指数 b^n — 指数関数",
+  },
+  {
+    series: ALGEBRA2_VEC_MAG_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "ベクトルの大きさ — ベクトル",
   },
   {
     series: ALGEBRA2_DIFF_SERIES,

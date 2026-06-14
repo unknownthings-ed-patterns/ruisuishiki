@@ -1,20 +1,52 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
+  generateSeriesId,
   listTeacherSeries,
+  saveTeacherSeries,
   type TeacherSeriesSummary,
 } from "@/lib/teacherStorage";
+import type { LearnerSeries } from "@/lib/types";
 
 export default function TeachIndex() {
   const [series, setSeries] = useState<TeacherSeriesSummary[]>([]);
   const [hasHydrated, setHasHydrated] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importSuccess, setImportSuccess] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSeries(listTeacherSeries());
     setHasHydrated(true);
   }, []);
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    setImportError(null);
+    setImportSuccess(null);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text) as LearnerSeries;
+      // 最小バリデーション
+      if (!data.id || !Array.isArray(data.steps) || data.steps.length === 0) {
+        throw new Error("series 形式ではないようです（id / steps が必要）");
+      }
+      // 既存と ID が衝突する場合は新しい ID にする
+      const existing = listTeacherSeries().some((s) => s.id === data.id);
+      const importedSeries: LearnerSeries = existing
+        ? { ...data, id: generateSeriesId(), title: data.title + "（インポート）" }
+        : data;
+      saveTeacherSeries(importedSeries);
+      setSeries(listTeacherSeries());
+      setImportSuccess(`「${importedSeries.title}」を読み込みました`);
+      if (fileRef.current) fileRef.current.value = "";
+    } catch (err) {
+      setImportError(err instanceof Error ? err.message : String(err));
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center px-6 py-16">
@@ -69,6 +101,49 @@ export default function TeachIndex() {
           >
             はじめる
           </Link>
+        </section>
+
+        {/* JSON インポート */}
+        <section
+          className="rounded-lg border border-border p-6 flex flex-col gap-4"
+          style={{ background: "var(--surface)" }}
+        >
+          <div className="flex items-baseline justify-between flex-wrap gap-2">
+            <h2
+              className="text-foreground"
+              style={{ fontSize: "13px", letterSpacing: "0.3em" }}
+            >
+              JSON から読み込む
+            </h2>
+            <span
+              className="text-muted"
+              style={{ fontSize: "12px" }}
+            >
+              他の人が作った系列を取り込む
+            </span>
+          </div>
+          <p className="text-muted" style={{ fontSize: "13px", lineHeight: 1.9 }}>
+            系列プレビュー画面で「JSON をダウンロード」して保存した
+            ファイルをここから取り込めます。
+          </p>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/json,.json"
+            onChange={handleFile}
+            className="text-foreground"
+            style={{ fontSize: "13px" }}
+          />
+          {importError && (
+            <p className="text-warning" style={{ fontSize: "13px" }}>
+              ✗ {importError}
+            </p>
+          )}
+          {importSuccess && (
+            <p className="text-success" style={{ fontSize: "13px" }}>
+              ✓ {importSuccess}
+            </p>
+          )}
         </section>
 
         {/* 既存系列リスト */}
