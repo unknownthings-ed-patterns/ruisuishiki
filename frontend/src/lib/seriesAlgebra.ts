@@ -1102,6 +1102,371 @@ export const ALGEBRA_MEAN_SERIES: LearnerSeries = {
   ],
 };
 
+/** Q3: x²+bx+c=0 の解の積（解と係数の関係） */
+export const ALGEBRA_QUAD_PRODUCT_SERIES: LearnerSeries = {
+  id: "algebra_quad_prod_01",
+  title: "解と係数の関係（積）",
+  subtitle:
+    "$x^2 + bx + c = 0$ の2つの解の積を求める5問。「積は c」の発見。",
+  patternId: "Q3",
+  unit: "algebra_1",
+  revelationLabel: "x² + bx + c = 0 の解の積は、c（解と係数の関係）",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "$x^2 + 5x + 6 = 0$ の2つの解の積はいくつでしょう？",
+      answer: 6, unit: "", unknownLabel: "解の積",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "因数分解 $(x+2)(x+3) = 0$ より解は $-2, -3$。" },
+        { layer: 2, text: "積は $(-2) \\times (-3) = 6$。" },
+        { layer: 3, text: "解と係数の関係：積は $c = 6$。" },
+      ],
+      formulaPreview: "c = 6",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "$x^2 + 7x + 12 = 0$ の2つの解の積はいくつでしょう？",
+      answer: 12, unit: "", unknownLabel: "解の積",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。積は $c$。" },
+        { layer: 2, text: "$c = 12$。" },
+        { layer: 3, text: "12。" },
+      ],
+      formulaPreview: "c = 12",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "$x^2 - 5x + 6 = 0$ の2つの解の積はいくつでしょう？",
+      answer: 6, unit: "", unknownLabel: "解の積",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$c = 6$。" },
+        { layer: 2, text: "解は 2, 3。積は 6。" },
+        { layer: 3, text: "6。" },
+      ],
+      formulaPreview: "c = 6",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "$x^2 + 3x - 10 = 0$ の2つの解の積はいくつでしょう？",
+      answer: -10, unit: "", unknownLabel: "解の積",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$c$ が負。積も負。" },
+        { layer: 2, text: "$c = -10$。" },
+        { layer: 3, text: "$-10$。" },
+      ],
+      formulaPreview: "c = -10",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "$y^2 + 9y + 20 = 0$ の2つの解の積はいくつでしょう？",
+      answer: 20, unit: "", unknownLabel: "解の積",
+      variationFromPrevious: "qualitative", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$x$ が $y$ に変わっただけ。積は $c$。" },
+        { layer: 2, text: "$c = 20$。" },
+        { layer: 3, text: "20。" },
+      ],
+      formulaPreview: "c = 20",
+    },
+  ],
+};
+
+/** Q4: 判別式 D = b² - 4c (a=1) */
+export const ALGEBRA_DISCRIMINANT_SERIES: LearnerSeries = {
+  id: "algebra_disc_01",
+  title: "判別式",
+  subtitle:
+    "$x^2 + bx + c = 0$ の判別式 $D = b^2 - 4c$ を求める5問。実数解の数を見分ける鍵。",
+  patternId: "Q4",
+  unit: "algebra_1",
+  revelationLabel: "D = b² - 4c（a=1のとき）。D の符号で実数解の個数が決まる",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "$x^2 + 4x + 3 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: 4, unit: "", unknownLabel: "判別式 D",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "公式：$D = b^2 - 4c$。" },
+        { layer: 2, text: "$4^2 - 4 \\times 3 = 16 - 12$。" },
+        { layer: 3, text: "4。" },
+      ],
+      formulaPreview: "16 - 12 = 4",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "$x^2 + 6x + 5 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: 16, unit: "", unknownLabel: "判別式 D",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "公式は同じ。" },
+        { layer: 2, text: "$36 - 20$。" },
+        { layer: 3, text: "16。" },
+      ],
+      formulaPreview: "36 - 20 = 16",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "$x^2 - 4x + 4 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: 0, unit: "", unknownLabel: "判別式 D",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$b = -4$ なので $b^2 = 16$。" },
+        { layer: 2, text: "$16 - 16$。" },
+        { layer: 3, text: "0（重解）。" },
+      ],
+      formulaPreview: "16 - 16 = 0",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "$x^2 + 2x + 3 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: -8, unit: "", unknownLabel: "判別式 D",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$4 - 12$。負になることもある。" },
+        { layer: 2, text: "$-8$（実数解なし）。" },
+        { layer: 3, text: "$-8$。" },
+      ],
+      formulaPreview: "4 - 12 = -8",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "$y^2 + 5y + 4 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: 9, unit: "", unknownLabel: "判別式 D",
+      variationFromPrevious: "qualitative", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$x$ が $y$ に変わっただけ。$D = b^2 - 4c$。" },
+        { layer: 2, text: "$25 - 16$。" },
+        { layer: 3, text: "9。" },
+      ],
+      formulaPreview: "25 - 16 = 9",
+    },
+  ],
+};
+
+/** MM1: 順列 P(n, 2) = n(n-1) */
+export const ALGEBRA_PERMUTATION_SERIES: LearnerSeries = {
+  id: "algebra_perm_01",
+  title: "順列 P(n, 2)",
+  subtitle:
+    "n 人から 2 人を「順番に並べる」場合の数を求める5問。組合せとの違いを体感。",
+  patternId: "MM1",
+  unit: "algebra_1",
+  revelationLabel: "P(n, 2) = n × (n − 1)（並べる：順序あり）",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "3 人から 2 人を選んで順番に並べる方法は何通りでしょう？",
+      answer: 6, unit: "通り", unknownLabel: "順列の数",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "1 番目に 3 通り、2 番目に 2 通り。" },
+        { layer: 2, text: "$3 \\times 2$。" },
+        { layer: 3, text: "6 通り。" },
+      ],
+      formulaPreview: "3 × 2 = 6",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "4 人から 2 人を選んで順番に並べる方法は何通りでしょう？",
+      answer: 12, unit: "通り", unknownLabel: "順列の数",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ仕組み。$n(n-1)$。" },
+        { layer: 2, text: "$4 \\times 3$。" },
+        { layer: 3, text: "12 通り。" },
+      ],
+      formulaPreview: "4 × 3 = 12",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "5 人から 2 人を選んで順番に並べる方法は何通りでしょう？",
+      answer: 20, unit: "通り", unknownLabel: "順列の数",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$5 \\times 4$。" },
+        { layer: 2, text: "20。" },
+        { layer: 3, text: "20 通り。" },
+      ],
+      formulaPreview: "5 × 4 = 20",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "6 人から 2 人を選んで順番に並べる方法は何通りでしょう？",
+      answer: 30, unit: "通り", unknownLabel: "順列の数",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$6 \\times 5$。" },
+        { layer: 2, text: "30。" },
+        { layer: 3, text: "30 通り。" },
+      ],
+      formulaPreview: "6 × 5 = 30",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "クラス 8 人から「リレー第1走者と第2走者」を決める方法は何通りでしょう？",
+      answer: 56, unit: "通り", unknownLabel: "順列の数",
+      variationFromPrevious: "qualitative", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "走者の順番が決まっているので順列。$n(n-1)$。" },
+        { layer: 2, text: "$8 \\times 7$。" },
+        { layer: 3, text: "56 通り。" },
+      ],
+      formulaPreview: "8 × 7 = 56",
+    },
+  ],
+};
+
+/** IT1: 約数の個数 */
+export const ALGEBRA_DIVISOR_COUNT_SERIES: LearnerSeries = {
+  id: "algebra_divisor_01",
+  title: "約数の個数",
+  subtitle:
+    "ある整数の約数の個数を求める5問。素因数分解の指数+1の積で出る。",
+  patternId: "IT1",
+  unit: "algebra_1",
+  revelationLabel: "n = p^a × q^b なら、約数の個数は (a+1)(b+1)",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "12 の約数は何個あるでしょう？",
+      answer: 6, unit: "個", unknownLabel: "約数の個数",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "$12 = 2^2 \\times 3$。指数+1 の積で求まる。" },
+        { layer: 2, text: "$(2+1)(1+1) = 3 \\times 2$。" },
+        { layer: 3, text: "6 個（1, 2, 3, 4, 6, 12）。" },
+      ],
+      formulaPreview: "(2+1)(1+1) = 6",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "18 の約数は何個あるでしょう？",
+      answer: 6, unit: "個", unknownLabel: "約数の個数",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "$18 = 2 \\times 3^2$。" },
+        { layer: 2, text: "$(1+1)(2+1) = 2 \\times 3$。" },
+        { layer: 3, text: "6 個（1, 2, 3, 6, 9, 18）。" },
+      ],
+      formulaPreview: "(1+1)(2+1) = 6",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "24 の約数は何個あるでしょう？",
+      answer: 8, unit: "個", unknownLabel: "約数の個数",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$24 = 2^3 \\times 3$。" },
+        { layer: 2, text: "$(3+1)(1+1) = 4 \\times 2$。" },
+        { layer: 3, text: "8 個。" },
+      ],
+      formulaPreview: "(3+1)(1+1) = 8",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "36 の約数は何個あるでしょう？",
+      answer: 9, unit: "個", unknownLabel: "約数の個数",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$36 = 2^2 \\times 3^2$。" },
+        { layer: 2, text: "$(2+1)(2+1)$。" },
+        { layer: 3, text: "9 個。" },
+      ],
+      formulaPreview: "(2+1)(2+1) = 9",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "60 の約数は何個あるでしょう？",
+      answer: 12, unit: "個", unknownLabel: "約数の個数",
+      variationFromPrevious: "qualitative", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$60 = 2^2 \\times 3 \\times 5$。素因数が 3 つ。" },
+        { layer: 2, text: "$(2+1)(1+1)(1+1) = 3 \\times 2 \\times 2$。" },
+        { layer: 3, text: "12 個。" },
+      ],
+      formulaPreview: "(2+1)(1+1)(1+1) = 12",
+    },
+  ],
+};
+
+/** VAR1: 5つの数の分散 */
+export const ALGEBRA_VARIANCE_SERIES: LearnerSeries = {
+  id: "algebra_variance_01",
+  title: "分散の入り口",
+  subtitle:
+    "5つの数の分散を求める5問。「平均からの離れ方の2乗を平均したもの」。",
+  patternId: "VAR1",
+  unit: "algebra_1",
+  revelationLabel: "分散 = (各データ - 平均)² の平均",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "5つの数 1, 2, 3, 4, 5 の分散はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "分散",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "平均は 3。偏差は -2, -1, 0, 1, 2。" },
+        { layer: 2, text: "偏差²は 4, 1, 0, 1, 4。和は 10。" },
+        { layer: 3, text: "$10 / 5 = 2$。" },
+      ],
+      formulaPreview: "10 / 5 = 2",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "5つの数 0, 1, 2, 3, 4 の分散はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "分散",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "平均 2。偏差 -2, -1, 0, 1, 2。" },
+        { layer: 2, text: "偏差² 4, 1, 0, 1, 4 → 和 10。" },
+        { layer: 3, text: "$10 / 5 = 2$。" },
+      ],
+      formulaPreview: "10 / 5 = 2",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "5つの数 2, 4, 6, 8, 10 の分散はいくつでしょう？",
+      answer: 8, unit: "", unknownLabel: "分散",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "平均 6。偏差 -4, -2, 0, 2, 4。" },
+        { layer: 2, text: "偏差² 16, 4, 0, 4, 16 → 和 40。" },
+        { layer: 3, text: "$40 / 5 = 8$。" },
+      ],
+      formulaPreview: "40 / 5 = 8",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "5つの数 -2, -1, 0, 1, 2 の分散はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "分散",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "平均 0。偏差はそのまま -2, -1, 0, 1, 2。" },
+        { layer: 2, text: "偏差² 4, 1, 0, 1, 4 → 和 10。" },
+        { layer: 3, text: "$10 / 5 = 2$。" },
+      ],
+      formulaPreview: "10 / 5 = 2",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "5 人のテスト点数 60, 70, 80, 90, 100 の分散はいくつでしょう？",
+      answer: 200, unit: "", unknownLabel: "分散",
+      variationFromPrevious: "qualitative", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "平均 80。偏差 -20, -10, 0, 10, 20。" },
+        { layer: 2, text: "偏差² 400, 100, 0, 100, 400 → 和 1000。" },
+        { layer: 3, text: "$1000 / 5 = 200$。" },
+      ],
+      formulaPreview: "1000 / 5 = 200",
+    },
+  ],
+};
+
 /** 数学Ⅰ・A の全系列リスト（将来拡張）。 */
 export const ALGEBRA_1_SERIES_LIST: LearnerSeries[] = [
   ALGEBRA_EXPANSION_AB_SERIES,
@@ -1110,7 +1475,12 @@ export const ALGEBRA_1_SERIES_LIST: LearnerSeries[] = [
   ALGEBRA_SQRT_SIMPLIFY_SERIES,
   ALGEBRA_LINEAR_INEQ_SERIES,
   ALGEBRA_QUAD_SUM_SERIES,
+  ALGEBRA_QUAD_PRODUCT_SERIES,
+  ALGEBRA_DISCRIMINANT_SERIES,
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
   ALGEBRA_QUAD_VERTEX_SERIES,
   ALGEBRA_MEAN_SERIES,
+  ALGEBRA_VARIANCE_SERIES,
+  ALGEBRA_PERMUTATION_SERIES,
+  ALGEBRA_DIVISOR_COUNT_SERIES,
 ];

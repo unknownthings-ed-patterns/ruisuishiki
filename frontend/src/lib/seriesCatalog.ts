@@ -10,15 +10,20 @@
 
 import {
   ALGEBRA_1_SERIES_LIST,
+  ALGEBRA_DISCRIMINANT_SERIES,
+  ALGEBRA_DIVISOR_COUNT_SERIES,
   ALGEBRA_EXPANSION_AB_SERIES,
   ALGEBRA_EXPANSION_SQ_SERIES,
   ALGEBRA_FACTORING_SERIES,
   ALGEBRA_LINEAR_INEQ_SERIES,
   ALGEBRA_MEAN_SERIES,
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
+  ALGEBRA_PERMUTATION_SERIES,
+  ALGEBRA_QUAD_PRODUCT_SERIES,
   ALGEBRA_QUAD_SUM_SERIES,
   ALGEBRA_QUAD_VERTEX_SERIES,
   ALGEBRA_SQRT_SIMPLIFY_SERIES,
+  ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
   ALGEBRA_2_SERIES_LIST,
@@ -216,7 +221,19 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     series: ALGEBRA_QUAD_SUM_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "解と係数の関係 — 2次方程式",
+    shortDescription: "解と係数の関係（和） — 2次方程式",
+  },
+  {
+    series: ALGEBRA_QUAD_PRODUCT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "解と係数の関係（積） — 2次方程式",
+  },
+  {
+    series: ALGEBRA_DISCRIMINANT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "判別式 D = b²−4c — 2次方程式",
   },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
@@ -235,6 +252,24 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     shortDescription: "5つの数の平均 — データ分析",
+  },
+  {
+    series: ALGEBRA_VARIANCE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "分散の入り口 — データ分析",
+  },
+  {
+    series: ALGEBRA_PERMUTATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "順列 P(n, 2) — 場合の数",
+  },
+  {
+    series: ALGEBRA_DIVISOR_COUNT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "約数の個数 — 整数の性質",
   },
   /* 中学校数学 */
   {

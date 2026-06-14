@@ -19,7 +19,9 @@ export type PatternId =
   /* 東京書籍5年生（年度通し復習＋予習） */
   | "EL1" | "EL2" | "EL3" | "EL4" | "EL5"
   | "EL6" | "EL7" | "EL8" | "EL9" | "EL10"
-  | "EL11" | "EL12" | "EL13" | "EL14";
+  | "EL11" | "EL12" | "EL13" | "EL14"
+  /* 数Ⅰ・A の追加（網羅化） */
+  | "Q3" | "Q4" | "MM1" | "IT1" | "VAR1";
 
 /**
  * 変数の意味的役割。
@@ -625,6 +627,98 @@ const EL14: PatternSpec = {
   evaluate: (k) => ({ unknownName: "S", answer: ((k.a + k.b) * k.h) / 2 }),
 };
 
+/* === 数Ⅰ・A の追加 === */
+
+/** Q3: x²+bx+c=0 の解の積 = c */
+const Q3: PatternSpec = {
+  id: "Q3",
+  unit: "algebra_1",
+  naturalLanguage: "x²+bx+c=0 の解の積（解と係数の関係）",
+  formulaTemplate: "productRoots = c",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "productRoots", role: "解の積", unknown: true, domain: { kind: "integer", min: -50, max: 50 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "productRoots", answer: k.c }),
+};
+
+/** Q4: 2次方程式 x²+bx+c=0 の判別式 D = b²-4c (a=1) */
+const Q4: PatternSpec = {
+  id: "Q4",
+  unit: "algebra_1",
+  naturalLanguage: "x²+bx+c=0 の判別式 D = b²-4c",
+  formulaTemplate: "D = b² - 4c",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "D", role: "判別式の値", unknown: true, domain: { kind: "integer", min: -100, max: 200 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "D", answer: k.b * k.b - 4 * k.c }),
+};
+
+/** MM1: 順列 P(n, 2) = n(n-1) */
+const MM1: PatternSpec = {
+  id: "MM1",
+  unit: "algebra_1",
+  naturalLanguage: "順列 P(n, 2) = n(n-1)（並べる）",
+  formulaTemplate: "P = n * (n - 1)",
+  variables: [
+    { name: "n", role: "全体", unknown: false, domain: { kind: "integer", min: 2, max: 20 } },
+    { name: "P", role: "順列の総数", unknown: true, domain: { kind: "integer", min: 2, max: 400 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "P", answer: k.n * (k.n - 1) }),
+};
+
+/** IT1: 約数の個数 */
+const IT1: PatternSpec = {
+  id: "IT1",
+  unit: "algebra_1",
+  naturalLanguage: "整数の約数の個数",
+  formulaTemplate: "count = number of divisors of n",
+  variables: [
+    { name: "n", role: "整数", unknown: false, domain: { kind: "integer", min: 1, max: 1000 } },
+    { name: "count", role: "約数の個数", unknown: true, domain: { kind: "integer", min: 1, max: 50 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => {
+    let count = 0;
+    for (let i = 1; i * i <= k.n; i++) {
+      if (k.n % i === 0) {
+        count++;
+        if (i * i !== k.n) count++;
+      }
+    }
+    return { unknownName: "count", answer: count };
+  },
+};
+
+/** VAR1: 5つの数の分散 */
+const VAR1: PatternSpec = {
+  id: "VAR1",
+  unit: "algebra_1",
+  naturalLanguage: "5つの数の分散（偏差²の平均）",
+  formulaTemplate: "var = mean((xᵢ - mean)²)",
+  variables: [
+    { name: "a", role: "1番目", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "b", role: "2番目", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "c", role: "3番目", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "d", role: "4番目", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "e", role: "5番目", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "variance", role: "分散", unknown: true, domain: { kind: "integer", min: 0, max: 2500 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => {
+    const values = [k.a, k.b, k.c, k.d, k.e];
+    const m = values.reduce((s, v) => s + v, 0) / 5;
+    const sqSum = values.reduce((s, v) => s + (v - m) * (v - m), 0);
+    return { unknownName: "variance", answer: sqSum / 5 };
+  },
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -635,6 +729,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   EL1, EL2, EL3, EL4, EL5,
   EL6, EL7, EL8, EL9, EL10,
   EL11, EL12, EL13, EL14,
+  Q3, Q4, MM1, IT1, VAR1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -647,6 +742,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   EL1, EL2, EL3, EL4, EL5,
   EL6, EL7, EL8, EL9, EL10,
   EL11, EL12, EL13, EL14,
+  Q3, Q4, MM1, IT1, VAR1,
 ];
 
 export const CONTEXT_CATEGORIES = [
