@@ -22,6 +22,23 @@ export const ADV_QUAD_MIN_SERIES: LearnerSeries = {
   patternId: "VV1",
   unit: "advanced",
   revelationLabel: "最小値 = c − b²/4（頂点の y 座標）",
+  derivation: `$f(x) = x^2 + bx + c$ の最小値が $c - \\dfrac{b^2}{4}$ になるのは、平方完成という変形で見えてきます。
+
+$x^2 + bx$ の部分に、$\\left(\\dfrac{b}{2}\\right)^2$ を足して引きます（足したぶんを取り戻すので、式の値は変わりません）。
+
+$$f(x) = x^2 + bx + \\left(\\dfrac{b}{2}\\right)^2 - \\left(\\dfrac{b}{2}\\right)^2 + c$$
+
+最初の3項は $\\left(x + \\dfrac{b}{2}\\right)^2$ にまとまります。
+
+$$f(x) = \\left(x + \\dfrac{b}{2}\\right)^2 + \\left(c - \\dfrac{b^2}{4}\\right)$$
+
+ここで $\\left(x + \\dfrac{b}{2}\\right)^2$ は二乗なので、どんな $x$ でも 0 以上です。
+だから $f(x)$ の値は、その二乗の部分が 0 のときに最も小さくなります。
+そのときの $x$ は $x = -\\dfrac{b}{2}$（頂点の x 座標）。残った部分が答えです。
+
+$$\\min f(x) = c - \\dfrac{b^2}{4}$$
+
+「最小値 = $c - b^2/4$」という公式は、平方完成の **残り** だったのです。だから問題によって $b$ が偶数だと割り算がきれいで、答えが整数になります。`,
   steps: [
     {
       id: "step1", position: 1,

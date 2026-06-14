@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { MathText } from "@/components/Math";
+import { MathBody, MathText } from "@/components/Math";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
 import { findStaticSeries } from "@/lib/seriesCatalog";
 import {
@@ -204,36 +204,79 @@ export default function Play() {
   // 完了画面
   if (status === "completed") {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center px-6 py-24">
-        <div className="w-full max-w-2xl flex flex-col items-center text-center gap-10">
+      <main className="flex min-h-screen flex-col items-center px-6 py-16">
+        <div className="w-full max-w-2xl flex flex-col items-center gap-10">
           <h1
-            className="font-serif text-foreground"
+            className="font-serif text-foreground text-center"
             style={{ fontSize: "clamp(32px, 4vw, 48px)", letterSpacing: "0.08em" }}
           >
             おわり
           </h1>
-          <p className="text-muted" style={{ fontSize: "16px", lineHeight: 2 }}>
+          <p
+            className="text-muted text-center"
+            style={{ fontSize: "16px", lineHeight: 2 }}
+          >
             {totalSteps} 問すべて解けました。
             <br />
             気づいたことはありましたか？
           </p>
+
+          {/* 公式の景色（系列に derivation がある時のみ） */}
+          {series.derivation && (
+            <details
+              className="w-full rounded-lg border border-border p-6 sm:p-8"
+              style={{
+                background: "var(--surface)",
+              }}
+            >
+              <summary
+                className="cursor-pointer font-serif text-foreground"
+                style={{
+                  fontSize: "16px",
+                  letterSpacing: "0.08em",
+                  listStyle: "none",
+                }}
+              >
+                <span className="text-accent mr-2">▸</span>
+                公式の景色 — この公式はどこから？
+              </summary>
+              <div
+                className="mt-6 text-foreground/85"
+                style={{ fontSize: "15px" }}
+              >
+                <MathBody text={series.derivation} />
+              </div>
+            </details>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Link
-              href="/learn/play/?fresh=1"
+              href={`/learn/play/?seriesId=${series.id}&fresh=1`}
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
               style={{ letterSpacing: "0.2em" }}
             >
               もう一度
             </Link>
             <Link
-              href="/"
+              href="/learn/"
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
               style={{ letterSpacing: "0.2em" }}
             >
-              ホームへ
+              系列カタログ
             </Link>
           </div>
         </div>
+
+        <style jsx global>{`
+          details[open] summary span:first-of-type {
+            display: inline-block;
+            transform: rotate(90deg);
+          }
+          details summary span:first-of-type {
+            display: inline-block;
+            transition: transform 0.2s var(--ease-smooth);
+          }
+        `}</style>
       </main>
     );
   }

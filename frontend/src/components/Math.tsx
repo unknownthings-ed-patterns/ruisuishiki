@@ -1,8 +1,8 @@
 "use client";
 
 import "katex/dist/katex.min.css";
-import type React from "react";
-import { InlineMath } from "react-katex";
+import React from "react";
+import { BlockMath, InlineMath } from "react-katex";
 
 /**
  * 問題文中の `$...$` を KaTeX でインライン描画する。
@@ -31,4 +31,45 @@ export function MathText({ text }: { text: string }) {
     parts.push(text.slice(lastIndex));
   }
   return <>{parts}</>;
+}
+
+/**
+ * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
+ *
+ * 「公式の景色」のような導出説明用：
+ * - 段落は空行で区切る
+ * - $$...$$ だけの行は BlockMath（中央寄せのディスプレイ数式）
+ * - 段落内の $...$ は InlineMath
+ */
+export function MathBody({ text }: { text: string }) {
+  // 段落分割（空行区切り）
+  const paragraphs = text.split(/\n\s*\n/);
+  return (
+    <>
+      {paragraphs.map((p, i) => {
+        const trimmed = p.trim();
+        // $$...$$ だけの段落は BlockMath
+        const blockMatch = trimmed.match(/^\$\$([\s\S]+)\$\$$/);
+        if (blockMatch) {
+          return (
+            <div key={i} className="my-4">
+              <BlockMath math={blockMatch[1].trim()} />
+            </div>
+          );
+        }
+        // 通常段落：改行を <br> として MathText で処理
+        const lines = trimmed.split("\n");
+        return (
+          <p key={i} className="my-3" style={{ lineHeight: 2 }}>
+            {lines.map((line, j) => (
+              <React.Fragment key={j}>
+                {j > 0 && <br />}
+                <MathText text={line} />
+              </React.Fragment>
+            ))}
+          </p>
+        );
+      })}
+    </>
+  );
 }
