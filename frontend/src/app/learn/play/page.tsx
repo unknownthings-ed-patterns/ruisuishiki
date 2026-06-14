@@ -91,6 +91,31 @@ export default function Play() {
     setStatus((current) => (current === "completed" ? current : "answering"));
   }, [stepIndex]);
 
+  // 正答時に Enter キーで「次の問題へ」を押せるようにする
+  useEffect(() => {
+    if (status !== "correct") return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Enter") return;
+      // テキスト入力エリアにフォーカスがある場合は除外（IME変換確定の Enter を奪わない）
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+      handleNext();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // handleNext は useCallback 化していないが stepIndex/isLast に依存する
+    // status と isLast の変化に追随できればよい
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, isLast]);
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     // 正答後は再評価しない（次へボタンで進む）
