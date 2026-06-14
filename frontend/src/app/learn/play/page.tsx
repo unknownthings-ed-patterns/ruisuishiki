@@ -17,21 +17,41 @@ import type { LearnerSeries, LearnerStep } from "@/lib/types";
 type Status = "answering" | "correct" | "incorrect" | "completed";
 
 /**
+ * 入力文字列の全角を半角に正規化する。
+ * 日本語入力モードのまま答えても自然に通るように。
+ *
+ * 対応：
+ * - 全角数字 ０１２３４５６７８９ → 半角 0123456789
+ * - 全角ピリオド／句点 ． 。 → 半角 .
+ * - 全角コンマ／読点 ， 、 → 半角 ,
+ * - 全角スラッシュ ／ → 半角 /
+ * - 全角マイナス／長音／ダッシュ ー − – — → 半角 -
+ * - 全角プラス ＋ → 半角 +
+ */
+function normalizeInput(input: string): string {
+  return input
+    .replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+    .replace(/[．。]/g, ".")
+    .replace(/[，、]/g, ",")
+    .replace(/／/g, "/")
+    .replace(/[ー−–—―]/g, "-")
+    .replace(/＋/g, "+");
+}
+
+/**
  * 学習者の入力を数値として解釈する。
  *
  * 受け付ける形式：
- * - 整数：「5」「-3」
- * - 小数：「0.5」「-1.25」
- * - 分数：「1/2」「-3/4」「6/4」（約分前でも比較は数値で）
+ * - 整数：「5」「-3」「１２３」（全角も OK）
+ * - 小数：「0.5」「-1.25」「０．５」
+ * - 分数：「1/2」「-3/4」「６／４」「6/4」（約分前でも比較は数値で）
  *
- * 半角・全角のスペースとカンマは無視。全角スラッシュ「／」も
- * 半角「/」と同じく分数の区切りとして扱う。
- *
+ * 半角・全角のスペースとカンマは無視。
  * 不正な入力は null を返す（再評価しない）。
  */
 function parseAnswer(input: string): number | null {
-  // 空白とカンマを除去、全角スラッシュを半角に
-  const cleaned = input.replace(/[,\s]/g, "").replace(/／/g, "/");
+  // 全角→半角正規化、空白とカンマを除去
+  const cleaned = normalizeInput(input).replace(/[,\s]/g, "");
   if (cleaned === "") return null;
 
   // 分数形式：a/b（a, b はそれぞれ整数 or 小数で、符号も許容）
