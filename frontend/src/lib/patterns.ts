@@ -9,7 +9,9 @@
  * フロントエンドでも文型を保持する。
  */
 
-export type PatternId = "P1" | "P2" | "P3" | "P4" | "P5" | "E1";
+export type PatternId =
+  | "P1" | "P2" | "P3" | "P4" | "P5"
+  | "E1" | "E2" | "F1" | "R1" | "I1";
 
 /**
  * 変数の意味的役割。
@@ -140,16 +142,106 @@ const E1: PatternSpec = {
   evaluate: (k) => ({ unknownName: "xCoef", answer: k.a + k.b }),
 };
 
-export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
-  P1,
-  P2,
-  P3,
-  P4,
-  P5,
-  E1,
+/**
+ * E2: 平方の展開（(x+a)² を展開した時の x の係数）
+ *
+ * 文型: (x+a)² = x² + 2ax + a²
+ * 未知数: x の係数 = 2a
+ *
+ * E1（a+b の和）から E2（2a の倍）への移行で、
+ * 「文型が違えば解式も変わる」を体感する。
+ * 同時に「2a = a + a」と気づけば、これは E1 の特殊形である
+ * という統合的な見方も育つ。
+ */
+const E2: PatternSpec = {
+  id: "E2",
+  unit: "algebra_1",
+  naturalLanguage: "(x+a)² の展開で x の係数を求める",
+  formulaTemplate: "xCoef = 2 * a",
+  variables: [
+    { name: "a", role: "定数", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "xCoef", role: "xの係数", unknown: true, domain: { kind: "integer", min: -20, max: 20 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "xCoef", answer: 2 * k.a }),
 };
 
-export const PATTERN_LIST: PatternSpec[] = [P1, P2, P3, P4, P5, E1];
+/**
+ * F1: 因数分解（x² + Cx + D を (x+a)(x+b) に。a と b のうち小さい方を求める）
+ *
+ * E1 の「逆オペレータ」——E1 では (x+a)(x+b) から x の係数 a+b を求めたが、
+ * F1 では x の係数（と定数項）から a, b を逆算する。
+ * 推理式の「逆」変化オペレータの実装例。
+ *
+ * 文型: x² + Cx + D, where C = a+b, D = ab
+ * 未知数: min(a, b)
+ */
+const F1: PatternSpec = {
+  id: "F1",
+  unit: "algebra_1",
+  naturalLanguage: "x² + Cx + D を (x+a)(x+b) に因数分解",
+  formulaTemplate: "minAB = min(a, b)",
+  variables: [
+    { name: "a", role: "因数（小）", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "b", role: "因数（大）", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "minAB", role: "小さい方", unknown: true, domain: { kind: "integer", min: -10, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "minAB", answer: Math.min(k.a, k.b) }),
+};
+
+/**
+ * R1: 平方根の簡単化（√n を a√m に。n = a²×m, m は平方因子を持たない）
+ *
+ * 文型: √(a²×m) = a√m
+ * 未知数: a（根号の外に出る数）
+ */
+const R1: PatternSpec = {
+  id: "R1",
+  unit: "algebra_1",
+  naturalLanguage: "√n を a√m の形に簡単化（n = a²×m）",
+  formulaTemplate: "a = √(largestSquareFactor)",
+  variables: [
+    { name: "a", role: "根号の外", unknown: false, domain: { kind: "integer", min: 1, max: 20, step: 1 } },
+    { name: "m", role: "根号の中", unknown: false, domain: { kind: "integer", min: 2, max: 20, step: 1 } },
+    { name: "outside", role: "答え", unknown: true, domain: { kind: "integer", min: 1, max: 20 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "outside", answer: k.a }),
+};
+
+/**
+ * I1: 1次不等式（ax + b > 0 を x > c に変形して c を求める）
+ *
+ * 文型: ax + b > 0 → x > -b/a（ただし a > 0、c が整数になる場合のみ）
+ * 未知数: c = -b/a
+ *
+ * MVP では a > 0 かつ c が整数のケースのみ扱う。
+ * 将来 a < 0（不等号反転）に拡張可能。
+ */
+const I1: PatternSpec = {
+  id: "I1",
+  unit: "algebra_1",
+  naturalLanguage: "ax + b > 0 の解 x > c から c を求める（a>0, c整数）",
+  formulaTemplate: "c = -b / a",
+  variables: [
+    { name: "a", role: "x の係数", unknown: false, domain: { kind: "integer", min: 1, max: 10, step: 1 } },
+    { name: "b", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50, step: 1 } },
+    { name: "c", role: "解の境界値", unknown: true, domain: { kind: "integer", min: -50, max: 50 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "c", answer: -k.b / k.a }),
+};
+
+export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
+  P1, P2, P3, P4, P5,
+  E1, E2, F1, R1, I1,
+};
+
+export const PATTERN_LIST: PatternSpec[] = [
+  P1, P2, P3, P4, P5,
+  E1, E2, F1, R1, I1,
+];
 
 export const CONTEXT_CATEGORIES = [
   { id: "shopping", label: "買い物" },

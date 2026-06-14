@@ -11,6 +11,10 @@
 import {
   ALGEBRA_1_SERIES_LIST,
   ALGEBRA_EXPANSION_AB_SERIES,
+  ALGEBRA_EXPANSION_SQ_SERIES,
+  ALGEBRA_FACTORING_SERIES,
+  ALGEBRA_LINEAR_INEQ_SERIES,
+  ALGEBRA_SQRT_SIMPLIFY_SERIES,
 } from "./seriesAlgebra";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import type { LearnerSeries } from "./types";
@@ -39,6 +43,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     shortDescription: "乗法公式 (x+a)(x+b) — 数と式",
+  },
+  {
+    series: ALGEBRA_EXPANSION_SQ_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "平方の展開 (x+a)² — 数と式",
+  },
+  {
+    series: ALGEBRA_FACTORING_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "因数分解（展開の逆） — 数と式",
+  },
+  {
+    series: ALGEBRA_SQRT_SIMPLIFY_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "平方根の簡単化 — 数と式",
+  },
+  {
+    series: ALGEBRA_LINEAR_INEQ_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    shortDescription: "1次不等式の解法 — 数と式",
   },
 ];
 
