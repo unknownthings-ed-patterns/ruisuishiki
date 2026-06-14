@@ -31,7 +31,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "(x + 1)(x + 2) を展開すると、x² + □x + 2 になります。□に入る数はいくつでしょう？",
+        "$(x+1)(x+2)$ を展開すると、$x^2 + \\square x + 2$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 3,
       unit: "",
       unknownLabel: "x の係数",
@@ -59,7 +59,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "(x + 2)(x + 3) を展開すると、x² + □x + 6 になります。□に入る数はいくつでしょう？",
+        "$(x+2)(x+3)$ を展開すると、$x^2 + \\square x + 6$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 5,
       unit: "",
       unknownLabel: "x の係数",
@@ -81,7 +81,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "(x + 3)(x + 5) を展開すると、x² + □x + 15 になります。□に入る数はいくつでしょう？",
+        "$(x+3)(x+5)$ を展開すると、$x^2 + \\square x + 15$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 8,
       unit: "",
       unknownLabel: "x の係数",
@@ -100,7 +100,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "(x - 2)(x + 5) を展開すると、x² + □x - 10 になります。□に入る数はいくつでしょう？",
+        "$(x-2)(x+5)$ を展開すると、$x^2 + \\square x - 10$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 3,
       unit: "",
       unknownLabel: "x の係数",
@@ -125,7 +125,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "(y + 4)(y + 6) を展開すると、y² + □y + 24 になります。□に入る数はいくつでしょう？",
+        "$(y+4)(y+6)$ を展開すると、$y^2 + \\square y + 24$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 10,
       unit: "",
       unknownLabel: "y の係数",
@@ -169,7 +169,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "(x + 1)² を展開すると、x² + □x + 1 になります。□に入る数はいくつでしょう？",
+        "$(x+1)^2$ を展開すると、$x^2 + \\square x + 1$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 2,
       unit: "",
       unknownLabel: "x の係数",
@@ -197,7 +197,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "(x + 2)² を展開すると、x² + □x + 4 になります。□に入る数はいくつでしょう？",
+        "$(x+2)^2$ を展開すると、$x^2 + \\square x + 4$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 4,
       unit: "",
       unknownLabel: "x の係数",
@@ -219,7 +219,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "(x + 4)² を展開すると、x² + □x + 16 になります。□に入る数はいくつでしょう？",
+        "$(x+4)^2$ を展開すると、$x^2 + \\square x + 16$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 8,
       unit: "",
       unknownLabel: "x の係数",
@@ -238,7 +238,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "(x - 3)² を展開すると、x² + □x + 9 になります。□に入る数はいくつでしょう？",
+        "$(x-3)^2$ を展開すると、$x^2 + \\square x + 9$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: -6,
       unit: "",
       unknownLabel: "x の係数",
@@ -263,7 +263,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "(y + 5)² を展開すると、y² + □y + 25 になります。□に入る数はいくつでしょう？",
+        "$(y+5)^2$ を展開すると、$y^2 + \\square y + 25$ になります。$\\square$ に入る数はいくつでしょう？",
       answer: 10,
       unit: "",
       unknownLabel: "y の係数",
@@ -304,7 +304,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "x² + 3x + 2 = (x + a)(x + b) と因数分解できます。a と b のうち小さい方を答えてください。",
+        "$x^2 + 3x + 2 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
       answer: 1,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -332,7 +332,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "x² + 5x + 6 = (x + a)(x + b) と因数分解できます。a と b のうち小さい方を答えてください。",
+        "$x^2 + 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
       answer: 2,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -351,7 +351,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "x² + 8x + 15 = (x + a)(x + b) と因数分解できます。a と b のうち小さい方を答えてください。",
+        "$x^2 + 8x + 15 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
       answer: 3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -370,7 +370,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "x² - 5x + 6 = (x + a)(x + b) と因数分解できます。a と b のうち小さい方を答えてください。",
+        "$x^2 - 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
       answer: -3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -398,7 +398,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "y² + 7y + 12 = (y + a)(y + b) と因数分解できます。a と b のうち小さい方を答えてください。",
+        "$y^2 + 7y + 12 = (y+a)(y+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
       answer: 3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -438,7 +438,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "√8 を a√m の形に簡単にすると、a√2 になります。a はいくつでしょう？",
+        "$\\sqrt{8}$ を $a\\sqrt{m}$ の形に簡単にすると、$a\\sqrt{2}$ になります。$a$ はいくつでしょう？",
       answer: 2,
       unit: "",
       unknownLabel: "根号の外に出る数",
@@ -466,7 +466,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "√12 を a√m の形に簡単にすると、a√3 になります。a はいくつでしょう？",
+        "$\\sqrt{12}$ を $a\\sqrt{m}$ の形に簡単にすると、$a\\sqrt{3}$ になります。$a$ はいくつでしょう？",
       answer: 2,
       unit: "",
       unknownLabel: "根号の外に出る数",
@@ -485,7 +485,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "√18 を a√m の形に簡単にすると、a√2 になります。a はいくつでしょう？",
+        "$\\sqrt{18}$ を $a\\sqrt{m}$ の形に簡単にすると、$a\\sqrt{2}$ になります。$a$ はいくつでしょう？",
       answer: 3,
       unit: "",
       unknownLabel: "根号の外に出る数",
@@ -507,7 +507,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "√50 を a√m の形に簡単にすると、a√2 になります。a はいくつでしょう？",
+        "$\\sqrt{50}$ を $a\\sqrt{m}$ の形に簡単にすると、$a\\sqrt{2}$ になります。$a$ はいくつでしょう？",
       answer: 5,
       unit: "",
       unknownLabel: "根号の外に出る数",
@@ -526,7 +526,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "√75 を a√m の形に簡単にすると、a√3 になります。a はいくつでしょう？",
+        "$\\sqrt{75}$ を $a\\sqrt{m}$ の形に簡単にすると、$a\\sqrt{3}$ になります。$a$ はいくつでしょう？",
       answer: 5,
       unit: "",
       unknownLabel: "根号の外に出る数",
@@ -562,7 +562,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "x + 1 > 0 の解は x > c の形になります。c はいくつでしょう？",
+        "$x + 1 > 0$ の解は $x > c$ の形になります。$c$ はいくつでしょう？",
       answer: -1,
       unit: "",
       unknownLabel: "境界値 c",
@@ -587,7 +587,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "x - 3 > 0 の解は x > c の形になります。c はいくつでしょう？",
+        "$x - 3 > 0$ の解は $x > c$ の形になります。$c$ はいくつでしょう？",
       answer: 3,
       unit: "",
       unknownLabel: "境界値 c",
@@ -606,7 +606,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "2x - 6 > 0 の解は x > c の形になります。c はいくつでしょう？",
+        "$2x - 6 > 0$ の解は $x > c$ の形になります。$c$ はいくつでしょう？",
       answer: 3,
       unit: "",
       unknownLabel: "境界値 c",
@@ -631,7 +631,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "3x + 9 > 0 の解は x > c の形になります。c はいくつでしょう？",
+        "$3x + 9 > 0$ の解は $x > c$ の形になります。$c$ はいくつでしょう？",
       answer: -3,
       unit: "",
       unknownLabel: "境界値 c",
@@ -653,7 +653,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "4y - 8 > 0 の解は y > c の形になります。c はいくつでしょう？",
+        "$4y - 8 > 0$ の解は $y > c$ の形になります。$c$ はいくつでしょう？",
       answer: 2,
       unit: "",
       unknownLabel: "境界値 c",

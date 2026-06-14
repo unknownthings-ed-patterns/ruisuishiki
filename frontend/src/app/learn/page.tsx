@@ -9,7 +9,12 @@ import {
   SUBJECT_GROUP_LABEL,
   SUBJECT_ORDER,
 } from "@/lib/seriesCatalog";
-import { getResumeIndex, loadSeriesHistory } from "@/lib/storage";
+import {
+  calculateLearningStats,
+  getResumeIndex,
+  type LearningStats,
+  loadSeriesHistory,
+} from "@/lib/storage";
 import {
   listTeacherSeries,
   type TeacherSeriesSummary,
@@ -24,6 +29,7 @@ type CatalogWithProgress = {
 export default function LearnIndex() {
   const [catalog, setCatalog] = useState<CatalogWithProgress[]>([]);
   const [teacherSeries, setTeacherSeries] = useState<TeacherSeriesSummary[]>([]);
+  const [stats, setStats] = useState<LearningStats | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
@@ -42,6 +48,7 @@ export default function LearnIndex() {
     });
     setCatalog(withProgress);
     setTeacherSeries(listTeacherSeries());
+    setStats(calculateLearningStats());
     setHasHydrated(true);
   }, []);
 
@@ -74,6 +81,38 @@ export default function LearnIndex() {
             戸田の系列原則で編まれた問題を、ひとつずつ歩いてみてください。
           </p>
         </header>
+
+        {/* 学習統計（履歴が1問でもあれば表示） */}
+        {hasHydrated && stats && stats.lifetimeCorrect > 0 && (
+          <section
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-wrap items-baseline justify-around gap-x-8 gap-y-3"
+            style={{ background: "var(--surface)" }}
+            aria-label="学習の足あと"
+          >
+            <Stat
+              label="今週"
+              value={stats.weeklyCorrect.toLocaleString()}
+              unit="問"
+            />
+            <Stat
+              label="累計"
+              value={stats.lifetimeCorrect.toLocaleString()}
+              unit="問"
+            />
+            {stats.lifetimeAccuracy !== null && (
+              <Stat
+                label="正答率"
+                value={Math.round(stats.lifetimeAccuracy * 100).toString()}
+                unit="%"
+              />
+            )}
+            <Stat
+              label="歩いた系列"
+              value={stats.seriesEngaged.toString()}
+              unit="本"
+            />
+          </section>
+        )}
 
         {/* 静的カタログ：subject（学年領域）でグループ化 */}
         {!hasHydrated ? (
@@ -248,5 +287,42 @@ export default function LearnIndex() {
         </Link>
       </div>
     </main>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  unit,
+}: {
+  label: string;
+  value: string;
+  unit?: string;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <span
+        className="text-muted"
+        style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+      >
+        {label}
+      </span>
+      <p className="mt-1 flex items-baseline gap-1">
+        <span
+          className="font-serif text-foreground tnum"
+          style={{ fontSize: "clamp(22px, 1.75rem, 28px)" }}
+        >
+          {value}
+        </span>
+        {unit && (
+          <span
+            className="text-muted"
+            style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+          >
+            {unit}
+          </span>
+        )}
+      </p>
+    </div>
   );
 }

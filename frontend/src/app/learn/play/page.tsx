@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
+import { MathText } from "@/components/Math";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
 import { findStaticSeries } from "@/lib/seriesCatalog";
 import {
@@ -111,10 +112,31 @@ export default function Play() {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    // handleNext は useCallback 化していないが stepIndex/isLast に依存する
-    // status と isLast の変化に追随できればよい
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, isLast]);
+
+  // 解答中・誤答中に h キーでヒントを順に開く
+  useEffect(() => {
+    if (status === "correct" || status === "completed") return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "h" && e.key !== "H") return;
+      // 入力欄にフォーカスがある時は無視（h を打鍵したいことがあるかもしれない）
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+      handleOpenHint();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, hintsOpened]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -269,7 +291,7 @@ export default function Play() {
                 letterSpacing: "0.04em",
               }}
             >
-              {step.questionText}
+              <MathText text={step.questionText} />
             </p>
           </section>
 

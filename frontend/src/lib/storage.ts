@@ -74,3 +74,71 @@ export function getResumeIndex(
   }
   return stepIds.length; // 全問正答済み
 }
+
+/* ====================================================================== */
+/* 学習統計（全系列横断）                                                  */
+/* ====================================================================== */
+
+/** すべての学習履歴を取得（series 別に）。 */
+export function loadAllHistory(): { seriesId: string; records: StepRecord[] }[] {
+  if (typeof window === "undefined") return [];
+  const results: { seriesId: string; records: StepRecord[] }[] = [];
+  try {
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      if (!key || !key.startsWith(STORAGE_PREFIX)) continue;
+      const seriesId = key.slice(STORAGE_PREFIX.length);
+      const records = loadSeriesHistory(seriesId);
+      if (records.length > 0) {
+        results.push({ seriesId, records });
+      }
+    }
+  } catch {
+    // 失敗しても続ける
+  }
+  return results;
+}
+
+export type LearningStats = {
+  /** 今週（過去7日）に正答した問題数 */
+  weeklyCorrect: number;
+  /** 累計の正答した問題数 */
+  lifetimeCorrect: number;
+  /** 累計の試行回数 */
+  lifetimeAttempts: number;
+  /** 累計の正答率（試行ベース、0..1）。試行ゼロなら null */
+  lifetimeAccuracy: number | null;
+  /** 取り組んだ系列の数（少なくとも1問は解いた） */
+  seriesEngaged: number;
+};
+
+export function calculateLearningStats(): LearningStats {
+  const all = loadAllHistory();
+  const now = Date.now();
+  const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+  let weeklyCorrect = 0;
+  let lifetimeCorrect = 0;
+  let lifetimeAttempts = 0;
+  let seriesEngaged = 0;
+  for (const { records } of all) {
+    let engaged = false;
+    for (const r of records) {
+      lifetimeAttempts += r.attempts;
+      if (r.correct) {
+        lifetimeCorrect++;
+        engaged = true;
+        const ts = new Date(r.answeredAt).getTime();
+        if (!Number.isNaN(ts) && ts >= oneWeekAgo) weeklyCorrect++;
+      }
+    }
+    if (engaged) seriesEngaged++;
+  }
+  return {
+    weeklyCorrect,
+    lifetimeCorrect,
+    lifetimeAttempts,
+    lifetimeAccuracy:
+      lifetimeAttempts > 0 ? lifetimeCorrect / lifetimeAttempts : null,
+    seriesEngaged,
+  };
+}
