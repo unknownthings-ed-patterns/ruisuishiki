@@ -24,6 +24,7 @@ export const ALGEBRA_EXPANSION_AB_SERIES: LearnerSeries = {
     "(x+a)(x+b) を展開した時の x の係数を、足し算だけで見つけていく5問。",
   patternId: "E1",
   unit: "algebra_1",
+  revelationLabel: "(x+a)(x+b) を展開した時の x の係数は、a + b",
   steps: [
     // 1. 基本原形（小さい正の数で、暗算で和が出る）
     {
@@ -161,6 +162,7 @@ export const ALGEBRA_EXPANSION_SQ_SERIES: LearnerSeries = {
     "(x+a)² を展開した時の x の係数を、2倍の関係から見つけていく5問。",
   patternId: "E2",
   unit: "algebra_1",
+  revelationLabel: "(x+a)² を展開した時の x の係数は、2 × a",
   steps: [
     // 1. 基本原形（暗算で 2×1）
     {
@@ -295,6 +297,7 @@ export const ALGEBRA_FACTORING_SERIES: LearnerSeries = {
     "x² + Cx + D = (x+a)(x+b) のとき、a と b のうち小さい方を答える5問。",
   patternId: "F1",
   unit: "algebra_1",
+  revelationLabel: "和と積から、2 つの数 a, b を逆算する",
   steps: [
     // 1. 基本原形
     {
@@ -428,6 +431,7 @@ export const ALGEBRA_SQRT_SIMPLIFY_SERIES: LearnerSeries = {
     "√n を a√m の形に整える5問。「根号の外に出る a」を見つけていく。",
   patternId: "R1",
   unit: "algebra_1",
+  revelationLabel: "根号の中の「平方の部分」を外に出す",
   steps: [
     // 1. 基本原形 √8 = 2√2
     {
@@ -551,6 +555,7 @@ export const ALGEBRA_LINEAR_INEQ_SERIES: LearnerSeries = {
     "ax + b > 0 の解 x > c の c を見つける5問。両辺を移項・割り算する。",
   patternId: "I1",
   unit: "algebra_1",
+  revelationLabel: "定数を右辺へ移項し、両辺を x の係数で割る",
   steps: [
     // 1. 基本原形 x + 1 > 0 → x > -1
     {

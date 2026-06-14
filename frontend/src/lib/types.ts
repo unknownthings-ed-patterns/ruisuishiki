@@ -50,6 +50,12 @@ export type LearnerSeries = {
   patternId: string;
   unit: string;
   steps: LearnerStep[];
+  /**
+   * 質的変化到達時の「気づき」演出で、「同じ仕組み」として
+   * 強調表示する1行（系列ごとに人間にやさしい言葉で）。
+   * 未設定時は汎用文を使う。
+   */
+  revelationLabel?: string;
 };
 
 /** localStorage に保存する学習履歴。 */

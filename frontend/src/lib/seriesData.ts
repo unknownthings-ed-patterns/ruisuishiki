@@ -16,6 +16,7 @@ export const RATIO_BASIC_SERIES: LearnerSeries = {
   subtitle: "もとにする量・割合・比較量を、比べながら見つけていく5問",
   patternId: "P1",
   unit: "ratio_5th",
+  revelationLabel: "もとの量　×　倍率　＝　求める量",
   steps: [
     // ステップ1：基本原形（暗算で入れる）
     {

@@ -275,7 +275,7 @@ export default function Play() {
                 ここまでの問題はすべて
                 <br />
                 <span className="font-serif">
-                  「もとの量　×　倍率　＝　求める量」
+                  「{series.revelationLabel ?? "同じ仕組み"}」
                 </span>
                 <br />
                 という同じ仕組みでした。
