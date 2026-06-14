@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MathText } from "@/components/Math";
 import { deleteTeacherSeries, getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries } from "@/lib/types";
 
@@ -216,14 +217,14 @@ export default function SeriesPreview() {
                     className="text-muted tnum"
                     style={{ fontSize: "12px" }}
                   >
-                    {step.formulaPreview}
+                    <MathText text={step.formulaPreview} />
                   </span>
                 </div>
                 <p
                   className="text-foreground"
                   style={{ fontSize: "15px", lineHeight: 1.9 }}
                 >
-                  {step.questionText}
+                  <MathText text={step.questionText} />
                 </p>
                 <p
                   className="mt-2 text-muted tnum"

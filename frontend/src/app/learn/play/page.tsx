@@ -351,7 +351,7 @@ export default function Play() {
                       className="flex-1 px-3 text-foreground text-center"
                       style={{ fontSize: "15px" }}
                     >
-                      {s.formulaPreview}
+                      <MathText text={s.formulaPreview} />
                     </span>
                     <span
                       className="text-muted shrink-0"
@@ -389,7 +389,7 @@ export default function Play() {
                       className="mt-1.5 text-foreground"
                       style={{ fontSize: "15px", lineHeight: 1.8 }}
                     >
-                      {hint.text}
+                      <MathText text={hint.text} />
                     </p>
                   </div>
 
@@ -423,7 +423,7 @@ export default function Play() {
                         className="mt-1.5 text-foreground/85"
                         style={{ fontSize: "14px", lineHeight: 1.8 }}
                       >
-                        {comparedStep.questionText}
+                        <MathText text={comparedStep.questionText} />
                       </p>
                       <p
                         className="mt-2 text-muted tnum"
