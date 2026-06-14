@@ -27,6 +27,10 @@ import {
 } from "./seriesAlgebra";
 import {
   ALGEBRA_2_SERIES_LIST,
+  ALGEBRA2_ARITH_NTH_SERIES,
+  ALGEBRA2_ARITH_SUM_SERIES,
+  ALGEBRA2_DIFF_SERIES,
+  ALGEBRA2_DOT_SERIES,
   ALGEBRA2_LOG_SERIES,
   ALGEBRA2_TRIG_PERIOD_SERIES,
 } from "./seriesAlgebra2";
@@ -302,6 +306,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     shortDescription: "対数の入り口 — log_b v の計算",
+  },
+  {
+    series: ALGEBRA2_ARITH_NTH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "等差数列の n 項目 — 数列",
+  },
+  {
+    series: ALGEBRA2_ARITH_SUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "等差数列の和 — 数列",
+  },
+  {
+    series: ALGEBRA2_DOT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "ベクトルの内積 — ベクトル",
+  },
+  {
+    series: ALGEBRA2_DIFF_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    shortDescription: "微分の入り口 — 微分・積分",
   },
   /* 統計 */
   {

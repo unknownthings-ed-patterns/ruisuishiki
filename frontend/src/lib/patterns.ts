@@ -21,7 +21,9 @@ export type PatternId =
   | "EL6" | "EL7" | "EL8" | "EL9" | "EL10"
   | "EL11" | "EL12" | "EL13" | "EL14"
   /* 数Ⅰ・A の追加（網羅化） */
-  | "Q3" | "Q4" | "MM1" | "IT1" | "VAR1";
+  | "Q3" | "Q4" | "MM1" | "IT1" | "VAR1"
+  /* 数Ⅱ・B の追加（網羅化） */
+  | "A1" | "A2" | "VEC1" | "DIFF1";
 
 /**
  * 変数の意味的役割。
@@ -719,6 +721,72 @@ const VAR1: PatternSpec = {
   },
 };
 
+/* === 数Ⅱ・B の追加 === */
+
+/** A1: 等差数列の n 項目 a_n = a + (n-1) × d */
+const A1: PatternSpec = {
+  id: "A1",
+  unit: "algebra_2",
+  naturalLanguage: "等差数列の n 項目",
+  formulaTemplate: "an = a + (n - 1) * d",
+  variables: [
+    { name: "a", role: "初項", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "d", role: "公差", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "n", role: "項数", unknown: false, domain: { kind: "integer", min: 2, max: 30 } },
+    { name: "an", role: "n 項目の値", unknown: true, domain: { kind: "integer", min: -300, max: 300 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "an", answer: k.a + (k.n - 1) * k.d }),
+};
+
+/** A2: 等差数列の和 S_n = n(a + l) / 2 */
+const A2: PatternSpec = {
+  id: "A2",
+  unit: "algebra_2",
+  naturalLanguage: "等差数列の和",
+  formulaTemplate: "S = n * (a + l) / 2",
+  variables: [
+    { name: "a", role: "初項", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "l", role: "末項", unknown: false, domain: { kind: "integer", min: -20, max: 200 } },
+    { name: "n", role: "項数", unknown: false, domain: { kind: "integer", min: 2, max: 100 } },
+    { name: "S", role: "和", unknown: true, domain: { kind: "integer", min: -10000, max: 10000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "S", answer: (k.n * (k.a + k.l)) / 2 }),
+};
+
+/** VEC1: 2次元ベクトルの内積 */
+const VEC1: PatternSpec = {
+  id: "VEC1",
+  unit: "algebra_2",
+  naturalLanguage: "ベクトルの内積 (a,b)·(c,d) = ac + bd",
+  formulaTemplate: "dot = a*c + b*d",
+  variables: [
+    { name: "a", role: "v1.x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "v1.y", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "v2.x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "d", role: "v2.y", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "dot", role: "内積", unknown: true, domain: { kind: "integer", min: -200, max: 200 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "dot", answer: k.a * k.c + k.b * k.d }),
+};
+
+/** DIFF1: f(x) = ax^n を微分して x=1 で評価。f'(1) = a*n */
+const DIFF1: PatternSpec = {
+  id: "DIFF1",
+  unit: "algebra_2",
+  naturalLanguage: "f(x) = ax^n の微分係数 f'(1)",
+  formulaTemplate: "fprime1 = a * n",
+  variables: [
+    { name: "a", role: "係数", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "n", role: "次数", unknown: false, domain: { kind: "integer", min: 1, max: 6 } },
+    { name: "fprime1", role: "f'(1)", unknown: true, domain: { kind: "integer", min: 1, max: 60 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "fprime1", answer: k.a * k.n }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -730,6 +798,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   EL6, EL7, EL8, EL9, EL10,
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
+  A1, A2, VEC1, DIFF1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -743,6 +812,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   EL6, EL7, EL8, EL9, EL10,
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
+  A1, A2, VEC1, DIFF1,
 ];
 
 export const CONTEXT_CATEGORIES = [
