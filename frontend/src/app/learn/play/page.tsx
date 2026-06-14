@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
+import { findStaticSeries } from "@/lib/seriesCatalog";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -37,14 +38,22 @@ export default function Play() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    // 教師作成の系列を読み込むかどうか
+    // 系列を選ぶ：?seriesId=xxx で
+    // 1) 静的カタログにあるか確認、2) なければ教師作成系列を localStorage から探す、
+    // 3) どちらにもなければ既定の RATIO_BASIC_SERIES
     const seriesIdParam = params.get("seriesId");
     let activeSeries: LearnerSeries = RATIO_BASIC_SERIES;
     if (seriesIdParam) {
-      const teacherSeries = getTeacherSeries(seriesIdParam);
-      if (teacherSeries) {
-        activeSeries = teacherSeries;
-        setSeries(teacherSeries);
+      const staticSeries = findStaticSeries(seriesIdParam);
+      if (staticSeries) {
+        activeSeries = staticSeries;
+        setSeries(staticSeries);
+      } else {
+        const teacherSeries = getTeacherSeries(seriesIdParam);
+        if (teacherSeries) {
+          activeSeries = teacherSeries;
+          setSeries(teacherSeries);
+        }
       }
     }
 

@@ -9,11 +9,15 @@
  * フロントエンドでも文型を保持する。
  */
 
-export type PatternId = "P1" | "P2" | "P3" | "P4" | "P5";
+export type PatternId = "P1" | "P2" | "P3" | "P4" | "P5" | "E1";
 
+/**
+ * 変数の意味的役割。
+ * 単元によって自由に拡張する（割合の「もとにする量」、代数の「定数」など）。
+ */
 export type VariableSpec = {
   name: string;
-  role: "もとにする量" | "比較量" | "割合" | "条件付加";
+  role: string;
   unknown: boolean;
   domain: {
     kind: "integer" | "decimal";
@@ -108,15 +112,44 @@ const P5: PatternSpec = {
   evaluate: (k) => ({ unknownName: "B", answer: k.A * (1 + k.d1) * (1 + k.d2) }),
 };
 
+/* --- 数学Ⅰ・A：数と式（algebra_1）--- */
+
+/**
+ * E1: 乗法公式（(x+a)(x+b) を展開した時の x の係数）
+ *
+ * 文型: (x+a)(x+b) = x² + (a+b)x + ab
+ * 未知数: x の係数 = a + b
+ *
+ * 推理式の核「同じ文型なら同じ解式」が、係数 a, b の値を変えても
+ * 「a+b を計算する」という一貫した解式で成立することを体感する系列。
+ *
+ * 質的変化（後半）：(y+a)(y+b)、(t+a)(t+b) のように変数記号を入れ替えても、
+ * 「2つの定数の和」という構造は変わらない。これが学習の核。
+ */
+const E1: PatternSpec = {
+  id: "E1",
+  unit: "algebra_1",
+  naturalLanguage: "(x+a)(x+b) の展開で x の係数を求める",
+  formulaTemplate: "xCoef = a + b",
+  variables: [
+    { name: "a", role: "定数（前項）", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "b", role: "定数（後項）", unknown: false, domain: { kind: "integer", min: -10, max: 10, step: 1 } },
+    { name: "xCoef", role: "xの係数", unknown: true, domain: { kind: "integer", min: -20, max: 20 } },
+  ],
+  difficultyTier: 1,
+  evaluate: (k) => ({ unknownName: "xCoef", answer: k.a + k.b }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1,
   P2,
   P3,
   P4,
   P5,
+  E1,
 };
 
-export const PATTERN_LIST: PatternSpec[] = [P1, P2, P3, P4, P5];
+export const PATTERN_LIST: PatternSpec[] = [P1, P2, P3, P4, P5, E1];
 
 export const CONTEXT_CATEGORIES = [
   { id: "shopping", label: "買い物" },
@@ -125,6 +158,7 @@ export const CONTEXT_CATEGORIES = [
   { id: "area", label: "面積" },
   { id: "length", label: "長さ" },
   { id: "time", label: "時間" },
+  { id: "abstract", label: "抽象（記号）" },
 ] as const;
 
 export type ContextId = (typeof CONTEXT_CATEGORIES)[number]["id"];
