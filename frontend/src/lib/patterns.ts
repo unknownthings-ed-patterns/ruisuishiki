@@ -27,7 +27,7 @@ export type PatternId =
   /* 数Ⅱ・B の追加2 */
   | "G1" | "G2" | "EXP1" | "VEC2"
   /* ★チャレンジ系列 */
-  | "VV1";
+  | "VV1" | "GR1" | "GR2" | "GR3" | "GR4";
 
 /**
  * 変数の意味的役割。
@@ -881,6 +881,66 @@ const VV1: PatternSpec = {
   evaluate: (k) => ({ unknownName: "min", answer: k.c - (k.b * k.b) / 4 }),
 };
 
+/** GR1: f(x) = x² + bx + c の頂点の x 座標 = -b/2（b偶数） */
+const GR1: PatternSpec = {
+  id: "GR1",
+  unit: "advanced",
+  naturalLanguage: "f(x) = x² + bx + c の頂点の x 座標",
+  formulaTemplate: "vx = -b / 2",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20, step: 2 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 100 } },
+    { name: "vx", role: "頂点の x 座標", unknown: true, domain: { kind: "integer", min: -10, max: 10 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "vx", answer: -k.b / 2 }),
+};
+
+/** GR2: f(x) = x² + bx + c の頂点の y 座標 = c - b²/4 */
+const GR2: PatternSpec = {
+  id: "GR2",
+  unit: "advanced",
+  naturalLanguage: "f(x) = x² + bx + c の頂点の y 座標",
+  formulaTemplate: "vy = c - b² / 4",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20, step: 2 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 100 } },
+    { name: "vy", role: "頂点の y 座標", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "vy", answer: k.c - (k.b * k.b) / 4 }),
+};
+
+/** GR3: f(x) = x² + bx + c の y 切片 = c */
+const GR3: PatternSpec = {
+  id: "GR3",
+  unit: "advanced",
+  naturalLanguage: "f(x) = x² + bx + c の y 切片",
+  formulaTemplate: "yi = c",
+  variables: [
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 100 } },
+    { name: "yi", role: "y 切片", unknown: true, domain: { kind: "integer", min: -50, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "yi", answer: k.c }),
+};
+
+/** GR4: 頂点 (p, q) から f(x) = (x - p)² + q を展開した c の値（= p² + q） */
+const GR4: PatternSpec = {
+  id: "GR4",
+  unit: "advanced",
+  naturalLanguage: "頂点 (p, q) から元の式 x² + bx + c の c を求める",
+  formulaTemplate: "c = p² + q",
+  variables: [
+    { name: "p", role: "頂点の x 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "q", role: "頂点の y 座標", unknown: false, domain: { kind: "integer", min: -50, max: 100 } },
+    { name: "c", role: "定数項", unknown: true, domain: { kind: "integer", min: -50, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({ unknownName: "c", answer: k.p * k.p + k.q }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -894,7 +954,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
-  VV1,
+  VV1, GR1, GR2, GR3, GR4,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -910,7 +970,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
-  VV1,
+  VV1, GR1, GR2, GR3, GR4,
 ];
 
 export const CONTEXT_CATEGORIES = [

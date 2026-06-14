@@ -39,6 +39,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  ADV_QUAD_GRAPH_SERIES,
   ADV_QUAD_MIN_SERIES,
   ADVANCED_SERIES_LIST,
 } from "./seriesAdvanced";
@@ -379,6 +380,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "advanced",
     subjectLabel: "★ チャレンジ",
     shortDescription: "2次関数の最小値 — 平方完成",
+  },
+  {
+    series: ADV_QUAD_GRAPH_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
   },
 ];
 

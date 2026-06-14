@@ -217,6 +217,187 @@ $$\\min f(x) = c - \\frac{b^2}{4}$$
   ],
 };
 
+/**
+ * 「★ 2次関数のグラフを読む」発展系列。
+ *
+ * 平方完成から読み取れる3つの情報（頂点・軸・y切片）を、
+ * 推理式の「同→+α→逆」変化オペレータで段階的に体感する。
+ *
+ * - step1-3: 頂点の x 座標 = -b/2
+ * - step4-5: 頂点の y 座標 = c - b²/4
+ * - step6:   軸の方程式 = x = -b/2（頂点 x 座標と同じだが「軸」として問う：+α）
+ * - step7:   y 切片 = c そのもの（+α）
+ * - step8:   質的変化：別の変数記号で頂点 x 座標
+ * - step9-10: 逆オペレータ：頂点 (p, q) から元の式の c を逆算
+ */
+export const ADV_QUAD_GRAPH_SERIES: LearnerSeries = {
+  id: "adv_quad_graph_01",
+  title: "★ 2次関数のグラフを読む",
+  subtitle:
+    "$f(x) = x^2 + bx + c$ の頂点・軸・y 切片を読み取る10問。平方完成の本領発揮。",
+  patternId: "GR1",
+  unit: "advanced",
+  revelationLabel: "平方完成から頂点（−b/2, c−b²/4）・軸・y 切片が一度に読める",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "$f(x) = x^2 + 4x + 5$ の頂点の **x 座標** はいくつでしょう？",
+      answer: -2, unit: "", unknownLabel: "頂点の x 座標",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "頂点の x 座標は $-b/2$。" },
+        { layer: 2, text: "$b = 4$ なので $-4/2$。" },
+        { layer: 3, text: "$-2$。" },
+      ],
+      formulaPreview: "−4/2 = −2",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "$f(x) = x^2 - 6x + 11$ の頂点の **x 座標** はいくつでしょう？",
+      answer: 3, unit: "", unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。$-b/2$。" },
+        { layer: 2, text: "$b = -6$ なので $-(-6)/2$。" },
+        { layer: 3, text: "$3$。" },
+      ],
+      formulaPreview: "−(−6)/2 = 3",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "$f(x) = x^2 + 10x + 30$ の頂点の **x 座標** はいくつでしょう？",
+      answer: -5, unit: "", unknownLabel: "頂点の x 座標",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$-b/2$。" },
+        { layer: 2, text: "$-10/2$。" },
+        { layer: 3, text: "$-5$。" },
+      ],
+      formulaPreview: "−10/2 = −5",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "$f(x) = x^2 + 4x + 5$ の頂点の **y 座標** はいくつでしょう？（step 1 と同じ関数で、今度は y 座標）",
+      answer: 1, unit: "", unknownLabel: "頂点の y 座標",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "頂点の y 座標は $c - b^2/4$。" },
+        { layer: 2, text: "$5 - 16/4 = 5 - 4$。" },
+        { layer: 3, text: "$1$。" },
+      ],
+      formulaPreview: "5 − 4 = 1",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "$f(x) = x^2 - 6x + 11$ の頂点の **y 座標** はいくつでしょう？（step 2 と同じ関数）",
+      answer: 2, unit: "", unknownLabel: "頂点の y 座標",
+      variationFromPrevious: "same", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$c - b^2/4$。" },
+        { layer: 2, text: "$11 - 36/4 = 11 - 9$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "11 − 9 = 2",
+    },
+    {
+      id: "step6", position: 6,
+      questionText: "$f(x) = x^2 - 8x + 20$ の **軸の方程式 $x = c$** の $c$ はいくつでしょう？",
+      answer: 4, unit: "", unknownLabel: "軸の x 座標",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "軸の方程式は $x = -b/2$。頂点の x 座標と同じ。" },
+        { layer: 2, text: "$-(-8)/2$。" },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "−(−8)/2 = 4",
+    },
+    {
+      id: "step7", position: 7,
+      questionText: "$f(x) = x^2 + 6x + 7$ の **y 切片**（グラフが y 軸と交わる点の y 座標）はいくつでしょう？",
+      answer: 7, unit: "", unknownLabel: "y 切片",
+      variationFromPrevious: "plus_alpha", compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "y 切片は $x = 0$ を代入したときの $f$ の値。" },
+        { layer: 2, text: "$f(0) = 0 + 0 + 7$。つまり定数項 $c$ そのもの。" },
+        { layer: 3, text: "$7$。" },
+      ],
+      formulaPreview: "c = 7",
+    },
+    {
+      id: "step8", position: 8,
+      questionText: "$g(y) = y^2 + 8y + 20$ の頂点の **y 座標** はいくつでしょう？（変数も関数名も違う）",
+      answer: 4, unit: "", unknownLabel: "頂点の y 座標",
+      variationFromPrevious: "qualitative", compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "変数記号が違うだけ。$c - b^2/4$。" },
+        { layer: 2, text: "$20 - 64/4 = 20 - 16$。" },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "20 − 16 = 4",
+    },
+    {
+      id: "step9", position: 9,
+      questionText: "頂点 $(3, 5)$ をもつ $f(x) = x^2 + bx + c$ の **定数項 $c$** はいくつでしょう？",
+      answer: 14, unit: "", unknownLabel: "定数項 c",
+      variationFromPrevious: "inverse", compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "頂点 $(p, q)$ なら $f(x) = (x - p)^2 + q$。展開して $c$ を読む。" },
+        { layer: 2, text: "$(x - 3)^2 + 5 = x^2 - 6x + 9 + 5$。" },
+        { layer: 3, text: "$c = 14$。" },
+      ],
+      formulaPreview: "3² + 5 = 14",
+    },
+    {
+      id: "step10", position: 10,
+      questionText: "頂点 $(-2, 3)$ をもつ $f(x) = x^2 + bx + c$ の **定数項 $c$** はいくつでしょう？",
+      answer: 7, unit: "", unknownLabel: "定数項 c",
+      variationFromPrevious: "same", compareWithStepId: "step9",
+      hints: [
+        { layer: 1, text: "公式は $c = p^2 + q$。" },
+        { layer: 2, text: "$(-2)^2 + 3 = 4 + 3$。" },
+        { layer: 3, text: "$7$。" },
+      ],
+      formulaPreview: "(−2)² + 3 = 7",
+    },
+  ],
+  derivation: `**1つの平方完成で、グラフの3つの読みどころ**
+
+この系列で出てきた問いは、すべて同じ操作 **「平方完成」** から答えが読み取れます。
+
+$f(x) = x^2 + bx + c$ を平方完成すると：
+
+$$f(x) = \\left(x + \\frac{b}{2}\\right)^2 + \\left(c - \\frac{b^2}{4}\\right)$$
+
+この形を眺めると、3つの大切な情報が **一度に** 浮かび上がります：
+
+- **頂点**：$\\left(-\\dfrac{b}{2},\\ c - \\dfrac{b^2}{4}\\right)$
+- **軸の方程式**：$x = -\\dfrac{b}{2}$（頂点の x 座標を通る縦の直線）
+- **y 切片**：もとの式に $x = 0$ を代入して $c$
+
+**1つの式変形で、グラフの「形」も「位置」もすべて確定する**——それが平方完成の本領です。
+
+**逆向きにも使える**
+
+step 9 と 10 では逆の方向を歩きました。頂点 $(p, q)$ から元の式を作るには：
+
+$$f(x) = (x - p)^2 + q$$
+
+これを展開すると：
+
+$$f(x) = x^2 - 2px + p^2 + q$$
+
+$x$ の係数は $b = -2p$、定数項は $c = p^2 + q$。
+
+頂点さえ知っていれば、$x^2 + bx + c$ の $b$ と $c$ が両方とも逆算できる。**グラフから式が読み取れる** ということです。
+
+**「グラフを読む」とは何か**
+
+ふつう「グラフを描く」は式 → 図の方向ですが、平方完成の力を借りると **式 → 頂点・軸・y 切片** という形でグラフの輪郭が**頭の中**に描けます。さらに、頂点を知っているなら **頂点 → 式** という逆方向も歩けます。
+
+これが、$x^2 + bx + c$ という6文字の式に隠されていた、**グラフ全体の地図** です。`,
+};
+
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_QUAD_MIN_SERIES,
+  ADV_QUAD_GRAPH_SERIES,
 ];
