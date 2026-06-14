@@ -21,6 +21,20 @@ import type { LearnerSeries } from "./types";
 
 export type SeriesSubject = "elementary" | "secondary" | "tertiary";
 
+/** subject の表示順（カタログでこの順に並べる）。 */
+export const SUBJECT_ORDER: SeriesSubject[] = [
+  "elementary",
+  "secondary",
+  "tertiary",
+];
+
+/** subject ごとのグループ見出し（subjectLabel と独立に持つ）。 */
+export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
+  elementary: "小学校算数",
+  secondary: "高校数学Ⅰ・A",
+  tertiary: "大学・専門",
+};
+
 export type CatalogEntry = {
   series: LearnerSeries;
   /** 対象学年・領域の表示用 */

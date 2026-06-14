@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { type CatalogEntry, STATIC_CATALOG } from "@/lib/seriesCatalog";
+import {
+  type CatalogEntry,
+  type SeriesSubject,
+  STATIC_CATALOG,
+  SUBJECT_GROUP_LABEL,
+  SUBJECT_ORDER,
+} from "@/lib/seriesCatalog";
 import { getResumeIndex, loadSeriesHistory } from "@/lib/storage";
 import {
   listTeacherSeries,
@@ -69,103 +75,115 @@ export default function LearnIndex() {
           </p>
         </header>
 
-        {/* 静的カタログ */}
-        <section className="flex flex-col gap-4">
-          <h2
-            className="text-foreground"
-            style={{ fontSize: "13px", letterSpacing: "0.3em" }}
-          >
-            ruisuishiki が用意した系列
-          </h2>
-          {!hasHydrated ? (
-            <p className="text-muted" style={{ fontSize: "13px" }}>
-              読み込んでいます…
-            </p>
-          ) : (
-            <ol className="flex flex-col gap-3">
-              {catalog.map(({ entry, resumeIndex, total }) => {
-                const isCompleted = resumeIndex >= total;
-                const inProgress = resumeIndex > 0 && !isCompleted;
-                const href = inProgress
-                  ? `/learn/play/?seriesId=${entry.series.id}`
-                  : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
-                return (
-                  <li key={entry.series.id}>
-                    <Link
-                      href={href}
-                      className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
-                      style={{ background: "var(--surface)" }}
-                    >
-                      <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
-                        <span
-                          className="text-accent"
-                          style={{
-                            fontSize: "12px",
-                            letterSpacing: "0.2em",
-                          }}
-                        >
-                          {entry.subjectLabel}
-                        </span>
-                        {isCompleted && (
-                          <span
-                            className="text-success tnum"
-                            style={{ fontSize: "12px" }}
-                          >
-                            ✓ {total}/{total}
-                          </span>
-                        )}
-                        {inProgress && (
-                          <span
-                            className="text-muted tnum"
-                            style={{ fontSize: "12px" }}
-                          >
-                            {resumeIndex}/{total} 解いた
-                          </span>
-                        )}
-                        {!isCompleted && !inProgress && (
-                          <span
-                            className="text-muted tnum"
-                            style={{ fontSize: "12px" }}
-                          >
-                            全 {total} 問
-                          </span>
-                        )}
-                      </div>
-                      <p
-                        className="font-serif text-foreground"
-                        style={{
-                          fontSize: "clamp(17px, 1.25rem, 20px)",
-                          letterSpacing: "0.06em",
-                        }}
-                      >
-                        {entry.series.title}
-                      </p>
-                      <p
-                        className="mt-2 text-muted"
-                        style={{ fontSize: "13px", lineHeight: 1.8 }}
-                      >
-                        {entry.shortDescription}
-                      </p>
-                      {inProgress && (
-                        <div className="mt-3 flex items-center gap-3">
-                          <span
-                            className="text-accent"
-                            style={{
-                              fontSize: "12px",
-                              letterSpacing: "0.15em",
-                            }}
-                          >
-                            続きから →
-                          </span>
-                        </div>
-                      )}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
-          )}
-        </section>
+        {/* 静的カタログ：subject（学年領域）でグループ化 */}
+        {!hasHydrated ? (
+          <p className="text-muted" style={{ fontSize: "13px" }}>
+            読み込んでいます…
+          </p>
+        ) : (
+          (() => {
+            // subject ごとに分類してから、SUBJECT_ORDER の順に並べる
+            const grouped = new Map<SeriesSubject, typeof catalog>();
+            for (const item of catalog) {
+              const key = item.entry.subject;
+              if (!grouped.has(key)) grouped.set(key, []);
+              grouped.get(key)!.push(item);
+            }
+            return SUBJECT_ORDER.filter((s) => grouped.has(s)).map(
+              (subject) => (
+                <section key={subject} className="flex flex-col gap-4">
+                  <h2
+                    className="text-foreground"
+                    style={{
+                      fontSize: "13px",
+                      letterSpacing: "0.3em",
+                    }}
+                  >
+                    {SUBJECT_GROUP_LABEL[subject]}
+                  </h2>
+                  <ol className="flex flex-col gap-3">
+                    {grouped.get(subject)!.map(
+                      ({ entry, resumeIndex, total }) => {
+                        const isCompleted = resumeIndex >= total;
+                        const inProgress = resumeIndex > 0 && !isCompleted;
+                        const href = inProgress
+                          ? `/learn/play/?seriesId=${entry.series.id}`
+                          : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
+                        return (
+                          <li key={entry.series.id}>
+                            <Link
+                              href={href}
+                              className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
+                              style={{ background: "var(--surface)" }}
+                            >
+                              <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
+                                <span
+                                  className="text-muted"
+                                  style={{
+                                    fontSize: "12px",
+                                    letterSpacing: "0.15em",
+                                  }}
+                                >
+                                  {entry.shortDescription}
+                                </span>
+                                {isCompleted && (
+                                  <span
+                                    className="text-success tnum"
+                                    style={{ fontSize: "12px" }}
+                                  >
+                                    ✓ {total}/{total}
+                                  </span>
+                                )}
+                                {inProgress && (
+                                  <span
+                                    className="text-muted tnum"
+                                    style={{ fontSize: "12px" }}
+                                  >
+                                    {resumeIndex}/{total} 解いた
+                                  </span>
+                                )}
+                                {!isCompleted && !inProgress && (
+                                  <span
+                                    className="text-muted tnum"
+                                    style={{ fontSize: "12px" }}
+                                  >
+                                    全 {total} 問
+                                  </span>
+                                )}
+                              </div>
+                              <p
+                                className="font-serif text-foreground"
+                                style={{
+                                  fontSize: "clamp(17px, 1.25rem, 20px)",
+                                  letterSpacing: "0.06em",
+                                }}
+                              >
+                                {entry.series.title}
+                              </p>
+                              {inProgress && (
+                                <div className="mt-3">
+                                  <span
+                                    className="text-accent"
+                                    style={{
+                                      fontSize: "12px",
+                                      letterSpacing: "0.15em",
+                                    }}
+                                  >
+                                    続きから →
+                                  </span>
+                                </div>
+                              )}
+                            </Link>
+                          </li>
+                        );
+                      },
+                    )}
+                  </ol>
+                </section>
+              ),
+            );
+          })()
+        )}
 
         {/* 教師作成カタログ */}
         {hasHydrated && teacherSeries.length > 0 && (
