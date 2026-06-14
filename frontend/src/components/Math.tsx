@@ -5,7 +5,35 @@ import React from "react";
 import { BlockMath, InlineMath } from "react-katex";
 
 /**
+ * 文字列中の **強調** 部分を <strong> に変換し、その断片を返す。
+ * MathText の中で使う。
+ */
+function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const regex = /\*\*([^*\n]+)\*\*/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let keyCounter = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(
+      <strong key={`${keyPrefix}b${keyCounter++}`} className="text-foreground">
+        {match[1]}
+      </strong>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
+
+/**
  * 問題文中の `$...$` を KaTeX でインライン描画する。
+ * `**強調**` も <strong> として処理する。
  *
  * 使い方：問題文の数式部分を $...$ で囲む。
  * 例：「$(x+1)(x+2)$ を展開すると $x^2 + \\square x + 2$ になります。」
@@ -20,7 +48,8 @@ export function MathText({ text }: { text: string }) {
   let keyCounter = 0;
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      parts.push(text.slice(lastIndex, match.index));
+      const before = text.slice(lastIndex, match.index);
+      parts.push(...renderBoldSegments(before, `m${keyCounter}`));
     }
     parts.push(
       <InlineMath key={`m${keyCounter++}`} math={match[1]} />
@@ -28,7 +57,8 @@ export function MathText({ text }: { text: string }) {
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
+    const tail = text.slice(lastIndex);
+    parts.push(...renderBoldSegments(tail, `mt${keyCounter}`));
   }
   return <>{parts}</>;
 }
