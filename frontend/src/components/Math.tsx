@@ -546,6 +546,147 @@ function TryExample({
 }
 
 /**
+ * 川幅を tan で測る図。
+ * 岸を 10 m 歩いて、向こう岸の木を見上げた角度が 60° なら、
+ * 川幅 = 10 × tan 60° ≈ 10 × 2 = 約 20 m。
+ *
+ * 池田洋介『数学Ⅰ・A 入門問題精講』（旺文社）の設例に着想を得て、
+ * ruisuishiki の視覚言語でオリジナルに描き起こしたもの。
+ * 数値（10 m / 60° / 約 20 m）は本サイトの教師の概数例に合わせている。
+ */
+export function RiverWidthMeasure() {
+  const stroke = "var(--foreground)";
+  const muted = "var(--muted)";
+  const accent = "var(--accent)";
+  const water =
+    "color-mix(in oklch, var(--background) 78%, var(--accent) 22%)";
+  const triFill =
+    "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const leaf =
+    "color-mix(in oklch, var(--accent) 35%, var(--foreground) 10%)";
+  // 座標
+  //   T = (130, 80)  木（向こう岸）
+  //   A = (130, 220) 木の真下、手前岸
+  //   C = (200, 220) 人（手前岸）
+  //   AT = 140 (= 川幅、約 20m に対応)
+  //   AC = 70  (= 歩いた距離、10m に対応、tan ≈ 2)
+  return (
+    <svg
+      viewBox="0 0 460 320"
+      className="w-full h-auto"
+      style={{ maxWidth: 480 }}
+      role="img"
+      aria-label="川幅をタンジェントで測る図：直角三角形 ACT、角C で 60°、AC=10m、川幅 ≈ 20m"
+    >
+      {/* 川 */}
+      <rect x="0" y="80" width="460" height="140" fill={water} opacity="0.55" />
+      {/* 川岸の線 */}
+      <line x1="0" y1="80" x2="460" y2="80" stroke="var(--border)" strokeWidth="1" />
+      <line x1="0" y1="220" x2="460" y2="220" stroke="var(--border)" strokeWidth="1" />
+
+      {/* 三角形 ACT */}
+      <polygon
+        points="130,80 200,220 130,220"
+        fill={triFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+        strokeDasharray="0"
+      />
+      {/* 直角マーカー at A=(130,220) */}
+      <polyline
+        points="130,212 138,212 138,220"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+
+      {/* 木（向こう岸、T） */}
+      {/* 幹 */}
+      <rect x="127" y="64" width="6" height="16" fill="color-mix(in oklch, var(--foreground) 35%, transparent)" />
+      {/* 葉 */}
+      <circle cx="130" cy="55" r="14" fill={leaf} />
+      <circle cx="120" cy="62" r="10" fill={leaf} />
+      <circle cx="140" cy="62" r="10" fill={leaf} />
+
+      {/* 人（手前岸、C） */}
+      {/* 頭 */}
+      <circle cx="200" cy="200" r="5" fill="none" stroke={stroke} strokeWidth="1.4" />
+      {/* 体 */}
+      <line x1="200" y1="205" x2="200" y2="220" stroke={stroke} strokeWidth="1.4" />
+      {/* 木を見上げる視線（細い破線） */}
+      <line
+        x1="200"
+        y1="200"
+        x2="135"
+        y2="80"
+        stroke={accent}
+        strokeWidth="0.8"
+        strokeDasharray="3,3"
+        opacity="0.5"
+      />
+
+      {/* 角 60° の弧（C = 200,220 から、CA 方向と CT 方向の間） */}
+      {/* CA = 左（-1,0）。 CT 方向は (-0.447,-0.894)。弧は半径 16 で */}
+      <path
+        d="M 184,220 A 16,16 0 0,0 192.8,205.7"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="170" y="212" fontSize="11" fill={accent} fontStyle="italic">
+        60°
+      </text>
+
+      {/* 川幅ラベル（A-T 中点付近、川の上） */}
+      <text x="122" y="150" fontSize="10" fill={muted} textAnchor="end">
+        川幅
+      </text>
+      <text
+        x="122"
+        y="166"
+        fontSize="14"
+        fill={accent}
+        textAnchor="end"
+        fontWeight="600"
+      >
+        ? m
+      </text>
+
+      {/* AC=10m ラベル */}
+      <text x="165" y="238" fontSize="11" fill={muted} textAnchor="middle">
+        歩いた距離
+      </text>
+      <text x="165" y="252" fontSize="12" fill={stroke} textAnchor="middle">
+        10 m
+      </text>
+
+      {/* 点ラベル */}
+      <text x="118" y="78" fontSize="10" fill={muted} textAnchor="end">
+        T
+      </text>
+      <text x="118" y="232" fontSize="10" fill={muted} textAnchor="end">
+        A
+      </text>
+      <text x="210" y="232" fontSize="10" fill={muted}>
+        C
+      </text>
+
+      {/* 計算式 */}
+      <text
+        x="230"
+        y="290"
+        fontSize="13"
+        fill={stroke}
+        textAnchor="middle"
+        style={{ letterSpacing: "0.05em" }}
+      >
+        川幅 = 10 × tan 60° ≈ 10 × 2 = 約 20 m
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 同じ角 θ をもつ、大きさの違う 2 つの直角三角形。
  * タンジェントの本質「角だけで決まる量、大きさによらない」を視覚化する。
  * 教師ワークシートの「タンジェント」の絵（複数の同角三角形）に対応。
@@ -1299,6 +1440,26 @@ export function MathBody({ text }: { text: string }) {
             <div key={i} className="my-6 flex justify-center">
               <TrigTable />
             </div>
+          );
+        }
+        if (trimmed === "<<RIVER_WIDTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RiverWidthMeasure />
+            </div>
+          );
+        }
+        // 水平区切り（「もっと深く」セクションへの分岐線）
+        if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
+          return (
+            <hr
+              key={i}
+              className="my-8"
+              style={{
+                border: 0,
+                borderTop: "1px dashed var(--border)",
+              }}
+            />
           );
         }
         // $$...$$ だけの段落は BlockMath
