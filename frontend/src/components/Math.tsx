@@ -117,6 +117,151 @@ export function ParabolaUp() {
 }
 
 /**
+ * 点と直線の距離を示す SVG。
+ * 直線 ℓ、点 A、A から ℓ に下ろした垂線の足 H、距離 d を描く。
+ */
+export function PointLineDistance() {
+  // 座標系：viewBox 240x180、原点を (40, 145) に
+  // x 軸方向 18px = 1 単位、y 軸方向 18px = 1 単位
+  const ox = 40;
+  const oy = 145;
+  const u = 18;
+  const m = (mx: number, my: number) => [ox + mx * u, oy - my * u] as const;
+
+  // 直線：y = -x/2 + 5（傾き -1/2、y切片 5）
+  // 端点：x = 0 → y = 5、x = 10 → y = 0
+  const [lineX0, lineY0] = m(0, 5);
+  const [lineX1, lineY1] = m(10, 0);
+
+  // 点 A = (4, 7)
+  const [ax, ay] = m(4, 7);
+
+  // 垂線の足 H = (2.4, 3.8)
+  const [hx, hy] = m(2.4, 3.8);
+
+  return (
+    <svg
+      viewBox="0 0 240 180"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ maxWidth: "300px", height: "auto" }}
+      role="img"
+      aria-label="座標平面上の点 A と直線 ℓ。A から ℓ に下ろした垂線の足が H、AH の長さが距離 d"
+    >
+      {/* 座標軸 */}
+      <line x1="20" y1={oy} x2="225" y2={oy} stroke="var(--muted)" strokeWidth="0.6" />
+      <line x1={ox} y1="15" x2={ox} y2="170" stroke="var(--muted)" strokeWidth="0.6" />
+      <text x="227" y={oy + 4} fontSize="9" fill="var(--muted)">x</text>
+      <text x={ox - 9} y="14" fontSize="9" fill="var(--muted)">y</text>
+      <text x={ox - 9} y={oy + 11} fontSize="8" fill="var(--muted)">O</text>
+
+      {/* 直線 ℓ */}
+      <line x1={lineX0} y1={lineY0} x2={lineX1} y2={lineY1} stroke="var(--accent)" strokeWidth="1.8" />
+      <text x={lineX1 + 4} y={lineY1 - 2} fontSize="11" fill="var(--accent)">ℓ</text>
+
+      {/* 垂線（A から H への点線） */}
+      <line x1={ax} y1={ay} x2={hx} y2={hy} stroke="var(--accent-warm)" strokeWidth="1.4" strokeDasharray="3,3" />
+
+      {/* 垂線の足 H に「直角マーク」 */}
+      {(() => {
+        // 直線の方向ベクトル: (10, 0) - (0, 5) = (10, -5)、つまり (2, -1) 方向
+        // 垂線の方向: (1, 2) 方向
+        const s = 6;
+        const dx1 = 2 / Math.sqrt(5) * s; // 直線方向
+        const dy1 = -1 / Math.sqrt(5) * s;
+        const dx2 = 1 / Math.sqrt(5) * s; // 垂線方向（H から A へ）
+        const dy2 = 2 / Math.sqrt(5) * s;
+        return (
+          <path
+            d={`M ${hx + dx1} ${hy + dy1} L ${hx + dx1 + dx2} ${hy + dy1 + dy2} L ${hx + dx2} ${hy + dy2}`}
+            fill="none" stroke="var(--accent-warm)" strokeWidth="1"
+          />
+        );
+      })()}
+
+      {/* 点 A */}
+      <circle cx={ax} cy={ay} r="3.5" fill="var(--accent-warm)" />
+      <text x={ax + 6} y={ay - 5} fontSize="11" fill="var(--foreground)">A(x₀, y₀)</text>
+
+      {/* 点 H */}
+      <circle cx={hx} cy={hy} r="3" fill="var(--accent)" />
+      <text x={hx - 14} y={hy + 14} fontSize="10" fill="var(--foreground)">H</text>
+
+      {/* 距離 d のラベル（A と H の中点付近に） */}
+      <text x={(ax + hx) / 2 + 6} y={(ay + hy) / 2} fontSize="11" fill="var(--accent-warm)" fontStyle="italic">d</text>
+    </svg>
+  );
+}
+
+/**
+ * 直線の式に代入したときの「ずれ」を可視化する SVG。
+ * 直線 ℓ と、その近くの 3 点（直線上・少しずれた点・大きくずれた点）を示し、
+ * 「式に代入した値の大きさ ＝ 直線からの離れ具合」が見える形に。
+ */
+export function PointLineDeviation() {
+  const ox = 40;
+  const oy = 145;
+  const u = 18;
+  const m = (mx: number, my: number) => [ox + mx * u, oy - my * u] as const;
+
+  // 直線：y = -x/2 + 5
+  const [lineX0, lineY0] = m(0, 5);
+  const [lineX1, lineY1] = m(10, 0);
+
+  // 3 つの点
+  // P1: 直線上の点（x=2, y=4） → ax+by+c = 2 + 2·4 - 10 = 0
+  const [p1x, p1y] = m(2, 4);
+  // P2: 少し上にずれた点（x=4, y=6） → 4 + 2·6 - 10 = 6（ずれ +6）
+  const [p2x, p2y] = m(4, 6);
+  // P3: 下にずれた点（x=2, y=2） → 2 + 2·2 - 10 = -4（ずれ -4）
+  const [p3x, p3y] = m(2, 2);
+
+  return (
+    <svg
+      viewBox="0 0 240 180"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ maxWidth: "300px", height: "auto" }}
+      role="img"
+      aria-label="直線とその近くの3点。式に代入した値の絶対値が、点の直線からの離れ具合を表す"
+    >
+      {/* 座標軸 */}
+      <line x1="20" y1={oy} x2="225" y2={oy} stroke="var(--muted)" strokeWidth="0.6" />
+      <line x1={ox} y1="15" x2={ox} y2="170" stroke="var(--muted)" strokeWidth="0.6" />
+      <text x="227" y={oy + 4} fontSize="9" fill="var(--muted)">x</text>
+      <text x={ox - 9} y="14" fontSize="9" fill="var(--muted)">y</text>
+
+      {/* 直線 ℓ */}
+      <line x1={lineX0} y1={lineY0} x2={lineX1} y2={lineY1} stroke="var(--accent)" strokeWidth="1.8" />
+      <text x={lineX1 + 4} y={lineY1 - 2} fontSize="10" fill="var(--accent)">
+        ℓ: x + 2y − 10 = 0
+      </text>
+
+      {/* P1: 直線上の点 */}
+      <circle cx={p1x} cy={p1y} r="3.5" fill="var(--success)" />
+      <text x={p1x + 6} y={p1y + 4} fontSize="9" fill="var(--success)">
+        P₁ → 0
+      </text>
+
+      {/* P2: 直線より上の点（正のずれ） */}
+      <circle cx={p2x} cy={p2y} r="3.5" fill="var(--accent-warm)" />
+      <text x={p2x + 6} y={p2y - 2} fontSize="9" fill="var(--accent-warm)">
+        P₂ → +6
+      </text>
+
+      {/* P3: 直線より下の点（負のずれ） */}
+      <circle cx={p3x} cy={p3y} r="3.5" fill="var(--warning)" />
+      <text x={p3x + 6} y={p3y + 10} fontSize="9" fill="var(--warning)">
+        P₃ → −4
+      </text>
+
+      {/* 凡例 */}
+      <text x={140} y={163} fontSize="8" fill="var(--muted)">
+        式に代入した値 → ずれの大きさ
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 直方体（1 cm³ ブロックの集まり）を等角投影で描く SVG。
  * 「公式の景色」で体積の意味を視覚的に支える。
  *
@@ -317,6 +462,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CuboidIsometric />
+            </div>
+          );
+        }
+        if (trimmed === "<<POINT_LINE_DIST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PointLineDistance />
+            </div>
+          );
+        }
+        if (trimmed === "<<POINT_LINE_DEVIATION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PointLineDeviation />
             </div>
           );
         }
