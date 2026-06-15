@@ -38,7 +38,7 @@ function TermLink({ term }: { term: string }) {
         {open && (
           <span
             role="tooltip"
-            className="absolute z-20 left-1/2 -translate-x-1/2 top-full mt-1 w-64 sm:w-72 p-3 rounded-lg border border-border shadow-lg"
+            className="absolute z-20 left-0 top-full mt-1 w-64 sm:w-72 max-w-[calc(100vw-2rem)] p-3 rounded-lg border border-border shadow-lg"
             style={{
               background: "var(--background)",
               fontSize: "12px",
