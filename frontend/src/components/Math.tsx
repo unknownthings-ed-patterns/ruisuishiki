@@ -51,7 +51,7 @@ function TermLink({ term }: { term: string }) {
           >
             <span className="block text-foreground">{entry.short}</span>
             <span className="flex flex-col gap-1 mt-2">
-              {entry.easy && (
+              {(entry.easy || entry.meaning) && (
                 <button
                   type="button"
                   onClick={(e) => {
@@ -62,7 +62,7 @@ function TermLink({ term }: { term: string }) {
                   className="text-accent hover:underline text-left"
                   style={{ fontSize: "11px", letterSpacing: "0.1em" }}
                 >
-                  もっと詳しく → 易しい例を読む
+                  もっと詳しく → 辞書ページを開く
                 </button>
               )}
               {entry.relatedSeriesId && (
@@ -81,11 +81,10 @@ function TermLink({ term }: { term: string }) {
           </span>
         )}
       </span>
-      {easyOpen && entry.easy && (
+      {easyOpen && (entry.easy || entry.meaning) && (
         <EasyExplanationModal
           term={term}
-          easy={entry.easy}
-          relatedSeriesId={entry.relatedSeriesId}
+          entry={entry}
           onClose={() => setEasyOpen(false)}
         />
       )}
@@ -97,17 +96,66 @@ function TermLink({ term }: { term: string }) {
  * 用語の「易しい例」を全画面のモーダルで表示する。
  * 易しい例は MathBody 互換のテキスト（$...$ や **強調**、図マーカーも使える）。
  */
+/**
+ * 構造化された辞書ページ。
+ * 教師のワークシート方式（4象限）に対応する 4セクション：
+ *   §1 定義（説明）と例
+ *   §2 図や絵
+ *   §3 使う場面 / 生活の中では？
+ *   §4 にていることば / なかまのことば
+ *
+ * 空のセクション（未記入）は描画しない。書く対象が一目で見える設計。
+ */
+function StructuredDictionaryPage({ entry }: { entry: GlossaryEntry }) {
+  const sections: { label: string; text: string }[] = [];
+  if (entry.meaning) sections.push({ label: "定義（説明）と例", text: entry.meaning });
+  if (entry.figures) sections.push({ label: "図や絵", text: entry.figures });
+  if (entry.scenes) sections.push({ label: "使う場面 — 生活の中では？", text: entry.scenes });
+  if (entry.relatedTerms)
+    sections.push({ label: "にていることば — なかまのことば", text: entry.relatedTerms });
+  return (
+    <>
+      {sections.map((s, i) => (
+        <span
+          key={s.label}
+          className={
+            i === 0
+              ? "block"
+              : "block mt-6 pt-5 border-t border-border/60"
+          }
+        >
+          <span
+            className="block text-muted mb-3"
+            style={{
+              fontSize: "11px",
+              letterSpacing: "0.25em",
+              textTransform: "none",
+            }}
+          >
+            §{i + 1}　{s.label}
+          </span>
+          <span
+            className="block text-foreground/85"
+            style={{ fontSize: "14px" }}
+          >
+            <MathBody text={s.text} />
+          </span>
+        </span>
+      ))}
+    </>
+  );
+}
+
 function EasyExplanationModal({
   term,
-  easy,
-  relatedSeriesId,
+  entry,
   onClose,
 }: {
   term: string;
-  easy: string;
-  relatedSeriesId?: string;
+  entry: GlossaryEntry;
   onClose: () => void;
 }) {
+  const relatedSeriesId = entry.relatedSeriesId;
   // ESC キーで閉じる
   React.useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -157,13 +205,15 @@ function EasyExplanationModal({
             閉じる ✕
           </button>
         </span>
-        <span className="block text-foreground/85" style={{ fontSize: "14px" }}>
-          <MathBody text={easy} />
-        </span>
+        {entry.meaning ? (
+          <StructuredDictionaryPage entry={entry} />
+        ) : entry.easy ? (
+          <span className="block text-foreground/85" style={{ fontSize: "14px" }}>
+            <MathBody text={entry.easy} />
+          </span>
+        ) : null}
 
-        {GLOSSARY[term]?.example && (
-          <TryExample term={term} entry={GLOSSARY[term]} />
-        )}
+        {entry.example && <TryExample term={term} entry={entry} />}
 
         {relatedSeriesId && (
           <span className="block mt-6 pt-4 border-t border-border">
@@ -492,6 +542,123 @@ function TryExample({
         </span>
       )}
     </span>
+  );
+}
+
+/**
+ * 同じ角 θ をもつ、大きさの違う 2 つの直角三角形。
+ * タンジェントの本質「角だけで決まる量、大きさによらない」を視覚化する。
+ * 教師ワークシートの「タンジェント」の絵（複数の同角三角形）に対応。
+ *
+ * 横:高さ = 1:2（slope 2）で 2サイズ描画。
+ * SVG y軸は下向きなので、高さは y を小さくする方向に描く。
+ */
+export function TangentScale() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 460 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 460 }}
+      role="img"
+      aria-label="同じ角 θ をもつ、大きさの違う 2つの直角三角形（横:高さ = 1:2）"
+    >
+      {/* 地面 */}
+      <line
+        x1="0"
+        y1="200"
+        x2="460"
+        y2="200"
+        stroke="var(--border)"
+        strokeWidth="0.5"
+        strokeDasharray="3,3"
+      />
+      {/* 小さい三角形：横40, 高さ80 */}
+      <polygon
+        points="40,200 80,200 80,120"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー（小） */}
+      <polyline
+        points="74,200 74,194 80,194"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* θ ラベル（小） */}
+      <text
+        x="48"
+        y="194"
+        fontSize="13"
+        fill={accent}
+        fontStyle="italic"
+      >
+        θ
+      </text>
+      <text x="60" y="222" fontSize="10" fill={muted} textAnchor="middle">
+        1 cm
+      </text>
+      <text x="86" y="165" fontSize="10" fill={muted}>
+        2 cm
+      </text>
+
+      {/* 大きい三角形：横100, 高さ200 */}
+      <polygon
+        points="220,200 320,200 320,0"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー（大） */}
+      <polyline
+        points="314,200 314,194 320,194"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* θ ラベル（大） */}
+      <text
+        x="228"
+        y="194"
+        fontSize="13"
+        fill={accent}
+        fontStyle="italic"
+      >
+        θ
+      </text>
+      <text x="270" y="222" fontSize="10" fill={muted} textAnchor="middle">
+        1 m
+      </text>
+      <text x="326" y="110" fontSize="10" fill={muted}>
+        2 m
+      </text>
+
+      {/* 中央のメッセージ */}
+      <text
+        x="150"
+        y="118"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        style={{ letterSpacing: "0.1em" }}
+      >
+        同じ θ
+      </text>
+      <text
+        x="150"
+        y="138"
+        fontSize="10"
+        fill={muted}
+        textAnchor="middle"
+      >
+        同じかたむき
+      </text>
+    </svg>
   );
 }
 
@@ -908,6 +1075,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <PointLineDeviation />
+            </div>
+          );
+        }
+        if (trimmed === "<<TANGENT_SCALE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TangentScale />
             </div>
           );
         }
