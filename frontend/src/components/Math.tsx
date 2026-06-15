@@ -3,7 +3,7 @@
 import "katex/dist/katex.min.css";
 import React, { useState } from "react";
 import { BlockMath, InlineMath } from "react-katex";
-import { GLOSSARY } from "@/lib/glossary";
+import { GLOSSARY, type GlossaryEntry, type VerifyResult } from "@/lib/glossary";
 
 /**
  * 用語リンク：[用語名] と書かれた部分が、辞書に登録されていれば
@@ -160,6 +160,11 @@ function EasyExplanationModal({
         <span className="block text-foreground/85" style={{ fontSize: "14px" }}>
           <MathBody text={easy} />
         </span>
+
+        {GLOSSARY[term]?.example && (
+          <TryExample term={term} entry={GLOSSARY[term]} />
+        )}
+
         {relatedSeriesId && (
           <span className="block mt-6 pt-4 border-t border-border">
             <a
@@ -262,6 +267,232 @@ export function MathText({ text }: { text: string }) {
     parts.push(...renderBoldSegments(tail, `mt${keyCounter}`));
   }
   return <>{parts}</>;
+}
+
+/**
+ * 「自分で例を作って確かめる」インタラクティブセクション。
+ * 結城浩さんのパタン「例示は理解の試金石」を実装。
+ *
+ * - 入力フィールドに値を入れる
+ * - 「確かめる」ボタンで verify 関数を呼ぶ
+ * - 結果（成功・失敗）と詳細・メッセージ・ヒントを表示
+ * - 成功した例は localStorage に蓄積（「集める喜び」）
+ */
+function TryExample({
+  term,
+  entry,
+}: {
+  term: string;
+  entry: GlossaryEntry;
+}) {
+  const spec = entry.example;
+  const [values, setValues] = useState<Record<string, string>>(() =>
+    Object.fromEntries(spec?.inputs.map((i) => [i.name, ""]) ?? []),
+  );
+  const [result, setResult] = useState<VerifyResult | null>(null);
+  const [foundExamples, setFoundExamples] = useState<string[]>([]);
+
+  const storageKey = `ruisuishiki:examples:${term}`;
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = window.localStorage.getItem(storageKey);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) setFoundExamples(parsed);
+      }
+    } catch {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [term]);
+
+  if (!spec) return null;
+
+  function handleCheck(e: React.FormEvent) {
+    e.preventDefault();
+    if (!spec) return;
+    const parsed: Record<string, number> = {};
+    for (const i of spec.inputs) {
+      const raw = (values[i.name] || "").trim();
+      if (raw === "") return;
+      const num = parseFloat(
+        raw
+          .replace(/[０-９]/g, (c) =>
+            String.fromCharCode(c.charCodeAt(0) - 0xfee0),
+          )
+          .replace(/[ー−–—]/g, "-"),
+      );
+      if (Number.isNaN(num)) return;
+      parsed[i.name] = num;
+    }
+    const r = spec.verify(parsed);
+    setResult(r);
+
+    // 成功で自明でなく、まだ見つけていない例なら追加
+    if (r.ok && !r.trivial && !foundExamples.includes(r.canonicalKey)) {
+      const updated = [r.canonicalKey, ...foundExamples].slice(0, 30); // 最大30件
+      setFoundExamples(updated);
+      if (typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem(storageKey, JSON.stringify(updated));
+        } catch {
+          // ignore
+        }
+      }
+    }
+  }
+
+  function handleReset() {
+    if (!spec) return;
+    setValues(Object.fromEntries(spec.inputs.map((i) => [i.name, ""])));
+    setResult(null);
+  }
+
+  // 新規発見か（成功時のみ意味あり）
+  const isNew =
+    result?.ok && !result.trivial && foundExamples[0] === result.canonicalKey;
+  // 既に見つけていた例（成功・既出）
+  const isRepeat =
+    result?.ok &&
+    !result.trivial &&
+    !isNew &&
+    foundExamples.includes(result.canonicalKey);
+
+  return (
+    <span className="block mt-6 pt-4 border-t border-border">
+      <span
+        className="block text-foreground mb-2"
+        style={{ fontSize: "13px", letterSpacing: "0.2em" }}
+      >
+        🔧 自分で例を作ってみる
+      </span>
+      <span
+        className="block text-muted mb-4"
+        style={{ fontSize: "13px", lineHeight: 1.8 }}
+      >
+        <MathText text={spec.prompt} />
+      </span>
+
+      <form onSubmit={handleCheck} className="flex flex-col gap-3 mb-4">
+        <span className="flex flex-wrap gap-3 items-baseline">
+          {spec.inputs.map((i) => (
+            <label
+              key={i.name}
+              className="flex items-baseline gap-2"
+              style={{ fontSize: "13px" }}
+            >
+              <span className="text-muted">{i.label} =</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={values[i.name]}
+                onChange={(e) =>
+                  setValues((v) => ({ ...v, [i.name]: e.target.value }))
+                }
+                className="w-16 px-2 py-1 rounded border border-border bg-background text-foreground text-center tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
+                style={{ fontSize: "14px" }}
+                aria-label={i.label}
+              />
+            </label>
+          ))}
+        </span>
+        <span className="flex gap-3">
+          <button
+            type="submit"
+            disabled={spec.inputs.some((i) => !values[i.name]?.trim())}
+            className="px-5 py-2 rounded-lg bg-accent text-background disabled:opacity-40 disabled:cursor-not-allowed transition-transform hover:scale-[1.02]"
+            style={{ fontSize: "12px", letterSpacing: "0.15em" }}
+          >
+            確かめる
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="px-4 py-2 text-muted hover:text-foreground transition-colors"
+            style={{ fontSize: "12px", letterSpacing: "0.1em" }}
+          >
+            リセット
+          </button>
+        </span>
+      </form>
+
+      {result && (
+        <span
+          className="block rounded-lg p-4 mb-4"
+          style={{
+            background: result.ok
+              ? result.trivial
+                ? "color-mix(in oklch, var(--surface) 85%, var(--warning) 15%)"
+                : "color-mix(in oklch, var(--surface) 75%, var(--success) 25%)"
+              : "color-mix(in oklch, var(--surface) 85%, var(--warning) 15%)",
+          }}
+          role="status"
+          aria-live="polite"
+        >
+          <span
+            className="block mb-1"
+            style={{
+              fontSize: "13px",
+              fontWeight: 600,
+              color: result.ok && !result.trivial ? "var(--success)" : "var(--warning)",
+            }}
+          >
+            {result.ok ? (result.trivial ? "🤔" : isRepeat ? "✓ また見つけました" : isNew ? "🎉 新しい発見！" : "✓") : "✗"}
+          </span>
+          <span
+            className="block text-foreground mb-2"
+            style={{ fontSize: "13px", lineHeight: 1.8 }}
+          >
+            <MathText text={result.detail} />
+          </span>
+          <span
+            className="block text-foreground/85"
+            style={{ fontSize: "13px", lineHeight: 1.8 }}
+          >
+            <MathText text={result.message} />
+          </span>
+          {result.hint && (
+            <span
+              className="block mt-2 text-muted"
+              style={{ fontSize: "12px", lineHeight: 1.7 }}
+            >
+              💡 <MathText text={result.hint} />
+            </span>
+          )}
+        </span>
+      )}
+
+      {foundExamples.length > 0 && (
+        <span className="block">
+          <span
+            className="block text-muted mb-2"
+            style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+          >
+            📦 これまでに見つけた例（{foundExamples.length}）
+          </span>
+          <span className="flex flex-wrap gap-2">
+            {foundExamples.map((ex, i) => (
+              <span
+                key={ex}
+                className="px-2.5 py-1 rounded border border-border text-foreground tnum"
+                style={{
+                  fontSize: "12px",
+                  background:
+                    i === 0
+                      ? "color-mix(in oklch, var(--surface) 70%, var(--success) 30%)"
+                      : "var(--surface)",
+                }}
+              >
+                ({ex})
+              </span>
+            ))}
+          </span>
+        </span>
+      )}
+    </span>
+  );
 }
 
 /**

@@ -34,6 +34,45 @@ export type GlossaryEntry = {
   easy?: string;
   /** もっと体系的に学べる関連系列のID（公式の景色を持つ系列） */
   relatedSeriesId?: string;
+  /**
+   * 「自分で例を作って確かめる」インタラクティブセクション。
+   * 結城浩さんのパタン「例示は理解の試金石」を実装する核。
+   * 受動的な「読む」から能動的な「作る」への橋渡し。
+   */
+  example?: ExampleSpec;
+};
+
+/** 入力フィールドの仕様 */
+export type ExampleInput = {
+  /** 内部キー（verify 関数の引数）。例: "a", "b", "c" */
+  name: string;
+  /** 表示ラベル。例: "a"、"a（短辺）" */
+  label: string;
+};
+
+/** 検証結果 */
+export type VerifyResult = {
+  ok: boolean;
+  /** 計算過程の詳細。「a² + b² = 25、c² = 25」など。常に表示 */
+  detail: string;
+  /** 評価メッセージ。「一致！」「惜しい！」など。常に表示 */
+  message: string;
+  /** 失敗時の前向きなヒント。失敗時のみ表示 */
+  hint?: string;
+  /** 重複判定キー。「3,4,5」のように同じ例を識別する */
+  canonicalKey: string;
+  /** 自明な例（0だけなど）か。控えめなフィードバックにする */
+  trivial?: boolean;
+};
+
+/** 「自分で例を作ってみる」セクションの仕様 */
+export type ExampleSpec = {
+  /** プロンプト文。入力欄の上に表示 */
+  prompt: string;
+  /** 入力フィールド群 */
+  inputs: ExampleInput[];
+  /** 検証関数。入力値から結果を返す */
+  verify: (values: Record<string, number>) => VerifyResult;
 };
 
 export const GLOSSARY: Record<string, GlossaryEntry> = {
@@ -254,6 +293,83 @@ $$(m^2 - n^2,\\ 2mn,\\ m^2 + n^2)$$
 
 無限に作れます。`,
     relatedSeriesId: "middle_pythagorean_01",
+    example: {
+      prompt: "3 つの整数 a, b, c を入れて、ピタゴラス数（$a^2 + b^2 = c^2$）になっているか確かめてみよう。",
+      inputs: [
+        { name: "a", label: "a" },
+        { name: "b", label: "b" },
+        { name: "c", label: "c（斜辺）" },
+      ],
+      verify: ({ a, b, c }) => {
+        // 整数の有効性確認
+        if (
+          !Number.isInteger(a) ||
+          !Number.isInteger(b) ||
+          !Number.isInteger(c)
+        ) {
+          return {
+            ok: false,
+            detail: "ピタゴラス数は「整数」の組です。",
+            message: "整数を入れてみよう。",
+            hint: "たとえば 3, 4, 5 のような正の整数を試してみよう。",
+            canonicalKey: `${a},${b},${c}`,
+          };
+        }
+        const lhs = a * a + b * b;
+        const rhs = c * c;
+        // 正規化キー：a, b は順序問わない、c は別
+        const [sa, sb] = [a, b].sort((x, y) => x - y);
+        const key = `${sa},${sb},${c}`;
+
+        // 0 を含む組は自明
+        const trivial = a === 0 || b === 0 || c === 0;
+
+        if (lhs === rhs) {
+          if (trivial) {
+            return {
+              ok: true,
+              detail: `$a^2 + b^2 = ${lhs}$、$c^2 = ${rhs}$`,
+              message:
+                "計算上は一致していますが、$a$ や $b$ や $c$ に 0 が入っていると、ふつうの直角三角形にはなりません。",
+              hint: "0 以外の正の整数で試してみよう。たとえば (3, 4, 5) や (5, 12, 13)。",
+              canonicalKey: key,
+              trivial: true,
+            };
+          }
+          if (a < 0 || b < 0 || c < 0) {
+            return {
+              ok: true,
+              detail: `$a^2 + b^2 = ${lhs}$、$c^2 = ${rhs}$`,
+              message:
+                "数式としては一致していますが、辺の長さなので正の整数で考えるのがふつうです。",
+              hint: "正の整数で試してみよう。",
+              canonicalKey: key,
+              trivial: true,
+            };
+          }
+          return {
+            ok: true,
+            detail: `$a^2 + b^2 = ${a}^2 + ${b}^2 = ${lhs}$、$c^2 = ${c}^2 = ${rhs}$`,
+            message: "ぴったり一致！これはピタゴラス数の組です。",
+            canonicalKey: key,
+          };
+        }
+        // ヒントを失敗の様子に応じて
+        let hint: string;
+        if (lhs > rhs) {
+          hint = `$c$ が小さすぎるようです。$c$ をもう少し大きくしてみよう。`;
+        } else {
+          hint = `$c$ が大きすぎるようです。$c$ を小さくするか、$a, b$ を大きくしてみよう。`;
+        }
+        return {
+          ok: false,
+          detail: `$a^2 + b^2 = ${a}^2 + ${b}^2 = ${lhs}$、$c^2 = ${c}^2 = ${rhs}$`,
+          message: `$${lhs}$ と $${rhs}$ で違うので、この組はピタゴラス数ではありません。`,
+          hint,
+          canonicalKey: key,
+        };
+      },
+    },
   },
   素因数分解: {
     short: "整数を素数の積に書き直す操作。",
