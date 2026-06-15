@@ -1,14 +1,102 @@
 "use client";
 
 import "katex/dist/katex.min.css";
-import React from "react";
+import React, { useState } from "react";
 import { BlockMath, InlineMath } from "react-katex";
+import { GLOSSARY } from "@/lib/glossary";
+
+/**
+ * 用語リンク：[用語名] と書かれた部分が、辞書に登録されていれば
+ * ホバーまたはクリックで簡易説明と関連系列リンクを表示する。
+ *
+ * 辞書にない用語はそのまま素通し（リンクなし）で表示。
+ */
+function TermLink({ term }: { term: string }) {
+  const [open, setOpen] = useState(false);
+  const entry = GLOSSARY[term];
+
+  // 辞書にない用語はそのまま素通し（角括弧は外す）
+  if (!entry) {
+    return <>{term}</>;
+  }
+
+  return (
+    <span className="relative inline-block">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        className="text-accent underline underline-offset-2 cursor-help"
+        style={{ textDecorationStyle: "dotted", textDecorationThickness: "1px" }}
+        aria-expanded={open}
+        aria-label={`用語の説明：${term}`}
+      >
+        {term}
+      </button>
+      {open && (
+        <span
+          role="tooltip"
+          className="absolute z-20 left-1/2 -translate-x-1/2 top-full mt-1 w-64 sm:w-72 p-3 rounded-lg border border-border shadow-lg"
+          style={{
+            background: "var(--background)",
+            fontSize: "12px",
+            lineHeight: 1.7,
+            letterSpacing: "0.02em",
+            textAlign: "left",
+          }}
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
+          <span className="block text-foreground">{entry.short}</span>
+          {entry.relatedSeriesId && (
+            <a
+              href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block mt-2 text-accent hover:underline"
+              style={{ fontSize: "11px", letterSpacing: "0.1em" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              もっと詳しく → 公式の景色を見る
+            </a>
+          )}
+        </span>
+      )}
+    </span>
+  );
+}
 
 /**
  * 文字列中の **強調** 部分を <strong> に変換し、その断片を返す。
+ * 用語 [...] は TermLink に置換する。
  * MathText の中で使う。
  */
+function renderTermLinks(text: string, keyPrefix: string): React.ReactNode[] {
+  // [用語名] の形式を検出して、辞書にあれば TermLink に置換
+  // 中身は日本語英数字を許容、改行や ] は含まない
+  const parts: React.ReactNode[] = [];
+  const regex = /\[([^\[\]\n]+)\]/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let keyCounter = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(
+      <TermLink key={`${keyPrefix}t${keyCounter++}`} term={match[1]} />
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
+
 function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] {
+  // まず **強調** をパースし、その隙間で [用語] をパースする
   const parts: React.ReactNode[] = [];
   const regex = /\*\*([^*\n]+)\*\*/g;
   let lastIndex = 0;
@@ -16,7 +104,8 @@ function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] 
   let keyCounter = 0;
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      parts.push(text.slice(lastIndex, match.index));
+      const between = text.slice(lastIndex, match.index);
+      parts.push(...renderTermLinks(between, `${keyPrefix}b${keyCounter}`));
     }
     parts.push(
       <strong key={`${keyPrefix}b${keyCounter++}`} className="text-foreground">
@@ -26,7 +115,8 @@ function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] 
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
+    const tail = text.slice(lastIndex);
+    parts.push(...renderTermLinks(tail, `${keyPrefix}bt${keyCounter}`));
   }
   return parts;
 }
