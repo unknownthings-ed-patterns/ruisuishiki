@@ -13,6 +13,7 @@ import { GLOSSARY } from "@/lib/glossary";
  */
 function TermLink({ term }: { term: string }) {
   const [open, setOpen] = useState(false);
+  const [easyOpen, setEasyOpen] = useState(false);
   const entry = GLOSSARY[term];
 
   // 辞書にない用語はそのまま素通し（角括弧は外す）
@@ -21,48 +22,158 @@ function TermLink({ term }: { term: string }) {
   }
 
   return (
-    <span className="relative inline-block">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        className="text-accent underline underline-offset-2 cursor-help"
-        style={{ textDecorationStyle: "dotted", textDecorationThickness: "1px" }}
-        aria-expanded={open}
-        aria-label={`用語の説明：${term}`}
-      >
-        {term}
-      </button>
-      {open && (
-        <span
-          role="tooltip"
-          className="absolute z-20 left-1/2 -translate-x-1/2 top-full mt-1 w-64 sm:w-72 p-3 rounded-lg border border-border shadow-lg"
-          style={{
-            background: "var(--background)",
-            fontSize: "12px",
-            lineHeight: 1.7,
-            letterSpacing: "0.02em",
-            textAlign: "left",
-          }}
+    <>
+      <span className="relative inline-block">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
           onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+          className="text-accent underline underline-offset-2 cursor-help"
+          style={{ textDecorationStyle: "dotted", textDecorationThickness: "1px" }}
+          aria-expanded={open}
+          aria-label={`用語の説明：${term}`}
         >
-          <span className="block text-foreground">{entry.short}</span>
-          {entry.relatedSeriesId && (
+          {term}
+        </button>
+        {open && (
+          <span
+            role="tooltip"
+            className="absolute z-20 left-1/2 -translate-x-1/2 top-full mt-1 w-64 sm:w-72 p-3 rounded-lg border border-border shadow-lg"
+            style={{
+              background: "var(--background)",
+              fontSize: "12px",
+              lineHeight: 1.7,
+              letterSpacing: "0.02em",
+              textAlign: "left",
+            }}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <span className="block text-foreground">{entry.short}</span>
+            <span className="flex flex-col gap-1 mt-2">
+              {entry.easy && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setEasyOpen(true);
+                    setOpen(false);
+                  }}
+                  className="text-accent hover:underline text-left"
+                  style={{ fontSize: "11px", letterSpacing: "0.1em" }}
+                >
+                  もっと詳しく → 易しい例を読む
+                </button>
+              )}
+              {entry.relatedSeriesId && (
+                <a
+                  href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline"
+                  style={{ fontSize: "11px", letterSpacing: "0.1em" }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  歩いて学ぶ → 関連の系列へ
+                </a>
+              )}
+            </span>
+          </span>
+        )}
+      </span>
+      {easyOpen && entry.easy && (
+        <EasyExplanationModal
+          term={term}
+          easy={entry.easy}
+          relatedSeriesId={entry.relatedSeriesId}
+          onClose={() => setEasyOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
+/**
+ * 用語の「易しい例」を全画面のモーダルで表示する。
+ * 易しい例は MathBody 互換のテキスト（$...$ や **強調**、図マーカーも使える）。
+ */
+function EasyExplanationModal({
+  term,
+  easy,
+  relatedSeriesId,
+  onClose,
+}: {
+  term: string;
+  easy: string;
+  relatedSeriesId?: string;
+  onClose: () => void;
+}) {
+  // ESC キーで閉じる
+  React.useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    // body スクロールを止める
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <span
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${term} の易しい例`}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        background: "color-mix(in oklch, var(--background) 70%, transparent)",
+        backdropFilter: "blur(4px)",
+      }}
+      onClick={onClose}
+    >
+      <span
+        className="relative block w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-lg border border-border p-6 sm:p-8 shadow-xl"
+        style={{ background: "var(--background)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span className="flex items-baseline justify-between mb-4">
+          <span
+            className="font-serif text-foreground"
+            style={{ fontSize: "clamp(20px, 1.5rem, 24px)", letterSpacing: "0.06em" }}
+          >
+            {term}
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-muted hover:text-foreground transition-colors"
+            style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+            aria-label="閉じる"
+          >
+            閉じる ✕
+          </button>
+        </span>
+        <span className="block text-foreground/85" style={{ fontSize: "14px" }}>
+          <MathBody text={easy} />
+        </span>
+        {relatedSeriesId && (
+          <span className="block mt-6 pt-4 border-t border-border">
             <a
-              href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
+              href={`/learn/play/?seriesId=${relatedSeriesId}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block mt-2 text-accent hover:underline"
-              style={{ fontSize: "11px", letterSpacing: "0.1em" }}
-              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-background transition-transform hover:scale-[1.02]"
+              style={{ fontSize: "13px", letterSpacing: "0.15em" }}
             >
-              もっと詳しく → 公式の景色を見る
+              系列を歩いて体感する →
             </a>
-          )}
-        </span>
-      )}
+          </span>
+        )}
+      </span>
     </span>
   );
 }
