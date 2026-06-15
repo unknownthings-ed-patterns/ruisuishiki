@@ -117,6 +117,178 @@ export function ParabolaUp() {
 }
 
 /**
+ * 直方体（1 cm³ ブロックの集まり）を等角投影で描く SVG。
+ * 「公式の景色」で体積の意味を視覚的に支える。
+ *
+ * 横 3 × 奥行 2 × 高さ 2 の直方体 = 12 個の 1 cm³ ブロック。
+ */
+export function CuboidIsometric() {
+  // 等角投影のパラメータ
+  const unit = 22; // 1 cm（1ブロックの辺）= 22 px
+  const dx = 11;   // 奥行方向の x オフセット
+  const dy = 8;    // 奥行方向の y オフセット（SVG y軸は下向き）
+  const w = 3;     // 横（cm）
+  const d = 2;     // 奥行（cm）
+  const h = 2;     // 高さ（cm）
+
+  // 前面・左下を原点に
+  const ox = 35;
+  const oy = 132;
+
+  // 3D の (x, y, z) を 2D の (sx, sy) に投影
+  function p(x: number, y: number, z: number) {
+    return [ox + x * unit + y * dx, oy - z * unit + y * dy] as const;
+  }
+
+  // 各頂点
+  const [fbl, fblY] = p(0, 0, 0);
+  const [fbr, fbrY] = p(w, 0, 0);
+  const [ftl, ftlY] = p(0, 0, h);
+  const [ftr, ftrY] = p(w, 0, h);
+  const [bbr, bbrY] = p(w, d, 0);
+  const [btl, btlY] = p(0, d, h);
+  const [btr, btrY] = p(w, d, h);
+
+  return (
+    <svg
+      viewBox="0 0 220 160"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ maxWidth: "280px", height: "auto" }}
+      role="img"
+      aria-label="1 cm³ のブロックが12個積み重なった直方体（横3・奥行2・高さ2）"
+    >
+      {/* 上面（平行四辺形） */}
+      <path
+        d={`M ${ftl} ${ftlY} L ${ftr} ${ftrY} L ${btr} ${btrY} L ${btl} ${btlY} Z`}
+        fill="color-mix(in oklch, var(--surface) 70%, var(--accent-soft) 30%)"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+      />
+      {/* 右面（平行四辺形） */}
+      <path
+        d={`M ${fbr} ${fbrY} L ${ftr} ${ftrY} L ${btr} ${btrY} L ${bbr} ${bbrY} Z`}
+        fill="color-mix(in oklch, var(--surface) 80%, var(--accent-soft) 20%)"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+      />
+      {/* 前面（長方形） */}
+      <path
+        d={`M ${fbl} ${fblY} L ${fbr} ${fbrY} L ${ftr} ${ftrY} L ${ftl} ${ftlY} Z`}
+        fill="color-mix(in oklch, var(--surface) 90%, var(--accent-warm) 10%)"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+      />
+
+      {/* 前面の格子線 */}
+      {Array.from({ length: w - 1 }).map((_, i) => {
+        const x = i + 1;
+        const [x1, y1] = p(x, 0, 0);
+        const [x2, y2] = p(x, 0, h);
+        return (
+          <line
+            key={`fv${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+      {Array.from({ length: h - 1 }).map((_, i) => {
+        const z = i + 1;
+        const [x1, y1] = p(0, 0, z);
+        const [x2, y2] = p(w, 0, z);
+        return (
+          <line
+            key={`fh${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+
+      {/* 上面の格子線（横方向） */}
+      {Array.from({ length: w - 1 }).map((_, i) => {
+        const x = i + 1;
+        const [x1, y1] = p(x, 0, h);
+        const [x2, y2] = p(x, d, h);
+        return (
+          <line
+            key={`tw${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+      {/* 上面の格子線（奥行方向） */}
+      {Array.from({ length: d - 1 }).map((_, i) => {
+        const y = i + 1;
+        const [x1, y1] = p(0, y, h);
+        const [x2, y2] = p(w, y, h);
+        return (
+          <line
+            key={`td${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+
+      {/* 右面の格子線（高さ方向） */}
+      {Array.from({ length: h - 1 }).map((_, i) => {
+        const z = i + 1;
+        const [x1, y1] = p(w, 0, z);
+        const [x2, y2] = p(w, d, z);
+        return (
+          <line
+            key={`rh${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+      {/* 右面の格子線（奥行方向） */}
+      {Array.from({ length: d - 1 }).map((_, i) => {
+        const y = i + 1;
+        const [x1, y1] = p(w, y, 0);
+        const [x2, y2] = p(w, y, h);
+        return (
+          <line
+            key={`rd${i}`}
+            x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="var(--accent)" strokeWidth="0.6" opacity="0.7"
+          />
+        );
+      })}
+
+      {/* 辺の長さラベル */}
+      {/* 横（前面下辺） */}
+      <text
+        x={(fbl + fbr) / 2 - 8}
+        y={fblY + 14}
+        fontSize="10" fill="var(--muted)"
+      >
+        横 3 cm
+      </text>
+      {/* 高さ（前面左辺） */}
+      <text
+        x={fbl - 28}
+        y={(fblY + ftlY) / 2 + 4}
+        fontSize="10" fill="var(--muted)"
+      >
+        高さ 2
+      </text>
+      {/* 奥行（上面奥側） */}
+      <text
+        x={btl - 28}
+        y={btlY + 4}
+        fontSize="10" fill="var(--muted)"
+      >
+        縦 2
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
@@ -137,6 +309,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ParabolaUp />
+            </div>
+          );
+        }
+        if (trimmed === "<<CUBOID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CuboidIsometric />
             </div>
           );
         }
