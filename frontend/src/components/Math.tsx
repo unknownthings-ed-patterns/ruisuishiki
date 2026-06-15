@@ -1034,12 +1034,221 @@ export function CuboidIsometric() {
 }
 
 /**
+ * markdown 風の表（| col | col | / |---|---| / | val | val |）を判定する。
+ * 2 行以上で全行が | で始まり | で終わり、2 行目が区切り行（---のみ）。
+ */
+function isMarkdownTable(lines: string[]): boolean {
+  if (lines.length < 2) return false;
+  const allPipeBounded = lines.every((line) => {
+    const t = line.trim();
+    return t.startsWith("|") && t.endsWith("|");
+  });
+  if (!allPipeBounded) return false;
+  const sep = lines[1].trim();
+  return /^\|[\s|:\-]+\|$/.test(sep) && sep.includes("-");
+}
+
+function parseTableRow(line: string): string[] {
+  // 先頭末尾の | を取り除き、| で分割（セル内の $...$ 中の | は稀なので無視）
+  return line
+    .trim()
+    .slice(1, -1)
+    .split("|")
+    .map((c) => c.trim());
+}
+
+function MarkdownTable({ lines }: { lines: string[] }) {
+  const headerCells = parseTableRow(lines[0]);
+  const bodyRows = lines.slice(2).map(parseTableRow);
+  return (
+    <div className="my-4 overflow-x-auto">
+      <table
+        className="w-full"
+        style={{ borderCollapse: "collapse", fontSize: "13px" }}
+      >
+        <thead>
+          <tr style={{ borderBottom: "1px solid var(--border)" }}>
+            {headerCells.map((c, i) => (
+              <th
+                key={i}
+                className="text-foreground"
+                style={{
+                  padding: "8px 10px",
+                  textAlign: "left",
+                  fontWeight: 500,
+                  letterSpacing: "0.05em",
+                }}
+              >
+                <MathText text={c} />
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {bodyRows.map((row, i) => (
+            <tr
+              key={i}
+              style={{
+                borderBottom: "1px solid color-mix(in oklch, var(--border) 50%, transparent)",
+              }}
+            >
+              {row.map((c, j) => (
+                <td
+                  key={j}
+                  className="text-foreground/85"
+                  style={{ padding: "7px 10px", verticalAlign: "top" }}
+                >
+                  <MathText text={c} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/**
+ * 三角比の表（0°〜90°、sin・cos・tan、小数第 4 位までの概数）。
+ * 教科書の三角比表に対応。特別な角（0, 30, 45, 60, 90°）は背景を変えて目立たせる。
+ * スティッキーヘッダ付きスクロールテーブル。
+ */
+export function TrigTable() {
+  const rows = Array.from({ length: 91 }, (_, deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return {
+      deg,
+      sin: Math.sin(rad),
+      cos: Math.cos(rad),
+      tan: deg === 90 ? null : Math.tan(rad),
+    };
+  });
+  const special = new Set([0, 30, 45, 60, 90]);
+  const accentTint =
+    "color-mix(in oklch, var(--background) 84%, var(--accent) 16%)";
+  return (
+    <div
+      className="w-full overflow-y-auto rounded-lg border border-border"
+      style={{
+        maxWidth: "min(420px, 100%)",
+        maxHeight: "420px",
+        background: "var(--background)",
+      }}
+    >
+      <table
+        className="w-full tnum"
+        style={{ fontSize: "12px", borderCollapse: "collapse" }}
+      >
+        <thead
+          className="sticky top-0"
+          style={{
+            background: "var(--background)",
+            borderBottom: "1px solid var(--border)",
+            zIndex: 1,
+          }}
+        >
+          <tr>
+            <th
+              className="text-muted"
+              style={{
+                padding: "8px 12px",
+                textAlign: "left",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+              }}
+            >
+              角
+            </th>
+            <th
+              className="text-muted"
+              style={{
+                padding: "8px 12px",
+                textAlign: "right",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+              }}
+            >
+              sin
+            </th>
+            <th
+              className="text-muted"
+              style={{
+                padding: "8px 12px",
+                textAlign: "right",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+              }}
+            >
+              cos
+            </th>
+            <th
+              className="text-muted"
+              style={{
+                padding: "8px 12px",
+                textAlign: "right",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+              }}
+            >
+              tan
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const isSpecial = special.has(r.deg);
+            return (
+              <tr
+                key={r.deg}
+                style={{
+                  background: isSpecial ? accentTint : undefined,
+                }}
+              >
+                <td
+                  className="text-foreground"
+                  style={{
+                    padding: "4px 12px",
+                    fontWeight: isSpecial ? 600 : 400,
+                  }}
+                >
+                  {r.deg}°
+                </td>
+                <td
+                  className="text-foreground/85"
+                  style={{ padding: "4px 12px", textAlign: "right" }}
+                >
+                  {r.sin.toFixed(4)}
+                </td>
+                <td
+                  className="text-foreground/85"
+                  style={{ padding: "4px 12px", textAlign: "right" }}
+                >
+                  {r.cos.toFixed(4)}
+                </td>
+                <td
+                  className="text-foreground/85"
+                  style={{ padding: "4px 12px", textAlign: "right" }}
+                >
+                  {r.tan === null ? "—" : r.tan.toFixed(4)}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
  * - 段落は空行で区切る
  * - $$...$$ だけの行は BlockMath（中央寄せのディスプレイ数式）
  * - <<PARABOLA_UP>> のような特殊マーカーは対応する図に置き換える
+ * - markdown 風の表（| col | col | / |---|---|）は <table> に変換
  * - 段落内の $...$ は InlineMath
  */
 export function MathBody({ text }: { text: string }) {
@@ -1085,6 +1294,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<TRIG_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigTable />
+            </div>
+          );
+        }
         // $$...$$ だけの段落は BlockMath
         const blockMatch = trimmed.match(/^\$\$([\s\S]+)\$\$$/);
         if (blockMatch) {
@@ -1094,8 +1310,11 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
-        // 通常段落：改行を <br> として MathText で処理
+        // markdown 表
         const lines = trimmed.split("\n");
+        if (isMarkdownTable(lines)) {
+          return <MarkdownTable key={i} lines={lines} />;
+        }
         return (
           <p key={i} className="my-3" style={{ lineHeight: 2 }}>
             {lines.map((line, j) => (
