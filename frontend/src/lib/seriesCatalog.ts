@@ -40,6 +40,7 @@ import {
 } from "./seriesAlgebra2";
 import {
   ADV_LINE_EQUATION_SERIES,
+  ADV_POINT_LINE_DISTANCE_SERIES,
   ADV_QUAD_GRAPH_SERIES,
   ADV_QUAD_MIN_SERIES,
   ADVANCED_SERIES_LIST,
@@ -393,6 +394,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "advanced",
     subjectLabel: "★ チャレンジ",
     shortDescription: "直線の方程式を読む — 傾き・切片・中点・垂直",
+  },
+  {
+    series: ADV_POINT_LINE_DISTANCE_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription: "点と直線の距離 — 図形と方程式の中核公式",
   },
 ];
 

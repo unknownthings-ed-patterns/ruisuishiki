@@ -28,7 +28,7 @@ export type PatternId =
   | "G1" | "G2" | "EXP1" | "VEC2"
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
-  | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7";
+  | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8";
 
 /**
  * 変数の意味的役割。
@@ -1039,6 +1039,29 @@ const LN7: PatternSpec = {
   evaluate: (k) => ({ unknownName: "mPerp", answer: -1 / k.m }),
 };
 
+/** LN8: 点 (x0, y0) と直線 ax + by + c = 0 の距離 */
+const LN8: PatternSpec = {
+  id: "LN8",
+  unit: "advanced",
+  naturalLanguage: "点と直線の距離 d = |ax₀+by₀+c| / √(a²+b²)",
+  formulaTemplate: "d = |a*x0 + b*y0 + c| / sqrt(a^2 + b^2)",
+  variables: [
+    { name: "a", role: "直線の x 係数", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "b", role: "直線の y 係数", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "c", role: "直線の定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "x0", role: "点の x 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "y0", role: "点の y 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "d", role: "距離", unknown: true, domain: { kind: "decimal", min: 0, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "d",
+    answer:
+      Math.abs(k.a * k.x0 + k.b * k.y0 + k.c) /
+      Math.sqrt(k.a * k.a + k.b * k.b),
+  }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -1053,7 +1076,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
-  LN1, LN2, LN3, LN5, LN6, LN7,
+  LN1, LN2, LN3, LN5, LN6, LN7, LN8,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1070,7 +1093,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   A1, A2, VEC1, DIFF1,
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
-  LN1, LN2, LN3, LN5, LN6, LN7,
+  LN1, LN2, LN3, LN5, LN6, LN7, LN8,
 ];
 
 export const CONTEXT_CATEGORIES = [

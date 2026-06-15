@@ -590,8 +590,227 @@ x も y も別々に「真ん中」を取るだけ——これは数直線で「
 直線の方程式は、たった5つの読み方で **「点・傾き・切片・中点・垂直」** の関係をすべて記述できます。$y = mx + n$ という6文字の式が、平面の上で1本の直線を完全に決める仕組み——これが「図形と方程式」という単元の名前の本当の意味です。`,
 };
 
+/**
+ * 「★ 点と直線の距離」発展系列。
+ * 数Ⅱ・B「図形と方程式」の中核公式：d = |ax₀+by₀+c| / √(a²+b²)。
+ *
+ * 整数答えに収まるよう、分母が整数になるピタゴラス数の組
+ * （3,4,5）（5,12,13）（8,15,17）（6,8,10）を利用。
+ *
+ * - step1-3: 基本原形と同（材料置換）
+ * - step4-6: 同（別のピタゴラス数の組）
+ * - step7:   負数や原点以外の点を含む組合せ
+ * - step8:   さらに大きい数（8,15,17 の組）
+ * - step9:   質的変化：水平直線への距離（直感的解釈）
+ * - step10:  応用：三角形 ABC の面積（点と直線の距離の応用）
+ */
+export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
+  id: "adv_point_line_distance_01",
+  title: "★ 点と直線の距離",
+  subtitle:
+    "数Ⅱ・B「図形と方程式」より — 公式 $d = |ax_0+by_0+c|/\\sqrt{a^2+b^2}$ を10問。",
+  patternId: "LN8",
+  unit: "advanced",
+  revelationLabel: "d = |ax₀ + by₀ + c| ÷ √(a² + b²)",
+  steps: [
+    {
+      id: "step1", position: 1,
+      questionText: "直線 $3x - 4y - 9 = 0$ と点 $(1, 6)$ の距離はいくつでしょう？",
+      answer: 6, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: null, compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "公式：$d = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$。" },
+        { layer: 2, text: "$\\dfrac{|3 \\cdot 1 + (-4) \\cdot 6 - 9|}{\\sqrt{9 + 16}} = \\dfrac{|-30|}{5}$。" },
+        { layer: 3, text: "$6$。" },
+      ],
+      formulaPreview: "|−30| / 5 = 6",
+    },
+    {
+      id: "step2", position: 2,
+      questionText: "直線 $3x + 4y - 25 = 0$ と原点 $(0, 0)$ の距離はいくつでしょう？",
+      answer: 5, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "原点なので、分子は $|c|$ に簡略化される。" },
+        { layer: 2, text: "$\\dfrac{|-25|}{\\sqrt{9 + 16}} = \\dfrac{25}{5}$。" },
+        { layer: 3, text: "$5$。" },
+      ],
+      formulaPreview: "|−25| / 5 = 5",
+    },
+    {
+      id: "step3", position: 3,
+      questionText: "直線 $4x - 3y + 5 = 0$ と点 $(2, 1)$ の距離はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "公式に代入。" },
+        { layer: 2, text: "$\\dfrac{|4 \\cdot 2 - 3 \\cdot 1 + 5|}{\\sqrt{16 + 9}} = \\dfrac{|10|}{5}$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "|10| / 5 = 2",
+    },
+    {
+      id: "step4", position: 4,
+      questionText: "直線 $5x + 12y - 30 = 0$ と点 $(1, 1)$ の距離はいくつでしょう？",
+      answer: 1, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "今度は分母が $\\sqrt{25+144} = 13$。" },
+        { layer: 2, text: "$\\dfrac{|5 + 12 - 30|}{13} = \\dfrac{|-13|}{13}$。" },
+        { layer: 3, text: "$1$。" },
+      ],
+      formulaPreview: "|−13| / 13 = 1",
+    },
+    {
+      id: "step5", position: 5,
+      questionText: "直線 $5x - 12y + 39 = 0$ と原点 $(0, 0)$ の距離はいくつでしょう？",
+      answer: 3, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "原点なので分子は $|c| = 39$。" },
+        { layer: 2, text: "$\\dfrac{39}{\\sqrt{25 + 144}} = \\dfrac{39}{13}$。" },
+        { layer: 3, text: "$3$。" },
+      ],
+      formulaPreview: "39 / 13 = 3",
+    },
+    {
+      id: "step6", position: 6,
+      questionText: "直線 $4x + 3y + 15 = 0$ と原点 $(0, 0)$ の距離はいくつでしょう？",
+      answer: 3, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "(3, 4, 5) の組に戻った。" },
+        { layer: 2, text: "$\\dfrac{|15|}{\\sqrt{16 + 9}} = \\dfrac{15}{5}$。" },
+        { layer: 3, text: "$3$。" },
+      ],
+      formulaPreview: "|15| / 5 = 3",
+    },
+    {
+      id: "step7", position: 7,
+      questionText: "直線 $3x - 4y + 20 = 0$ と点 $(-5, 0)$ の距離はいくつでしょう？",
+      answer: 1, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "$x_0 = -5$ なので $a x_0 = 3 \\cdot (-5) = -15$。" },
+        { layer: 2, text: "$\\dfrac{|-15 - 0 + 20|}{5} = \\dfrac{|5|}{5}$。" },
+        { layer: 3, text: "$1$。" },
+      ],
+      formulaPreview: "|5| / 5 = 1",
+    },
+    {
+      id: "step8", position: 8,
+      questionText: "直線 $8x + 15y - 34 = 0$ と原点 $(0, 0)$ の距離はいくつでしょう？",
+      answer: 2, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "same", compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "(8, 15, 17) という新しいピタゴラスの組。" },
+        { layer: 2, text: "$\\dfrac{|-34|}{\\sqrt{64+225}} = \\dfrac{34}{17}$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "34 / 17 = 2",
+    },
+    {
+      id: "step9", position: 9,
+      questionText: "直線 $y = 3$ と点 $(2, 7)$ の距離はいくつでしょう？",
+      answer: 4, unit: "", unknownLabel: "距離 d",
+      variationFromPrevious: "qualitative", compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "水平な直線 $y = 3$ は、一般形だと $0 \\cdot x + 1 \\cdot y - 3 = 0$。" },
+        { layer: 2, text: "$\\dfrac{|0 + 7 - 3|}{\\sqrt{0+1}} = \\dfrac{|4|}{1}$。" },
+        { layer: 3, text: "$4$。直感的にも $|y_0 - 3| = |7 - 3|$。" },
+      ],
+      formulaPreview: "|7−3| = 4",
+    },
+    {
+      id: "step10", position: 10,
+      questionText: "3点 $A(0, 0)$, $B(4, 0)$, $C(0, 3)$ で作る三角形 $ABC$ の面積はいくつでしょう？（直線 BC の方程式と点 A の距離を使う、または底辺 × 高さ ÷ 2 で）",
+      answer: 6, unit: "", unknownLabel: "面積",
+      variationFromPrevious: "qualitative", compareWithStepId: "step9",
+      hints: [
+        { layer: 1, text: "直線 BC は $3x + 4y - 12 = 0$。原点 $A$ との距離は $\\dfrac{|-12|}{5} = \\dfrac{12}{5}$。" },
+        { layer: 2, text: "$BC$ の長さは $\\sqrt{16+9} = 5$。面積 $= \\dfrac{1}{2} \\cdot 5 \\cdot \\dfrac{12}{5}$。" },
+        { layer: 3, text: "$6$。（直角三角形なので $\\dfrac{1}{2} \\cdot 4 \\cdot 3$ でも同じ。）" },
+      ],
+      formulaPreview: "½ · 5 · 12/5 = 6",
+    },
+  ],
+  derivation: `**「点と直線の距離」とは何か**
+
+平面上に点 $A(x_0, y_0)$ と直線 $\\ell$ があるとき、$A$ から $\\ell$ に **垂直に下ろした線分** の長さを、$A$ と $\\ell$ の **距離** $d$ といいます。
+
+「最短距離」と言ってもいい——$A$ から $\\ell$ 上のどの点に行くにも、まっすぐ垂直に下ろした足までが、いちばん近い道です。
+
+**直線が一般形のときの便利な公式**
+
+直線が $ax + by + c = 0$（一般形）で書かれていて、点が $(x_0, y_0)$ のとき：
+
+$$d = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$$
+
+「**点の座標を直線の式の左辺に代入し、絶対値を取って、$\\sqrt{a^2+b^2}$ で割る**」。
+
+たったこれだけで距離が出ます。垂線の足の座標を計算しなくてもよい——これがこの公式のすばらしさです。
+
+**なぜこの形になるのか（簡単な導出）**
+
+直線 $ax + by + c = 0$ に **垂直** なベクトルは $(a, b)$ という方向ベクトル。これが分子と分母の正体です。
+
+- **分子** $|ax_0 + by_0 + c|$：点 $(x_0, y_0)$ を式の左辺に入れた値。これは点がどれだけ直線から「ずれている」かを表す数（直線上の点なら $0$ になる）。
+- **分母** $\\sqrt{a^2 + b^2}$：法線ベクトル $(a, b)$ の長さ。これで割ることで、「ずれの大きさ」を本当の **距離** に変換しています。
+
+絶対値 $|\\cdot|$ は、左辺の値が負になってもかまわず **距離は正の数** だから、というだけのこと。
+
+**整数答えになる組合せ**
+
+この系列では、分母 $\\sqrt{a^2 + b^2}$ が **整数** になるピタゴラス数の組を使いました：
+
+| $(a, b)$ | $\\sqrt{a^2 + b^2}$ |
+|---|---|
+| $(3, 4)$ または $(4, 3)$ | $5$ |
+| $(5, 12)$ または $(12, 5)$ | $13$ |
+| $(8, 15)$ または $(15, 8)$ | $17$ |
+| $(6, 8)$ | $10$ |
+
+ピタゴラス数の組を係数に持つ直線では、距離が **整数で確定** することが多くなります。
+
+**特別な場合：水平・垂直の直線**
+
+直線 $y = k$（水平）と点 $(x_0, y_0)$ の距離：
+
+$$d = |y_0 - k|$$
+
+直線 $x = k$（垂直）と点 $(x_0, y_0)$ の距離：
+
+$$d = |x_0 - k|$$
+
+これらは一般公式に $(a, b, c) = (0, 1, -k)$ や $(1, 0, -k)$ を代入すると、自然に出てきます。直感的にも「$y$ 座標の差」「$x$ 座標の差」だから当たり前。
+
+**応用：三角形の面積**
+
+3 点 $A, B, C$ で作る三角形の面積は、「**底辺 $\\times$ 高さ $\\div 2$**」で求めます：
+
+1. 底辺を $BC$ とする
+2. $BC$ の長さを **2 点間の距離公式** で求める
+3. $C$ を通り $B$ も通る **直線 $BC$ の方程式** を一般形で求める
+4. その直線と点 $A$ との **距離** $d$（これが高さ）を点と直線の距離の公式で求める
+5. 面積 $= \\dfrac{1}{2} \\cdot BC \\cdot d$
+
+3 つの座標から、計算だけで三角形の面積が出る——これが座標幾何の威力です。
+
+**「図形と方程式」の中心の道具**
+
+点と直線の距離は、座標幾何の **計算道具** として中心的な存在です。
+
+- 三角形の面積
+- 円と直線の位置関係（接する・交わる・離れる）
+- 軌跡の問題（距離が一定の点の集まり）
+- ベクトルの正射影
+
+これら多くの応用で、「点と直線の距離」の公式が **計算の核** になります。`,
+};
+
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_QUAD_MIN_SERIES,
   ADV_QUAD_GRAPH_SERIES,
   ADV_LINE_EQUATION_SERIES,
+  ADV_POINT_LINE_DISTANCE_SERIES,
 ];
