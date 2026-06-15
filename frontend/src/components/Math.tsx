@@ -126,14 +126,15 @@ export function CuboidIsometric() {
   // 等角投影のパラメータ
   const unit = 22; // 1 cm（1ブロックの辺）= 22 px
   const dx = 11;   // 奥行方向の x オフセット
-  const dy = 8;    // 奥行方向の y オフセット（SVG y軸は下向き）
+  // SVG の y 軸は下向き。「奥に行くと上に上がる」よう、dy は負（上方向）に
+  const dy = -8;
   const w = 3;     // 横（cm）
   const d = 2;     // 奥行（cm）
   const h = 2;     // 高さ（cm）
 
-  // 前面・左下を原点に
+  // 前面・左下を原点に（奥が上に伸びる分、画面下寄りに）
   const ox = 35;
-  const oy = 132;
+  const oy = 142;
 
   // 3D の (x, y, z) を 2D の (sx, sy) に投影
   function p(x: number, y: number, z: number) {
@@ -262,24 +263,24 @@ export function CuboidIsometric() {
       {/* 辺の長さラベル */}
       {/* 横（前面下辺） */}
       <text
-        x={(fbl + fbr) / 2 - 8}
-        y={fblY + 14}
+        x={(fbl + fbr) / 2 - 14}
+        y={fblY + 13}
         fontSize="10" fill="var(--muted)"
       >
         横 3 cm
       </text>
       {/* 高さ（前面左辺） */}
       <text
-        x={fbl - 28}
-        y={(fblY + ftlY) / 2 + 4}
+        x={fbl - 30}
+        y={(fblY + ftlY) / 2 + 3}
         fontSize="10" fill="var(--muted)"
       >
         高さ 2
       </text>
-      {/* 奥行（上面奥側） */}
+      {/* 奥行（左奥に伸びる辺） */}
       <text
-        x={btl - 28}
-        y={btlY + 4}
+        x={btl - 24}
+        y={btlY - 2}
         fontSize="10" fill="var(--muted)"
       >
         縦 2
