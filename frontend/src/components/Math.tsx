@@ -603,6 +603,90 @@ export function RightTriangleAnatomy() {
 }
 
 /**
+ * 数え方その1：$(a+b)^2$ を 4 つに分けた図。
+ *   左上の a² 正方形、右上の ab 長方形、左下の ab 長方形、右下の b² 正方形。
+ *   PythagorasProof と「同じ大きな正方形」を別の見方で見ていることを強調するため、
+ *   座標と寸法（a=60, b=140）を統一している。
+ */
+export function ExpansionSquare() {
+  const stroke = "var(--foreground)";
+  const muted = "var(--muted)";
+  const aFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const abFill = "color-mix(in oklch, var(--foreground) 5%, transparent)";
+  const bFill = "color-mix(in oklch, var(--accent) 24%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 280 290"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="(a+b)の2乗 を a², ab, ab, b² の 4 つに分けた図"
+    >
+      {/* 4 つの分割（外枠を兼ねる） */}
+      {/* 左上: a² */}
+      <rect x="40" y="40" width="60" height="60" fill={aFill} stroke={stroke} strokeWidth="1" />
+      {/* 右上: ab */}
+      <rect x="100" y="40" width="140" height="60" fill={abFill} stroke={stroke} strokeWidth="1" />
+      {/* 左下: ab */}
+      <rect x="40" y="100" width="60" height="140" fill={abFill} stroke={stroke} strokeWidth="1" />
+      {/* 右下: b² */}
+      <rect x="100" y="100" width="140" height="140" fill={bFill} stroke={stroke} strokeWidth="1" />
+      {/* 大きな正方形の外枠 */}
+      <rect
+        x="40"
+        y="40"
+        width="200"
+        height="200"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+      />
+
+      {/* 内部ラベル */}
+      <text x="70" y="76" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a²
+      </text>
+      <text x="170" y="76" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        ab
+      </text>
+      <text x="70" y="175" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        ab
+      </text>
+      <text x="170" y="178" fontSize="20" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        b²
+      </text>
+
+      {/* 上辺ラベル */}
+      <text x="70" y="32" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      <text x="170" y="32" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        b
+      </text>
+      {/* 左辺ラベル */}
+      <text x="32" y="75" fontSize="12" fill={muted} textAnchor="end" fontStyle="italic">
+        a
+      </text>
+      <text x="32" y="175" fontSize="12" fill={muted} textAnchor="end" fontStyle="italic">
+        b
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="140"
+        y="270"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        (a+b)² = a² + ab + ab + b² = a² + 2ab + b²
+      </text>
+    </svg>
+  );
+}
+
+/**
  * ピタゴラスの定理の「面積による証明」図。
  * 1辺 (a+b) の大きな正方形の中に、4枚の同じ直角三角形と、
  * 真ん中の c×c の正方形を配置する古典的な構図。
@@ -1905,6 +1989,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <PythagorasProof />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXPANSION_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpansionSquare />
             </div>
           );
         }
