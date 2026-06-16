@@ -546,6 +546,108 @@ function TryExample({
 }
 
 /**
+ * 三角形の面積を「底辺 × 高さ ÷ 2」で求める図。
+ * 例：A(0,0), B(4,0), C(0,3) の三角形で、
+ * 底辺 BC、高さ d = A から BC への距離。
+ *
+ * 座標系：原点 A を SVG (50, 170)、1 単位 = 30 pixel。
+ * H（垂線の足）は線分 BC 上、計算で (93.2, 112.4) 付近。
+ */
+export function TriangleAreaByDistance() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 280 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="3点 A(0,0), B(4,0), C(0,3) の三角形と、A から BC への垂線（高さ d）"
+    >
+      {/* 軸 */}
+      <line x1="40" y1="170" x2="240" y2="170" stroke={muted} strokeWidth="0.5" />
+      <line x1="50" y1="170" x2="50" y2="30" stroke={muted} strokeWidth="0.5" />
+      <text x="232" y="183" fontSize="9" fill={muted}>
+        x
+      </text>
+      <text x="48" y="35" fontSize="9" fill={muted} textAnchor="end">
+        y
+      </text>
+
+      {/* 三角形（塗り） */}
+      <polygon
+        points="50,170 170,170 50,80"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.5"
+      />
+      {/* BC を強調（底辺） */}
+      <line x1="170" y1="170" x2="50" y2="80" stroke={stroke} strokeWidth="2" />
+
+      {/* A から BC への垂線（高さ d、破線で示す） */}
+      <line
+        x1="50"
+        y1="170"
+        x2="93.2"
+        y2="112.4"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeDasharray="4,3"
+      />
+      {/* 直角マーカー at H=(93.2,112.4) */}
+      <polyline
+        points="99.6,117.2 94.8,123.6 88.4,118.8"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="0.8"
+      />
+
+      {/* 点 */}
+      <circle cx="50" cy="170" r="3" fill={stroke} />
+      <circle cx="170" cy="170" r="3" fill={stroke} />
+      <circle cx="50" cy="80" r="3" fill={stroke} />
+
+      {/* 点ラベル */}
+      <text x="42" y="186" fontSize="11" fill={stroke}>
+        A
+      </text>
+      <text x="174" y="184" fontSize="11" fill={stroke}>
+        B
+      </text>
+      <text x="42" y="76" fontSize="11" fill={stroke}>
+        C
+      </text>
+
+      {/* 距離 d ラベル */}
+      <text
+        x="58"
+        y="138"
+        fontSize="13"
+        fill={accent}
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        d
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="140"
+        y="208"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        底辺 BC、高さ d（A から BC への距離）
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 直角三角形の anatomy 図。
  * 2辺を a, b、斜辺を c とラベルし、直角マーカーを付ける。
  * ピタゴラスの定理の「役者の紹介」に相当。
@@ -2003,6 +2105,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <SquareDiagonal />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIANGLE_AREA_DIST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TriangleAreaByDistance />
             </div>
           );
         }
