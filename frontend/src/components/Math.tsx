@@ -546,6 +546,127 @@ function TryExample({
 }
 
 /**
+ * ゆるい坂と急な坂の比較図。
+ * 同じ「進んだ長さ」（底辺）で、角度が違うと のぼり方（縦辺）が変わる。
+ * 角が小さい → のぼり方 小、角が大きい → のぼり方 大、を一目で示す。
+ *
+ * 左：tan ≈ 0.5（θ ≈ 27°、ゆるい坂）
+ * 右：tan ≈ 1.7（θ ≈ 60°、急な坂）
+ * 二つの三角形の底辺の長さは同じにそろえて、角度の違いだけが効くようにしてある。
+ */
+export function SlopeAngleCompare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const groundColor = "var(--border)";
+  return (
+    <svg
+      viewBox="0 0 460 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 460 }}
+      role="img"
+      aria-label="ゆるい坂と急な坂の比較。同じ底辺でも、角が急なほどのぼり方が大きい"
+    >
+      {/* 地面参照線 */}
+      <line
+        x1="20"
+        y1="220"
+        x2="440"
+        y2="220"
+        stroke={groundColor}
+        strokeWidth="1"
+        strokeDasharray="3,3"
+      />
+
+      {/* === 左：ゆるい坂（tan ≈ 0.5、θ ≈ 27°） === */}
+      <polygon
+        points="50,220 150,220 150,170"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー P1=(150,220) */}
+      <polyline
+        points="142,220 142,212 150,212"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* θ arc at S1=(50,220) */}
+      <path
+        d="M 70,220 A 20,20 0 0,0 67.14,209.71"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="76" y="215" fontSize="12" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      {/* 棒人間 at F1=(150,170) */}
+      <circle cx="150" cy="145" r="5" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <line x1="150" y1="150" x2="150" y2="168" stroke={stroke} strokeWidth="1.3" />
+      <line x1="150" y1="156" x2="145" y2="161" stroke={stroke} strokeWidth="1.3" />
+      <line x1="150" y1="156" x2="155" y2="161" stroke={stroke} strokeWidth="1.3" />
+      <line x1="150" y1="168" x2="146" y2="170" stroke={stroke} strokeWidth="1.3" />
+      <line x1="150" y1="168" x2="154" y2="170" stroke={stroke} strokeWidth="1.3" />
+      {/* キャプション */}
+      <text x="100" y="245" fontSize="11" fill={muted} textAnchor="middle">
+        角がゆるい
+      </text>
+      <text x="100" y="262" fontSize="12" fill={stroke} textAnchor="middle">
+        のぼり方{" "}
+        <tspan fill={accent} fontWeight="600">
+          小
+        </tspan>
+      </text>
+
+      {/* === 右：急な坂（tan ≈ 1.7、θ ≈ 60°） === */}
+      <polygon
+        points="270,220 370,220 370,50"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー P2=(370,220) */}
+      <polyline
+        points="362,220 362,212 370,212"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* θ arc at S2=(270,220) */}
+      <path
+        d="M 290,220 A 20,20 0 0,0 279.71,202.51"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="294" y="215" fontSize="12" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      {/* 棒人間 at F2=(370,50) */}
+      <circle cx="370" cy="25" r="5" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <line x1="370" y1="30" x2="370" y2="48" stroke={stroke} strokeWidth="1.3" />
+      <line x1="370" y1="36" x2="365" y2="41" stroke={stroke} strokeWidth="1.3" />
+      <line x1="370" y1="36" x2="375" y2="41" stroke={stroke} strokeWidth="1.3" />
+      <line x1="370" y1="48" x2="366" y2="50" stroke={stroke} strokeWidth="1.3" />
+      <line x1="370" y1="48" x2="374" y2="50" stroke={stroke} strokeWidth="1.3" />
+      {/* キャプション */}
+      <text x="320" y="245" fontSize="11" fill={muted} textAnchor="middle">
+        角が急
+      </text>
+      <text x="320" y="262" fontSize="12" fill={stroke} textAnchor="middle">
+        のぼり方{" "}
+        <tspan fill={accent} fontWeight="600">
+          大
+        </tspan>
+      </text>
+    </svg>
+  );
+}
+
+/**
  * タンジェントの定義図（基本図／anatomy）。
  * 坂を登る棒人間と、直角三角形の anatomy を一枚で示す。
  * 役割：「なぜタンジェントなんて比を考えるのか」を絵で語る。
@@ -1559,6 +1680,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TangentDefinition />
+            </div>
+          );
+        }
+        if (trimmed === "<<SLOPE_COMPARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SlopeAngleCompare />
             </div>
           );
         }
