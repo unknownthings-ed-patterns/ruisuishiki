@@ -546,6 +546,210 @@ function TryExample({
 }
 
 /**
+ * 直角三角形の anatomy 図。
+ * 2辺を a, b、斜辺を c とラベルし、直角マーカーを付ける。
+ * ピタゴラスの定理の「役者の紹介」に相当。
+ */
+export function RightTriangleAnatomy() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="直角三角形：直角を挟む2辺 a, b と 斜辺 c"
+    >
+      {/* 三角形：右下が直角。底辺 b、左辺 a、斜辺 c */}
+      <polygon
+        points="60,60 60,180 240,180"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー（左下） */}
+      <polyline
+        points="68,180 68,172 60,172"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* 辺ラベル */}
+      <text x="48" y="125" fontSize="14" fill={stroke} textAnchor="end" fontStyle="italic">
+        a
+      </text>
+      <text x="150" y="200" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        b
+      </text>
+      <text x="162" y="115" fontSize="14" fill={accent} fontStyle="italic" fontWeight="600">
+        c
+      </text>
+      {/* キャプション */}
+      <text
+        x="160"
+        y="215"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        a と b が直角をはさむ 2辺、c が斜辺
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * ピタゴラスの定理の「面積による証明」図。
+ * 1辺 (a+b) の大きな正方形の中に、4枚の同じ直角三角形と、
+ * 真ん中の c×c の正方形を配置する古典的な構図。
+ * 視覚的に：
+ *   (a+b)² = 4 × (ab/2) + c² →  a² + b² = c²
+ */
+export function PythagorasProof() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const triFill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const cFill = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  // a=60, b=140, a+b=200 で大きな正方形 (40,40)-(240,240)
+  return (
+    <svg
+      viewBox="0 0 280 290"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="ピタゴラスの定理の面積による証明：(a+b)の正方形の中に 4枚の直角三角形と c の正方形"
+    >
+      {/* 大きな正方形 (a+b)×(a+b) */}
+      <rect
+        x="40"
+        y="40"
+        width="200"
+        height="200"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+      />
+      {/* 4つの直角三角形 */}
+      <polygon points="40,240 100,240 40,100" fill={triFill} stroke={stroke} strokeWidth="1" />
+      <polygon points="40,40 40,100 180,40" fill={triFill} stroke={stroke} strokeWidth="1" />
+      <polygon points="240,40 180,40 240,180" fill={triFill} stroke={stroke} strokeWidth="1" />
+      <polygon points="240,240 240,180 100,240" fill={triFill} stroke={stroke} strokeWidth="1" />
+      {/* 中の正方形 c×c */}
+      <polygon
+        points="100,240 40,100 180,40 240,180"
+        fill={cFill}
+        stroke={accent}
+        strokeWidth="1.5"
+      />
+      {/* ラベル：a, b 上辺で */}
+      <text x="110" y="32" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        b
+      </text>
+      <text x="210" y="32" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      {/* 中の正方形に c */}
+      <text
+        x="140"
+        y="148"
+        fontSize="20"
+        fill={accent}
+        textAnchor="middle"
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        c
+      </text>
+      {/* キャプション */}
+      <text
+        x="140"
+        y="270"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        この同じ正方形の面積を、「2通り」で数えてみる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 正方形の対角線図。
+ * 1辺 a の正方形の中に対角線を引き、その長さが a√2 になる。
+ * Pythagoras 系列の Step 5（質の変化：a=b の場合）に対応。
+ */
+export function SquareDiagonal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 260 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="正方形の対角線：1辺 a の正方形、対角線は a√2"
+    >
+      {/* 正方形 */}
+      <rect
+        x="50"
+        y="50"
+        width="140"
+        height="140"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 対角線 */}
+      <line
+        x1="50"
+        y1="50"
+        x2="190"
+        y2="190"
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー（左下） */}
+      <polyline
+        points="58,190 58,182 50,182"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* ラベル */}
+      <text x="120" y="42" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      <text x="200" y="125" fontSize="13" fill={stroke} fontStyle="italic">
+        a
+      </text>
+      <text x="135" y="108" fontSize="14" fill={accent} fontStyle="italic" fontWeight="600">
+        a√2
+      </text>
+      {/* キャプション */}
+      <text
+        x="120"
+        y="218"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        正方形の対角線は、必ず辺の √2 倍
+      </text>
+    </svg>
+  );
+}
+
+/**
  * ゆるい坂と急な坂の比較図。
  * 同じ「進んだ長さ」（底辺）で、角度が違うと のぼり方（縦辺）が変わる。
  * 角が小さい → のぼり方 小、角が大きい → のぼり方 大、を一目で示す。
@@ -1687,6 +1891,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <SlopeAngleCompare />
+            </div>
+          );
+        }
+        if (trimmed === "<<RIGHT_TRIANGLE_ANATOMY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RightTriangleAnatomy />
+            </div>
+          );
+        }
+        if (trimmed === "<<PYTHAGORAS_PROOF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PythagorasProof />
+            </div>
+          );
+        }
+        if (trimmed === "<<SQUARE_DIAGONAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SquareDiagonal />
             </div>
           );
         }
