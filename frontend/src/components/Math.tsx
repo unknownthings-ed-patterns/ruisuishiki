@@ -546,6 +546,158 @@ function TryExample({
 }
 
 /**
+ * 原点中心、半径 r の円と、円上の点 P(x, y)、原点との直角三角形。
+ * x² + y² = r² の式が、ピタゴラスから自然に出てくることを視覚化。
+ * 例として 3-4-5 直角三角形（P=(3,4)、r=5）。
+ */
+export function CircleAroundOrigin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 320x290, origin SVG (160, 200), 1 unit = 20 px, radius 5 units = 100 px
+  // P = (3, 4) → SVG (160+60, 200-80) = (220, 120)
+  return (
+    <svg
+      viewBox="0 0 320 290"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="原点を中心とする半径 r の円。点 P(x, y) と原点との直角三角形（ピタゴラス）"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="200" x2="300" y2="200" stroke={muted} strokeWidth="0.5" />
+      <line x1="160" y1="20" x2="160" y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y="213" fontSize="10" fill={muted}>x</text>
+      <text x="156" y="22" fontSize="10" fill={muted} textAnchor="end">y</text>
+
+      {/* 円 */}
+      <circle cx="160" cy="200" r="100" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* x（横の補助線） */}
+      <line x1="160" y1="200" x2="220" y2="200" stroke={stroke} strokeWidth="1.5" />
+      {/* y（縦の補助線、破線） */}
+      <line x1="220" y1="200" x2="220" y2="120" stroke={stroke} strokeWidth="1" strokeDasharray="3,2" />
+      {/* OP（半径） */}
+      <line x1="160" y1="200" x2="220" y2="120" stroke={accent} strokeWidth="1.7" />
+      {/* 直角マーカー at foot=(220, 200) */}
+      <polyline points="214,200 214,194 220,194" fill="none" stroke={stroke} strokeWidth="0.8" />
+
+      {/* 原点 */}
+      <circle cx="160" cy="200" r="3" fill={stroke} />
+      {/* P */}
+      <circle cx="220" cy="120" r="3" fill={accent} />
+
+      {/* ラベル */}
+      <text x="148" y="215" fontSize="11" fill={stroke}>O</text>
+      <text x="226" y="118" fontSize="11" fill={stroke}>P(x, y)</text>
+      <text x="186" y="215" fontSize="11" fill={muted} fontStyle="italic">x</text>
+      <text x="226" y="166" fontSize="11" fill={muted} fontStyle="italic">y</text>
+      <text x="178" y="155" fontSize="13" fill={accent} fontStyle="italic" fontWeight="600">r</text>
+
+      {/* キャプション */}
+      <text x="160" y="275" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        x² + y² = r² —— ピタゴラスから自然に出てくる円の方程式
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 中心 A(a, b)、半径 r の円と、円上の点 P(x, y)。
+ * 標準形 (x-a)² + (y-b)² = r² が、A から P までの距離を表していることを視覚化。
+ */
+export function CircleAroundCenter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 320x270, origin SVG (50, 220), 1 unit = 25 px
+  // A=(4,3) → SVG (50+100, 220-75) = (150, 145), radius 90 px (= 3.6 units)
+  // P = A + (54, -72) で AP = 90 px ピッタリ（54²+72²=8100=90²）
+  return (
+    <svg
+      viewBox="0 0 320 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="中心 A(a, b)、半径 r の円。P(x, y) は円の上の点"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="220" x2="300" y2="220" stroke={muted} strokeWidth="0.5" />
+      <line x1="50" y1="20" x2="50" y2="250" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y="233" fontSize="10" fill={muted}>x</text>
+      <text x="46" y="22" fontSize="10" fill={muted} textAnchor="end">y</text>
+
+      {/* 円 */}
+      <circle cx="150" cy="145" r="90" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* AP（半径） */}
+      <line x1="150" y1="145" x2="204" y2="73" stroke={accent} strokeWidth="1.7" />
+
+      {/* 中心 A */}
+      <circle cx="150" cy="145" r="3" fill={stroke} />
+      {/* P */}
+      <circle cx="204" cy="73" r="3" fill={accent} />
+
+      {/* ラベル */}
+      <text x="118" y="138" fontSize="11" fill={stroke}>A(a, b)</text>
+      <text x="210" y="68" fontSize="11" fill={stroke}>P(x, y)</text>
+      <text x="186" y="100" fontSize="13" fill={accent} fontStyle="italic" fontWeight="600">r</text>
+
+      {/* キャプション */}
+      <text x="160" y="262" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        中心 A から P までの距離が r —— (x-a)² + (y-b)² = r²
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 直径の両端 A, B から円が決まる図。
+ * 中心 M = AB の中点、半径 r = AB / 2 を可視化。
+ */
+export function DiameterCircle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="直径の両端 A, B から円が決まる：中心 M は AB の中点、半径は AB / 2"
+    >
+      {/* 円 */}
+      <circle cx="160" cy="110" r="70" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 直径 AB */}
+      <line x1="90" y1="110" x2="230" y2="110" stroke={accent} strokeWidth="1.7" />
+
+      {/* A, B, M */}
+      <circle cx="90" cy="110" r="3.5" fill={stroke} />
+      <circle cx="230" cy="110" r="3.5" fill={stroke} />
+      <circle cx="160" cy="110" r="3.5" fill={accent} />
+
+      <text x="78" y="128" fontSize="11" fill={stroke}>A</text>
+      <text x="228" y="128" fontSize="11" fill={stroke}>B</text>
+      <text x="155" y="128" fontSize="11" fill={accent} fontWeight="600">M</text>
+
+      {/* 半径ラベル */}
+      <text x="120" y="103" fontSize="10" fill={muted}>半径</text>
+      <text x="190" y="103" fontSize="10" fill={muted}>半径</text>
+
+      {/* キャプション */}
+      <text x="160" y="200" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        中心 M は AB の中点、半径 = AB ÷ 2
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 三角形の面積を「底辺 × 高さ ÷ 2」で求める図。
  * 例：A(0,0), B(4,0), C(0,3) の三角形で、
  * 底辺 BC、高さ d = A から BC への距離。
@@ -2112,6 +2264,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TriangleAreaByDistance />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_AROUND_ORIGIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleAroundOrigin />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_AROUND_CENTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleAroundCenter />
+            </div>
+          );
+        }
+        if (trimmed === "<<DIAMETER_CIRCLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DiameterCircle />
             </div>
           );
         }

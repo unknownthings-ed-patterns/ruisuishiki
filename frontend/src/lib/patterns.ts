@@ -28,7 +28,8 @@ export type PatternId =
   | "G1" | "G2" | "EXP1" | "VEC2"
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
-  | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8";
+  | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
+  | "CR1";
 
 /**
  * 変数の意味的役割。
@@ -1062,6 +1063,25 @@ const LN8: PatternSpec = {
   }),
 };
 
+/** CR1: 円の方程式（標準形・一般形・直径両端・平方完成） */
+const CR1: PatternSpec = {
+  id: "CR1",
+  unit: "advanced",
+  naturalLanguage: "円の方程式 (x-a)² + (y-b)² = r²",
+  formulaTemplate: "(x - a)^2 + (y - b)^2 = r^2",
+  variables: [
+    { name: "a", role: "中心の x 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "中心の y 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "r", role: "半径", unknown: false, domain: { kind: "decimal", min: 1, max: 20 } },
+    { name: "r2", role: "半径の 2 乗", unknown: true, domain: { kind: "decimal", min: 1, max: 400 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "r2",
+    answer: k.r * k.r,
+  }),
+};
+
 export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   P1, P2, P3, P4, P5,
   E1, E2, F1, R1, I1,
@@ -1077,6 +1097,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
+  CR1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1094,6 +1115,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
+  CR1,
 ];
 
 export const CONTEXT_CATEGORIES = [

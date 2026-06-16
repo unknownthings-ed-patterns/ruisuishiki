@@ -39,6 +39,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  ADV_CIRCLE_EQUATION_SERIES,
   ADV_LINE_EQUATION_SERIES,
   ADV_POINT_LINE_DISTANCE_SERIES,
   ADV_QUAD_GRAPH_SERIES,
@@ -400,6 +401,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subject: "advanced",
     subjectLabel: "★ チャレンジ",
     shortDescription: "点と直線の距離 — 図形と方程式の中核公式",
+  },
+  {
+    series: ADV_CIRCLE_EQUATION_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription:
+      "円の方程式 — 標準形・一般形・平方完成。点と直線の距離の次に",
   },
 ];
 
