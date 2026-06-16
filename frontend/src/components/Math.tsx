@@ -546,6 +546,112 @@ function TryExample({
 }
 
 /**
+ * タンジェントの定義図（基本図／anatomy）。
+ * 坂を登る棒人間と、直角三角形の anatomy を一枚で示す。
+ * 役割：「なぜタンジェントなんて比を考えるのか」を絵で語る。
+ *
+ *   F (棒人間が登った位置)
+ *   |\
+ *   | \
+ *   |  \  斜辺
+ *   |   \
+ * のぼった \
+ *   |    \
+ *   | θ   \
+ *   --------
+ *   S 進んだ長さ P
+ */
+export function TangentDefinition() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const groundColor = "var(--border)";
+  // S=(110,230) 坂の根元, P=(270,230) 直角の頂点, F=(270,80) 坂の上
+  return (
+    <svg
+      viewBox="0 0 460 290"
+      className="w-full h-auto"
+      style={{ maxWidth: 460 }}
+      role="img"
+      aria-label="坂を登った棒人間と直角三角形。底辺『進んだ長さ』、垂直辺『のぼった高さ』、底辺の角に θ"
+    >
+      {/* 地面の参照線 */}
+      <line
+        x1="40"
+        y1="230"
+        x2="440"
+        y2="230"
+        stroke={groundColor}
+        strokeWidth="1"
+        strokeDasharray="3,3"
+      />
+
+      {/* 直角三角形（坂） */}
+      <polygon
+        points="110,230 270,230 270,80"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 直角マーカー at P */}
+      <polyline
+        points="262,230 262,222 270,222"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* 角 θ at S。CA 方向(1,0) と CF 方向(150,-150) の間 */}
+      <path
+        d="M 130,230 A 20,20 0 0,0 124.14,215.86"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="138" y="225" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+
+      {/* 棒人間（F = 坂の上に立っている） */}
+      {/* 頭 */}
+      <circle cx="270" cy="62" r="6" fill="none" stroke={stroke} strokeWidth="1.5" />
+      {/* 体 */}
+      <line x1="270" y1="68" x2="270" y2="88" stroke={stroke} strokeWidth="1.5" />
+      {/* 腕（両側に少し広げる） */}
+      <line x1="270" y1="76" x2="261" y2="80" stroke={stroke} strokeWidth="1.5" />
+      <line x1="270" y1="76" x2="279" y2="80" stroke={stroke} strokeWidth="1.5" />
+      {/* 脚 */}
+      <line x1="270" y1="88" x2="263" y2="100" stroke={stroke} strokeWidth="1.5" />
+      <line x1="270" y1="88" x2="277" y2="100" stroke={stroke} strokeWidth="1.5" />
+
+      {/* 「進んだ長さ」ラベル（底辺の下） */}
+      <text x="190" y="252" fontSize="11" fill={muted} textAnchor="middle">
+        進んだ長さ
+      </text>
+      {/* 「のぼった高さ」ラベル（右辺の右） */}
+      <text x="285" y="152" fontSize="11" fill={muted}>
+        のぼった
+      </text>
+      <text x="285" y="167" fontSize="11" fill={muted}>
+        高さ
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="230"
+        y="278"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        坂のきつさは、「歩いた分のうち、どれだけ上がったか」で表せる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 川幅を tan で測る図。
  * 岸を 10 m 歩いて、向こう岸の木を見上げた角度が 60° なら、
  * 川幅 = 10 × tan 60° ≈ 10 × 2 = 約 20 m。
@@ -1446,6 +1552,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <RiverWidthMeasure />
+            </div>
+          );
+        }
+        if (trimmed === "<<TANGENT_DEF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TangentDefinition />
             </div>
           );
         }
