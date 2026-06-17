@@ -76,6 +76,12 @@ export default function Play() {
   const [attempts, setAttempts] = useState(0);
   const [hintsOpened, setHintsOpened] = useState<0 | 1 | 2 | 3>(0);
   const [status, setStatus] = useState<Status>("answering");
+  /**
+   * 「公式の景色」（derivation）を mid-series で見ているか。
+   * ヒント 3 でも理解できなかった学習者の脱出口（F4 予防）。
+   * 戻ると元のステップに戻る。
+   */
+  const [showingDerivation, setShowingDerivation] = useState(false);
 
   const step = series.steps[stepIndex];
   const totalSteps = series.steps.length;
@@ -142,6 +148,7 @@ export default function Play() {
     setAttempts(0);
     setHintsOpened(0);
     setStatus((current) => (current === "completed" ? current : "answering"));
+    setShowingDerivation(false);
   }, [stepIndex]);
 
   // 正答時に Enter キーで「次の問題へ」を押せるようにする
@@ -229,6 +236,40 @@ export default function Play() {
     if (hintsOpened < 3) {
       setHintsOpened((h) => (h + 1) as 0 | 1 | 2 | 3);
     }
+  }
+
+  /**
+   * 「公式の景色」を mid-series で開く。
+   * ステップを越えて開いたことを localStorage に記録（教師の振り返り用）。
+   */
+  function handleViewDerivation() {
+    if (typeof window !== "undefined") {
+      try {
+        const key = `ruisuishiki:derivation_viewed:${series.id}`;
+        const stored = window.localStorage.getItem(key);
+        const list: number[] = stored ? JSON.parse(stored) : [];
+        if (!list.includes(stepIndex)) {
+          list.push(stepIndex);
+          window.localStorage.setItem(key, JSON.stringify(list));
+        }
+      } catch {
+        // ignore
+      }
+    }
+    setShowingDerivation(true);
+    // スクロールを上に戻して、景色の冒頭から読めるように
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function handleReturnFromDerivation() {
+    setShowingDerivation(false);
+  }
+
+  function handleSkipFromDerivation() {
+    setShowingDerivation(false);
+    handleNext();
   }
 
   function handleAnswerChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -370,25 +411,27 @@ export default function Play() {
             </span>
           </header>
 
-          {/* 問題文 */}
-          <section
-            className="p-6 sm:p-10 rounded-lg border border-border transition-colors duration-500"
-            style={{
-              background:
-                status === "correct" ? "color-mix(in oklch, var(--surface) 70%, var(--accent-warm) 30%)" : "var(--surface)",
-            }}
-          >
-            <p
-              className="text-foreground"
+          {/* 問題文（mid-series で公式の景色を読んでいる時は隠す） */}
+          {!showingDerivation && (
+            <section
+              className="p-6 sm:p-10 rounded-lg border border-border transition-colors duration-500"
               style={{
-                fontSize: "clamp(17px, 1.25rem, 20px)",
-                lineHeight: 1.9,
-                letterSpacing: "0.04em",
+                background:
+                  status === "correct" ? "color-mix(in oklch, var(--surface) 70%, var(--accent-warm) 30%)" : "var(--surface)",
               }}
             >
-              <MathText text={step.questionText} />
-            </p>
-          </section>
+              <p
+                className="text-foreground"
+                style={{
+                  fontSize: "clamp(17px, 1.25rem, 20px)",
+                  lineHeight: 1.9,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                <MathText text={step.questionText} />
+              </p>
+            </section>
+          )}
 
           {/* 質的変化の正答時：「同じ仕組みだった」の発見演出
               桝田の言う「喜びのグレードアップ」を、これまでの全式を並べることで支える */}
@@ -461,7 +504,7 @@ export default function Play() {
           )}
 
           {/* ヒント表示（問題文の真下に積層） */}
-          {hintsOpened > 0 && (
+          {hintsOpened > 0 && !showingDerivation && (
             <section
               className="flex flex-col gap-3"
               aria-label="ヒント"
@@ -534,7 +577,56 @@ export default function Play() {
                   )}
                 </Fragment>
               ))}
+
+              {/* ヒント 3 まで開いてもよく分からない学習者のための脱出口：
+                  「公式の景色（考え方）を見る」へのリンク（F4 予防）。
+                  控えめに表示し、戸田の自得階段を全部上ってから降りる設計。 */}
+              {hintsOpened === 3 && series.derivation && (
+                <button
+                  type="button"
+                  onClick={handleViewDerivation}
+                  className="self-start mt-2 text-muted hover:text-accent transition-colors"
+                  style={{
+                    fontSize: "12px",
+                    letterSpacing: "0.05em",
+                    lineHeight: 1.7,
+                    textAlign: "left",
+                  }}
+                >
+                  それでもよくわからない時は →{" "}
+                  <span className="underline underline-offset-2" style={{ textDecorationStyle: "dotted" }}>
+                    公式の景色（考え方）を見てみる
+                  </span>
+                </button>
+              )}
             </section>
+          )}
+
+          {/* 公式の景色（mid-series 閲覧モード） */}
+          {showingDerivation && series.derivation && (
+            <article
+              className="rounded-lg border border-border p-6 sm:p-8 animate-fade-in"
+              style={{ background: "var(--surface)" }}
+              aria-label="公式の景色（考え方）"
+            >
+              <header className="mb-4 flex items-baseline justify-between gap-4">
+                <span
+                  className="font-serif text-foreground"
+                  style={{ fontSize: "18px", letterSpacing: "0.08em" }}
+                >
+                  公式の景色 — 考え方
+                </span>
+                <span
+                  className="text-muted shrink-0"
+                  style={{ fontSize: "11px", letterSpacing: "0.1em" }}
+                >
+                  問題 {stepIndex + 1} の途中で開いた
+                </span>
+              </header>
+              <div className="text-foreground/85" style={{ fontSize: "14px" }}>
+                <MathBody text={series.derivation} />
+              </div>
+            </article>
           )}
         </div>
       </div>
@@ -546,8 +638,38 @@ export default function Play() {
         style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
       >
         <div className="mx-auto w-full max-w-2xl px-6 py-4">
+          {/* 公式の景色を mid-series で見ている時の戻り方 */}
+          {showingDerivation && (
+            <section className="flex flex-wrap items-center justify-between gap-3 animate-fade-in">
+              <p
+                className="text-muted"
+                style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+              >
+                読み終わったら戻ってください。
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handleReturnFromDerivation}
+                  className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
+                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                >
+                  ← 問題に戻る
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSkipFromDerivation}
+                  className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02]"
+                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                >
+                  {isLast ? "おわりへ →" : "次の問題へ →"}
+                </button>
+              </div>
+            </section>
+          )}
+
           {/* 解答フォーム */}
-          {status !== "correct" && (
+          {!showingDerivation && status !== "correct" && (
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex items-baseline gap-3">
                 <span
@@ -615,7 +737,7 @@ export default function Play() {
           )}
 
           {/* 正答時 */}
-          {status === "correct" && (
+          {!showingDerivation && status === "correct" && (
             <section className="flex items-center justify-between gap-4 animate-fade-in flex-wrap">
               <div className="flex flex-col gap-1">
                 <p
