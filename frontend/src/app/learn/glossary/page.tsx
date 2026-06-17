@@ -100,13 +100,13 @@ function GlossaryEntryView({ term }: { term: string }) {
 
       {entry.relatedSeriesId && (
         <div className="mt-8 pt-6 border-t border-border">
-          <a
+          <Link
             href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-background transition-transform hover:scale-[1.02]"
             style={{ fontSize: "13px", letterSpacing: "0.15em" }}
           >
             系列を歩いて体感する →
-          </a>
+          </Link>
         </div>
       )}
     </article>
@@ -174,14 +174,14 @@ function IndexView({ allTerms }: { allTerms: string[] }) {
         </h2>
         <div className="flex flex-wrap gap-2">
           {withMeaning.map((t) => (
-            <a
+            <Link
               key={t}
               href={`/learn/glossary/?term=${encodeURIComponent(t)}`}
               className="px-3 py-1.5 rounded-lg border border-border text-foreground hover:bg-surface transition-colors"
               style={{ fontSize: "13px" }}
             >
               {t}
-            </a>
+            </Link>
           ))}
         </div>
       </section>
@@ -199,14 +199,14 @@ function IndexView({ allTerms }: { allTerms: string[] }) {
           </h2>
           <div className="flex flex-wrap gap-2">
             {stubsOnly.map((t) => (
-              <a
+              <Link
                 key={t}
                 href={`/learn/glossary/?term=${encodeURIComponent(t)}`}
                 className="px-3 py-1.5 rounded-lg border border-border/50 text-muted hover:text-foreground transition-colors"
                 style={{ fontSize: "12px" }}
               >
                 {t}
-              </a>
+              </Link>
             ))}
           </div>
         </section>
