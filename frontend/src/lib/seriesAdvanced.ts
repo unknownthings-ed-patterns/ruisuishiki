@@ -1015,6 +1015,7 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "$N = 9$。" },
       ],
       formulaPreview: "x² + y² = 9",
+      figureMarker: "<<CIRCLE_STEP1>>",
     },
     {
       id: "step2",
@@ -1118,6 +1119,7 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "半径 $= \\dfrac{AB}{2} = 5$。" },
       ],
       formulaPreview: "AB = 10, r = 5",
+      figureMarker: "<<CIRCLE_STEP6>>",
     },
     {
       id: "step7",
@@ -1141,6 +1143,7 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "$(x-2)^2 + (y+3)^2 = 25$ → 半径 $\\sqrt{25} = 5$。" },
       ],
       formulaPreview: "(x-2)²+(y+3)² = 25, r=5",
+      figureMarker: "<<CIRCLE_STEP7>>",
     },
     {
       id: "step8",

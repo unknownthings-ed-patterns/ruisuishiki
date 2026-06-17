@@ -39,6 +39,14 @@ export type LearnerStep = {
   compareWithStepId: string | null;
   /** 質的変化到達時の「同じ仕組みだった」表示用。"100 × 0.5 = 50" 形式の構造的展開。 */
   formulaPreview: string;
+  /**
+   * 問題理解を助ける図のマーカー（例：'<<CIRCLE_STEP1>>'）。
+   * 問題文の直下に描画される、ステップ固有の small SVG。
+   * 「フェードアウトする足場」のパタンに従い、Step 1 や質的変化のステップだけに
+   * 置いて、慣れたら図なしで型を抽象的に扱えるように設計する。
+   * 答えは見せず、配置・関係だけを示すこと（自得を裏切らない）。
+   */
+  figureMarker?: string;
 };
 
 /** 学習者が歩く系列。 */

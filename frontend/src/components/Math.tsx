@@ -546,6 +546,145 @@ function TryExample({
 }
 
 /**
+ * 円の方程式 Step 1 の足場図：原点中心、半径 3 の円。
+ * 答え（N = 9）は見せず、円の配置だけを示す。
+ */
+export function CircleStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 280x240, origin SVG (140, 130), 1 unit = 28 px (radius 3 = 84 px)
+  return (
+    <svg
+      viewBox="0 0 280 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="原点を中心とする半径 3 の円"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="130" x2="260" y2="130" stroke={muted} strokeWidth="0.5" />
+      <line x1="140" y1="20" x2="140" y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="143" fontSize="9" fill={muted}>x</text>
+      <text x="136" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 目盛り（−3, 3 を示す） */}
+      <line x1="56" y1="127" x2="56" y2="133" stroke={muted} strokeWidth="0.5" />
+      <line x1="224" y1="127" x2="224" y2="133" stroke={muted} strokeWidth="0.5" />
+      <line x1="137" y1="46" x2="143" y2="46" stroke={muted} strokeWidth="0.5" />
+      <line x1="137" y1="214" x2="143" y2="214" stroke={muted} strokeWidth="0.5" />
+      <text x="56" y="146" fontSize="9" fill={muted} textAnchor="middle">−3</text>
+      <text x="224" y="146" fontSize="9" fill={muted} textAnchor="middle">3</text>
+      <text x="130" y="50" fontSize="9" fill={muted} textAnchor="end">3</text>
+
+      {/* 円 */}
+      <circle cx="140" cy="130" r="84" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
+
+      {/* 中心 */}
+      <circle cx="140" cy="130" r="3" fill={accent} />
+      <text x="146" y="146" fontSize="10" fill={accent} fontStyle="italic" fontWeight="600">O</text>
+
+      {/* 半径の補助線 */}
+      <line x1="140" y1="130" x2="224" y2="130" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <text x="178" y="124" fontSize="11" fill={accent} fontStyle="italic">3</text>
+    </svg>
+  );
+}
+
+/**
+ * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
+ * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
+ */
+export function CircleStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 280x260
+  // 1 unit = 18 px, origin SVG (50, 230)
+  // A=(1,2) → SVG (50+18, 230-36) = (68, 194)
+  // B=(7,10) → SVG (50+126, 230-180) = (176, 50)
+  // M=(4,6) → SVG (50+72, 230-108) = (122, 122)
+  // r = 5 = 90 px
+  return (
+    <svg
+      viewBox="0 0 280 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="2 点 A, B を直径の両端とする円"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="230" x2="260" y2="230" stroke={muted} strokeWidth="0.5" />
+      <line x1="50" y1="20" x2="50" y2="250" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="243" fontSize="9" fill={muted}>x</text>
+      <text x="46" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 円（中心 M、半径 5） */}
+      <circle cx="122" cy="122" r="90" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 直径 AB */}
+      <line x1="68" y1="194" x2="176" y2="50" stroke={accent} strokeWidth="1.6" />
+
+      {/* A, B, M */}
+      <circle cx="68" cy="194" r="3.5" fill={stroke} />
+      <circle cx="176" cy="50" r="3.5" fill={stroke} />
+      <circle cx="122" cy="122" r="3.5" fill={accent} />
+
+      {/* 点ラベル */}
+      <text x="56" y="208" fontSize="11" fill={stroke}>A(1, 2)</text>
+      <text x="182" y="46" fontSize="11" fill={stroke}>B(7, 10)</text>
+      <text x="128" y="115" fontSize="11" fill={accent} fontWeight="600">M</text>
+    </svg>
+  );
+}
+
+/**
+ * 円の方程式 Step 7 の足場図：一般形 x²+y²-4x+6y-12=0 が表す円。
+ * 中心 (2, -3)、半径 5。答え（半径 5）の数値は控えめに、配置を示す。
+ */
+export function CircleStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 280x260
+  // 1 unit = 18 px, origin SVG (90, 130)
+  // 中心 (2, -3) → SVG (90+36, 130+54) = (126, 184)
+  // 半径 5 → 90 px
+  return (
+    <svg
+      viewBox="0 0 280 290"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="一般形で表された円のグラフ（具体的な中心・半径は問題で求める）"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="130" x2="260" y2="130" stroke={muted} strokeWidth="0.5" />
+      <line x1="90" y1="20" x2="90" y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="143" fontSize="9" fill={muted}>x</text>
+      <text x="86" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 原点 */}
+      <text x="86" y="146" fontSize="9" fill={muted} textAnchor="end">O</text>
+
+      {/* 円（中心 (2, -3) → SVG (126, 184)、半径 90 px） */}
+      <circle cx="126" cy="184" r="90" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
+
+      {/* 中心の点（マークだけ、座標は見せない） */}
+      <circle cx="126" cy="184" r="2.5" fill={accent} />
+
+      {/* キャプション（式そのものを再掲、中心と半径の数値は見せない） */}
+      <text x="140" y="280" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        x² + y² − 4x + 6y − 12 = 0 が表す円
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 斜辺 1 の直角三角形。横が cos θ、高さが sin θ、斜辺が 1。
  * サイン・コサインの「斜辺 1 のときの縦・横」という直感を視覚化。
  * 例として角度は arctan(3/4) ≈ 36.87°（3-4-5 直角三角形）。
@@ -2685,6 +2824,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <UnitTriangleSinCos />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleStep7 />
             </div>
           );
         }

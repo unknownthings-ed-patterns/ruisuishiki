@@ -506,6 +506,13 @@ export default function Play() {
               >
                 <MathText text={step.questionText} />
               </p>
+              {/* 問題理解の足場図（Step 1 や 質的変化のステップだけに置く、
+                  フェードアウトする足場のパタン）。答えは見せず、配置・関係だけを示す。 */}
+              {step.figureMarker && (
+                <div className="mt-5 -mx-2 sm:-mx-4">
+                  <MathBody text={step.figureMarker} />
+                </div>
+              )}
             </section>
           )}
 
