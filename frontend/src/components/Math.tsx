@@ -546,6 +546,323 @@ function TryExample({
 }
 
 /**
+ * 点と直線の距離 Step 1 の足場図：直線 3x-4y-9=0 と点 (1, 6) の配置。
+ * 答え（距離）も垂線も描かない、配置だけ。
+ */
+export function LineDistanceStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // viewBox 280x250、原点 SVG (60, 180)、1 unit = 20 px
+  // 直線 3x-4y-9=0 → y=(3x-9)/4
+  // x=-1: y=-3 → SVG (40, 240); x=10: y=5.25 → SVG (260, 75)
+  // 点 (1, 6) → SVG (80, 60)
+  return (
+    <svg
+      viewBox="0 0 280 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="直線 3x-4y-9=0 と 点 (1, 6) の配置"
+    >
+      <line x1="20" y1="180" x2="260" y2="180" stroke={muted} strokeWidth="0.5" />
+      <line x1="60" y1="10" x2="60" y2="220" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="193" fontSize="9" fill={muted}>x</text>
+      <text x="56" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
+      {/* 直線 */}
+      <line x1="40" y1="240" x2="260" y2="75" stroke={stroke} strokeWidth="1.6" />
+      <text x="246" y="68" fontSize="10" fill={muted} fontStyle="italic">3x − 4y − 9 = 0</text>
+      {/* 点 */}
+      <circle cx="80" cy="60" r="4" fill={accent} />
+      <text x="86" y="58" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">(1, 6)</text>
+      <text x="140" y="240" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        この点から直線までの最短距離は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * ピタゴラスの定理 Step 1 の足場図：直角三角形（2 辺 3, 4、斜辺 ?）。
+ */
+export function PythagorasStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 280 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="直角三角形：2 辺が 3 と 4、斜辺は ?"
+    >
+      <polygon points="60,160 200,160 60,55" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
+      <polyline points="68,160 68,152 60,152" fill="none" stroke={stroke} strokeWidth="0.8" />
+      <text x="48" y="115" fontSize="13" fill={stroke} textAnchor="end" fontStyle="italic">3</text>
+      <text x="130" y="180" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">4</text>
+      <text x="140" y="100" fontSize="14" fill={accent} fontStyle="italic" fontWeight="700">?</text>
+      <text x="140" y="195" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        斜辺（直角の向かいの辺）はいくつ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * ピタゴラスの定理 Step 5 の足場図：1 辺 7 の正方形と対角線。
+ */
+export function PythagorasStep5() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 280 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="1 辺 7 の正方形と対角線（長さは ?）"
+    >
+      <rect x="70" y="35" width="140" height="140" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
+      <line x1="70" y1="35" x2="210" y2="175" stroke={accent} strokeWidth="1.6" />
+      <polyline points="78,175 78,167 70,167" fill="none" stroke={stroke} strokeWidth="0.8" />
+      <text x="140" y="28" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">7</text>
+      <text x="220" y="110" fontSize="13" fill={stroke} fontStyle="italic">7</text>
+      <text x="155" y="100" fontSize="14" fill={accent} fontStyle="italic" fontWeight="700">?</text>
+      <text x="140" y="200" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        対角線は a√2 の形。a はいくつ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 直線の方程式 Step 1 の足場図：2 点を通る直線。
+ */
+export function TwoPointsLineStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 原点 SVG (40, 200)、1 unit = 25 px
+  // (1,2) → (65, 150)、(3,8) → (115, 0) はみ出すので scale 縮小
+  // 1 unit = 18 px に。(1,2) → (58, 164)、(3,8) → (94, 56)
+  return (
+    <svg
+      viewBox="0 0 280 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="2 点 (1, 2) と (3, 8) を通る直線"
+    >
+      <line x1="20" y1="200" x2="260" y2="200" stroke={muted} strokeWidth="0.5" />
+      <line x1="40" y1="10" x2="40" y2="220" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="213" fontSize="9" fill={muted}>x</text>
+      <text x="36" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
+      {/* 直線（点を結び、外側に少し延長） */}
+      <line x1="35" y1="179" x2="200" y2="-16" stroke={stroke} strokeWidth="1.6" strokeDasharray="0" />
+      {/* 2点 */}
+      <circle cx="58" cy="164" r="4" fill={accent} />
+      <text x="64" y="178" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">(1, 2)</text>
+      <circle cx="94" cy="56" r="4" fill={accent} />
+      <text x="100" y="52" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">(3, 8)</text>
+      <text x="140" y="232" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        この直線の傾きは？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 直線の方程式 Step 7 の足場図：2 点と中点。
+ */
+export function MidpointStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 原点 SVG (40, 180)、1 unit = 22 px
+  // (1, 5) → (62, 70)、(7, 3) → (194, 114)、中点 (4, 4) → (128, 92)
+  return (
+    <svg
+      viewBox="0 0 280 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="2 点 (1, 5) と (7, 3) の中点 M"
+    >
+      <line x1="20" y1="180" x2="260" y2="180" stroke={muted} strokeWidth="0.5" />
+      <line x1="40" y1="10" x2="40" y2="200" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="193" fontSize="9" fill={muted}>x</text>
+      <text x="36" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
+      <line x1="62" y1="70" x2="194" y2="114" stroke={stroke} strokeWidth="1.6" />
+      <circle cx="62" cy="70" r="4" fill={stroke} />
+      <text x="50" y="66" fontSize="11" fill={stroke} textAnchor="end" fontStyle="italic">(1, 5)</text>
+      <circle cx="194" cy="114" r="4" fill={stroke} />
+      <text x="200" y="116" fontSize="11" fill={stroke} fontStyle="italic">(7, 3)</text>
+      <circle cx="128" cy="92" r="4.5" fill={accent} />
+      <text x="134" y="88" fontSize="11" fill={accent} fontStyle="italic" fontWeight="700">M = ?</text>
+      <text x="140" y="210" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        中点 M の x 座標は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 直線の方程式 Step 9 の足場図：傾き 2 の直線と、垂直な直線。
+ */
+export function PerpendicularStep9() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // viewBox 280x200, 中心 (140, 100)
+  // 直線 1：傾き 2、通る (140, 100) → (110, 160), (170, 40)
+  // 直線 2（垂直）：傾き -1/2、通る (140, 100) → (80, 130), (200, 70)
+  return (
+    <svg
+      viewBox="0 0 280 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="傾き 2 の直線と、それに垂直な直線"
+    >
+      <line x1="10" y1="100" x2="270" y2="100" stroke={muted} strokeWidth="0.5" />
+      <line x1="140" y1="10" x2="140" y2="190" stroke={muted} strokeWidth="0.5" />
+      {/* 直線 1（傾き 2） */}
+      <line x1="110" y1="160" x2="170" y2="40" stroke={stroke} strokeWidth="1.6" />
+      <text x="174" y="44" fontSize="11" fill={stroke} fontStyle="italic">傾き 2</text>
+      {/* 直線 2（傾き -1/2、垂直） */}
+      <line x1="80" y1="130" x2="200" y2="70" stroke={accent} strokeWidth="1.6" />
+      <text x="206" y="74" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">傾き ?</text>
+      {/* 直角マーカー at (140, 100) */}
+      <polyline points="148,97 153,99 151,104" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="140" y="210" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        傾き 2 の直線に垂直な直線の傾きは？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 2次関数の最小値 Step 1 の足場図：下に凸の放物線と、底の最小値マーク。
+ * 数値は載せない、概形だけ。
+ */
+export function ParabolaMinStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 放物線 y = 0.05(x-140)² + 50 を SVG 直接で描画（viewBox 280x180、頂点 (140, 130)）
+  const pts: string[] = [];
+  for (let i = 0; i <= 50; i++) {
+    const sx = 60 + (i / 50) * 160;
+    const dx = sx - 140;
+    const sy = 130 - 0.05 * dx * dx;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 280 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="下に凸の放物線。底が最小値"
+    >
+      <line x1="20" y1="160" x2="260" y2="160" stroke={muted} strokeWidth="0.5" />
+      <line x1="140" y1="10" x2="140" y2="180" stroke={muted} strokeWidth="0.5" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="140" cy="130" r="4" fill={accent} />
+      {/* 矢印で 最小値 を指す */}
+      <line x1="200" y1="80" x2="148" y2="128" stroke={accent} strokeWidth="0.8" />
+      <text x="206" y="80" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">最小値 = ?</text>
+      <text x="140" y="195" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        お椀の底の高さが最小値
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 2次関数のグラフ Step 1 の足場図：頂点と対称軸を強調した放物線。
+ */
+export function ParabolaSymmetryStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: string[] = [];
+  for (let i = 0; i <= 50; i++) {
+    const sx = 60 + (i / 50) * 160;
+    const dx = sx - 140;
+    const sy = 130 - 0.05 * dx * dx;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 280 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="放物線の頂点と対称軸"
+    >
+      <line x1="20" y1="160" x2="260" y2="160" stroke={muted} strokeWidth="0.5" />
+      <line x1="140" y1="10" x2="140" y2="180" stroke={muted} strokeWidth="0.5" />
+      {/* 対称軸（頂点を通る縦の破線） */}
+      <line x1="140" y1="20" x2="140" y2="160" stroke={accent} strokeWidth="1.2" strokeDasharray="4,3" opacity="0.7" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="140" cy="130" r="4" fill={accent} />
+      <text x="148" y="135" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">頂点</text>
+      <text x="144" y="30" fontSize="10" fill={accent} fontStyle="italic">対称軸</text>
+      <text x="140" y="195" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        頂点の x 座標は？（対称軸の x と同じ）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 2次関数のグラフ Step 9 の足場図：頂点 (3, 5) を持つ放物線。
+ * 「頂点から元の式の c を逆算する」問題用。c の値は見せない。
+ */
+export function ParabolaVertexStep9() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // viewBox 280x240、原点 SVG (40, 200)、1 unit = 20 px
+  // 頂点 (3, 5) → SVG (100, 100)
+  // 放物線 f(x) = (x-3)² + 5、x ∈ [-1, 7]
+  const pts: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const x = -1 + (i / 60) * 8;
+    const y = (x - 3) ** 2 + 5;
+    const sx = 40 + x * 20;
+    const sy = 200 - y * 20;
+    if (sy < 0) continue;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 280 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="頂点 (3, 5) を持つ放物線"
+    >
+      <line x1="20" y1="200" x2="260" y2="200" stroke={muted} strokeWidth="0.5" />
+      <line x1="40" y1="10" x2="40" y2="220" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="213" fontSize="9" fill={muted}>x</text>
+      <text x="36" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="100" cy="100" r="4" fill={accent} />
+      <text x="108" y="98" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">頂点 (3, 5)</text>
+      <text x="140" y="232" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        この頂点を持つ f(x) = x² + bx + c の c は？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 1 の足場図：原点中心、半径 3 の円。
  * 円の上の任意の点 P(x, y) から原点までの距離 = 半径 3。
  * ピタゴラスから x² + y² = N の N がどこにあるか（= 右辺）を視覚化。
@@ -2882,6 +3199,69 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CircleStep7 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LINE_DIST_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LineDistanceStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PYTHAGORAS_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PythagorasStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PYTHAGORAS_STEP5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PythagorasStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<TWO_POINTS_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TwoPointsLineStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<MIDPOINT_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <MidpointStep7 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PERP_STEP9>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PerpendicularStep9 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARABOLA_MIN_STEP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaMinStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARABOLA_SYMMETRY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaSymmetryStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARABOLA_VERTEX_3_5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaVertexStep9 />
             </div>
           );
         }

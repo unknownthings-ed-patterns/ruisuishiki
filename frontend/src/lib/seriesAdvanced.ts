@@ -130,6 +130,7 @@ $$g(y) = y^2 - 10y + 28$$
         { layer: 3, text: "最小値は 1（$x = -2$ のとき）。" },
       ],
       formulaPreview: "5 − 16/4 = 1",
+      figureMarker: "<<PARABOLA_MIN_STEP>>",
     },
     {
       id: "step2", position: 2,
@@ -275,6 +276,7 @@ export const ADV_QUAD_GRAPH_SERIES: LearnerSeries = {
         { layer: 3, text: "$-2$。" },
       ],
       formulaPreview: "−4/2 = −2",
+      figureMarker: "<<PARABOLA_SYMMETRY>>",
     },
     {
       id: "step2", position: 2,
@@ -371,6 +373,7 @@ export const ADV_QUAD_GRAPH_SERIES: LearnerSeries = {
         { layer: 3, text: "$c = 14$。" },
       ],
       formulaPreview: "3² + 5 = 14",
+      figureMarker: "<<PARABOLA_VERTEX_3_5>>",
     },
     {
       id: "step10", position: 10,
@@ -510,6 +513,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "$3$。" },
       ],
       formulaPreview: "(8−2)/(3−1) = 3",
+      figureMarker: "<<TWO_POINTS_LINE>>",
     },
     {
       id: "step2", position: 2,
@@ -582,6 +586,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "$4$。" },
       ],
       formulaPreview: "(1+7)/2 = 4",
+      figureMarker: "<<MIDPOINT_STEP7>>",
     },
     {
       id: "step8", position: 8,
@@ -606,6 +611,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
         { layer: 3, text: "$-\\dfrac{1}{2}$（小数だと $-0.5$）。" },
       ],
       formulaPreview: "−1 / 2 = −1/2",
+      figureMarker: "<<PERP_STEP9>>",
     },
     {
       id: "step10", position: 10,
@@ -752,6 +758,7 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
         { layer: 3, text: "$6$。" },
       ],
       formulaPreview: "|−30| / 5 = 6",
+      figureMarker: "<<LINE_DIST_STEP1>>",
     },
     {
       id: "step2", position: 2,
@@ -860,6 +867,7 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
         { layer: 3, text: "$6$。（直角三角形なので $\\dfrac{1}{2} \\cdot 4 \\cdot 3$ でも同じ。）" },
       ],
       formulaPreview: "½ · 5 · 12/5 = 6",
+      figureMarker: "<<TRIANGLE_AREA_DIST>>",
     },
   ],
   derivation: `**野原に立っているとき、目の前の道までの距離はどう測る？**

@@ -289,6 +289,7 @@ $$\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
       unknownLabel: "斜辺の長さ",
       variationFromPrevious: null,
       compareWithStepId: null,
+      figureMarker: "<<PYTHAGORAS_STEP1>>",
       hints: [
         { layer: 1, text: "ピタゴラスの定理：$c^2 = a^2 + b^2$。" },
         { layer: 2, text: "$c^2 = 3^2 + 4^2 = 9 + 16 = 25$。" },
@@ -357,6 +358,7 @@ $$\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
       unknownLabel: "対角線の根号の前",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
+      figureMarker: "<<PYTHAGORAS_STEP5>>",
       hints: [
         {
           layer: 1,
