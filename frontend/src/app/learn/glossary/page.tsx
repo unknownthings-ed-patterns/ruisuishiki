@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo } from "react";
 import {
   MathBody,
   MathText,
@@ -18,19 +19,36 @@ import { GLOSSARY } from "@/lib/glossary";
  *
  * URL の term パラメータが GLOSSARY に存在すれば、その辞書ページを直接表示。
  * パラメータがない or 該当用語がない場合は、登録されている全用語の一覧を表示。
+ *
+ * useSearchParams は Suspense 必須なので、内容を子コンポーネントに切り出す。
  */
 export default function GlossaryPage() {
-  const [term, setTerm] = useState<string | null>(null);
+  return (
+    <Suspense fallback={<GlossaryFallback />}>
+      <GlossaryPageContent />
+    </Suspense>
+  );
+}
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const t = params.get("term");
-    if (t) setTerm(t);
-  }, []);
+function GlossaryFallback() {
+  return (
+    <main className="flex min-h-screen items-center justify-center px-6">
+      <p
+        className="text-muted"
+        style={{ fontSize: "13px", letterSpacing: "0.2em" }}
+      >
+        読み込んでいます…
+      </p>
+    </main>
+  );
+}
 
+function GlossaryPageContent() {
+  // useSearchParams は URL の変化を React に通知してくれるので、
+  // Link で別の用語に飛んだら自動で再描画される。
+  const params = useSearchParams();
+  const term = params.get("term");
   const entry = term ? GLOSSARY[term] : undefined;
-
   const allTerms = useMemo(() => Object.keys(GLOSSARY).sort(), []);
 
   return (
@@ -41,14 +59,29 @@ export default function GlossaryPage() {
         margin: "0 auto",
       }}
     >
-      <nav className="mb-8">
+      <nav
+        className="mb-8 flex items-baseline gap-4"
+        style={{ fontSize: "12px", letterSpacing: "0.1em" }}
+      >
         <Link
           href="/learn"
           className="text-muted hover:text-foreground transition-colors"
-          style={{ fontSize: "12px", letterSpacing: "0.1em" }}
         >
           ← 学ぶに戻る
         </Link>
+        {term && (
+          <>
+            <span className="text-muted opacity-30" aria-hidden>
+              /
+            </span>
+            <Link
+              href="/learn/glossary/"
+              className="text-muted hover:text-foreground transition-colors"
+            >
+              ← 数学用語辞典に戻る
+            </Link>
+          </>
+        )}
       </nav>
 
       {term && entry ? (
