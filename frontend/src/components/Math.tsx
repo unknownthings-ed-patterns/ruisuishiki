@@ -546,6 +546,276 @@ function TryExample({
 }
 
 /**
+ * 直線の傾き m = (y₂ − y₁) / (x₂ − x₁) を視覚化する図。
+ * 2 点 P₁, P₂ と、ステップ三角形（Δx, Δy）を一緒に描く。
+ */
+export function LineSlope() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 320x250, origin SVG (50, 200), 1 unit = 25 px
+  // P₁ = (1, 2) → SVG (75, 150), P₂ = (5, 6) → SVG (175, 50)
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="2 点 P₁, P₂ を通る直線。傾き m = (y₂-y₁)/(x₂-x₁)"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="200" x2="300" y2="200" stroke={muted} strokeWidth="0.5" />
+      <line x1="50" y1="20" x2="50" y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y="213" fontSize="9" fill={muted}>x</text>
+      <text x="46" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* ステップ三角形 */}
+      <polygon
+        points="75,150 175,150 175,50"
+        fill={fillColor}
+        stroke={muted}
+        strokeWidth="0.8"
+        strokeDasharray="3,2"
+      />
+
+      {/* 直線（実は線分として描く） */}
+      <line x1="55" y1="170" x2="195" y2="30" stroke={stroke} strokeWidth="1.8" />
+
+      {/* P1, P2 */}
+      <circle cx="75" cy="150" r="3.5" fill={accent} />
+      <circle cx="175" cy="50" r="3.5" fill={accent} />
+
+      {/* ラベル */}
+      <text x="60" y="170" fontSize="11" fill={stroke}>P₁(x₁, y₁)</text>
+      <text x="180" y="48" fontSize="11" fill={stroke}>P₂(x₂, y₂)</text>
+      <text x="125" y="167" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        x₂ − x₁
+      </text>
+      <text x="183" y="105" fontSize="11" fill={muted} fontStyle="italic">
+        y₂ − y₁
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="160"
+        y="248"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        傾き m = (y の差) ÷ (x の差) ——「x の変化に対する y の変化」
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 平方完成からグラフの 3 つの読みどころ（頂点・軸・y 切片）が見える図。
+ * 例として f(x) = (x-2)² + 1（頂点 (2, 1)、y 切片 5）。
+ */
+export function ParabolaWithLabels() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // viewBox 360x260, origin SVG (180, 210), x: 30 px/unit, y: 18 px/unit
+  // 放物線 f(x) = (x-2)² + 1, x ∈ [-1, 5]
+  const pts: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const x = -1 + (i / 60) * 6;
+    const y = (x - 2) ** 2 + 1;
+    const sx = 180 + x * 30;
+    const sy = 210 - y * 18;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 360 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="放物線 y = (x-2)² + 1 の頂点・対称軸・y 切片"
+    >
+      {/* x 軸 */}
+      <line x1="20" y1="210" x2="340" y2="210" stroke={muted} strokeWidth="0.5" />
+      {/* y 軸 */}
+      <line x1="180" y1="20" x2="180" y2="240" stroke={muted} strokeWidth="0.5" />
+      <text x="336" y="223" fontSize="9" fill={muted}>x</text>
+      <text x="176" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 対称軸（縦の破線、頂点を通る） */}
+      <line
+        x1="240"
+        y1="20"
+        x2="240"
+        y2="210"
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="4,3"
+        opacity="0.7"
+      />
+      <text x="244" y="35" fontSize="10" fill={accent} fontStyle="italic">
+        x = −b/2
+      </text>
+
+      {/* 放物線 */}
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+
+      {/* 頂点 (2, 1) */}
+      <circle cx="240" cy="192" r="4" fill={accent} />
+      <text x="248" y="198" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        頂点
+      </text>
+      <text x="248" y="212" fontSize="9" fill={muted}>
+        (−b/2, c − b²/4)
+      </text>
+
+      {/* y 切片 (0, 5) */}
+      <circle cx="180" cy="120" r="4" fill={accent} />
+      <text
+        x="172"
+        y="116"
+        fontSize="11"
+        fill={accent}
+        fontStyle="italic"
+        fontWeight="600"
+        textAnchor="end"
+      >
+        y 切片
+      </text>
+      <text x="172" y="130" fontSize="9" fill={muted} textAnchor="end">
+        (0, c)
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="180"
+        y="260"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        平方完成 1 つで、頂点・軸・y 切片が一度に見える
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 平方完成の幾何的意味を示す図。
+ * x² + bx を「x×x の正方形 + 2つの x×(b/2) の長方形」と捉え、
+ * 隙間の (b/2)² を補うと、辺 (x + b/2) の大きな正方形が完成する。
+ * 「平方完成」という名前の由来そのものを視覚化。
+ */
+export function CompleteSquareVisual() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const xSquareFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const rectFill = "color-mix(in oklch, var(--foreground) 5%, transparent)";
+  const addedFill = "color-mix(in oklch, var(--accent) 28%, transparent)";
+  // x = 130, b/2 = 70 で 大きな正方形 (40,40)-(240,240)
+  return (
+    <svg
+      viewBox="0 0 280 310"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="平方完成の幾何的意味：x² + bx に (b/2)² を補って (x + b/2)² を完成させる"
+    >
+      {/* 左上: x² */}
+      <rect x="40" y="40" width="130" height="130" fill={xSquareFill} stroke={stroke} strokeWidth="1" />
+      {/* 右上: x × (b/2) */}
+      <rect x="170" y="40" width="70" height="130" fill={rectFill} stroke={stroke} strokeWidth="1" />
+      {/* 左下: (b/2) × x */}
+      <rect x="40" y="170" width="130" height="70" fill={rectFill} stroke={stroke} strokeWidth="1" />
+      {/* 右下: (b/2)²（補うぶん、破線で強調） */}
+      <rect
+        x="170"
+        y="170"
+        width="70"
+        height="70"
+        fill={addedFill}
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="4,2"
+      />
+      {/* 大きな正方形の外枠 */}
+      <rect
+        x="40"
+        y="40"
+        width="200"
+        height="200"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+      />
+
+      {/* 内部ラベル */}
+      <text x="105" y="110" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        x²
+      </text>
+      <text x="205" y="110" fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (b/2)x
+      </text>
+      <text x="105" y="212" fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (b/2)x
+      </text>
+      <text
+        x="205"
+        y="212"
+        fontSize="12"
+        fill={accent}
+        textAnchor="middle"
+        fontStyle="italic"
+        fontWeight="700"
+      >
+        (b/2)²
+      </text>
+
+      {/* 上辺ラベル */}
+      <text x="105" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        x
+      </text>
+      <text x="205" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        b/2
+      </text>
+      {/* 左辺ラベル */}
+      <text x="32" y="110" fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">
+        x
+      </text>
+      <text x="32" y="212" fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">
+        b/2
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="140"
+        y="275"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        x² + bx に (b/2)² を補うと、辺 (x + b/2) の正方形が完成
+      </text>
+      <text
+        x="140"
+        y="294"
+        fontSize="11"
+        fill={accent}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        破線の正方形が「平方を完成させる」一手
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 原点中心、半径 r の円と、円上の点 P(x, y)、原点との直角三角形。
  * x² + y² = r² の式が、ピタゴラスから自然に出てくることを視覚化。
  * 例として 3-4-5 直角三角形（P=(3,4)、r=5）。
@@ -2285,6 +2555,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <DiameterCircle />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLETE_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CompleteSquareVisual />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARABOLA_WITH_LABELS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaWithLabels />
+            </div>
+          );
+        }
+        if (trimmed === "<<LINE_SLOPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LineSlope />
             </div>
           );
         }
