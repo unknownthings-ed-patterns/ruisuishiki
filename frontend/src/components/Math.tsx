@@ -546,6 +546,128 @@ function TryExample({
 }
 
 /**
+ * 指数関数の急成長グラフ。
+ * y = 2^x を x=0 から x=10 まで描き、爆発的増加を視覚化。
+ * x が 10 でも y が 1024 を超える、を一目で伝える。
+ */
+export function ExpGrowth() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // viewBox 320x230, 原点 SVG (40, 200), 1 unit x = 24 px, y scale: 1024 → 180 px
+  const yMax = 1024;
+  const yPx = 180;
+  const pts: string[] = [];
+  const markedPoints: { x: number; y: number; label: string; emph?: boolean }[] = [];
+  for (let i = 0; i <= 10; i++) {
+    const y = Math.pow(2, i);
+    const sx = 40 + i * 24;
+    const sy = 200 - (y / yMax) * yPx;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+    if (i === 0 || i === 3 || i === 5 || i === 7 || i === 10) {
+      markedPoints.push({ x: sx, y: sy, label: `${y}`, emph: i === 10 });
+    }
+  }
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="y = 2^x の指数関数的増加。x = 10 で y は 1024 を超える"
+    >
+      {/* 軸 */}
+      <line x1="20" y1="200" x2="300" y2="200" stroke={muted} strokeWidth="0.5" />
+      <line x1="40" y1="10" x2="40" y2="220" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y="213" fontSize="9" fill={muted}>x</text>
+      <text x="36" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 曲線 */}
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+
+      {/* マークと注釈 */}
+      {markedPoints.map((p) => (
+        <g key={p.label}>
+          <circle cx={p.x} cy={p.y} r={p.emph ? 4.5 : 3} fill={p.emph ? accent : muted} />
+          {p.emph && (
+            <text x={p.x - 6} y={p.y - 8} fontSize="11" fill={accent} fontWeight="600" textAnchor="end">
+              {p.label}
+            </text>
+          )}
+        </g>
+      ))}
+
+      {/* 軸目盛りラベル */}
+      <text x="40" y="215" fontSize="9" fill={muted} textAnchor="middle">0</text>
+      <text x="160" y="215" fontSize="9" fill={muted} textAnchor="middle">5</text>
+      <text x="280" y="215" fontSize="9" fill={muted} textAnchor="middle">10</text>
+
+      {/* キャプション */}
+      <text x="160" y="232" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        n が 10 でも、結果は 1000 倍を超える——これが指数の威力
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数と対数の対応図。
+ * 「$2^3 = 8$」と「$\\log_2 8 = 3$」が同じ関係の 2 方向の表現であることを示す。
+ * 底・指数・値の役割が両側でどう入れ替わるかを視覚化。
+ */
+export function ExpLogMirror() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const boxFill = "color-mix(in oklch, var(--surface) 80%, var(--accent) 20%)";
+  return (
+    <svg
+      viewBox="0 0 340 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="指数と対数の対応：2^3 = 8 と log_2 8 = 3 は同じ関係の 2 方向"
+    >
+      {/* 指数の箱 */}
+      <rect x="10" y="40" width="140" height="90" rx="6" fill={boxFill} stroke={stroke} strokeWidth="1" />
+      <text x="80" y="30" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">指数の式</text>
+      <text x="80" y="78" fontSize="22" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        2³ = 8
+      </text>
+      <text x="80" y="108" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        2 を 3 回かけたら 8
+      </text>
+
+      {/* 対数の箱 */}
+      <rect x="190" y="40" width="140" height="90" rx="6" fill={boxFill} stroke={stroke} strokeWidth="1" />
+      <text x="260" y="30" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">対数の式</text>
+      <text x="260" y="78" fontSize="22" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        log₂ 8 = 3
+      </text>
+      <text x="260" y="108" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        2 を何回かけて 8？ → 3 回
+      </text>
+
+      {/* 中央の双方向矢印 */}
+      <line x1="155" y1="85" x2="185" y2="85" stroke={accent} strokeWidth="1.5" />
+      <polyline points="160,80 155,85 160,90" fill="none" stroke={accent} strokeWidth="1.5" />
+      <polyline points="180,80 185,85 180,90" fill="none" stroke={accent} strokeWidth="1.5" />
+
+      {/* 役割の対応説明 */}
+      <text x="170" y="160" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        どちらも「2 を 3 回かけたら 8」という同じ事実
+      </text>
+      <text x="170" y="178" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        指数：底 → 値　／　対数：値 → 指数
+      </text>
+      <text x="170" y="200" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        同じものを 2 方向から書いただけ
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 点と直線の距離 Step 1 の足場図：直線 3x-4y-9=0 と点 (1, 6) の配置。
  * 答え（距離）も垂線も描かない、配置だけ。
  */
@@ -3262,6 +3384,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ParabolaVertexStep9 />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_GROWTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpGrowth />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_LOG_MIRROR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpLogMirror />
             </div>
           );
         }
