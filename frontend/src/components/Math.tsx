@@ -106,7 +106,7 @@ function TermLink({ term }: { term: string }) {
  *
  * 空のセクション（未記入）は描画しない。書く対象が一目で見える設計。
  */
-function StructuredDictionaryPage({ entry }: { entry: GlossaryEntry }) {
+export function StructuredDictionaryPage({ entry }: { entry: GlossaryEntry }) {
   const sections: { label: string; text: string }[] = [];
   if (entry.meaning) sections.push({ label: "定義（説明）と例", text: entry.meaning });
   if (entry.figures) sections.push({ label: "図や絵", text: entry.figures });
