@@ -546,6 +546,108 @@ function TryExample({
 }
 
 /**
+ * 斜辺 1 の直角三角形。横が cos θ、高さが sin θ、斜辺が 1。
+ * サイン・コサインの「斜辺 1 のときの縦・横」という直感を視覚化。
+ * 例として角度は arctan(3/4) ≈ 36.87°（3-4-5 直角三角形）。
+ */
+export function UnitTriangleSinCos() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 320x230
+  // 三角形：(60, 180), (220, 180), (220, 60)
+  // 横 160px, 高さ 120px, 斜辺 200px（= 1 と読む）
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="斜辺 1 の直角三角形：横が cos θ、高さが sin θ"
+    >
+      {/* 地面参照線 */}
+      <line
+        x1="20"
+        y1="180"
+        x2="300"
+        y2="180"
+        stroke="var(--border)"
+        strokeWidth="0.5"
+        strokeDasharray="3,3"
+      />
+
+      {/* 三角形 */}
+      <polygon
+        points="60,180 220,180 220,60"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+
+      {/* 直角マーカー at (220, 180) */}
+      <polyline
+        points="212,180 212,172 220,172"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+
+      {/* θ 弧 at (60, 180)
+          斜辺方向：(160, -120) normalized = (0.8, -0.6)
+          arc from (80, 180) to (60+20*0.8, 180-20*0.6) = (76, 168) */}
+      <path
+        d="M 80,180 A 20,20 0 0,0 76,168"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="88" y="175" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+
+      {/* 辺ラベル */}
+      <text
+        x="140"
+        y="198"
+        fontSize="13"
+        fill={accent}
+        textAnchor="middle"
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        cos θ
+      </text>
+      <text
+        x="232"
+        y="124"
+        fontSize="13"
+        fill={accent}
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        sin θ
+      </text>
+      <text x="120" y="110" fontSize="14" fill={stroke} fontStyle="italic" fontWeight="600">
+        1
+      </text>
+
+      {/* キャプション */}
+      <text
+        x="160"
+        y="220"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        斜辺 1 の直角三角形——横が cos θ、高さが sin θ
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 直線の傾き m = (y₂ − y₁) / (x₂ − x₁) を視覚化する図。
  * 2 点 P₁, P₂ と、ステップ三角形（Δx, Δy）を一緒に描く。
  */
@@ -2576,6 +2678,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <LineSlope />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitTriangleSinCos />
             </div>
           );
         }
