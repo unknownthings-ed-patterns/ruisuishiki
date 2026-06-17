@@ -547,47 +547,84 @@ function TryExample({
 
 /**
  * 円の方程式 Step 1 の足場図：原点中心、半径 3 の円。
- * 答え（N = 9）は見せず、円の配置だけを示す。
+ * 円の上の任意の点 P(x, y) から原点までの距離 = 半径 3。
+ * ピタゴラスから x² + y² = N の N がどこにあるか（= 右辺）を視覚化。
+ * 答えの数値（N=9）は見せない。
  */
 export function CircleStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
-  // viewBox 280x240, origin SVG (140, 130), 1 unit = 28 px (radius 3 = 84 px)
+  // viewBox 280x290
+  // 原点 SVG (140, 120)、1 unit = 28 px、半径 3 = 84 px
+  // P 取り方：(2.12, 2.12) ≒ (√4.5, √4.5)。SVG (199, 61)
   return (
     <svg
-      viewBox="0 0 280 240"
+      viewBox="0 0 280 290"
       className="w-full h-auto"
       style={{ maxWidth: 280 }}
       role="img"
-      aria-label="原点を中心とする半径 3 の円"
+      aria-label="原点中心、半径 3 の円。点 P(x, y) と原点との直角三角形（ピタゴラス）"
     >
       {/* 軸 */}
-      <line x1="20" y1="130" x2="260" y2="130" stroke={muted} strokeWidth="0.5" />
-      <line x1="140" y1="20" x2="140" y2="230" stroke={muted} strokeWidth="0.5" />
-      <text x="256" y="143" fontSize="9" fill={muted}>x</text>
-      <text x="136" y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
-
-      {/* 目盛り（−3, 3 を示す） */}
-      <line x1="56" y1="127" x2="56" y2="133" stroke={muted} strokeWidth="0.5" />
-      <line x1="224" y1="127" x2="224" y2="133" stroke={muted} strokeWidth="0.5" />
-      <line x1="137" y1="46" x2="143" y2="46" stroke={muted} strokeWidth="0.5" />
-      <line x1="137" y1="214" x2="143" y2="214" stroke={muted} strokeWidth="0.5" />
-      <text x="56" y="146" fontSize="9" fill={muted} textAnchor="middle">−3</text>
-      <text x="224" y="146" fontSize="9" fill={muted} textAnchor="middle">3</text>
-      <text x="130" y="50" fontSize="9" fill={muted} textAnchor="end">3</text>
+      <line x1="20" y1="120" x2="260" y2="120" stroke={muted} strokeWidth="0.5" />
+      <line x1="140" y1="10" x2="140" y2="220" stroke={muted} strokeWidth="0.5" />
+      <text x="256" y="133" fontSize="9" fill={muted}>x</text>
+      <text x="136" y="12" fontSize="9" fill={muted} textAnchor="end">y</text>
 
       {/* 円 */}
-      <circle cx="140" cy="130" r="84" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
+      <circle cx="140" cy="120" r="84" fill={fillColor} stroke={stroke} strokeWidth="1.6" />
 
-      {/* 中心 */}
-      <circle cx="140" cy="130" r="3" fill={accent} />
-      <text x="146" y="146" fontSize="10" fill={accent} fontStyle="italic" fontWeight="600">O</text>
+      {/* x 軸沿いの補助線（原点 → P の真下） */}
+      <line x1="140" y1="120" x2="199" y2="120" stroke={stroke} strokeWidth="1.4" />
+      {/* y 軸方向の補助線（P → x 軸、破線） */}
+      <line x1="199" y1="120" x2="199" y2="61" stroke={stroke} strokeWidth="1" strokeDasharray="3,2" />
+      {/* 半径 OP（強調） */}
+      <line x1="140" y1="120" x2="199" y2="61" stroke={accent} strokeWidth="1.7" />
 
-      {/* 半径の補助線 */}
-      <line x1="140" y1="130" x2="224" y2="130" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
-      <text x="178" y="124" fontSize="11" fill={accent} fontStyle="italic">3</text>
+      {/* 直角マーカー at (199, 120) */}
+      <polyline points="193,120 193,114 199,114" fill="none" stroke={stroke} strokeWidth="0.8" />
+
+      {/* 原点と P */}
+      <circle cx="140" cy="120" r="3" fill={stroke} />
+      <circle cx="199" cy="61" r="3.5" fill={accent} />
+
+      {/* 点ラベル */}
+      <text x="130" y="135" fontSize="10" fill={muted} textAnchor="end">O</text>
+      <text x="205" y="58" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">P(x, y)</text>
+
+      {/* 辺ラベル */}
+      <text x="170" y="135" fontSize="11" fill={muted} fontStyle="italic">x</text>
+      <text x="204" y="94" fontSize="11" fill={muted} fontStyle="italic">y</text>
+      <text x="153" y="84" fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">3</text>
+
+      {/* 方程式タグ（N がどこにあるか明示、N は accent で強調） */}
+      <line
+        x1="60"
+        y1="240"
+        x2="220"
+        y2="240"
+        stroke="var(--border)"
+        strokeWidth="0.5"
+        strokeDasharray="3,3"
+      />
+      <text x="140" y="260" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x² + y² ={" "}
+        <tspan fill={accent} fontWeight="700">
+          N
+        </tspan>
+      </text>
+      <text
+        x="140"
+        y="278"
+        fontSize="10"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        ↑ この N を求めます（円の上ならどこでも同じ値）
+      </text>
     </svg>
   );
 }
