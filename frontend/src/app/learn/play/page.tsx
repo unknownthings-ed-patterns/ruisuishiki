@@ -297,7 +297,43 @@ export default function Play() {
   // 完了画面
   if (status === "completed") {
     return (
-      <main className="flex min-h-screen flex-col items-center px-6 py-16">
+      <main className="flex min-h-screen flex-col">
+        <nav
+          className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+          style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+          aria-label="サイト全体のナビゲーション"
+        >
+          <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
+            <div
+              className="flex items-baseline gap-3"
+              style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+            >
+              <Link
+                href="/learn/"
+                className="text-muted hover:text-foreground transition-colors"
+              >
+                ← 学ぶ
+              </Link>
+              <span className="text-muted opacity-30" aria-hidden>
+                /
+              </span>
+              <Link
+                href="/"
+                className="text-muted hover:text-foreground transition-colors"
+              >
+                ホーム
+              </Link>
+            </div>
+            <span
+              className="text-muted truncate"
+              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+              title={series.title}
+            >
+              {series.title}
+            </span>
+          </div>
+        </nav>
+        <div className="flex-1 flex flex-col items-center px-6 py-16">
         <div className="w-full max-w-2xl flex flex-col items-center gap-10">
           <h1
             className="font-serif text-foreground text-center"
@@ -359,6 +395,7 @@ export default function Play() {
             </Link>
           </div>
         </div>
+        </div>
 
         <style jsx global>{`
           details[open] summary span:first-of-type {
@@ -376,10 +413,49 @@ export default function Play() {
 
   return (
     <main className="flex min-h-screen flex-col">
+      {/* 上部 sticky ナビ：いつでも「学ぶ（系列カタログ）」「ホーム」に戻れる
+          子どもにも大人にも「いつでもやめられる」安心感を担保（戸田の自得を
+          縛りに変えない設計）。 */}
+      <nav
+        className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+        style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+        aria-label="サイト全体のナビゲーション"
+      >
+        <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
+          <div
+            className="flex items-baseline gap-3"
+            style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+          >
+            <Link
+              href="/learn/"
+              className="text-muted hover:text-foreground transition-colors"
+            >
+              ← 学ぶ
+            </Link>
+            <span className="text-muted opacity-30" aria-hidden>
+              /
+            </span>
+            <Link
+              href="/"
+              className="text-muted hover:text-foreground transition-colors"
+            >
+              ホーム
+            </Link>
+          </div>
+          <span
+            className="text-muted truncate"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+            title={series.title}
+          >
+            {series.title}
+          </span>
+        </div>
+      </nav>
+
       {/* 上部：スクロール可能エリア（進度バー・問題文・ヒント）
           フォームは画面下部に sticky 固定なので、ここがどれだけ長くなっても
           メインアクション（解答送信）は常に視野に入る */}
-      <div className="flex-1 flex flex-col items-center px-6 pt-8 pb-6">
+      <div className="flex-1 flex flex-col items-center px-6 pt-6 pb-6">
         <div className="w-full max-w-2xl flex flex-col gap-6">
           {/* 進度表示（文型タグは出さない・第2弾失敗モードF1の予防） */}
           <header className="flex items-center justify-between">
@@ -640,31 +716,23 @@ export default function Play() {
         <div className="mx-auto w-full max-w-2xl px-6 py-4">
           {/* 公式の景色を mid-series で見ている時の戻り方 */}
           {showingDerivation && (
-            <section className="flex flex-wrap items-center justify-between gap-3 animate-fade-in">
-              <p
-                className="text-muted"
-                style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+            <section className="flex flex-wrap items-center justify-end gap-3 animate-fade-in">
+              <button
+                type="button"
+                onClick={handleReturnFromDerivation}
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
+                style={{ letterSpacing: "0.15em", fontSize: "13px" }}
               >
-                読み終わったら戻ってください。
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={handleReturnFromDerivation}
-                  className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
-                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
-                >
-                  ← 問題に戻る
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSkipFromDerivation}
-                  className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02]"
-                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
-                >
-                  {isLast ? "おわりへ →" : "次の問題へ →"}
-                </button>
-              </div>
+                ← 問題に戻る
+              </button>
+              <button
+                type="button"
+                onClick={handleSkipFromDerivation}
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02]"
+                style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+              >
+                {isLast ? "おわりへ →" : "次の問題へ →"}
+              </button>
             </section>
           )}
 
