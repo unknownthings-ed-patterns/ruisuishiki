@@ -29,7 +29,7 @@ export type PatternId =
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
-  | "CR1";
+  | "CR1" | "NL1";
 
 /**
  * 変数の意味的役割。
@@ -1063,6 +1063,26 @@ const LN8: PatternSpec = {
   }),
 };
 
+/** NL1: 数直線上の点（距離・中点・内分・外分） */
+const NL1: PatternSpec = {
+  id: "NL1",
+  unit: "advanced",
+  naturalLanguage: "数直線上の 2 点の距離・中点・内分・外分",
+  formulaTemplate: "|x2 - x1| / (x1+x2)/2 / (n*x1+m*x2)/(m+n)",
+  variables: [
+    { name: "x1", role: "A の座標", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "x2", role: "B の座標", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "m", role: "比 m", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "n", role: "比 n", unknown: false, domain: { kind: "integer", min: 1, max: 10 } },
+    { name: "result", role: "結果（距離 / 中点 / 内分 / 外分）", unknown: true, domain: { kind: "decimal", min: -100, max: 100 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: Math.abs(k.x2 - k.x1),
+  }),
+};
+
 /** CR1: 円の方程式（標準形・一般形・直径両端・平方完成） */
 const CR1: PatternSpec = {
   id: "CR1",
@@ -1097,7 +1117,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1,
+  CR1, NL1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1115,7 +1135,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1,
+  CR1, NL1,
 ];
 
 export const CONTEXT_CATEGORIES = [

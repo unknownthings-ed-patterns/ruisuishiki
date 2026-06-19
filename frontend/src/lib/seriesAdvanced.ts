@@ -1357,7 +1357,312 @@ $$Ax^2 + By^2 + Cxy + Dx + Ey + F = 0$$
 の形を持ちます。$C = 0$ で $A = B$ なら円。**係数の組合せが、図形の種類を決める** ——これは座標幾何の大きなテーマです。`,
 };
 
+/* ===== NL1: 数直線上の点（距離・中点・内分・外分） ===== */
+export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
+  id: "adv_number_line_01",
+  title: "★ 数直線上の点",
+  subtitle: "数Ⅱ・B「図形と方程式」の入口 — 距離・中点・内分・外分を 10 問。",
+  patternId: "NL1",
+  unit: "advanced",
+  revelationLabel: "内分 = 重み付き平均、外分は n を −n に置き換える",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText: "数直線上の 2 点 $A(2)$, $B(8)$ の距離はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "距離 AB",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "数直線上の距離 $= |x_2 - x_1|$。座標の差の絶対値。" },
+        { layer: 2, text: "$|8 - 2| = |6|$。" },
+        { layer: 3, text: "$6$。" },
+      ],
+      formulaPreview: "|8 − 2| = 6",
+      figureMarker: "<<NUMLINE_DIST_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText: "数直線上の 2 点 $A(-3)$, $B(5)$ の距離はいくつでしょう？",
+      answer: 8,
+      unit: "",
+      unknownLabel: "距離 AB",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。$|x_2 - x_1|$。負の数の差に注意。" },
+        { layer: 2, text: "$|5 - (-3)| = |8|$。" },
+        { layer: 3, text: "$8$。" },
+      ],
+      formulaPreview: "|5 − (−3)| = 8",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText: "数直線上の 2 点 $A(2)$, $B(8)$ の中点の座標はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "中点の座標",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "中点 $= \\dfrac{x_1 + x_2}{2}$（2 つの座標の平均）。" },
+        { layer: 2, text: "$\\dfrac{2 + 8}{2} = \\dfrac{10}{2}$。" },
+        { layer: 3, text: "$5$。" },
+      ],
+      formulaPreview: "(2+8)/2 = 5",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText: "数直線上の 2 点 $A(-3)$, $B(7)$ の中点の座標はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "中点の座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "2 つの座標の平均。" },
+        { layer: 2, text: "$\\dfrac{-3 + 7}{2} = \\dfrac{4}{2}$。" },
+        { layer: 3, text: "$2$。" },
+      ],
+      formulaPreview: "(−3+7)/2 = 2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "数直線上の 2 点 $A(3)$, $B(7)$ を $1 : 1$ に内分する点の座標はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "内分点の座標",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$m:n$ に内分する点 $= \\dfrac{n x_1 + m x_2}{m + n}$。クロスして掛けて足す。",
+        },
+        {
+          layer: 2,
+          text: "$\\dfrac{1 \\cdot 3 + 1 \\cdot 7}{1 + 1} = \\dfrac{10}{2}$。",
+        },
+        { layer: 3, text: "$5$（$1:1$ の内分は中点と同じ）。" },
+      ],
+      formulaPreview: "(3+7)/2 = 5",
+      figureMarker: "<<NUMLINE_INTERNAL>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "数直線上の 2 点 $A(2)$, $B(7)$ を $2 : 3$ に内分する点の座標はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "内分点の座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "$\\dfrac{n x_1 + m x_2}{m + n}$、$m = 2, n = 3$。" },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{3 \\cdot 2 + 2 \\cdot 7}{2 + 3} = \\dfrac{6 + 14}{5} = \\dfrac{20}{5}$。",
+        },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "(3·2+2·7)/5 = 4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "数直線上の 2 点 $A(1)$, $B(11)$ を $2 : 3$ に内分する点の座標はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "内分点の座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前と同じ手順。" },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{3 \\cdot 1 + 2 \\cdot 11}{2 + 3} = \\dfrac{3 + 22}{5} = \\dfrac{25}{5}$。",
+        },
+        { layer: 3, text: "$5$。" },
+      ],
+      formulaPreview: "(3·1+2·11)/5 = 5",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "数直線上の 2 点 $A(-2)$, $B(12)$ を $3 : 4$ に内分する点の座標はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "内分点の座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "$m = 3, n = 4$。" },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{4 \\cdot (-2) + 3 \\cdot 12}{3 + 4} = \\dfrac{-8 + 36}{7} = \\dfrac{28}{7}$。",
+        },
+        { layer: 3, text: "$4$。" },
+      ],
+      formulaPreview: "(4·(−2)+3·12)/7 = 4",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "数直線上の 2 点 $A(2)$, $B(8)$ を $3 : 1$ に外分する点の座標はいくつでしょう？",
+      answer: 11,
+      unit: "",
+      unknownLabel: "外分点の座標",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "外分の公式 $= \\dfrac{-n x_1 + m x_2}{m - n}$。内分の公式の $n$ を $-n$ に置き換える。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{-1 \\cdot 2 + 3 \\cdot 8}{3 - 1} = \\dfrac{-2 + 24}{2} = \\dfrac{22}{2}$。",
+        },
+        { layer: 3, text: "$11$。" },
+      ],
+      formulaPreview: "(−1·2+3·8)/2 = 11",
+      figureMarker: "<<NUMLINE_EXT_STEP9>>",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "数直線上の 2 点 $A(-2)$, $B(12)$ を $5 : 3$ に外分する点の座標はいくつでしょう？",
+      answer: 33,
+      unit: "",
+      unknownLabel: "外分点の座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step9",
+      hints: [
+        { layer: 1, text: "外分の公式。$m = 5, n = 3$。" },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{-3 \\cdot (-2) + 5 \\cdot 12}{5 - 3} = \\dfrac{6 + 60}{2} = \\dfrac{66}{2}$。",
+        },
+        { layer: 3, text: "$33$（B より遠く右側）。" },
+      ],
+      formulaPreview: "(−3·(−2)+5·12)/2 = 33",
+    },
+  ],
+  derivation: `**直線の上の点は、たった 1 つの座標で居場所が決まる。**
+
+数直線——それは「数を並べて作った線」。直線の上の点の位置は、その点の **座標 $x$ という 1 つの数** で完全に決まります。
+
+この単純さの上に、図形と方程式という大きな単元のすべてが乗っています。今回は、**$2$ 点について「距離」「真ん中」「分ける」の 3 種類の問いに、すべて計算だけで答えを出す** ——その入口です。
+
+**1. 2 点の距離——座標の差の絶対値**
+
+<<NUMLINE_DIST>>
+
+数直線上に 2 点 $A(x_1)$, $B(x_2)$ があるとき、AB の距離は：
+
+$$AB = |x_2 - x_1|$$
+
+「**座標の差の絶対値**」。なぜ絶対値が要るか——$x_2 < x_1$ の場合（$B$ が $A$ より左にある場合）でも、距離は **正の量** で表したいから。「向き」の情報を捨て、「長さ」だけを取り出す道具が絶対値です。
+
+例：$A(2), B(8)$ なら $|8 - 2| = 6$。$A(5), B(-3)$ なら $|-3 - 5| = 8$。
+
+**2. 中点——2 つの座標の平均**
+
+<<NUMLINE_MID>>
+
+「中点」は、$A$ と $B$ の **ちょうど真ん中** の点。これは **$2$ つの座標の平均** で出ます：
+
+$$\\text{中点} = \\dfrac{x_1 + x_2}{2}$$
+
+例：$A(3), B(7)$ なら $(3+7)/2 = 5$。
+
+シンプルな式ですが、これは「**真ん中＝平均**」という $1$ つの直感を式にしただけ。次の内分・外分は、この「平均」の発想を一段広げたものです。
+
+**3. 内分——「重み付きの平均」**
+
+中点は「ちょうど真ん中」。じゃあ「$A$ から $2$ ぶん、$B$ から $3$ ぶんの距離で分ける点は？」——これが **内分** の問い。
+
+<<NUMLINE_INTERNAL>>
+
+線分 $AB$ を **$m : n$ に内分する** 点 $P$ とは、$AP : PB = m : n$ となる点のこと。式は：
+
+$$x_P = \\dfrac{n x_1 + m x_2}{m + n}$$
+
+**覚え方の核**：$A$ の座標 $x_1$ に $n$（**反対側**の比）を掛け、$B$ の座標 $x_2$ に $m$（反対側の比）を掛け、合計を $(m+n)$ で割る——「**クロスして掛けて足す**」。
+
+**なぜクロスするのか**：$m : n$ に分けると、$P$ は $B$ の方に **$m/(m+n)$** だけ寄っています。だから $B$ の重みは $m/(m+n)$、$A$ の重みは $n/(m+n)$——**遠い方の比が、その点の重みになる**。
+
+これは「**重み付き平均**」そのもの。中点は $m = n = 1$ の特殊な場合：
+
+$$\\dfrac{1 \\cdot x_1 + 1 \\cdot x_2}{1 + 1} = \\dfrac{x_1 + x_2}{2}$$
+
+——中点の公式が内分の公式から自然に出てきます。
+
+**4. 外分——線分の外で分ける**
+
+ここで一段、概念を広げます。**外分** は、AB を「同じ比」で分けるけれど、点 $P$ が **線分の外側** にあるケース。
+
+<<NUMLINE_EXTERNAL>>
+
+線分 $AB$ を **$m : n$ に外分する** 点 $P$ とは、$P$ が線分 $AB$ の外にあって、$AP : BP = m : n$ となる点。式は：
+
+$$x_P = \\dfrac{-n x_1 + m x_2}{m - n}$$
+
+**覚え方の核**：これは **内分の公式の $n$ を $-n$ に置き換えただけ**。内分と外分で別々の公式を覚える必要がない——$1$ つの公式の中で、符号を変えるだけ。
+
+**$m - n$（分母）の意味**：$m = n$ だと分母が $0$ になって計算できない。これは「$1:1$ で外分する点は存在しない」（無限遠にあるとも言える）ことを表しています。
+
+────────
+
+**もっと深く** — 内分と外分の統一視点
+
+内分も外分も、**$P$ の座標を「$A$ と $B$ の加重平均」として表す** 視点で統一できます：
+
+- 内分 ($m:n$)：$A$ の重み $\\dfrac{n}{m+n}$、$B$ の重み $\\dfrac{m}{m+n}$、合計 $1$
+- 外分 ($m:n$)：$A$ の重み $\\dfrac{-n}{m-n}$、$B$ の重み $\\dfrac{m}{m-n}$、合計 $1$
+
+**外分では片方の重みが負になり、合計はまだ $1$**——これが「線分の外」を意味します。重みが負になる、という感覚が外分の本質。
+
+**$2$ 次元への自然な拡張**
+
+平面上の 2 点 $A(x_1, y_1)$, $B(x_2, y_2)$ でも、内分・外分の公式は **$x$ と $y$ それぞれに独立に同じ形** で適用できます：
+
+$$x_P = \\dfrac{n x_1 + m x_2}{m + n}, \\quad y_P = \\dfrac{n y_1 + m y_2}{m + n}$$
+
+**平面の話を、数直線の話 $2$ つに分解できる**——これも座標幾何の便利さです。次の単元「平面上の点」では、この拡張がそのまま使えます。
+
+**応用：三角形の重心**
+
+三角形の **重心**（$3$ つの中線が交わる点）は、$3$ つの頂点の **平均**：
+
+$$\\text{重心} = \\left(\\dfrac{x_1 + x_2 + x_3}{3},\\ \\dfrac{y_1 + y_2 + y_3}{3}\\right)$$
+
+これも「平均」の発想の延長。$3$ 点に重み $1:1:1$ をつけた重心が、$3$ 中線の交点になる。中点・内分・重心はすべて、**「重み付き平均」という $1$ つの考え方** の家族です。
+
+> *距離・中点・内分・外分の構成は、池田洋介『数学Ⅱ・B 入門問題精講』（旺文社）に倣っています。*`,
+};
+
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
+  ADV_NUMBER_LINE_SERIES,
   ADV_QUAD_MIN_SERIES,
   ADV_QUAD_GRAPH_SERIES,
   ADV_LINE_EQUATION_SERIES,

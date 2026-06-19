@@ -546,6 +546,195 @@ function TryExample({
 }
 
 /**
+ * 数直線上の 2 点の距離（汎用）。
+ * A(x₁), B(x₂) と、|x₂ − x₁| の弧を上に描く。
+ */
+export function NumLineDistance() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 320 110" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="数直線上の 2 点 A, B と距離">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <line x1="80" y1="65" x2="80" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="240" y1="65" x2="240" y2="75" stroke={stroke} strokeWidth="1" />
+      <circle cx="80" cy="70" r="4" fill={accent} />
+      <circle cx="240" cy="70" r="4" fill={accent} />
+      <text x="80" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">A(x₁)</text>
+      <text x="240" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">B(x₂)</text>
+      <path d="M 80,55 Q 160,30 240,55" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="160" y="32" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        |x₂ − x₁|
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数直線上の中点（汎用）。
+ * A(x₁), M（中点）, B(x₂)。AM = MB を弧で示す。
+ */
+export function NumLineMidpoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 320 110" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="数直線上の中点 M">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <line x1="80" y1="65" x2="80" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="160" y1="65" x2="160" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="240" y1="65" x2="240" y2="75" stroke={stroke} strokeWidth="1" />
+      <circle cx="80" cy="70" r="4" fill={stroke} />
+      <circle cx="240" cy="70" r="4" fill={stroke} />
+      <circle cx="160" cy="70" r="4.5" fill={accent} />
+      <text x="80" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">A(x₁)</text>
+      <text x="160" y="92" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">M</text>
+      <text x="240" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">B(x₂)</text>
+      <path d="M 80,55 Q 120,38 160,55" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 160,55 Q 200,38 240,55" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="160" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        AM = MB（等しい）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数直線上の内分（汎用）。AB を m:n に内分する点 P を示す。
+ * m:n = 2:3 で描く。
+ */
+export function NumLineInternal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // A=60, B=260, AB=200. m:n=2:3 → P at A + (2/5)*200 = 60+80 = 140
+  return (
+    <svg viewBox="0 0 320 130" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="数直線上の内分点">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <line x1="60" y1="65" x2="60" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="140" y1="65" x2="140" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="260" y1="65" x2="260" y2="75" stroke={stroke} strokeWidth="1" />
+      <circle cx="60" cy="70" r="4" fill={stroke} />
+      <circle cx="140" cy="70" r="4.5" fill={accent} />
+      <circle cx="260" cy="70" r="4" fill={stroke} />
+      <text x="60" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">A(x₁)</text>
+      <text x="140" y="92" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">P</text>
+      <text x="260" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">B(x₂)</text>
+      {/* 比 m:n */}
+      <text x="100" y="55" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">m</text>
+      <text x="200" y="55" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">n</text>
+      <text x="160" y="115" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        AB を m : n に内分する点 P
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数直線上の外分（汎用）。AB を m:n に外分する点 P を示す（P が線分の外）。
+ * m:n = 3:1（B より右側に外分）で描く。
+ */
+export function NumLineExternal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // A=40, B=160, AB=120. 3:1 外分 → AP/BP=3/1, AP=AB+BP=120+BP, AP=3BP → BP=60, AP=180
+  // P = A + AP = 40 + 180 = 220
+  return (
+    <svg viewBox="0 0 320 140" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="数直線上の外分点">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <line x1="40" y1="65" x2="40" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="160" y1="65" x2="160" y2="75" stroke={stroke} strokeWidth="1" />
+      <line x1="220" y1="65" x2="220" y2="75" stroke={stroke} strokeWidth="1" />
+      <circle cx="40" cy="70" r="4" fill={stroke} />
+      <circle cx="160" cy="70" r="4" fill={stroke} />
+      <circle cx="220" cy="70" r="4.5" fill={accent} />
+      <text x="40" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">A(x₁)</text>
+      <text x="160" y="92" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">B(x₂)</text>
+      <text x="220" y="92" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">P</text>
+      {/* AP の弧 */}
+      <path d="M 40,55 Q 130,28 220,55" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="130" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">AP : BP = m : n</text>
+      <text x="160" y="125" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        P は線分 AB の外（外分）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * Step 1 用の足場図：A(2), B(8) の距離。具体値は座標だけ表示。
+ */
+export function NumLineDistStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 数直線：0 を SVG x=40, 1 単位 = 28 px
+  // A(2) → 40+56 = 96, B(8) → 40+224 = 264
+  return (
+    <svg viewBox="0 0 320 110" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="数直線上の A(2) と B(8)">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      {/* 目盛り */}
+      {[0, 5, 10].map((v) => (
+        <g key={v}>
+          <line x1={40 + v * 28} y1="66" x2={40 + v * 28} y2="74" stroke={muted} strokeWidth="0.8" />
+          <text x={40 + v * 28} y="86" fontSize="9" fill={muted} textAnchor="middle">{v}</text>
+        </g>
+      ))}
+      {/* A, B */}
+      <circle cx="96" cy="70" r="4" fill={accent} />
+      <circle cx="264" cy="70" r="4" fill={accent} />
+      <text x="96" y="100" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">A(2)</text>
+      <text x="264" y="100" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">B(8)</text>
+      {/* 距離の弧 */}
+      <path d="M 96,55 Q 180,32 264,55" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="180" y="32" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">AB = ?</text>
+    </svg>
+  );
+}
+
+/**
+ * Step 9 用の足場図：A(2), B(8) を 3:1 に外分する点。位置の数値は隠す。
+ */
+export function NumLineExtStep9() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 数直線：0 を SVG x=40, 1 単位 = 22 px (12 まで見える)
+  // A(2) → 40+44 = 84, B(8) → 40+176 = 216, P(11) → 40+242 = 282
+  return (
+    <svg viewBox="0 0 320 130" className="w-full h-auto" style={{ maxWidth: 320 }} role="img" aria-label="A(2), B(8) を 3:1 に外分する点">
+      <line x1="20" y1="70" x2="300" y2="70" stroke={stroke} strokeWidth="1.5" />
+      <polyline points="294,65 300,70 294,75" fill="none" stroke={stroke} strokeWidth="1.2" />
+      {/* 目盛り */}
+      {[0, 5, 10].map((v) => (
+        <g key={v}>
+          <line x1={40 + v * 22} y1="66" x2={40 + v * 22} y2="74" stroke={muted} strokeWidth="0.8" />
+          <text x={40 + v * 22} y="86" fontSize="9" fill={muted} textAnchor="middle">{v}</text>
+        </g>
+      ))}
+      <circle cx="84" cy="70" r="4" fill={stroke} />
+      <circle cx="216" cy="70" r="4" fill={stroke} />
+      <circle cx="282" cy="70" r="4.5" fill={accent} />
+      <text x="84" y="100" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">A(2)</text>
+      <text x="216" y="100" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">B(8)</text>
+      <text x="282" y="100" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">P(?)</text>
+      {/* 比 3:1 */}
+      <path d="M 84,55 Q 183,30 282,55" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="183" y="30" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">AP : BP = 3 : 1</text>
+      <text x="160" y="120" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        P は線分 AB の外（B より右）
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 指数関数の急成長グラフ。
  * y = 2^x を x=0 から x=10 まで描き、爆発的増加を視覚化。
  * x が 10 でも y が 1024 を超える、を一目で伝える。
@@ -3398,6 +3587,48 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ExpLogMirror />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_DIST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineDistance />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_MID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineMidpoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_INTERNAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineInternal />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_EXTERNAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineExternal />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_DIST_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineDistStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMLINE_EXT_STEP9>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumLineExtStep9 />
             </div>
           );
         }
