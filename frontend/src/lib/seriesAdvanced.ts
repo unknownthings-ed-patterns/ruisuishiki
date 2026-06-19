@@ -1502,8 +1502,8 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "数直線上の 2 点 $A(-2)$, $B(12)$ を $3 : 4$ に内分する点の座標はいくつでしょう？",
-      answer: 4,
+        "数直線上の 2 点 $A(-3)$, $B(11)$ を $3 : 4$ に内分する点の座標はいくつでしょう？",
+      answer: 3,
       unit: "",
       unknownLabel: "内分点の座標",
       variationFromPrevious: "same",
@@ -1513,11 +1513,11 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$\\dfrac{4 \\cdot (-2) + 3 \\cdot 12}{3 + 4} = \\dfrac{-8 + 36}{7} = \\dfrac{28}{7}$。",
+            "$\\dfrac{4 \\cdot (-3) + 3 \\cdot 11}{3 + 4} = \\dfrac{-12 + 33}{7} = \\dfrac{21}{7}$。",
         },
-        { layer: 3, text: "$4$。" },
+        { layer: 3, text: "$3$。" },
       ],
-      formulaPreview: "(4·(−2)+3·12)/7 = 4",
+      formulaPreview: "(4·(−3)+3·11)/7 = 3",
     },
     {
       id: "step9",
@@ -1549,8 +1549,8 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "数直線上の 2 点 $A(-2)$, $B(12)$ を $5 : 3$ に外分する点の座標はいくつでしょう？",
-      answer: 33,
+        "数直線上の 2 点 $A(0)$, $B(10)$ を $5 : 3$ に外分する点の座標はいくつでしょう？",
+      answer: 25,
       unit: "",
       unknownLabel: "外分点の座標",
       variationFromPrevious: "same",
@@ -1560,11 +1560,11 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$\\dfrac{-3 \\cdot (-2) + 5 \\cdot 12}{5 - 3} = \\dfrac{6 + 60}{2} = \\dfrac{66}{2}$。",
+            "$\\dfrac{-3 \\cdot 0 + 5 \\cdot 10}{5 - 3} = \\dfrac{0 + 50}{2} = \\dfrac{50}{2}$。",
         },
-        { layer: 3, text: "$33$（B より遠く右側）。" },
+        { layer: 3, text: "$25$（B より遠く右側）。" },
       ],
-      formulaPreview: "(−3·(−2)+5·12)/2 = 33",
+      formulaPreview: "(−3·0+5·10)/2 = 25",
     },
   ],
   derivation: `**直線の上の点は、たった 1 つの座標で居場所が決まる。**
@@ -1658,7 +1658,7 @@ $$\\text{重心} = \\left(\\dfrac{x_1 + x_2 + x_3}{3},\\ \\dfrac{y_1 + y_2 + y_3
 
 これも「平均」の発想の延長。$3$ 点に重み $1:1:1$ をつけた重心が、$3$ 中線の交点になる。中点・内分・重心はすべて、**「重み付き平均」という $1$ つの考え方** の家族です。
 
-> *距離・中点・内分・外分の構成は、池田洋介『数学Ⅱ・B 入門問題精講』（旺文社）に倣っています。*`,
+> *単元の構成（距離・中点・内分・外分という配列）は、池田洋介『数学Ⅱ・B 入門問題精講』（旺文社）の章立てを参考にしています。問題の値はすべてオリジナルです。*`,
 };
 
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
