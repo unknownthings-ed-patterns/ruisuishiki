@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   type CatalogEntry,
   type SeriesSubject,
@@ -142,14 +142,36 @@ export default function LearnIndex() {
                   </h2>
                   <ol className="flex flex-col gap-3">
                     {grouped.get(subject)!.map(
-                      ({ entry, resumeIndex, total }) => {
+                      ({ entry, resumeIndex, total }, idx, arr) => {
                         const isCompleted = resumeIndex >= total;
                         const inProgress = resumeIndex > 0 && !isCompleted;
+                        // 単元グループ（小見出し）：直前のエントリと topicGroup が
+                        // 変わったら見出しを描画。同じ subject の中で
+                        // 「数Ⅰ・A 2 次関数」「数Ⅱ・B 図形と方程式」と分ける用途
+                        const prevTopic =
+                          idx > 0 ? arr[idx - 1].entry.topicGroup : undefined;
+                        const showTopicHeader =
+                          entry.topicGroup &&
+                          entry.topicGroup !== prevTopic;
                         const href = inProgress
                           ? `/learn/play/?seriesId=${entry.series.id}`
                           : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
                         return (
-                          <li key={entry.series.id}>
+                          <Fragment key={entry.series.id}>
+                            {showTopicHeader && (
+                              <li
+                                className="text-muted mt-2 first:mt-0"
+                                style={{
+                                  fontSize: "11px",
+                                  letterSpacing: "0.2em",
+                                  listStyle: "none",
+                                }}
+                                aria-hidden
+                              >
+                                {entry.topicGroup}
+                              </li>
+                            )}
+                          <li>
                             <Link
                               href={href}
                               className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
@@ -230,6 +252,7 @@ export default function LearnIndex() {
                               )}
                             </Link>
                           </li>
+                          </Fragment>
                         );
                       },
                     )}

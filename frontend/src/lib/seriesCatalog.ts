@@ -103,7 +103,7 @@ export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
   secondary: "高校数学Ⅰ・A",
   secondary2: "高校数学Ⅱ・B",
   tertiary: "統計・データ分析",
-  advanced: "★ チャレンジ（発展）",
+  advanced: "高校 入門",
 };
 
 export type CatalogEntry = {
@@ -114,6 +114,13 @@ export type CatalogEntry = {
   subjectLabel: string;
   /** 簡易説明 */
   shortDescription: string;
+  /**
+   * 単元グループ（小見出し）。同じ subject の中で複数の単元を
+   * グルーピングするとき使う。たとえば「高校 入門」の中で
+   * 「数Ⅰ・A 2 次関数」「数Ⅱ・B 図形と方程式」と分ける。
+   * 同じ値の連続する entry に対して小見出しが 1 度だけ描画される。
+   */
+  topicGroup?: string;
 };
 
 export const STATIC_CATALOG: CatalogEntry[] = [
@@ -379,51 +386,57 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "統計・データ分析",
     shortDescription: "中央値 — 並び替えて真ん中",
   },
-  /* ★ チャレンジ（発展） */
-  {
-    series: ADV_QUAD_MIN_SERIES,
-    subject: "advanced",
-    subjectLabel: "★ チャレンジ",
-    shortDescription: "2次関数の最小値 — 平方完成",
-  },
+  /* 高校 入門（教育順に並べる、池田洋介『入門問題精講』ベース） */
+  /* 数Ⅰ・A 2 次関数 */
   {
     series: ADV_QUAD_GRAPH_SERIES,
     subject: "advanced",
-    subjectLabel: "★ チャレンジ",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅰ・A 2 次関数",
     shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
+  },
+  {
+    series: ADV_QUAD_MIN_SERIES,
+    subject: "advanced",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅰ・A 2 次関数",
+    shortDescription: "2次関数の最小値 — 平方完成",
+  },
+  /* 数Ⅱ・B 図形と方程式（単元の入口から順に） */
+  {
+    series: ADV_NUMBER_LINE_SERIES,
+    subject: "advanced",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅱ・B 図形と方程式",
+    shortDescription: "数直線上の点 — 距離・中点・内分・外分。単元の入口",
   },
   {
     series: ADV_LINE_EQUATION_SERIES,
     subject: "advanced",
-    subjectLabel: "★ チャレンジ",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅱ・B 図形と方程式",
     shortDescription: "直線の方程式を読む — 傾き・切片・中点・垂直",
   },
   {
     series: ADV_POINT_LINE_DISTANCE_SERIES,
     subject: "advanced",
-    subjectLabel: "★ チャレンジ",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅱ・B 図形と方程式",
     shortDescription: "点と直線の距離 — 図形と方程式の中核公式",
   },
   {
     series: ADV_CIRCLE_EQUATION_SERIES,
     subject: "advanced",
-    subjectLabel: "★ チャレンジ",
-    shortDescription:
-      "円の方程式 — 標準形・一般形・平方完成。点と直線の距離の次に",
-  },
-  {
-    series: ADV_NUMBER_LINE_SERIES,
-    subject: "advanced",
-    subjectLabel: "★ チャレンジ",
-    shortDescription:
-      "数直線上の点 — 距離・中点・内分・外分。図形と方程式の入口",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅱ・B 図形と方程式",
+    shortDescription: "円の方程式 — 標準形・一般形・平方完成",
   },
   {
     series: ADV_CIRCLE_LINE_SERIES,
     subject: "advanced",
-    subjectLabel: "★ チャレンジ",
-    shortDescription:
-      "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く。円の方程式の次に",
+    subjectLabel: "高校 入門",
+    topicGroup: "数Ⅱ・B 図形と方程式",
+    shortDescription: "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く",
   },
 ];
 
