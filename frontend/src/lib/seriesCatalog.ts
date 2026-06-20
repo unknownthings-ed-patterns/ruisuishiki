@@ -219,91 +219,53 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "小5・東京書籍",
     shortDescription: "15. 台形の面積",
   },
+  /* === 高校数学Ⅰ・A（数Ⅰ の章順 → 数A の章順）=== */
+  /* 数Ⅰ: 数と式 */
   {
     series: ALGEBRA_EXPANSION_AB_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "乗法公式 (x+a)(x+b) — 数と式",
+    topicGroup: "数と式",
+    shortDescription: "乗法公式 (x+a)(x+b) — 展開",
   },
   {
     series: ALGEBRA_EXPANSION_SQ_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "平方の展開 (x+a)² — 数と式",
+    topicGroup: "数と式",
+    shortDescription: "平方の展開 (x+a)²",
   },
   {
     series: ALGEBRA_FACTORING_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "因数分解（展開の逆） — 数と式",
+    topicGroup: "数と式",
+    shortDescription: "因数分解（展開の逆）",
   },
   {
     series: ALGEBRA_SQRT_SIMPLIFY_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "平方根の簡単化 — 数と式",
+    topicGroup: "数と式",
+    shortDescription: "平方根の簡単化",
   },
+  /* 数Ⅰ: 1 次不等式 */
   {
     series: ALGEBRA_LINEAR_INEQ_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "1次不等式の解法 — 数と式",
+    topicGroup: "1 次不等式",
+    shortDescription: "1次不等式の解法",
   },
-  {
-    series: ALGEBRA_QUAD_SUM_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "解と係数の関係（和） — 2次方程式",
-  },
-  {
-    series: ALGEBRA_QUAD_PRODUCT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "解と係数の関係（積） — 2次方程式",
-  },
-  {
-    series: ALGEBRA_DISCRIMINANT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "判別式 D = b²−4c — 2次方程式",
-  },
+  /* 数Ⅰ: 集合と命題 */
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "必要条件・十分条件 — 集合と命題",
+    topicGroup: "集合と命題",
+    shortDescription: "必要条件・十分条件",
   },
-  {
-    series: ALGEBRA_QUAD_VERTEX_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "頂点の x 座標 — 2次関数",
-  },
-  {
-    series: ALGEBRA_MEAN_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "5つの数の平均 — データ分析",
-  },
-  {
-    series: ALGEBRA_VARIANCE_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "分散の入り口 — データ分析",
-  },
-  {
-    series: ALGEBRA_PERMUTATION_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "順列 P(n, 2) — 場合の数",
-  },
-  {
-    series: ALGEBRA_DIVISOR_COUNT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    shortDescription: "約数の個数 — 整数の性質",
-  },
-  /* 数Ⅰ・A の小単元：2 次関数（教育順） */
+  /* 数Ⅰ: 2 次関数（グラフ → 頂点 → 最小値 → 判別式 → 解と係数） */
   {
     series: ADV_QUAD_GRAPH_SERIES,
     subject: "secondary",
@@ -312,11 +274,70 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
   },
   {
+    series: ALGEBRA_QUAD_VERTEX_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "頂点の x 座標",
+  },
+  {
     series: ADV_QUAD_MIN_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "2 次関数",
     shortDescription: "2次関数の最小値 — 平方完成",
+  },
+  {
+    series: ALGEBRA_DISCRIMINANT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "判別式 D = b²−4c — 2次方程式",
+  },
+  {
+    series: ALGEBRA_QUAD_SUM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "解と係数の関係（和） — 2次方程式",
+  },
+  {
+    series: ALGEBRA_QUAD_PRODUCT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "解と係数の関係（積） — 2次方程式",
+  },
+  /* 数Ⅰ: データの分析 */
+  {
+    series: ALGEBRA_MEAN_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription: "5つの数の平均",
+  },
+  {
+    series: ALGEBRA_VARIANCE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription: "分散の入り口",
+  },
+  /* 数A: 場合の数 */
+  {
+    series: ALGEBRA_PERMUTATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription: "順列 P(n, 2)",
+  },
+  /* 数A: 整数の性質 */
+  {
+    series: ALGEBRA_DIVISOR_COUNT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription: "約数の個数",
   },
   /* 中学校数学 */
   {
@@ -337,68 +358,8 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "中学校数学",
     shortDescription: "組合せ C(n, 2) — 確率の基礎",
   },
-  /* 高校数学Ⅱ・B */
-  {
-    series: ALGEBRA2_TRIG_PERIOD_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "三角関数の周期 — 360°ごとの繰り返し",
-  },
-  {
-    series: ALGEBRA2_LOG_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "対数の入り口 — log_b v の計算",
-  },
-  {
-    series: ALGEBRA2_ARITH_NTH_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "等差数列の n 項目 — 数列",
-  },
-  {
-    series: ALGEBRA2_ARITH_SUM_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "等差数列の和 — 数列",
-  },
-  {
-    series: ALGEBRA2_DOT_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "ベクトルの内積 — ベクトル",
-  },
-  {
-    series: ALGEBRA2_GEO_NTH_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "等比数列の n 項目 — 数列",
-  },
-  {
-    series: ALGEBRA2_GEO_SUM_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "等比数列の和 — 数列",
-  },
-  {
-    series: ALGEBRA2_EXP_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "指数 b^n — 指数関数",
-  },
-  {
-    series: ALGEBRA2_VEC_MAG_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "ベクトルの大きさ — ベクトル",
-  },
-  {
-    series: ALGEBRA2_DIFF_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    shortDescription: "微分の入り口 — 微分・積分",
-  },
-  /* 数Ⅱ・B の小単元：図形と方程式（入口から順に） */
+  /* === 高校数学Ⅱ・B（数Ⅱ の章順 → 数B の章順）=== */
+  /* 数Ⅱ: 図形と方程式（入口から順に） */
   {
     series: ADV_NUMBER_LINE_SERIES,
     subject: "secondary2",
@@ -433,6 +394,81 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く",
+  },
+  /* 数Ⅱ: 三角関数 */
+  {
+    series: ALGEBRA2_TRIG_PERIOD_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription: "三角関数の周期 — 360°ごとの繰り返し",
+  },
+  /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
+  {
+    series: ALGEBRA2_EXP_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数と対数関数",
+    shortDescription: "指数 b^n",
+  },
+  {
+    series: ALGEBRA2_LOG_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数と対数関数",
+    shortDescription: "対数の入り口 — log_b v の計算",
+  },
+  /* 数Ⅱ: 微分・積分 */
+  {
+    series: ALGEBRA2_DIFF_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription: "微分の入り口",
+  },
+  /* 数B: 数列（等差 → 等比、各 n 項目 → 和の順） */
+  {
+    series: ALGEBRA2_ARITH_NTH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription: "等差数列の n 項目",
+  },
+  {
+    series: ALGEBRA2_ARITH_SUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription: "等差数列の和",
+  },
+  {
+    series: ALGEBRA2_GEO_NTH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription: "等比数列の n 項目",
+  },
+  {
+    series: ALGEBRA2_GEO_SUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription: "等比数列の和",
+  },
+  /* 数B: ベクトル（大きさ → 内積） */
+  {
+    series: ALGEBRA2_VEC_MAG_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "ベクトル",
+    shortDescription: "ベクトルの大きさ",
+  },
+  {
+    series: ALGEBRA2_DOT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "ベクトル",
+    shortDescription: "ベクトルの内積",
   },
   /* 統計 */
   {
