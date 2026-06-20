@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { MathBody, MathText } from "@/components/Math";
+import { PolyaQuestionsPanel } from "@/components/PolyaQuestions";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
 import { findStaticSeries } from "@/lib/seriesCatalog";
 import {
@@ -413,6 +414,12 @@ export default function Play() {
 
   return (
     <main className="flex min-h-screen flex-col">
+      {/* ポリアの「問題解決のための質問」パネル（岩井先生が 15 年以上かけて
+          算数授業用に精選したもの）。問題と向き合うすべての瞬間に使える
+          ドメイン汎用のメタ認知スキャフォールド。
+          公式の景色を見ているときは隠す（読みに集中するため） */}
+      {!showingDerivation && <PolyaQuestionsPanel />}
+
       {/* 上部 sticky ナビ：いつでも「学ぶ（系列カタログ）」「ホーム」に戻れる
           子どもにも大人にも「いつでもやめられる」安心感を担保（戸田の自得を
           縛りに変えない設計）。 */}
