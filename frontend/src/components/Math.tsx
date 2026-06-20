@@ -546,6 +546,68 @@ function TryExample({
 }
 
 /**
+ * 円と直線の位置関係 3 通り（離れている・接する・交わる）を一枚で示す図。
+ * 各パネルで距離 d と半径 r の関係を視覚化。
+ */
+export function CircleLinePositions() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 480 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 480 }}
+      role="img"
+      aria-label="円と直線の位置関係 3 通り：離れている・接する・交わる"
+    >
+      {/* Panel 1: d > r 離れている */}
+      <circle cx="80" cy="80" r="30" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <circle cx="80" cy="80" r="2.5" fill={stroke} />
+      <line x1="20" y1="160" x2="140" y2="160" stroke={stroke} strokeWidth="1.5" />
+      <line x1="80" y1="80" x2="80" y2="160" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <text x="86" y="125" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">d</text>
+      <text x="80" y="184" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        d &gt; r
+      </text>
+      <text x="80" y="204" fontSize="11" fill={stroke} textAnchor="middle">
+        離れている（0 個）
+      </text>
+
+      {/* Panel 2: d = r 接する */}
+      <circle cx="240" cy="80" r="30" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <circle cx="240" cy="80" r="2.5" fill={stroke} />
+      <line x1="180" y1="110" x2="300" y2="110" stroke={stroke} strokeWidth="1.5" />
+      <line x1="240" y1="80" x2="240" y2="110" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <text x="246" y="100" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">d</text>
+      <circle cx="240" cy="110" r="3.5" fill={accent} />
+      <text x="240" y="184" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        d = r
+      </text>
+      <text x="240" y="204" fontSize="11" fill={stroke} textAnchor="middle">
+        接する（1 個）
+      </text>
+
+      {/* Panel 3: d < r 交わる */}
+      <circle cx="400" cy="80" r="30" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <circle cx="400" cy="80" r="2.5" fill={stroke} />
+      <line x1="340" y1="90" x2="460" y2="90" stroke={stroke} strokeWidth="1.5" />
+      <line x1="400" y1="80" x2="400" y2="90" stroke={accent} strokeWidth="1.2" strokeDasharray="2,1.5" />
+      <text x="408" y="89" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">d</text>
+      <circle cx="372" cy="90" r="3.5" fill={accent} />
+      <circle cx="428" cy="90" r="3.5" fill={accent} />
+      <text x="400" y="184" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        d &lt; r
+      </text>
+      <text x="400" y="204" fontSize="11" fill={stroke} textAnchor="middle">
+        交わる（2 個）
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 数直線上の 2 点の距離（汎用）。
  * A(x₁), B(x₂) と、|x₂ − x₁| の弧を上に描く。
  */
@@ -3629,6 +3691,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <NumLineExtStep9 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_LINE_POSITIONS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleLinePositions />
             </div>
           );
         }

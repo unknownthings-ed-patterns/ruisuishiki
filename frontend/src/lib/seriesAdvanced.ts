@@ -1688,6 +1688,327 @@ $4$ つの公式に見えるが、根は **$1$ つの考え方——「重み付
   — 単元構成（距離・中点・内分・外分）を参考。問題の値はオリジナル。`,
 };
 
+/* ===== CR2: 円と直線の位置関係 ===== */
+export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
+  id: "adv_circle_line_01",
+  title: "★ 円と直線の位置関係",
+  subtitle:
+    "数Ⅱ・B「図形と方程式」より — 共有点の個数（0/1/2）を距離 $d$ と半径 $r$ で判定する 10 問。",
+  patternId: "CR2",
+  unit: "advanced",
+  revelationLabel: "d と r の大小で位置関係が決まる（d > r → 0、d = r → 1、d < r → 2）",
+  drivingQuestion: "円と直線の位置関係を、絵を描かずに見抜けないか？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "円 $x^2 + y^2 = 9$ と直線 $4x + 3y - 20 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 0,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "中心 $(0, 0)$ から直線までの距離 $d$ と、半径 $r$ を比べる。",
+        },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 + 0 - 20|}{\\sqrt{16 + 9}} = \\dfrac{20}{5} = 4$、$r = 3$。$d > r$。",
+        },
+        { layer: 3, text: "$0$（離れているので共有点なし）。" },
+      ],
+      formulaPreview: "d = 4 > r = 3 → 0 個",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "円 $x^2 + y^2 = 16$ と直線 $3x - 4y + 10 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。$d$ と $r$ を比べる。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 - 0 + 10|}{\\sqrt{9 + 16}} = \\dfrac{10}{5} = 2$、$r = 4$。$d < r$。",
+        },
+        { layer: 3, text: "$2$ 個（交わる）。" },
+      ],
+      formulaPreview: "d = 2 < r = 4 → 2 個",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "円 $x^2 + y^2 = 5$ と直線 $x + 2y - 5 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$d$ と $r$ を計算。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 + 0 - 5|}{\\sqrt{1 + 4}} = \\dfrac{5}{\\sqrt{5}} = \\sqrt{5}$、$r = \\sqrt{5}$。$d = r$。",
+        },
+        { layer: 3, text: "$1$ 個（接する）。" },
+      ],
+      formulaPreview: "d = √5 = r → 1 個",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "円 $x^2 + y^2 = 25$ と直線 $3x + 4y - 30 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 0,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "$d$ と $r$ を比べる。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 + 0 - 30|}{\\sqrt{9 + 16}} = \\dfrac{30}{5} = 6$、$r = 5$。$d > r$。",
+        },
+        { layer: 3, text: "$0$ 個（離れている）。" },
+      ],
+      formulaPreview: "d = 6 > r = 5 → 0 個",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "円 $x^2 + y^2 = 13$ と直線 $2x - 3y + 13 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$d$ と $r$ を比べる。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 - 0 + 13|}{\\sqrt{4 + 9}} = \\dfrac{13}{\\sqrt{13}} = \\sqrt{13}$、$r = \\sqrt{13}$。$d = r$。",
+        },
+        { layer: 3, text: "$1$ 個（接する）。" },
+      ],
+      formulaPreview: "d = √13 = r → 1 個",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "円 $x^2 + y^2 = 8$ と直線 $x + y - 2 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "$d$ と $r$ を比べる。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|0 + 0 - 2|}{\\sqrt{1 + 1}} = \\dfrac{2}{\\sqrt{2}} = \\sqrt{2}$、$r = \\sqrt{8} = 2\\sqrt{2}$。$\\sqrt{2} < 2\\sqrt{2}$。",
+        },
+        { layer: 3, text: "$2$ 個（交わる）。" },
+      ],
+      formulaPreview: "d = √2 < r = 2√2 → 2 個",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "円 $(x - 1)^2 + y^2 = 4$ と直線 $3x + 4y - 10 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "中心 $(1, 0)$、半径 $2$。距離を計算。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|3 \\cdot 1 + 4 \\cdot 0 - 10|}{\\sqrt{9 + 16}} = \\dfrac{|-7|}{5} = \\dfrac{7}{5} = 1.4$、$r = 2$。",
+        },
+        { layer: 3, text: "$2$ 個（$d < r$ なので交わる）。" },
+      ],
+      formulaPreview: "d = 7/5 < r = 2 → 2 個",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "円 $(x - 2)^2 + (y - 1)^2 = 9$ と直線 $4x - 3y - 20 = 0$ の共有点の個数はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "中心 $(2, 1)$、半径 $3$。距離を計算。" },
+        {
+          layer: 2,
+          text:
+            "$d = \\dfrac{|4 \\cdot 2 - 3 \\cdot 1 - 20|}{\\sqrt{16 + 9}} = \\dfrac{|-15|}{5} = 3$、$r = 3$。$d = r$。",
+        },
+        { layer: 3, text: "$1$ 個（接する）。" },
+      ],
+      formulaPreview: "d = 3 = r → 1 個",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "円 $x^2 + y^2 = 5$ と直線 $y = 2x - 5$ の共有点の個数を、代入して 2 次方程式を作り判別式 $D$ で判定するといくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "円の式に直線の $y$ を代入し、$x$ の 2 次方程式の判別式 $D$ で判定。",
+        },
+        {
+          layer: 2,
+          text:
+            "$x^2 + (2x - 5)^2 = 5$ → $5x^2 - 20x + 20 = 0$ → $x^2 - 4x + 4 = 0$ → $D/4 = 4 - 4 = 0$。",
+        },
+        { layer: 3, text: "$1$ 個（$D = 0$ なので接する）。" },
+      ],
+      formulaPreview: "D = 0 → 1 個",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "円 $x^2 + y^2 = 4$ と直線 $y = x + 3$ の共有点の個数を、代入して判別式 $D$ で判定するといくつでしょう？",
+      answer: 0,
+      unit: "",
+      unknownLabel: "共有点の個数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step9",
+      hints: [
+        { layer: 1, text: "代入して 2 次方程式に。判別式 $D$ で。" },
+        {
+          layer: 2,
+          text:
+            "$x^2 + (x + 3)^2 = 4$ → $2x^2 + 6x + 5 = 0$ → $D = 36 - 40 = -4 < 0$。",
+        },
+        { layer: 3, text: "$0$ 個（$D < 0$ なので共有点なし）。" },
+      ],
+      formulaPreview: "D = −4 < 0 → 0 個",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 円と直線の位置関係を、絵を描かずに見抜けないか？
+
+────────
+
+**円と直線の関係は、たった 3 通り。**
+
+直線を少しずつ動かして円に近づけていく——どこかで円に **触れ**、もう少し動かすと **貫き**、さらに動かすと反対側で **離れていく**。連続的に変わるけれど、ある瞬間の関係は **3 通りだけ**：
+
+- **離れている**：共有点 $0$ 個
+- **接する**：共有点 $1$ 個
+- **交わる**：共有点 $2$ 個
+
+<<CIRCLE_LINE_POSITIONS>>
+
+この 3 つを、**絵を描かずに、計算だけで見抜きたい**——これがこの単元の問いです。
+
+**方法 1：距離 $d$ と半径 $r$ を比べる（最短ルート）**
+
+円の中心から直線までの距離 $d$ と、円の半径 $r$ を比べるだけで、位置関係は決まります：
+
+| $d$ と $r$ | 位置関係 | 共有点 |
+|---|---|---|
+| $d > r$ | 離れている | $0$ 個 |
+| $d = r$ | 接する | $1$ 個 |
+| $d < r$ | 交わる | $2$ 個 |
+
+直感的にも明らかです——中心から直線まで「半径より遠い」なら直線は円に届かない、「半径と同じ」ならぎりぎり $1$ 点で触れる、「半径より近い」なら直線が円を貫く。
+
+[点と直線の距離] で学んだ公式
+
+$$d = \\dfrac{|a x_0 + b y_0 + c|}{\\sqrt{a^2 + b^2}}$$
+
+を、円の中心 $(x_0, y_0)$ と直線 $ax + by + c = 0$ に当てるだけ。**距離公式 $1$ 回で判定が終わる**。
+
+**方法 2：連立して判別式 $D$ を見る**
+
+別のルートもあります。**円と直線の方程式を連立** し、$y$ を消去すると $x$ の $2$ 次方程式が出ます。その解の個数 = 共有点の個数なので、[判別式] $D$ で判定できます：
+
+| $D$ | 共有点 |
+|---|---|
+| $D > 0$ | $2$ 個（交わる） |
+| $D = 0$ | $1$ 個（接する） |
+| $D < 0$ | $0$ 個（離れている） |
+
+これは [円の方程式] の単元で扱った「$2$ 次方程式の解の個数を $D$ で判定」と同じ発想。
+
+**どちらが簡単？**
+
+**方法 1（$d$ と $r$ を比べる）** が圧倒的に簡単です。連立して展開して整理する必要がなく、距離公式 $1$ 回で答えが出る。
+
+ただし方法 2 は「**接点の座標を実際に求めたい**」「**パラメータの範囲を求めたい**」とき必要になります。両方使える状態にしておくのが理想。
+
+**Step 1〜8：距離 $d$ で判定する練習**
+
+最初の $8$ 問では、いろいろな円と直線について、距離 $d$ を計算して位置関係を判定しました。Step 1〜6 は **原点中心の円**、Step 7〜8 は **中心が原点でない円**。$d$ と $r$ の大小を比べるだけで、$0/1/2$ の答えが出てくる——同じ手順を繰り返すうちに、計算が手に馴染んできます。
+
+**Step 9〜10：もう $1$ つの道——質的変化**
+
+Step 9〜10 では、同じ問いを **別の方法（連立して判別式 $D$）** で解きました。
+
+たとえば Step 9 は、円 $x^2 + y^2 = 5$ と直線 $y = 2x - 5$ について、$y$ を消去して $5x^2 - 20x + 20 = 0$ → $x^2 - 4x + 4 = 0$ → $D/4 = 0$ → 接する（$1$ 個）。方法 1 で計算しても、$d = \\dfrac{|-5|}{\\sqrt{5}} = \\sqrt{5} = r$ → 接する。**$2$ つの道が同じ答えに到達する**——「**$1$ つの真実に $2$ つの道**」を体感する場面です。
+
+────────
+
+**もっと深く** — 接点・接線・パラメータ範囲
+
+**接点の座標を求めるには**：方法 2 が必須。連立して出た $2$ 次方程式の解 $x$ が、接点・交点の $x$ 座標。これを直線の式に代入すれば $y$ も出る。「位置関係だけ知りたい」なら方法 1 で十分だが、「**接点を実際に押さえたい**」なら方法 2 に進むしかない。
+
+**円外の点から接線を引く**：点 $(x_0, y_0)$ から円に引いた接線の式を求める典型問題。「接線の傾きを $m$ とおいて、$d = r$ の条件から $m$ を決める」流儀と、「接点を $(s, t)$ とおいて関係式を立てる」流儀がある。どちらも、$d = r$ という条件式を起点にする。
+
+**パラメータの範囲**：「直線が円と $2$ 点で交わるような $m$ の範囲は？」のような問い。$d < r$ または $D > 0$ の **不等式を $m$ について解く** だけ。方法 1 なら $d$ を $m$ で表す、方法 2 なら $D$ を $m$ で表す。
+
+**円と円の位置関係への拡張**：$2$ つの円の位置関係も、**中心間の距離** と **半径の和・差** を比べると決まります。考え方は同じ——「**距離で位置関係を判定する**」発想は、図形と方程式の中心的な道具です。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 単元構成（距離 $d$ による判定と判別式 $D$ による判定の $2$ つの方法を並列に扱う）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「円と直線の位置関係を、絵を描かずに見抜けないか？」——その答えは、
+
+**中心から直線までの距離 $d$ と、円の半径 $r$ を比べるだけ。**
+
+$d > r$ なら離れている（$0$ 個）、$d = r$ なら接する（$1$ 個）、$d < r$ なら交わる（$2$ 個）。
+連立＋判別式 $D$ という別の道もあり、同じ答えに到達する——でも **距離 $d$ ひとつ** で「絵を描かずに見抜く」ことができる。これがこの単元の到達点。`,
+};
+
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_NUMBER_LINE_SERIES,
   ADV_QUAD_MIN_SERIES,
@@ -1695,4 +2016,5 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_LINE_EQUATION_SERIES,
   ADV_POINT_LINE_DISTANCE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
+  ADV_CIRCLE_LINE_SERIES,
 ];

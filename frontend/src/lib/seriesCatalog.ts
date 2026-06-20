@@ -40,6 +40,7 @@ import {
 } from "./seriesAlgebra2";
 import {
   ADV_CIRCLE_EQUATION_SERIES,
+  ADV_CIRCLE_LINE_SERIES,
   ADV_LINE_EQUATION_SERIES,
   ADV_NUMBER_LINE_SERIES,
   ADV_POINT_LINE_DISTANCE_SERIES,
@@ -416,6 +417,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "★ チャレンジ",
     shortDescription:
       "数直線上の点 — 距離・中点・内分・外分。図形と方程式の入口",
+  },
+  {
+    series: ADV_CIRCLE_LINE_SERIES,
+    subject: "advanced",
+    subjectLabel: "★ チャレンジ",
+    shortDescription:
+      "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く。円の方程式の次に",
   },
 ];
 

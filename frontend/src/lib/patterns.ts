@@ -29,7 +29,7 @@ export type PatternId =
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
-  | "CR1" | "NL1";
+  | "CR1" | "NL1" | "CR2";
 
 /**
  * 変数の意味的役割。
@@ -1063,6 +1063,32 @@ const LN8: PatternSpec = {
   }),
 };
 
+/** CR2: 円と直線の位置関係（距離 d と半径 r の比較、または判別式 D） */
+const CR2: PatternSpec = {
+  id: "CR2",
+  unit: "advanced",
+  naturalLanguage: "円と直線の位置関係（離れている・接する・交わる）",
+  formulaTemplate: "compare d = |ax0 + by0 + c|/sqrt(a^2+b^2) with r",
+  variables: [
+    { name: "a", role: "中心 x 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "中心 y 座標", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "r2", role: "半径の 2 乗", unknown: false, domain: { kind: "integer", min: 1, max: 100 } },
+    { name: "p", role: "直線の x 係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "q", role: "直線の y 係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "s", role: "直線の定数項", unknown: false, domain: { kind: "integer", min: -30, max: 30 } },
+    { name: "count", role: "共有点の個数（0/1/2）", unknown: true, domain: { kind: "integer", min: 0, max: 2 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => {
+    const d = Math.abs(k.p * k.a + k.q * k.b + k.s) / Math.sqrt(k.p * k.p + k.q * k.q);
+    const r = Math.sqrt(k.r2);
+    let answer = 0;
+    if (Math.abs(d - r) < 0.001) answer = 1;
+    else if (d < r) answer = 2;
+    return { unknownName: "count", answer };
+  },
+};
+
 /** NL1: 数直線上の点（距離・中点・内分・外分） */
 const NL1: PatternSpec = {
   id: "NL1",
@@ -1117,7 +1143,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1, NL1,
+  CR1, NL1, CR2,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1135,7 +1161,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1, NL1,
+  CR1, NL1, CR2,
 ];
 
 export const CONTEXT_CATEGORIES = [
