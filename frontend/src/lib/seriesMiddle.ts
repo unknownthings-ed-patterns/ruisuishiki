@@ -182,6 +182,7 @@ export const MIDDLE_PYTHAGOREAN_SERIES: LearnerSeries = {
   patternId: "PT1",
   unit: "middle",
   revelationLabel: "c² = a² + b² より、c = √(a² + b²)",
+  drivingQuestion: "なぜ直角があると、3 辺の 2 乗にきれいな関係が生まれる？",
   derivation: `**直角三角形には、3辺がぴったり噛み合う秘密がある。**
 
 直角が 1 つあるだけで、3辺の長さの 2乗の関係が決まってしまう——これがピタゴラスの定理です。

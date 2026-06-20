@@ -155,16 +155,17 @@ export default function LearnIndex() {
                               className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
                               style={{ background: "var(--surface)" }}
                             >
+                              {/* 上段：タイトル + ステータス */}
                               <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
-                                <span
-                                  className="text-muted"
+                                <p
+                                  className="font-serif text-foreground"
                                   style={{
-                                    fontSize: "12px",
-                                    letterSpacing: "0.15em",
+                                    fontSize: "clamp(17px, 1.25rem, 20px)",
+                                    letterSpacing: "0.06em",
                                   }}
                                 >
-                                  {entry.shortDescription}
-                                </span>
+                                  {entry.series.title}
+                                </p>
                                 {isCompleted && (
                                   <span
                                     className="text-success tnum"
@@ -190,14 +191,29 @@ export default function LearnIndex() {
                                   </span>
                                 )}
                               </div>
+                              {/* 中段：中心の問い（駆動質問、発見者向けの動機づけ） */}
+                              {entry.series.drivingQuestion && (
+                                <p
+                                  className="text-foreground/85 mb-2"
+                                  style={{
+                                    fontSize: "13px",
+                                    lineHeight: 1.7,
+                                    fontStyle: "italic",
+                                  }}
+                                >
+                                  「{entry.series.drivingQuestion}」
+                                </p>
+                              )}
+                              {/* 下段：概念ラベル（回帰者向けのナビゲーション） */}
                               <p
-                                className="font-serif text-foreground"
+                                className="text-muted"
                                 style={{
-                                  fontSize: "clamp(17px, 1.25rem, 20px)",
-                                  letterSpacing: "0.06em",
+                                  fontSize: "12px",
+                                  letterSpacing: "0.1em",
+                                  lineHeight: 1.6,
                                 }}
                               >
-                                {entry.series.title}
+                                {entry.shortDescription}
                               </p>
                               {inProgress && (
                                 <div className="mt-3">

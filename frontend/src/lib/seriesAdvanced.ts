@@ -22,6 +22,7 @@ export const ADV_QUAD_MIN_SERIES: LearnerSeries = {
   patternId: "VV1",
   unit: "advanced",
   revelationLabel: "最小値 = c − b²/4（頂点の y 座標）",
+  drivingQuestion: "ばらけた 2 次式から、最小値はどう読む？",
   derivation: `**放物線という「お椀」の底——その高さが最小値。**
 
 $f(x) = x^2 + bx + c$ をグラフに描くと、口が上向きに開いた **お椀のような曲線**（数学では「**下に凸（とつ）な放物線**」）になります。
@@ -264,6 +265,7 @@ export const ADV_QUAD_GRAPH_SERIES: LearnerSeries = {
   patternId: "GR1",
   unit: "advanced",
   revelationLabel: "平方完成から頂点（−b/2, c−b²/4）・軸・y 切片が一度に読める",
+  drivingQuestion: "6 文字の式に隠れたグラフの地図を、どう開く？",
   steps: [
     {
       id: "step1", position: 1,
@@ -501,6 +503,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
   patternId: "LN1",
   unit: "advanced",
   revelationLabel: "傾き＝yの差／xの差。中点＝平均。垂直＝傾きの積が −1",
+  drivingQuestion: "2 点から、傾き・切片・中点・垂直関係をどう読み解く？",
   steps: [
     {
       id: "step1", position: 1,
@@ -746,6 +749,7 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
   patternId: "LN8",
   unit: "advanced",
   revelationLabel: "d = |ax₀ + by₀ + c| ÷ √(a² + b²)",
+  drivingQuestion: "垂線の足の座標を計算せずに、距離は出せないか？",
   steps: [
     {
       id: "step1", position: 1,
@@ -1000,6 +1004,7 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
   patternId: "CR1",
   unit: "advanced",
   revelationLabel: "(x − a)² + (y − b)² = r²",
+  drivingQuestion: "中心からの距離が一定の点の集まりを、1 つの式で書けないか？",
   steps: [
     {
       id: "step1",
@@ -1365,6 +1370,8 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
   patternId: "NL1",
   unit: "advanced",
   revelationLabel: "内分 = 重み付き平均、外分は n を −n に置き換える",
+  drivingQuestion:
+    "直線上の 2 点について、距離・真ん中・分ける点を、計算だけで出せないか？",
   steps: [
     {
       id: "step1",

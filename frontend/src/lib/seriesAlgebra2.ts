@@ -165,6 +165,7 @@ export const ALGEBRA2_LOG_SERIES: LearnerSeries = {
   patternId: "L1",
   unit: "algebra_2",
   revelationLabel: "log_b(v) は「b を何回かけたら v になるか」の回数",
+  drivingQuestion: "何回かければその数になるか——その回数を直接表せないか？",
   derivation: `**「$2$ を何回かけたら $8$ になる？」——その答えを返す道具が、対数。**
 
 [指数の値] では「$2$ を $3$ 回かけたら？」と問うと「$8$」と返ってきました。対数は **逆向きの問い**：「$8$ にするには $2$ を何回かければいい？」——返ってくるのは **回数 $3$**。
@@ -1015,6 +1016,7 @@ export const ALGEBRA2_EXP_SERIES: LearnerSeries = {
   patternId: "EXP1",
   unit: "algebra_2",
   revelationLabel: "b^n は「b を n 回かけたもの」",
+  drivingQuestion: "同じ数のかけ算を、コンパクトに書けないか？",
   derivation: `**1 から 2 倍をたった 10 回繰り返すと、$1000$ を超える。**
 
 紙を半分に折る → 折る → 折るを $10$ 回続けると、厚みは $1024$ 枚分。$30$ 回まで折れたら、月までの距離を超える——同じ数のかけ算は、人間の直感を遥かに超える勢いで巨大になります。

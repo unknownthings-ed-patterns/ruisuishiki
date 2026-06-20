@@ -457,6 +457,33 @@ export default function Play() {
           メインアクション（解答送信）は常に視野に入る */}
       <div className="flex-1 flex flex-col items-center px-6 pt-6 pb-6">
         <div className="w-full max-w-2xl flex flex-col gap-6">
+          {/* 中心の問い（駆動質問）——全問題の上部に常駐し、いま自分が何の問いに
+              向かって 1 歩進んでいるかを意識させる。教育パタン・ランゲージ Wiki の
+              「胚細胞モデル」「熟慮的問い（駆動質問）」と整合 */}
+          {series.drivingQuestion && !showingDerivation && (
+            <section
+              className="rounded-lg border border-accent/30 px-5 py-3"
+              style={{
+                background:
+                  "color-mix(in oklch, var(--surface) 85%, var(--accent) 15%)",
+              }}
+              aria-label="中心の問い"
+            >
+              <span
+                className="block text-muted mb-1"
+                style={{ fontSize: "10px", letterSpacing: "0.25em" }}
+              >
+                中心の問い
+              </span>
+              <p
+                className="text-foreground"
+                style={{ fontSize: "13px", lineHeight: 1.7, letterSpacing: "0.02em" }}
+              >
+                <MathText text={series.drivingQuestion} />
+              </p>
+            </section>
+          )}
+
           {/* 進度表示（文型タグは出さない・第2弾失敗モードF1の予防） */}
           <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
