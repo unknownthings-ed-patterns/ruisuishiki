@@ -103,7 +103,11 @@ export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
   secondary: "高校数学Ⅰ・A",
   secondary2: "高校数学Ⅱ・B",
   tertiary: "統計・データ分析",
-  advanced: "高校 入門",
+  // 将来用：高校数学を「分野別」（方程式・図形・関数 等）で
+  // ハイレベル課題に取り組むコース。池田洋介『方程式・図形・関数からとらえる
+  // 数学の基礎 分野別 標準問題精講』（旺文社）が出発点の候補。
+  // entry がない間はカタログから消える（SUBJECT_ORDER.filter で空グループは省略）。
+  advanced: "高校 ハイレベル",
 };
 
 export type CatalogEntry = {
@@ -299,6 +303,21 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅰ・A",
     shortDescription: "約数の個数 — 整数の性質",
   },
+  /* 数Ⅰ・A の小単元：2 次関数（教育順） */
+  {
+    series: ADV_QUAD_GRAPH_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
+  },
+  {
+    series: ADV_QUAD_MIN_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "2 次関数",
+    shortDescription: "2次関数の最小値 — 平方完成",
+  },
   /* 中学校数学 */
   {
     series: MIDDLE_SIMUL_SERIES,
@@ -379,64 +398,48 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     shortDescription: "微分の入り口 — 微分・積分",
   },
+  /* 数Ⅱ・B の小単元：図形と方程式（入口から順に） */
+  {
+    series: ADV_NUMBER_LINE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "数直線上の点 — 距離・中点・内分・外分。単元の入口",
+  },
+  {
+    series: ADV_LINE_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "直線の方程式を読む — 傾き・切片・中点・垂直",
+  },
+  {
+    series: ADV_POINT_LINE_DISTANCE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "点と直線の距離 — 図形と方程式の中核公式",
+  },
+  {
+    series: ADV_CIRCLE_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "円の方程式 — 標準形・一般形・平方完成",
+  },
+  {
+    series: ADV_CIRCLE_LINE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く",
+  },
   /* 統計 */
   {
     series: STATS_MEDIAN_SERIES,
     subject: "tertiary",
     subjectLabel: "統計・データ分析",
     shortDescription: "中央値 — 並び替えて真ん中",
-  },
-  /* 高校 入門（教育順に並べる、池田洋介『入門問題精講』ベース） */
-  /* 数Ⅰ・A 2 次関数 */
-  {
-    series: ADV_QUAD_GRAPH_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅰ・A 2 次関数",
-    shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
-  },
-  {
-    series: ADV_QUAD_MIN_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅰ・A 2 次関数",
-    shortDescription: "2次関数の最小値 — 平方完成",
-  },
-  /* 数Ⅱ・B 図形と方程式（単元の入口から順に） */
-  {
-    series: ADV_NUMBER_LINE_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅱ・B 図形と方程式",
-    shortDescription: "数直線上の点 — 距離・中点・内分・外分。単元の入口",
-  },
-  {
-    series: ADV_LINE_EQUATION_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅱ・B 図形と方程式",
-    shortDescription: "直線の方程式を読む — 傾き・切片・中点・垂直",
-  },
-  {
-    series: ADV_POINT_LINE_DISTANCE_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅱ・B 図形と方程式",
-    shortDescription: "点と直線の距離 — 図形と方程式の中核公式",
-  },
-  {
-    series: ADV_CIRCLE_EQUATION_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅱ・B 図形と方程式",
-    shortDescription: "円の方程式 — 標準形・一般形・平方完成",
-  },
-  {
-    series: ADV_CIRCLE_LINE_SERIES,
-    subject: "advanced",
-    subjectLabel: "高校 入門",
-    topicGroup: "数Ⅱ・B 図形と方程式",
-    shortDescription: "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く",
   },
 ];
 
