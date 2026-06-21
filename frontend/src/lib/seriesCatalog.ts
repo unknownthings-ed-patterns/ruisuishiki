@@ -249,12 +249,11 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "数と式",
     shortDescription: "平方根の簡単化",
   },
-  /* 数Ⅰ: 1 次不等式 */
   {
     series: ALGEBRA_LINEAR_INEQ_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "1 次不等式",
+    topicGroup: "数と式",
     shortDescription: "1次不等式の解法",
   },
   /* 数Ⅰ: 集合と命題 */
@@ -455,19 +454,20 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "数列",
     shortDescription: "等比数列の和",
   },
-  /* 数B: ベクトル（大きさ → 内積） */
+  /* ベクトル（旧課程 数B、新課程では数C に移行。読者の参考書世代を問わず
+     使えるよう、注記つきで 数Ⅱ・B に置く） */
   {
     series: ALGEBRA2_VEC_MAG_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "ベクトル",
+    topicGroup: "ベクトル（数B 旧／数C 新）",
     shortDescription: "ベクトルの大きさ",
   },
   {
     series: ALGEBRA2_DOT_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "ベクトル",
+    topicGroup: "ベクトル（数B 旧／数C 新）",
     shortDescription: "ベクトルの内積",
   },
   /* 統計 */
