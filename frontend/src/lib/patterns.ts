@@ -29,7 +29,7 @@ export type PatternId =
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
-  | "CR1" | "NL1" | "CR2";
+  | "CR1" | "NL1" | "CR2" | "CR3";
 
 /**
  * 変数の意味的役割。
@@ -1063,6 +1063,24 @@ const LN8: PatternSpec = {
   }),
 };
 
+/** CR3: 円の接線の公式 ax + by = r² */
+const CR3: PatternSpec = {
+  id: "CR3",
+  unit: "advanced",
+  naturalLanguage: "円 x² + y² = r² の接線は ax + by = r²（接点 (a, b)）",
+  formulaTemplate: "a*x + b*y = r^2",
+  variables: [
+    { name: "a", role: "接点の x 座標", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "b", role: "接点の y 座標", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "r2", role: "右辺 = a² + b²", unknown: true, domain: { kind: "integer", min: 1, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "r2",
+    answer: k.a * k.a + k.b * k.b,
+  }),
+};
+
 /** CR2: 円と直線の位置関係（距離 d と半径 r の比較、または判別式 D） */
 const CR2: PatternSpec = {
   id: "CR2",
@@ -1143,7 +1161,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1, NL1, CR2,
+  CR1, NL1, CR2, CR3,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1161,7 +1179,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   G1, G2, EXP1, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
-  CR1, NL1, CR2,
+  CR1, NL1, CR2, CR3,
 ];
 
 export const CONTEXT_CATEGORIES = [

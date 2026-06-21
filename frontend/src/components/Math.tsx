@@ -608,6 +608,151 @@ export function CircleLinePositions() {
 }
 
 /**
+ * 円の接線（接点が与えられた場合）。
+ * 円・接点 P(a, b)・半径 OP・接線・直角マーカー・公式ラベル。
+ */
+export function CircleTangentAtPoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const Ox = 200;
+  const Oy = 130;
+  const r = 65;
+  /* P at math angle from atan(4/3) ≈ 53.13°, i.e. (3, 4) scaled — gives clean placement */
+  const Px = Ox + (r * 3) / 5; // 239
+  const Py = Oy - (r * 4) / 5; // 78
+  /* tangent unit direction (perpendicular to OP), going down-right */
+  const tux = 4 / 5;
+  const tuy = 3 / 5;
+  const halfLen = 80;
+  const Tx1 = Px - halfLen * tux;
+  const Ty1 = Py - halfLen * tuy;
+  const Tx2 = Px + halfLen * tux;
+  const Ty2 = Py + halfLen * tuy;
+  return (
+    <svg
+      viewBox="0 0 460 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 460 }}
+      role="img"
+      aria-label="円の接線：接点 P(a, b) における接線 ax + by = r²"
+    >
+      {/* 円 */}
+      <circle cx={Ox} cy={Oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      {/* 軸（薄く） */}
+      <line x1={Ox - 100} y1={Oy} x2={Ox + 130} y2={Oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={Ox} y1={Oy - 100} x2={Ox} y2={Oy + 100} stroke={muted} strokeWidth="0.8" />
+      {/* 半径 OP */}
+      <line x1={Ox} y1={Oy} x2={Px} y2={Py} stroke={stroke} strokeWidth="1.4" strokeDasharray="3,2" />
+      {/* 接線 */}
+      <line x1={Tx1} y1={Ty1} x2={Tx2} y2={Ty2} stroke={accent} strokeWidth="2" />
+      {/* 直角マーカー */}
+      <polyline
+        points={`${Px - 8 * 3 / 5},${Py + 8 * 4 / 5} ${Px - 8 * 3 / 5 + 8 * 4 / 5},${Py + 8 * 4 / 5 + 8 * 3 / 5} ${Px + 8 * 4 / 5},${Py + 8 * 3 / 5}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.1"
+      />
+      {/* O */}
+      <circle cx={Ox} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox - 8} y={Oy + 14} fontSize="12" fill={stroke} fontStyle="italic">O</text>
+      {/* P(a, b) */}
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 8} y={Py - 6} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">
+        P(a, b)
+      </text>
+      {/* 接線ラベル */}
+      <text
+        x={Tx2 + 6}
+        y={Ty2 + 6}
+        fontSize="12"
+        fill={accent}
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        ax + by = r²
+      </text>
+      {/* 円の式（左上） */}
+      <text x="20" y="28" fontSize="12" fill={muted} fontStyle="italic">
+        x² + y² = r²
+      </text>
+      {/* 半径ラベル */}
+      <text x={Ox + 18} y={Oy - 24} fontSize="11" fill={muted} fontStyle="italic">
+        r
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 円外の点 Q から円に引いた 2 本の接線。
+ * 接点 P₁, P₂ で接し、QP₁ ⊥ OP₁、QP₂ ⊥ OP₂。
+ */
+export function CircleTangentFromExternal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const Ox = 160;
+  const Oy = 140;
+  const r = 60;
+  const Qx = 310;
+  const Qy = 140;
+  /* d=150, r=60 → cos α = 0.4, sin α = √0.84 ≈ 0.9165 */
+  const cosA = 0.4;
+  const sinA = Math.sqrt(1 - cosA * cosA);
+  /* tangent points */
+  const T1x = Ox + r * cosA;
+  const T1y = Oy + r * sinA;
+  const T2x = Ox + r * cosA;
+  const T2y = Oy - r * sinA;
+  return (
+    <svg
+      viewBox="0 0 400 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="円外の点 Q から円に引いた 2 本の接線と 2 つの接点 P₁, P₂"
+    >
+      <circle cx={Ox} cy={Oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      {/* OQ 補助線 */}
+      <line x1={Ox} y1={Oy} x2={Qx} y2={Qy} stroke={muted} strokeWidth="0.8" strokeDasharray="2,2" />
+      {/* 半径 OT1, OT2 */}
+      <line x1={Ox} y1={Oy} x2={T1x} y2={T1y} stroke={stroke} strokeWidth="1.2" strokeDasharray="3,2" />
+      <line x1={Ox} y1={Oy} x2={T2x} y2={T2y} stroke={stroke} strokeWidth="1.2" strokeDasharray="3,2" />
+      {/* 接線 1, 2 */}
+      <line x1={T1x} y1={T1y} x2={Qx} y2={Qy} stroke={accent} strokeWidth="2" />
+      <line x1={T2x} y1={T2y} x2={Qx} y2={Qy} stroke={accent} strokeWidth="2" />
+      {/* O */}
+      <circle cx={Ox} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox - 8} y={Oy + 16} fontSize="12" fill={stroke} fontStyle="italic">O</text>
+      {/* Q */}
+      <circle cx={Qx} cy={Qy} r="4" fill={stroke} />
+      <text x={Qx + 8} y={Qy + 4} fontSize="12" fill={stroke} fontStyle="italic" fontWeight="600">
+        Q(x₀, y₀)
+      </text>
+      {/* P1, P2 (tangent points) */}
+      <circle cx={T1x} cy={T1y} r="4" fill={accent} />
+      <text x={T1x - 12} y={T1y + 18} fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">
+        P₁
+      </text>
+      <circle cx={T2x} cy={T2y} r="4" fill={accent} />
+      <text x={T2x - 12} y={T2y - 8} fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">
+        P₂
+      </text>
+      {/* 注記 */}
+      <text x="20" y="28" fontSize="12" fill={muted} fontStyle="italic">
+        x² + y² = r²
+      </text>
+      <text x="20" y="262" fontSize="11" fill={muted}>
+        円外の点 Q から接線は 2 本：接点 P₁, P₂ で円に触れる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 数直線上の 2 点の距離（汎用）。
  * A(x₁), B(x₂) と、|x₂ − x₁| の弧を上に描く。
  */
@@ -3698,6 +3843,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CircleLinePositions />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_AT_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentAtPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_FROM_EXTERNAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentFromExternal />
             </div>
           );
         }

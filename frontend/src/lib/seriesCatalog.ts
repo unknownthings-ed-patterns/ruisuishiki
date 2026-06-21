@@ -41,6 +41,7 @@ import {
 import {
   ADV_CIRCLE_EQUATION_SERIES,
   ADV_CIRCLE_LINE_SERIES,
+  ADV_CIRCLE_TANGENT_SERIES,
   ADV_LINE_EQUATION_SERIES,
   ADV_NUMBER_LINE_SERIES,
   ADV_POINT_LINE_DISTANCE_SERIES,
@@ -393,6 +394,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "円と直線の位置関係 — 共有点 0/1/2 を距離 d で見抜く",
+  },
+  {
+    series: ADV_CIRCLE_TANGENT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "円の接線の公式 ax + by = r² — xx + yy = r² の片方を a, b に",
   },
   /* 数Ⅱ: 三角関数 */
   {
