@@ -854,6 +854,95 @@ export function CircleTangentStep10() {
 }
 
 /**
+ * 束の考え方 Step 1：2 直線 L₁: x+y-3=0、L₂: 2x-y=0 の交点 Q(1, 2)、
+ * 通したい点 P(0, 1)、Q を通る直線の家族（束）を薄い破線で示唆。
+ * 答え（k = -2 / 結果の直線 x-y+1=0）は描かない。
+ */
+export function BundleStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 160;
+  const Oy = 200;
+  const scale = 35;
+  // 交点 Q (math: 1, 2)
+  const Qx = Ox + 1 * scale;
+  const Qy = Oy - 2 * scale;
+  // 通したい点 P (math: 0, 1)
+  const Px = Ox;
+  const Py = Oy - 1 * scale;
+  // 束の家族（L₁ の傾き -1、L₂ の傾き 2、答え線の傾き 1 を避ける）
+  const familySlopes = [-2, 0, 0.5, 3];
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 直線 L₁, L₂ の交点 Q、通したい点 P、Q を通る直線の家族（束）"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      {/* 束の家族（薄い破線） */}
+      {familySlopes.map((m, i) => {
+        // 直線 y = m·x + (2 - m) を math x = ±5 で延長
+        const yL = -6 * m + 2;
+        const yR = 4 * m + 2;
+        const x1 = Ox - 5 * scale;
+        const y1 = Oy - yL * scale;
+        const x2 = Ox + 5 * scale;
+        const y2 = Oy - yR * scale;
+        return (
+          <line
+            key={i}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={muted}
+            strokeWidth="0.9"
+            strokeDasharray="3,3"
+            opacity="0.4"
+          />
+        );
+      })}
+
+      {/* L₁: x+y-3=0（傾き -1、(3,0) と (0,3) を通る） */}
+      <line x1="65" y1="0" x2="320" y2="255" stroke={stroke} strokeWidth="1.5" />
+      {/* L₂: 2x-y=0（傾き 2、原点と (1,2)） */}
+      <line x1="260" y1="0" x2="120" y2="280" stroke={stroke} strokeWidth="1.5" />
+
+      {/* ラベル */}
+      <text x="92" y="22" fontSize="12" fill={stroke} fontStyle="italic">L₁</text>
+      <text x="265" y="22" fontSize="12" fill={stroke} fontStyle="italic">L₂</text>
+
+      {/* 交点 Q */}
+      <circle cx={Qx} cy={Qy} r="4" fill={accent} />
+      <text x={Qx + 8} y={Qy - 6} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">
+        Q（交点）
+      </text>
+
+      {/* 通したい点 P */}
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text
+        x={Px - 8}
+        y={Py + 16}
+        fontSize="11"
+        fill={accent}
+        fontWeight="600"
+        fontStyle="italic"
+        textAnchor="end"
+      >
+        P(0, 1)
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円外の点 Q から円に引いた 2 本の接線。
  * 接点 P₁, P₂ で接し、QP₁ ⊥ OP₁、QP₂ ⊥ OP₂。
  */
@@ -4053,6 +4142,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CircleTangentStep10 />
+            </div>
+          );
+        }
+        if (trimmed === "<<BUNDLE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <BundleStep1 />
             </div>
           );
         }

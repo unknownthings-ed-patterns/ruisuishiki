@@ -2379,6 +2379,7 @@ export const ADV_BUNDLE_SERIES: LearnerSeries = {
         { layer: 3, text: "$-2 - k = 0$ → $k = -2$。" },
       ],
       formulaPreview: "(x+y-3) + k(2x-y) = 0, P(0,1) → k = -2",
+      figureMarker: "<<BUNDLE_STEP1>>",
     },
     {
       id: "step2",
