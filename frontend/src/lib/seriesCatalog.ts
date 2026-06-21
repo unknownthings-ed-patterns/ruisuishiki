@@ -39,6 +39,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  ADV_BUNDLE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
@@ -401,6 +402,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "円の接線の公式 ax + by = r² — xx + yy = r² の片方を a, b に",
+  },
+  {
+    series: ADV_BUNDLE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "束の考え方 L₁ + k L₂ = 0 — 交点を求めずに通る直線・円を作る",
   },
   /* 数Ⅱ: 三角関数 */
   {

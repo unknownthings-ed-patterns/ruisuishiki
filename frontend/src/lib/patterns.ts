@@ -29,7 +29,8 @@ export type PatternId =
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
-  | "CR1" | "NL1" | "CR2" | "CR3";
+  | "CR1" | "NL1" | "CR2" | "CR3"
+  | "BD1";
 
 /**
  * 変数の意味的役割。
@@ -1063,6 +1064,31 @@ const LN8: PatternSpec = {
   }),
 };
 
+/**
+ * BD1: 束（線束・円束）— 2 つの図形 F1 = 0, F2 = 0 の束 F1 + k·F2 = 0 が
+ * 点 (x0, y0) を通る条件から k を求める。
+ *
+ * F1, F2 は直線（一般形）でも円（一般形）でもよい。代入して
+ *   F1(x0, y0) + k · F2(x0, y0) = 0
+ * を解くと k が一意に決まる（F2(x0, y0) ≠ 0 が前提）。
+ */
+const BD1: PatternSpec = {
+  id: "BD1",
+  unit: "advanced",
+  naturalLanguage: "2 直線（または 2 円）の交点と点 (x0, y0) を通る束 F1 + k·F2 = 0 の k",
+  formulaTemplate: "k = -F1(x0, y0) / F2(x0, y0)",
+  variables: [
+    { name: "f1_at_p", role: "F1 に点 P を代入した値", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "f2_at_p", role: "F2 に点 P を代入した値（0 でない）", unknown: false, domain: { kind: "integer", min: -100, max: 100 } },
+    { name: "k", role: "束の係数", unknown: true, domain: { kind: "integer", min: -50, max: 50 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "k",
+    answer: -k.f1_at_p / k.f2_at_p,
+  }),
+};
+
 /** CR3: 円の接線の公式 ax + by = r² */
 const CR3: PatternSpec = {
   id: "CR3",
@@ -1162,6 +1188,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
+  BD1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1180,6 +1207,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
+  BD1,
 ];
 
 export const CONTEXT_CATEGORIES = [
