@@ -2040,6 +2040,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
         { layer: 3, text: "$N = 10$。" },
       ],
       formulaPreview: "3x + y = 10",
+      figureMarker: "<<CIRCLE_TANGENT_STEP1>>",
     },
     {
       id: "step2",
@@ -2171,6 +2172,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
         { layer: 3, text: "$a = 1$ または $a = 2$。大きいほうは $a = 2$。" },
       ],
       formulaPreview: "a = 1, 2（接点: (1,2), (2,-1)）",
+      figureMarker: "<<CIRCLE_TANGENT_STEP8>>",
     },
     {
       id: "step9",
@@ -2196,6 +2198,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
         { layer: 3, text: "$a = 1$ または $a = 3$。大きいほうは $a = 3$。" },
       ],
       formulaPreview: "a = 1, 3（接点: (1,3), (3,-1)）",
+      figureMarker: "<<CIRCLE_TANGENT_STEP9>>",
     },
     {
       id: "step10",
@@ -2221,6 +2224,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
         { layer: 3, text: "$a = 3$ または $a = 4$。大きいほうは $a = 4$。" },
       ],
       formulaPreview: "a = 3, 4（接点: (3,4), (4,-3)）",
+      figureMarker: "<<CIRCLE_TANGENT_STEP10>>",
     },
   ],
   derivation: `**中心の問い** ｜ 円の接線を、接点が分かれば $1$ 行で書けないか？
@@ -2255,6 +2259,7 @@ $$y - b = -\\dfrac{a}{b}(x - a)$$
 両辺に $b$ をかけて整理：
 
 $$by - b^2 = -ax + a^2$$
+
 $$ax + by = a^2 + b^2$$
 
 ここで $P(a, b)$ は円上の点だから $a^2 + b^2 = r^2$。よって、

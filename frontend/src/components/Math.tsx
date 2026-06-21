@@ -686,6 +686,174 @@ export function CircleTangentAtPoint() {
 }
 
 /**
+ * Step 1 専用：円 x²+y² = 10、接点 P(3, 1)、接線 3x + y = 10。
+ * 30 px / 1 math unit。
+ */
+export function CircleTangentStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const Ox = 140;
+  const Oy = 140;
+  const scale = 30;
+  const r = Math.sqrt(10) * scale; // ≈ 94.87
+  /* P math(3, 1) → SVG */
+  const Px = Ox + 3 * scale; // 230
+  const Py = Oy - 1 * scale; // 110
+  /* OP svg vector = (90, -30). 接線は OP に直交 → 単位ベクトル (1/√10, 3/√10) */
+  const tux = 1 / Math.sqrt(10);
+  const tuy = 3 / Math.sqrt(10);
+  const halfLen = 80;
+  const T1x = Px - halfLen * tux;
+  const T1y = Py - halfLen * tuy;
+  const T2x = Px + halfLen * tux;
+  const T2y = Py + halfLen * tuy;
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円 x² + y² = 10、接点 P(3, 1)、接線 3x + y = 10"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="260" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+      <circle cx={Ox} cy={Oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      {/* 半径 OP（破線） */}
+      <line x1={Ox} y1={Oy} x2={Px} y2={Py} stroke={stroke} strokeWidth="1.2" strokeDasharray="3,2" />
+      {/* 接線 */}
+      <line x1={T1x} y1={T1y} x2={T2x} y2={T2y} stroke={accent} strokeWidth="2" />
+      {/* 直角マーカー */}
+      <polyline
+        points={`${Px - 8 * 3 / Math.sqrt(10)},${Py + 8 / Math.sqrt(10)} ${Px - 8 * 3 / Math.sqrt(10) + 8 / Math.sqrt(10)},${Py + 8 / Math.sqrt(10) + 8 * 3 / Math.sqrt(10)} ${Px + 8 / Math.sqrt(10)},${Py + 8 * 3 / Math.sqrt(10)}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.1"
+      />
+      <circle cx={Ox} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox - 6} y={Oy + 14} fontSize="11" fill={stroke} textAnchor="end" fontStyle="italic">O</text>
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 8} y={Py - 6} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">
+        P(3, 1)
+      </text>
+      <text x="20" y="28" fontSize="12" fill={muted} fontStyle="italic">
+        x² + y² = 10
+      </text>
+      <text
+        x={T2x + 4}
+        y={T2y + 14}
+        fontSize="12"
+        fill={accent}
+        fontStyle="italic"
+        fontWeight="600"
+      >
+        3x + y = 10
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 円外の点 + 2 接点 を描く共通レンダラ（Step 8〜10 で使用）。
+ */
+function CircleTangentFromExtFig({
+  rSqLabel,
+  scale,
+  Q,
+  T1,
+  T2,
+}: {
+  rSqLabel: string;
+  scale: number;
+  Q: [number, number];
+  T1: [number, number];
+  T2: [number, number];
+}) {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const rMath = Math.sqrt(T1[0] * T1[0] + T1[1] * T1[1]);
+  const rSvg = rMath * scale;
+  /* viewBox は外側の点まで余裕を持って入るように、原点を左に寄せて配置 */
+  const xs = [0, Q[0], T1[0], T2[0]];
+  const ys = [0, Q[1], T1[1], T2[1]];
+  const minX = Math.min(...xs) - 1.5;
+  const maxX = Math.max(...xs) + 1.5;
+  const minY = Math.min(...ys) - 1.5;
+  const maxY = Math.max(...ys) + 1.5;
+  const padding = 30;
+  const vbW = (maxX - minX) * scale + padding * 2;
+  const vbH = (maxY - minY) * scale + padding * 2;
+  const Ox = -minX * scale + padding;
+  const Oy = maxY * scale + padding;
+  const toSvg = (p: [number, number]): [number, number] => [Ox + p[0] * scale, Oy - p[1] * scale];
+  const [Qx, Qy] = toSvg(Q);
+  const [T1x, T1y] = toSvg(T1);
+  const [T2x, T2y] = toSvg(T2);
+  /* 接線を Q の向こう側にも少し延ばす */
+  const extend = (a: [number, number], b: [number, number], t1: number, t2: number): [number, number, number, number] => {
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
+    return [a[0] - t1 * dx, a[1] - t1 * dy, b[0] + t2 * dx, b[1] + t2 * dy];
+  };
+  const [l1x1, l1y1, l1x2, l1y2] = extend([T1x, T1y], [Qx, Qy], 0.25, 0.15);
+  const [l2x1, l2y1, l2x2, l2y2] = extend([T2x, T2y], [Qx, Qy], 0.25, 0.15);
+  return (
+    <svg
+      viewBox={`0 0 ${vbW} ${vbH}`}
+      className="w-full h-auto"
+      style={{ maxWidth: Math.min(360, vbW * 1.05) }}
+      role="img"
+      aria-label={`円 ${rSqLabel}、外側の点 Q(${Q[0]}, ${Q[1]}) から接線 2 本、接点 (${T1[0]}, ${T1[1]}) と (${T2[0]}, ${T2[1]})`}
+    >
+      <line x1="0" y1={Oy} x2={vbW} y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2={vbH} stroke={muted} strokeWidth="0.5" />
+      <circle cx={Ox} cy={Oy} r={rSvg} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <line x1={Ox} y1={Oy} x2={T1x} y2={T1y} stroke={stroke} strokeWidth="1" strokeDasharray="3,2" />
+      <line x1={Ox} y1={Oy} x2={T2x} y2={T2y} stroke={stroke} strokeWidth="1" strokeDasharray="3,2" />
+      <line x1={l1x1} y1={l1y1} x2={l1x2} y2={l1y2} stroke={accent} strokeWidth="2" />
+      <line x1={l2x1} y1={l2y1} x2={l2x2} y2={l2y2} stroke={accent} strokeWidth="2" />
+      <circle cx={Ox} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox - 6} y={Oy + 14} fontSize="11" fill={stroke} textAnchor="end" fontStyle="italic">O</text>
+      <circle cx={Qx} cy={Qy} r="4" fill={stroke} />
+      <text x={Qx + 8} y={Qy - 4} fontSize="12" fill={stroke} fontWeight="600" fontStyle="italic">
+        Q({Q[0]}, {Q[1]})
+      </text>
+      <circle cx={T1x} cy={T1y} r="4" fill={accent} />
+      <text x={T1x - 10} y={T1y - 6} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic" textAnchor="end">
+        ({T1[0]}, {T1[1] < 0 ? `−${Math.abs(T1[1])}` : T1[1]})
+      </text>
+      <circle cx={T2x} cy={T2y} r="4" fill={accent} />
+      <text x={T2x + 8} y={T2y + 14} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">
+        ({T2[0]}, {T2[1] < 0 ? `−${Math.abs(T2[1])}` : T2[1]})
+      </text>
+      <text x="12" y="20" fontSize="12" fill={muted} fontStyle="italic">
+        {rSqLabel}
+      </text>
+    </svg>
+  );
+}
+
+/** Step 8：円 x²+y²=5、外側 (3, 1)、接点 (1, 2), (2, -1) */
+export function CircleTangentStep8() {
+  return <CircleTangentFromExtFig rSqLabel="x² + y² = 5" scale={32} Q={[3, 1]} T1={[1, 2]} T2={[2, -1]} />;
+}
+
+/** Step 9：円 x²+y²=10、外側 (4, 2)、接点 (1, 3), (3, -1) */
+export function CircleTangentStep9() {
+  return <CircleTangentFromExtFig rSqLabel="x² + y² = 10" scale={28} Q={[4, 2]} T1={[1, 3]} T2={[3, -1]} />;
+}
+
+/** Step 10：円 x²+y²=25、外側 (7, 1)、接点 (3, 4), (4, -3) */
+export function CircleTangentStep10() {
+  return <CircleTangentFromExtFig rSqLabel="x² + y² = 25" scale={20} Q={[7, 1]} T1={[3, 4]} T2={[4, -3]} />;
+}
+
+/**
  * 円外の点 Q から円に引いた 2 本の接線。
  * 接点 P₁, P₂ で接し、QP₁ ⊥ OP₁、QP₂ ⊥ OP₂。
  */
@@ -3857,6 +4025,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CircleTangentFromExternal />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_STEP9>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentStep9 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CIRCLE_TANGENT_STEP10>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CircleTangentStep10 />
             </div>
           );
         }
