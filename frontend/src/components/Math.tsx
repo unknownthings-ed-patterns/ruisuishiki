@@ -743,14 +743,14 @@ export function CircleTangentStep1() {
         x² + y² = 10
       </text>
       <text
-        x={T2x + 4}
-        y={T2y + 14}
+        x={T2x - 6}
+        y={T2y + 16}
         fontSize="12"
         fill={accent}
         fontStyle="italic"
         fontWeight="600"
       >
-        3x + y = 10
+        3x + y = N
       </text>
     </svg>
   );
