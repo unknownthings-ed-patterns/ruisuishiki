@@ -2484,6 +2484,7 @@ export const ADV_BUNDLE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "C₁(P)=-3, C₂(P)=3 → -3+3k=0 → k = 1（直線も円も同じ）",
+      figureMarker: "<<BUNDLE_STEP5>>",
     },
     {
       id: "step6",
@@ -2563,6 +2564,7 @@ export const ADV_BUNDLE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "(1+k)·(x²+y²) を消す → k = -1（根軸の特別な値）",
+      figureMarker: "<<BUNDLE_STEP8>>",
     },
     {
       id: "step9",
@@ -2621,6 +2623,7 @@ export const ADV_BUNDLE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "a(x+y-2) + (x-y) = 0 → 定点 (1, 1) → x = 1",
+      figureMarker: "<<BUNDLE_STEP10>>",
     },
   ],
   derivation: `**中心の問い** ｜ $2$ 直線の交点を、いちいち座標で求めずに、その交点を通る直線をどう書ける？

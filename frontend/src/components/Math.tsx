@@ -943,6 +943,202 @@ export function BundleStep1() {
 }
 
 /**
+ * 束の考え方 Step 5（質的変化：直線 → 円）：2 円 C₁, C₂ の 2 交点と
+ * 通したい点 P。「直線が円に変わっただけで手順は同じ」を視覚化。
+ * 答え（k=1 / 結果の円）は描かない。
+ */
+export function BundleStep5() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const Ox = 130;
+  const Oy = 170;
+  const scale = 35;
+  // C₁: 中心 (0,0), r=2
+  const C1x = Ox;
+  const C1y = Oy;
+  const C1r = 2 * scale;
+  // C₂: 中心 (1,2), r=1
+  const C2x = Ox + 1 * scale;
+  const C2y = Oy - 2 * scale;
+  const C2r = 1 * scale;
+  // 2 交点 (0, 2) と (8/5, 6/5)
+  const Ax = Ox;
+  const Ay = Oy - 2 * scale;
+  const Bx = Ox + 1.6 * scale;
+  const By = Oy - 1.2 * scale;
+  // P (1, 0)
+  const Px = Ox + 1 * scale;
+  const Py = Oy;
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 円 C₁, C₂ の交点 2 つと通したい点 P"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      <circle cx={C1x} cy={C1y} r={C1r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <circle cx={C2x} cy={C2y} r={C2r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      <text x="40" y={Oy - 60} fontSize="12" fill={stroke} fontStyle="italic">C₁</text>
+      <text x={C2x + C2r + 4} y={C2y - C2r + 12} fontSize="12" fill={stroke} fontStyle="italic">C₂</text>
+
+      {/* 2 交点 */}
+      <circle cx={Ax} cy={Ay} r="3" fill={accent} />
+      <circle cx={Bx} cy={By} r="3" fill={accent} />
+      <text x={Ax - 8} y={Ay - 6} fontSize="10" fill={accent} fontStyle="italic" textAnchor="end">
+        2 交点
+      </text>
+
+      {/* 通したい点 P */}
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 10} y={Py + 4} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">
+        P(1, 0)
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 束の考え方 Step 8（質的変化：k=-1 で根軸が現れる）：2 円 C₁, C₂ と、
+ * 束 C₁ + kC₂ = 0 が直線になる瞬間に現れる根軸を accent 色で示す。
+ * 答え（k=-1）は問題で問うているもの。図には現れない。
+ */
+export function BundleStep8() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const Ox = 120;
+  const Oy = 160;
+  const scale = 16;
+  // C₁: 中心 (0,0), r=5
+  const C1x = Ox;
+  const C1y = Oy;
+  const C1r = 5 * scale;
+  // C₂: 中心 (3,4), r=5
+  const C2x = Ox + 3 * scale;
+  const C2y = Oy - 4 * scale;
+  const C2r = 5 * scale;
+  // 根軸 6x+8y=25：math x=-3 から x=7 までで viewBox を横切る
+  const RxL = Ox - 3 * scale;
+  const RyL = Oy - 5.375 * scale;
+  const RxR = Ox + 7 * scale;
+  const RyR = Oy - -2.125 * scale;
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 円 C₁, C₂ と、束で現れる根軸（直線）"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      <circle cx={C1x} cy={C1y} r={C1r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+      <circle cx={C2x} cy={C2y} r={C2r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      <text x="20" y={Oy + 56} fontSize="12" fill={stroke} fontStyle="italic">C₁</text>
+      <text x={C2x + C2r - 14} y={C2y - C2r + 14} fontSize="12" fill={stroke} fontStyle="italic">C₂</text>
+
+      {/* 根軸（束で直線になる瞬間に現れる） */}
+      <line x1={RxL} y1={RyL} x2={RxR} y2={RyR} stroke={accent} strokeWidth="2" />
+      <text x={RxR - 60} y={RyR + 18} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        根軸（直線）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 束の考え方 Step 10（逆：定点問題）：パラメータ a を変えると直線
+ * (a+1)x + (a-1)y - 2a = 0 が回転するが、必ず定点 (1, 1) を通る。
+ * 4 つの a 値の代表線を薄く描き、定点を accent 色で強調。
+ * 答え（定点の x 座標 = 1）の数値そのものは図に書かない（座標ラベル
+ * では「(1, 1)」と位置として示し、問題で問うているのは x 座標）。
+ */
+export function BundleStep10() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 130;
+  const Oy = 200;
+  const scale = 35;
+  // 定点 (1, 1)
+  const Fx = Ox + 1 * scale;
+  const Fy = Oy - 1 * scale;
+  // 代表の a 値
+  const aValues = [-1, 0, 1, 2];
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="パラメータ a を変えると直線が回転するが、定点を必ず通る"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="280" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      {/* 4 本の代表直線（すべて定点を通る） */}
+      {aValues.map((a, i) => {
+        // 法線 (a+1, a-1)、方向 (1-a, a+1)。定点 (1, 1) から halfM 単位だけ伸ばす
+        const dxM = 1 - a;
+        const dyM = a + 1;
+        const lenM = Math.sqrt(dxM * dxM + dyM * dyM);
+        const halfM = 6;
+        const x1M = 1 + (halfM * dxM) / lenM;
+        const y1M = 1 + (halfM * dyM) / lenM;
+        const x2M = 1 - (halfM * dxM) / lenM;
+        const y2M = 1 - (halfM * dyM) / lenM;
+        const x1 = Ox + x1M * scale;
+        const y1 = Oy - y1M * scale;
+        const x2 = Ox + x2M * scale;
+        const y2 = Oy - y2M * scale;
+        return (
+          <line
+            key={i}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={muted}
+            strokeWidth="1.2"
+            opacity="0.55"
+          />
+        );
+      })}
+
+      {/* 定点 */}
+      <circle cx={Fx} cy={Fy} r="5" fill={accent} />
+      <text x={Fx + 10} y={Fy + 4} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">
+        定点
+      </text>
+
+      {/* 説明（隅） */}
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        (a + 1) x + (a − 1) y − 2 a = 0
+      </text>
+      <text x="14" y="36" fontSize="10" fill={muted}>
+        a を動かすと直線は回転する
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円外の点 Q から円に引いた 2 本の接線。
  * 接点 P₁, P₂ で接し、QP₁ ⊥ OP₁、QP₂ ⊥ OP₂。
  */
@@ -4149,6 +4345,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <BundleStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<BUNDLE_STEP5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <BundleStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<BUNDLE_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <BundleStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<BUNDLE_STEP10>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <BundleStep10 />
             </div>
           );
         }
