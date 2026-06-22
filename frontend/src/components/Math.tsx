@@ -1455,6 +1455,163 @@ export function QuadraticStep5() {
 }
 
 /**
+ * 解と因数分解 Step 1：因数分解 → 解 の流れ図（schematic）。
+ * 具体的な数値（解の積 = 6）は描かず、構造だけを示す。
+ */
+export function FactorStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 次方程式の因数分解 → 解 の流れ図"
+    >
+      <defs>
+        <marker id="fac1-arr-d" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L5,10 L10,0 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* equation */}
+      <text x="160" y="30" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x² − 5x + 6 = 0
+      </text>
+
+      {/* arrow + 因数分解 */}
+      <line x1="160" y1="48" x2="160" y2="80" stroke={muted} strokeWidth="1" markerEnd="url(#fac1-arr-d)" />
+      <text x="170" y="68" fontSize="11" fill={muted} fontStyle="italic">因数分解</text>
+
+      {/* factored form */}
+      <text x="160" y="110" fontSize="15" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        (x − α)(x − β) = 0
+      </text>
+
+      {/* arrow + AB=0 の原理 */}
+      <line x1="160" y1="128" x2="160" y2="160" stroke={muted} strokeWidth="1" markerEnd="url(#fac1-arr-d)" />
+      <text x="170" y="148" fontSize="11" fill={muted} fontStyle="italic">AB = 0 なら A = 0 か B = 0</text>
+
+      {/* roots */}
+      <text x="160" y="190" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x = α  または  x = β
+      </text>
+
+      {/* annotation */}
+      <text x="14" y="218" fontSize="10" fill={muted} fontStyle="italic">
+        係数を比較すれば：α + β = 5、α β = ?
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 解と因数分解 Step 4：非モニック（a ≠ 1）の因数分解で
+ * 先頭の a が前に出ることを強調。値（α β = -1）は描かない。
+ */
+export function FactorStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="非モニックの 2 次式の因数分解：先頭の a が前に出る"
+    >
+      {/* general form with a highlighted */}
+      <text x="14" y="44" fontSize="14" fill={muted} fontStyle="italic">
+        モニック（a = 1）:
+      </text>
+      <text x="170" y="44" fontSize="14" fill={stroke} fontStyle="italic">
+        x² + bx + c = (x − α)(x − β)
+      </text>
+
+      <line x1="14" y1="62" x2="306" y2="62" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+
+      <text x="14" y="92" fontSize="14" fill={muted} fontStyle="italic">
+        一般（a ≠ 1）:
+      </text>
+      <text x="170" y="92" fontSize="14" fill={stroke} fontStyle="italic">
+        ax² + bx + c =
+      </text>
+      <text x="170" y="116" fontSize="15" fill={accent} fontStyle="italic" fontWeight="700">
+        a
+      </text>
+      <text x="184" y="116" fontSize="14" fill={stroke} fontStyle="italic">
+        (x − α)(x − β)
+      </text>
+
+      <text x="14" y="155" fontSize="11" fill={muted} fontStyle="italic">
+        x² の係数を合わせるため、先頭に a が必要
+      </text>
+      <text x="14" y="175" fontSize="10" fill={muted}>
+        例：2x² + 3x − 2 = 2(x − α)(x − β)
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 解と因数分解 Step 5：複素数解（共役対）でも因数分解できる。
+ * 複素平面で 2 つの共役解を accent ドットで表示。値（α β = 8）は描かない。
+ */
+export function FactorStep5() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 140;
+  const Oy = 130;
+  const scale = 28;
+  // -2 + 2i → (Ox - 2*scale, Oy - 2*scale)
+  // -2 - 2i → (Ox - 2*scale, Oy + 2*scale)
+  const Ax = Ox - 2 * scale;
+  const Ay = Oy - 2 * scale;
+  const Bx = Ox - 2 * scale;
+  const By = Oy + 2 * scale;
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="複素数解の共役ペア：複素平面で実軸に関して対称"
+    >
+      <line x1="20" y1={Oy} x2="290" y2={Oy} stroke={muted} strokeWidth="1" />
+      <line x1={Ox} y1="20" x2={Ox} y2="240" stroke={muted} strokeWidth="1" />
+      <text x="280" y={Oy + 14} fontSize="11" fill={muted} fontStyle="italic">実軸</text>
+      <text x={Ox + 6} y="30" fontSize="11" fill={muted} fontStyle="italic">虚軸</text>
+
+      <circle cx={Ox} cy={Oy} r="2" fill={muted} />
+      <text x={Ox - 6} y={Oy + 14} fontSize="11" fill={muted} textAnchor="end">0</text>
+
+      {/* α = -2 + 2i */}
+      <circle cx={Ax} cy={Ay} r="5" fill={accent} />
+      <text x={Ax - 8} y={Ay - 6} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic" textAnchor="end">α</text>
+
+      {/* β = -2 - 2i */}
+      <circle cx={Bx} cy={By} r="5" fill={accent} />
+      <text x={Bx - 8} y={By + 14} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic" textAnchor="end">β</text>
+
+      {/* vertical dashed line connecting them (showing symmetry) */}
+      <line x1={Ax} y1={Ay} x2={Bx} y2={By} stroke={accent} strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+
+      {/* labels */}
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        x² + 4x + 8 = (x − α)(x − β)
+      </text>
+      <text x="14" y="252" fontSize="10" fill={muted}>
+        α, β は実軸に関して対称な共役ペア
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -4781,6 +4938,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <QuadraticStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<FACTOR_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FactorStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<FACTOR_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FactorStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<FACTOR_STEP5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FactorStep5 />
             </div>
           );
         }

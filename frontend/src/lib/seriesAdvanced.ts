@@ -3347,6 +3347,323 @@ $$x = \\dfrac{-b' \\pm \\sqrt{b'^2 - ac}}{a}$$
 そして [判別式] $D = b^2 - 4ac$ の符号を見れば、解かなくても **異なる $2$ 実数解 / 重解 / 異なる $2$ 虚数解** の $3$ 場面が見抜ける。複素数の世界で初めて、$2$ 次方程式は「解の個数が場合分けで変わる」のではなく、**つねに $2$ つの解を持つ**（重解は「同じ値の $2$ 解」と数える）——これが [複素数] が広げた新しい景色。`,
 };
 
+/* ===== CN3: 2 次方程式の解と因数分解 ===== */
+export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
+  id: "adv_complex_factorization_01",
+  title: "2 次方程式の解と因数分解",
+  subtitle:
+    "数Ⅱ・B「複素数と方程式」より — 解を求めれば $a x^2 + b x + c = a(x - \\alpha)(x - \\beta)$ で確実に因数分解できる。複素数の世界では「因数分解できない式」は存在しない、を $10$ 問で身につける。",
+  patternId: "CN3",
+  unit: "advanced",
+  revelationLabel:
+    "解 $\\alpha, \\beta$ を求めれば $a x^2 + b x + c = a(x - \\alpha)(x - \\beta)$。複素数の世界では **すべての $2$ 次式が確実に因数分解できる**。$\\alpha \\beta = c/a$、$\\alpha + \\beta = -b/a$",
+  drivingQuestion:
+    "すべての $2$ 次式を、例外なく因数分解する方法はある？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$2$ 次方程式 $x^2 - 5x + 6 = 0$ の $2$ 解を $\\alpha, \\beta$ とすると、$x^2 - 5x + 6 = (x - \\alpha)(x - \\beta)$ と因数分解できる。**解の積** $\\alpha \\beta$ はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$(x - \\alpha)(x - \\beta)$ を展開すると $x^2 - (\\alpha + \\beta) x + \\alpha \\beta$。左辺 $x^2 - 5x + 6$ と係数を比較する。",
+        },
+        {
+          layer: 2,
+          text:
+            "定数項 $\\alpha \\beta = 6$。または因数分解 $(x - 2)(x - 3)$ から $\\alpha = 2, \\beta = 3$ で $\\alpha \\beta = 6$。",
+        },
+        { layer: 3, text: "$\\alpha \\beta = 6$。" },
+      ],
+      formulaPreview: "x² − 5x + 6 = (x − 2)(x − 3) → α β = 6",
+      figureMarker: "<<FACTOR_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$2$ 次方程式 $x^2 + 3x - 10 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**積** $\\alpha \\beta$ はいくつでしょう？",
+      answer: -10,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ。定数項がそのまま $\\alpha \\beta$（$a = 1$ のとき）。" },
+        { layer: 2, text: "$(x + 5)(x - 2)$。$\\alpha = -5, \\beta = 2$。" },
+        { layer: 3, text: "$\\alpha \\beta = -10$。" },
+      ],
+      formulaPreview: "x² + 3x − 10 = (x + 5)(x − 2) → α β = −10",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$x^2 - 7x + 12 = 0$ の $2$ 解 $\\alpha, \\beta$ について、$\\alpha \\beta$ はいくつでしょう？",
+      answer: 12,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$a = 1$ のときは $\\alpha \\beta = c$（定数項そのまま）。" },
+        { layer: 2, text: "$(x - 3)(x - 4)$。" },
+        { layer: 3, text: "$\\alpha \\beta = 12$。" },
+      ],
+      formulaPreview: "x² − 7x + 12 = (x − 3)(x − 4) → α β = 12",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$2 x^2 + 3 x - 2 = 0$ の解を $\\alpha, \\beta$ とすると、**先頭の $a = 2$** が前に出て $2 x^2 + 3 x - 2 = 2(x - \\alpha)(x - \\beta)$ の形になる。$\\alpha \\beta$ はいくつでしょう？",
+      answer: -1,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$a (x - \\alpha)(x - \\beta) = a x^2 - a(\\alpha + \\beta) x + a \\alpha \\beta$。定数項を比較すると $a \\alpha \\beta = c$、つまり $\\alpha \\beta = c / a$。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\alpha \\beta = c / a = -2 / 2 = -1$。または解の公式：$x = (-3 \\pm 5) / 4 = 1/2, -2$。$(1/2)(-2) = -1$。",
+        },
+        { layer: 3, text: "$\\alpha \\beta = -1$。" },
+      ],
+      formulaPreview: "2x² + 3x − 2 = 2(x − 1/2)(x + 2) → α β = −1 = c/a",
+      figureMarker: "<<FACTOR_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$x^2 + 4x + 8 = 0$ の解は **異なる $2$ つの虚数解**（共役の複素数ペア）になる。それでも因数分解はできる：$x^2 + 4x + 8 = (x - \\alpha)(x - \\beta)$ の $\\alpha \\beta$ はいくつでしょう？",
+      answer: 8,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "係数比較なら $\\alpha \\beta = c / a = 8 / 1 = 8$（解が複素数でも同じ式）。または解 $\\alpha = -2 + 2i, \\beta = -2 - 2i$ を直接掛ける。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\alpha \\beta = (-2 + 2i)(-2 - 2i) = 4 - (2i)^2 = 4 + 4 = 8$（[共役複素数] の積はいつも実数）。",
+        },
+        { layer: 3, text: "$\\alpha \\beta = 8$。" },
+      ],
+      formulaPreview: "(−2+2i)(−2−2i) = 4 + 4 = 8 = c/a",
+      figureMarker: "<<FACTOR_STEP5>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$x^2 + 2x + 5 = 0$ の解 $\\alpha, \\beta$（共役な虚数解）について、$\\alpha \\beta$ はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "$\\alpha \\beta = c / a = 5 / 1 = 5$ で即答できる。" },
+        {
+          layer: 2,
+          text:
+            "解は $-1 \\pm 2 i$。積は $(-1)^2 - (2 i)^2 = 1 + 4 = 5$。",
+        },
+        { layer: 3, text: "$\\alpha \\beta = 5$。" },
+      ],
+      formulaPreview: "(−1+2i)(−1−2i) = 1 + 4 = 5",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$x^2 - 6x + 13 = 0$ の解 $\\alpha, \\beta$（共役な虚数解）について、$\\alpha \\beta$ はいくつでしょう？",
+      answer: 13,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "$\\alpha \\beta = c / a = 13$。" },
+        {
+          layer: 2,
+          text:
+            "解は $3 \\pm 2 i$。積は $9 - (2 i)^2 = 9 + 4 = 13$。",
+        },
+        { layer: 3, text: "$\\alpha \\beta = 13$。" },
+      ],
+      formulaPreview: "(3+2i)(3−2i) = 9 + 4 = 13",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$3 x^2 + 2 x + 3 = 0$ を解と因数分解で $3(x - \\alpha)(x - \\beta)$ の形に書きたい（**先頭 $a = 3$、解は複素数**の合わせ技）。$\\alpha \\beta$ はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "係数比較の式は同じ：$\\alpha \\beta = c / a$。$a$ が $1$ でなくても、複素数解でも、この式は成り立つ。",
+        },
+        { layer: 2, text: "$\\alpha \\beta = c / a = 3 / 3 = 1$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = 1$。実際に解は $(-1 \\pm 2\\sqrt{2}\\,i) / 3$ で、積は $(1 + 8) / 9 = 1$。$a \\ne 1$ でも複素数でも、ルールは同じ。",
+        },
+      ],
+      formulaPreview: "α β = c/a = 3/3 = 1（a ≠ 1、複素数解でも）",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$2$ 次方程式 $x^2 + 5 x + 7 = 0$ の解 $\\alpha, \\beta$ について、今度は **和** $\\alpha + \\beta$ はいくつでしょう？",
+      answer: -5,
+      unit: "",
+      unknownLabel: "α + β",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$。$x$ の係数を比較すると $\\alpha + \\beta = -b / a$。",
+        },
+        { layer: 2, text: "$\\alpha + \\beta = -5 / 1 = -5$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha + \\beta = -5$。これと $\\alpha \\beta$ を合わせると **解と係数の関係**——解を出さずに和と積が分かる強力な道具。",
+        },
+      ],
+      formulaPreview: "α + β = −b/a = −5",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$2 x^2 + 6 x + 3 = 0$ の解 $\\alpha, \\beta$ について、**和** $\\alpha + \\beta$ はいくつでしょう？（先頭 $a = 2$ に注意）",
+      answer: -3,
+      unit: "",
+      unknownLabel: "α + β",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$a \\ne 1$ なので、和は $\\alpha + \\beta = -b / a$（積の式 $\\alpha \\beta = c / a$ と並ぶ）。",
+        },
+        { layer: 2, text: "$\\alpha + \\beta = -6 / 2 = -3$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha + \\beta = -3$。$\\alpha \\beta = c / a = 3 / 2$ と合わせれば、解を出さずに係数を見るだけで「和 $= -3$、積 $= 3/2$」と読める。",
+        },
+      ],
+      formulaPreview: "α + β = −b/a = −6/2 = −3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ すべての $2$ 次式を、例外なく因数分解する方法はある？
+
+────────
+
+**「解が分かれば、因数分解は自動で書ける」**
+
+中学・高校で「因数分解」を学んだとき、$x^2 - 5 x + 6 = (x - 2)(x - 3)$ のように、**整数の組み合わせを見つけて** 分解しました。でも $x^2 + 3 x - 2$ のような式は、ぱっと見ては因数分解できない——「これは因数分解できない式だ」と切り捨ててきた経験があるはず。
+
+ところが、視点を変えると：
+
+> **$2$ 次方程式の解 $\\alpha, \\beta$ を求めれば、因数分解は自動で書ける。**
+
+$$x^2 + p x + q = (x - \\alpha)(x - \\beta)$$
+
+なぜなら、左辺 $= 0$ とおいた方程式の解が $\\alpha, \\beta$ なら、右辺 $(x - \\alpha)(x - \\beta) = 0$ も同じ解を持つ。$2$ 次式は係数と最高次が決まれば一意なので、両者は等しい。
+
+[解の公式] $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4 a c}}{2 a}$ は、**[複素数] の世界では必ず $2$ つの解を返す**（[判別式] $D$ の符号によらず）。だから **すべての $2$ 次式は確実に因数分解できる**——これが複素数の世界が広げた新しい景色。
+
+**$a \\ne 1$ のときは先頭の $a$ が前に出る**：
+
+一般に、$2$ 次方程式 $a x^2 + b x + c = 0$ の $2$ 解を $\\alpha, \\beta$ とすると、
+
+$$a x^2 + b x + c = a (x - \\alpha)(x - \\beta)$$
+
+——**先頭に $a$ が必要**。なぜなら $(x - \\alpha)(x - \\beta)$ の $x^2$ の係数は $1$ なので、左辺の $a$ と合わせるため。
+
+**例**：$2 x^2 + 3 x - 2 = 0$。解の公式から $\\alpha = 1/2, \\beta = -2$。だから
+
+$$2 x^2 + 3 x - 2 = 2 \\left(x - \\tfrac{1}{2}\\right)(x + 2)$$
+
+**複素数解でも同じ**：$x^2 + 4 x + 8 = 0$ の解は $-2 \\pm 2 i$。だから
+
+$$x^2 + 4 x + 8 = (x - (-2 + 2 i))(x - (-2 - 2 i)) = (x + 2 - 2 i)(x + 2 + 2 i)$$
+
+「[複素数] の範囲では、すべての $2$ 次式は確実に因数分解できる」——昔切り捨ててきた式も、$i$ を使えば全部書ける。
+
+────────
+
+**もっと深く** — 解と係数の関係、$n$ 次式への拡張
+
+**解と係数の関係（Vieta の公式）**：$a x^2 + b x + c = a (x - \\alpha)(x - \\beta)$ の右辺を展開すると：
+
+$$a (x - \\alpha)(x - \\beta) = a x^2 - a (\\alpha + \\beta) x + a \\alpha \\beta$$
+
+これと $a x^2 + b x + c$ の係数を比較すると：
+
+$$\\boxed{\\alpha + \\beta = -\\dfrac{b}{a}, \\quad \\alpha \\beta = \\dfrac{c}{a}}$$
+
+——**解そのものを出さなくても、係数を見るだけで和と積が分かる**。これが解と係数の関係。たとえば $x^2 + 5 x + 7 = 0$ の和 $\\alpha + \\beta = -5$、積 $\\alpha \\beta = 7$。
+
+**[共役複素数] のペアの形が現れる**：実数係数の $2$ 次方程式が複素数解を持つとき、$\\alpha, \\beta$ は必ず共役のペア $p + q i, p - q i$。和は $2 p$（実数）、積は $p^2 + q^2$（[ピタゴラス数] の形！）になります——どちらも実数。だから「実数の係数 $b, c$ が」「実数の解の和・積」になる。
+
+**$n$ 次式への拡張（代数学の基本定理）**：実は **複素数の世界では、$n$ 次方程式は必ず $n$ 個の解を持つ**（重解を重複して数えれば）。これを **代数学の基本定理** といいます。その結果、$n$ 次式は必ず $n$ 個の一次式の積に因数分解できる：
+
+$$a_n x^n + \\cdots + a_0 = a_n (x - \\alpha_1)(x - \\alpha_2) \\cdots (x - \\alpha_n)$$
+
+「複素数を導入したご褒美」として、整数の世界では分解できなかった式が、すべて確実に分解できるようになる——これが [複素数] の世界がもたらす最大の利益のひとつ。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $2$ 章「複素数と方程式」§ $3$「$2$ 次方程式の解と因数分解」の節構成（解 → 因数分解の自動化、$a \\ne 1$ の注意、複素数係数の因数分解）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「すべての $2$ 次式を、例外なく因数分解する方法はある？」——その答えが、
+
+**解の公式で解 $\\alpha, \\beta$ を出して、$a x^2 + b x + c = a (x - \\alpha)(x - \\beta)$ と書く。**
+
+複素数の世界では [解の公式] が必ず $2$ 解を返すから、**例外はない**。さらに係数を比較するだけで、解を出さずに和 $\\alpha + \\beta = -b / a$ と積 $\\alpha \\beta = c / a$ が読める（解と係数の関係）——「**解と因数分解は同じ事柄の表と裏**」、その対応が複素数によって完成する。`,
+};
+
 /**
  * 高校 入門カテゴリの系列リスト（教育順で並べる）。
  *
@@ -3354,7 +3671,7 @@ $$x = \\dfrac{-b' \\pm \\sqrt{b'^2 - ac}}{a}$$
  *   1. グラフ → 2. 最小値
  *
  * 数Ⅱ・B 複素数と方程式:
- *   1. 新しい数を作る → 2. 2 次方程式の実数解
+ *   1. 新しい数を作る → 2. 2 次方程式の実数解 → 3. 2 次方程式の解と因数分解
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
@@ -3367,6 +3684,7 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   // 数Ⅱ・B 複素数と方程式（図形と方程式の前）
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
+  ADV_COMPLEX_FACTORIZATION_SERIES,
   // 数Ⅱ・B 図形と方程式
   ADV_NUMBER_LINE_SERIES,
   ADV_LINE_EQUATION_SERIES,
