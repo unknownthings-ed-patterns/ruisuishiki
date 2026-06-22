@@ -30,7 +30,7 @@ export type PatternId =
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
-  | "BD1";
+  | "BD1" | "CN1";
 
 /**
  * 変数の意味的役割。
@@ -1065,6 +1065,29 @@ const LN8: PatternSpec = {
 };
 
 /**
+ * CN1: 複素数（新しい数を作る）— i² = -1 を使った複素数の四則演算と
+ * 等式・共役。問題ごとに「実部」「虚部」「値そのもの」のいずれかを問う。
+ */
+const CN1: PatternSpec = {
+  id: "CN1",
+  unit: "advanced",
+  naturalLanguage: "複素数の四則演算（i² = -1）と等式・共役",
+  formulaTemplate: "(a + bi) op (c + di), i² = -1",
+  variables: [
+    { name: "a", role: "実部 1", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "虚部 1", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "実部 2", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "d", role: "虚部 2", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "result", role: "問われている単一値（実部 or 虚部 or 値）", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.a + k.c,
+  }),
+};
+
+/**
  * BD1: 束（線束・円束）— 2 つの図形 F1 = 0, F2 = 0 の束 F1 + k·F2 = 0 が
  * 点 (x0, y0) を通る条件から k を求める。
  *
@@ -1188,7 +1211,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1,
+  BD1, CN1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1207,7 +1230,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1,
+  BD1, CN1,
 ];
 
 export const CONTEXT_CATEGORIES = [

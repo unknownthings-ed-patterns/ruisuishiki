@@ -1139,6 +1139,227 @@ export function BundleStep10() {
 }
 
 /**
+ * 新しい数を作る Step 1：複素平面（実軸 + 虚軸）に i と -i を強調。
+ * $x^2 = -1$ の解が虚軸上にある $2$ 点であることを視覚化。答え（-1）は描かない。
+ */
+export function ComplexStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 160;
+  const Oy = 140;
+  const scale = 50;
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="複素平面：i と -i は虚軸上の 2 点（x² = -1 の解）"
+    >
+      <defs>
+        <marker id="cx1-arr-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)" />
+        </marker>
+        <marker id="cx1-arr-u" viewBox="0 0 10 10" refX="5" refY="1" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,10 L5,0 L10,10 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="1" markerEnd="url(#cx1-arr-r)" />
+      <line x1={Ox} y1="260" x2={Ox} y2="20" stroke={muted} strokeWidth="1" markerEnd="url(#cx1-arr-u)" />
+
+      <text x="286" y={Oy + 14} fontSize="11" fill={muted} fontStyle="italic">実軸</text>
+      <text x={Ox + 6} y="30" fontSize="11" fill={muted} fontStyle="italic">虚軸</text>
+
+      {/* 0, 1, -1 on real axis */}
+      <circle cx={Ox - scale} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox - scale} y={Oy + 16} fontSize="11" fill={stroke} textAnchor="middle">−1</text>
+      <circle cx={Ox + scale} cy={Oy} r="2.5" fill={stroke} />
+      <text x={Ox + scale} y={Oy + 16} fontSize="11" fill={stroke} textAnchor="middle">1</text>
+      <circle cx={Ox} cy={Oy} r="2" fill={muted} />
+      <text x={Ox - 6} y={Oy + 16} fontSize="11" fill={muted} textAnchor="end">0</text>
+
+      {/* i (highlighted) */}
+      <circle cx={Ox} cy={Oy - scale} r="5" fill={accent} />
+      <text x={Ox + 10} y={Oy - scale + 5} fontSize="14" fill={accent} fontWeight="700" fontStyle="italic">
+        i
+      </text>
+
+      {/* -i (highlighted) */}
+      <circle cx={Ox} cy={Oy + scale} r="5" fill={accent} />
+      <text x={Ox + 10} y={Oy + scale + 5} fontSize="14" fill={accent} fontWeight="700" fontStyle="italic">
+        −i
+      </text>
+
+      <text x="20" y="22" fontSize="10" fill={muted} fontStyle="italic">
+        x² = −1 の解は虚軸上の 2 点（i と −i）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 新しい数を作る Step 4：複素平面で 1+i と 1-i を共役対として強調。
+ * 実軸に関して対称な 2 点。答え（積 = 2）は描かない。
+ */
+export function ComplexStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 140;
+  const Oy = 140;
+  const scale = 55;
+  const Px = Ox + scale;
+  const Py1 = Oy - scale;
+  const Py2 = Oy + scale;
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="複素平面：1+i と 1-i は実軸に関して対称な共役対"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="1" />
+      <line x1={Ox} y1="260" x2={Ox} y2="20" stroke={muted} strokeWidth="1" />
+      <text x="286" y={Oy + 14} fontSize="11" fill={muted} fontStyle="italic">実軸</text>
+      <text x={Ox + 6} y="30" fontSize="11" fill={muted} fontStyle="italic">虚軸</text>
+
+      <circle cx={Ox} cy={Oy} r="2" fill={muted} />
+      <text x={Ox - 6} y={Oy + 16} fontSize="11" fill={muted} textAnchor="end">0</text>
+      <circle cx={Ox + scale} cy={Oy} r="2.5" fill={muted} />
+      <text x={Ox + scale} y={Oy + 16} fontSize="10" fill={muted} textAnchor="middle">1</text>
+
+      {/* 1 + i */}
+      <circle cx={Px} cy={Py1} r="5" fill={accent} />
+      <text x={Px + 10} y={Py1 + 5} fontSize="13" fill={accent} fontWeight="700" fontStyle="italic">
+        1 + i
+      </text>
+
+      {/* 1 - i */}
+      <circle cx={Px} cy={Py2} r="5" fill={accent} />
+      <text x={Px + 10} y={Py2 + 5} fontSize="13" fill={accent} fontWeight="700" fontStyle="italic">
+        1 − i
+      </text>
+
+      {/* vertical dashed line showing symmetry */}
+      <line x1={Px} y1={Py1} x2={Px} y2={Py2} stroke={accent} strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+
+      <text x="20" y="22" fontSize="10" fill={muted} fontStyle="italic">
+        1+i と 1−i は実軸に関して対称（共役対）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 新しい数を作る Step 6：分母の実数化の手順を schematic で示す。
+ * 「分母の共役を分母・分子に掛ける」というレシピ。
+ * 答え（虚部 = 1）は描かない。
+ */
+export function ComplexStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="分母の実数化：分母の共役を分母・分子に掛ける"
+    >
+      <defs>
+        <marker id="cx6-arr-d" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L5,10 L10,0 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* before */}
+      <text x="58" y="36" fontSize="11" fill={stroke}>分子</text>
+      <text x="58" y="80" fontSize="11" fill={stroke}>分母</text>
+      <line x1="100" y1="50" x2="240" y2="50" stroke={stroke} strokeWidth="1.5" />
+      <text x="170" y="36" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a + bi
+      </text>
+      <text x="170" y="74" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        c + di
+      </text>
+
+      {/* arrow down */}
+      <line x1="170" y1="100" x2="170" y2="135" stroke={muted} strokeWidth="1" markerEnd="url(#cx6-arr-d)" />
+      <text x="180" y="122" fontSize="10" fill={muted} fontStyle="italic">
+        分母の共役 c − di を上下に掛ける
+      </text>
+
+      {/* after */}
+      <line x1="60" y1="175" x2="280" y2="175" stroke={accent} strokeWidth="1.5" />
+      <text x="170" y="163" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        (a + bi)(c − di)
+      </text>
+      <text x="170" y="198" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        c² + d²
+      </text>
+
+      <text x="14" y="222" fontSize="10" fill={muted} fontStyle="italic">
+        分母が実数 c² + d² になる → 複素数の標準形に戻せる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
+ * 答え（-6）は描かない。
+ */
+export function ComplexStep8() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const danger = "color-mix(in oklch, var(--accent) 75%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="ルートの計算規則：負の数が混ざると壊れる"
+    >
+      <text x="20" y="36" fontSize="13" fill={stroke}>
+        √a · √b = √(ab)
+      </text>
+      <text x="200" y="36" fontSize="11" fill={muted} fontStyle="italic">
+        a, b ≧ 0 のとき ✓
+      </text>
+
+      <line x1="14" y1="60" x2="306" y2="60" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+
+      <text x="20" y="98" fontSize="13" fill={danger} fontWeight="600">
+        √(−a) · √(−b) ≠ √(ab)
+      </text>
+      <text x="200" y="98" fontSize="11" fill={danger} fontStyle="italic">
+        ⚠ 落とし穴
+      </text>
+
+      <text x="20" y="138" fontSize="13" fill={accent}>
+        √(−a) · √(−b)
+      </text>
+      <text x="20" y="162" fontSize="13" fill={accent}>
+        = √a · i · √b · i
+      </text>
+      <text x="20" y="186" fontSize="13" fill={accent} fontWeight="600">
+        = i² · √(ab) = −√(ab)
+      </text>
+
+      <text x="14" y="218" fontSize="10" fill={muted} fontStyle="italic">
+        負のルートはまず √(−a) = √a·i で i を取り出してから計算する
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円外の点 Q から円に引いた 2 本の接線。
  * 接点 P₁, P₂ で接し、QP₁ ⊥ OP₁、QP₂ ⊥ OP₂。
  */
@@ -4366,6 +4587,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <BundleStep10 />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLEX_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ComplexStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLEX_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ComplexStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLEX_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ComplexStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLEX_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ComplexStep8 />
             </div>
           );
         }

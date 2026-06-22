@@ -2706,11 +2706,335 @@ $$(a+1) x + (a-1) y - 2a = a (x + y - 2) + (x - y) = 0$$
 $1$ 本の式の中に、交点 $Q$ を通るすべての直線が住んでいる。$k$ を動かせば、別の直線が次々と取り出せる。この発想は **円束（根軸）** にも、もっと一般の図形にも広がっていく。「**交点を求めない**」「**式の組み合わせだけで答えに辿り着く**」——代数で図形を扱う力の、原点のひとつ。`,
 };
 
+/* ===== CN1: 新しい数を作る（複素数の四則演算） ===== */
+export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
+  id: "adv_complex_new_number_01",
+  title: "新しい数を作る",
+  subtitle:
+    "数Ⅱ・B「複素数と方程式」より — $x^2 = -1$ を解くために新しい数 $i$ を作り、複素数 $a + bi$ の四則演算と等式・共役を $10$ 問で身につける。",
+  patternId: "CN1",
+  unit: "advanced",
+  revelationLabel:
+    "$i^2 = -1$ を約束すれば、$x^2 = -1$ は $i, -i$ を解にもち、複素数 $a + bi$ で四則演算がすべて成立する",
+  drivingQuestion: "$x^2 = -1$ という、実数の世界では解けない方程式に解を持たせるには、どんな新しい数を作ればいい？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "中学で学んだ「実数の世界」では、$x^2 = -1$ には解がありません。新しい数 $i$ を「$2$ 乗すると $-1$ になる数」と決めると、$i$ は $x^2 = -1$ の解の $1$ つになります。もう $1$ つの解 $-i$ について、$(-i)^2$ はいくつでしょう？",
+      answer: -1,
+      unit: "",
+      unknownLabel: "(-i)²",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "符号は $2$ 乗で消える：$(-x)^2 = x^2$。だから $(-i)^2$ も $i^2$ と同じ値。",
+        },
+        { layer: 2, text: "$(-i)^2 = (-1)^2 \\cdot i^2 = 1 \\cdot i^2 = i^2$。$i^2$ の約束は何だった？" },
+        { layer: 3, text: "$i^2 = -1$。だから $(-i)^2 = -1$。$i$ と $-i$ の両方が $x^2 = -1$ の解。" },
+      ],
+      formulaPreview: "(-i)² = i² = -1（i と -i の両方が解）",
+      figureMarker: "<<COMPLEX_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "複素数 $(2 + 3i) + (1 - i)$ を計算したときの **実部**（実数の部分）はいくつでしょう？",
+      answer: 3,
+      unit: "",
+      unknownLabel: "実部",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "実部どうし、虚部どうしを別々に足す。実数の文字計算と同じ。" },
+        { layer: 2, text: "$(2 + 1) + (3 - 1)i = 3 + 2i$。実部は $3$、虚部は $2$。" },
+        { layer: 3, text: "実部 $= 3$。" },
+      ],
+      formulaPreview: "(2+3i) + (1−i) = 3 + 2i → 実部 = 3",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "複素数 $(5 - 2i) - (3 - 4i)$ を計算したときの **虚部**（$i$ の係数）はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "虚部",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "引き算も、実部どうし・虚部どうしを別々に引く。" },
+        { layer: 2, text: "$(5 - 3) + (-2 - (-4))i = 2 + 2i$。" },
+        { layer: 3, text: "虚部 $= 2$。" },
+      ],
+      formulaPreview: "(5−2i) − (3−4i) = 2 + 2i → 虚部 = 2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "複素数のかけ算は、ふつうの文字計算と同じように展開して、最後に $i^2 = -1$ に置き換える。$(1 + i)(1 - i)$ を計算した結果はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "(1+i)(1−i) の値",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "和と差の積：$(a + b)(a - b) = a^2 - b^2$。これに $a = 1, b = i$ を当てると、$1 - i^2$。",
+        },
+        { layer: 2, text: "$i^2 = -1$ なので、$1 - i^2 = 1 - (-1)$。" },
+        {
+          layer: 3,
+          text:
+            "$1 - (-1) = 2$。**$i$ が消えて実数になる**——これが共役どうしの積の特徴。",
+        },
+      ],
+      formulaPreview: "(1+i)(1−i) = 1 − i² = 1 − (−1) = 2",
+      figureMarker: "<<COMPLEX_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$(2 + i)(3 + 2i)$ を計算したときの **実部** はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "実部",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "ふつうに展開してから、$i^2 = -1$ で置き換える。" },
+        {
+          layer: 2,
+          text:
+            "$(2 + i)(3 + 2i) = 6 + 4i + 3i + 2i^2 = 6 + 7i - 2 = 4 + 7i$。",
+        },
+        { layer: 3, text: "実部 $= 4$。" },
+      ],
+      formulaPreview: "(2+i)(3+2i) = 4 + 7i → 実部 = 4",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "複素数の割り算は、**分母の共役を分母・分子に掛けて分母を実数化** する。$\\dfrac{1 + i}{1 - i}$ を計算したときの **虚部** はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "虚部",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "分母 $1 - i$ の共役は $1 + i$。これを分母・分子に掛ける。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{(1+i)(1+i)}{(1-i)(1+i)} = \\dfrac{1 + 2i + i^2}{1 - i^2} = \\dfrac{2i}{2} = i$。",
+        },
+        { layer: 3, text: "$i$ なので、実部 $= 0$、**虚部 $= 1$**。" },
+      ],
+      formulaPreview: "(1+i)/(1−i) = 2i/2 = i → 虚部 = 1",
+      figureMarker: "<<COMPLEX_STEP6>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\dfrac{3 + i}{1 + i}$ を計算したときの **実部** はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "実部",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "分母 $1 + i$ の共役は $1 - i$。これを分母・分子に掛ける。" },
+        {
+          layer: 2,
+          text:
+            "$\\dfrac{(3+i)(1-i)}{(1+i)(1-i)} = \\dfrac{3 - 3i + i - i^2}{1 - i^2} = \\dfrac{4 - 2i}{2} = 2 - i$。",
+        },
+        { layer: 3, text: "実部 $= 2$、虚部 $= -1$。" },
+      ],
+      formulaPreview: "(3+i)/(1+i) = 2 − i → 実部 = 2",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$a$ が正の実数のとき $\\sqrt{-a} = \\sqrt{a}\\,i$ と書く約束です。**ただし負のルートどうしのかけ算では落とし穴がある**。$\\sqrt{-3} \\times \\sqrt{-12}$ はいくつでしょう？",
+      answer: -6,
+      unit: "",
+      unknownLabel: "√(−3) × √(−12) の値",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**「$\\sqrt{(-3)(-12)} = \\sqrt{36} = 6$」と書くと間違い**。まず $\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出してから掛ける。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\sqrt{-3} = \\sqrt{3}\\,i$、$\\sqrt{-12} = 2\\sqrt{3}\\,i$。掛けると $\\sqrt{3} \\cdot 2\\sqrt{3} \\cdot i^2 = 6 \\cdot (-1)$。",
+        },
+        { layer: 3, text: "$6 \\cdot (-1) = -6$。" },
+      ],
+      formulaPreview: "√(−3)·√(−12) = √3·i · 2√3·i = 6i² = −6",
+      figureMarker: "<<COMPLEX_STEP8>>",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "**$2$ つの複素数 $a + bi$ と $a' + b'i$ が等しい** とは、**実部どうしも、虚部どうしも、それぞれ等しい** こと。$x, y$ を実数として $(2 + i)(x + yi) = 11 + 8i$ が成り立つとき、$x$ の値はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "x",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "左辺を展開し、実部と虚部に整理する。右辺と「実部 ＝ 実部、虚部 ＝ 虚部」で比較すれば、$x, y$ の連立方程式が立つ。",
+        },
+        {
+          layer: 2,
+          text:
+            "$(2 + i)(x + yi) = (2x - y) + (x + 2y)i = 11 + 8i$。よって $2x - y = 11$、$x + 2y = 8$。",
+        },
+        {
+          layer: 3,
+          text:
+            "$(2x - y) \\cdot 2 = 4x - 2y = 22$ と $x + 2y = 8$ を足すと $5x = 30$ → $x = 6$。",
+        },
+      ],
+      formulaPreview: "2x − y = 11, x + 2y = 8 → x = 6 (y = 1)",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "複素数 $z = 3 + 4i$ について、$i$ の符号を反転させた $\\bar{z} = 3 - 4i$ を **共役複素数** という。**共役どうしの積は必ず実数になる**。$z \\cdot \\bar{z}$ の値はいくつでしょう？",
+      answer: 25,
+      unit: "",
+      unknownLabel: "z · z̄ の値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "和と差の積：$(a + b)(a - b) = a^2 - b^2$。これを $a = 3, b = 4i$ に当てる。",
+        },
+        {
+          layer: 2,
+          text:
+            "$(3 + 4i)(3 - 4i) = 9 - (4i)^2 = 9 - 16 i^2 = 9 - 16(-1) = 9 + 16$。",
+        },
+        {
+          layer: 3,
+          text:
+            "$9 + 16 = 25$。一般に $z = a + bi$ なら $z\\bar{z} = a^2 + b^2$——**ピタゴラスの形** が顔を出す。",
+        },
+      ],
+      formulaPreview: "z·z̄ = 3² + 4² = 25（一般に a² + b²）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $x^2 = -1$ という、実数の世界では解けない方程式に解を持たせるには、どんな新しい数を作ればいい？
+
+────────
+
+**「ないのなら、作ってみる」——新しい数 $i$ の導入**
+
+中学までで学んだ「実数の世界」では、すべての実数は $2$ 乗すると $0$ 以上になります。だから、
+
+$$x^2 = -1$$
+
+という方程式には **実数解がありません**。「ない」のだから諦める——のではなく、**ないのなら作ってみる** のが歴史の答えでした。「$2$ 乗すると $-1$ になる」新しい数 $i$ を導入する：
+
+$$i^2 = -1$$
+
+これを認めると、$x^2 = -1$ は
+
+$$(x + i)(x - i) = 0$$
+
+と因数分解できて、$x = i, -i$ という $2$ つの解を持つ。**$i$ を「虚数単位」、$i$ と実数の組み合わせ $a + bi$（$a, b$ は実数）を「複素数」** と呼びます。$a$ を **実部**、$b$ を **虚部**。$b = 0$ のときはふつうの実数。$b \\ne 0$ のとき「虚数」、特に $a = 0$ のとき「純虚数」。
+
+**$\\sqrt{-a}$ の表し方**：$a$ が正の実数のとき、
+
+$$\\sqrt{-a} = \\sqrt{a}\\,i$$
+
+と書く約束。たとえば $\\sqrt{-3} = \\sqrt{3}\\,i$、$\\sqrt{-1} = i$。
+
+**四則演算がすべて成り立つ**：複素数どうしを足す・引く・掛ける・割る、いずれの結果も必ず複素数になります。これが「数の世界」としての性質——実数の世界をこわすことなく、$1$ 段拡張した。
+
+- **足し算・引き算**：実部どうし・虚部どうしを別々に：$(2 + 3i) + (1 - 5i) = 3 - 2i$
+- **かけ算**：ふつうの文字計算 + 最後に $i^2 = -1$：$(2 + 3i)(1 - 5i) = 2 - 10i + 3i - 15i^2 = 17 - 7i$
+- **割り算**：**分母の共役を分母・分子に掛けて、分母を実数化**：$\\dfrac{5 + 4i}{1 + 2i} = \\dfrac{(5+4i)(1-2i)}{(1+2i)(1-2i)} = \\dfrac{13 - 6i}{5}$
+
+────────
+
+**もっと深く** — ルートの落とし穴、共役複素数、複素数が広げる世界
+
+**ルートの計算規則は要注意**：$\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$ や $\\dfrac{\\sqrt{a}}{\\sqrt{b}} = \\sqrt{\\dfrac{a}{b}}$ は **$a, b$ がともに非負のときだけ** 成り立ちます。負の数が混ざると壊れる：
+
+$$\\sqrt{-3} \\times \\sqrt{-2} = \\sqrt{3}\\,i \\times \\sqrt{2}\\,i = \\sqrt{6}\\,i^2 = -\\sqrt{6}$$
+
+——もし「$\\sqrt{-3}\\sqrt{-2} = \\sqrt{6}$」と書くと **間違い**。負のルートに出会ったら、まず $\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出し、ふつうの数の計算に戻すのが安全。
+
+**共役複素数**：$z = a + bi$ に対して、虚部の符号を反転させた $\\bar{z} = a - bi$ を **共役複素数** といいます。共役どうしの和と積はいつも実数：
+
+- **和**：$z + \\bar{z} = (a + bi) + (a - bi) = 2a$（実部の $2$ 倍）
+- **積**：$z \\cdot \\bar{z} = (a + bi)(a - bi) = a^2 - (bi)^2 = a^2 + b^2$（実部の $2$ 乗 + 虚部の $2$ 乗）
+
+積の式 $a^2 + b^2$ は **ピタゴラス** そのものの形。複素数を点 $(a, b)$ として **複素平面** にプロットすると、$|z|^2 = z\\bar{z} = a^2 + b^2$ が **原点からの距離の $2$ 乗** を表します——「数の世界」と「幾何の世界」がここで橋を架ける。
+
+**複素数が広げる世界**：複素数は数学だけの遊びではなく、**実世界の問題を解く力** を持ちます。
+
+- **電気工学・信号処理**：交流回路の電圧・電流は複素数で表す（フェーザ表示）。**フーリエ変換** で音や画像を「周波数の世界」に翻訳するのも複素数の力
+- **量子力学**：粒子の状態は複素数値の「波動関数」で記述される。実部・虚部の両方が物理的意味を持つ
+- **流体力学・電磁気学**：複素関数が空気の流れや電場の形を解く道具になる
+- **コンピュータグラフィクス**：複素数の掛け算は **平面上の回転と拡大** を表す。$z \\mapsto i \\cdot z$ は $90°$ 回転、$z \\mapsto (1 + i) z$ は $45°$ 回転 + $\\sqrt{2}$ 倍
+
+「数の世界を $1$ つ広げる」という小さな約束が、こんなに大きな世界に通じている。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $2$ 章「複素数と方程式」§$1$「新しい数を作る」の節構成（「ないのなら作ってみる」の発想 → $i$ の定義 → 四則演算 → 共役）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「$x^2 = -1$ という、実数の世界では解けない方程式に解を持たせるには、どんな新しい数を作ればいい？」——その答えが、
+
+**$i^2 = -1$ を約束する新しい数 $i$。**
+
+$i$ と実数を組み合わせた $a + bi$ という「複素数」の世界では、四則演算がすべて成り立ち、$x^2 = -1$ は $i, -i$ という $2$ つの解を持つ。**「ない」のなら「作る」**——この大胆な発想が、量子力学や信号処理まで広がる豊かな数学の扉を開いた。`,
+};
+
 /**
  * 高校 入門カテゴリの系列リスト（教育順で並べる）。
  *
  * 数Ⅰ・A 2 次関数:
  *   1. グラフ → 2. 最小値
+ *
+ * 数Ⅱ・B 複素数と方程式:
+ *   1. 新しい数を作る
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
@@ -2720,6 +3044,8 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   // 数Ⅰ・A 2 次関数
   ADV_QUAD_GRAPH_SERIES,
   ADV_QUAD_MIN_SERIES,
+  // 数Ⅱ・B 複素数と方程式（図形と方程式の前）
+  ADV_COMPLEX_NEW_NUMBER_SERIES,
   // 数Ⅱ・B 図形と方程式
   ADV_NUMBER_LINE_SERIES,
   ADV_LINE_EQUATION_SERIES,

@@ -41,6 +41,7 @@ import {
 import {
   ADV_BUNDLE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
+  ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_LINE_EQUATION_SERIES,
@@ -360,6 +361,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "組合せ C(n, 2) — 確率の基礎",
   },
   /* === 高校数学Ⅱ・B（数Ⅱ の章順 → 数B の章順）=== */
+  /* 数Ⅱ: 複素数と方程式（図形と方程式の前） */
+  {
+    series: ADV_COMPLEX_NEW_NUMBER_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "複素数と方程式",
+    shortDescription: "新しい数を作る — i² = -1 を約束して、複素数 a + bi の四則演算と等式・共役へ",
+  },
   /* 数Ⅱ: 図形と方程式（入口から順に） */
   {
     series: ADV_NUMBER_LINE_SERIES,
