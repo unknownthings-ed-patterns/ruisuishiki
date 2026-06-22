@@ -3691,10 +3691,18 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$OP = 3$ を式に翻訳すると $\\sqrt{x^2 + y^2} = 3$。両辺を $2$ 乗する。",
+            "条件「$OP = 3$」を、$x$ と $y$ の式に書くとどうなる？",
         },
-        { layer: 2, text: "$x^2 + y^2 = 3^2 = 9$。" },
-        { layer: 3, text: "$N = 9$。原点を中心とする半径 $3$ の円。" },
+        {
+          layer: 2,
+          text:
+            "$OP$（原点からの距離）はルートで書ける。書いた式の **両辺はどちらも $0$ 以上** だから、何をするときれいになる？",
+        },
+        {
+          layer: 3,
+          text:
+            "$OP = \\sqrt{x^2 + y^2} = 3$。両辺を $2$ 乗すると $x^2 + y^2 = 9$。**両辺が非負なので $2$ 乗は同値変形** ——これが軌跡の式を出すレシピ。$N = 9$。",
+        },
       ],
       formulaPreview: "OP = 3 → √(x²+y²) = 3 → x² + y² = 9",
       figureMarker: "<<LOCUS_STEP1>>",
@@ -3710,9 +3718,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ手順。$OP = 5$ → $\\sqrt{x^2 + y^2} = 5$。" },
-        { layer: 2, text: "両辺 $2$ 乗：$x^2 + y^2 = 25$。" },
-        { layer: 3, text: "$N = 25$。" },
+        { layer: 1, text: "**前題と比べてみよう**。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text:
+            "中心（原点）も式の形（$\\sqrt{x^2 + y^2}$）も同じ。**変わったのは距離だけ**。$2$ 乗するとどうなる？",
+        },
+        {
+          layer: 3,
+          text:
+            "前題 $OP = 3$ で右辺 $= 3^2 = 9$ だった。今は $OP = 5$ なので、変わるのは右辺の $2$ 乗だけ：$5^2 = 25$。$N = 25$。",
+        },
       ],
       formulaPreview: "OP = 5 → x² + y² = 25",
     },
@@ -3727,13 +3743,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
+        { layer: 1, text: "**前題と比べてみよう**。中心の位置が変わっただけ。距離の式はどう変わる？" },
         {
-          layer: 1,
+          layer: 2,
           text:
-            "$AP = 4$ → $\\sqrt{(x - 1)^2 + (y - 3)^2} = 4$。両辺 $2$ 乗。",
+            "原点 $(0, 0)$ から → 点 $(1, 3)$ から。$\\sqrt{}$ の中身の **引き算** に注目すると？",
         },
-        { layer: 2, text: "$(x - 1)^2 + (y - 3)^2 = 16$。" },
-        { layer: 3, text: "$N = 16$。$A(1, 3)$ を中心とする半径 $4$ の円。" },
+        {
+          layer: 3,
+          text:
+            "前題は $\\sqrt{x^2 + y^2}$（中心が原点）。今は $\\sqrt{(x - 1)^2 + (y - 3)^2}$（中心が $(1, 3)$）。距離 $= 4$ なので両辺 $2$ 乗して $(x-1)^2 + (y-3)^2 = 16$。$N = 16$。",
+        },
       ],
       formulaPreview: "AP = 4 → (x−1)² + (y−3)² = 16",
     },
@@ -3751,14 +3771,18 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$OP : AP = 2 : 1$ ⟺ $OP = 2 AP$。両辺を式にして $\\sqrt{x^2 + y^2} = 2 \\sqrt{(x - 3)^2 + y^2}$。両辺 $2$ 乗。",
+            "**Step 3 までは「距離 = 定数」だった。今度は「距離の比 = 一定」**。条件「$OP : AP = 2 : 1$」を **等式** にしてみよう。",
         },
         {
           layer: 2,
           text:
-            "$x^2 + y^2 = 4((x - 3)^2 + y^2)$ → $3 x^2 + 3 y^2 - 24 x + 36 = 0$ → $x^2 + y^2 - 8 x + 12 = 0$。平方完成 $(x - 4)^2 + y^2 = 4$。",
+            "比は等式に直せる：$OP = 2 AP$。$OP$ も $AP$ も $\\sqrt{}$ で書ける。今までと同じく **両辺 $2$ 乗** すると、どんな形に整理できる？",
         },
-        { layer: 3, text: "中心 $(4, 0)$、半径 $2$。$N = 4$。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{x^2 + y^2} = 2 \\sqrt{(x-3)^2 + y^2}$ を $2$ 乗：$x^2 + y^2 = 4((x-3)^2 + y^2)$。展開して整理し平方完成すると $(x - 4)^2 + y^2 = 4$ ——中心 $(4, 0)$、半径 $2$ の円。**距離条件 → $2$ 乗 → 展開 → 平方完成、はこれまでと同じレシピ**。$N = 4$。",
+        },
       ],
       formulaPreview: "(x−4)² + y² = 4 → 中心 (4, 0)、半径 2",
       figureMarker: "<<LOCUS_STEP4>>",
@@ -3774,17 +3798,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text:
-            "$OP = 2 AP$ → $\\sqrt{x^2 + y^2} = 2 \\sqrt{x^2 + (y - 6)^2}$。両辺 $2$ 乗。",
-        },
+        { layer: 1, text: "**前題と比べてみよう**。比は同じ $2 : 1$。点 $A$ がどう動いた？" },
         {
           layer: 2,
           text:
-            "$x^2 + y^2 = 4 (x^2 + (y - 6)^2)$ → $3 x^2 + 3 y^2 - 48 y + 144 = 0$ → $x^2 + y^2 - 16 y + 48 = 0$ → $x^2 + (y - 8)^2 = 16$。",
+            "$A$ は $x$ 軸上 $(3, 0)$ から $y$ 軸上 $(0, 6)$ へ。手順は同じ：$OP = 2 AP$ → $2$ 乗 → 平方完成。中心はどの軸上に来る？",
         },
-        { layer: 3, text: "$N = 8$（中心 $(0, 8)$、半径 $4$）。" },
+        {
+          layer: 3,
+          text:
+            "前題と同じレシピで $\\sqrt{x^2 + y^2} = 2 \\sqrt{x^2 + (y - 6)^2}$、$2$ 乗・整理・平方完成 → $x^2 + (y - 8)^2 = 16$。前題は $x$ 方向に中心がシフトしたが、今は $A$ が $y$ 軸上なので **$y$ 方向にシフト**。$N = 8$。",
+        },
       ],
       formulaPreview: "x² + (y−8)² = 16 → 中心 (0, 8)、半径 4",
     },
@@ -3802,14 +3826,18 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$AP = BP$ → $\\sqrt{x^2 + y^2} = \\sqrt{(x - 6)^2 + y^2}$。両辺 $2$ 乗。",
+            "**Step 4–5 の距離の比が $2 : 1$ だった。今は $1 : 1$（等距離）。同じ式の中で「比 $= 1$」にしたとき、何が起きる？**",
         },
         {
           layer: 2,
           text:
-            "$x^2 + y^2 = (x - 6)^2 + y^2$ → $0 = - 12 x + 36$ → $x = 3$。",
+            "$AP = BP$ を $2$ 乗すると **$2$ 乗の項が左右で同じ** になる。何が残って何が消える？",
         },
-        { layer: 3, text: "$N = 3$。線分 $AB$ の中点を通り、$AB$ に垂直な直線。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{x^2 + y^2} = \\sqrt{(x - 6)^2 + y^2}$ を $2$ 乗：$x^2 + y^2 = (x-6)^2 + y^2$。展開すると $x^2$ と $y^2$ が両辺で消えて、$0 = -12x + 36$ という **$1$ 次式**（直線）が残る。比 $= 1$ の極限では円が「無限に大きくなって直線に化ける」。$N = 3$。",
+        },
       ],
       formulaPreview: "AP = BP → x = 3（線分 AB の垂直二等分線）",
       figureMarker: "<<LOCUS_STEP6>>",
@@ -3825,17 +3853,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        {
-          layer: 1,
-          text:
-            "$AP = BP$ → $\\sqrt{x^2 + (y - 2)^2} = \\sqrt{x^2 + (y - 10)^2}$。両辺 $2$ 乗。",
-        },
+        { layer: 1, text: "**前題と比べてみよう**。$2$ 点が $x$ 軸上 → $y$ 軸上に動いた。残る方の文字は？" },
         {
           layer: 2,
           text:
-            "$(y - 2)^2 = (y - 10)^2$ → $- 4 y + 4 = - 20 y + 100$ → $16 y = 96$ → $y = 6$。",
+            "$2$ 乗で **$x^2 + y^2$ の項が消える** のは同じ。違うのは「$x$ 方向に並ぶ $2$ 点」か「$y$ 方向に並ぶ $2$ 点」か——どっちの $1$ 次式が残る？",
         },
-        { layer: 3, text: "$N = 6$。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{x^2 + (y-2)^2} = \\sqrt{x^2 + (y-10)^2}$、$2$ 乗で $x^2 + y^2$ が消えて $(y-2)^2 = (y-10)^2$ → $16y = 96$。前題は $x$ の $1$ 次式が残ったが、今は **$y$ の $1$ 次式**。$N = 6$。",
+        },
       ],
       formulaPreview: "AP = BP → y = 6",
     },
@@ -3853,17 +3881,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$x$ 軸との距離は $|y|$。$A$ との距離は $\\sqrt{x^2 + (y - 4)^2}$。$|y| = \\sqrt{x^2 + (y - 4)^2}$ の両辺 $2$ 乗。",
+            "**Step 6–7 は「$2$ 点から等距離」だった。今度は「直線（$x$ 軸）と $1$ 点から等距離」**。距離の式の片方の形が変わる。",
         },
         {
           layer: 2,
           text:
-            "$y^2 = x^2 + (y - 4)^2 = x^2 + y^2 - 8 y + 16$ → $0 = x^2 - 8 y + 16$ → $8 y = x^2 + 16$ → $y = \\dfrac{x^2}{8} + 2$。",
+            "$x$ 軸との距離は $\\sqrt{}$ ではなく **$|y|$**。点との距離は今までと同じ $\\sqrt{}$。形が違う $2$ つを等式にして $2$ 乗すると？",
         },
         {
           layer: 3,
           text:
-            "$N = 2$。これは「$x$ 軸（准線）と $A(0, 4)$（焦点）から等距離」という放物線の幾何的定義そのもの。",
+            "$|y| = \\sqrt{x^2 + (y-4)^2}$ を $2$ 乗：$y^2 = x^2 + y^2 - 8y + 16$。**$y^2$ が両辺で消えて $x^2$ だけが残る** → $y = x^2/8 + 2$。Step 6–7 では $1$ 次式が残ったが、今は **$2$ 乗の項 $x^2$ が片側だけに残るから放物線**。$N = 2$。",
         },
       ],
       formulaPreview: "y = x²/8 + 2（准線 = x 軸、焦点 = A(0, 4)）",
@@ -3880,13 +3908,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step8",
       hints: [
-        { layer: 1, text: "前と同じ：$|y| = \\sqrt{x^2 + (y - 10)^2}$ の両辺 $2$ 乗。" },
+        { layer: 1, text: "**前題と比べてみよう**。焦点 $A$ が $(0, 4)$ から $(0, 10)$ に上がった。何が変わる？" },
         {
           layer: 2,
           text:
-            "$y^2 = x^2 + y^2 - 20 y + 100$ → $0 = x^2 - 20 y + 100$ → $y = \\dfrac{x^2}{20} + 5$。",
+            "手順は前題と同じ：$|y| = \\sqrt{x^2 + (y - 10)^2}$ を $2$ 乗。係数だけ変わる。頂点の位置は焦点の **何分の何** にある？",
         },
-        { layer: 3, text: "$N = 5$（頂点 $(0, 5)$、焦点 $A(0, 10)$、准線 $x$ 軸）。" },
+        {
+          layer: 3,
+          text:
+            "$2$ 乗して整理：$0 = x^2 - 20 y + 100$ → $y = x^2/20 + 5$。前題 $A(0, 4)$ では頂点 $y = 2$（焦点と准線の中間）。今 $A(0, 10)$ なので頂点 $y = 5$（やはり焦点と准線の中間）。**頂点は焦点と准線の中点** という幾何が見える。$N = 5$。",
+        },
       ],
       formulaPreview: "y = x²/20 + 5",
     },
@@ -3904,17 +3936,17 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "円上の動点 $Q$ を $Q = (2 \\cos\\theta, 2 \\sin\\theta)$ と書く（半径 $2$）。$M = (A + Q) / 2$ をパラメータ $\\theta$ で書き、$\\cos\\theta, \\sin\\theta$ を消去する。",
+            "**これまでは「動く点 $P$ の距離条件」だった。今は「動く点 $Q$ が円上にあり、固定点 $A$ との中点 $M$ の経路」**。$Q$ を $1$ つの変数で書けないか？",
         },
         {
           layer: 2,
           text:
-            "$M = ((14 + 2 \\cos\\theta) / 2, (\\sin\\theta \\cdot 2) / 2) = (7 + \\cos\\theta, \\sin\\theta)$。$M = (X, Y)$ とおくと $X - 7 = \\cos\\theta$、$Y = \\sin\\theta$。",
+            "円上の点なら角度 $\\theta$ で書ける：$Q = (2\\cos\\theta, 2\\sin\\theta)$。中点 $M$ を $\\theta$ で表したあと、$\\theta$ を消すには「$\\cos^2 + \\sin^2$」の関係をどう使う？",
         },
         {
           layer: 3,
           text:
-            "$(X - 7)^2 + Y^2 = \\cos^2\\theta + \\sin^2\\theta = 1$。軌跡は中心 $(7, 0)$、半径 $1$ の円。$N = 7$。",
+            "$M = ((14 + 2\\cos\\theta)/2, \\sin\\theta) = (7 + \\cos\\theta, \\sin\\theta)$。$M = (X, Y)$ とおくと $X - 7 = \\cos\\theta$、$Y = \\sin\\theta$。$\\cos^2 + \\sin^2 = 1$ から $(X - 7)^2 + Y^2 = 1$。**$\\theta$ を経由しても、最後は同じ「距離 = 一定」の円の式**。$N = 7$。",
         },
       ],
       formulaPreview: "(X − 7)² + Y² = 1 → 中心 (7, 0)、半径 1",
