@@ -3027,6 +3027,326 @@ $$\\sqrt{-3} \\times \\sqrt{-2} = \\sqrt{3}\\,i \\times \\sqrt{2}\\,i = \\sqrt{6
 $i$ と実数を組み合わせた $a + bi$ という「複素数」の世界では、四則演算がすべて成り立ち、$x^2 = -1$ は $i, -i$ という $2$ つの解を持つ。**「ない」のなら「作る」**——この大胆な発想が、量子力学や信号処理まで広がる豊かな数学の扉を開いた。`,
 };
 
+/* ===== CN2: 2 次方程式の実数解（と虚数解） ===== */
+export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
+  id: "adv_complex_quadratic_solutions_01",
+  title: "2 次方程式の実数解",
+  subtitle:
+    "数Ⅱ・B「複素数と方程式」より — 解の公式を複素数の世界に拡張し、判別式 $D = b^2 - 4ac$ の符号で「異なる $2$ 実数解 / 重解 / 異なる $2$ 虚数解」の $3$ 場合を見抜く力を $10$ 問で身につける。",
+  patternId: "CN2",
+  unit: "advanced",
+  revelationLabel:
+    "判別式 $D = b^2 - 4ac$ の符号で、$2$ 次方程式の解は「異なる $2$ 実数解（$D>0$）」「重解（$D=0$）」「異なる $2$ 虚数解（$D<0$）」のいずれかに決まる",
+  drivingQuestion:
+    "解の公式に出てくる $\\sqrt{b^2 - 4ac}$ が負になる $2$ 次方程式は、複素数の世界では どう解ける？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$2$ 次方程式 $x^2 - 5x + 6 = 0$ は実数解を $2$ つもちます。**大きい方** の解はいくつでしょう？",
+      answer: 3,
+      unit: "",
+      unknownLabel: "大きい方の解",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "解の公式 $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ で $a = 1, b = -5, c = 6$ を入れる。または因数分解で $(x - ?)(x - ?) = 0$。",
+        },
+        {
+          layer: 2,
+          text:
+            "$(x - 2)(x - 3) = 0$ なので解は $2, 3$。または解の公式：$x = \\dfrac{5 \\pm \\sqrt{25 - 24}}{2} = \\dfrac{5 \\pm 1}{2}$ で $2, 3$。",
+        },
+        { layer: 3, text: "大きい方は $3$。" },
+      ],
+      formulaPreview: "(x − 2)(x − 3) = 0 → 解 2, 3 → 大: 3",
+      figureMarker: "<<QUADRATIC_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$2$ 次方程式 $x^2 - 7x + 10 = 0$ の **大きい方** の解はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "大きい方の解",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ手順——解の公式または因数分解。" },
+        {
+          layer: 2,
+          text:
+            "$(x - 2)(x - 5) = 0$。または $x = \\dfrac{7 \\pm \\sqrt{49 - 40}}{2} = \\dfrac{7 \\pm 3}{2}$ で $2, 5$。",
+        },
+        { layer: 3, text: "大きい方は $5$。" },
+      ],
+      formulaPreview: "(x − 2)(x − 5) = 0 → 解 2, 5 → 大: 5",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$2$ 次方程式 $x^2 - 9x + 14 = 0$ の **大きい方** の解はいくつでしょう？",
+      answer: 7,
+      unit: "",
+      unknownLabel: "大きい方の解",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "因数分解か解の公式で。" },
+        {
+          layer: 2,
+          text:
+            "$(x - 2)(x - 7) = 0$。または $x = \\dfrac{9 \\pm \\sqrt{81 - 56}}{2} = \\dfrac{9 \\pm 5}{2}$ で $2, 7$。",
+        },
+        { layer: 3, text: "大きい方は $7$。" },
+      ],
+      formulaPreview: "(x − 2)(x − 7) = 0 → 解 2, 7 → 大: 7",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$2$ 次方程式 $x^2 - 12x + 36 = 0$ を解くと、$2$ つの解が **同じ値** になります（**重解**）。その値はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "重解の値",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "解の公式のルートの中身 $b^2 - 4ac$ がちょうど $0$ になると、$\\sqrt{0} = 0$ で $\\pm$ が消える——だから解が $1$ 個（重解）に。",
+        },
+        {
+          layer: 2,
+          text:
+            "$x^2 - 12x + 36 = (x - 6)^2 = 0$。または $x = \\dfrac{12 \\pm \\sqrt{144 - 144}}{2} = \\dfrac{12 \\pm 0}{2} = 6$。",
+        },
+        { layer: 3, text: "重解 $x = 6$。$1$ つの値だけ。" },
+      ],
+      formulaPreview: "(x − 6)² = 0 → 重解 x = 6（D = 0）",
+      figureMarker: "<<QUADRATIC_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$2$ 次方程式 $x^2 + 2x + 5 = 0$ は **実数解をもちません**（解の公式のルートの中身が負）。複素数の世界では解は $-1 \\pm b i$ の形になります。$b > 0$ のときの $b$ はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "虚部 b（> 0）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "解の公式を機械的に当てる：$x = \\dfrac{-2 \\pm \\sqrt{4 - 20}}{2}$。ルートの中身は負だが、$\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出す。",
+        },
+        {
+          layer: 2,
+          text:
+            "$\\sqrt{-16} = 4 i$ なので、$x = \\dfrac{-2 \\pm 4 i}{2} = -1 \\pm 2 i$。",
+        },
+        { layer: 3, text: "解は $-1 \\pm 2 i$ なので、$b = 2$。" },
+      ],
+      formulaPreview: "x = (−2 ± 4i)/2 = −1 ± 2i → b = 2",
+      figureMarker: "<<QUADRATIC_STEP5>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$2$ 次方程式 $x^2 - 4x + 13 = 0$ の解は $2 \\pm b i$ の形。$b > 0$ のときの $b$ はいくつでしょう？",
+      answer: 3,
+      unit: "",
+      unknownLabel: "虚部 b（> 0）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "解の公式 + $\\sqrt{-a} = \\sqrt{a}\\,i$ の手順は前と同じ。" },
+        {
+          layer: 2,
+          text:
+            "$x = \\dfrac{4 \\pm \\sqrt{16 - 52}}{2} = \\dfrac{4 \\pm \\sqrt{-36}}{2} = \\dfrac{4 \\pm 6 i}{2} = 2 \\pm 3 i$。",
+        },
+        { layer: 3, text: "$b = 3$。" },
+      ],
+      formulaPreview: "x = (4 ± 6i)/2 = 2 ± 3i → b = 3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$2$ 次方程式 $x^2 + 6x + 25 = 0$ の解は $-3 \\pm b i$ の形。$b > 0$ のときの $b$ はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "虚部 b（> 0）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "同じ手順。$\\sqrt{}$ の中身を確認して $i$ を取り出す。" },
+        {
+          layer: 2,
+          text:
+            "$x = \\dfrac{-6 \\pm \\sqrt{36 - 100}}{2} = \\dfrac{-6 \\pm \\sqrt{-64}}{2} = \\dfrac{-6 \\pm 8 i}{2} = -3 \\pm 4 i$。",
+        },
+        { layer: 3, text: "$b = 4$。" },
+      ],
+      formulaPreview: "x = (−6 ± 8i)/2 = −3 ± 4i → b = 4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "解の公式のルートの中身 $b^2 - 4ac$ を **判別式** $D$ といいます。$D$ の符号で、$D > 0$ なら異なる $2$ 実数解、$D = 0$ なら重解、$D < 0$ なら異なる $2$ 虚数解と即座に判別できる。$2$ 次方程式 $2x^2 + x + 1 = 0$ の判別式 $D$ はいくつでしょう？",
+      answer: -7,
+      unit: "",
+      unknownLabel: "判別式 D",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$D = b^2 - 4ac$ に $a = 2, b = 1, c = 1$ を代入する。",
+        },
+        { layer: 2, text: "$D = 1^2 - 4 \\cdot 2 \\cdot 1 = 1 - 8$。" },
+        { layer: 3, text: "$D = -7$。負なので、この方程式は **異なる $2$ 虚数解** を持つ。" },
+      ],
+      formulaPreview: "D = 1 − 8 = −7（D < 0 → 異なる 2 虚数解）",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$2$ 次方程式 $x^2 + 4x + k = 0$ が **重解** をもつとき、$k$ の値はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "k",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "重解 ⟺ 判別式 $D = 0$。$D = b^2 - 4ac$ に $a = 1, b = 4, c = k$ を入れて、$D = 0$ を解く。",
+        },
+        { layer: 2, text: "$D = 16 - 4k = 0$ → $4k = 16$。" },
+        { layer: 3, text: "$k = 4$。" },
+      ],
+      formulaPreview: "D = 16 − 4k = 0 → k = 4",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$2$ 次方程式 $x^2 + 6x + k = 0$ が **異なる $2$ つの実数解** をもつのは $k < N$ のとき。**境界** $N$ はいくつでしょう？",
+      answer: 9,
+      unit: "",
+      unknownLabel: "境界 N",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "「異なる $2$ つの実数解」⟺ 判別式 $D > 0$。境界 $N$ は $D = 0$ となる $k$ の値（そこから先は $D < 0$ で虚数解になる）。",
+        },
+        {
+          layer: 2,
+          text:
+            "$D = 36 - 4k > 0$ ⟺ $k < 9$。境界は $D = 36 - 4k = 0$ から $k = 9$。",
+        },
+        {
+          layer: 3,
+          text:
+            "$N = 9$。$k < 9$ で異なる $2$ 実数解、$k = 9$ で重解、$k > 9$ で虚数解 — 判別式の符号で $3$ 場面が分かれる。",
+        },
+      ],
+      formulaPreview: "D = 36 − 4k > 0 ⟺ k < 9 → 境界 N = 9",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 解の公式に出てくる $\\sqrt{b^2 - 4ac}$ が負になる $2$ 次方程式は、複素数の世界では どう解ける？
+
+────────
+
+**解の公式は、複素数の世界でなら「すべての $2$ 次方程式」を解ける。**
+
+$2$ 次方程式 $ax^2 + bx + c = 0$（$a, b, c$ は実数）の **解の公式**：
+
+$$x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+
+中学までの実数の世界では、$b^2 - 4ac < 0$ になると **ルートの中身が負** になって「解なし」でした。
+
+ところが——[虚数単位] $i$ を導入した [複素数] の世界ならば、$\\sqrt{-a} = \\sqrt{a}\\,i$（$a > 0$）で $\\sqrt{\\text{負}}$ も書ける。**解の公式はそのまま通用する**。
+
+**例**：$2x^2 + x + 1 = 0$ を解の公式で：
+
+$$x = \\dfrac{-1 \\pm \\sqrt{1^2 - 4 \\cdot 2 \\cdot 1}}{2 \\cdot 2} = \\dfrac{-1 \\pm \\sqrt{-7}}{4} = \\dfrac{-1 \\pm \\sqrt{7}\\,i}{4}$$
+
+中学までは「解なし」と切り捨てていた方程式が、複素数の世界で $2$ つの解を取り戻す。
+
+**判別式 $D = b^2 - 4ac$** ——解の公式のルートの中身に名前をつけ、その **符号** で解の種類を判別する：
+
+| $D$ の符号 | ルートの中身 | 解の種類 |
+|---|---|---|
+| $D > 0$ | 正 → ふつうのルート | **異なる $2$ つの実数解** |
+| $D = 0$ | $0$ → ルートが消える | **実数の重解**（同じ値 $1$ つ） |
+| $D < 0$ | 負 → $i$ が顔を出す | **異なる $2$ つの虚数解** |
+
+「**解かなくても、解の種類が分かる**」——これが [判別式] の威力。
+
+────────
+
+**もっと深く** — 偶数の $b$ のとき、放物線とのつながり、解と係数の関係
+
+**$b$ が偶数のとき**：$b = 2 b'$ と置くと、解の公式は次の **バリエーション** で計算量が減る：
+
+$$x = \\dfrac{-b' \\pm \\sqrt{b'^2 - ac}}{a}$$
+
+たとえば $3x^2 - 4x + 3 = 0$ は $b' = -2$ として、$x = \\dfrac{2 \\pm \\sqrt{4 - 9}}{3} = \\dfrac{2 \\pm \\sqrt{5}\\,i}{3}$。$D/4 = b'^2 - ac$ を使うと数字が小さくなる。
+
+**放物線とのつながり**：$D$ の符号は、放物線 $y = ax^2 + bx + c$ と $x$ 軸の関係そのもの：
+
+| $D$ | グラフ |
+|---|---|
+| $D > 0$ | $x$ 軸と **$2$ 点** で交わる |
+| $D = 0$ | $x$ 軸に **接する**（$1$ 点で触れる） |
+| $D < 0$ | $x$ 軸とは **離れている**（共有点なし） |
+
+これは「$2$ 次方程式の解 $=$ 放物線が $x$ 軸と交わる点の $x$ 座標」だから自然です。$D < 0$ で「離れている」とき、実数解は無い——でも複素数の世界では **$x$ 軸の外側に「もう $1$ つの世界」がある** と考えればよい。
+
+**解と係数の関係**：$ax^2 + bx + c = 0$ の $2$ 解 $\\alpha, \\beta$ について：
+
+- 解の和：$\\alpha + \\beta = -\\dfrac{b}{a}$
+- 解の積：$\\alpha \\beta = \\dfrac{c}{a}$
+
+**虚数解の場合も同じ式が成り立ちます**。実は $\\alpha, \\beta$ が虚数解なら、それらは [共役複素数] のペア $\\alpha = p + q i,\\ \\beta = p - q i$。和 $\\alpha + \\beta = 2p$、積 $\\alpha \\beta = p^2 + q^2$ がともに実数になる——これも実数係数 $2$ 次方程式の **対称性** の現れ。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $2$ 章「複素数と方程式」§ $2$「$2$ 次方程式の実数解」の節構成（解の公式の複素数への拡張 → 判別式 $D$ → $3$ 場面の判別 → パラメータ問題）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「解の公式に出てくる $\\sqrt{b^2 - 4ac}$ が負になる $2$ 次方程式は、複素数の世界では どう解ける？」——その答えが、
+
+**解の公式そのままで解ける。$\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出すだけ。**
+
+そして [判別式] $D = b^2 - 4ac$ の符号を見れば、解かなくても **異なる $2$ 実数解 / 重解 / 異なる $2$ 虚数解** の $3$ 場面が見抜ける。複素数の世界で初めて、$2$ 次方程式は「解の個数が場合分けで変わる」のではなく、**つねに $2$ つの解を持つ**（重解は「同じ値の $2$ 解」と数える）——これが [複素数] が広げた新しい景色。`,
+};
+
 /**
  * 高校 入門カテゴリの系列リスト（教育順で並べる）。
  *
@@ -3034,7 +3354,7 @@ $i$ と実数を組み合わせた $a + bi$ という「複素数」の世界で
  *   1. グラフ → 2. 最小値
  *
  * 数Ⅱ・B 複素数と方程式:
- *   1. 新しい数を作る
+ *   1. 新しい数を作る → 2. 2 次方程式の実数解
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
@@ -3046,6 +3366,7 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_QUAD_MIN_SERIES,
   // 数Ⅱ・B 複素数と方程式（図形と方程式の前）
   ADV_COMPLEX_NEW_NUMBER_SERIES,
+  ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
   // 数Ⅱ・B 図形と方程式
   ADV_NUMBER_LINE_SERIES,
   ADV_LINE_EQUATION_SERIES,

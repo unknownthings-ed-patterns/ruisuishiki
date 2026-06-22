@@ -1312,6 +1312,149 @@ export function ComplexStep6() {
 }
 
 /**
+ * 2 次方程式の実数解 Step 1（D > 0）：放物線 y = x² - 5x + 6 が x 軸と 2 点で交わる。
+ * 答え（大きい方の解 = 3）は数値ラベルとしては描かない。dot は描くが目盛りは付けない。
+ */
+export function QuadraticStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 40;
+  const Oy = 220;
+  const xScale = 40;
+  const yScale = 20;
+  const samples: string[] = [];
+  for (let xi = -0.5; xi <= 5.5; xi += 0.1) {
+    const yi = xi * xi - 5 * xi + 6;
+    const sx = Ox + xi * xScale;
+    const sy = Oy - yi * yScale;
+    samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="放物線 y = x² − 5x + 6 が x 軸と 2 点で交わる（D > 0、異なる 2 実数解）"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="240" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      <polyline points={samples.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+
+      {/* 2 つの交点（accent ドット、数値ラベルなし） */}
+      <circle cx={Ox + 2 * xScale} cy={Oy} r="4" fill={accent} />
+      <circle cx={Ox + 3 * xScale} cy={Oy} r="4" fill={accent} />
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        y = x² − 5x + 6（D &gt; 0）
+      </text>
+      <text x="14" y="38" fontSize="10" fill={muted}>
+        x 軸と 2 点で交わる → 異なる 2 実数解
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 2 次方程式の実数解 Step 4（D = 0）：放物線 y = x² - 12x + 36 = (x-6)² が
+ * x 軸に「接する」。重解 1 点を accent ドット。答え（重解の値 = 6）は数値で描かない。
+ */
+export function QuadraticStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 50;
+  const Oy = 230;
+  const xScale = 25;
+  const yScale = 13;
+  const samples: string[] = [];
+  for (let xi = 2; xi <= 10; xi += 0.1) {
+    const yi = (xi - 6) * (xi - 6);
+    const sx = Ox + xi * xScale;
+    const sy = Oy - yi * yScale;
+    samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="放物線 y = (x − 6)² が x 軸に接する（D = 0、重解）"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="240" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      <polyline points={samples.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+
+      {/* 接点（accent ドット、重解の場所、数値ラベルなし） */}
+      <circle cx={Ox + 6 * xScale} cy={Oy} r="4.5" fill={accent} />
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        y = (x − 6)²（D = 0）
+      </text>
+      <text x="14" y="38" fontSize="10" fill={muted}>
+        x 軸に接する → 重解（1 つの値が 2 重）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 2 次方程式の実数解 Step 5（D < 0）：放物線 y = x² + 2x + 5 が x 軸と
+ * 交わらない（実数解なし → 複素数の世界に 2 つの虚数解が住む）。
+ * 答え（虚部 b = 2）は描かない。
+ */
+export function QuadraticStep5() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 130;
+  const Oy = 220;
+  const xScale = 30;
+  const yScale = 14;
+  const samples: string[] = [];
+  for (let xi = -4; xi <= 2; xi += 0.1) {
+    const yi = xi * xi + 2 * xi + 5;
+    const sx = Ox + xi * xScale;
+    const sy = Oy - yi * yScale;
+    samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="放物線 y = x² + 2x + 5 が x 軸と交わらない（D < 0、虚数解）"
+    >
+      <line x1="0" y1={Oy} x2="320" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="0" x2={Ox} y2="240" stroke={muted} strokeWidth="0.5" />
+      <text x="312" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="12" fontSize="10" fill={muted}>y</text>
+
+      <polyline points={samples.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+
+      {/* 頂点（accent ドット、x 軸の上にあることを示す） */}
+      <circle cx={Ox - 1 * xScale} cy={Oy - 4 * yScale} r="3.5" fill={accent} />
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        y = x² + 2x + 5（D &lt; 0）
+      </text>
+      <text x="14" y="38" fontSize="10" fill={muted}>
+        x 軸と交わらない → 実数解なし。複素数の世界に虚数解が 2 つ
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -4617,6 +4760,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ComplexStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUADRATIC_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadraticStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUADRATIC_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadraticStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUADRATIC_STEP5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadraticStep5 />
             </div>
           );
         }

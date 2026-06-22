@@ -42,6 +42,7 @@ import {
   ADV_BUNDLE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
   ADV_COMPLEX_NEW_NUMBER_SERIES,
+  ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_LINE_EQUATION_SERIES,
@@ -368,6 +369,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "複素数と方程式",
     shortDescription: "新しい数を作る — i² = -1 を約束して、複素数 a + bi の四則演算と等式・共役へ",
+  },
+  {
+    series: ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "複素数と方程式",
+    shortDescription: "2 次方程式の実数解 — 判別式 D = b² − 4ac の符号で実数解・重解・虚数解の 3 場面を見抜く",
   },
   /* 数Ⅱ: 図形と方程式（入口から順に） */
   {

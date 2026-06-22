@@ -30,7 +30,7 @@ export type PatternId =
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
-  | "BD1" | "CN1";
+  | "BD1" | "CN1" | "CN2";
 
 /**
  * 変数の意味的役割。
@@ -1065,6 +1065,28 @@ const LN8: PatternSpec = {
 };
 
 /**
+ * CN2: 2 次方程式の実数解と虚数解 — 解の公式 x = (-b ± √(b² - 4ac)) / (2a)
+ * を複素数の世界に拡張し、判別式 D = b² - 4ac の符号で 3 つの場合に分ける。
+ */
+const CN2: PatternSpec = {
+  id: "CN2",
+  unit: "advanced",
+  naturalLanguage: "2 次方程式 ax² + bx + c = 0 の解と判別式 D = b² - 4ac",
+  formulaTemplate: "x = (-b ± √D) / (2a), D = b² - 4ac",
+  variables: [
+    { name: "a", role: "x² の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "result", role: "問われている値（実解 / 重解 / 虚部 / D / パラメータ k）", unknown: true, domain: { kind: "integer", min: -200, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.b * k.b - 4 * k.a * k.c,
+  }),
+};
+
+/**
  * CN1: 複素数（新しい数を作る）— i² = -1 を使った複素数の四則演算と
  * 等式・共役。問題ごとに「実部」「虚部」「値そのもの」のいずれかを問う。
  */
@@ -1211,7 +1233,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1,
+  BD1, CN1, CN2,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1230,7 +1252,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1,
+  BD1, CN1, CN2,
 ];
 
 export const CONTEXT_CATEGORIES = [
