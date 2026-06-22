@@ -577,7 +577,7 @@ export default function Play() {
                 ここまでの問題はすべて
                 <br />
                 <span className="font-serif">
-                  「{series.revelationLabel ?? "同じ仕組み"}」
+                  「<MathText text={series.revelationLabel ?? "同じ仕組み"} />」
                 </span>
                 <br />
                 という同じ仕組みでした。

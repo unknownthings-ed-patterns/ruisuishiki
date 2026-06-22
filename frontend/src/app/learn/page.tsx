@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
+import { MathText } from "@/components/Math";
 import {
   type CatalogEntry,
   type SeriesSubject,
@@ -223,7 +224,7 @@ export default function LearnIndex() {
                                     fontStyle: "italic",
                                   }}
                                 >
-                                  「{entry.series.drivingQuestion}」
+                                  「<MathText text={entry.series.drivingQuestion} />」
                                 </p>
                               )}
                               {/* 下段：概念ラベル（回帰者向けのナビゲーション） */}
@@ -235,7 +236,7 @@ export default function LearnIndex() {
                                   lineHeight: 1.6,
                                 }}
                               >
-                                {entry.shortDescription}
+                                <MathText text={entry.shortDescription} />
                               </p>
                               {inProgress && (
                                 <div className="mt-3">
@@ -307,7 +308,7 @@ export default function LearnIndex() {
                       className="mt-1.5 text-muted truncate"
                       style={{ fontSize: "13px" }}
                     >
-                      {s.subtitle}
+                      <MathText text={s.subtitle} />
                     </p>
                   </Link>
                 </li>
