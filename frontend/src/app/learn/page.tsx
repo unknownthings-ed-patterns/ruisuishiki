@@ -51,7 +51,8 @@ export default function LearnIndex() {
   const [stats, setStats] = useState<LearningStats | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
   // 折りたたまれた topicGroup（key は `${subject}|${topicGroup}`）。
-  // 空集合 = すべて展開。デフォルトは初訪問時すべて展開。
+  // デフォルトは「全グループ畳む。ただし進行中の系列を含むグループだけ自動展開」。
+  // 手動でトグルした履歴がある（localStorage 保存済み）なら、その状態を尊重。
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
     new Set(),
   );
@@ -73,18 +74,42 @@ export default function LearnIndex() {
     setCatalog(withProgress);
     setTeacherSeries(listTeacherSeries());
     setStats(calculateLearningStats());
-    // 折りたたみ状態を復元
+
+    // 折りたたみ状態を決定
+    let resolvedCollapsed: Set<string> | null = null;
     if (typeof window !== "undefined") {
       try {
         const raw = window.localStorage.getItem(COLLAPSED_GROUPS_KEY);
         if (raw) {
           const arr = JSON.parse(raw);
-          if (Array.isArray(arr)) setCollapsedGroups(new Set(arr));
+          if (Array.isArray(arr)) {
+            // 保存済みの状態を尊重（手動操作の履歴がある）
+            resolvedCollapsed = new Set(arr);
+          }
         }
       } catch {
         // localStorage 不可でも続行
       }
     }
+
+    if (resolvedCollapsed === null) {
+      // 初訪問・未操作：全グループを畳む。ただし進行中の系列を含むグループだけ展開
+      const allGroupKeys = new Set<string>();
+      const groupsWithInProgress = new Set<string>();
+      for (const item of withProgress) {
+        const tg = item.entry.topicGroup;
+        if (!tg) continue;
+        const key = `${item.entry.subject}|${tg}`;
+        allGroupKeys.add(key);
+        const inProgress =
+          item.resumeIndex > 0 && item.resumeIndex < item.total;
+        if (inProgress) groupsWithInProgress.add(key);
+      }
+      resolvedCollapsed = new Set(
+        [...allGroupKeys].filter((key) => !groupsWithInProgress.has(key)),
+      );
+    }
+    setCollapsedGroups(resolvedCollapsed);
     setHasHydrated(true);
   }, []);
 
