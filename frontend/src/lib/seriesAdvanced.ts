@@ -3675,7 +3675,7 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
   revelationLabel:
     "距離条件を $x, y$ の式に書き、両辺を $2$ 乗して整理すれば、軌跡の方程式（円・直線・放物線）が現れる",
   drivingQuestion:
-    "点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？",
+    "動く点が描く図形を、距離の条件から「式」で見抜くには？",
   steps: [
     {
       id: "step1",
@@ -3920,7 +3920,7 @@ export const ADV_LOCUS_SERIES: LearnerSeries = {
       formulaPreview: "(X − 7)² + Y² = 1 → 中心 (7, 0)、半径 1",
     },
   ],
-  derivation: `**中心の問い** ｜ 点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？
+  derivation: `**中心の問い** ｜ 動く点が描く図形を、距離の条件から「式」で見抜くには？
 
 ────────
 
@@ -3984,11 +3984,332 @@ $$3 x^2 - 24 x + 36 + 3 y^2 = 0 \\quad \\Longrightarrow \\quad (x - 4)^2 + y^2 =
 
 **問いに戻ると**
 
-「点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？」——その答えが、
+「動く点が描く図形を、距離の条件から「式」で見抜くには？」——その答えが、
 
 **距離を $x, y$ の式に翻訳し、両辺を $2$ 乗して整理すれば、軌跡の方程式が現れる。**
 
 「距離一定」なら **円**、「距離の比一定」なら **アポロニウスの円**、「$2$ 点から等距離」なら **垂直二等分線**、「定点と定直線から等距離」なら **放物線**——条件によって図形は変わるが、**式から見抜く手順は同じ**。これがデカルトの座標系がもたらした「**図形を式で扱う**」哲学の真骨頂。`,
+};
+
+/* ===== PA1: 媒介変数表示 ===== */
+export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
+  id: "adv_parametric_01",
+  title: "媒介変数表示",
+  subtitle:
+    "数Ⅱ・B「図形と方程式」より — $y = f(x)$ の枠を超えて、動く点を $x = f(t), y = g(t)$ で記述する。媒介変数を経由した動きの言語を $10$ 問で身につける。",
+  patternId: "PA1",
+  unit: "advanced",
+  revelationLabel:
+    "動く点を $x = f(t), y = g(t)$ で記述すれば、$y = f(x)$ では書けない経路も扱える。$t$ を消去すれば軌跡の方程式に戻り、変域を引き継げば軌跡の一部も扱える",
+  drivingQuestion:
+    "$y = f(x)$ では書けない動きを、もう $1$ つの変数 $t$ を経由して表すには？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "媒介変数 $t$ で動く点 $P$ が $x = t, \\ y = 7 t + 2$ と表される。$t$ を消去して $y = m x + n$ の形にしたとき、**傾き** $m$ はいくつでしょう？",
+      answer: 7,
+      unit: "",
+      unknownLabel: "傾き m",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "$x = t$ なので、$y$ の式の $t$ を $x$ に置き換えるだけ。" },
+        { layer: 2, text: "$y = 7 x + 2$。" },
+        { layer: 3, text: "$m = 7$。" },
+      ],
+      formulaPreview: "x = t → y = 7t + 2 → y = 7x + 2 → m = 7",
+      figureMarker: "<<PARAMETRIC_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$x = t - 1, \\ y = 2 t + 5$ から $t$ を消去すると $y = m x + n$。傾き $m$ はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "傾き m",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "$t = x + 1$。これを $y$ に代入する。" },
+        { layer: 2, text: "$y = 2 (x + 1) + 5 = 2 x + 7$。" },
+        { layer: 3, text: "$m = 2$。" },
+      ],
+      formulaPreview: "t = x + 1 → y = 2(x+1) + 5 = 2x + 7 → m = 2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$x = t + 4, \\ y = -t + 1$ から $t$ を消去すると $y = m x + n$。傾き $m$ はいくつでしょう？",
+      answer: -1,
+      unit: "",
+      unknownLabel: "傾き m",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "$t = x - 4$。" },
+        { layer: 2, text: "$y = -(x - 4) + 1 = -x + 5$。" },
+        { layer: 3, text: "$m = -1$。" },
+      ],
+      formulaPreview: "t = x − 4 → y = −x + 5 → m = −1",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "媒介変数 $\\theta$ で動く点 $P$ が $x = 2 + 3 \\cos\\theta, \\ y = 1 + 3 \\sin\\theta$ と表される。$\\theta$ を消去すると、軌跡は中心 $(2, 1)$ の円 $(x - 2)^2 + (y - 1)^2 = r^2$。$r^2$ はいくつでしょう？",
+      answer: 9,
+      unit: "",
+      unknownLabel: "r²",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$x - 2 = 3 \\cos\\theta$、$y - 1 = 3 \\sin\\theta$。両辺を $2$ 乗して足すと $\\sin^2 + \\cos^2 = 1$ で $\\theta$ が消える。",
+        },
+        {
+          layer: 2,
+          text:
+            "$(x - 2)^2 + (y - 1)^2 = 9 \\cos^2\\theta + 9 \\sin^2\\theta = 9 (\\cos^2\\theta + \\sin^2\\theta) = 9$。",
+        },
+        { layer: 3, text: "$r^2 = 9$。中心 $(2, 1)$、半径 $3$ の円。" },
+      ],
+      formulaPreview: "(x − 2)² + (y − 1)² = 9 → r² = 9",
+      figureMarker: "<<PARAMETRIC_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$x = 4 \\cos\\theta, \\ y = 4 \\sin\\theta$ から $\\theta$ を消去すると $x^2 + y^2 = r^2$。$r^2$ はいくつでしょう？",
+      answer: 16,
+      unit: "",
+      unknownLabel: "r²",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "$x^2 + y^2 = 16 \\cos^2\\theta + 16 \\sin^2\\theta = 16$。" },
+        { layer: 2, text: "$r^2 = 16$（半径 $4$ の円）。" },
+        { layer: 3, text: "$r^2 = 16$。" },
+      ],
+      formulaPreview: "x² + y² = 16 → r² = 16",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$t$ を媒介変数とする放物線 $y = x^2 - 2 (t + 3) x + 6 t$ の **頂点** が描く軌跡を求めたい。頂点を $(X, Y)$ とおき $t$ を消去すると、軌跡は放物線 $y = -(x - 3)^2 - 9$。$t$ を消去して得た放物線の **頂点の $x$ 座標** はいくつでしょう？",
+      answer: 3,
+      unit: "",
+      unknownLabel: "軌跡の頂点 x",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$y = (x - (t + 3))^2 - (t + 3)^2 + 6 t = (x - (t + 3))^2 - t^2 - 9$。放物線の頂点は $(t + 3, -t^2 - 9)$。",
+        },
+        {
+          layer: 2,
+          text:
+            "$X = t + 3$、$Y = -t^2 - 9$。$t = X - 3$ を $Y$ に代入：$Y = -(X - 3)^2 - 9$。",
+        },
+        { layer: 3, text: "軌跡 $y = -(x - 3)^2 - 9$ の頂点は $(3, -9)$。$x = 3$。" },
+      ],
+      formulaPreview: "頂点 (t+3, −t²−9) → y = −(x−3)² − 9 → 頂点 (3, −9)",
+      figureMarker: "<<PARAMETRIC_STEP6>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "前題と同じ放物線で、$t \\geq 1$ という **変域制限** がついた場合、軌跡の $x$ が動く範囲は $x \\geq N$。$N$ はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "変域の下限 N",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**媒介変数の変域は、消去後の変数の変域に「引き継がれる」**。$X = t + 3$ なので、$t$ の範囲を $X$ の範囲に翻訳する。",
+        },
+        { layer: 2, text: "$t \\geq 1$ ⟺ $X = t + 3 \\geq 4$。" },
+        {
+          layer: 3,
+          text:
+            "$N = 4$。軌跡は $y = -(x - 3)^2 - 9$ の **$x \\geq 4$ の部分のみ**（放物線の右半分の一部）。",
+        },
+      ],
+      formulaPreview: "t ≥ 1 ⟹ X = t + 3 ≥ 4 → x ≥ 4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "直線 $y = 5 x - 2$ 上を動く点 $Q$ と、定点 $A(0, 0)$ を結ぶ線分の **中点** $M$ の軌跡を求めたい。$Q$ を $(s, 5 s - 2)$ と媒介変数 $s$ で書くと、$M$ の軌跡は直線 $y = m x + n$。傾き $m$ はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "中点軌跡の傾き m",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$M = (A + Q) / 2 = (s/2, (5 s - 2)/2)$。$M = (X, Y)$ とおき、$s$ を消去する。",
+        },
+        {
+          layer: 2,
+          text:
+            "$X = s/2$ → $s = 2 X$。$Y = (5 \\cdot 2 X - 2) / 2 = (10 X - 2)/2 = 5 X - 1$。",
+        },
+        { layer: 3, text: "軌跡 $y = 5 x - 1$。傾き $m = 5$。" },
+      ],
+      formulaPreview: "M = (s/2, (5s−2)/2) → y = 5x − 1 → m = 5",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "円 $x^2 + y^2 = 9$ 上を動く点 $Q$ と、定点 $A(12, 0)$ を結ぶ線分の **中点** $M$ の軌跡は、中心 $(N, 0)$ の円。$N$ はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "中点軌跡の中心 x",
+      variationFromPrevious: "same",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$Q = (3 \\cos\\theta, 3 \\sin\\theta)$ と媒介変数 $\\theta$ で書く。$M = (A + Q) / 2$ で $\\theta$ を消去する。",
+        },
+        {
+          layer: 2,
+          text:
+            "$M = ((12 + 3 \\cos\\theta) / 2, \\ 3 \\sin\\theta / 2) = (6 + (3/2) \\cos\\theta, \\ (3/2) \\sin\\theta)$。$(X - 6)^2 + Y^2 = (9/4)$。",
+        },
+        { layer: 3, text: "$N = 6$（中心 $(6, 0)$、半径 $3/2$ の円）。" },
+      ],
+      formulaPreview: "(X − 6)² + Y² = 9/4 → 中心 (6, 0)、半径 3/2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "放物線 $y = x^2$ 上を動く点 $P$ と、定点 $A(0, 2)$ を結ぶ線分の **中点** $M$ の軌跡は放物線 $y = 2 x^2 + N$。$N$ はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "中点軌跡の頂点 y",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$P = (t, t^2)$ と媒介変数 $t$ で書く（放物線上の点）。$M = (A + P) / 2$ で $t$ を消去する。",
+        },
+        {
+          layer: 2,
+          text:
+            "$M = (t/2, (t^2 + 2)/2) = (X, Y)$。$t = 2 X$ → $Y = (4 X^2 + 2)/2 = 2 X^2 + 1$。",
+        },
+        { layer: 3, text: "軌跡 $y = 2 x^2 + 1$。頂点 $(0, 1)$。$N = 1$。" },
+      ],
+      formulaPreview: "Y = (t² + 2)/2 = 2X² + 1 → 頂点 (0, 1)",
+      figureMarker: "<<PARAMETRIC_STEP10>>",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $y = f(x)$ では書けない動きを、もう $1$ つの変数 $t$ を経由して表すには？
+
+────────
+
+**動きを「内側から」記述する——媒介変数 $t$ の発想。**
+
+[軌跡] の単元では「距離条件 → $x, y$ の関係式 → 軌跡の方程式」という流れで、動く点の経路を **外側から見た形**（$F(x, y) = 0$ や $y = f(x)$）として捉えました。
+
+しかし、世界には **$y = f(x)$ で書けない動き** がたくさんある：
+
+- **円の上を回る点**：$x^2 + y^2 = r^2$ は陰関数。$y = \\pm \\sqrt{r^2 - x^2}$ と $2$ つに分けないと関数にできない
+- **垂直な直線**：$x = 3$ は $y = f(x)$ では書けない（傾きが無限大）
+- **ループや自己交差を持つ曲線**：レムニスケート（$\\infty$ 形）、サイクロイドなど
+- **時刻に応じて動く物体**：物理の質点運動は $x(t), y(t)$ で書くのが自然
+
+そこで発想を変えて、**動く点の $x$ と $y$ をそれぞれ、もう $1$ つの変数 $t$（時刻のイメージ）の関数として書く**：
+
+$$x = f(t), \\quad y = g(t)$$
+
+この $t$ を **媒介変数（パラメータ）** という。この書き方を **媒介変数表示** という。
+
+**$y = f(x)$ と $x = f(t), y = g(t)$ の本質的な違い**：
+- $y = f(x)$：$x$ を入力すると $y$ が決まる **外側からの形**
+- $x = f(t), y = g(t)$：$t$（時刻）を入力すると **点 $(x, y)$ の位置** が決まる **内側からの動き**
+
+**例 $1$ ：直線の媒介変数表示**：
+
+$$x = t + 1, \\quad y = 2 t - 3$$
+
+$t$ を消去すると、$t = x - 1$ なので $y = 2 (x - 1) - 3 = 2 x - 5$。軌跡は直線 $y = 2 x - 5$。
+
+**例 $2$ ：円の媒介変数表示**：
+
+$$x = r \\cos\\theta, \\quad y = r \\sin\\theta$$
+
+$\\theta$ を消去すると、$\\cos^2\\theta + \\sin^2\\theta = 1$ から $x^2 + y^2 = r^2$。原点中心、半径 $r$ の円。**$\\theta$ は「中心から見た角度」という、円という図形の内側の言葉**。
+
+**例 $3$ ：放物線の頂点の軌跡**（パラメータが係数の中に住んでいる例）：
+
+$y = x^2 - 2 (t + 3) x + 6 t$ の頂点は、平方完成すると $(t + 3, -t^2 - 9)$。$X = t + 3, Y = -t^2 - 9$ とおいて $t$ を消去すると、軌跡は $y = -(x - 3)^2 - 9$。**放物線が動くと、その頂点もまた放物線を描く**——媒介変数で繋がる図形たち。
+
+**$t$ を消去すれば軌跡の方程式に戻る**：媒介変数表示と軌跡の方程式 $F(x, y) = 0$ は、**同じ図形の表と裏**。
+
+────────
+
+**もっと深く** — 変域の引き継ぎ、$y = f(x)$ で書けない曲線、媒介変数微分
+
+**変域の引き継ぎ**：媒介変数 $t$ に **変域の制限** がある場合、消去後の $x$（または $y$）の変域にも引き継がれる。
+
+例：上の放物線で $t \\geq 0$ なら $X = t + 3 \\geq 3$ なので、軌跡は $y = -(x - 3)^2 - 9$ の **$x \\geq 3$ の部分のみ**（放物線の右半分）。$t$ の動く範囲が、軌跡の「見える部分」を決める。
+
+**$y = f(x)$ で書けない曲線の例**：
+
+| 曲線 | 媒介変数表示 | $x, y$ の関係式 |
+|---|---|---|
+| 円 | $x = r \\cos\\theta, y = r \\sin\\theta$ | $x^2 + y^2 = r^2$ |
+| 楕円 | $x = a \\cos\\theta, y = b \\sin\\theta$ | $x^2/a^2 + y^2/b^2 = 1$ |
+| 双曲線 | $x = a / \\cos\\theta, y = b \\tan\\theta$ | $x^2/a^2 - y^2/b^2 = 1$ |
+| サイクロイド | $x = r(t - \\sin t), y = r(1 - \\cos t)$ | （簡単な陰関数で書けない） |
+| リサジュー曲線 | $x = \\sin(\\alpha t), y = \\sin(\\beta t)$ | （複雑な周期パターン） |
+
+特に **サイクロイド**（回転する車輪上の点が描く曲線）は、$y = f(x)$ では絶対に書けないが、媒介変数表示なら $2$ 行で書ける——「**動きの内側の言葉**」の威力が最大に出る例。
+
+**物理：質点運動の自然な記述**：放物運動 $x = v_0 t \\cos\\theta, \\ y = v_0 t \\sin\\theta - \\frac{1}{2} g t^2$ のように、時刻 $t$ で位置 $(x, y)$ を記述するのは物理の基本。媒介変数表示は **物理の言語そのもの**。
+
+**媒介変数微分（数Ⅲ）**：$x = f(t), y = g(t)$ で表される曲線の接線の傾きは、$\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt} = \\dfrac{g'(t)}{f'(t)}$ で計算できる。**$t$ を消去せずに、媒介変数のままで微分する** 道具で、円・楕円・サイクロイドの接線を求めるときに必須。
+
+**ベクトル（数B / 数C）への橋渡し**：媒介変数表示 $(x, y) = (f(t), g(t))$ は、**位置ベクトル** $\\vec{p}(t) = f(t) \\vec{i} + g(t) \\vec{j}$ と同じ書き方。物理・$3$ 次元・関数解析へと自然に拡張する基盤。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $3$ 章「図形と方程式」§ $5$「媒介変数表示」の節構成（直接 $x, y$ で書きにくい軌跡を媒介変数で → 消去で軌跡へ → 変域の引き継ぎ → 動点の合成）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「$y = f(x)$ では書けない動きを、もう $1$ つの変数 $t$ を経由して表すには？」——その答えが、
+
+**$x = f(t), y = g(t)$ という媒介変数表示。**
+
+$t$（時刻のイメージ）を入力すると点の位置が決まる **動きの内側の言語**。$t$ を消去すれば軌跡の方程式に戻り、$t$ の変域を引き継げば軌跡の一部だけも表せる。物理の質点運動・微分・ベクトルへと **同じ発想で広がる「動きを式にする」技法** の入り口。`,
 };
 
 /**
@@ -4002,7 +4323,7 @@ $$3 x^2 - 24 x + 36 + 3 y^2 = 0 \\quad \\Longrightarrow \\quad (x - 4)^2 + y^2 =
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
- *   → 6. 円の接線 → 7. 束の考え方 → 8. 軌跡
+ *   → 6. 円の接線 → 7. 束の考え方 → 8. 軌跡 → 9. 媒介変数表示
  */
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   // 数Ⅰ・A 2 次関数
@@ -4021,4 +4342,5 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_BUNDLE_SERIES,
   ADV_LOCUS_SERIES,
+  ADV_PARAMETRIC_SERIES,
 ];

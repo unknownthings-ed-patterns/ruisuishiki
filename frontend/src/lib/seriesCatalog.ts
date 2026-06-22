@@ -45,6 +45,7 @@ import {
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
   ADV_LOCUS_SERIES,
+  ADV_PARAMETRIC_SERIES,
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_LINE_EQUATION_SERIES,
@@ -442,6 +443,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "軌跡 — 距離条件を式に翻訳すれば、円・直線・放物線が現れる",
+  },
+  {
+    series: ADV_PARAMETRIC_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "媒介変数表示 — y = f(x) の枠を超えて、動く点を t を経由して記述する",
   },
   /* 数Ⅱ: 三角関数 */
   {

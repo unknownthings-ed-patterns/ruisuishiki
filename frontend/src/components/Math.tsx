@@ -1841,6 +1841,341 @@ export function LocusStep8() {
 }
 
 /**
+ * 媒介変数表示 Step 1：直線の媒介変数表示。$t$ 値を変えると点が直線上を動く。
+ * 答え（傾き 7）は具体的に描かない（直線の傾き感を表すのみ）。
+ */
+export function ParametricStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 80;
+  const Oy = 200;
+  const xScale = 35;
+  const yScale = 18;
+  // 線 y = 7t + 2、x = t、t = -2..2
+  // sample t values: -1, 0, 1 → 各 SVG (x = t*scale + Ox, y = Oy - (7t+2)*yScale)
+  const ts = [-1, 0, 1];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="直線の媒介変数表示：t を変えると点 (t, 7t+2) が直線上を動く"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 直線 y = 7x + 2 を t ∈ [-1.5, 1.5] で描く */}
+      {(() => {
+        const samples: string[] = [];
+        for (let ti = -1.5; ti <= 1.5; ti += 0.1) {
+          const xi = ti;
+          const yi = 7 * ti + 2;
+          const sx = Ox + xi * xScale;
+          const sy = Oy - yi * yScale;
+          samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+        }
+        return (
+          <polyline
+            points={samples.join(" ")}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.5"
+          />
+        );
+      })()}
+
+      {/* サンプル点（各 t での点の位置） */}
+      {ts.map((t, i) => {
+        const sx = Ox + t * xScale;
+        const sy = Oy - (7 * t + 2) * yScale;
+        return (
+          <g key={i}>
+            <circle cx={sx} cy={sy} r="4" fill={accent} />
+            <text
+              x={sx + 8}
+              y={sy + 4}
+              fontSize="10"
+              fill={accent}
+              fontStyle="italic"
+              fontWeight="600"
+            >
+              t = {t}
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        x = t, y = 7t + 2（t を変えると点が直線上を動く）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 媒介変数表示 Step 4：円の媒介変数表示。中心 (2, 1)、半径 3 の円を θ で表す。
+ * P の動きと、角度 θ を可視化。答え（r² = 9）は描かない。
+ */
+export function ParametricStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const Ox = 60;
+  const Oy = 160;
+  const scale = 28;
+  // 中心 (2, 1) → SVG
+  const Cx = Ox + 2 * scale;
+  const Cy = Oy - 1 * scale;
+  const r = 3 * scale;
+  // P を θ = 60° の位置に
+  const theta = -Math.PI / 3;
+  const Px = Cx + r * Math.cos(theta);
+  const Py = Cy + r * Math.sin(theta);
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円の媒介変数表示：θ を変えると点 P が円周上を動く"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+
+      {/* 円 */}
+      <circle cx={Cx} cy={Cy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 中心 */}
+      <circle cx={Cx} cy={Cy} r="2.5" fill={muted} />
+      <text x={Cx + 6} y={Cy + 14} fontSize="10" fill={muted} fontStyle="italic">中心 (2, 1)</text>
+
+      {/* 半径線 */}
+      <line x1={Cx} y1={Cy} x2={Px} y2={Py} stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+
+      {/* 角度 θ の弧（短く） */}
+      <path
+        d={`M ${Cx + 18},${Cy} A 18,18 0 0 0 ${Cx + 18 * Math.cos(theta)},${Cy + 18 * Math.sin(theta)}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <text x={Cx + 24} y={Cy - 6} fontSize="11" fill={accent} fontStyle="italic">θ</text>
+
+      {/* P */}
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 8} y={Py + 4} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">P</text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        x = 2 + 3 cos θ, y = 1 + 3 sin θ（θ を変えると P が円周を動く）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 媒介変数表示 Step 6：動く放物線と頂点の軌跡。
+ * 異なる t 値で放物線を 3 本描き、各頂点を accent ドット、頂点の軌跡を破線で。
+ * 答え（軌跡の頂点 x = 3）は具体的には描かない。
+ */
+export function ParametricStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 160;
+  const Oy = 130;
+  const xScale = 14;
+  const yScale = 4;
+  // 放物線 y = x² - 2(t+3)x + 6t の頂点 (t+3, -t² - 9)
+  // t = -2, 0, 2 で 3 本描く
+  const ts = [-2, 0, 2];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="t を変えると放物線が動く。頂点の軌跡も放物線になる"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+
+      {/* 3 本の放物線 */}
+      {ts.map((t, idx) => {
+        const samples: string[] = [];
+        const vx = t + 3;
+        const vy = -t * t - 9;
+        for (let xi = vx - 6; xi <= vx + 6; xi += 0.3) {
+          const yi = (xi - vx) * (xi - vx) + vy;
+          const sx = Ox + xi * xScale;
+          const sy = Oy - yi * yScale;
+          samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+        }
+        return (
+          <polyline
+            key={idx}
+            points={samples.join(" ")}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1"
+            opacity="0.6"
+          />
+        );
+      })}
+
+      {/* 頂点の軌跡（破線、accent） y = -(x-3)² - 9 を x = -1..7 */}
+      {(() => {
+        const locusSamples: string[] = [];
+        for (let xi = -1; xi <= 7; xi += 0.2) {
+          const yi = -(xi - 3) * (xi - 3) - 9;
+          const sx = Ox + xi * xScale;
+          const sy = Oy - yi * yScale;
+          locusSamples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+        }
+        return (
+          <polyline
+            points={locusSamples.join(" ")}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1.8"
+            strokeDasharray="4,3"
+          />
+        );
+      })()}
+
+      {/* 各頂点を accent ドット */}
+      {ts.map((t, idx) => {
+        const vx = t + 3;
+        const vy = -t * t - 9;
+        const sx = Ox + vx * xScale;
+        const sy = Oy - vy * yScale;
+        return (
+          <g key={`v${idx}`}>
+            <circle cx={sx} cy={sy} r="3.5" fill={accent} />
+            <text
+              x={sx + 6}
+              y={sy + 4}
+              fontSize="9"
+              fill={accent}
+              fontStyle="italic"
+            >
+              t = {t}
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        t を変えると放物線が動き、頂点も軌跡を描く（破線）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 媒介変数表示 Step 10：放物線 y = x² 上の動点 P と定点 A の中点 M の軌跡。
+ * 元の放物線、A、いくつかの P、対応する M、M の軌跡（別の放物線、破線）を示す。
+ * 答え（軌跡の頂点 y = 1）は具体的に書かない。
+ */
+export function ParametricStep10() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 160;
+  const Oy = 220;
+  const xScale = 30;
+  const yScale = 16;
+  // 元の放物線 y = x², x = -2.5..2.5
+  // 動点 P at t = -1, 0, 1
+  // 定点 A = (0, 2)
+  // 中点 M = (t/2, (t²+2)/2)
+  const ts = [-1.5, 0, 1.5];
+  const Ax = Ox;
+  const Ay = Oy - 2 * yScale;
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="放物線上の動点 P と定点 A の中点 M の軌跡"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="235" stroke={muted} strokeWidth="0.5" />
+
+      {/* 元の放物線 y = x² */}
+      {(() => {
+        const samples: string[] = [];
+        for (let xi = -2.5; xi <= 2.5; xi += 0.1) {
+          const yi = xi * xi;
+          const sx = Ox + xi * xScale;
+          const sy = Oy - yi * yScale;
+          samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+        }
+        return (
+          <polyline
+            points={samples.join(" ")}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.5"
+          />
+        );
+      })()}
+
+      {/* 中点の軌跡 y = 2x² + 1 を破線で */}
+      {(() => {
+        const locusSamples: string[] = [];
+        for (let xi = -1.5; xi <= 1.5; xi += 0.1) {
+          const yi = 2 * xi * xi + 1;
+          const sx = Ox + xi * xScale;
+          const sy = Oy - yi * yScale;
+          locusSamples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+        }
+        return (
+          <polyline
+            points={locusSamples.join(" ")}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1.8"
+            strokeDasharray="4,3"
+          />
+        );
+      })()}
+
+      {/* 定点 A */}
+      <circle cx={Ax} cy={Ay} r="4" fill={muted} />
+      <text x={Ax + 8} y={Ay + 4} fontSize="11" fill={muted} fontStyle="italic">A</text>
+
+      {/* 各 t で P, M を */}
+      {ts.map((t, idx) => {
+        const Px = Ox + t * xScale;
+        const Py = Oy - t * t * yScale;
+        const Mx = Ox + (t / 2) * xScale;
+        const My = Oy - ((t * t + 2) / 2) * yScale;
+        return (
+          <g key={idx}>
+            {/* PA 線分 */}
+            <line x1={Px} y1={Py} x2={Ax} y2={Ay} stroke={muted} strokeWidth="0.8" opacity="0.4" />
+            {/* P */}
+            <circle cx={Px} cy={Py} r="2.5" fill={muted} />
+            {/* M */}
+            <circle cx={Mx} cy={My} r="3.5" fill={accent} />
+          </g>
+        );
+      })}
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        P (放物線上) と A の中点 M の軌跡（破線）も放物線
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -5216,6 +5551,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <LocusStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARAMETRIC_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParametricStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARAMETRIC_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParametricStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARAMETRIC_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParametricStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARAMETRIC_STEP10>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParametricStep10 />
             </div>
           );
         }

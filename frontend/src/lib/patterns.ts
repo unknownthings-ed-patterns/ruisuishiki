@@ -31,7 +31,7 @@ export type PatternId =
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
   | "BD1" | "CN1" | "CN2" | "CN3"
-  | "LO1";
+  | "LO1" | "PA1";
 
 /**
  * 変数の意味的役割。
@@ -1066,6 +1066,28 @@ const LN8: PatternSpec = {
 };
 
 /**
+ * PA1: 媒介変数表示 — x = f(t), y = g(t) で動く点を記述し、
+ * t を消去して軌跡の方程式に戻す。または変域を考える。
+ */
+const PA1: PatternSpec = {
+  id: "PA1",
+  unit: "advanced",
+  naturalLanguage: "媒介変数表示 x = f(t), y = g(t) から t を消去して軌跡を得る",
+  formulaTemplate: "x = f(t), y = g(t) → t を消去 → F(x, y) = 0",
+  variables: [
+    { name: "p", role: "媒介変数表示の係数 1", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "q", role: "媒介変数表示の係数 2", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "r", role: "媒介変数表示の定数 / 半径", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "result", role: "問われている値（傾き・r²・頂点座標・変域境界など）", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.p,
+  }),
+};
+
+/**
  * LO1: 軌跡 — 距離条件から軌跡の方程式を導く。
  * 円（中心固定からの距離一定）、アポロニウスの円（距離の比）、
  * 垂直二等分線（2 点から等距離）、放物線（線と点から等距離）、
@@ -1282,7 +1304,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1,
+  LO1, PA1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1302,7 +1324,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1,
+  LO1, PA1,
 ];
 
 export const CONTEXT_CATEGORIES = [
