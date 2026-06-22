@@ -30,7 +30,8 @@ export type PatternId =
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
-  | "BD1" | "CN1" | "CN2" | "CN3";
+  | "BD1" | "CN1" | "CN2" | "CN3"
+  | "LO1";
 
 /**
  * 変数の意味的役割。
@@ -1065,6 +1066,30 @@ const LN8: PatternSpec = {
 };
 
 /**
+ * LO1: 軌跡 — 距離条件から軌跡の方程式を導く。
+ * 円（中心固定からの距離一定）、アポロニウスの円（距離の比）、
+ * 垂直二等分線（2 点から等距離）、放物線（線と点から等距離）、
+ * パラメータ軌跡（円上の点と定点の中点）など。
+ */
+const LO1: PatternSpec = {
+  id: "LO1",
+  unit: "advanced",
+  naturalLanguage: "点 P の距離条件から軌跡の方程式を導く（円・直線・放物線）",
+  formulaTemplate: "距離条件 → x, y の式 → 両辺 2 乗で軌跡の方程式",
+  variables: [
+    { name: "a", role: "中心 / 定点 x", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "b", role: "中心 / 定点 y", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "r", role: "距離・半径", unknown: false, domain: { kind: "integer", min: 1, max: 20 } },
+    { name: "result", role: "問われている値（中心座標・半径・切片・頂点座標など）", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.r * k.r,
+  }),
+};
+
+/**
  * CN3: 2 次方程式の解と因数分解 — 解 α, β を求めれば
  * ax² + bx + c = a(x - α)(x - β) と確実に因数分解できる。
  * 問題では α + β（= -b/a）または α β（= c/a）を問う。
@@ -1257,6 +1282,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
+  LO1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1276,6 +1302,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
+  LO1,
 ];
 
 export const CONTEXT_CATEGORIES = [

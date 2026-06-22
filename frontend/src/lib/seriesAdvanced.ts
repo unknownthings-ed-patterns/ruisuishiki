@@ -3664,6 +3664,333 @@ $$a_n x^n + \\cdots + a_0 = a_n (x - \\alpha_1)(x - \\alpha_2) \\cdots (x - \\al
 複素数の世界では [解の公式] が必ず $2$ 解を返すから、**例外はない**。さらに係数を比較するだけで、解を出さずに和 $\\alpha + \\beta = -b / a$ と積 $\\alpha \\beta = c / a$ が読める（解と係数の関係）——「**解と因数分解は同じ事柄の表と裏**」、その対応が複素数によって完成する。`,
 };
 
+/* ===== LO1: 軌跡 ===== */
+export const ADV_LOCUS_SERIES: LearnerSeries = {
+  id: "adv_locus_01",
+  title: "軌跡",
+  subtitle:
+    "数Ⅱ・B「図形と方程式」より — 距離条件を式に翻訳すれば、点 $P$ の軌跡は円・直線・放物線になる。「ある条件を満たしながら動く点が描く図形」を $10$ 問で身につける。",
+  patternId: "LO1",
+  unit: "advanced",
+  revelationLabel:
+    "距離条件を $x, y$ の式に書き、両辺を $2$ 乗して整理すれば、軌跡の方程式（円・直線・放物線）が現れる",
+  drivingQuestion:
+    "点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "点 $P(x, y)$ が「原点 $O$ からの距離が $3$」という条件を満たしながら動く。$P$ の軌跡は $x^2 + y^2 = N$。$N$ はいくつでしょう？",
+      answer: 9,
+      unit: "",
+      unknownLabel: "右辺 N",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$OP = 3$ を式に翻訳すると $\\sqrt{x^2 + y^2} = 3$。両辺を $2$ 乗する。",
+        },
+        { layer: 2, text: "$x^2 + y^2 = 3^2 = 9$。" },
+        { layer: 3, text: "$N = 9$。原点を中心とする半径 $3$ の円。" },
+      ],
+      formulaPreview: "OP = 3 → √(x²+y²) = 3 → x² + y² = 9",
+      figureMarker: "<<LOCUS_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "点 $P(x, y)$ が原点 $O$ から距離 $5$ の条件で動く。軌跡 $x^2 + y^2 = N$ の $N$ は？",
+      answer: 25,
+      unit: "",
+      unknownLabel: "右辺 N",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前と同じ手順。$OP = 5$ → $\\sqrt{x^2 + y^2} = 5$。" },
+        { layer: 2, text: "両辺 $2$ 乗：$x^2 + y^2 = 25$。" },
+        { layer: 3, text: "$N = 25$。" },
+      ],
+      formulaPreview: "OP = 5 → x² + y² = 25",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "点 $P(x, y)$ が「定点 $A(1, 3)$ からの距離が $4$」の条件で動く。軌跡は $(x - 1)^2 + (y - 3)^2 = N$。$N$ は？",
+      answer: 16,
+      unit: "",
+      unknownLabel: "右辺 N",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$AP = 4$ → $\\sqrt{(x - 1)^2 + (y - 3)^2} = 4$。両辺 $2$ 乗。",
+        },
+        { layer: 2, text: "$(x - 1)^2 + (y - 3)^2 = 16$。" },
+        { layer: 3, text: "$N = 16$。$A(1, 3)$ を中心とする半径 $4$ の円。" },
+      ],
+      formulaPreview: "AP = 4 → (x−1)² + (y−3)² = 16",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "点 $P$ が「原点 $O$ と点 $A(3, 0)$ からの距離の比が $OP : AP = 2 : 1$」の条件で動く。**距離の比が一定の点の軌跡は円**（アポロニウスの円）になる。軌跡は中心 $(N, 0)$、半径 $2$ の円。$N$ はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "中心の x 座標",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$OP : AP = 2 : 1$ ⟺ $OP = 2 AP$。両辺を式にして $\\sqrt{x^2 + y^2} = 2 \\sqrt{(x - 3)^2 + y^2}$。両辺 $2$ 乗。",
+        },
+        {
+          layer: 2,
+          text:
+            "$x^2 + y^2 = 4((x - 3)^2 + y^2)$ → $3 x^2 + 3 y^2 - 24 x + 36 = 0$ → $x^2 + y^2 - 8 x + 12 = 0$。平方完成 $(x - 4)^2 + y^2 = 4$。",
+        },
+        { layer: 3, text: "中心 $(4, 0)$、半径 $2$。$N = 4$。" },
+      ],
+      formulaPreview: "(x−4)² + y² = 4 → 中心 (4, 0)、半径 2",
+      figureMarker: "<<LOCUS_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "点 $P$ が「原点 $O$ と点 $A(0, 6)$ からの距離の比が $OP : AP = 2 : 1$」の条件で動く。軌跡は中心 $(0, N)$ の円。$N$ はいくつでしょう？",
+      answer: 8,
+      unit: "",
+      unknownLabel: "中心の y 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$OP = 2 AP$ → $\\sqrt{x^2 + y^2} = 2 \\sqrt{x^2 + (y - 6)^2}$。両辺 $2$ 乗。",
+        },
+        {
+          layer: 2,
+          text:
+            "$x^2 + y^2 = 4 (x^2 + (y - 6)^2)$ → $3 x^2 + 3 y^2 - 48 y + 144 = 0$ → $x^2 + y^2 - 16 y + 48 = 0$ → $x^2 + (y - 8)^2 = 16$。",
+        },
+        { layer: 3, text: "$N = 8$（中心 $(0, 8)$、半径 $4$）。" },
+      ],
+      formulaPreview: "x² + (y−8)² = 16 → 中心 (0, 8)、半径 4",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "点 $P$ が「$2$ 点 $A(0, 0)$ と $B(6, 0)$ から **等距離**」の条件で動く。**$2$ 点から等距離の軌跡は直線（[垂直二等分線]）**。軌跡の方程式は $x = N$。$N$ はいくつでしょう？",
+      answer: 3,
+      unit: "",
+      unknownLabel: "x = ?",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$AP = BP$ → $\\sqrt{x^2 + y^2} = \\sqrt{(x - 6)^2 + y^2}$。両辺 $2$ 乗。",
+        },
+        {
+          layer: 2,
+          text:
+            "$x^2 + y^2 = (x - 6)^2 + y^2$ → $0 = - 12 x + 36$ → $x = 3$。",
+        },
+        { layer: 3, text: "$N = 3$。線分 $AB$ の中点を通り、$AB$ に垂直な直線。" },
+      ],
+      formulaPreview: "AP = BP → x = 3（線分 AB の垂直二等分線）",
+      figureMarker: "<<LOCUS_STEP6>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "点 $P$ が「$2$ 点 $A(0, 2)$ と $B(0, 10)$ から等距離」の条件で動く。軌跡の方程式は $y = N$。$N$ はいくつでしょう？",
+      answer: 6,
+      unit: "",
+      unknownLabel: "y = ?",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$AP = BP$ → $\\sqrt{x^2 + (y - 2)^2} = \\sqrt{x^2 + (y - 10)^2}$。両辺 $2$ 乗。",
+        },
+        {
+          layer: 2,
+          text:
+            "$(y - 2)^2 = (y - 10)^2$ → $- 4 y + 4 = - 20 y + 100$ → $16 y = 96$ → $y = 6$。",
+        },
+        { layer: 3, text: "$N = 6$。" },
+      ],
+      formulaPreview: "AP = BP → y = 6",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "点 $P$ が「$x$ 軸との距離と、定点 $A(0, 4)$ からの距離が等しい」条件で動く。**直線と定点から等距離の軌跡は放物線**。軌跡 $y = \\dfrac{x^2}{8} + N$ の $N$ はいくつでしょう？",
+      answer: 2,
+      unit: "",
+      unknownLabel: "頂点の y 座標",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$x$ 軸との距離は $|y|$。$A$ との距離は $\\sqrt{x^2 + (y - 4)^2}$。$|y| = \\sqrt{x^2 + (y - 4)^2}$ の両辺 $2$ 乗。",
+        },
+        {
+          layer: 2,
+          text:
+            "$y^2 = x^2 + (y - 4)^2 = x^2 + y^2 - 8 y + 16$ → $0 = x^2 - 8 y + 16$ → $8 y = x^2 + 16$ → $y = \\dfrac{x^2}{8} + 2$。",
+        },
+        {
+          layer: 3,
+          text:
+            "$N = 2$。これは「$x$ 軸（准線）と $A(0, 4)$（焦点）から等距離」という放物線の幾何的定義そのもの。",
+        },
+      ],
+      formulaPreview: "y = x²/8 + 2（准線 = x 軸、焦点 = A(0, 4)）",
+      figureMarker: "<<LOCUS_STEP8>>",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "点 $P$ が「$x$ 軸との距離と、定点 $A(0, 10)$ からの距離が等しい」条件で動く。軌跡 $y = \\dfrac{x^2}{20} + N$ の $N$ はいくつでしょう？",
+      answer: 5,
+      unit: "",
+      unknownLabel: "頂点の y 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "前と同じ：$|y| = \\sqrt{x^2 + (y - 10)^2}$ の両辺 $2$ 乗。" },
+        {
+          layer: 2,
+          text:
+            "$y^2 = x^2 + y^2 - 20 y + 100$ → $0 = x^2 - 20 y + 100$ → $y = \\dfrac{x^2}{20} + 5$。",
+        },
+        { layer: 3, text: "$N = 5$（頂点 $(0, 5)$、焦点 $A(0, 10)$、准線 $x$ 軸）。" },
+      ],
+      formulaPreview: "y = x²/20 + 5",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "円 $x^2 + y^2 = 4$ 上を点 $Q$ が動く。定点 $A(14, 0)$ と点 $Q$ を結ぶ線分の **中点** $M$ の軌跡は中心 $(N, 0)$、半径 $1$ の円。$N$ はいくつでしょう？",
+      answer: 7,
+      unit: "",
+      unknownLabel: "中点の軌跡の中心 x",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "円上の動点 $Q$ を $Q = (2 \\cos\\theta, 2 \\sin\\theta)$ と書く（半径 $2$）。$M = (A + Q) / 2$ をパラメータ $\\theta$ で書き、$\\cos\\theta, \\sin\\theta$ を消去する。",
+        },
+        {
+          layer: 2,
+          text:
+            "$M = ((14 + 2 \\cos\\theta) / 2, (\\sin\\theta \\cdot 2) / 2) = (7 + \\cos\\theta, \\sin\\theta)$。$M = (X, Y)$ とおくと $X - 7 = \\cos\\theta$、$Y = \\sin\\theta$。",
+        },
+        {
+          layer: 3,
+          text:
+            "$(X - 7)^2 + Y^2 = \\cos^2\\theta + \\sin^2\\theta = 1$。軌跡は中心 $(7, 0)$、半径 $1$ の円。$N = 7$。",
+        },
+      ],
+      formulaPreview: "(X − 7)² + Y² = 1 → 中心 (7, 0)、半径 1",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？
+
+────────
+
+**距離条件を $x, y$ の式に翻訳すれば、軌跡の方程式が現れる。**
+
+「**軌跡**」とは、ある条件を満たしながら点が動くとき、その点が描く図形のこと。
+
+たとえば点 $P$ が「原点 $O$ から距離が $1$ である」という条件を満たしながら動くと、$P$ の軌跡は **$O$ を中心とする半径 $1$ の円**。これは直観的に見えますが、**式で求める** とこうなる：
+
+$$OP = 1 \\quad \\Longleftrightarrow \\quad \\sqrt{x^2 + y^2} = 1 \\quad \\Longleftrightarrow \\quad x^2 + y^2 = 1$$
+
+両辺を $2$ 乗するだけで、軌跡の方程式が得られる——「**$P$ の満たすべき条件を $x, y$ の式に書き、それを変形する**」のが軌跡を求める基本手順。
+
+**もう少しトリッキーな例**：原点 $O$ と点 $A(3, 0)$ からの距離の比が $OP : AP = 2 : 1$ である点 $P$ の軌跡は？
+
+条件を式にする：
+
+$$OP = 2 AP \\quad \\Longleftrightarrow \\quad \\sqrt{x^2 + y^2} = 2 \\sqrt{(x - 3)^2 + y^2}$$
+
+両辺を $2$ 乗：
+
+$$x^2 + y^2 = 4 ((x - 3)^2 + y^2)$$
+
+展開して整理（[平方完成] も使う）：
+
+$$3 x^2 - 24 x + 36 + 3 y^2 = 0 \\quad \\Longrightarrow \\quad (x - 4)^2 + y^2 = 4$$
+
+——**中心 $(4, 0)$、半径 $2$ の円**。これが **アポロニウスの円**。距離の比が一定の点の軌跡は、思いがけず円になっている。
+
+**条件から軌跡へ、変形のレシピ**：
+
+| 条件 | 式 | 軌跡の形 |
+|---|---|---|
+| 定点 $A$ から距離一定 | $\\sqrt{(x - a)^2 + (y - b)^2} = r$ | 中心 $A$、半径 $r$ の **円** |
+| $2$ 定点 $A, B$ から距離の比一定（$\\ne 1 : 1$） | $\\sqrt{\\dots} = k \\sqrt{\\dots}$ | **アポロニウスの円** |
+| $2$ 定点 $A, B$ から **等距離**（$1 : 1$） | $\\sqrt{\\dots} = \\sqrt{\\dots}$ | $AB$ の **[垂直二等分線]**（直線） |
+| 定点 $F$ と定直線 $\\ell$ から **等距離** | $\\sqrt{\\dots} = \\text{ 距離 }(\\text{ 点, 直線 })$ | **放物線**（焦点 $F$、准線 $\\ell$） |
+
+距離条件が「$1 : 1$（等距離）」のときに直線に **退化** し、「定点と定直線の等距離」のときに放物線になる——同じ「距離の方程式」のレシピから、円・直線・放物線が場合分けで現れる景色。
+
+────────
+
+**もっと深く** — 「両辺を $2$ 乗する」変形の同値性、アポロニウスとケプラー
+
+**「両辺を $2$ 乗する」は同値変形か？**：一般には $A = B$ と $A^2 = B^2$ は **同値ではない**（例：$1 = 1$ から $1^2 = (-1)^2$ は導けるが、$1^2 = (-1)^2$ から $1 = -1$ は導けない）。
+
+しかし軌跡の問題で扱う $A, B$ は **距離**（または距離を表す式）で、**つねに非負**：$A \\geq 0, B \\geq 0$。このとき $A^2 = B^2 \\iff A = B$ が成り立つ——つまり **両辺を $2$ 乗する変形は必ず同値**。距離 $0$ 以上という保証つきだから、軌跡の方程式に安心してルートを外せる。
+
+**アポロニウスの円の歴史**：「$2$ 点からの距離の比が一定の点の軌跡 → 円」は、古代ギリシャの数学者 **アポロニウス**（紀元前 $200$ 年頃）が幾何的に証明していた性質。彼は「式」を一切使わず、図形の性質だけで証明したそうです。私たちが今「$\\sqrt{(x-a)^2 + (y-b)^2} = k \\sqrt{\\dots}$」と書いて両辺を $2$ 乗する手法は、**$17$ 世紀のデカルト** が「座標系」を発明して初めて可能になった。約 $1800$ 年の時を経て、図形が「式」で扱えるようになった——その威力を体感する単元。
+
+**放物線の幾何的定義**：「焦点 $F$ と准線 $\\ell$ から等距離の点の軌跡 = 放物線」は、ケプラーやガリレオが扱った形と一致します。物体を斜め上に投げると（重力下では）軌道が放物線になる——その「焦点と准線」の幾何が、力学にもつながっている。
+
+**$3$ 次元への拡張**：軌跡の発想は $3$ 次元でも生きる。「定点から距離一定」→ **球**。「定直線から距離一定」→ **円柱**。「$2$ 定点から距離の和が一定」→ **楕円**（$2$ 次元の場合）、**回転楕円体**（$3$ 次元）。距離条件から $2$ 次曲面が全部出てくる。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $3$ 章「図形と方程式」§ $4$「軌跡」の節構成（距離条件 → アポロニウスの円 → 垂直二等分線 → 放物線）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「点 $P$ が「ある距離の条件」を満たしながら動くと、どんな図形が描かれる？」——その答えが、
+
+**距離を $x, y$ の式に翻訳し、両辺を $2$ 乗して整理すれば、軌跡の方程式が現れる。**
+
+「距離一定」なら **円**、「距離の比一定」なら **アポロニウスの円**、「$2$ 点から等距離」なら **垂直二等分線**、「定点と定直線から等距離」なら **放物線**——条件によって図形は変わるが、**式から見抜く手順は同じ**。これがデカルトの座標系がもたらした「**図形を式で扱う**」哲学の真骨頂。`,
+};
+
 /**
  * 高校 入門カテゴリの系列リスト（教育順で並べる）。
  *
@@ -3675,7 +4002,7 @@ $$a_n x^n + \\cdots + a_0 = a_n (x - \\alpha_1)(x - \\alpha_2) \\cdots (x - \\al
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
- *   → 6. 円の接線 → 7. 束の考え方
+ *   → 6. 円の接線 → 7. 束の考え方 → 8. 軌跡
  */
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   // 数Ⅰ・A 2 次関数
@@ -3693,4 +4020,5 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_BUNDLE_SERIES,
+  ADV_LOCUS_SERIES,
 ];

@@ -1612,6 +1612,235 @@ export function FactorStep5() {
 }
 
 /**
+ * 軌跡 Step 1：原点 O を中心とする円（条件 OP = r、変数 r で抽象的に表示）。
+ * 具体的な r 値や答え（N = 9）は描かない。
+ */
+export function LocusStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const Ox = 160;
+  const Oy = 130;
+  const r = 75;
+  // P を 30 度位置に置く（時計回り上方）
+  const angle = -Math.PI / 6;
+  const Px = Ox + r * Math.cos(angle);
+  const Py = Oy + r * Math.sin(angle);
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="原点 O を中心とする円。P は OP = r の条件を満たして動く"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="240" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      <circle cx={Ox} cy={Oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      <circle cx={Ox} cy={Oy} r="2.5" fill={muted} />
+      <text x={Ox - 4} y={Oy + 14} fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">O</text>
+
+      <line x1={Ox} y1={Oy} x2={Px} y2={Py} stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 8} y={Py + 4} fontSize="12" fill={accent} fontWeight="600" fontStyle="italic">P</text>
+      <text x={(Ox + Px) / 2 - 8} y={(Oy + Py) / 2 - 8} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        OP = r
+      </text>
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        P の軌跡 = O を中心とする半径 r の円
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 軌跡 Step 4：アポロニウスの円。O と A の間で「距離の比 = 一定」の点 P の軌跡が円。
+ * 内分点と外分点を accent ドットで示す。中心位置は明示しない。
+ */
+export function LocusStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 単位スケール
+  const Ox = 60;
+  const Oy = 140;
+  const scale = 32;
+  const Opx = Ox; // O = (0, 0)
+  const Apx = Ox + 3 * scale; // A = (3, 0)
+  const InPx = Ox + 2 * scale; // 内分点 (2, 0)
+  const ExPx = Ox + 6 * scale; // 外分点 (6, 0)
+  const Cx = Ox + 4 * scale; // 中心 (4, 0)
+  const radius = 2 * scale;
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="アポロニウスの円：OP : AP = 2 : 1 の点 P の軌跡"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+
+      <circle cx={Cx} cy={Oy} r={radius} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      <circle cx={Opx} cy={Oy} r="3.5" fill={muted} />
+      <text x={Opx - 4} y={Oy + 16} fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">O</text>
+
+      <circle cx={Apx} cy={Oy} r="3.5" fill={muted} />
+      <text x={Apx + 4} y={Oy + 16} fontSize="11" fill={muted} fontStyle="italic">A</text>
+
+      <circle cx={InPx} cy={Oy} r="3" fill={accent} />
+      <text x={InPx} y={Oy + 26} fontSize="9" fill={accent} fontStyle="italic" textAnchor="middle">内分</text>
+
+      <circle cx={ExPx} cy={Oy} r="3" fill={accent} />
+      <text x={ExPx} y={Oy + 26} fontSize="9" fill={accent} fontStyle="italic" textAnchor="middle">外分</text>
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        OP : AP = 2 : 1 の点 P の軌跡（アポロニウスの円）
+      </text>
+      <text x="14" y="218" fontSize="10" fill={muted}>
+        内分点と外分点を直径の両端とする円
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 軌跡 Step 6：2 点 A, B から等距離 → 垂直二等分線。
+ * 中点 M を通り、AB に垂直な直線を accent 色で。中点の具体的座標は明示しない。
+ */
+export function LocusStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 80;
+  const Oy = 140;
+  const scale = 28;
+  const Ax = Ox;
+  const Bx = Ox + 6 * scale;
+  const Mx = Ox + 3 * scale;
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 点 A, B から等距離の軌跡：AB の垂直二等分線"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.4" />
+
+      {/* AB 線分 */}
+      <line x1={Ax} y1={Oy} x2={Bx} y2={Oy} stroke={stroke} strokeWidth="1.5" />
+
+      <circle cx={Ax} cy={Oy} r="4" fill={muted} />
+      <text x={Ax - 4} y={Oy + 18} fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">A</text>
+
+      <circle cx={Bx} cy={Oy} r="4" fill={muted} />
+      <text x={Bx + 4} y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic">B</text>
+
+      <circle cx={Mx} cy={Oy} r="3" fill={accent} />
+      <text x={Mx} y={Oy + 18} fontSize="10" fill={accent} fontStyle="italic" textAnchor="middle">M</text>
+
+      {/* 垂直二等分線 */}
+      <line x1={Mx} y1={Oy - 95} x2={Mx} y2={Oy + 95} stroke={accent} strokeWidth="2" />
+
+      {/* 直角マーカー */}
+      <polyline
+        points={`${Mx + 8},${Oy} ${Mx + 8},${Oy - 8} ${Mx},${Oy - 8}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1"
+      />
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        AP = BP の軌跡 → AB の垂直二等分線（直線）
+      </text>
+      <text x="14" y="218" fontSize="10" fill={muted}>
+        中点 M を通り、AB に垂直な直線
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 軌跡 Step 8：定直線（准線）と定点（焦点）から等距離の点の軌跡 = 放物線。
+ * 焦点 A、准線 x 軸、放物線上の点 P と、PA = PH（H は P から x 軸への垂線の足）を示す。
+ * 具体的な頂点座標（答え N = 2）は描かない。
+ */
+export function LocusStep8() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 160;
+  const Oy = 220;
+  const xScale = 18;
+  const yScale = 17;
+  // 放物線 y = x²/8 + 2 を x ∈ [-8, 8] で sample
+  const samples: string[] = [];
+  for (let xi = -8; xi <= 8; xi += 0.2) {
+    const yi = (xi * xi) / 8 + 2;
+    const sx = Ox + xi * xScale;
+    const sy = Oy - yi * yScale;
+    samples.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  // 焦点 A = (0, 4)
+  const Ax = Ox;
+  const Ay = Oy - 4 * yScale;
+  // 放物線上の P、x = 4：y = 16/8 + 2 = 4
+  const Px = Ox + 4 * xScale;
+  const Py = Oy - 4 * yScale;
+  // 准線（x 軸）への垂線の足 H = (4, 0)
+  const Hx = Px;
+  const Hy = Oy;
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="焦点と准線から等距離の点の軌跡 = 放物線"
+    >
+      {/* 准線 = x 軸（accent 色強調なし、muted のままで地味に） */}
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="1.5" />
+      <text x="220" y={Oy + 14} fontSize="10" fill={muted} fontStyle="italic">准線 (x 軸)</text>
+
+      {/* 放物線 */}
+      <polyline points={samples.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+
+      {/* 焦点 A */}
+      <circle cx={Ax} cy={Ay} r="4" fill={accent} />
+      <text x={Ax + 8} y={Ay - 6} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">
+        A (焦点)
+      </text>
+
+      {/* 点 P */}
+      <circle cx={Px} cy={Py} r="4" fill={accent} />
+      <text x={Px + 8} y={Py + 4} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">P</text>
+
+      {/* PA */}
+      <line x1={Px} y1={Py} x2={Ax} y2={Ay} stroke={accent} strokeWidth="1" strokeDasharray="3,2" />
+      <text x={(Px + Ax) / 2 - 4} y={(Py + Ay) / 2 - 4} fontSize="10" fill={accent} fontStyle="italic">PA</text>
+
+      {/* PH（x 軸への垂線） */}
+      <line x1={Px} y1={Py} x2={Hx} y2={Hy} stroke={accent} strokeWidth="1" strokeDasharray="3,2" />
+      <circle cx={Hx} cy={Hy} r="2" fill={accent} />
+      <text x={Hx + 6} y={(Py + Hy) / 2 + 4} fontSize="10" fill={accent} fontStyle="italic">PH</text>
+
+      <text x="14" y="22" fontSize="11" fill={muted} fontStyle="italic">
+        PA = PH（焦点 A と准線 x 軸から等距離）→ 放物線
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -4959,6 +5188,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <FactorStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOCUS_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LocusStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOCUS_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LocusStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOCUS_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LocusStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOCUS_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LocusStep8 />
             </div>
           );
         }
