@@ -49,7 +49,9 @@ function TermLink({ term }: { term: string }) {
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
           >
-            <span className="block text-foreground">{entry.short}</span>
+            <span className="block text-foreground">
+              <MathText text={entry.short} />
+            </span>
             <span className="flex flex-col gap-1 mt-2">
               {(entry.easy || entry.meaning) && (
                 <button
