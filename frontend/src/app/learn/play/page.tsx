@@ -15,7 +15,7 @@ import {
 import { getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
-type Status = "answering" | "correct" | "incorrect" | "completed";
+type Status = "answering" | "correct" | "incorrect" | "skipped" | "completed";
 
 /**
  * 入力文字列の全角を半角に正規化する。
@@ -152,9 +152,9 @@ export default function Play() {
     setShowingDerivation(false);
   }, [stepIndex]);
 
-  // 正答時に Enter キーで「次の問題へ」を押せるようにする
+  // 正答時・スキップ時に Enter キーで「次の問題へ」を押せるようにする
   useEffect(() => {
-    if (status !== "correct") return;
+    if (status !== "correct" && status !== "skipped") return;
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== "Enter") return;
       // テキスト入力エリアにフォーカスがある場合は除外（IME変換確定の Enter を奪わない）
@@ -231,6 +231,22 @@ export default function Play() {
     } else {
       setStepIndex((i) => i + 1);
     }
+  }
+
+  function handleSkip() {
+    // 「歩く」体験のためのスキップ。formulaPreview を表示して次へ進めるよう
+    // 記録を残す（skipped: true）。正答率には数えない（getResumeIndex は
+    // 進める方向で扱う）。戸田の「答のみで自得」と整合：答を見せて進む。
+    if (status === "correct" || status === "skipped") return;
+    saveStepRecord(series.id, {
+      stepId: step.id,
+      attempts,
+      hintsOpened,
+      correct: false,
+      skipped: true,
+      answeredAt: new Date().toISOString(),
+    });
+    setStatus("skipped");
   }
 
   function handleOpenHint() {
@@ -841,8 +857,47 @@ export default function Play() {
                     ヒント
                   </button>
                 )}
+                <button
+                  type="button"
+                  onClick={handleSkip}
+                  className="inline-flex items-center justify-center px-7 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30 ml-auto"
+                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                  aria-label="この問題をスキップして次へ進む"
+                >
+                  スキップ →
+                </button>
               </div>
             </form>
+          )}
+
+          {/* スキップ時：答えを軽く見せて次へ */}
+          {!showingDerivation && status === "skipped" && (
+            <section className="flex items-center justify-between gap-4 animate-fade-in flex-wrap">
+              <div className="flex flex-col gap-1">
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "14px", letterSpacing: "0.05em" }}
+                >
+                  → スキップ。{step.unknownLabel} は {step.answer}{step.unit}。
+                </p>
+                {step.formulaPreview && (
+                  <p
+                    className="text-muted/80 tnum"
+                    style={{ fontSize: "12px" }}
+                  >
+                    {step.formulaPreview}
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
+                style={{ letterSpacing: "0.15em" }}
+              >
+                {isLast ? "おわりへ" : "次の問題へ →"}
+              </button>
+            </section>
           )}
 
           {/* 正答時 */}

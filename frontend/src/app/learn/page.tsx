@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
 import {
   type CatalogEntry,
@@ -27,11 +27,34 @@ type CatalogWithProgress = {
   total: number;
 };
 
+const COLLAPSED_GROUPS_KEY = "ruisuishiki:catalog_collapsed";
+
+/** topicGroup ごとにまとめる（順序は入力順を維持）。 */
+function groupByTopic(
+  entries: CatalogWithProgress[],
+): { topicGroup: string | undefined; items: CatalogWithProgress[] }[] {
+  const map = new Map<string | undefined, CatalogWithProgress[]>();
+  for (const item of entries) {
+    const key = item.entry.topicGroup;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(item);
+  }
+  return [...map.entries()].map(([topicGroup, items]) => ({
+    topicGroup,
+    items,
+  }));
+}
+
 export default function LearnIndex() {
   const [catalog, setCatalog] = useState<CatalogWithProgress[]>([]);
   const [teacherSeries, setTeacherSeries] = useState<TeacherSeriesSummary[]>([]);
   const [stats, setStats] = useState<LearningStats | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
+  // 折りたたまれた topicGroup（key は `${subject}|${topicGroup}`）。
+  // 空集合 = すべて展開。デフォルトは初訪問時すべて展開。
+  const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
+    new Set(),
+  );
 
   useEffect(() => {
     // 静的カタログ各系列について履歴を読み、進度を計算
@@ -50,8 +73,39 @@ export default function LearnIndex() {
     setCatalog(withProgress);
     setTeacherSeries(listTeacherSeries());
     setStats(calculateLearningStats());
+    // 折りたたみ状態を復元
+    if (typeof window !== "undefined") {
+      try {
+        const raw = window.localStorage.getItem(COLLAPSED_GROUPS_KEY);
+        if (raw) {
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) setCollapsedGroups(new Set(arr));
+        }
+      } catch {
+        // localStorage 不可でも続行
+      }
+    }
     setHasHydrated(true);
   }, []);
+
+  function toggleGroup(key: string) {
+    setCollapsedGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      if (typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem(
+            COLLAPSED_GROUPS_KEY,
+            JSON.stringify([...next]),
+          );
+        } catch {
+          // ignore
+        }
+      }
+      return next;
+    });
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center px-6 py-16">
@@ -115,7 +169,7 @@ export default function LearnIndex() {
           </section>
         )}
 
-        {/* 静的カタログ：subject（学年領域）でグループ化 */}
+        {/* 静的カタログ：subject（学年領域）でグループ化、topicGroup で折りたたみ可能 */}
         {!hasHydrated ? (
           <p className="text-muted" style={{ fontSize: "13px" }}>
             読み込んでいます…
@@ -130,136 +184,110 @@ export default function LearnIndex() {
               grouped.get(key)!.push(item);
             }
             return SUBJECT_ORDER.filter((s) => grouped.has(s)).map(
-              (subject) => (
-                <section key={subject} className="flex flex-col gap-4">
-                  <h2
-                    className="text-foreground"
-                    style={{
-                      fontSize: "13px",
-                      letterSpacing: "0.3em",
-                    }}
-                  >
-                    {SUBJECT_GROUP_LABEL[subject]}
-                  </h2>
-                  <ol className="flex flex-col gap-3">
-                    {grouped.get(subject)!.map(
-                      ({ entry, resumeIndex, total }, idx, arr) => {
-                        const isCompleted = resumeIndex >= total;
-                        const inProgress = resumeIndex > 0 && !isCompleted;
-                        // 単元グループ（小見出し）：直前のエントリと topicGroup が
-                        // 変わったら見出しを描画。同じ subject の中で
-                        // 「数Ⅰ・A 2 次関数」「数Ⅱ・B 図形と方程式」と分ける用途
-                        const prevTopic =
-                          idx > 0 ? arr[idx - 1].entry.topicGroup : undefined;
-                        const showTopicHeader =
-                          entry.topicGroup &&
-                          entry.topicGroup !== prevTopic;
-                        const href = inProgress
-                          ? `/learn/play/?seriesId=${entry.series.id}`
-                          : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
-                        return (
-                          <Fragment key={entry.series.id}>
-                            {showTopicHeader && (
-                              <li
-                                className="text-muted mt-2 first:mt-0"
-                                style={{
-                                  fontSize: "11px",
-                                  letterSpacing: "0.2em",
-                                  listStyle: "none",
-                                }}
-                                aria-hidden
-                              >
-                                {entry.topicGroup}
-                              </li>
-                            )}
-                          <li>
-                            <Link
-                              href={href}
-                              className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
-                              style={{ background: "var(--surface)" }}
+              (subject) => {
+                const entriesInSubject = grouped.get(subject)!;
+                const byTopic = groupByTopic(entriesInSubject);
+                return (
+                  <section key={subject} className="flex flex-col gap-4">
+                    <h2
+                      className="text-foreground"
+                      style={{
+                        fontSize: "13px",
+                        letterSpacing: "0.3em",
+                      }}
+                    >
+                      {SUBJECT_GROUP_LABEL[subject]}
+                    </h2>
+                    <div className="flex flex-col gap-3">
+                      {byTopic.map(({ topicGroup, items }) => {
+                        if (!topicGroup) {
+                          // topicGroup なし → カードを直接並べる（折りたたまない）
+                          return (
+                            <ol
+                              key="_no_topic"
+                              className="flex flex-col gap-3"
                             >
-                              {/* 上段：タイトル + ステータス */}
-                              <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
-                                <p
-                                  className="font-serif text-foreground"
-                                  style={{
-                                    fontSize: "clamp(17px, 1.25rem, 20px)",
-                                    letterSpacing: "0.06em",
-                                  }}
-                                >
-                                  {entry.series.title}
-                                </p>
-                                {isCompleted && (
-                                  <span
-                                    className="text-success tnum"
-                                    style={{ fontSize: "12px" }}
-                                  >
-                                    ✓ {total}/{total}
-                                  </span>
-                                )}
-                                {inProgress && (
-                                  <span
-                                    className="text-muted tnum"
-                                    style={{ fontSize: "12px" }}
-                                  >
-                                    {resumeIndex}/{total} 解いた
-                                  </span>
-                                )}
-                                {!isCompleted && !inProgress && (
-                                  <span
-                                    className="text-muted tnum"
-                                    style={{ fontSize: "12px" }}
-                                  >
-                                    全 {total} 問
-                                  </span>
-                                )}
-                              </div>
-                              {/* 中段：中心の問い（駆動質問、発見者向けの動機づけ） */}
-                              {entry.series.drivingQuestion && (
-                                <p
-                                  className="text-foreground/85 mb-2"
-                                  style={{
-                                    fontSize: "13px",
-                                    lineHeight: 1.7,
-                                    fontStyle: "italic",
-                                  }}
-                                >
-                                  「<MathText text={entry.series.drivingQuestion} />」
-                                </p>
-                              )}
-                              {/* 下段：概念ラベル（回帰者向けのナビゲーション） */}
-                              <p
-                                className="text-muted"
-                                style={{
-                                  fontSize: "12px",
-                                  letterSpacing: "0.1em",
-                                  lineHeight: 1.6,
-                                }}
-                              >
-                                <MathText text={entry.shortDescription} />
-                              </p>
-                              {inProgress && (
-                                <div className="mt-3">
-                                  <span
-                                    className="text-accent"
-                                    style={{
-                                      fontSize: "12px",
-                                      letterSpacing: "0.15em",
-                                    }}
-                                  >
-                                    続きから →
-                                  </span>
-                                </div>
-                              )}
-                            </Link>
-                          </li>
-                          </Fragment>
+                              {items.map((item) => (
+                                <CatalogCard
+                                  key={item.entry.series.id}
+                                  item={item}
+                                />
+                              ))}
+                            </ol>
+                          );
+                        }
+                        // topicGroup ありの場合 → 折りたたみ可能
+                        const groupKey = `${subject}|${topicGroup}`;
+                        const collapsed = collapsedGroups.has(groupKey);
+                        const totalSteps = items.reduce(
+                          (acc, it) => acc + it.total,
+                          0,
                         );
-                      },
-                    )}
-                  </ol>
-                </section>
-              ),
+                        const doneSteps = items.reduce(
+                          (acc, it) => acc + Math.min(it.resumeIndex, it.total),
+                          0,
+                        );
+                        return (
+                          <div key={groupKey} className="flex flex-col gap-3">
+                            <button
+                              type="button"
+                              onClick={() => toggleGroup(groupKey)}
+                              className="flex items-center justify-between gap-3 text-left py-2 -mx-2 px-2 rounded-md hover:bg-surface/60 transition-colors"
+                              aria-expanded={!collapsed}
+                              aria-controls={`group-${subject}-${topicGroup}`}
+                            >
+                              <span className="flex items-baseline gap-3 min-w-0">
+                                <span
+                                  aria-hidden
+                                  className="text-muted"
+                                  style={{
+                                    fontSize: "10px",
+                                    display: "inline-block",
+                                    transform: collapsed
+                                      ? "rotate(-90deg)"
+                                      : "rotate(0deg)",
+                                    transition: "transform 150ms ease",
+                                  }}
+                                >
+                                  ▼
+                                </span>
+                                <span
+                                  className="text-muted"
+                                  style={{
+                                    fontSize: "11px",
+                                    letterSpacing: "0.25em",
+                                  }}
+                                >
+                                  {topicGroup}
+                                </span>
+                              </span>
+                              <span
+                                className="text-muted tnum shrink-0"
+                                style={{ fontSize: "11px" }}
+                              >
+                                {items.length} 系列・{doneSteps}/{totalSteps} 問
+                              </span>
+                            </button>
+                            {!collapsed && (
+                              <ol
+                                id={`group-${subject}-${topicGroup}`}
+                                className="flex flex-col gap-3"
+                              >
+                                {items.map((item) => (
+                                  <CatalogCard
+                                    key={item.entry.series.id}
+                                    item={item}
+                                  />
+                                ))}
+                              </ol>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              },
             );
           })()
         )}
@@ -327,6 +355,102 @@ export default function LearnIndex() {
         </Link>
       </div>
     </main>
+  );
+}
+
+/**
+ * 静的カタログのカード 1 枚（系列）。
+ * 折りたたみ可能なグループ内でも、グループ外でも同じ見た目で使う。
+ */
+function CatalogCard({ item }: { item: CatalogWithProgress }) {
+  const { entry, resumeIndex, total } = item;
+  const isCompleted = resumeIndex >= total;
+  const inProgress = resumeIndex > 0 && !isCompleted;
+  const href = inProgress
+    ? `/learn/play/?seriesId=${entry.series.id}`
+    : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
+  return (
+    <li>
+      <Link
+        href={href}
+        className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
+        style={{ background: "var(--surface)" }}
+      >
+        {/* 上段：タイトル + ステータス */}
+        <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
+          <p
+            className="font-serif text-foreground"
+            style={{
+              fontSize: "clamp(17px, 1.25rem, 20px)",
+              letterSpacing: "0.06em",
+            }}
+          >
+            {entry.series.title}
+          </p>
+          {isCompleted && (
+            <span
+              className="text-success tnum"
+              style={{ fontSize: "12px" }}
+            >
+              ✓ {total}/{total}
+            </span>
+          )}
+          {inProgress && (
+            <span
+              className="text-muted tnum"
+              style={{ fontSize: "12px" }}
+            >
+              {resumeIndex}/{total} 解いた
+            </span>
+          )}
+          {!isCompleted && !inProgress && (
+            <span
+              className="text-muted tnum"
+              style={{ fontSize: "12px" }}
+            >
+              全 {total} 問
+            </span>
+          )}
+        </div>
+        {/* 中段：中心の問い（駆動質問、発見者向けの動機づけ） */}
+        {entry.series.drivingQuestion && (
+          <p
+            className="text-foreground/85 mb-2"
+            style={{
+              fontSize: "13px",
+              lineHeight: 1.7,
+              fontStyle: "italic",
+            }}
+          >
+            「<MathText text={entry.series.drivingQuestion} />」
+          </p>
+        )}
+        {/* 下段：概念ラベル（回帰者向けのナビゲーション） */}
+        <p
+          className="text-muted"
+          style={{
+            fontSize: "12px",
+            letterSpacing: "0.1em",
+            lineHeight: 1.6,
+          }}
+        >
+          <MathText text={entry.shortDescription} />
+        </p>
+        {inProgress && (
+          <div className="mt-3">
+            <span
+              className="text-accent"
+              style={{
+                fontSize: "12px",
+                letterSpacing: "0.15em",
+              }}
+            >
+              続きから →
+            </span>
+          </div>
+        )}
+      </Link>
+    </li>
   );
 }
 

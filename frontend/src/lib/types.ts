@@ -92,6 +92,13 @@ export type StepRecord = {
   hintsOpened: 0 | 1 | 2 | 3;
   /** 正答に至ったか。 */
   correct: boolean;
+  /**
+   * スキップしたか（散歩中に「今は飛ばす」を選んだ）。
+   * skipped: true のとき correct: false が前提。
+   * 進度計算では「addressed（次へ進める）」として扱うが、
+   * 正答率や weeklyCorrect には数えない。
+   */
+  skipped?: boolean;
   /** ISO 8601 文字列。 */
   answeredAt: string;
 };

@@ -58,21 +58,22 @@ export function clearSeriesHistory(seriesId: string): void {
 
 /**
  * 履歴から「次に解くべきステップのindex」を求める。
- * 全問正答済みなら totalSteps を返す（completed の意味）。
+ * 正答済み or スキップ済みのステップは「addressed」として進める。
+ * 全ステップが addressed なら totalSteps を返す（completed の意味）。
  */
 export function getResumeIndex(
   history: StepRecord[],
   stepIds: string[],
 ): number {
-  const correctIds = new Set(
-    history.filter((r) => r.correct).map((r) => r.stepId),
+  const addressedIds = new Set(
+    history.filter((r) => r.correct || r.skipped).map((r) => r.stepId),
   );
   for (let i = 0; i < stepIds.length; i++) {
-    if (!correctIds.has(stepIds[i])) {
+    if (!addressedIds.has(stepIds[i])) {
       return i;
     }
   }
-  return stepIds.length; // 全問正答済み
+  return stepIds.length; // 全問が addressed
 }
 
 /* ====================================================================== */
