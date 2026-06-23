@@ -143,13 +143,36 @@ export default function Play() {
     setHasHydrated(true);
   }, []);
 
-  // 問題が変わるたびに状態をリセット
+  // 問題が変わるたびに状態を更新。
+  // 「← 前へ」で戻ったときは履歴から状態を復元する（correct / skipped を見える形に）。
+  // 「次へ」で前進したときは新規 step なので初期状態（answering / 空入力）に。
   useEffect(() => {
-    setUserAnswer("");
-    setAttempts(0);
-    setHintsOpened(0);
-    setStatus((current) => (current === "completed" ? current : "answering"));
+    if (typeof window === "undefined") return;
+    const history = loadSeriesHistory(series.id);
+    const record = history.find((r) => r.stepId === step.id);
+    if (record) {
+      // 既に取り組んだ step に来た（戻ったか、再訪）
+      setAttempts(record.attempts);
+      setHintsOpened(record.hintsOpened);
+      if (record.skipped) {
+        setStatus("skipped");
+        setUserAnswer("");
+      } else if (record.correct) {
+        setStatus("correct");
+        setUserAnswer(String(step.answer));
+      } else {
+        setStatus("answering");
+        setUserAnswer("");
+      }
+    } else {
+      // 未到達の step（前進してきた）
+      setUserAnswer("");
+      setAttempts(0);
+      setHintsOpened(0);
+      setStatus((current) => (current === "completed" ? current : "answering"));
+    }
     setShowingDerivation(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex]);
 
   // 正答時・スキップ時に Enter キーで「次の問題へ」を押せるようにする
@@ -230,6 +253,13 @@ export default function Play() {
       setStatus("completed");
     } else {
       setStepIndex((i) => i + 1);
+    }
+  }
+
+  function handlePrev() {
+    // 前 step に戻る。useEffect が履歴から状態を復元する。
+    if (stepIndex > 0) {
+      setStepIndex((i) => i - 1);
     }
   }
 
@@ -533,7 +563,7 @@ export default function Play() {
               className="text-muted tnum"
               style={{ fontSize: "13px", letterSpacing: "0.1em" }}
             >
-              {stepIndex + 1} / {totalSteps}
+              Step {stepIndex + 1} / 全 {totalSteps} 問
             </span>
           </header>
 
@@ -793,8 +823,9 @@ export default function Play() {
             </section>
           )}
 
-          {/* 解答フォーム */}
-          {!showingDerivation && status !== "correct" && (
+          {/* 解答フォーム（answering / incorrect のみ。skipped/correct は別セクションで表示） */}
+          {!showingDerivation &&
+            (status === "answering" || status === "incorrect") && (
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex items-baseline gap-3">
                 <span
@@ -838,7 +869,18 @@ export default function Play() {
                 </p>
               )}
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 items-center">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
                 <button
                   type="submit"
                   disabled={!userAnswer.trim()}
@@ -872,7 +914,7 @@ export default function Play() {
 
           {/* スキップ時：答えを軽く見せて次へ */}
           {!showingDerivation && status === "skipped" && (
-            <section className="flex items-center justify-between gap-4 animate-fade-in flex-wrap">
+            <section className="flex flex-col gap-4 animate-fade-in">
               <div className="flex flex-col gap-1">
                 <p
                   className="text-muted"
@@ -889,20 +931,33 @@ export default function Play() {
                   </p>
                 )}
               </div>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
-                style={{ letterSpacing: "0.15em" }}
-              >
-                {isLast ? "おわりへ" : "次の問題へ →"}
-              </button>
+              <div className="flex items-center gap-3 flex-wrap">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40 ml-auto"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  {isLast ? "おわりへ" : "次の問題へ →"}
+                </button>
+              </div>
             </section>
           )}
 
           {/* 正答時 */}
           {!showingDerivation && status === "correct" && (
-            <section className="flex items-center justify-between gap-4 animate-fade-in flex-wrap">
+            <section className="flex flex-col gap-4 animate-fade-in">
               <div className="flex flex-col gap-1">
                 <p
                   className="text-success font-medium"
@@ -919,14 +974,27 @@ export default function Play() {
                   </p>
                 )}
               </div>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02]"
-                style={{ letterSpacing: "0.15em" }}
-              >
-                {isLast ? "おわりへ" : "次の問題へ →"}
-              </button>
+              <div className="flex items-center gap-3 flex-wrap">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02] ml-auto"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  {isLast ? "おわりへ" : "次の問題へ →"}
+                </button>
+              </div>
             </section>
           )}
         </div>
