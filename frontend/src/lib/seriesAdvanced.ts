@@ -4071,9 +4071,21 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
-        { layer: 1, text: "$x = t$ なので、$y$ の式の $t$ を $x$ に置き換えるだけ。" },
-        { layer: 2, text: "$y = 7 x + 2$。" },
-        { layer: 3, text: "$m = 7$。" },
+        {
+          layer: 1,
+          text:
+            "**媒介変数 $t$ を「消す」とは何だろう？** $x = t$ という式から、$t$ を $x$ で表せないか？",
+        },
+        {
+          layer: 2,
+          text:
+            "$x = t$ なら、$y$ の式の中の $t$ を $x$ に書き換えるとどうなる？",
+        },
+        {
+          layer: 3,
+          text:
+            "$y = 7 t + 2$ の $t$ を $x$ に置き換えて $y = 7 x + 2$。これが $t$ を消去した直線。$y = m x + n$ の形と比較して $m = 7$。**媒介変数表示は直線にも使える**——ここから始まる。",
+        },
       ],
       formulaPreview: "x = t → y = 7t + 2 → y = 7x + 2 → m = 7",
       figureMarker: "<<PARAMETRIC_STEP1>>",
@@ -4089,9 +4101,21 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "$t = x + 1$。これを $y$ に代入する。" },
-        { layer: 2, text: "$y = 2 (x + 1) + 5 = 2 x + 7$。" },
-        { layer: 3, text: "$m = 2$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。$x$ の式が違う。$t$ を $x$ で表す方法は前題と同じ？",
+        },
+        {
+          layer: 2,
+          text:
+            "前題は $x = t$ で「そのまま」だった。今は $x = t - 1$。$t$ を $x$ で表すにはどうする？",
+        },
+        {
+          layer: 3,
+          text:
+            "前題は $t = x$ で一発代入だった。今は $t = x + 1$ と書き換えてから $y$ に代入：$y = 2(x + 1) + 5 = 2x + 7$、$m = 2$。**$x$ の式が違うだけで手順は同じ「$t$ を $x$ で表す → $y$ に代入」**。",
+        },
       ],
       formulaPreview: "t = x + 1 → y = 2(x+1) + 5 = 2x + 7 → m = 2",
     },
@@ -4106,9 +4130,21 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "$t = x - 4$。" },
-        { layer: 2, text: "$y = -(x - 4) + 1 = -x + 5$。" },
-        { layer: 3, text: "$m = -1$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。今度は $x = t + 4$。$t$ を $x$ で表すと？",
+        },
+        {
+          layer: 2,
+          text:
+            "$y = -t + 1$ で $t$ にマイナスがついている。代入したら傾きの符号はどうなる？",
+        },
+        {
+          layer: 3,
+          text:
+            "$t = x - 4$ を $y = -t + 1$ に代入：$y = -(x - 4) + 1 = -x + 5$、$m = -1$。**$y$ の $t$ の係数 = 傾き** ではなく、$x$ と $t$ の関係次第で符号が変わる——前題と同じレシピだが結果がマイナスになる場合。",
+        },
       ],
       formulaPreview: "t = x − 4 → y = −x + 5 → m = −1",
     },
@@ -4126,14 +4162,18 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$x - 2 = 3 \\cos\\theta$、$y - 1 = 3 \\sin\\theta$。両辺を $2$ 乗して足すと $\\sin^2 + \\cos^2 = 1$ で $\\theta$ が消える。",
+            "**ここまで $3$ 問は「$t$ が $x$ で表せる」直線だった。今は $\\cos\\theta, \\sin\\theta$ が混じる。** $\\theta$ を消す方法はどう変わる？",
         },
         {
           layer: 2,
           text:
-            "$(x - 2)^2 + (y - 1)^2 = 9 \\cos^2\\theta + 9 \\sin^2\\theta = 9 (\\cos^2\\theta + \\sin^2\\theta) = 9$。",
+            "$t$ を $x$ で表して代入、は使えない（$\\cos$ から $\\theta$ を取り出すのは大変）。代わりに **$\\cos^2 + \\sin^2 = 1$** という関係が使える——どう使う？",
         },
-        { layer: 3, text: "$r^2 = 9$。中心 $(2, 1)$、半径 $3$ の円。" },
+        {
+          layer: 3,
+          text:
+            "Step 1–3 の「片方の式から $t$ を取り出して代入」が通用しない。代わりに **両辺 $2$ 乗して足す**：$(x - 2)^2 + (y - 1)^2 = 9 \\cos^2\\theta + 9 \\sin^2\\theta = 9$。$r^2 = 9$。**$\\theta$ の消去には三角恒等式を使う**——直線とは違うレシピが要る。",
+        },
       ],
       formulaPreview: "(x − 2)² + (y − 1)² = 9 → r² = 9",
       figureMarker: "<<PARAMETRIC_STEP4>>",
@@ -4149,9 +4189,21 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "$x^2 + y^2 = 16 \\cos^2\\theta + 16 \\sin^2\\theta = 16$。" },
-        { layer: 2, text: "$r^2 = 16$（半径 $4$ の円）。" },
-        { layer: 3, text: "$r^2 = 16$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。中心と半径が変わっただけ？",
+        },
+        {
+          layer: 2,
+          text:
+            "$x = 4 \\cos\\theta, y = 4 \\sin\\theta$ は、前題の「中心」と「半径」がどう変わった？ 手順は同じか？",
+        },
+        {
+          layer: 3,
+          text:
+            "中心 $(2, 1) \\to (0, 0)$、半径 $3 \\to 4$。$\\cos^2 + \\sin^2 = 1$ を使う手順は同じ：$x^2 + y^2 = 16 (\\cos^2\\theta + \\sin^2\\theta) = 16$。$r^2 = 16$。",
+        },
       ],
       formulaPreview: "x² + y² = 16 → r² = 16",
     },
@@ -4169,14 +4221,18 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$y = (x - (t + 3))^2 - (t + 3)^2 + 6 t = (x - (t + 3))^2 - t^2 - 9$。放物線の頂点は $(t + 3, -t^2 - 9)$。",
+            "**Step 1–5 は「動く点」の媒介変数表示だった。今は「動く放物線の頂点」の軌跡——係数の中に $t$ が住んでいる**。どこから $X, Y$ の媒介変数表示を取り出す？",
         },
         {
           layer: 2,
           text:
-            "$X = t + 3$、$Y = -t^2 - 9$。$t = X - 3$ を $Y$ に代入：$Y = -(X - 3)^2 - 9$。",
+            "頂点を取り出すには [平方完成]。$y = x^2 - 2 (t + 3) x + 6t$ を平方完成すると、頂点はどんな式になる？",
         },
-        { layer: 3, text: "軌跡 $y = -(x - 3)^2 - 9$ の頂点は $(3, -9)$。$x = 3$。" },
+        {
+          layer: 3,
+          text:
+            "$y = (x - (t + 3))^2 - t^2 - 9$ から頂点 $(t + 3, -t^2 - 9)$。これを $(X, Y)$ とおいて Step 1–3 と同じレシピで $t$ を消す：$X = t + 3$ → $t = X - 3$ を $Y$ に代入 → $Y = -(X - 3)^2 - 9$。軌跡の頂点は $(3, -9)$、$x = 3$。**「式の係数の中の $t$」も媒介変数として扱える**——$t$ の出てくる場所が変わっても同じレシピ。",
+        },
       ],
       formulaPreview: "頂点 (t+3, −t²−9) → y = −(x−3)² − 9 → 頂点 (3, −9)",
       figureMarker: "<<PARAMETRIC_STEP6>>",
@@ -4195,13 +4251,17 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "**媒介変数の変域は、消去後の変数の変域に「引き継がれる」**。$X = t + 3$ なので、$t$ の範囲を $X$ の範囲に翻訳する。",
+            "**前題と同じ放物線。今は $t$ に「$t \\geq 1$」という制限がついた**。軌跡の $x$ の範囲はどう変わる？",
         },
-        { layer: 2, text: "$t \\geq 1$ ⟺ $X = t + 3 \\geq 4$。" },
+        {
+          layer: 2,
+          text:
+            "前題の $X = t + 3$ という関係を、**範囲のまま** 翻訳できないか？ $t \\geq 1$ なら $X = t + 3$ はどうなる？",
+        },
         {
           layer: 3,
           text:
-            "$N = 4$。軌跡は $y = -(x - 3)^2 - 9$ の **$x \\geq 4$ の部分のみ**（放物線の右半分の一部）。",
+            "**媒介変数の変域は消去後の変数の変域に引き継がれる**：$t \\geq 1$ ⟺ $X = t + 3 \\geq 4$、つまり $N = 4$。前題は $t$ がすべての実数で軌跡が放物線全体だったが、制限つきだと放物線の **$x \\geq 4$ の部分のみ**（右側の一部）——制限が「軌跡の一部」を切り出す。",
         },
       ],
       formulaPreview: "t ≥ 1 ⟹ X = t + 3 ≥ 4 → x ≥ 4",
@@ -4220,14 +4280,18 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$M = (A + Q) / 2 = (s/2, (5 s - 2)/2)$。$M = (X, Y)$ とおき、$s$ を消去する。",
+            "**Step 1–7 は「動く点 $1$ つ」の軌跡だった。今は「動く点 $Q$ と固定点 $A$ の中点 $M$」——$2$ つの点の関係から軌跡を作る**。中点 $M$ を媒介変数 $s$ でどう書く？",
         },
         {
           layer: 2,
           text:
-            "$X = s/2$ → $s = 2 X$。$Y = (5 \\cdot 2 X - 2) / 2 = (10 X - 2)/2 = 5 X - 1$。",
+            "$Q$ が直線上を動く → $Q = (s, 5 s - 2)$。$M = (A + Q) / 2$ を $s$ で書いてみよう。そこから Step 1–3 と同じく $s$ を消去すれば？",
         },
-        { layer: 3, text: "軌跡 $y = 5 x - 1$。傾き $m = 5$。" },
+        {
+          layer: 3,
+          text:
+            "$M = (s / 2, (5 s - 2) / 2)$。$X = s / 2$ → $s = 2 X$、$Y = (5 \\cdot 2 X - 2) / 2 = 5 X - 1$。軌跡 $y = 5 x - 1$、$m = 5$。**動く点を媒介変数で書く → 中点を $X, Y$ で書く → 消去** ——「動点の合成」も同じレシピ。",
+        },
       ],
       formulaPreview: "M = (s/2, (5s−2)/2) → y = 5x − 1 → m = 5",
     },
@@ -4245,14 +4309,18 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$Q = (3 \\cos\\theta, 3 \\sin\\theta)$ と媒介変数 $\\theta$ で書く。$M = (A + Q) / 2$ で $\\theta$ を消去する。",
+            "**前題と比べてみよう**。$Q$ が動く図形が直線から円に変わった。中点の手順はどう？",
         },
         {
           layer: 2,
           text:
-            "$M = ((12 + 3 \\cos\\theta) / 2, \\ 3 \\sin\\theta / 2) = (6 + (3/2) \\cos\\theta, \\ (3/2) \\sin\\theta)$。$(X - 6)^2 + Y^2 = (9/4)$。",
+            "直線上の $Q$ は $1$ パラメータ $(s, 5s - 2)$ だった。円上の $Q$ は何で書く？ Step 4 を思い出すと？",
         },
-        { layer: 3, text: "$N = 6$（中心 $(6, 0)$、半径 $3/2$ の円）。" },
+        {
+          layer: 3,
+          text:
+            "Step 4 と同じ円の媒介変数表示：$Q = (3 \\cos\\theta, 3 \\sin\\theta)$。$M = ((12 + 3 \\cos\\theta) / 2, 3 \\sin\\theta / 2) = (6 + (3/2) \\cos\\theta, (3/2) \\sin\\theta)$。Step 4 と同じく $\\cos^2 + \\sin^2 = 1$ で消去：$(X - 6)^2 + Y^2 = 9/4$、中心 $(6, 0)$、$N = 6$。**動く図形が直線から円に変わっても、媒介変数表示 + 消去のレシピは不変**。",
+        },
       ],
       formulaPreview: "(X − 6)² + Y² = 9/4 → 中心 (6, 0)、半径 3/2",
     },
@@ -4270,14 +4338,18 @@ export const ADV_PARAMETRIC_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$P = (t, t^2)$ と媒介変数 $t$ で書く（放物線上の点）。$M = (A + P) / 2$ で $t$ を消去する。",
+            "**前題と比べてみよう**。$Q$（今度は $P$）が動く図形が今度は放物線。$P$ を媒介変数でどう書く？",
         },
         {
           layer: 2,
           text:
-            "$M = (t/2, (t^2 + 2)/2) = (X, Y)$。$t = 2 X$ → $Y = (4 X^2 + 2)/2 = 2 X^2 + 1$。",
+            "放物線 $y = x^2$ 上の点は、$x$ を $1$ パラメータ $t$ に取れば $(t, t^2)$ と $1$ 行で書ける——円のように三角関数は要らない。あとは中点を $t$ で書いて消去するだけ。",
         },
-        { layer: 3, text: "軌跡 $y = 2 x^2 + 1$。頂点 $(0, 1)$。$N = 1$。" },
+        {
+          layer: 3,
+          text:
+            "$P = (t, t^2)$、$M = (t / 2, (t^2 + 2) / 2)$。$X = t / 2$ → $t = 2 X$、$Y = (4 X^2 + 2) / 2 = 2 X^2 + 1$。軌跡 $y = 2 x^2 + 1$、頂点 $(0, 1)$、$N = 1$。**直線・円・放物線、どんな曲線上の動点でも「媒介変数で書く → 中点を $X, Y$ で書く → 消去」の同じレシピ**——媒介変数表示の汎用性。",
+        },
       ],
       formulaPreview: "Y = (t² + 2)/2 = 2X² + 1 → 頂点 (0, 1)",
       figureMarker: "<<PARAMETRIC_STEP10>>",
