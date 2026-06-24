@@ -2756,10 +2756,18 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "符号は $2$ 乗で消える：$(-x)^2 = x^2$。だから $(-i)^2$ も $i^2$ と同じ値。",
+            "$i$ は「$2$ 乗すると $-1$ になる数」と決めた。$-i$ も同じ性質を持つだろうか？",
         },
-        { layer: 2, text: "$(-i)^2 = (-1)^2 \\cdot i^2 = 1 \\cdot i^2 = i^2$。$i^2$ の約束は何だった？" },
-        { layer: 3, text: "$i^2 = -1$。だから $(-i)^2 = -1$。$i$ と $-i$ の両方が $x^2 = -1$ の解。" },
+        {
+          layer: 2,
+          text:
+            "$(-i)^2$ を素直に展開すると、$(-1)^2 \\cdot i^2$。それぞれの値はいくつ？",
+        },
+        {
+          layer: 3,
+          text:
+            "$(-1)^2 = 1$、$i^2 = -1$ なので、$(-i)^2 = 1 \\cdot (-1) = -1$。**$i$ も $-i$ も $x^2 = -1$ の解**——$x^2 = 4$ の解が $\\pm 2$ で対になるのと同じ。",
+        },
       ],
       formulaPreview: "(-i)² = i² = -1（i と -i の両方が解）",
       figureMarker: "<<COMPLEX_STEP1>>",
@@ -2775,9 +2783,21 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "実部どうし、虚部どうしを別々に足す。実数の文字計算と同じ。" },
-        { layer: 2, text: "$(2 + 1) + (3 - 1)i = 3 + 2i$。実部は $3$、虚部は $2$。" },
-        { layer: 3, text: "実部 $= 3$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。前題は $i^2$ の計算だった。今は複素数の **足し算**。$i$ をどう扱えばいい？",
+        },
+        {
+          layer: 2,
+          text:
+            "$i$ をふつうの文字として扱い、実数部分と $i$ の係数を別々に足したらどうなる？",
+        },
+        {
+          layer: 3,
+          text:
+            "$(2 + 3i) + (1 - i) = (2 + 1) + (3 - 1)i = 3 + 2i$、実部 $= 3$。**足し算では $i^2$ は出てこない**——実数 + 実数 と同じ感覚で、別々に扱える。",
+        },
       ],
       formulaPreview: "(2+3i) + (1−i) = 3 + 2i → 実部 = 3",
     },
@@ -2792,9 +2812,21 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "引き算も、実部どうし・虚部どうしを別々に引く。" },
-        { layer: 2, text: "$(5 - 3) + (-2 - (-4))i = 2 + 2i$。" },
-        { layer: 3, text: "虚部 $= 2$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。足し算 → 引き算。手順は同じ？",
+        },
+        {
+          layer: 2,
+          text:
+            "$(5 - 2i) - (3 - 4i)$。実部どうし、虚部どうしを別々に引いたらどうなる？ 符号に注意。",
+        },
+        {
+          layer: 3,
+          text:
+            "$(5 - 3) + (-2 - (-4))i = 2 + 2i$、虚部 $= 2$。**符号さえ間違えなければ、足し算と全く同じレシピ**。",
+        },
       ],
       formulaPreview: "(5−2i) − (3−4i) = 2 + 2i → 虚部 = 2",
     },
@@ -2812,13 +2844,17 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "和と差の積：$(a + b)(a - b) = a^2 - b^2$。これに $a = 1, b = i$ を当てると、$1 - i^2$。",
+            "**Step 2-3 は実部と虚部を別々に扱う線形操作だった。今はかけ算——$i$ どうしの積が出てくる**。$i^2$ はどう扱う？",
         },
-        { layer: 2, text: "$i^2 = -1$ なので、$1 - i^2 = 1 - (-1)$。" },
+        {
+          layer: 2,
+          text:
+            "$(1+i)(1-i)$ をふつうに「$(a+b)(a-b) = a^2 - b^2$」で展開すると $1 - i^2$。ここで $i^2$ をどう置き換える？",
+        },
         {
           layer: 3,
           text:
-            "$1 - (-1) = 2$。**$i$ が消えて実数になる**——これが共役どうしの積の特徴。",
+            "$i^2 = -1$ なので $1 - i^2 = 1 - (-1) = 2$。**$i$ が完全に消えて実数になる**——これが共役どうしの積の特徴。Step 2-3 と違って $i^2 = -1$ を使う新しい操作。",
         },
       ],
       formulaPreview: "(1+i)(1−i) = 1 − i² = 1 − (−1) = 2",
@@ -2835,13 +2871,21 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "ふつうに展開してから、$i^2 = -1$ で置き換える。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。同じくかけ算。今度は共役対ではなく一般のかけ算——手順は同じ？",
+        },
         {
           layer: 2,
           text:
-            "$(2 + i)(3 + 2i) = 6 + 4i + 3i + 2i^2 = 6 + 7i - 2 = 4 + 7i$。",
+            "Step 4 で身につけた「ふつうに展開 → $i^2 = -1$ で置き換え」を $(2+i)(3+2i)$ にそのまま当てる。",
         },
-        { layer: 3, text: "実部 $= 4$。" },
+        {
+          layer: 3,
+          text:
+            "$(2+i)(3+2i) = 6 + 4i + 3i + 2i^2 = 6 + 7i - 2 = 4 + 7i$、実部 $= 4$。**Step 4 と同じレシピ**——共役対では $i$ が消えたが、一般のかけ算では $i$ が残る。",
+        },
       ],
       formulaPreview: "(2+i)(3+2i) = 4 + 7i → 実部 = 4",
     },
@@ -2859,14 +2903,18 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "分母 $1 - i$ の共役は $1 + i$。これを分母・分子に掛ける。",
+            "**Step 4-5 はかけ算で $i^2 = -1$ を使った。今は割り算——分母に $i$ があるとき、どう実数化する？**",
         },
         {
           layer: 2,
           text:
-            "$\\dfrac{(1+i)(1+i)}{(1-i)(1+i)} = \\dfrac{1 + 2i + i^2}{1 - i^2} = \\dfrac{2i}{2} = i$。",
+            "Step 4 で「$(1+i)(1-i) = 2$（実数になる）」と発見した。これが割り算でどう使える？ **分母の共役** を何かに掛けたい。",
         },
-        { layer: 3, text: "$i$ なので、実部 $= 0$、**虚部 $= 1$**。" },
+        {
+          layer: 3,
+          text:
+            "分母の共役 $1 + i$ を分母・分子に掛ける：$\\dfrac{(1+i)(1+i)}{(1-i)(1+i)} = \\dfrac{2i}{2} = i$。実部 $= 0$、**虚部 $= 1$**。**Step 4 の「共役どうしは実数」が割り算の道具になる**——同じ事実が違う場面で効く。",
+        },
       ],
       formulaPreview: "(1+i)/(1−i) = 2i/2 = i → 虚部 = 1",
       figureMarker: "<<COMPLEX_STEP6>>",
@@ -2882,13 +2930,21 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "分母 $1 + i$ の共役は $1 - i$。これを分母・分子に掛ける。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。割り算は同じ。分母の符号だけ変わった——共役は何？",
+        },
         {
           layer: 2,
           text:
-            "$\\dfrac{(3+i)(1-i)}{(1+i)(1-i)} = \\dfrac{3 - 3i + i - i^2}{1 - i^2} = \\dfrac{4 - 2i}{2} = 2 - i$。",
+            "分母 $1 + i$ の共役は $1 - i$。Step 6 と同じ手順で分母・分子に掛けると？",
         },
-        { layer: 3, text: "実部 $= 2$、虚部 $= -1$。" },
+        {
+          layer: 3,
+          text:
+            "$\\dfrac{(3+i)(1-i)}{(1+i)(1-i)} = \\dfrac{4 - 2i}{2} = 2 - i$、実部 $= 2$。**Step 6 と同じレシピ、分母の符号が反対だっただけ**。",
+        },
       ],
       formulaPreview: "(3+i)/(1+i) = 2 − i → 実部 = 2",
     },
@@ -2906,14 +2962,18 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "**「$\\sqrt{(-3)(-12)} = \\sqrt{36} = 6$」と書くと間違い**。まず $\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出してから掛ける。",
+            "**Step 4-7 は $a + bi$ の四則演算だった。今は $\\sqrt{-3} \\times \\sqrt{-12}$——ルートに負の数が入る**。ふつうの $\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$ は使える？",
         },
         {
           layer: 2,
           text:
-            "$\\sqrt{-3} = \\sqrt{3}\\,i$、$\\sqrt{-12} = 2\\sqrt{3}\\,i$。掛けると $\\sqrt{3} \\cdot 2\\sqrt{3} \\cdot i^2 = 6 \\cdot (-1)$。",
+            "「$\\sqrt{(-3)(-12)} = \\sqrt{36} = 6$」と書くと正の $6$。一方で **まず $i$ を取り出してから** 掛けるとどうなる？",
         },
-        { layer: 3, text: "$6 \\cdot (-1) = -6$。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{-3} = \\sqrt{3}\\,i$、$\\sqrt{-12} = 2\\sqrt{3}\\,i$。掛けると $\\sqrt{3} \\cdot 2\\sqrt{3} \\cdot i^2 = 6 \\cdot (-1) = -6$。**$\\sqrt{a}\\sqrt{b} = \\sqrt{ab}$ は負の数では成り立たない**——必ず $i$ を取り出してから計算するのが安全なレシピ。",
+        },
       ],
       formulaPreview: "√(−3)·√(−12) = √3·i · 2√3·i = 6i² = −6",
       figureMarker: "<<COMPLEX_STEP8>>",
@@ -2932,17 +2992,17 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "左辺を展開し、実部と虚部に整理する。右辺と「実部 ＝ 実部、虚部 ＝ 虚部」で比較すれば、$x, y$ の連立方程式が立つ。",
+            "**Step 4-8 は計算問題だった。今は方程式：$(2 + i)(x + yi) = 11 + 8i$ から実数 $x$ を求める**。$x$ をどう取り出す？",
         },
         {
           layer: 2,
           text:
-            "$(2 + i)(x + yi) = (2x - y) + (x + 2y)i = 11 + 8i$。よって $2x - y = 11$、$x + 2y = 8$。",
+            "Step 4-5 で身につけた「複素数のかけ算」で左辺を展開すると、実部と虚部はそれぞれ何になる？ 右辺と比べると？",
         },
         {
           layer: 3,
           text:
-            "$(2x - y) \\cdot 2 = 4x - 2y = 22$ と $x + 2y = 8$ を足すと $5x = 30$ → $x = 6$。",
+            "$(2+i)(x+yi) = (2x - y) + (x + 2y)i = 11 + 8i$。**実部 $=$ 実部、虚部 $=$ 虚部** で連立：$2x - y = 11$、$x + 2y = 8$。これを解いて $x = 6, y = 1$。**複素数の等式 $1$ 本 $=$ 実数の連立方程式 $2$ 本**——複素数の世界の新しい解法。",
         },
       ],
       formulaPreview: "2x − y = 11, x + 2y = 8 → x = 6 (y = 1)",
@@ -2961,17 +3021,17 @@ export const ADV_COMPLEX_NEW_NUMBER_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "和と差の積：$(a + b)(a - b) = a^2 - b^2$。これを $a = 3, b = 4i$ に当てる。",
+            "**前題と比べてみよう**。今度は $z = 3 + 4i$ と共役 $\\bar{z} = 3 - 4i$ の積。Step 4 で出会った形と同じ？",
         },
         {
           layer: 2,
           text:
-            "$(3 + 4i)(3 - 4i) = 9 - (4i)^2 = 9 - 16 i^2 = 9 - 16(-1) = 9 + 16$。",
+            "$z \\cdot \\bar{z} = (3 + 4i)(3 - 4i)$。Step 4 で $(1+i)(1-i) = 2$ のとき使った「和と差の積 $(a + b)(a - b) = a^2 - b^2$」を当てると？",
         },
         {
           layer: 3,
           text:
-            "$9 + 16 = 25$。一般に $z = a + bi$ なら $z\\bar{z} = a^2 + b^2$——**ピタゴラスの形** が顔を出す。",
+            "$(3+4i)(3-4i) = 9 - (4i)^2 = 9 - 16 i^2 = 9 + 16 = 25$。**一般に $z = a + bi$ なら $z\\bar{z} = a^2 + b^2$**——[ピタゴラス数] の形が顔を出す。Step 4 で発見した「共役どうしは実数」が、絶対値の $2$ 乗という美しい結論に至る。",
         },
       ],
       formulaPreview: "z·z̄ = 3² + 4² = 25（一般に a² + b²）",
@@ -3078,14 +3138,18 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "解の公式 $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ で $a = 1, b = -5, c = 6$ を入れる。または因数分解で $(x - ?)(x - ?) = 0$。",
+            "$2$ 次方程式を解く道は $2$ つ——**因数分解** か **解の公式**。$x^2 - 5x + 6$ ならどっちが早そう？",
         },
         {
           layer: 2,
           text:
-            "$(x - 2)(x - 3) = 0$ なので解は $2, 3$。または解の公式：$x = \\dfrac{5 \\pm \\sqrt{25 - 24}}{2} = \\dfrac{5 \\pm 1}{2}$ で $2, 3$。",
+            "「足して $-5$、掛けて $6$」の $2$ 数を探すと？ または解の公式 $x = \\dfrac{5 \\pm \\sqrt{25 - 24}}{2}$ でルートの中身を見ると？",
         },
-        { layer: 3, text: "大きい方は $3$。" },
+        {
+          layer: 3,
+          text:
+            "$(x - 2)(x - 3) = 0$ で解 $2, 3$、または解の公式で $x = \\dfrac{5 \\pm 1}{2}$ から $2, 3$。**大きい方は $3$**。中学で学んだ解法を、この単元で「複素数の世界」へ更新していく。",
+        },
       ],
       formulaPreview: "(x − 2)(x − 3) = 0 → 解 2, 3 → 大: 3",
       figureMarker: "<<QUADRATIC_STEP1>>",
@@ -3101,13 +3165,21 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ手順——解の公式または因数分解。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。係数が違うだけ。同じ手順で解けるか？",
+        },
         {
           layer: 2,
           text:
-            "$(x - 2)(x - 5) = 0$。または $x = \\dfrac{7 \\pm \\sqrt{49 - 40}}{2} = \\dfrac{7 \\pm 3}{2}$ で $2, 5$。",
+            "Step 1 と同じレシピ——因数分解か解の公式。$\\sqrt{}$ の中身（$49 - 40$）はいくつ？",
         },
-        { layer: 3, text: "大きい方は $5$。" },
+        {
+          layer: 3,
+          text:
+            "$(x - 2)(x - 5) = 0$ で解 $2, 5$、大きい方は $5$。または解の公式で $x = \\dfrac{7 \\pm 3}{2}$。**Step 1 と全く同じレシピ**——$\\sqrt{}$ の中身が正なら異なる $2$ 実数解。",
+        },
       ],
       formulaPreview: "(x − 2)(x − 5) = 0 → 解 2, 5 → 大: 5",
     },
@@ -3122,13 +3194,21 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "因数分解か解の公式で。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。今回も同じ手順？",
+        },
         {
           layer: 2,
           text:
-            "$(x - 2)(x - 7) = 0$。または $x = \\dfrac{9 \\pm \\sqrt{81 - 56}}{2} = \\dfrac{9 \\pm 5}{2}$ で $2, 7$。",
+            "$x^2 - 9x + 14$ を因数分解、または解の公式。$\\sqrt{}$ の中身はいくつ？",
         },
-        { layer: 3, text: "大きい方は $7$。" },
+        {
+          layer: 3,
+          text:
+            "$(x - 2)(x - 7) = 0$ で解 $2, 7$、大きい方は $7$。**Step 1–3 はすべて $\\sqrt{}$ の中身（後で「判別式 $D$」と呼ぶもの）が正で、異なる $2$ 実数解**——同じレシピで $3$ 連発。",
+        },
       ],
       formulaPreview: "(x − 2)(x − 7) = 0 → 解 2, 7 → 大: 7",
     },
@@ -3146,14 +3226,18 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "解の公式のルートの中身 $b^2 - 4ac$ がちょうど $0$ になると、$\\sqrt{0} = 0$ で $\\pm$ が消える——だから解が $1$ 個（重解）に。",
+            "**Step 1–3 では「解が $2$ つ違う値」だった。今は「$2$ 解が同じ値」になる**——解の公式のどこに変化がある？",
         },
         {
           layer: 2,
           text:
-            "$x^2 - 12x + 36 = (x - 6)^2 = 0$。または $x = \\dfrac{12 \\pm \\sqrt{144 - 144}}{2} = \\dfrac{12 \\pm 0}{2} = 6$。",
+            "$x = \\dfrac{12 \\pm \\sqrt{144 - 144}}{2}$ を計算してみる。$\\sqrt{}$ の中身がどうなった？",
         },
-        { layer: 3, text: "重解 $x = 6$。$1$ つの値だけ。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{0} = 0$ なので $\\pm$ が消えて、$x = 6$ ただ $1$ 値（重解）。または $(x - 6)^2 = 0$ と因数分解。**$\\sqrt{}$ の中身 $= 0$ が「$2$ 解が同じ値に重なる」境界**——後で「判別式 $D = 0$」と呼ぶ特別な値の伏線。",
+        },
       ],
       formulaPreview: "(x − 6)² = 0 → 重解 x = 6（D = 0）",
       figureMarker: "<<QUADRATIC_STEP4>>",
@@ -3172,14 +3256,18 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "解の公式を機械的に当てる：$x = \\dfrac{-2 \\pm \\sqrt{4 - 20}}{2}$。ルートの中身は負だが、$\\sqrt{-a} = \\sqrt{a}\\,i$ で $i$ を取り出す。",
+            "**Step 1–4 では $\\sqrt{}$ の中身が $\\geq 0$ だった。今は負になる**——前単元（新しい数を作る）で学んだ $i$ を使って解けないか？",
         },
         {
           layer: 2,
           text:
-            "$\\sqrt{-16} = 4 i$ なので、$x = \\dfrac{-2 \\pm 4 i}{2} = -1 \\pm 2 i$。",
+            "解の公式 $x = \\dfrac{-2 \\pm \\sqrt{4 - 20}}{2} = \\dfrac{-2 \\pm \\sqrt{-16}}{2}$。前単元の規則「$\\sqrt{-a} = \\sqrt{a}\\,i$」を使うと $\\sqrt{-16}$ はどうなる？",
         },
-        { layer: 3, text: "解は $-1 \\pm 2 i$ なので、$b = 2$。" },
+        {
+          layer: 3,
+          text:
+            "$\\sqrt{-16} = 4 i$。$x = \\dfrac{-2 \\pm 4 i}{2} = -1 \\pm 2 i$、**$b = 2$**。**実数解がない方程式も、複素数の世界では解ける**——これが「複素数を導入したご褒美」。Step 1–4 と解の公式は同じ、$i$ を取り出すレシピが加わっただけ。",
+        },
       ],
       formulaPreview: "x = (−2 ± 4i)/2 = −1 ± 2i → b = 2",
       figureMarker: "<<QUADRATIC_STEP5>>",
@@ -3195,13 +3283,21 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "解の公式 + $\\sqrt{-a} = \\sqrt{a}\\,i$ の手順は前と同じ。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。係数だけ違う。同じ手順で $b$ を出せる？",
+        },
         {
           layer: 2,
           text:
-            "$x = \\dfrac{4 \\pm \\sqrt{16 - 52}}{2} = \\dfrac{4 \\pm \\sqrt{-36}}{2} = \\dfrac{4 \\pm 6 i}{2} = 2 \\pm 3 i$。",
+            "Step 5 と同じく解の公式に当てて、$\\sqrt{}$ から $i$ を取り出す。$\\sqrt{}$ の中身はいくつ？",
         },
-        { layer: 3, text: "$b = 3$。" },
+        {
+          layer: 3,
+          text:
+            "$x = \\dfrac{4 \\pm \\sqrt{16 - 52}}{2} = \\dfrac{4 \\pm 6 i}{2} = 2 \\pm 3 i$、$b = 3$。**Step 5 と同じレシピ**——係数だけ違う同操作。",
+        },
       ],
       formulaPreview: "x = (4 ± 6i)/2 = 2 ± 3i → b = 3",
     },
@@ -3216,13 +3312,21 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "同じ手順。$\\sqrt{}$ の中身を確認して $i$ を取り出す。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。やはり虚数解。同じ手順？",
+        },
         {
           layer: 2,
           text:
-            "$x = \\dfrac{-6 \\pm \\sqrt{36 - 100}}{2} = \\dfrac{-6 \\pm \\sqrt{-64}}{2} = \\dfrac{-6 \\pm 8 i}{2} = -3 \\pm 4 i$。",
+            "解の公式 → $\\sqrt{}$ の中身を確認 → $i$ を取り出す。$\\sqrt{}$ の中身は？",
         },
-        { layer: 3, text: "$b = 4$。" },
+        {
+          layer: 3,
+          text:
+            "$x = \\dfrac{-6 \\pm \\sqrt{-64}}{2} = \\dfrac{-6 \\pm 8 i}{2} = -3 \\pm 4 i$、$b = 4$。**Step 5–7 はすべて $\\sqrt{}$ の中身が負の虚数解、レシピは同じ**——$3$ 連発で慣らした。",
+        },
       ],
       formulaPreview: "x = (−6 ± 8i)/2 = −3 ± 4i → b = 4",
     },
@@ -3240,10 +3344,18 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$D = b^2 - 4ac$ に $a = 2, b = 1, c = 1$ を代入する。",
+            "**Step 1–7 で毎回計算していた「$\\sqrt{}$ の中身 $b^2 - 4ac$」に、$D$ という名前をつける**。今は解かずに $D$ だけ計算してみる",
         },
-        { layer: 2, text: "$D = 1^2 - 4 \\cdot 2 \\cdot 1 = 1 - 8$。" },
-        { layer: 3, text: "$D = -7$。負なので、この方程式は **異なる $2$ 虚数解** を持つ。" },
+        {
+          layer: 2,
+          text:
+            "$D = b^2 - 4ac$ に、この方程式の $a, b, c$ を代入すると？",
+        },
+        {
+          layer: 3,
+          text:
+            "$D = 1^2 - 4 \\cdot 2 \\cdot 1 = -7$。**負なので異なる $2$ 虚数解**——Step 1–7 では $\\sqrt{}$ の中身を毎回計算していたが、$D$ という名前をつけると **解かずに種類が判別できる** ようになる。",
+        },
       ],
       formulaPreview: "D = 1 − 8 = −7（D < 0 → 異なる 2 虚数解）",
     },
@@ -3261,10 +3373,18 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "重解 ⟺ 判別式 $D = 0$。$D = b^2 - 4ac$ に $a = 1, b = 4, c = k$ を入れて、$D = 0$ を解く。",
+            "**Step 8 で $D$ を計算した。今は逆——$D$ をある値にするような係数を求める**。重解 ⟺ $D$ がいくつ？",
         },
-        { layer: 2, text: "$D = 16 - 4k = 0$ → $4k = 16$。" },
-        { layer: 3, text: "$k = 4$。" },
+        {
+          layer: 2,
+          text:
+            "Step 4 で「重解 ⟺ $\\sqrt{}$ の中身 $= 0$」と発見した。今は $D = 16 - 4k$。$D = 0$ を $k$ について解く。",
+        },
+        {
+          layer: 3,
+          text:
+            "$D = 16 - 4k = 0$ → $k = 4$。**$D$ を「読む」（Step 8）から「設定する」（今）に視点が切り替わった**——係数 $k$ を動かして $D$ を制御し、解の種類を狙う。",
+        },
       ],
       formulaPreview: "D = 16 − 4k = 0 → k = 4",
     },
@@ -3282,17 +3402,17 @@ export const ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "「異なる $2$ つの実数解」⟺ 判別式 $D > 0$。境界 $N$ は $D = 0$ となる $k$ の値（そこから先は $D < 0$ で虚数解になる）。",
+            "**前題と比べてみよう**。前題は「重解 ⟺ $D = 0$」を $1$ 点で解いた。今は「異なる $2$ 実数解 ⟺ $D > 0$」を **範囲で** 見る",
         },
         {
           layer: 2,
           text:
-            "$D = 36 - 4k > 0$ ⟺ $k < 9$。境界は $D = 36 - 4k = 0$ から $k = 9$。",
+            "$D = 36 - 4k$。「異なる $2$ 実数解 ⟺ $D > 0$」を $k$ の条件に翻訳すると？ 境界の $N$ は $D = 0$ のときの $k$。",
         },
         {
           layer: 3,
           text:
-            "$N = 9$。$k < 9$ で異なる $2$ 実数解、$k = 9$ で重解、$k > 9$ で虚数解 — 判別式の符号で $3$ 場面が分かれる。",
+            "$D > 0$ ⟺ $36 - 4k > 0$ ⟺ $k < 9$、境界 $N = 9$。**$D$ の符号で $3$ 場面（$D > 0$ 実数解 / $D = 0$ 重解 / $D < 0$ 虚数解）が連続的に切り替わる**——$k = 9$ がその転換点。Step 1–10 の総まとめ：$D$ という $1$ つの量で $2$ 次方程式のすべてが見える。",
         },
       ],
       formulaPreview: "D = 36 − 4k > 0 ⟺ k < 9 → 境界 N = 9",
@@ -3398,14 +3518,18 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$(x - \\alpha)(x - \\beta)$ を展開すると $x^2 - (\\alpha + \\beta) x + \\alpha \\beta$。左辺 $x^2 - 5x + 6$ と係数を比較する。",
+            "$x^2 - 5x + 6 = (x - \\alpha)(x - \\beta)$ の **右辺を展開** すると、係数はどう $\\alpha, \\beta$ と関係する？",
         },
         {
           layer: 2,
           text:
-            "定数項 $\\alpha \\beta = 6$。または因数分解 $(x - 2)(x - 3)$ から $\\alpha = 2, \\beta = 3$ で $\\alpha \\beta = 6$。",
+            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$ を展開して、左辺 $x^2 - 5x + 6$ の **定数項** と比較すると、$\\alpha \\beta$ は何と一致する？",
         },
-        { layer: 3, text: "$\\alpha \\beta = 6$。" },
+        {
+          layer: 3,
+          text:
+            "定数項を比較して $\\alpha \\beta = 6$。または因数分解 $(x - 2)(x - 3)$ で $\\alpha = 2, \\beta = 3$、積も $6$ で同じ。**解を出さなくても、$\\alpha \\beta$ は係数から読める**——これがこの単元の出発点。",
+        },
       ],
       formulaPreview: "x² − 5x + 6 = (x − 2)(x − 3) → α β = 6",
       figureMarker: "<<FACTOR_STEP1>>",
@@ -3421,9 +3545,21 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ。定数項がそのまま $\\alpha \\beta$（$a = 1$ のとき）。" },
-        { layer: 2, text: "$(x + 5)(x - 2)$。$\\alpha = -5, \\beta = 2$。" },
-        { layer: 3, text: "$\\alpha \\beta = -10$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。係数が違うだけ。$\\alpha \\beta$ をどこから読む？",
+        },
+        {
+          layer: 2,
+          text:
+            "Step 1 で「定数項 $=$ $\\alpha \\beta$（$a = 1$ のとき）」と発見した。今の定数項はいくつ？",
+        },
+        {
+          layer: 3,
+          text:
+            "定数項 $= -10$、即答で $\\alpha \\beta = -10$。または $(x + 5)(x - 2)$ で $\\alpha = -5, \\beta = 2$、積も $-10$。**Step 1 と同じ手順、係数だけ違う**。",
+        },
       ],
       formulaPreview: "x² + 3x − 10 = (x + 5)(x − 2) → α β = −10",
     },
@@ -3438,9 +3574,21 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "$a = 1$ のときは $\\alpha \\beta = c$（定数項そのまま）。" },
-        { layer: 2, text: "$(x - 3)(x - 4)$。" },
-        { layer: 3, text: "$\\alpha \\beta = 12$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。今度は $x^2 - 7x + 12$。$\\alpha \\beta$ は？",
+        },
+        {
+          layer: 2,
+          text:
+            "$a = 1$ なら定数項がそのまま $\\alpha \\beta$。$12$ をどう読む？",
+        },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = 12$。または $(x - 3)(x - 4)$ で $\\alpha = 3, \\beta = 4$、積も同じ。**Step 1–3 はすべて $a = 1$ で「定数項 $=$ 積」のパターン**。",
+        },
       ],
       formulaPreview: "x² − 7x + 12 = (x − 3)(x − 4) → α β = 12",
     },
@@ -3458,14 +3606,18 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$a (x - \\alpha)(x - \\beta) = a x^2 - a(\\alpha + \\beta) x + a \\alpha \\beta$。定数項を比較すると $a \\alpha \\beta = c$、つまり $\\alpha \\beta = c / a$。",
+            "**Step 1–3 では $a = 1$（$x^2$ の係数が $1$）だった。今は $a = 2$**——$\\alpha \\beta$ は定数項そのまま？",
         },
         {
           layer: 2,
           text:
-            "$\\alpha \\beta = c / a = -2 / 2 = -1$。または解の公式：$x = (-3 \\pm 5) / 4 = 1/2, -2$。$(1/2)(-2) = -1$。",
+            "右辺を展開 $a (x - \\alpha)(x - \\beta) = a x^2 - a (\\alpha + \\beta) x + a \\alpha \\beta$。定数項を比較すると $a \\alpha \\beta = c$、$\\alpha \\beta$ は？",
         },
-        { layer: 3, text: "$\\alpha \\beta = -1$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = c / a = -2 / 2 = -1$。または解の公式で解 $1/2, -2$ → 積 $-1$。**$a \\ne 1$ のときは「定数項 $\\div a$」**——Step 1–3 の式 $\\alpha\\beta = c$ が、一段拡張されて $\\alpha\\beta = c/a$ になる瞬間。",
+        },
       ],
       formulaPreview: "2x² + 3x − 2 = 2(x − 1/2)(x + 2) → α β = −1 = c/a",
       figureMarker: "<<FACTOR_STEP4>>",
@@ -3484,14 +3636,18 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "係数比較なら $\\alpha \\beta = c / a = 8 / 1 = 8$（解が複素数でも同じ式）。または解 $\\alpha = -2 + 2i, \\beta = -2 - 2i$ を直接掛ける。",
+            "**Step 1–4 では解が実数だった。今は虚数解**——共役ペア $\\alpha = -2 + 2i, \\beta = -2 - 2i$。それでも $\\alpha \\beta$ は計算できる？",
         },
         {
           layer: 2,
           text:
-            "$\\alpha \\beta = (-2 + 2i)(-2 - 2i) = 4 - (2i)^2 = 4 + 4 = 8$（[共役複素数] の積はいつも実数）。",
+            "**実は同じ式 $\\alpha \\beta = c / a$ が、複素数解でも成り立つ**——係数比較は解の性質によらない。$c / a$ は？",
         },
-        { layer: 3, text: "$\\alpha \\beta = 8$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = c / a = 8$。または直接掛けて $(-2 + 2i)(-2 - 2i) = 4 - (2i)^2 = 4 + 4 = 8$（[共役複素数] の積はいつも実数）。**複素数解でも公式 $\\alpha \\beta = c/a$ は不変**——係数比較の威力。",
+        },
       ],
       formulaPreview: "(−2+2i)(−2−2i) = 4 + 4 = 8 = c/a",
       figureMarker: "<<FACTOR_STEP5>>",
@@ -3507,13 +3663,21 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "$\\alpha \\beta = c / a = 5 / 1 = 5$ で即答できる。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。やはり虚数解、$a = 1$。同じ手順？",
+        },
         {
           layer: 2,
           text:
-            "解は $-1 \\pm 2 i$。積は $(-1)^2 - (2 i)^2 = 1 + 4 = 5$。",
+            "$a = 1$ なので $\\alpha \\beta = c$ で即答。定数項は？",
         },
-        { layer: 3, text: "$\\alpha \\beta = 5$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = c / a = 5$。または解 $-1 \\pm 2 i$ から $(-1)^2 - (2i)^2 = 1 + 4 = 5$。Step 5 と同じレシピ。",
+        },
       ],
       formulaPreview: "(−1+2i)(−1−2i) = 1 + 4 = 5",
     },
@@ -3528,13 +3692,21 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "$\\alpha \\beta = c / a = 13$。" },
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。やはり虚数解、$a = 1$。同じ即答？",
+        },
         {
           layer: 2,
           text:
-            "解は $3 \\pm 2 i$。積は $9 - (2 i)^2 = 9 + 4 = 13$。",
+            "定数項をそのまま読む。$13$。",
         },
-        { layer: 3, text: "$\\alpha \\beta = 13$。" },
+        {
+          layer: 3,
+          text:
+            "$\\alpha \\beta = 13$。または解 $3 \\pm 2 i$ から $9 + 4 = 13$。**Step 5–7 はすべて「虚数解でも $\\alpha \\beta = c/a$」の確認**——共役対の積はいつも実数 $a^2 + b^2$（[ピタゴラス数] の形）。",
+        },
       ],
       formulaPreview: "(3+2i)(3−2i) = 9 + 4 = 13",
     },
@@ -3552,13 +3724,17 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "係数比較の式は同じ：$\\alpha \\beta = c / a$。$a$ が $1$ でなくても、複素数解でも、この式は成り立つ。",
+            "**Step 4 は非モニック × 実数解、Step 5–7 は $a = 1$ × 複素数解。今は両方の合わせ技**——非モニック × 複素数解。$\\alpha \\beta$ の式は変わる？",
         },
-        { layer: 2, text: "$\\alpha \\beta = c / a = 3 / 3 = 1$。" },
+        {
+          layer: 2,
+          text:
+            "公式 $\\alpha \\beta = c / a$ は **「非モニック」「複素数解」どちらも独立に成立**——両方混じっても同じ。$a = 3, c = 3$ なら？",
+        },
         {
           layer: 3,
           text:
-            "$\\alpha \\beta = 1$。実際に解は $(-1 \\pm 2\\sqrt{2}\\,i) / 3$ で、積は $(1 + 8) / 9 = 1$。$a \\ne 1$ でも複素数でも、ルールは同じ。",
+            "$\\alpha \\beta = c / a = 3 / 3 = 1$。実際の解は $(-1 \\pm 2\\sqrt{2}\\,i) / 3$ で積 $(1 + 8) / 9 = 1$ も一致。**$\\alpha \\beta = c/a$ は「非モニック」と「複素数解」両方の拡張を同時に通す**——係数比較の汎用性。",
         },
       ],
       formulaPreview: "α β = c/a = 3/3 = 1（a ≠ 1、複素数解でも）",
@@ -3577,13 +3753,17 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$。$x$ の係数を比較すると $\\alpha + \\beta = -b / a$。",
+            "**Step 1–8 では $\\alpha \\beta$（積）を聞いた。今は $\\alpha + \\beta$（和）**。$x$ の係数を比較すると何が見える？",
         },
-        { layer: 2, text: "$\\alpha + \\beta = -5 / 1 = -5$。" },
+        {
+          layer: 2,
+          text:
+            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$ を展開した式の $x$ の係数を、左辺 $x^2 + 5 x + 7$ の $x$ の係数 $5$ と比較すると？",
+        },
         {
           layer: 3,
           text:
-            "$\\alpha + \\beta = -5$。これと $\\alpha \\beta$ を合わせると **解と係数の関係**——解を出さずに和と積が分かる強力な道具。",
+            "$x$ の係数は $-(\\alpha + \\beta) = 5$ なので $\\alpha + \\beta = -5$。**これと積 $\\alpha \\beta = c/a$ を合わせて「解と係数の関係」**——解そのものを出さずに、和と積が見える強力な道具。",
         },
       ],
       formulaPreview: "α + β = −b/a = −5",
@@ -3602,13 +3782,17 @@ export const ADV_COMPLEX_FACTORIZATION_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$a \\ne 1$ なので、和は $\\alpha + \\beta = -b / a$（積の式 $\\alpha \\beta = c / a$ と並ぶ）。",
+            "**前題と比べてみよう**。和を聞かれているのは同じ。今度は $a = 2$——式はどう変わる？",
         },
-        { layer: 2, text: "$\\alpha + \\beta = -6 / 2 = -3$。" },
+        {
+          layer: 2,
+          text:
+            "$a (x - \\alpha)(x - \\beta)$ の $x$ の係数は $-a(\\alpha + \\beta)$。元の式の $x$ の係数 $b$ と比較すると、$\\alpha + \\beta$ は？",
+        },
         {
           layer: 3,
           text:
-            "$\\alpha + \\beta = -3$。$\\alpha \\beta = c / a = 3 / 2$ と合わせれば、解を出さずに係数を見るだけで「和 $= -3$、積 $= 3/2$」と読める。",
+            "$\\alpha + \\beta = -b / a = -6 / 2 = -3$。Step 9 が $a = 1$ で「和 $= -b$」だったが、$a \\ne 1$ では「$-b / a$」と一段拡張。**和 $\\alpha + \\beta = -b/a$、積 $\\alpha \\beta = c/a$**——この単元の総まとめ。解を計算せずに、係数を見るだけで和と積が読める。",
         },
       ],
       formulaPreview: "α + β = −b/a = −6/2 = −3",
