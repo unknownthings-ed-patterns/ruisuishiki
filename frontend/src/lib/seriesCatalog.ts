@@ -44,6 +44,7 @@ import {
   ADV_COMPLEX_FACTORIZATION_SERIES,
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
+  ADV_LINEAR_PROGRAMMING_SERIES,
   ADV_LOCUS_SERIES,
   ADV_PARAMETRIC_SERIES,
   ADV_REGION_SERIES,
@@ -458,6 +459,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "領域 — 等式が境界線、不等号は『どちら側の広がり』を選ぶ",
+  },
+  {
+    series: ADV_LINEAR_PROGRAMMING_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "不等式と領域 — 等高線を動かして、領域上の最大最小を見抜く",
   },
   /* 数Ⅱ: 三角関数 */
   {

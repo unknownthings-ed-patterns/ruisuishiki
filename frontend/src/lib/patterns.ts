@@ -31,7 +31,7 @@ export type PatternId =
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
   | "BD1" | "CN1" | "CN2" | "CN3"
-  | "LO1" | "PA1" | "RG1";
+  | "LO1" | "PA1" | "RG1" | "LP1";
 
 /**
  * 変数の意味的役割。
@@ -1089,6 +1089,29 @@ const RG1: PatternSpec = {
 };
 
 /**
+ * LP1: 不等式と領域 / 線形計画法 — 領域 D 上で関数 z = f(x, y) の最大・最小を、
+ * 等高線（z = k の集合）を平行移動して領域の境界と接する瞬間で見抜く。
+ * 線形なら直線等高線、円なら原点距離の等高線、パラメータ付き直線なら判別式。
+ */
+const LP1: PatternSpec = {
+  id: "LP1",
+  unit: "advanced",
+  naturalLanguage: "領域 D 上で関数 z = f(x, y) の最大・最小を、等高線と境界の接触点で見抜く",
+  formulaTemplate: "z = ax + by + c の等高線 → 領域 D の頂点で接触 → 最大・最小",
+  variables: [
+    { name: "a", role: "等高線の係数 a / 制約の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "等高線の係数 b / 制約の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "等高線の定数 / 領域の境界値", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "result", role: "問われている値（最大・最小・係数の逆算・通過領域境界）", unknown: true, domain: { kind: "integer", min: -200, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.a + k.b + k.c,
+  }),
+};
+
+/**
  * PA1: 媒介変数表示 — x = f(t), y = g(t) で動く点を記述し、
  * t を消去して軌跡の方程式に戻す。または変域を考える。
  */
@@ -1327,7 +1350,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1, PA1, RG1,
+  LO1, PA1, RG1, LP1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1347,7 +1370,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1, PA1, RG1,
+  LO1, PA1, RG1, LP1,
 ];
 
 export const CONTEXT_CATEGORIES = [

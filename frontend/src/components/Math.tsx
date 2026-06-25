@@ -2515,6 +2515,325 @@ export function RegionStep10() {
 }
 
 /**
+ * 不等式と領域 Step 1：三角形領域 D と直線等高線 x + y = k。
+ * 等高線を平行移動するイメージを示す。最大値（z = 6）は描かない（k 軸は伏せる）。
+ */
+export function LPStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillD = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const Ox = 60;
+  const Oy = 210;
+  const s = 22;
+  const Px = (x: number) => Ox + x * s;
+  const Py = (y: number) => Oy - y * s;
+  // 三角形領域 D: (0,0), (6,0), (0,6)
+  const triangle = `${Px(0)},${Py(0)} ${Px(6)},${Py(0)} ${Px(0)},${Py(6)}`;
+  // 等高線 x + y = k で k = 1, 3, 5 を描く（最大値の k=6 は伏せる）
+  const isolines = [1, 3, 5];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形領域 D と直線等高線 x + y = k を動かすイメージ"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 領域 D */}
+      <polygon points={triangle} fill={fillD} stroke={stroke} strokeWidth="1.5" />
+      <text x={Px(1.5)} y={Py(1.5)} fontSize="14" fill={accent} fontWeight="700" fontStyle="italic">D</text>
+
+      {/* 等高線（k=1, 3, 5） */}
+      {isolines.map((k, i) => {
+        // x + y = k → y = k - x、領域全体を貫くように
+        const x1 = -1, y1 = k - x1;
+        const x2 = k + 1, y2 = -1;
+        return (
+          <line
+            key={i}
+            x1={Px(x1)}
+            y1={Py(y1)}
+            x2={Px(x2)}
+            y2={Py(y2)}
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="3,3"
+            opacity="0.6"
+          />
+        );
+      })}
+
+      {/* 矢印で「k を大きく」 */}
+      <text x={Px(2.5)} y={Py(4.5)} fontSize="11" fill={accent} fontStyle="italic">→ k 大</text>
+      <text x={Px(0.5)} y={Py(1.0)} fontSize="11" fill={accent} fontStyle="italic">← k 小</text>
+
+      {/* 頂点ラベル */}
+      <circle cx={Px(0)} cy={Py(0)} r="2.5" fill={muted} />
+      <text x={Px(0) - 14} y={Py(0) + 14} fontSize="10" fill={muted}>(0, 0)</text>
+      <circle cx={Px(6)} cy={Py(0)} r="2.5" fill={muted} />
+      <text x={Px(6) - 14} y={Py(0) + 14} fontSize="10" fill={muted}>(6, 0)</text>
+      <circle cx={Px(0)} cy={Py(6)} r="2.5" fill={muted} />
+      <text x={Px(0) + 6} y={Py(6) + 4} fontSize="10" fill={muted}>(0, 6)</text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        等高線 x + y = k を動かす——D から離れる瞬間が最大
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 不等式と領域 Step 6：三角形領域 D と円の等高線 x² + y² = k。
+ * 最大値（z = 36）は描かない（接触頂点を accent ドットで示すのみ）。
+ */
+export function LPStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillD = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const Ox = 60;
+  const Oy = 210;
+  const s = 22;
+  const Px = (x: number) => Ox + x * s;
+  const Py = (y: number) => Oy - y * s;
+  // 三角形領域 D: (0,0), (6,0), (0,6)
+  const triangle = `${Px(0)},${Py(0)} ${Px(6)},${Py(0)} ${Px(0)},${Py(6)}`;
+  // 円の等高線、半径 = sqrt(k)、k = 1, 9, 25
+  const radii = [1, 3, 5];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形領域 D と円の等高線 x² + y² = k を動かすイメージ"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 領域 D */}
+      <polygon points={triangle} fill={fillD} stroke={stroke} strokeWidth="1.5" />
+      <text x={Px(1.5)} y={Py(1.5)} fontSize="14" fill={accent} fontWeight="700" fontStyle="italic">D</text>
+
+      {/* 円の等高線 */}
+      {radii.map((r, i) => (
+        <circle
+          key={i}
+          cx={Px(0)}
+          cy={Py(0)}
+          r={r * s}
+          fill="none"
+          stroke={accent}
+          strokeWidth="1"
+          strokeDasharray="3,3"
+          opacity="0.6"
+        />
+      ))}
+
+      {/* 最遠頂点 (6, 0) と (0, 6) を accent ドット */}
+      <circle cx={Px(6)} cy={Py(0)} r="4" fill={accent} />
+      <circle cx={Px(0)} cy={Py(6)} r="4" fill={accent} />
+
+      {/* k を大きくする方向 */}
+      <text x={Px(3.5)} y={Py(3.5)} fontSize="11" fill={accent} fontStyle="italic">→ k 大</text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        等高線が円——膨らませて D の最遠頂点に最後に接する
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 不等式と領域 Step 9：直線 y = 2tx - t² の通過領域。
+ * 複数の t について直線を描き、包絡線（放物線 y = x² の下側）が現れることを示す。
+ * 答え (N = 9) は描かない。
+ */
+export function LPStep9() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillRegion = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const Ox = 160;
+  const Oy = 50;
+  const xs = 24;
+  const ys = 3;
+  const Px = (x: number) => Ox + x * xs;
+  const Py = (y: number) => Oy + (-y) * ys; // y は下向き（放物線が下に開く感じだが、ここでは y=x² なので上向き）
+
+  // 実際は、y = x² の下側を通過領域として描く。SVG では y 軸が下向きなので、
+  // (x, x²) は数学座標で y が大きい = SVG では下の値
+  // ここでは Oy を上方に置き、y_math を下に大きくするほど SVG では下に行くようにする
+  // Px(x) = Ox + x*xs, Py(y_math) = Oy + y_math * ys (y_math 大なら下)
+  const Py2 = (y: number) => Oy + y * ys;
+
+  // 通過領域（y ≤ x²）の塗りつぶし。x = -7..7、y_math = x²..maxY
+  const maxY = 60;
+  const fillPoints: string[] = [];
+  // 上辺（境界 y = x²）を左から右へ
+  for (let xi = -7; xi <= 7; xi += 0.2) {
+    fillPoints.push(`${Px(xi).toFixed(1)},${Py2(xi * xi).toFixed(1)}`);
+  }
+  // 右下角・左下角
+  fillPoints.push(`${Px(7).toFixed(1)},${Py2(maxY).toFixed(1)}`);
+  fillPoints.push(`${Px(-7).toFixed(1)},${Py2(maxY).toFixed(1)}`);
+
+  // y = x² の境界
+  const boundary: string[] = [];
+  for (let xi = -7; xi <= 7; xi += 0.2) {
+    boundary.push(`${Px(xi).toFixed(1)},${Py2(xi * xi).toFixed(1)}`);
+  }
+
+  // 複数の t について直線 y = 2 t x - t² を描く
+  const ts = [-3, -1.5, 0, 1.5, 3];
+
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="直線 y = 2tx - t² の通過領域は放物線 y = x² の下側"
+    >
+      {/* 通過領域（y ≤ x²）を塗りつぶし */}
+      <polygon points={fillPoints.join(" ")} fill={fillRegion} />
+
+      {/* 軸：x 軸は y_math = 0、Py2(0) = Oy */}
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* t を変えた複数の直線 */}
+      {ts.map((t, i) => {
+        // y = 2 t x - t² で x = -7..7
+        const x1 = -7, y1 = 2 * t * x1 - t * t;
+        const x2 = 7, y2 = 2 * t * x2 - t * t;
+        return (
+          <line
+            key={i}
+            x1={Px(x1)}
+            y1={Py2(y1)}
+            x2={Px(x2)}
+            y2={Py2(y2)}
+            stroke={muted}
+            strokeWidth="0.8"
+            opacity="0.5"
+          />
+        );
+      })}
+
+      {/* 包絡線 y = x²（破線 + accent） */}
+      <polyline
+        points={boundary.join(" ")}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.8"
+        strokeDasharray="5,3"
+      />
+
+      {/* ラベル */}
+      <text x="34" y={Oy + 24} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        境界：y = x²
+      </text>
+      <text x="34" y={Oy + 40} fontSize="10" fill={muted}>
+        通過領域は y ≤ x²
+      </text>
+
+      <text x="14" y="18" fontSize="11" fill={muted} fontStyle="italic">
+        t を動かすと直線の包絡線（破線）が現れる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 不等式と領域 Step 10：工場の生産最適化。
+ * 4 つの制約による多角形領域 + 利益等高線 + 最適頂点 (4, 5) を accent ドット。
+ * 最大値 (22) は数値として描かない。
+ */
+export function LPStep10() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillD = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const Ox = 50;
+  const Oy = 210;
+  const xs = 30;
+  const ys = 22;
+  const Px = (x: number) => Ox + x * xs;
+  const Py = (y: number) => Oy - y * ys;
+  // 領域頂点: (0,0), (5,0), (4,5), (0,7)
+  const poly = `${Px(0)},${Py(0)} ${Px(5)},${Py(0)} ${Px(4)},${Py(5)} ${Px(0)},${Py(7)}`;
+  // 利益等高線 3x + 2y = k、k = 6, 14, 22 でラインを描く
+  const isolines = [6, 14, 22];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="工場の生産領域と利益等高線。最適は (4, 5) で実現"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 領域 D */}
+      <polygon points={poly} fill={fillD} stroke={stroke} strokeWidth="1.5" />
+      <text x={Px(1.5)} y={Py(2.5)} fontSize="14" fill={accent} fontWeight="700" fontStyle="italic">D</text>
+
+      {/* 利益等高線 3x + 2y = k → y = (k - 3x)/2 */}
+      {isolines.map((k, i) => {
+        // 端点：x_min, x_max を決めて y を計算
+        const x1 = -1, y1 = (k - 3 * x1) / 2;
+        const x2 = 8, y2 = (k - 3 * x2) / 2;
+        return (
+          <line
+            key={i}
+            x1={Px(x1)}
+            y1={Py(y1)}
+            x2={Px(x2)}
+            y2={Py(y2)}
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="3,3"
+            opacity="0.6"
+          />
+        );
+      })}
+
+      {/* 最適頂点 (4, 5) を強調 */}
+      <circle cx={Px(4)} cy={Py(5)} r="5" fill={accent} />
+      <text x={Px(4) + 8} y={Py(5)} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">
+        (4, 5)
+      </text>
+
+      {/* 他の頂点 */}
+      <circle cx={Px(0)} cy={Py(0)} r="2.5" fill={muted} />
+      <circle cx={Px(5)} cy={Py(0)} r="2.5" fill={muted} />
+      <circle cx={Px(0)} cy={Py(7)} r="2.5" fill={muted} />
+
+      {/* k を大きく */}
+      <text x={Px(5)} y={Py(5.5)} fontSize="11" fill={accent} fontStyle="italic">→ k 大</text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        利益等高線 3x + 2y = k——$2$ 制約が同時に効く頂点で最大化
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -5946,6 +6265,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <RegionStep10 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LP_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LPStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LP_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LPStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LP_STEP9>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LPStep9 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LP_STEP10>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LPStep10 />
             </div>
           );
         }
