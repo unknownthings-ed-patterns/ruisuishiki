@@ -3872,6 +3872,424 @@ $$a_n x^n + \\cdots + a_0 = a_n (x - \\alpha_1)(x - \\alpha_2) \\cdots (x - \\al
 複素数の世界では [解の公式] が必ず $2$ 解を返すから、**例外はない**。さらに係数を比較するだけで、解を出さずに和 $\\alpha + \\beta = -b / a$ と積 $\\alpha \\beta = c / a$ が読める（解と係数の関係）——「**解と因数分解は同じ事柄の表と裏**」、その対応が複素数によって完成する。`,
 };
 
+/* ===== CN4: 解と係数の関係 ===== */
+export const ADV_COMPLEX_ROOT_COEFFICIENT_SERIES: LearnerSeries = {
+  id: "adv_complex_root_coefficient_01",
+  title: "解と係数の関係",
+  subtitle:
+    "数Ⅱ・B「複素数と方程式」より — $a x^2 + b x + c = 0$ の $2$ 解 $\\alpha, \\beta$ について $\\alpha + \\beta = -b/a$、$\\alpha \\beta = c/a$。解を出さずに対称式を読み、解 → 係数の逆向き・解の平行移動・パラメータ問題まで $10$ 問で身につける。",
+  patternId: "CN4",
+  unit: "advanced",
+  revelationLabel:
+    "解の対称な情報は、すべて $\\alpha + \\beta = -b/a$、$\\alpha \\beta = c/a$ の組み合わせで書ける——解を出さずに、係数を読むだけで分かる",
+  drivingQuestion:
+    "$2$ 解を求めずに、解にまつわる情報はどこまで読める？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$2$ 次方程式 $x^2 - 7 x + 12 = 0$ の $2$ 解を $\\alpha, \\beta$ とするとき、**$\\alpha + \\beta$** はいくつでしょう？",
+      answer: 7,
+      unit: "",
+      unknownLabel: "α + β",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text:
+            "$x^2 - 7 x + 12 = (x - \\alpha)(x - \\beta)$ と因数分解できると考えると、**右辺を展開** したときの $x$ の係数は、$\\alpha, \\beta$ とどう結びつく？",
+        },
+        {
+          layer: 2,
+          text:
+            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$ を展開して、左辺の **$x$ の係数 $-7$** と比較すると、$\\alpha + \\beta$ は何と一致する？",
+        },
+        {
+          layer: 3,
+          text:
+            "$x$ の係数を比較して $-(\\alpha + \\beta) = -7$、つまり $\\alpha + \\beta = 7$。**解を出さずに、$x$ の係数を読むだけで和が見える**——これがこの単元の出発点。検算は因数分解 $(x - 3)(x - 4)$ で $3 + 4 = 7$ も同じ。",
+        },
+      ],
+      formulaPreview: "α + β = −(−7) = 7",
+      figureMarker: "<<VIETA_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$2$ 次方程式 $x^2 + 5 x + 6 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**$\\alpha + \\beta$** はいくつでしょう？",
+      answer: -5,
+      unit: "",
+      unknownLabel: "α + β",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。係数が違うだけ。$\\alpha + \\beta$ はどこから読む？",
+        },
+        {
+          layer: 2,
+          text:
+            "Step 1 で「$x$ の係数の符号を変えたものが $\\alpha + \\beta$（$a = 1$ のとき）」と発見した。今の $x$ の係数はいくつ？",
+        },
+        {
+          layer: 3,
+          text:
+            "$x$ の係数 $= 5$ なので $\\alpha + \\beta = -5$。検算は $(x + 2)(x + 3)$ で $(-2) + (-3) = -5$。**Step 1 と全く同じレシピ**——係数だけ違う。",
+        },
+      ],
+      formulaPreview: "α + β = −5",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$2$ 次方程式 $x^2 + 3 x - 10 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**$\\alpha \\beta$**（積）はいくつでしょう？",
+      answer: -10,
+      unit: "",
+      unknownLabel: "α β",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 1, 2 では「和」を聞いた。今度は「積」**。$(x - \\alpha)(x - \\beta)$ を展開した式の **どの項** に $\\alpha \\beta$ が現れる？",
+        },
+        {
+          layer: 2,
+          text:
+            "$(x - \\alpha)(x - \\beta) = x^2 - (\\alpha + \\beta) x + \\alpha \\beta$ の **定数項** を、左辺 $x^2 + 3 x - 10$ の定数項と比較すると、$\\alpha \\beta$ は何と一致する？",
+        },
+        {
+          layer: 3,
+          text:
+            "定数項を比較して $\\alpha \\beta = -10$。検算は $(x + 5)(x - 2)$ で $5 \\cdot (-2) = -10$。**和は $x$ の係数の符号反転、積は定数項そのまま**（$a = 1$ のとき）——$2$ つの量が並んで読める。",
+        },
+      ],
+      formulaPreview: "α β = −10",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$2$ 次方程式 $2 x^2 - 8 x + 3 = 0$（**$a = 2$**）の $2$ 解 $\\alpha, \\beta$ について、**$\\alpha + \\beta$** はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "α + β",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 1–3 では $a = 1$（$x^2$ の係数が $1$）だった。今は $a = 2$**——$\\alpha + \\beta$ は $x$ の係数そのまま？ それとも一手間入る？",
+        },
+        {
+          layer: 2,
+          text:
+            "$a x^2 + b x + c = a (x - \\alpha)(x - \\beta)$ の **右辺を展開** すると、$x$ の係数は $-a(\\alpha + \\beta)$。左辺の $b$ と比較すると、$\\alpha + \\beta$ は？",
+        },
+        {
+          layer: 3,
+          text:
+            "$\\alpha + \\beta = -b / a = -(-8) / 2 = 4$。**$a \\ne 1$ のときは「$x$ の係数を $a$ で割って符号反転」**——Step 1–3 の $\\alpha + \\beta = -b$ が、一段拡張されて $\\alpha + \\beta = -b/a$ になる瞬間。同様に積も $\\alpha \\beta = c / a$。",
+        },
+      ],
+      formulaPreview: "α + β = −b/a = −(−8)/2 = 4",
+      figureMarker: "<<VIETA_STEP4>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$2$ 次方程式 $x^2 + 5 x + 2 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**$\\alpha^2 + \\beta^2$** はいくつでしょう？",
+      answer: 21,
+      unit: "",
+      unknownLabel: "α² + β²",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 1–4 では $\\alpha + \\beta$ と $\\alpha \\beta$ を直接聞いた。今は $\\alpha^2 + \\beta^2$**——解 $\\alpha, \\beta$ を出さずに計算できないか？ $\\alpha^2 + \\beta^2$ を **和 $\\alpha + \\beta$ と積 $\\alpha \\beta$ で書き換える** 道はある？",
+        },
+        {
+          layer: 2,
+          text:
+            "$(\\alpha + \\beta)^2$ を展開してみる：$\\alpha^2 + 2 \\alpha \\beta + \\beta^2$。これと $\\alpha^2 + \\beta^2$ を見比べると、**ある量を引けば** $\\alpha^2 + \\beta^2$ になる。何を引く？",
+        },
+        {
+          layer: 3,
+          text:
+            "$\\alpha^2 + \\beta^2 = (\\alpha + \\beta)^2 - 2 \\alpha \\beta$。$\\alpha + \\beta = -5, \\alpha \\beta = 2$ を代入して $25 - 4 = 21$。**解 $\\alpha, \\beta$ そのものは要らない——和と積さえあれば計算できる**。これが「対称式は和と積で書ける」という大原則。$\\alpha, \\beta$ を入れ替えても変わらない式（対称式）はすべて、この方法で出せる。",
+        },
+      ],
+      formulaPreview: "α² + β² = (α+β)² − 2αβ = 25 − 4 = 21",
+      figureMarker: "<<VIETA_STEP5>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$2$ 次方程式 $x^2 - 3 x + 4 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**$\\alpha^2 + \\beta^2$** はいくつでしょう？",
+      answer: 1,
+      unit: "",
+      unknownLabel: "α² + β²",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**前題と比べてみよう**。係数が違うだけ。同じレシピで $\\alpha^2 + \\beta^2$ を出せる？",
+        },
+        {
+          layer: 2,
+          text:
+            "Step 5 と同じく $\\alpha^2 + \\beta^2 = (\\alpha + \\beta)^2 - 2 \\alpha \\beta$。$\\alpha + \\beta$ と $\\alpha \\beta$ をそれぞれ係数から読むと？",
+        },
+        {
+          layer: 3,
+          text:
+            "$\\alpha + \\beta = 3, \\alpha \\beta = 4$ なので $\\alpha^2 + \\beta^2 = 9 - 8 = 1$。**Step 5 と同じレシピ、係数だけ違う同操作**。ちなみに $D = 9 - 16 = -7 < 0$ なので $\\alpha, \\beta$ は虚数解だが——**対称式の公式は虚数解でも実数値として成立**。$(\\alpha + \\beta)^2 - 2 \\alpha \\beta$ は係数だけで決まるから当然。",
+        },
+      ],
+      formulaPreview: "α² + β² = 9 − 8 = 1（虚数解でも公式は同じ）",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$2$ 次方程式 $x^2 - 6 x + 4 = 0$ の $2$ 解 $\\alpha, \\beta$ について、**$(\\alpha - \\beta)^2$**（差の $2$ 乗）はいくつでしょう？",
+      answer: 20,
+      unit: "",
+      unknownLabel: "(α − β)²",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 5, 6 は「和の対称式 $\\alpha^2 + \\beta^2$」だった。今は「差の対称式 $(\\alpha - \\beta)^2$」**——差は対称式？ $\\alpha, \\beta$ を入れ替えても値が変わらない？ ${}^2$ にしてしまえば？",
+        },
+        {
+          layer: 2,
+          text:
+            "$(\\alpha - \\beta)^2$ を展開すると $\\alpha^2 - 2 \\alpha \\beta + \\beta^2$。これも $(\\alpha + \\beta)^2$ を経由して書き換えられる——$2 \\alpha \\beta$ の符号に注意。$(\\alpha + \\beta)^2 = \\alpha^2 + 2 \\alpha \\beta + \\beta^2$ から **何を引くと** $(\\alpha - \\beta)^2$ になる？",
+        },
+        {
+          layer: 3,
+          text:
+            "$(\\alpha - \\beta)^2 = (\\alpha + \\beta)^2 - 4 \\alpha \\beta$。$\\alpha + \\beta = 6, \\alpha \\beta = 4$ で $36 - 16 = 20$。**和の対称式と同じく、差の $2$ 乗も和・積で書ける**——「対称式は和と積で書ける」の射程がさらに広がる。検算：$\\alpha - \\beta = \\pm \\sqrt{20} = \\pm 2 \\sqrt{5}$、解の公式でも一致。",
+        },
+      ],
+      formulaPreview: "(α − β)² = (α+β)² − 4αβ = 36 − 16 = 20",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$2$ つの解が $3$ と $5$ である $2$ 次方程式は $x^2 + b x + c = 0$ の形（$a = 1$）に書ける。このときの **$c$** はいくつでしょう？",
+      answer: 15,
+      unit: "",
+      unknownLabel: "定数項 c",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 1–7 は「係数 → 解の情報」の向きだった。今は逆——「解 → 係数」**。$3, 5$ を解とする $2$ 次方程式は、**$\\alpha + \\beta$ と $\\alpha \\beta$ がそれぞれいくつ** になる方程式？",
+        },
+        {
+          layer: 2,
+          text:
+            "Step 1–3 で見つけた式を逆向きに：$\\alpha + \\beta = 3 + 5$、$\\alpha \\beta = 3 \\cdot 5$。これが $-b$ と $c$ に対応するから（$a = 1$ のとき）、$c$ はどっち？",
+        },
+        {
+          layer: 3,
+          text:
+            "$\\alpha + \\beta = 8 = -b$ なので $b = -8$。$\\alpha \\beta = 15 = c$、**$c = 15$**。方程式は $x^2 - 8 x + 15 = 0$。展開すると $(x - 3)(x - 5)$ で確認できる。**解を与えて方程式を作る——これが「解と係数の関係」を逆向きに使う場面**。整数係数の問題作りや、$2$ 解の情報から方程式を復元する技に直結。",
+        },
+      ],
+      formulaPreview: "(x − 3)(x − 5) = x² − 8x + 15 → c = 15",
+      figureMarker: "<<VIETA_STEP8>>",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$2$ 次方程式 $x^2 - 4 x + 1 = 0$ の $2$ 解を $\\alpha, \\beta$ とする。**$\\alpha + 2, \\beta + 2$** を $2$ 解とする $2$ 次方程式 $x^2 + p x + q = 0$ の **$q$** はいくつでしょう？",
+      answer: 13,
+      unit: "",
+      unknownLabel: "新方程式の q",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 8 と Step 5–7 を合わせ技にする**。新しい解の **和と積** が分かれば、Step 8 と同じく方程式が作れる。新しい解の和 $(\\alpha + 2) + (\\beta + 2)$ と積 $(\\alpha + 2)(\\beta + 2)$ を、もとの $\\alpha + \\beta$ と $\\alpha \\beta$ で書き換えられない？",
+        },
+        {
+          layer: 2,
+          text:
+            "もとの $\\alpha + \\beta = 4, \\alpha \\beta = 1$。新しい解の和：$(\\alpha + 2) + (\\beta + 2) = (\\alpha + \\beta) + 4$。新しい解の積：$(\\alpha + 2)(\\beta + 2)$ を展開すると $\\alpha \\beta + 2(\\alpha + \\beta) + 4$。それぞれ代入すると？",
+        },
+        {
+          layer: 3,
+          text:
+            "新しい和 $= 4 + 4 = 8$、新しい積 $= 1 + 8 + 4 = 13$。$q$ は新しい解の積なので **$q = 13$**（方程式は $x^2 - 8 x + 13 = 0$）。**もとの解を出さずに、$\\alpha + \\beta$ と $\\alpha \\beta$ だけで新しい方程式が作れる**——「対称式は和と積で書ける」の威力がここでも効く。実際の解は $2 \\pm \\sqrt{3}$ だが、それを使わなくてよい。",
+        },
+      ],
+      formulaPreview: "新 αβ = αβ + 2(α+β) + 4 = 1 + 8 + 4 = 13 = q",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$2$ 次方程式 $x^2 - 5 x + k = 0$ の $2$ 解の **差** $|\\alpha - \\beta|$ が $3$ となるような $k$ の値はいくつでしょう？",
+      answer: 4,
+      unit: "",
+      unknownLabel: "k",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "**Step 7 で $(\\alpha - \\beta)^2 = (\\alpha + \\beta)^2 - 4 \\alpha \\beta$ を使った。今は逆向き——「差がある値になる」条件から $k$ を求める**。「$|\\alpha - \\beta| = 3$」を $(\\alpha - \\beta)^2$ の言葉に翻訳できる？",
+        },
+        {
+          layer: 2,
+          text:
+            "$|\\alpha - \\beta| = 3$ ⟺ $(\\alpha - \\beta)^2 = 9$。$\\alpha + \\beta = 5, \\alpha \\beta = k$ なので、Step 7 の式 $(\\alpha + \\beta)^2 - 4 \\alpha \\beta = (\\alpha - \\beta)^2$ に代入して、$k$ について解く。",
+        },
+        {
+          layer: 3,
+          text:
+            "$25 - 4 k = 9$ なので **$k = 4$**。方程式は $x^2 - 5 x + 4 = (x - 1)(x - 4) = 0$、解 $1, 4$ で差は $3$。**$k$（係数）を動かして、$(\\alpha - \\beta)^2$（解の対称な情報）を狙い撃ちする**——係数と対称式の対応を双方向に使う、この単元の総まとめ。同じ手で「$2$ 解の和が $\\alpha^2 + \\beta^2 = N$ になる $k$」のような問題も解ける。",
+        },
+      ],
+      formulaPreview: "(α−β)² = 25 − 4k = 9 → k = 4",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $2$ 解を求めずに、解にまつわる情報はどこまで読める？
+
+────────
+
+**解の対称な情報は、すべて $\\alpha + \\beta$ と $\\alpha \\beta$ で書ける——そして $\\alpha + \\beta, \\alpha \\beta$ は係数で読める。**
+
+$2$ 次方程式 $a x^2 + b x + c = 0$ の $2$ 解 $\\alpha, \\beta$ について：
+
+$$\\alpha + \\beta = -\\dfrac{b}{a}, \\quad \\alpha \\beta = \\dfrac{c}{a}$$
+
+**和は $-b/a$、積は $c/a$**——係数を読んで割るだけ。$a = 1$ なら $\\alpha + \\beta = -b, \\alpha \\beta = c$（定数項そのまま）。これが [解と係数の関係]。
+
+**なぜ成り立つか**：解が $\\alpha, \\beta$ なら、[因数分解] して
+
+$$a x^2 + b x + c = a (x - \\alpha)(x - \\beta)$$
+
+右辺を展開して整理すると
+
+$$a x^2 - a (\\alpha + \\beta) x + a \\alpha \\beta$$
+
+これと左辺 $a x^2 + b x + c$ の係数を比較すれば、$- a (\\alpha + \\beta) = b$、$a \\alpha \\beta = c$ ——つまり $\\alpha + \\beta = -b/a$、$\\alpha \\beta = c/a$。**「因数分解 → 展開 → 係数比較」が証明そのもの**。
+
+**[複素数] 解でも公式は同じ**：実数係数の $2$ 次方程式が虚数解（[共役複素数] のペア $p \\pm q i$）を持っても、和 $2 p$ と積 $p^2 + q^2$ は実数になる。だから「実数係数 → 実数の和・積」は破れない（Step 6 の $x^2 - 3 x + 4 = 0$ が実例）。
+
+────────
+
+**$\\alpha + \\beta, \\alpha \\beta$ で書き直せる「対称式」たち**
+
+**対称式**——$\\alpha$ と $\\beta$ を入れ替えても変わらない式——は、**すべて $\\alpha + \\beta$ と $\\alpha \\beta$ だけで書ける**（対称式の基本定理）。だから「対称式の値」は **解そのものを出さずに係数から読める**。
+
+| 対称式 | 和 $\\alpha + \\beta$ と積 $\\alpha \\beta$ で表すと |
+|---|---|
+| $\\alpha^2 + \\beta^2$ | $(\\alpha + \\beta)^2 - 2 \\alpha \\beta$ |
+| $(\\alpha - \\beta)^2$ | $(\\alpha + \\beta)^2 - 4 \\alpha \\beta$ |
+| $\\dfrac{1}{\\alpha} + \\dfrac{1}{\\beta}$ | $\\dfrac{\\alpha + \\beta}{\\alpha \\beta}$ |
+| $\\alpha^3 + \\beta^3$ | $(\\alpha + \\beta)^3 - 3 \\alpha \\beta (\\alpha + \\beta)$ |
+| $\\alpha^2 \\beta + \\alpha \\beta^2$ | $\\alpha \\beta (\\alpha + \\beta)$ |
+
+**例**：$x^2 + 5 x + 2 = 0$（Step 5）の $\\alpha^2 + \\beta^2 = (-5)^2 - 2 \\cdot 2 = 21$。$x^2 - 6 x + 4 = 0$（Step 7）の $(\\alpha - \\beta)^2 = 6^2 - 4 \\cdot 4 = 20$。**解そのものは要らない——係数だけで答えが出る**。
+
+────────
+
+**逆向き：解から方程式を作る**
+
+[解と係数の関係] は **両向きに使える**：
+
+- **係数 → 解の情報**（Step 1–7）：方程式が与えられ、$\\alpha + \\beta, \\alpha \\beta$ や対称式を係数から読む
+- **解 → 係数**（Step 8）：$2$ 解 $p, q$ が与えられ、それを解とする $2$ 次方程式 $x^2 + b x + c = 0$ を作る
+
+逆向きはとても素直：$\\alpha = p, \\beta = q$ なら $\\alpha + \\beta = p + q$、$\\alpha \\beta = p q$。だから方程式は
+
+$$x^2 - (p + q) x + p q = 0$$
+
+——係数を直接置くだけ。**例**：解が $3, 5$ なら $x^2 - 8 x + 15 = 0$。
+
+この逆向きは、**解の情報を加工して新しい方程式を作る**ときにも効きます（Step 9）。$\\alpha, \\beta$ を解とする方程式が与えられたとき、$\\alpha + 2, \\beta + 2$（解を平行移動）や $\\alpha^2, \\beta^2$（解の $2$ 乗）を解とする方程式を作るには、**新しい解の和と積を、もとの $\\alpha + \\beta, \\alpha \\beta$ で書き換える** だけ。
+
+**Step 9 の例**：もとの $x^2 - 4 x + 1 = 0$ の解 $\\alpha, \\beta$（$= 2 \\pm \\sqrt{3}$）から、$\\alpha + 2, \\beta + 2$ を解とする方程式。新しい和 $= (\\alpha + \\beta) + 4 = 8$、新しい積 $= \\alpha \\beta + 2(\\alpha + \\beta) + 4 = 13$。だから $x^2 - 8 x + 13 = 0$。**もとの解そのものは一度も使わない**。
+
+────────
+
+**パラメータ問題：係数を動かして対称式を狙う**
+
+応用の頂点は **パラメータ問題**：「方程式に文字 $k$ が含まれ、解 $\\alpha, \\beta$ がある条件を満たすような $k$ を求める」。
+
+**Step 10 の例**：$x^2 - 5 x + k = 0$ の $2$ 解の **差が $3$** となる $k$ は？
+
+「差が $3$」は $|\\alpha - \\beta| = 3$、つまり $(\\alpha - \\beta)^2 = 9$。$\\alpha + \\beta = 5, \\alpha \\beta = k$ で $(\\alpha + \\beta)^2 - 4 \\alpha \\beta = 25 - 4 k = 9$、よって $k = 4$。
+
+**ポイント**：「解の条件」を「対称式の方程式」に翻訳できれば、係数 $k$ について解けばよい。$k$ を動かして、対称式の値を狙い撃ちする——**係数と対称式の対応を双方向に往復する**のがこの単元の真骨頂。
+
+────────
+
+**もっと深く** — $n$ 次への拡張（Vieta の公式）、応用の広がり
+
+**$n$ 次方程式への一般化（Vieta の公式）**：$a x^n + a_{n-1} x^{n-1} + \\cdots + a_0 = 0$ の解 $\\alpha_1, \\alpha_2, \\dots, \\alpha_n$ について、**基本対称式** たちが係数比で書ける：
+
+$$\\alpha_1 + \\alpha_2 + \\cdots + \\alpha_n = -\\dfrac{a_{n-1}}{a}$$
+
+$$\\alpha_1 \\alpha_2 \\cdots \\alpha_n = (-1)^n \\dfrac{a_0}{a}$$
+
+——間の「$k$ 次の対称式」（$k$ 個ずつ掛けたものの和）もすべて係数比から計算できる。$2$ 次の「和と積」はその最も基本的な例。$3$ 次方程式 $x^3 + p x^2 + q x + r = 0$ の解 $\\alpha, \\beta, \\gamma$ なら $\\alpha + \\beta + \\gamma = -p$、$\\alpha \\beta + \\beta \\gamma + \\gamma \\alpha = q$、$\\alpha \\beta \\gamma = -r$。
+
+**「対称式の基本定理」**：$n$ 変数のあらゆる対称式は、$n$ 個の基本対称式の多項式で**一意に**書ける。だから「対称式の値」は係数だけで決まる。これは **群論・ガロア理論** の出発点でもある重要な定理——「解の置換で不変な式は、係数の式」という洞察が、後に「方程式が解けるとはどういうことか」を問う Galois 理論の核になる。
+
+**応用の広がり**：
+
+- **整数問題**：「和が $S$、積が $P$ の整数解を持つ $2$ 次方程式」のような問題で頻出
+- **物理・工学**：$2$ 次の特性方程式（バネ・LCR 回路など）の解の和・積から、減衰率・固有周波数・時定数を読む
+- **数値計算**：高次方程式の数値解を出す前に、解の和・積で「解の大体の位置」を見積もる
+- **多項式の対称性**：対称関数論・表現論への入口
+
+**[判別式] との関係**：$D = b^2 - 4 a c$ は、実は対称式の言葉で書ける——$D / a^2 = (\\alpha - \\beta)^2$ そのもの（Step 7 の式 $(\\alpha + \\beta)^2 - 4 \\alpha \\beta = b^2/a^2 - 4 c/a$ を変形）。**判別式 $\\geq 0$ ⟺ $(\\alpha - \\beta)^2 \\geq 0$ ⟺ 異なる実数解 or 重解**——判別式と解と係数の関係は、$(\\alpha - \\beta)^2$ という $1$ つの対称式で結ばれている。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 第 $2$ 章「複素数と方程式」§ $4$「解と係数の関係」の節構成（和と積の公式 → 対称式 → 解 → 係数の逆向き → パラメータ問題）を参考。問題の値はオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「$2$ 解を求めずに、解にまつわる情報はどこまで読める？」——その答えが、
+
+**解の対称な情報は、すべて $\\alpha + \\beta = -b/a$、$\\alpha \\beta = c/a$ の組み合わせで書ける——だから係数だけで読める。**
+
+$\\alpha^2 + \\beta^2$ も $(\\alpha - \\beta)^2$ も $\\alpha^3 + \\beta^3$ も、解 $\\alpha, \\beta$ そのものを出さずに係数から計算できる。さらに逆向きに使えば、解から方程式を復元したり、解を加工した新しい方程式を作ったり、パラメータを調整して解の対称式を狙い撃ちしたり——**係数と対称式の対応を双方向に往復する力**が、この単元で身につきます。$n$ 次への拡張（Vieta の公式）と「対称式の基本定理」を経由して、最終的にはガロア理論にまで続く深い射程の入口。`,
+};
+
 /* ===== LO1: 軌跡 ===== */
 export const ADV_LOCUS_SERIES: LearnerSeries = {
   id: "adv_locus_01",
@@ -5419,6 +5837,7 @@ $y = 2 t x - t^2$ のように **パラメータ $t$ を含む直線** が、$t$
  *
  * 数Ⅱ・B 複素数と方程式:
  *   1. 新しい数を作る → 2. 2 次方程式の実数解 → 3. 2 次方程式の解と因数分解
+ *   → 4. 解と係数の関係
  *
  * 数Ⅱ・B 図形と方程式（入口から順に）:
  *   1. 数直線上の点 → 2. 直線 → 3. 点と直線の距離 → 4. 円 → 5. 円と直線
@@ -5433,6 +5852,7 @@ export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
   ADV_COMPLEX_FACTORIZATION_SERIES,
+  ADV_COMPLEX_ROOT_COEFFICIENT_SERIES,
   // 数Ⅱ・B 図形と方程式
   ADV_NUMBER_LINE_SERIES,
   ADV_LINE_EQUATION_SERIES,

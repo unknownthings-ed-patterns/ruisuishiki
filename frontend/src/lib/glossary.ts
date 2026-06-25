@@ -532,7 +532,7 @@ $$a x^2 - a (\\alpha + \\beta) x + a \\alpha \\beta = 0$$
 - **整数問題**：与えられた和と積を持つ整数解を探す`,
     relatedTerms: `- [判別式]：解の個数を見抜く道具（こちらは和と積）
 - [因数分解]：解 $\\alpha, \\beta$ から $(x - \\alpha)(x - \\beta)$ を作る`,
-    relatedSeriesId: "algebra_quad_sum_01",
+    relatedSeriesId: "adv_complex_root_coefficient_01",
   },
   因数分解: {
     reading: "いんすうぶんかい",

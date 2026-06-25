@@ -44,6 +44,7 @@ import {
   ADV_COMPLEX_FACTORIZATION_SERIES,
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
+  ADV_COMPLEX_ROOT_COEFFICIENT_SERIES,
   ADV_LINEAR_PROGRAMMING_SERIES,
   ADV_LOCUS_SERIES,
   ADV_PARAMETRIC_SERIES,
@@ -388,6 +389,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "複素数と方程式",
     shortDescription: "2 次方程式の解と因数分解 — ax² + bx + c = a(x − α)(x − β) と解と係数の関係",
+  },
+  {
+    series: ADV_COMPLEX_ROOT_COEFFICIENT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "複素数と方程式",
+    shortDescription: "解と係数の関係 — 解を出さずに対称式・逆向き・パラメータ問題まで",
   },
   /* 数Ⅱ: 図形と方程式（入口から順に） */
   {

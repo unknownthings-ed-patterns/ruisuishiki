@@ -1612,6 +1612,253 @@ export function FactorStep5() {
 }
 
 /**
+ * 解と係数の関係 Step 1：因数分解 → 展開 → 係数比較 の流れ図。
+ * 答え（α + β = 7、αβ = 12）は描かない。「? = 7」「? = 12」とせず、
+ * 比較で結びつく構造だけを示す。
+ */
+export function VietaStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 次方程式 → 因数分解 → 展開 → 係数比較 の流れ図"
+    >
+      <defs>
+        <marker id="vieta1-arr" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L5,10 L10,0 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* 元の式 */}
+      <text x="160" y="26" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x² − 7x + 12 = 0
+      </text>
+
+      {/* 矢印 + 因数分解 */}
+      <line x1="160" y1="40" x2="160" y2="70" stroke={muted} strokeWidth="1" markerEnd="url(#vieta1-arr)" />
+      <text x="170" y="59" fontSize="11" fill={muted} fontStyle="italic">因数分解</text>
+
+      {/* 因数分解形 */}
+      <text x="160" y="96" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (x − α)(x − β) = 0
+      </text>
+
+      {/* 矢印 + 展開 */}
+      <line x1="160" y1="110" x2="160" y2="140" stroke={muted} strokeWidth="1" markerEnd="url(#vieta1-arr)" />
+      <text x="170" y="129" fontSize="11" fill={muted} fontStyle="italic">展開</text>
+
+      {/* 展開形 */}
+      <text x="160" y="166" fontSize="15" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        x² − (α + β) x + α β = 0
+      </text>
+
+      {/* 係数比較の点線 */}
+      <line x1="40" y1="186" x2="280" y2="186" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+      <text x="160" y="200" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        ↑ 係数を比較すると ↑
+      </text>
+
+      {/* 比較結果（値は未知のまま） */}
+      <text x="160" y="226" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        α + β = −(−7),   α β = 12
+      </text>
+      <text x="160" y="248" fontSize="10" fill={muted} textAnchor="middle">
+        x の係数を符号反転、定数項そのまま（a = 1 のとき）
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 解と係数の関係 Step 4：a = 1 と a ≠ 1 の対比表。
+ * 「a で割る」一手間が加わることを強調。具体値（α + β = 4）は描かない。
+ */
+export function VietaStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="モニック（a = 1）と非モニック（a ≠ 1）の対比：解と係数の関係に a で割る一手間が加わる"
+    >
+      {/* モニック側 */}
+      <text x="14" y="32" fontSize="12" fill={muted} fontStyle="italic">
+        モニック（a = 1）:
+      </text>
+      <text x="14" y="56" fontSize="14" fill={stroke} fontStyle="italic">
+        x² + bx + c = 0
+      </text>
+      <text x="14" y="80" fontSize="13" fill={stroke} fontStyle="italic">
+        α + β = −b,   α β = c
+      </text>
+
+      <line x1="14" y1="100" x2="306" y2="100" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+
+      {/* 非モニック側 */}
+      <text x="14" y="124" fontSize="12" fill={muted} fontStyle="italic">
+        一般（a ≠ 1）:
+      </text>
+      <text x="14" y="148" fontSize="14" fill={stroke} fontStyle="italic">
+        ax² + bx + c = 0
+      </text>
+      <text x="14" y="174" fontSize="13" fill={accent} fontStyle="italic" fontWeight="700">
+        α + β = −b/a,   α β = c/a
+      </text>
+
+      <text x="14" y="200" fontSize="10" fill={muted} fontStyle="italic">
+        x² の係数 a で割る一手間が加わる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 解と係数の関係 Step 5：α² + β² = (α+β)² − 2αβ の幾何的視覚化。
+ * 大きな正方形 (α+β)² の中に α², β² と 2 つの αβ 長方形が並ぶ
+ * 「正方形分解」図。具体的な値（21）は描かない。
+ */
+export function VietaStep5() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillAB = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const fillAA = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  // 正方形 (α+β)² を 4 つに分割
+  // 簡略化のため α : β = 3 : 2 で図示
+  const Ox = 60;
+  const Oy = 40;
+  const aSize = 90;
+  const bSize = 60;
+  const total = aSize + bSize;
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="(α+β)² を α², αβ, αβ, β² の 4 つに分割した正方形図。2 つの αβ を引くと α² + β² が残る"
+    >
+      {/* 大正方形の輪郭 */}
+      <rect x={Ox} y={Oy} width={total} height={total} fill="none" stroke={stroke} strokeWidth="1" />
+
+      {/* α² の正方形（左上） */}
+      <rect x={Ox} y={Oy} width={aSize} height={aSize} fill={fillAA} stroke={stroke} strokeWidth="0.6" />
+      <text x={Ox + aSize / 2} y={Oy + aSize / 2 + 5} fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        α²
+      </text>
+
+      {/* αβ の長方形（右上） */}
+      <rect x={Ox + aSize} y={Oy} width={bSize} height={aSize} fill={fillAB} stroke={stroke} strokeWidth="0.6" />
+      <text x={Ox + aSize + bSize / 2} y={Oy + aSize / 2 + 5} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        α β
+      </text>
+
+      {/* αβ の長方形（左下） */}
+      <rect x={Ox} y={Oy + aSize} width={aSize} height={bSize} fill={fillAB} stroke={stroke} strokeWidth="0.6" />
+      <text x={Ox + aSize / 2} y={Oy + aSize + bSize / 2 + 5} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        α β
+      </text>
+
+      {/* β² の正方形（右下） */}
+      <rect x={Ox + aSize} y={Oy + aSize} width={bSize} height={bSize} fill={fillAA} stroke={stroke} strokeWidth="0.6" />
+      <text x={Ox + aSize + bSize / 2} y={Oy + aSize + bSize / 2 + 5} fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        β²
+      </text>
+
+      {/* 外側ラベル：α と β */}
+      <text x={Ox + aSize / 2} y={Oy - 8} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">α</text>
+      <text x={Ox + aSize + bSize / 2} y={Oy - 8} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">β</text>
+      <text x={Ox - 12} y={Oy + aSize / 2 + 4} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">α</text>
+      <text x={Ox - 12} y={Oy + aSize + bSize / 2 + 4} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">β</text>
+
+      {/* 上側の総辺ラベル */}
+      <text x={Ox + total / 2} y={Oy + total + 18} fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">
+        辺の長さ：α + β
+      </text>
+
+      {/* 注記 */}
+      <text x="14" y="246" fontSize="11" fill={muted} fontStyle="italic">
+        (α + β)² の正方形から αβ 2 つを引くと α² + β² が残る
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 解と係数の関係 Step 8：解 → 方程式の逆向き図。
+ * 「解 3, 5」→ α + β, αβ → 方程式 x² + bx + c = 0 の流れ。
+ * 答え（c = 15）は描かない。「c = ?」のまま。
+ */
+export function VietaStep8() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 解 3, 5 から x² + bx + c = 0 を逆向きに作る流れ図"
+    >
+      <defs>
+        <marker id="vieta8-arr" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L5,10 L10,0 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* 数直線（解の可視化） */}
+      <line x1="40" y1="40" x2="280" y2="40" stroke={muted} strokeWidth="1" />
+      {/* 目盛り 0, 3, 5 */}
+      {[0, 3, 5].map((v) => {
+        const x = 40 + v * 36;
+        return (
+          <g key={v}>
+            <line x1={x} y1="36" x2={x} y2="44" stroke={muted} strokeWidth="0.6" />
+            <text x={x} y="58" fontSize="10" fill={muted} textAnchor="middle">{v}</text>
+          </g>
+        );
+      })}
+      {/* 解 3, 5 の accent ドット */}
+      <circle cx={40 + 3 * 36} cy="40" r="4.5" fill={accent} />
+      <circle cx={40 + 5 * 36} cy="40" r="4.5" fill={accent} />
+      <text x={40 + 3 * 36} y="28" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">α</text>
+      <text x={40 + 5 * 36} y="28" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">β</text>
+
+      {/* 矢印 ↓ */}
+      <line x1="160" y1="78" x2="160" y2="106" stroke={muted} strokeWidth="1" markerEnd="url(#vieta8-arr)" />
+      <text x="170" y="96" fontSize="10" fill={muted} fontStyle="italic">和と積を計算</text>
+
+      {/* 和と積 */}
+      <text x="160" y="128" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        α + β = 3 + 5,   α β = 3 · 5
+      </text>
+
+      {/* 矢印 ↓ */}
+      <line x1="160" y1="142" x2="160" y2="166" stroke={muted} strokeWidth="1" markerEnd="url(#vieta8-arr)" />
+      <text x="170" y="158" fontSize="10" fill={muted} fontStyle="italic">−(α+β), αβ を係数に</text>
+
+      {/* 方程式（c は未知のまま） */}
+      <text x="160" y="190" fontSize="15" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        x² + b x + c = 0
+      </text>
+      <text x="160" y="210" fontSize="10" fill={muted} textAnchor="middle">
+        b と c をそれぞれ係数として読む
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 軌跡 Step 1：原点 O を中心とする円（条件 OP = r、変数 r で抽象的に表示）。
  * 具体的な r 値や答え（N = 9）は描かない。
  */
@@ -6181,6 +6428,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <FactorStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<VIETA_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <VietaStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<VIETA_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <VietaStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<VIETA_STEP5>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <VietaStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<VIETA_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <VietaStep8 />
             </div>
           );
         }

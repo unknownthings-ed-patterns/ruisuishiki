@@ -30,7 +30,7 @@ export type PatternId =
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
-  | "BD1" | "CN1" | "CN2" | "CN3"
+  | "BD1" | "CN1" | "CN2" | "CN3" | "CN4"
   | "LO1" | "PA1" | "RG1" | "LP1";
 
 /**
@@ -1158,6 +1158,30 @@ const LO1: PatternSpec = {
 };
 
 /**
+ * CN4: 解と係数の関係 — 2 次方程式 ax² + bx + c = 0 の 2 解 α, β について
+ * α + β = -b/a、αβ = c/a。解を求めずに対称式を読む、解→係数の逆向き、
+ * 解の平行移動、パラメータ問題（差の対称式）などを扱う系列。
+ */
+const CN4: PatternSpec = {
+  id: "CN4",
+  unit: "advanced",
+  naturalLanguage:
+    "解と係数の関係（α + β = -b/a, αβ = c/a）と対称式・逆向き・パラメータ問題",
+  formulaTemplate: "α + β = -b/a, αβ = c/a; 対称式は和と積で表す",
+  variables: [
+    { name: "a", role: "x² の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "x の係数", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "result", role: "問われている値（和 / 積 / 対称式 / 係数 / k）", unknown: true, domain: { kind: "integer", min: -200, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: -k.b / k.a,
+  }),
+};
+
+/**
  * CN3: 2 次方程式の解と因数分解 — 解 α, β を求めれば
  * ax² + bx + c = a(x - α)(x - β) と確実に因数分解できる。
  * 問題では α + β（= -b/a）または α β（= c/a）を問う。
@@ -1349,7 +1373,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1, CN2, CN3,
+  BD1, CN1, CN2, CN3, CN4,
   LO1, PA1, RG1, LP1,
 };
 
@@ -1369,7 +1393,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1, CN2, CN3,
+  BD1, CN1, CN2, CN3, CN4,
   LO1, PA1, RG1, LP1,
 ];
 
