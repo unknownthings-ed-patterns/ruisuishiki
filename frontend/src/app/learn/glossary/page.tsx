@@ -49,7 +49,16 @@ function GlossaryPageContent() {
   const params = useSearchParams();
   const term = params.get("term");
   const entry = term ? GLOSSARY[term] : undefined;
-  const allTerms = useMemo(() => Object.keys(GLOSSARY).sort(), []);
+  // 読み（reading）順でソート。reading 未設定なら key 文字列で fallback。
+  // JS の Intl.Collator で日本語ロケール比較を使い、ひらがな・カタカナを同等に扱う。
+  const allTerms = useMemo(() => {
+    const collator = new Intl.Collator("ja", { sensitivity: "base" });
+    return Object.keys(GLOSSARY).sort((a, b) => {
+      const ra = GLOSSARY[a].reading ?? a;
+      const rb = GLOSSARY[b].reading ?? b;
+      return collator.compare(ra, rb);
+    });
+  }, []);
 
   return (
     <main
