@@ -31,7 +31,7 @@ export type PatternId =
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
   | "BD1" | "CN1" | "CN2" | "CN3"
-  | "LO1" | "PA1";
+  | "LO1" | "PA1" | "RG1";
 
 /**
  * 変数の意味的役割。
@@ -1066,6 +1066,29 @@ const LN8: PatternSpec = {
 };
 
 /**
+ * RG1: 領域 — 不等式が表す平面の領域。等式が描く境界線を、
+ * 不等号は「どちら側の広がり」へと育てる。直線（上下／左右）・
+ * 円（内外＝距離条件）・連立（共通部分）・領域から不等式を読む（逆）。
+ */
+const RG1: PatternSpec = {
+  id: "RG1",
+  unit: "advanced",
+  naturalLanguage: "不等式 y > f(x) / x > k / (x-a)² + (y-b)² < r² が表す領域",
+  formulaTemplate: "境界（等式）→ 不等号の向き → 領域",
+  variables: [
+    { name: "a", role: "境界の係数 / 中心 x", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "b", role: "境界の係数 / 中心 y", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "境界の定数 / 半径", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "result", role: "問われている値（境界値 N / 不等式の係数 / 連立の下限など）", unknown: true, domain: { kind: "integer", min: -100, max: 100 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.a + k.c,
+  }),
+};
+
+/**
  * PA1: 媒介変数表示 — x = f(t), y = g(t) で動く点を記述し、
  * t を消去して軌跡の方程式に戻す。または変域を考える。
  */
@@ -1304,7 +1327,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1, PA1,
+  LO1, PA1, RG1,
 };
 
 export const PATTERN_LIST: PatternSpec[] = [
@@ -1324,7 +1347,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
   BD1, CN1, CN2, CN3,
-  LO1, PA1,
+  LO1, PA1, RG1,
 ];
 
 export const CONTEXT_CATEGORIES = [

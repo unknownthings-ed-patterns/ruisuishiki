@@ -2176,6 +2176,345 @@ export function ParametricStep10() {
 }
 
 /**
+ * 領域 Step 1：直線 y = x + 1 の上側の領域。
+ * 境界（直線）は破線（不等号 > なので含まない）、上側を網掛けで示す。
+ * 問われている境界値 N は描かない。
+ */
+export function RegionStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const Ox = 60;
+  const Oy = 200;
+  const xScale = 30;
+  const yScale = 18;
+  // 直線 y = x + 1、x = -1..7
+  const Px = (xi: number) => Ox + xi * xScale;
+  const Py = (yi: number) => Oy - yi * yScale;
+  // 領域多角形（上側）：(-1,0), (-1, 10), (7, 10), (7, 8)
+  const polyPts = [
+    `${Px(-1)},${Py(0)}`,
+    `${Px(-1)},${Py(10)}`,
+    `${Px(7)},${Py(10)}`,
+    `${Px(7)},${Py(8)}`,
+  ].join(" ");
+  // 直線サンプル
+  const lineSamples: string[] = [];
+  for (let xi = -1; xi <= 7; xi += 0.2) {
+    lineSamples.push(`${Px(xi).toFixed(1)},${Py(xi + 1).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="直線 y = x + 1 の上側の領域。境界は破線、上側を網掛けで表示"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 領域（網掛け） */}
+      <polygon points={polyPts} fill={fillColor} />
+
+      {/* 境界の直線（破線：不等号 > なので含まない） */}
+      <polyline
+        points={lineSamples.join(" ")}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="5,3"
+      />
+
+      {/* 「上側」の矢印（領域の中の点に置く） */}
+      <text x={Px(3) - 14} y={Py(6)} fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">
+        y &gt; x + 1
+      </text>
+
+      {/* 直線ラベル */}
+      <text x={Px(5.5) + 4} y={Py(6.5) + 4} fontSize="11" fill={muted} fontStyle="italic">
+        y = x + 1
+      </text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        直線が境界、不等号 &gt; は上側の広がりを選ぶ
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 領域 Step 4：縦の直線 x = 3 の右側の領域（x > 3）。
+ * 「上下」が「左右」に変わる質的変化を可視化。
+ */
+export function RegionStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const Ox = 60;
+  const Oy = 130;
+  const xScale = 28;
+  const yScale = 14;
+  const Px = (xi: number) => Ox + xi * xScale;
+  const Py = (yi: number) => Oy - yi * yScale;
+  // 領域多角形（右側）
+  const polyPts = [
+    `${Px(3)},${Py(-7)}`,
+    `${Px(3)},${Py(7)}`,
+    `${Px(8.5)},${Py(7)}`,
+    `${Px(8.5)},${Py(-7)}`,
+  ].join(" ");
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="縦の直線 x = 3 の右側の領域。上下ではなく左右の領域として現れる"
+    >
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 領域 */}
+      <polygon points={polyPts} fill={fillColor} />
+
+      {/* 境界の縦線（破線） */}
+      <line
+        x1={Px(3)}
+        y1={Py(7)}
+        x2={Px(3)}
+        y2={Py(-7)}
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="5,3"
+      />
+
+      {/* x = 3 ラベル */}
+      <text x={Px(3) - 36} y={Py(6)} fontSize="11" fill={muted} fontStyle="italic">
+        x = 3
+      </text>
+
+      {/* 「右側」表示 */}
+      <text x={Px(5.5)} y={Py(0) + 4} fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">
+        x &gt; 3
+      </text>
+
+      {/* 左右の矢印 */}
+      <text x={Px(1)} y={Py(-5)} fontSize="10" fill={muted}>← 左側</text>
+      <text x={Px(5)} y={Py(-5)} fontSize="10" fill={muted}>右側 →</text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        縦線 x = 3 の境界——上下はあいまい、左右で区別する
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 領域 Step 8：円 x² + y² = 9 の外側の領域。
+ * 「距離 OP > 3」として距離条件で読み解く質的変化。
+ */
+export function RegionStep8() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillOuter = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const Ox = 160;
+  const Oy = 130;
+  const scale = 22;
+  const Cx = Ox;
+  const Cy = Oy;
+  const r = 3 * scale;
+  // サンプル点 P at (4, 0) を中心からの矢印として
+  const Pangle = -Math.PI / 4;
+  const Px = Cx + 4 * scale * Math.cos(Pangle);
+  const Py = Cy + 4 * scale * Math.sin(Pangle);
+  // ビューポート外周の正方形からくり抜きで「外側」を表す
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円 x² + y² = 9 の外側の領域。距離 OP > 3 として読む"
+    >
+      {/* 外側網掛け（円の外を fillOuter で塗る） */}
+      <defs>
+        <mask id="region-outside-circle">
+          <rect x="0" y="0" width="320" height="240" fill="white" />
+          <circle cx={Cx} cy={Cy} r={r} fill="black" />
+        </mask>
+      </defs>
+      <rect
+        x="20"
+        y="20"
+        width="280"
+        height="200"
+        fill={fillOuter}
+        mask="url(#region-outside-circle)"
+      />
+
+      {/* 軸 */}
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="230" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* 境界の円（破線） */}
+      <circle
+        cx={Cx}
+        cy={Cy}
+        r={r}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="5,3"
+      />
+
+      {/* 中心 O */}
+      <circle cx={Cx} cy={Cy} r="2.5" fill={muted} />
+      <text x={Cx - 10} y={Cy + 14} fontSize="10" fill={muted} fontStyle="italic">O</text>
+
+      {/* OP の矢印（半径 4 の位置に P） */}
+      <line x1={Cx} y1={Cy} x2={Px} y2={Py} stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <circle cx={Px} cy={Py} r="3.5" fill={accent} />
+      <text x={Px + 6} y={Py + 4} fontSize="11" fill={accent} fontWeight="600" fontStyle="italic">P</text>
+
+      {/* OP > 3 ラベル */}
+      <text x={(Cx + Px) / 2 - 6} y={(Cy + Py) / 2 - 6} fontSize="10" fill={accent} fontStyle="italic">
+        OP &gt; 3
+      </text>
+
+      {/* x² + y² > 9 表示 */}
+      <text x="38" y="56" fontSize="12" fill={accent} fontStyle="italic" fontWeight="600">
+        x² + y² &gt; 9
+      </text>
+      <text x="38" y="72" fontSize="10" fill={muted}>
+        ⟺ OP &gt; 3 ⟺ 円の外側
+      </text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        円が境界、不等式は『中心からの距離 vs 半径』で読む
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 領域 Step 10：連立 {x² + y² < 25, y > x − 1} の領域。
+ * 円の内側 ∩ 直線の上側 = 共通部分（複合）。
+ */
+export function RegionStep10() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillCircle = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const fillCommon = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  const Ox = 160;
+  const Oy = 130;
+  const scale = 18;
+  const Cx = Ox;
+  const Cy = Oy;
+  const r = 5 * scale;
+  const Px = (xi: number) => Ox + xi * scale;
+  const Py = (yi: number) => Oy - yi * scale;
+  // 円 x²+y² < 25 の内側
+  // 直線 y = x − 1 の上側
+  // 共通部分は概ね、円の内側で y > x − 1 を満たす部分
+  // SVG では clip-path で「円の内側」と「直線の上側半平面」の積を描く
+  // 直線サンプル
+  const lineSamples: string[] = [];
+  for (let xi = -5.5; xi <= 5.5; xi += 0.2) {
+    lineSamples.push(`${Px(xi).toFixed(1)},${Py(xi - 1).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="連立 x² + y² < 25 かつ y > x − 1 の領域。円の内側と直線の上側の共通部分"
+    >
+      {/* 軸 */}
+      <line x1="20" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={Ox} y1="20" x2={Ox} y2="250" stroke={muted} strokeWidth="0.5" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="22" fontSize="10" fill={muted}>y</text>
+
+      {/* clip-path: 円の内側 */}
+      <defs>
+        <clipPath id="region-step10-circle-clip">
+          <circle cx={Cx} cy={Cy} r={r} />
+        </clipPath>
+      </defs>
+
+      {/* 円の内側（薄い fill） */}
+      <circle cx={Cx} cy={Cy} r={r} fill={fillCircle} />
+
+      {/* 共通部分（円の内側で直線の上側）を polygon でクリップ */}
+      {(() => {
+        // 直線 y = x − 1 から上を多角形でクリップ → 円との交わり
+        // 多角形：(−5.5, −4.5)→(−5.5, 6)→(5.5, 6)→(5.5, 4.5) で直線の上側半平面
+        const pts = [
+          `${Px(-5.5)},${Py(-4.5)}`,
+          `${Px(-5.5)},${Py(7)}`,
+          `${Px(5.5)},${Py(7)}`,
+          `${Px(5.5)},${Py(4.5)}`,
+        ].join(" ");
+        return (
+          <polygon
+            points={pts}
+            fill={fillCommon}
+            clipPath="url(#region-step10-circle-clip)"
+          />
+        );
+      })()}
+
+      {/* 境界の円（破線） */}
+      <circle
+        cx={Cx}
+        cy={Cy}
+        r={r}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="5,3"
+      />
+
+      {/* 境界の直線（破線） */}
+      <polyline
+        points={lineSamples.join(" ")}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="5,3"
+      />
+
+      {/* ラベル */}
+      <text x="34" y="50" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        x² + y² &lt; 25
+      </text>
+      <text x="34" y="66" fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">
+        かつ y &gt; x − 1
+      </text>
+      <text x="34" y="82" fontSize="10" fill={muted}>
+        ＝ 円の内側 ∩ 直線の上側
+      </text>
+
+      <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
+        連立は『共通部分』——内外と上下を組み合わせる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 新しい数を作る Step 8：ルートの計算規則の落とし穴。
  * 答え（-6）は描かない。
  */
@@ -5579,6 +5918,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ParametricStep10 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REGION_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RegionStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REGION_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RegionStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REGION_STEP8>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RegionStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REGION_STEP10>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RegionStep10 />
             </div>
           );
         }

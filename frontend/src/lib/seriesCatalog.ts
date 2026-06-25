@@ -46,6 +46,7 @@ import {
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,
   ADV_LOCUS_SERIES,
   ADV_PARAMETRIC_SERIES,
+  ADV_REGION_SERIES,
   ADV_CIRCLE_LINE_SERIES,
   ADV_CIRCLE_TANGENT_SERIES,
   ADV_LINE_EQUATION_SERIES,
@@ -450,6 +451,13 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "図形と方程式",
     shortDescription: "媒介変数表示 — y = f(x) の枠を超えて、動く点を t を経由して記述する",
+  },
+  {
+    series: ADV_REGION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "図形と方程式",
+    shortDescription: "領域 — 等式が境界線、不等号は『どちら側の広がり』を選ぶ",
   },
   /* 数Ⅱ: 三角関数 */
   {
