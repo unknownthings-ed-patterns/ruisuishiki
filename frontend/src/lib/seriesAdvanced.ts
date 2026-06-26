@@ -511,9 +511,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 3, unit: "", unknownLabel: "傾き",
       variationFromPrevious: null, compareWithStepId: null,
       hints: [
-        { layer: 1, text: "傾き $= \\dfrac{y\\text{ の差}}{x\\text{ の差}}$。" },
-        { layer: 2, text: "$\\dfrac{8 - 2}{3 - 1} = \\dfrac{6}{2}$。" },
-        { layer: 3, text: "$3$。" },
+        { layer: 1, text: "2 点を結ぶ直線の「かたむき」を数にするには、何を見ればいい？ $x$ が進むあいだに $y$ がどれだけ上がるか——その割合を考えてみよう。" },
+        { layer: 2, text: "$x$ は $1$ から $3$ へ、$y$ は $2$ から $8$ へ。$x$ の増えぶんと $y$ の増えぶん、それぞれいくつ？ その比がかたむき。" },
+        { layer: 3, text: "かたむき＝$y$ の差 ÷ $x$ の差 ＝ $\\dfrac{y_2 - y_1}{x_2 - x_1}$。$\\dfrac{8 - 2}{3 - 1} = 3$。$x$ が $1$ 進むごとに $y$ が $3$ 上がるという意味。" },
       ],
       formulaPreview: "(8−2)/(3−1) = 3",
       figureMarker: "<<TWO_POINTS_LINE>>",
@@ -524,9 +524,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 2, unit: "", unknownLabel: "傾き",
       variationFromPrevious: "same", compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "$\\dfrac{y\\text{ の差}}{x\\text{ の差}}$。" },
-        { layer: 2, text: "$\\dfrac{11 - 5}{5 - 2} = \\dfrac{6}{3}$。" },
-        { layer: 3, text: "$2$。" },
+        { layer: 1, text: "前題（傾きを出す）と比べてみよう。やることは同じ「$y$ の差 ÷ $x$ の差」。変わったのは？" },
+        { layer: 2, text: "前題と同じく差の比。座標だけ $(2,5),(5,11)$ に変わった。$y$ の増えぶん・$x$ の増えぶんは？" },
+        { layer: 3, text: "前題と同じ。$\\dfrac{11 - 5}{5 - 2} = 2$。" },
       ],
       formulaPreview: "(11−5)/(5−2) = 2",
     },
@@ -536,9 +536,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: -2, unit: "", unknownLabel: "傾き",
       variationFromPrevious: "same", compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "符号にも注意。" },
-        { layer: 2, text: "$\\dfrac{-2 - 4}{3 - 0} = \\dfrac{-6}{3}$。" },
-        { layer: 3, text: "$-2$。" },
+        { layer: 1, text: "前題と比べてみよう。同じく傾き。今回は $y$ が $4$ から $-2$ へ下がっている——傾きの符号はどうなりそう？" },
+        { layer: 2, text: "$y$ が減って $x$ が増えると、差の比はプラス？マイナス？ 右下がりの直線をイメージして。" },
+        { layer: 3, text: "$\\dfrac{-2 - 4}{3 - 0} = \\dfrac{-6}{3} = -2$。$y$ が下がる分、傾きは負——右下がりの直線。" },
       ],
       formulaPreview: "(−2−4)/(3−0) = −2",
     },
@@ -548,9 +548,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: -1, unit: "", unknownLabel: "y 切片",
       variationFromPrevious: "plus_alpha", compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "傾き $m = 3$（step 1）。次に $y = mx + n$ に1点を代入。" },
-        { layer: 2, text: "$(1, 2)$ を入れて $2 = 3 \\cdot 1 + n$。" },
-        { layer: 3, text: "$n = -1$。" },
+        { layer: 1, text: "座標は step1（$(1,2),(3,8)$）と同じ。でも今度は「傾き」でなく「$y$ 切片」を聞いている。切片は直線のどこ？" },
+        { layer: 2, text: "$y$ 切片は直線が $y$ 軸（$x=0$）と交わる高さ。step1 で傾き $3$ は分かっている。これと通る点を、直線の式にどう使う？" },
+        { layer: 3, text: "傾き $m=3$（step1）。$y = 3x + n$ に通る点 $(1,2)$ を代入して $2 = 3 \\cdot 1 + n$、$n = -1$。点と傾きが分かれば切片は出る。" },
       ],
       formulaPreview: "2 = 3·1 + n → n = −1",
     },
@@ -560,9 +560,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: -1, unit: "", unknownLabel: "y 切片",
       variationFromPrevious: "same", compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "$y = mx + n$ に点を代入。" },
-        { layer: 2, text: "$5 = 3 \\cdot 2 + n$。" },
-        { layer: 3, text: "$n = -1$。" },
+        { layer: 1, text: "前題（切片を出す）と比べてみよう。やり方は同じ。今回は最初から傾き $3$ が与えられている——前題で step1 から傾きを持ってきた手間が省けるね。" },
+        { layer: 2, text: "前題と同じく $y = mx + n$ に点を代入。$m=3$、点 $(2,5)$。何を入れる？" },
+        { layer: 3, text: "$5 = 3 \\cdot 2 + n$ より $n = -1$。前題と同じく点を代入して切片を出すだけ。" },
       ],
       formulaPreview: "5 = 6 + n → n = −1",
     },
@@ -572,9 +572,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 3, unit: "", unknownLabel: "y 切片",
       variationFromPrevious: "plus_alpha", compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "平行な直線は **傾きが同じ**。だから $m = 2$。" },
-        { layer: 2, text: "$y = 2x + n$ に $(1, 5)$ を代入：$5 = 2 + n$。" },
-        { layer: 3, text: "$n = 3$。" },
+        { layer: 1, text: "前題と比べてみよう。今回は「$y = 2x + 7$ に平行」という条件が増えた。平行な直線どうしで、変わらないものは何だろう？" },
+        { layer: 2, text: "平行＝同じ向き。だと傾きはどうなる？ 傾きが分かれば、あとは前題と同じ「点を代入して切片」。" },
+        { layer: 3, text: "平行なら傾きは同じで $m = 2$。$y = 2x + n$ に $(1,5)$ を代入して $5 = 2 \\cdot 1 + n$、$n = 3$。" },
       ],
       formulaPreview: "5 − 2·1 = 3",
     },
@@ -584,9 +584,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 4, unit: "", unknownLabel: "中点の x 座標",
       variationFromPrevious: "plus_alpha", compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "中点は両端の **平均**。" },
-        { layer: 2, text: "$\\dfrac{1 + 7}{2}$。" },
-        { layer: 3, text: "$4$。" },
+        { layer: 1, text: "ここまでは傾き・切片の話だった。今度は「中点」。2 点のちょうど真ん中の $x$ 座標は、どう出せそう？" },
+        { layer: 2, text: "真ん中＝平均。$x$ 座標 $1$ と $7$ の真ん中は？（数直線の中点と同じ発想）" },
+        { layer: 3, text: "中点は両端の平均。$\\dfrac{1 + 7}{2} = 4$。" },
       ],
       formulaPreview: "(1+7)/2 = 4",
       figureMarker: "<<MIDPOINT_STEP7>>",
@@ -597,9 +597,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 4, unit: "", unknownLabel: "中点の y 座標",
       variationFromPrevious: "same", compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "y も同じく平均。" },
-        { layer: 2, text: "$\\dfrac{5 + 3}{2}$。" },
-        { layer: 3, text: "$4$。" },
+        { layer: 1, text: "前題（中点の $x$）と比べてみよう。今度は $y$ 座標。やり方は変わる？" },
+        { layer: 2, text: "前題と同じく平均。今度は $y$ 座標 $5$ と $3$ で。$x$ と $y$ は別々に真ん中を取るだけ。" },
+        { layer: 3, text: "$\\dfrac{5 + 3}{2} = 4$。中点は $x$・$y$ をそれぞれ平均するだけ。" },
       ],
       formulaPreview: "(5+3)/2 = 4",
     },
@@ -609,9 +609,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: -0.5, unit: "", unknownLabel: "垂直な直線の傾き",
       variationFromPrevious: "inverse", compareWithStepId: "step8",
       hints: [
-        { layer: 1, text: "垂直なら $mm' = -1$。" },
-        { layer: 2, text: "$2 \\cdot m' = -1$ より $m' = -\\dfrac{1}{2}$。" },
-        { layer: 3, text: "$-\\dfrac{1}{2}$（小数だと $-0.5$）。" },
+        { layer: 1, text: "ここで「垂直」が出てきた。これまでは1本の直線の中の話。今度は2本の直線の関係——垂直な2直線の傾きには、どんな関係がありそう？" },
+        { layer: 2, text: "垂直だと、片方が急なほどもう片方はゆるい、と向きが逆になる。傾き $2$ に対して、符号と大小はどう変わりそう？" },
+        { layer: 3, text: "垂直な2直線は傾きの積が $-1$：$m \\cdot m' = -1$。$2 \\cdot m' = -1$ より $m' = -\\dfrac{1}{2}$（$-0.5$）。「ひっくり返して符号を変える」。" },
       ],
       formulaPreview: "−1 / 2 = −1/2",
       figureMarker: "<<PERP_STEP9>>",
@@ -622,9 +622,9 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 0.25, unit: "", unknownLabel: "垂直な直線の傾き",
       variationFromPrevious: "qualitative", compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "$mm' = -1$。" },
-        { layer: 2, text: "$-4 \\cdot m' = -1$ より $m' = \\dfrac{1}{4}$。" },
-        { layer: 3, text: "$\\dfrac{1}{4}$（小数だと $0.25$）。" },
+        { layer: 1, text: "前題（垂直の傾き）と比べてみよう。やり方は同じ。今回は元の傾きが $-4$ と負。垂直の傾きの符号はどうなる？" },
+        { layer: 2, text: "前題と同じ「積が $-1$」。$-4$ に何を掛ければ $-1$ になる？ 符号にも注意。" },
+        { layer: 3, text: "$-4 \\cdot m' = -1$ より $m' = \\dfrac{1}{4}$（$0.25$）。元が負なら垂直は正。前題と同じ『ひっくり返して符号を変える』。" },
       ],
       formulaPreview: "−1 / (−4) = 1/4",
     },
@@ -757,9 +757,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 6, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: null, compareWithStepId: null,
       hints: [
-        { layer: 1, text: "公式：$d = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$。" },
-        { layer: 2, text: "$\\dfrac{|3 \\cdot 1 + (-4) \\cdot 6 - 9|}{\\sqrt{9 + 16}} = \\dfrac{|-30|}{5}$。" },
-        { layer: 3, text: "$6$。" },
+        { layer: 1, text: "点から直線までの距離って、どこを測る？ 直線にまっすぐ（垂直に）降りた一番近い長さだよね。それを、垂線の足を求めずに出せないかな？" },
+        { layer: 2, text: "点の座標を直線の式の左辺に入れると、その点が直線からどれだけ「ずれて」いるかが値に出る。それが使えそう？" },
+        { layer: 3, text: "公式：$d = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$（座標を左辺に代入→絶対値→$\\sqrt{a^2+b^2}$ で割る）。$\\dfrac{|3 \\cdot 1 + (-4) \\cdot 6 - 9|}{\\sqrt{9 + 16}} = \\dfrac{|-30|}{5} = 6$。垂線の足を計算しなくていいのがミソ。" },
       ],
       formulaPreview: "|−30| / 5 = 6",
       figureMarker: "<<LINE_DIST_STEP1>>",
@@ -770,9 +770,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 5, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "原点なので、分子は $|c|$ に簡略化される。" },
-        { layer: 2, text: "$\\dfrac{|-25|}{\\sqrt{9 + 16}} = \\dfrac{25}{5}$。" },
-        { layer: 3, text: "$5$。" },
+        { layer: 1, text: "前題（点と直線の距離）と比べてみよう。やることは同じ公式。今回の点は原点 $(0,0)$——分子はどう簡単になりそう？" },
+        { layer: 2, text: "原点を代入すると $ax_0 + by_0$ が消えて、分子は $|c|$ だけ。あとは前題と同じ手順。" },
+        { layer: 3, text: "$\\dfrac{|-25|}{\\sqrt{9 + 16}} = \\dfrac{25}{5} = 5$。原点なら分子は $|c|$ に簡略化。" },
       ],
       formulaPreview: "|−25| / 5 = 5",
     },
@@ -782,9 +782,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 2, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "公式に代入。" },
-        { layer: 2, text: "$\\dfrac{|4 \\cdot 2 - 3 \\cdot 1 + 5|}{\\sqrt{16 + 9}} = \\dfrac{|10|}{5}$。" },
-        { layer: 3, text: "$2$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ距離の公式。点が原点でなく $(2,1)$ に戻った。分子には何を代入する？" },
+        { layer: 2, text: "前題と同じく点の座標を左辺へ。$4x - 3y + 5$ に $(2,1)$ を入れるとどうなる？" },
+        { layer: 3, text: "$\\dfrac{|4 \\cdot 2 - 3 \\cdot 1 + 5|}{\\sqrt{16 + 9}} = \\dfrac{|10|}{5} = 2$。" },
       ],
       formulaPreview: "|10| / 5 = 2",
     },
@@ -794,9 +794,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 1, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step3",
       hints: [
-        { layer: 1, text: "今度は分母が $\\sqrt{25+144} = 13$。" },
-        { layer: 2, text: "$\\dfrac{|5 + 12 - 30|}{13} = \\dfrac{|-13|}{13}$。" },
-        { layer: 3, text: "$1$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ公式。今回の係数は $5, 12$——分母 $\\sqrt{a^2+b^2}$ はどんな数になりそう？" },
+        { layer: 2, text: "$\\sqrt{5^2 + 12^2}$ はきれいな整数になる（ピタゴラス数 $5, 12, 13$）。分子は $(1,1)$ を代入。" },
+        { layer: 3, text: "$\\dfrac{|5 + 12 - 30|}{\\sqrt{25+144}} = \\dfrac{|-13|}{13} = 1$。係数 $5, 12$ なら分母は $13$。" },
       ],
       formulaPreview: "|−13| / 13 = 1",
     },
@@ -806,9 +806,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 3, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "原点なので分子は $|c| = 39$。" },
-        { layer: 2, text: "$\\dfrac{39}{\\sqrt{25 + 144}} = \\dfrac{39}{13}$。" },
-        { layer: 3, text: "$3$。" },
+        { layer: 1, text: "前題と比べてみよう。点が原点に戻った。分子はどうなる？ 係数はまた $5, 12$。" },
+        { layer: 2, text: "原点なので分子は $|c| = 39$。分母は前題と同じ $13$。" },
+        { layer: 3, text: "$\\dfrac{39}{\\sqrt{25 + 144}} = \\dfrac{39}{13} = 3$。" },
       ],
       formulaPreview: "39 / 13 = 3",
     },
@@ -818,9 +818,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 3, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "(3, 4, 5) の組に戻った。" },
-        { layer: 2, text: "$\\dfrac{|15|}{\\sqrt{16 + 9}} = \\dfrac{15}{5}$。" },
-        { layer: 3, text: "$3$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ手順。係数が $4, 3$ に戻った——分母は？" },
+        { layer: 2, text: "$4, 3$ なら分母は $5$（$3, 4, 5$ の組）。原点なので分子は $|15|$。" },
+        { layer: 3, text: "$\\dfrac{|15|}{\\sqrt{16 + 9}} = \\dfrac{15}{5} = 3$。" },
       ],
       formulaPreview: "|15| / 5 = 3",
     },
@@ -830,9 +830,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 1, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "$x_0 = -5$ なので $a x_0 = 3 \\cdot (-5) = -15$。" },
-        { layer: 2, text: "$\\dfrac{|-15 - 0 + 20|}{5} = \\dfrac{|5|}{5}$。" },
-        { layer: 3, text: "$1$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ公式。今回の点は $(-5, 0)$ と負の座標。分子の代入で気をつけるのは？" },
+        { layer: 2, text: "$x_0 = -5$ を入れると $a x_0 = 3 \\cdot (-5) = -15$。符号を丁寧に。あとは前題と同じ。" },
+        { layer: 3, text: "$\\dfrac{|3\\cdot(-5) - 4\\cdot0 + 20|}{\\sqrt{9+16}} = \\dfrac{|5|}{5} = 1$。負の座標は符号だけ注意。" },
       ],
       formulaPreview: "|5| / 5 = 1",
     },
@@ -842,9 +842,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 2, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "same", compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "(8, 15, 17) という新しいピタゴラスの組。" },
-        { layer: 2, text: "$\\dfrac{|-34|}{\\sqrt{64+225}} = \\dfrac{34}{17}$。" },
-        { layer: 3, text: "$2$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ手順。係数 $8, 15$ は新しい組——分母はいくつになりそう？" },
+        { layer: 2, text: "$8, 15$ もピタゴラス数で $\\sqrt{8^2+15^2}=17$。原点なので分子は $|c|$。" },
+        { layer: 3, text: "$\\dfrac{|-34|}{\\sqrt{64+225}} = \\dfrac{34}{17} = 2$。$8, 15, 17$ の組。" },
       ],
       formulaPreview: "34 / 17 = 2",
     },
@@ -854,9 +854,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 4, unit: "", unknownLabel: "距離 d",
       variationFromPrevious: "qualitative", compareWithStepId: "step8",
       hints: [
-        { layer: 1, text: "水平な直線 $y = 3$ は、一般形だと $0 \\cdot x + 1 \\cdot y - 3 = 0$。" },
-        { layer: 2, text: "$\\dfrac{|0 + 7 - 3|}{\\sqrt{0+1}} = \\dfrac{|4|}{1}$。" },
-        { layer: 3, text: "$4$。直感的にも $|y_0 - 3| = |7 - 3|$。" },
+        { layer: 1, text: "ここで直線が「$y = 3$」という水平な線に変わった。形は違うけど同じ距離の公式が使えるかな？ そもそも水平線と点の距離は、直感的にはどう測れる？" },
+        { layer: 2, text: "$y = 3$ を一般形 $ax+by+c=0$ に直すと、$a, b, c$ は何になる？ それを公式に入れれば、直感（$y$ の差）と合うか確かめられる。" },
+        { layer: 3, text: "$y = 3$ は $0\\cdot x + 1\\cdot y - 3 = 0$。$\\dfrac{|0 + 7 - 3|}{\\sqrt{0+1}} = 4$。直感の $|7 - 3|$ と一致——特別な場合も同じ公式に含まれている。" },
       ],
       formulaPreview: "|7−3| = 4",
     },
@@ -866,9 +866,9 @@ export const ADV_POINT_LINE_DISTANCE_SERIES: LearnerSeries = {
       answer: 6, unit: "", unknownLabel: "面積",
       variationFromPrevious: "qualitative", compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "直線 BC は $3x + 4y - 12 = 0$。原点 $A$ との距離は $\\dfrac{|-12|}{5} = \\dfrac{12}{5}$。" },
-        { layer: 2, text: "$BC$ の長さは $\\sqrt{16+9} = 5$。面積 $= \\dfrac{1}{2} \\cdot 5 \\cdot \\dfrac{12}{5}$。" },
-        { layer: 3, text: "$6$。（直角三角形なので $\\dfrac{1}{2} \\cdot 4 \\cdot 3$ でも同じ。）" },
+        { layer: 1, text: "問いが「距離」から「三角形の面積」に変わった。でも 3 点の座標だけで面積を出せる——これまでの距離の公式が「高さ」にどう化けそう？" },
+        { layer: 2, text: "面積＝底辺×高さ÷2。底辺を $BC$ とすると、その「高さ」は点 $A$ から直線 $BC$ までの距離。今までの公式がそのまま高さになる。" },
+        { layer: 3, text: "直線 $BC$ は $3x + 4y - 12 = 0$、$A$ との距離（高さ）は $\\dfrac{|-12|}{5} = \\dfrac{12}{5}$。$BC = \\sqrt{16+9} = 5$。面積 $= \\dfrac{1}{2}\\cdot5\\cdot\\dfrac{12}{5} = 6$（直角三角形なので $\\dfrac{1}{2}\\cdot4\\cdot3$ でも同じ）。" },
       ],
       formulaPreview: "½ · 5 · 12/5 = 6",
       figureMarker: "<<TRIANGLE_AREA_DIST>>",
@@ -1017,15 +1017,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
-        {
-          layer: 1,
-          text: "円とは「中心からの距離が等しい点の集まり」。距離 $=$ 半径 $r$。",
-        },
-        {
-          layer: 2,
-          text: "ピタゴラスから $\\sqrt{x^2 + y^2} = 3$。両辺を 2 乗すると $x^2 + y^2 = 9$。",
-        },
-        { layer: 3, text: "$N = 9$。" },
+        { layer: 1, text: "円ってどんな点の集まり？ 中心から「同じ距離（半径）」にある点が全部集まったもの——その「距離が一定」を式にできないかな？" },
+        { layer: 2, text: "原点から点 $(x,y)$ までの距離は、ピタゴラスで $\\sqrt{x^2+y^2}$。これが半径 $3$ に等しい、と書くと？" },
+        { layer: 3, text: "$\\sqrt{x^2+y^2} = 3$ の両辺を2乗して $x^2 + y^2 = 9$。だから $N = 9$。円＝中心からの距離が一定、を式にしたもの。" },
       ],
       formulaPreview: "x² + y² = 9",
       figureMarker: "<<CIRCLE_STEP1>>",
@@ -1041,9 +1035,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ形。半径だけ変わった。" },
-        { layer: 2, text: "$5^2 = 25$。" },
-        { layer: 3, text: "$N = 25$。" },
+        { layer: 1, text: "前題（原点中心の円）と比べてみよう。形は同じ $x^2+y^2=N$。変わったのは半径だけ——$N$ は何で決まる？" },
+        { layer: 2, text: "前題では半径 $3$ で $N=9$ だった。$N$ は半径の何だった？" },
+        { layer: 3, text: "$N = 5^2 = 25$。$N$ は半径の2乗。" },
       ],
       formulaPreview: "x² + y² = 25",
     },
@@ -1058,12 +1052,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        {
-          layer: 1,
-          text: "中心が動いた → $x$ が「中心からのずれ」になる $(x - a)$。",
-        },
-        { layer: 2, text: "$\\sqrt{(x-2)^2 + y^2} = 3$ → 両辺 2 乗で $9$。" },
-        { layer: 3, text: "$N = 9$。" },
+        { layer: 1, text: "前題と比べてみよう。今回は中心が原点から $(2,0)$ へ動いた。式の $x$ の部分はどう変わりそう？" },
+        { layer: 2, text: "中心が $a$ ずれると、距離は「中心からのずれ」$(x - a)$ で測る。半径 $3$ は同じ。" },
+        { layer: 3, text: "$\\sqrt{(x-2)^2 + y^2} = 3$ を2乗して $(x-2)^2 + y^2 = 9$。$N = 9$。中心のずれは $(x-a)$ で吸収。" },
       ],
       formulaPreview: "(x-2)² + y² = 9",
     },
@@ -1078,12 +1069,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step3",
       hints: [
-        {
-          layer: 1,
-          text: "中心の $y$ 座標が負 → $(y - (-2))^2 = (y + 2)^2$。",
-        },
-        { layer: 2, text: "半径 $4$ → $N = 4^2 = 16$。" },
-        { layer: 3, text: "$N = 16$。" },
+        { layer: 1, text: "前題と比べてみよう。中心の $y$ 座標が負の $-2$。$(y - b)$ の部分はどうなる？" },
+        { layer: 2, text: "$b = -2$ なら $(y - (-2)) = (y + 2)$。半径 $4$ なので $N$ は？" },
+        { layer: 3, text: "$(x-1)^2 + (y+2)^2 = 16$。$N = 4^2 = 16$。負の中心は符号が反転して $(y+2)$。" },
       ],
       formulaPreview: "(x-1)² + (y+2)² = 16",
     },
@@ -1098,15 +1086,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        {
-          layer: 1,
-          text: "半径が $\\sqrt{10}$ → 右辺は $(\\sqrt{10})^2 = 10$。",
-        },
-        {
-          layer: 2,
-          text: "中心 $(-3, 5)$ → $(x - (-3))^2 + (y - 5)^2 = (x+3)^2 + (y-5)^2$。",
-        },
-        { layer: 3, text: "$N = 10$。" },
+        { layer: 1, text: "前題と比べてみよう。今回は半径が $\\sqrt{10}$。右辺 $N$ はどうなりそう？" },
+        { layer: 2, text: "$N$ は半径の2乗だった。$(\\sqrt{10})^2$ は？ 中心 $(-3,5)$ は前題と同じ要領で。" },
+        { layer: 3, text: "$(x+3)^2 + (y-5)^2 = 10$。$N = (\\sqrt{10})^2 = 10$。ルートの半径も2乗すればきれいに。" },
       ],
       formulaPreview: "(x+3)² + (y-5)² = 10",
     },
@@ -1121,15 +1103,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step5",
       hints: [
-        {
-          layer: 1,
-          text: "直径の両端が分かれば、中心 $=$ 中点、半径 $=$ 直径 $\\div 2$。",
-        },
-        {
-          layer: 2,
-          text: "$AB = \\sqrt{(7-1)^2 + (10-2)^2} = \\sqrt{36+64} = 10$。",
-        },
-        { layer: 3, text: "半径 $= \\dfrac{AB}{2} = 5$。" },
+        { layer: 1, text: "ここで問いが変わった。今度は「直径の両端」2点が与えられている。中心と半径は、この2点からどう取り出せそう？" },
+        { layer: 2, text: "直径の両端なら、中心はその「中点」、半径は「直径の半分」。$AB$ の長さが出れば半径は？" },
+        { layer: 3, text: "$AB = \\sqrt{(7-1)^2 + (10-2)^2} = \\sqrt{36+64} = 10$。半径 $= AB \\div 2 = 5$。中心は $AB$ の中点。" },
       ],
       formulaPreview: "AB = 10, r = 5",
       figureMarker: "<<CIRCLE_STEP6>>",
@@ -1145,15 +1121,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step6",
       hints: [
-        {
-          layer: 1,
-          text: "一般形 → 平方完成 → 標準形にすると、中心と半径が現れる。",
-        },
-        {
-          layer: 2,
-          text: "$x^2 - 4x = (x-2)^2 - 4$、$y^2 + 6y = (y+3)^2 - 9$。",
-        },
-        { layer: 3, text: "$(x-2)^2 + (y+3)^2 = 25$ → 半径 $\\sqrt{25} = 5$。" },
+        { layer: 1, text: "式の形がガラッと変わった——$x^2+y^2-4x+6y-12=0$。これまでの「$(x-a)^2+(y-b)^2=r^2$」の形に直せれば中心と半径が見える。どうやって直す？" },
+        { layer: 2, text: "$x^2 - 4x$ のような形を $(x-a)^2$ のかたまりに整える（平方完成）。$x^2-4x$ は $(x-2)^2$ から何が余る？" },
+        { layer: 3, text: "$x^2-4x=(x-2)^2-4$、$y^2+6y=(y+3)^2-9$。代入して整理すると $(x-2)^2+(y+3)^2=25$。半径 $=\\sqrt{25}=5$。一般形→平方完成→標準形。" },
       ],
       formulaPreview: "(x-2)²+(y+3)² = 25, r=5",
       figureMarker: "<<CIRCLE_STEP7>>",
@@ -1169,12 +1139,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "前と同じ。平方完成で標準形に。" },
-        {
-          layer: 2,
-          text: "$(x-3)^2 - 9 + (y+4)^2 - 16 + 9 = 0$ → $(x-3)^2 + (y+4)^2 = 16$。",
-        },
-        { layer: 3, text: "半径 $= \\sqrt{16} = 4$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ平方完成で標準形に。式の数が変わっただけ——手順は同じ？" },
+        { layer: 2, text: "前題と同じく $x^2-6x$、$y^2+8y$ をそれぞれ平方完成。定数も忘れず動かす。" },
+        { layer: 3, text: "$(x-3)^2-9+(y+4)^2-16+9=0$ より $(x-3)^2+(y+4)^2=16$。半径 $=\\sqrt{16}=4$。" },
       ],
       formulaPreview: "(x-3)²+(y+4)² = 16, r=4",
     },
@@ -1189,15 +1156,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step8",
       hints: [
-        {
-          layer: 1,
-          text: "平方完成 → 標準形 $(x-a)^2 + (y-b)^2 = r^2$ の $a$ が答え。",
-        },
-        {
-          layer: 2,
-          text: "$(x+2)^2 - 4 + (y-1)^2 - 1 - 4 = 0$ → $(x+2)^2 + (y-1)^2 = 9$。",
-        },
-        { layer: 3, text: "中心 $(-2, 1)$ → $x$ 座標 $= -2$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ平方完成。今回求めるのは半径でなく「中心の $x$ 座標」——標準形のどこを読めばいい？" },
+        { layer: 2, text: "標準形 $(x-a)^2+(y-b)^2=r^2$ にすれば、中心は $(a, b)$。平方完成して $a$ を読む。" },
+        { layer: 3, text: "$(x+2)^2-4+(y-1)^2-1-4=0$ より $(x+2)^2+(y-1)^2=9$。中心 $(-2,1)$ なので $x$ 座標 $=-2$。" },
       ],
       formulaPreview: "中心 (-2, 1)",
     },
@@ -1212,12 +1173,9 @@ export const ADV_CIRCLE_EQUATION_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "ここまでと同じやり方。平方完成。" },
-        {
-          layer: 2,
-          text: "$(x-2)^2 - 4 + (y+1)^2 - 1 + 1 = 0$ → $(x-2)^2 + (y+1)^2 = 4$。",
-        },
-        { layer: 3, text: "半径 $= \\sqrt{4} = 2$。" },
+        { layer: 1, text: "前題と比べてみよう。ここまでと同じやり方（平方完成）。式の数が変わっただけ。" },
+        { layer: 2, text: "前題と同じく $x^2-4x$、$y^2+2y$ を平方完成。定数の出入りに注意。" },
+        { layer: 3, text: "$(x-2)^2-4+(y+1)^2-1+1=0$ より $(x-2)^2+(y+1)^2=4$。半径 $=\\sqrt{4}=2$。" },
       ],
       formulaPreview: "(x-2)²+(y+1)² = 4, r=2",
     },
@@ -1711,17 +1669,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
-        {
-          layer: 1,
-          text:
-            "中心 $(0, 0)$ から直線までの距離 $d$ と、半径 $r$ を比べる。",
-        },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 + 0 - 20|}{\\sqrt{16 + 9}} = \\dfrac{20}{5} = 4$、$r = 3$。$d > r$。",
-        },
-        { layer: 3, text: "$0$（離れているので共有点なし）。" },
+        { layer: 1, text: "円と直線が「離れている／接する／交わる」を、絵を描かずに見分けるには何と何を比べればいい？ 円の中心と直線の関係に注目してみよう。" },
+        { layer: 2, text: "中心から直線までの距離 $d$ と、半径 $r$ を比べたらどうだろう？ $d$ が $r$ より大きい・等しい・小さいで、位置はどう変わりそう？" },
+        { layer: 3, text: "中心 $(0,0)$ から直線への距離 $d = \\dfrac{|0+0-20|}{\\sqrt{16+9}} = \\dfrac{20}{5} = 4$、半径 $r = 3$。$d > r$ なので離れていて共有点 $0$ 個。" },
       ],
       formulaPreview: "d = 4 > r = 3 → 0 個",
     },
@@ -1736,13 +1686,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ。$d$ と $r$ を比べる。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 - 0 + 10|}{\\sqrt{9 + 16}} = \\dfrac{10}{5} = 2$、$r = 4$。$d < r$。",
-        },
-        { layer: 3, text: "$2$ 個（交わる）。" },
+        { layer: 1, text: "前題と比べてみよう。やることは同じ「$d$ と $r$ を比べる」。今回はどちらが大きい？" },
+        { layer: 2, text: "前題は $d > r$ で $0$ 個だった。今回 $d$ と $r$ を計算して大小を見ると？" },
+        { layer: 3, text: "$d = \\dfrac{|10|}{\\sqrt{9+16}} = \\dfrac{10}{5} = 2$、$r = 4$。$d < r$ なので $2$ 個（突き抜けて交わる）。" },
       ],
       formulaPreview: "d = 2 < r = 4 → 2 個",
     },
@@ -1757,13 +1703,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "$d$ と $r$ を計算。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 + 0 - 5|}{\\sqrt{1 + 4}} = \\dfrac{5}{\\sqrt{5}} = \\sqrt{5}$、$r = \\sqrt{5}$。$d = r$。",
-        },
-        { layer: 3, text: "$1$ 個（接する）。" },
+        { layer: 1, text: "前題と比べてみよう。同じく $d$ と $r$。今回ちょうど $d = r$ になったら、どんな位置？" },
+        { layer: 2, text: "$d = r$ は「ぎりぎり1点で触れる」状態。$d$ と $r$ を計算して等しいか確かめよう。" },
+        { layer: 3, text: "$d = \\dfrac{|-5|}{\\sqrt{1+4}} = \\dfrac{5}{\\sqrt{5}} = \\sqrt{5}$、$r = \\sqrt{5}$。$d = r$ なので接して $1$ 個。" },
       ],
       formulaPreview: "d = √5 = r → 1 個",
     },
@@ -1778,13 +1720,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step3",
       hints: [
-        { layer: 1, text: "$d$ と $r$ を比べる。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 + 0 - 30|}{\\sqrt{9 + 16}} = \\dfrac{30}{5} = 6$、$r = 5$。$d > r$。",
-        },
-        { layer: 3, text: "$0$ 個（離れている）。" },
+        { layer: 1, text: "前題と比べてみよう。同じ手順。今回の $d$ と $r$、どちらが大きい？" },
+        { layer: 2, text: "前題は $d=r$ で接していた。今回は計算するとどうなる？" },
+        { layer: 3, text: "$d = \\dfrac{|-30|}{\\sqrt{9+16}} = \\dfrac{30}{5} = 6$、$r = 5$。$d > r$ なので $0$ 個。" },
       ],
       formulaPreview: "d = 6 > r = 5 → 0 個",
     },
@@ -1799,13 +1737,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "$d$ と $r$ を比べる。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 - 0 + 13|}{\\sqrt{4 + 9}} = \\dfrac{13}{\\sqrt{13}} = \\sqrt{13}$、$r = \\sqrt{13}$。$d = r$。",
-        },
-        { layer: 3, text: "$1$ 個（接する）。" },
+        { layer: 1, text: "前題と比べてみよう。同じ判定。今回はまた $d = r$ になる例。確かめよう。" },
+        { layer: 2, text: "$d$ と $r$ を計算。ルートが残っても大小は比べられる。" },
+        { layer: 3, text: "$d = \\dfrac{|13|}{\\sqrt{4+9}} = \\dfrac{13}{\\sqrt{13}} = \\sqrt{13}$、$r = \\sqrt{13}$。$d = r$ で接して $1$ 個。" },
       ],
       formulaPreview: "d = √13 = r → 1 個",
     },
@@ -1820,13 +1754,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "$d$ と $r$ を比べる。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|0 + 0 - 2|}{\\sqrt{1 + 1}} = \\dfrac{2}{\\sqrt{2}} = \\sqrt{2}$、$r = \\sqrt{8} = 2\\sqrt{2}$。$\\sqrt{2} < 2\\sqrt{2}$。",
-        },
-        { layer: 3, text: "$2$ 個（交わる）。" },
+        { layer: 1, text: "前題と比べてみよう。同じ手順。今回は $d$ も $r$ もルートの形——大小はどう比べる？" },
+        { layer: 2, text: "$d$ と $r$ を出して、ルートのまま大小比較。$\\sqrt{2}$ と $2\\sqrt{2}$、どちらが大きい？" },
+        { layer: 3, text: "$d = \\dfrac{|-2|}{\\sqrt{2}} = \\sqrt{2}$、$r = \\sqrt{8} = 2\\sqrt{2}$。$\\sqrt{2} < 2\\sqrt{2}$ なので $d<r$、$2$ 個。" },
       ],
       formulaPreview: "d = √2 < r = 2√2 → 2 個",
     },
@@ -1841,13 +1771,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "中心 $(1, 0)$、半径 $2$。距離を計算。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|3 \\cdot 1 + 4 \\cdot 0 - 10|}{\\sqrt{9 + 16}} = \\dfrac{|-7|}{5} = \\dfrac{7}{5} = 1.4$、$r = 2$。",
-        },
-        { layer: 3, text: "$2$ 個（$d < r$ なので交わる）。" },
+        { layer: 1, text: "前題と比べてみよう。今回は円の中心が原点でなく $(1,0)$。$d$ の計算で何が変わる？" },
+        { layer: 2, text: "中心 $(1,0)$ を距離の公式に入れるだけ。半径は $\\sqrt{4}=2$。前題と同じく $d$ と $r$ を比べる。" },
+        { layer: 3, text: "$d = \\dfrac{|3\\cdot1 + 4\\cdot0 - 10|}{\\sqrt{9+16}} = \\dfrac{7}{5} = 1.4$、$r = 2$。$d<r$ なので $2$ 個。" },
       ],
       formulaPreview: "d = 7/5 < r = 2 → 2 個",
     },
@@ -1862,13 +1788,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "中心 $(2, 1)$、半径 $3$。距離を計算。" },
-        {
-          layer: 2,
-          text:
-            "$d = \\dfrac{|4 \\cdot 2 - 3 \\cdot 1 - 20|}{\\sqrt{16 + 9}} = \\dfrac{|-15|}{5} = 3$、$r = 3$。$d = r$。",
-        },
-        { layer: 3, text: "$1$ 個（接する）。" },
+        { layer: 1, text: "前題と比べてみよう。中心が $(2,1)$ に。やり方は同じ——$d$ を出して $r$ と比べる。" },
+        { layer: 2, text: "中心 $(2,1)$、半径 $\\sqrt{9}=3$。$d$ を計算して $3$ と比べると？" },
+        { layer: 3, text: "$d = \\dfrac{|4\\cdot2 - 3\\cdot1 - 20|}{\\sqrt{16+9}} = \\dfrac{15}{5} = 3$、$r = 3$。$d = r$ で接して $1$ 個。" },
       ],
       formulaPreview: "d = 3 = r → 1 個",
     },
@@ -1883,17 +1805,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step8",
       hints: [
-        {
-          layer: 1,
-          text:
-            "円の式に直線の $y$ を代入し、$x$ の 2 次方程式の判別式 $D$ で判定。",
-        },
-        {
-          layer: 2,
-          text:
-            "$x^2 + (2x - 5)^2 = 5$ → $5x^2 - 20x + 20 = 0$ → $x^2 - 4x + 4 = 0$ → $D/4 = 4 - 4 = 0$。",
-        },
-        { layer: 3, text: "$1$ 個（$D = 0$ なので接する）。" },
+        { layer: 1, text: "ここで別のやり方が出てくる。$d$ と $r$ ではなく、円の式に直線を代入して「共有点の $x$ を解く方程式」を作る。その解の個数は、何を見れば分かる？" },
+        { layer: 2, text: "代入してできる $x$ の2次方程式は、解の個数＝共有点の個数。2次方程式の解の個数は判別式 $D$ の符号で決まる（$D>0,=0,<0$）。" },
+        { layer: 3, text: "$x^2 + (2x-5)^2 = 5$ を整理すると $x^2 - 4x + 4 = 0$、$D/4 = 4-4 = 0$。$D=0$ なので接して $1$ 個。$d$/$r$ 法と同じ結論が代入法でも出る。" },
       ],
       formulaPreview: "D = 0 → 1 個",
     },
@@ -1908,13 +1822,9 @@ export const ADV_CIRCLE_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "代入して 2 次方程式に。判別式 $D$ で。" },
-        {
-          layer: 2,
-          text:
-            "$x^2 + (x + 3)^2 = 4$ → $2x^2 + 6x + 5 = 0$ → $D = 36 - 40 = -4 < 0$。",
-        },
-        { layer: 3, text: "$0$ 個（$D < 0$ なので共有点なし）。" },
+        { layer: 1, text: "前題と比べてみよう。同じ代入＋判別式の方法。今回の $D$ の符号は？" },
+        { layer: 2, text: "前題と同じく代入して2次方程式に。$D$ を計算して符号を見る。" },
+        { layer: 3, text: "$x^2 + (x+3)^2 = 4$ より $2x^2 + 6x + 5 = 0$、$D = 36 - 40 = -4 < 0$。$D<0$ なので共有点 $0$ 個。" },
       ],
       formulaPreview: "D = −4 < 0 → 0 個",
     },
@@ -2032,13 +1942,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
-        {
-          layer: 1,
-          text:
-            "公式：円 $x^2 + y^2 = r^2$ 上の点 $(a, b)$ における接線は $ax + by = r^2$。右辺はいつも $r^2$。",
-        },
-        { layer: 2, text: "円の式の右辺がそのまま接線の右辺。$x^2 + y^2 = 10$ の右辺は $10$。" },
-        { layer: 3, text: "$N = 10$。" },
+        { layer: 1, text: "円上の点 $P$ での接線を、接点の座標が分かれば一行で書けないかな？ 円の式 $x^2 + y^2 = r^2$ を、接点でどう「読み替える」と接線になりそう？" },
+        { layer: 2, text: "接線の右辺は、円の式の右辺とどんな関係になりそう？ $P(3,1)$ を使って $3x + y = ?$ の右辺を予想してみよう。" },
+        { layer: 3, text: "公式：円 $x^2+y^2=r^2$ 上の点 $(a,b)$ の接線は $ax + by = r^2$（$xx+yy=r^2$ の片方を $a,b$ に置き換える）。右辺は円の右辺そのままで $N = 10$。" },
       ],
       formulaPreview: "3x + y = 10",
       figureMarker: "<<CIRCLE_TANGENT_STEP1>>",
@@ -2054,9 +1960,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ公式。右辺はいつも $r^2$。" },
-        { layer: 2, text: "$x^2 + y^2 = 13$ の右辺はそのまま $13$。" },
-        { layer: 3, text: "$N = 13$。" },
+        { layer: 1, text: "前題（接線の公式）と比べてみよう。やることは同じ。右辺はいつも何だった？" },
+        { layer: 2, text: "前題で右辺は円の式の右辺（$r^2$）そのままだった。$x^2+y^2=13$ なら？" },
+        { layer: 3, text: "$N = 13$。右辺はいつも $r^2$。接点 $(2,3)$ は左辺の係数になるだけ。" },
       ],
       formulaPreview: "2x + 3y = 13",
     },
@@ -2071,9 +1977,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "接点の座標が $(4, 3)$、$r^2 = 25$。検算は $a^2 + b^2 = r^2$。" },
-        { layer: 2, text: "$4^2 + 3^2 = 16 + 9 = 25$ ✓。接点は確かに円上。右辺 = $25$。" },
-        { layer: 3, text: "$N = 25$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ公式。今回は接点が円上にあるか検算もしてみよう——どう確かめる？" },
+        { layer: 2, text: "接点 $(a,b)$ が円上なら $a^2+b^2=r^2$ が成り立つ。$(4,3)$ で確かめると？ 右辺はそのまま $25$。" },
+        { layer: 3, text: "$4^2+3^2 = 25$ ✓ で接点は円上。$N = 25$。" },
       ],
       formulaPreview: "4x + 3y = 25",
     },
@@ -2088,13 +1994,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step3",
       hints: [
-        {
-          layer: 1,
-          text:
-            "接点の $x$ 座標が **負**。それでも公式はそのまま——$a = -1, b = 4$ を $ax + by = r^2$ に入れる。",
-        },
-        { layer: 2, text: "$(-1) \\cdot x + 4 \\cdot y = 17$ → $-x + 4y = 17$。" },
-        { layer: 3, text: "$N = 17$。" },
+        { layer: 1, text: "前題と比べてみよう。今回は接点の $x$ 座標が負の $-1$。公式はそのまま使えるかな？" },
+        { layer: 2, text: "$a = -1, b = 4$ をそのまま $ax + by = r^2$ に入れるだけ。符号に注意。右辺は？" },
+        { layer: 3, text: "$(-1)x + 4y = 17$ より $-x + 4y = 17$。$N = 17$。負の座標も公式はそのまま。" },
       ],
       formulaPreview: "-x + 4y = 17",
     },
@@ -2109,9 +2011,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "$a = -2, b = 5$。公式そのまま。" },
-        { layer: 2, text: "右辺 = $r^2 = 29$。検算：$(-2)^2 + 5^2 = 4 + 25 = 29$ ✓。" },
-        { layer: 3, text: "$N = 29$。" },
+        { layer: 1, text: "前題と比べてみよう。同じく接点の $x$ が負。$a=-2, b=5$ を入れるだけ。" },
+        { layer: 2, text: "右辺は $r^2 = 29$。検算 $(-2)^2 + 5^2 = 29$ ✓。" },
+        { layer: 3, text: "$-2x + 5y = 29$。$N = 29$。" },
       ],
       formulaPreview: "-2x + 5y = 29",
     },
@@ -2126,9 +2028,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "今度は **$y$ 座標が負**。$a = 2, b = -4$。" },
-        { layer: 2, text: "$2x + (-4)y = 20$ → $2x - 4y = 20$。検算：$4 + 16 = 20$ ✓。" },
-        { layer: 3, text: "$N = 20$。" },
+        { layer: 1, text: "前題と比べてみよう。今度は $y$ 座標が負。$a=2, b=-4$。公式は変わる？" },
+        { layer: 2, text: "$2x + (-4)y = 20$ → $2x - 4y = 20$。検算 $4+16=20$ ✓。" },
+        { layer: 3, text: "$N = 20$。$y$ が負でも公式はそのまま、符号だけ注意。" },
       ],
       formulaPreview: "2x − 4y = 20",
     },
@@ -2143,9 +2045,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "$x, y$ どちらも負でも、公式は同じ。" },
-        { layer: 2, text: "$(-1)x + (-6)y = 37$ → $-x - 6y = 37$。$(-1)^2 + (-6)^2 = 1 + 36 = 37$ ✓。" },
-        { layer: 3, text: "$N = 37$。" },
+        { layer: 1, text: "前題と比べてみよう。今回は $x, y$ どちらも負。それでも公式は同じ？" },
+        { layer: 2, text: "$(-1)x + (-6)y = 37$ → $-x - 6y = 37$。検算 $1+36=37$ ✓。" },
+        { layer: 3, text: "$N = 37$。両方負でも公式そのまま。" },
       ],
       formulaPreview: "-x − 6y = 37",
     },
@@ -2160,17 +2062,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step7",
       hints: [
-        {
-          layer: 1,
-          text:
-            "接点 $(a, b)$ における接線は $ax + by = 5$。この直線が外側の点 $(3, 1)$ を通るから $3a + b = 5$。さらに $(a, b)$ は円上なので $a^2 + b^2 = 5$。",
-        },
-        {
-          layer: 2,
-          text:
-            "$b = 5 - 3a$ を $a^2 + b^2 = 5$ に代入 → $a^2 + (5-3a)^2 = 5$ → $10a^2 - 30a + 20 = 0$ → $a^2 - 3a + 2 = 0$ → $(a-1)(a-2) = 0$。",
-        },
-        { layer: 3, text: "$a = 1$ または $a = 2$。大きいほうは $a = 2$。" },
+        { layer: 1, text: "ここで問いがガラッと変わった。今度は円の「外」の点から接線を2本引く。接点 $(a,b)$ はまだ分からない——でも接点について、どんな条件が2つ立てられそう？" },
+        { layer: 2, text: "条件①：接点での接線 $ax+by=5$ が外の点 $(3,1)$ を通る → $3a+b=5$。条件②：接点は円上 → $a^2+b^2=5$。この2式を連立すれば $a$ が出る。" },
+        { layer: 3, text: "$b=5-3a$ を $a^2+b^2=5$ に代入して $a^2-3a+2=0$、$(a-1)(a-2)=0$。$a=1$ または $a=2$、大きいほうは $a=2$。接線の公式＋「接点は円上」を連立する応用。" },
       ],
       formulaPreview: "a = 1, 2（接点: (1,2), (2,-1)）",
       figureMarker: "<<CIRCLE_TANGENT_STEP8>>",
@@ -2186,17 +2080,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step8",
       hints: [
-        {
-          layer: 1,
-          text:
-            "接点で接線 $ax + by = 10$、これが $(4, 2)$ を通る → $4a + 2b = 10$。円上 → $a^2 + b^2 = 10$。",
-        },
-        {
-          layer: 2,
-          text:
-            "$b = 5 - 2a$ を代入 → $5a^2 - 20a + 15 = 0$ → $a^2 - 4a + 3 = 0$ → $(a-1)(a-3) = 0$。",
-        },
-        { layer: 3, text: "$a = 1$ または $a = 3$。大きいほうは $a = 3$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ「外の点から2本の接線」。立てる2条件は何だった？" },
+        { layer: 2, text: "前題と同じく、接線 $ax+by=10$ が $(4,2)$ を通る（$4a+2b=10$）＋接点は円上（$a^2+b^2=10$）を連立。" },
+        { layer: 3, text: "$b=5-2a$ を代入して $a^2-4a+3=0$、$(a-1)(a-3)=0$。$a=1$ または $a=3$、大きいほうは $a=3$。" },
       ],
       formulaPreview: "a = 1, 3（接点: (1,3), (3,-1)）",
       figureMarker: "<<CIRCLE_TANGENT_STEP9>>",
@@ -2212,17 +2098,9 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step9",
       hints: [
-        {
-          layer: 1,
-          text:
-            "接点で接線 $ax + by = 25$、これが $(7, 1)$ を通る → $7a + b = 25$。円上 → $a^2 + b^2 = 25$。",
-        },
-        {
-          layer: 2,
-          text:
-            "$b = 25 - 7a$ を代入 → $50a^2 - 350a + 600 = 0$ → $a^2 - 7a + 12 = 0$ → $(a-3)(a-4) = 0$。",
-        },
-        { layer: 3, text: "$a = 3$ または $a = 4$。大きいほうは $a = 4$。" },
+        { layer: 1, text: "前題と比べてみよう。同じ連立。今回は外の点が $(7,1)$、円は $x^2+y^2=25$。2条件を立てよう。" },
+        { layer: 2, text: "接線 $ax+by=25$ が $(7,1)$ を通る（$7a+b=25$）＋接点は円上（$a^2+b^2=25$）。$b=25-7a$ を代入。" },
+        { layer: 3, text: "$a^2-7a+12=0$、$(a-3)(a-4)=0$。$a=3$ または $a=4$、大きいほうは $a=4$。" },
       ],
       formulaPreview: "a = 3, 4（接点: (3,4), (4,-3)）",
       figureMarker: "<<CIRCLE_TANGENT_STEP10>>",
@@ -2370,7 +2248,7 @@ export const ADV_BUNDLE_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "**束の式 $L_1 + k L_2 = 0$ に、$P$ を代入してみよう**。$L_1, L_2$ の交点を計算する必要はある？",
+            "$2$ 直線の交点を求めずに、その交点を通る直線を作りたい。$L_1 + k L_2 = 0$ は $k$ をどう選んでも交点を通る——では、これが点 $P$ も通るには $k$ をどう決めればいい？",
         },
         {
           layer: 2,
