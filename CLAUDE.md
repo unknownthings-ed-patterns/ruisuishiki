@@ -94,6 +94,11 @@
 ### コミット前の機械チェック（最重要）
 
 ```bash
+# 0) ヒント3層の「比較の指さし」準拠を機械監査（最優先）
+python3 scripts/audit_hints.py                  # 全系列の準拠率と要修正系列の一覧
+python3 scripts/audit_hints.py seriesAdvanced.ts # 特定ファイルのみ。対象系列が ✅(L1違反=0) か確認
+# ↑ ドリフト一括是正の手順とお手本・残タスクは docs/hint_rewrite_handoff.md（Opus 引き継ぎ）
+
 # 1) ヒント Layer 1 の比較指さし検証（新規系列の hints のうち、step1 以外）
 grep -nE 'layer: 1' src/lib/seriesAdvanced.ts | head  # 該当 Layer 1 を目視で「前題と」「比べてみよう」「何が同じ／違う」のいずれかが含まれることを確認
 
