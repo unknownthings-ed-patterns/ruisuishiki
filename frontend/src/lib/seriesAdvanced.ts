@@ -512,7 +512,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 3, unit: "", unknownLabel: "傾き",
       variationFromPrevious: null, compareWithStepId: null,
       hints: [
-        { layer: 1, text: "2 点を結ぶ直線の「かたむき」を数にするには、何を見ればいい？ $x$ が進むあいだに $y$ がどれだけ上がるか——その割合を考えてみよう。" },
+        { layer: 1, text: "2 点を結ぶ直線の「かたむき」を数にするには、何を見ればいい？ $x$ が進むあいだに $y$ がどれだけ上がるか——その [割合] を考えてみよう（小5で習った割合だね）。" },
         { layer: 2, text: "$x$ は $1$ から $3$ へ、$y$ は $2$ から $8$ へ。$x$ の増えぶんと $y$ の増えぶん、それぞれいくつ？ その比がかたむき。" },
         { layer: 3, text: "かたむき＝$y$ の差 ÷ $x$ の差 ＝ $\\dfrac{y_2 - y_1}{x_2 - x_1}$。$\\dfrac{8 - 2}{3 - 1} = 3$。$x$ が $1$ 進むごとに $y$ が $3$ 上がるという意味。" },
       ],
@@ -585,7 +585,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 4, unit: "", unknownLabel: "中点の x 座標",
       variationFromPrevious: "plus_alpha", compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "ここまでは傾き・切片の話だった。今度は「中点」。2 点のちょうど真ん中の $x$ 座標は、どう出せそう？" },
+        { layer: 1, text: "ここまでは傾き・切片の話だった。今度は「中点」——[中点] は数直線でやった『2 数の [平均]』そのもの。平面では $x$ 座標だけ取り出して、どう出せそう？" },
         { layer: 2, text: "真ん中＝平均。$x$ 座標 $1$ と $7$ の真ん中は？（数直線の中点と同じ発想）" },
         { layer: 3, text: "中点は両端の平均。$\\dfrac{1 + 7}{2} = 4$。" },
       ],
@@ -1404,7 +1404,7 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       hints: [
         { layer: 1, text: "座標は前々題（$A(2), B(8)$）と同じ。でも問いが「距離」から「真ん中」に変わった。真ん中はどこにある？" },
         { layer: 2, text: "$2$ と $8$ のちょうど中央。2 つの数の「まんなかの数」は、どうやって出せそう？" },
-        { layer: 3, text: "まんなか＝平均。$2$ と $8$ を足して $2$ で割るだけ。距離は「差」、中点は「和を半分」——同じ 2 数から別の問いが立つ。" },
+        { layer: 3, text: "まんなか＝[平均]。$2$ と $8$ を足して $2$ で割るだけ。距離は「差」、中点は「和を半分」——同じ 2 数から別の問いが立つ。" },
       ],
       formulaPreview: "(2+8)/2 = 5",
     },
