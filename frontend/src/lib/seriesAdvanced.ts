@@ -1383,9 +1383,9 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
-        { layer: 1, text: "数直線上の距離 $= |x_2 - x_1|$。座標の差の絶対値。" },
-        { layer: 2, text: "$|8 - 2| = |6|$。" },
-        { layer: 3, text: "$6$。" },
+        { layer: 1, text: "数直線の上で、$2$ と $8$ はどれだけ離れている？「へだたり」を数で言うとしたら、何と何を見ればいい？" },
+        { layer: 2, text: "$8$ から $2$ まで何ぶんすすむ？ 大きい方から小さい方を引くと、へだたりが見えてくる。" },
+        { layer: 3, text: "$8 - 2 = 6$。これが距離。向きは関係ないので、差を正の量（絶対値）で見るのがコツ。" },
       ],
       formulaPreview: "|8 − 2| = 6",
       figureMarker: "<<NUMLINE_DIST_STEP1>>",
@@ -1400,9 +1400,9 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前と同じ。$|x_2 - x_1|$。負の数の差に注意。" },
-        { layer: 2, text: "$|5 - (-3)| = |8|$。" },
-        { layer: 3, text: "$8$。" },
+        { layer: 1, text: "前題（$A(2), B(8)$ の距離）と比べてみよう。問いは同じ「へだたり」。何が変わった？" },
+        { layer: 2, text: "変わったのは座標だけ。前題と同じく「大きい方 − 小さい方」を考える。今、大きいのはどっち？" },
+        { layer: 3, text: "前題と同じく差をとる。$5 - (-3) = 8$。負の数が混じっても「大きい方 − 小さい方」は変わらない。" },
       ],
       formulaPreview: "|5 − (−3)| = 8",
     },
@@ -1416,9 +1416,9 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "中点 $= \\dfrac{x_1 + x_2}{2}$（2 つの座標の平均）。" },
-        { layer: 2, text: "$\\dfrac{2 + 8}{2} = \\dfrac{10}{2}$。" },
-        { layer: 3, text: "$5$。" },
+        { layer: 1, text: "座標は前々題（$A(2), B(8)$）と同じ。でも問いが「距離」から「真ん中」に変わった。真ん中はどこにある？" },
+        { layer: 2, text: "$2$ と $8$ のちょうど中央。2 つの数の「まんなかの数」は、どうやって出せそう？" },
+        { layer: 3, text: "まんなか＝平均。$\\dfrac{2 + 8}{2} = 5$。距離は「差」、中点は「和を半分」——同じ 2 数から別の問いが立つ。" },
       ],
       formulaPreview: "(2+8)/2 = 5",
     },
@@ -1432,9 +1432,9 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step3",
       hints: [
-        { layer: 1, text: "2 つの座標の平均。" },
-        { layer: 2, text: "$\\dfrac{-3 + 7}{2} = \\dfrac{4}{2}$。" },
-        { layer: 3, text: "$2$。" },
+        { layer: 1, text: "前題（中点）と比べてみよう。やることは同じ「まんなか」。違うのは何？" },
+        { layer: 2, text: "前題と同じく 2 数の平均。今の 2 数は $-3$ と $7$。負の数が入っても和を半分にするだけ。" },
+        { layer: 3, text: "$\\dfrac{-3 + 7}{2} = 2$。前題と同じ手順、数が変わっただけ。" },
       ],
       formulaPreview: "(−3+7)/2 = 2",
     },
@@ -1452,13 +1452,14 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "$m:n$ に内分する点 $= \\dfrac{n x_1 + m x_2}{m + n}$。クロスして掛けて足す。",
+            "前題は「まんなか」だった。今は「$1:1$ に内分」という新しい言葉。$1:1$ に分けると、中点とどこが違いそう？",
         },
         {
           layer: 2,
-          text: "$\\dfrac{1 \\cdot 3 + 1 \\cdot 7}{1 + 1} = \\dfrac{10}{2}$。",
+          text:
+            "$1:1$ に分けるとは、ちょうど真ん中で分けること。前題の中点と同じ場所になりそう？ 確かめてみよう。",
         },
-        { layer: 3, text: "$5$（$1:1$ の内分は中点と同じ）。" },
+        { layer: 3, text: "$1:1$ の内分は中点と一致。$\\dfrac{3 + 7}{2} = 5$。内分は「真ん中」を一般の比に広げた考え方——その入口がこの $1:1$。" },
       ],
       formulaPreview: "(3+7)/2 = 5",
       figureMarker: "<<NUMLINE_INTERNAL>>",
@@ -1474,13 +1475,13 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "$\\dfrac{n x_1 + m x_2}{m + n}$、$m = 2, n = 3$。" },
+        { layer: 1, text: "前題（$1:1$ の内分）と比べてみよう。比が $1:1$ から $2:3$ に変わった。真ん中ではなくなる——$A$ と $B$、どちら寄りになる？" },
         {
           layer: 2,
           text:
-            "$\\dfrac{3 \\cdot 2 + 2 \\cdot 7}{2 + 3} = \\dfrac{6 + 14}{5} = \\dfrac{20}{5}$。",
+            "$2:3$ なら $P$ は $A$ から $2$、$B$ から $3$ の側。単純な平均では出ない——もし「重み」をつけるなら、どの座標にどの比を掛ける？",
         },
-        { layer: 3, text: "$4$。" },
+        { layer: 3, text: "内分は「遠い方の比」を重みにする加重平均。$\\dfrac{3 \\cdot 2 + 2 \\cdot 7}{2 + 3} = 4$。クロスして掛けて足すのがコツ。" },
       ],
       formulaPreview: "(3·2+2·7)/5 = 4",
     },
@@ -1495,13 +1496,13 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前と同じ手順。" },
+        { layer: 1, text: "前題（$A(2), B(7)$ を $2:3$）と比べてみよう。比は同じ $2:3$。変わったのは何？" },
         {
           layer: 2,
           text:
-            "$\\dfrac{3 \\cdot 1 + 2 \\cdot 11}{2 + 3} = \\dfrac{3 + 22}{5} = \\dfrac{25}{5}$。",
+            "比 $2:3$ は同じで、座標だけ $A(1), B(11)$ に変わった。前題と同じ「クロスして掛けて足す」がそのまま使える？",
         },
-        { layer: 3, text: "$5$。" },
+        { layer: 3, text: "前題と同じ手順。$\\dfrac{3 \\cdot 1 + 2 \\cdot 11}{2 + 3} = 5$。" },
       ],
       formulaPreview: "(3·1+2·11)/5 = 5",
     },
@@ -1516,13 +1517,13 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "$m = 3, n = 4$。" },
+        { layer: 1, text: "前題と比べてみよう。やり方は同じ内分。比が $3:4$、座標に負の数。何に気をつける？" },
         {
           layer: 2,
           text:
-            "$\\dfrac{4 \\cdot (-3) + 3 \\cdot 11}{3 + 4} = \\dfrac{-12 + 33}{7} = \\dfrac{21}{7}$。",
+            "比 $3:4$ なら $A$ に $4$、$B$ に $3$ を掛ける（遠い方の比）。負の数 $-3$ の掛け算だけ丁寧に。",
         },
-        { layer: 3, text: "$3$。" },
+        { layer: 3, text: "$\\dfrac{4 \\cdot (-3) + 3 \\cdot 11}{3 + 4} = 3$。前題と同じ加重平均、符号だけ注意。" },
       ],
       formulaPreview: "(4·(−3)+3·11)/7 = 3",
     },
@@ -1540,14 +1541,14 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
         {
           layer: 1,
           text:
-            "外分の公式 $= \\dfrac{-n x_1 + m x_2}{m - n}$。内分の公式の $n$ を $-n$ に置き換える。",
+            "ここで「内分」が「外分」に変わった。場面が変わる質的な一歩。内分は線分の内側で分けた——外分の点はどこにありそう？",
         },
         {
           layer: 2,
           text:
-            "$\\dfrac{-1 \\cdot 2 + 3 \\cdot 8}{3 - 1} = \\dfrac{-2 + 24}{2} = \\dfrac{22}{2}$。",
+            "外分の点は線分の外。でも公式を覚え直す必要はない——前題までの内分の式で、比のうち片方を「マイナス」にすると外側になる。どの比を負にすればいい？",
         },
-        { layer: 3, text: "$11$。" },
+        { layer: 3, text: "内分の式の $n$ を $-n$ に置き換えるだけ。$\\dfrac{-1 \\cdot 2 + 3 \\cdot 8}{3 - 1} = 11$。内分と外分は別物でなく、符号ひとつ違いの兄弟。" },
       ],
       formulaPreview: "(−1·2+3·8)/2 = 11",
       figureMarker: "<<NUMLINE_EXT_STEP9>>",
@@ -1563,13 +1564,13 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       variationFromPrevious: "same",
       compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "外分の公式。$m = 5, n = 3$。" },
+        { layer: 1, text: "前題（外分）と比べてみよう。やり方は同じ外分。比が $5:3$、座標が $0$ と $10$。" },
         {
           layer: 2,
           text:
-            "$\\dfrac{-3 \\cdot 0 + 5 \\cdot 10}{5 - 3} = \\dfrac{0 + 50}{2} = \\dfrac{50}{2}$。",
+            "前題と同じく内分の $n$ を $-n$ に。$m = 5, n = 3$ なら分母は $m - n$。",
         },
-        { layer: 3, text: "$25$（B より遠く右側）。" },
+        { layer: 3, text: "$\\dfrac{-3 \\cdot 0 + 5 \\cdot 10}{5 - 3} = 25$。$B(10)$ より右の外にできる。前題と同じ符号の置き換え。" },
       ],
       formulaPreview: "(−3·0+5·10)/2 = 25",
     },
