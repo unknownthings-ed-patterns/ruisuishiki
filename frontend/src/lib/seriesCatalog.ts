@@ -56,6 +56,7 @@ import {
   ADV_POINT_LINE_DISTANCE_SERIES,
   ADV_QUAD_GRAPH_SERIES,
   ADV_QUAD_MIN_SERIES,
+  ADV_REMAINDER_THEOREM_SERIES,
   ADVANCED_SERIES_LIST,
 } from "./seriesAdvanced";
 import { RATIO_BASIC_SERIES } from "./seriesData";
@@ -396,6 +397,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "複素数と方程式",
     shortDescription: "解と係数の関係 — 解を出さずに対称式・逆向き・パラメータ問題まで",
+  },
+  {
+    series: ADV_REMAINDER_THEOREM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "複素数と方程式",
+    shortDescription:
+      "剰余の定理・因数定理 — 割り算せずに $1$ 点の代入で余りや因数を見抜く",
   },
   /* 数Ⅱ: 図形と方程式（入口から順に） */
   {

@@ -30,7 +30,7 @@ export type PatternId =
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
   | "CR1" | "NL1" | "CR2" | "CR3"
-  | "BD1" | "CN1" | "CN2" | "CN3" | "CN4"
+  | "BD1" | "CN1" | "CN2" | "CN3" | "CN4" | "CN5"
   | "LO1" | "PA1" | "RG1" | "LP1";
 
 /**
@@ -1158,6 +1158,32 @@ const LO1: PatternSpec = {
 };
 
 /**
+ * CN5: 剰余の定理・因数定理 — 整式 P(x) を x - a で割った余りは P(a)。
+ * 「割り算」という重い操作を「1 点での代入」という軽い操作に翻訳する基本定理。
+ * P(a) = 0 の場合は因数定理（x - a が因数 ⟺ x = a が解）に特殊化される。
+ */
+const CN5: PatternSpec = {
+  id: "CN5",
+  unit: "advanced",
+  naturalLanguage:
+    "整式 P(x) を 1 次式 x - a（または ax + b）で割った余りを、x = a（または x = -b/a）の代入で取り出す",
+  formulaTemplate: "R = P(a); P(a) = 0 ⟺ (x - a) は P(x) の因数",
+  variables: [
+    { name: "a", role: "代入する値（除数 x - a のゼロ点）", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c0", role: "P(x) の定数項", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "c1", role: "P(x) の 1 次の係数", unknown: false, domain: { kind: "integer", min: -50, max: 50 } },
+    { name: "c2", role: "P(x) の 2 次の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c3", role: "P(x) の 3 次の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "result", role: "問われている値（余り R / 係数 a / 定数項など）", unknown: true, domain: { kind: "integer", min: -200, max: 200 } },
+  ],
+  difficultyTier: 3,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: k.c3 * k.a * k.a * k.a + k.c2 * k.a * k.a + k.c1 * k.a + k.c0,
+  }),
+};
+
+/**
  * CN4: 解と係数の関係 — 2 次方程式 ax² + bx + c = 0 の 2 解 α, β について
  * α + β = -b/a、αβ = c/a。解を求めずに対称式を読む、解→係数の逆向き、
  * 解の平行移動、パラメータ問題（差の対称式）などを扱う系列。
@@ -1373,7 +1399,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1, CN2, CN3, CN4,
+  BD1, CN1, CN2, CN3, CN4, CN5,
   LO1, PA1, RG1, LP1,
 };
 
@@ -1393,7 +1419,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
-  BD1, CN1, CN2, CN3, CN4,
+  BD1, CN1, CN2, CN3, CN4, CN5,
   LO1, PA1, RG1, LP1,
 ];
 

@@ -1859,6 +1859,256 @@ export function VietaStep8() {
 }
 
 /**
+ * 剰余の定理 Step 1：割り算 → 代入の翻訳を縦に並べた流れ図。
+ * 「$x = 1$ を代入すると $(x - 1) Q$ が消える」ことを示す。
+ * 具体的な答え（R = 4）は描かない。$R$ のまま。
+ */
+export function RemainderStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="P(x) = (x − 1) Q(x) + R に x = 1 を代入すると (x − 1) Q の部分が消えて R だけが残る流れ図"
+    >
+      <defs>
+        <marker id="rem1-arr" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L5,10 L10,0 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* 上段：もとの式 */}
+      <text x="160" y="28" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        P(x) = (x − 1) Q(x) + R
+      </text>
+
+      {/* 矢印 + ラベル */}
+      <line x1="160" y1="42" x2="160" y2="78" stroke={muted} strokeWidth="1" markerEnd="url(#rem1-arr)" />
+      <text x="170" y="64" fontSize="11" fill={muted} fontStyle="italic">x = 1 を代入</text>
+
+      {/* 中段：代入結果 */}
+      <text x="160" y="102" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        P(1) = (1 − 1) Q(1) + R
+      </text>
+
+      {/* ハイライト：(1 − 1) = 0 */}
+      <text x="160" y="128" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        = 0 · Q(1) + R
+      </text>
+      <text x="160" y="148" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        Q の部分が消える
+      </text>
+
+      {/* 矢印 + ラベル */}
+      <line x1="160" y1="160" x2="160" y2="194" stroke={muted} strokeWidth="1" markerEnd="url(#rem1-arr)" />
+
+      {/* 下段：結論 */}
+      <text x="160" y="220" fontSize="16" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        R = P(1)
+      </text>
+
+      {/* 一番下の注記 */}
+      <line x1="40" y1="240" x2="280" y2="240" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+      <text x="160" y="260" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        割り算 → 1 点での代入に翻訳
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 剰余の定理 Step 4：因数定理「3 通りの言い方」の三角形図。
+ * P(a) = 0、x − a が因数、x = a が解 — 3 つが等価。
+ * 具体的な数値は使わず、a のまま。
+ */
+export function RemainderStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 三角形の頂点座標
+  const top = { x: 160, y: 50 };
+  const bl = { x: 50, y: 180 };
+  const br = { x: 270, y: 180 };
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="P(a) = 0、x − a が因数、x = a が解 — 3 通りの言い方が等価であることを示す三角形図"
+    >
+      {/* 三角形の 3 辺（双方向の同値関係） */}
+      <line x1={top.x} y1={top.y + 8} x2={bl.x + 10} y2={bl.y - 12} stroke={muted} strokeWidth="1" />
+      <line x1={top.x} y1={top.y + 8} x2={br.x - 10} y2={bl.y - 12} stroke={muted} strokeWidth="1" />
+      <line x1={bl.x + 20} y1={bl.y} x2={br.x - 20} y2={bl.y} stroke={muted} strokeWidth="1" />
+
+      {/* ⟺ 記号を辺の中央に */}
+      <text x={(top.x + bl.x) / 2 - 6} y={(top.y + bl.y) / 2 + 4} fontSize="16" fill={accent} fontWeight="700" textAnchor="middle">⟺</text>
+      <text x={(top.x + br.x) / 2 + 6} y={(top.y + bl.y) / 2 + 4} fontSize="16" fill={accent} fontWeight="700" textAnchor="middle">⟺</text>
+      <text x={(bl.x + br.x) / 2} y={bl.y - 4} fontSize="16" fill={accent} fontWeight="700" textAnchor="middle">⟺</text>
+
+      {/* 頂点：上 — P(a) = 0 */}
+      <text x={top.x} y={top.y} fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        P(a) = 0
+      </text>
+      <text x={top.x} y={top.y - 14} fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">1 点での値</text>
+
+      {/* 頂点：左下 — x − a が因数 */}
+      <text x={bl.x} y={bl.y + 4} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        x − a が因数
+      </text>
+      <text x={bl.x} y={bl.y + 20} fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">割り切れる</text>
+
+      {/* 頂点：右下 — x = a が解 */}
+      <text x={br.x} y={bl.y + 4} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        x = a が解
+      </text>
+      <text x={br.x} y={bl.y + 20} fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">方程式の根</text>
+
+      {/* 中央のラベル */}
+      <text x="160" y="130" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        同じ事柄の
+      </text>
+      <text x="160" y="144" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        3 通りの言い方
+      </text>
+
+      {/* 一番下の注記 */}
+      <text x="160" y="240" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        1 点の値が、整式の大域構造（因数・解）を見抜く
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 剰余の定理 Step 6：1 次式 ax + b のゼロ点を代入する図。
+ * 直線 y = ax + b が x 軸を切る点を強調。具体的な答え（R = 1）は描かない。
+ */
+export function RemainderStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 座標系：原点 (160, 150)、x 軸は y = 150、ゼロ点を x = 200 あたりに
+  const Ox = 160;
+  const Oy = 150;
+  const zeroX = 200; // ゼロ点の x 座標（具体値は隠す）
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="直線 y = ax + b が x 軸を切るゼロ点 x = −b/a を強調。この点を代入すると (ax + b) Q が消える"
+    >
+      {/* 上部の式 */}
+      <text x="160" y="26" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        P(x) = (ax + b) Q(x) + R
+      </text>
+
+      {/* 座標軸 */}
+      <line x1="40" y1={Oy} x2="300" y2={Oy} stroke={muted} strokeWidth="0.6" />
+      <line x1={Ox} y1="60" x2={Ox} y2="220" stroke={muted} strokeWidth="0.6" />
+      <text x="296" y={Oy + 12} fontSize="10" fill={muted}>x</text>
+      <text x={Ox + 4} y="64" fontSize="10" fill={muted}>y</text>
+      <text x={Ox - 4} y={Oy + 12} fontSize="10" fill={muted} textAnchor="end">O</text>
+
+      {/* 直線 y = ax + b（斜め） */}
+      <line x1="60" y1={Oy + 75} x2="290" y2={Oy - 70} stroke={stroke} strokeWidth="1.4" />
+      <text x="60" y={Oy + 92} fontSize="12" fill={stroke} fontStyle="italic">y = ax + b</text>
+
+      {/* ゼロ点の強調 */}
+      <circle cx={zeroX} cy={Oy} r="5" fill={accent} />
+      <text x={zeroX} y={Oy + 24} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        x = −b/a
+      </text>
+      <line x1={zeroX} y1={Oy - 30} x2={zeroX} y2={Oy} stroke={accent} strokeWidth="0.6" strokeDasharray="2,2" />
+
+      {/* 注記 */}
+      <text x="160" y={Oy + 50} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        この点を代入すると (ax + b) Q(x) = 0
+      </text>
+
+      {/* 結論 */}
+      <line x1="40" y1="224" x2="280" y2="224" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+      <text x="160" y="246" fontSize="14" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        R = P(−b/a)
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 剰余の定理 Step 9：除数が 2 次のときの「2 点で代入」図。
+ * 数直線上の x = a, x = b を強調。具体的な値は描かない（a, b のまま）。
+ */
+export function RemainderStep9() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="除数 (x − a)(x − b) のゼロ点 x = a, x = b を数直線上に示し、両方を代入することで余り px + q の p, q を決める流れ図"
+    >
+      <defs>
+        <marker id="rem9-arr" viewBox="0 0 10 10" refX="5" refY="1" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,10 L5,0 L10,10 z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      {/* 上段：式 */}
+      <text x="160" y="26" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        P(x) = (x − a)(x − b) Q(x) + (px + q)
+      </text>
+
+      {/* 数直線 */}
+      <line x1="40" y1="100" x2="280" y2="100" stroke={muted} strokeWidth="1" />
+      <text x="296" y="104" fontSize="10" fill={muted}>x</text>
+
+      {/* 数直線上の 2 点（accent ドット） */}
+      <circle cx="100" cy="100" r="5" fill={accent} />
+      <circle cx="220" cy="100" r="5" fill={accent} />
+      <text x="100" y="120" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">x = a</text>
+      <text x="220" y="120" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">x = b</text>
+
+      {/* 矢印 ↑（2 点それぞれから上の式へ） */}
+      <line x1="100" y1="92" x2="100" y2="56" stroke={muted} strokeWidth="0.8" markerEnd="url(#rem9-arr)" />
+      <line x1="220" y1="92" x2="220" y2="56" stroke={muted} strokeWidth="0.8" markerEnd="url(#rem9-arr)" />
+
+      {/* 注記 */}
+      <text x="160" y="150" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        代入すると (x − a)(x − b) Q = 0 になり、
+      </text>
+      <text x="160" y="166" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        余りの式に値を入れた結果が残る
+      </text>
+
+      {/* 結論行 */}
+      <line x1="40" y1="184" x2="280" y2="184" stroke={muted} strokeWidth="0.4" strokeDasharray="2,3" />
+      <text x="160" y="208" fontSize="14" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        P(a) = pa + q
+      </text>
+      <text x="160" y="230" fontSize="14" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        P(b) = pb + q
+      </text>
+
+      {/* 一番下の注記 */}
+      <text x="160" y="262" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        除数の次数が上がると、代入する点の数も増える
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 軌跡 Step 1：原点 O を中心とする円（条件 OP = r、変数 r で抽象的に表示）。
  * 具体的な r 値や答え（N = 9）は描かない。
  */
@@ -6456,6 +6706,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <VietaStep8 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REMAINDER_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RemainderStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REMAINDER_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RemainderStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REMAINDER_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RemainderStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REMAINDER_STEP9>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RemainderStep9 />
             </div>
           );
         }
