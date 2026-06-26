@@ -636,7 +636,7 @@ export const ADV_LINE_EQUATION_SERIES: LearnerSeries = {
       answer: 6, unit: "", unknownLabel: "y 切片",
       variationFromPrevious: "composite", compareWithStepId: "step10",
       hints: [
-        { layer: 1, text: "step 9・10（垂直の傾き）と step 5・6（点を代入して切片）を思い出そう。今回はその合わせ技——垂直な直線の切片を求める。" },
+        { layer: 1, text: "step 9・10（垂直の傾き）と step 5・6（切片の出し方）を思い出そう。今回はその合わせ技——垂直な直線の切片を求める。" },
         {
           layer: 2,
           text:
