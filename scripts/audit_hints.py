@@ -70,6 +70,12 @@ def l1_violation(t):
     return bool(CALC.search(t) or METHOD.search(t) or not (COMPARE.search(t) or QUESTION.search(t)))
 
 
+# 5オペレータの網羅チェック（10ステップ系列は5つすべて最低1問＝memory ruisuishiki-core-principles）
+REQUIRED_OPS = {"same", "inverse", "plus_alpha", "qualitative", "composite"}
+OP_JP = {"same": "同", "inverse": "逆", "plus_alpha": "＋α", "qualitative": "質的変化", "composite": "複合"}
+OPERATOR = re.compile(r'variationFromPrevious:\s*"(\w+)"')
+
+
 def audit_file(path):
     s = open(path, encoding="utf-8").read()
     bounds = [(m.start(), m.group(1)) for m in SERIES.finditer(s)]
@@ -84,7 +90,9 @@ def audit_file(path):
         if not tr:
             continue
         bad = sum(1 for d in tr if l1_violation(d.get(1, "")))
-        rows.append((title, len(tr), bad))
+        ops = set(OPERATOR.findall(seg))
+        missing = REQUIRED_OPS - ops
+        rows.append((title, len(tr), bad, missing))
     return rows
 
 
@@ -97,23 +105,31 @@ def main():
     )
     total = bad_total = 0
     worst = []
+    op_gaps = []
     for f in files:
         rows = audit_file(f)
         if not rows:
             continue
         print(f"\n## {os.path.basename(f)}")
-        for title, n, bad in rows:
+        for title, n, bad, missing in rows:
             total += n
             bad_total += bad
             mark = "✅" if bad == 0 else ("△" if bad <= n // 2 else "❌")
-            print(f"  {mark} {title:28s} 三層={n:3d} L1違反={bad:3d}")
+            opmark = "" if not missing else "  ⚠オペレータ欠落:" + "・".join(OP_JP[o] for o in sorted(missing))
+            print(f"  {mark} {title:28s} 三層={n:3d} L1違反={bad:3d}{opmark}")
             if bad > 1:
                 worst.append((bad, title, os.path.basename(f)))
+            if missing:
+                op_gaps.append((title, os.path.basename(f), sorted(missing)))
     print(f"\n{'='*50}\n合計 三層={total}  L1違反={bad_total}  準拠率={100*(total-bad_total)//max(total,1)}%")
     if worst:
-        print("\n要修正（違反>1）の系列、違反数の多い順:")
+        print("\n要修正（L1違反>1）の系列、違反数の多い順:")
         for bad, title, f in sorted(worst, reverse=True):
             print(f"  ❌ {title}  ({f}, L1違反={bad})")
+    if op_gaps:
+        print("\n5オペレータ欠落の系列（同・逆・＋α・質的変化・複合 のうち不足）:")
+        for title, f, missing in op_gaps:
+            print(f"  ⚠ {title}  ({f}): {'・'.join(OP_JP[o] for o in missing)} が無い")
 
 
 if __name__ == "__main__":

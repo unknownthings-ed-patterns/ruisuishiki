@@ -1447,22 +1447,22 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "数直線上の 2 点 $A(1)$, $B(11)$ を $2 : 3$ に内分する点の座標はいくつでしょう？",
-      answer: 5,
+        "数直線上の点 $A(2)$ を $2 : 3$ に内分する点が $4$ でした。もう一方の端 $B$ の座標はいくつでしょう？",
+      answer: 7,
       unit: "",
-      unknownLabel: "内分点の座標",
-      variationFromPrevious: "same",
+      unknownLabel: "端 B の座標",
+      variationFromPrevious: "inverse",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前題（$A(2), B(7)$ を $2:3$）と比べてみよう。比は同じ $2:3$。変わったのは何？" },
+        { layer: 1, text: "ここで問いが「逆向き」になった。前題までは端から内分点を出した。今回は内分点 $4$ が分かっていて、端 $B$ を逆に求める。同じ式をどう使えばいい？" },
         {
           layer: 2,
           text:
-            "比 $2:3$ は同じで、座標だけ $A(1), B(11)$ に変わった。前題と同じ「クロスして掛けて足す」がそのまま使える？",
+            "内分の式 $\\dfrac{nA+mB}{m+n}$ で、分かっているのは $A=2$・比 $2:3$・内分点 $4$。未知は $B$ だけ。式に入れて $B$ について解けない？",
         },
-        { layer: 3, text: "前題と同じ手順。$A(1)$ に $3$、$B(11)$ に $2$ を掛けて足し、$5$ で割る——前題のクロス掛けがそのまま使える。" },
+        { layer: 3, text: "$\\dfrac{3 \\cdot 2 + 2B}{2+3} = 4$ → $6 + 2B = 20$ → $B = 7$。同じ内分の式を、未知の位置を変えて逆向きに使うだけ。「答→問題」の逆。" },
       ],
-      formulaPreview: "(3·1+2·11)/5 = 5",
+      formulaPreview: "(3·2 + 2B)/5 = 4 → B = 7",
     },
     {
       id: "step8",
@@ -1473,9 +1473,9 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "内分点の座標",
       variationFromPrevious: "same",
-      compareWithStepId: "step7",
+      compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。やり方は同じ内分。比が $3:4$、座標に負の数。何に気をつける？" },
+        { layer: 1, text: "step6（順方向の内分）と同じやり方に戻る。step7 で見た逆向きではなく、また端から内分点を出す。比が $3:4$、座標に負の数。何に気をつける？" },
         {
           layer: 2,
           text:
@@ -1515,22 +1515,22 @@ export const ADV_NUMBER_LINE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "数直線上の 2 点 $A(0)$, $B(10)$ を $5 : 3$ に外分する点の座標はいくつでしょう？",
-      answer: 25,
+        "数直線上の点 $A(2)$ を $3 : 1$ に外分する点が $11$ でした。もう一方の端 $B$ の座標はいくつでしょう？",
+      answer: 8,
       unit: "",
-      unknownLabel: "外分点の座標",
-      variationFromPrevious: "same",
+      unknownLabel: "端 B の座標",
+      variationFromPrevious: "composite",
       compareWithStepId: "step9",
       hints: [
-        { layer: 1, text: "前題（外分）と比べてみよう。やり方は同じ外分。比が $5:3$、座標が $0$ と $10$。" },
+        { layer: 1, text: "前題（外分・step9）と、step7（内分の逆算）を思い出そう。今回はその合わせ技——「外分」した点が分かっていて、端 $B$ を「逆算」する。" },
         {
           layer: 2,
           text:
-            "前題と同じく内分の $n$ を $-n$ に。$m = 5, n = 3$ なら分母は $m - n$。",
+            "外分の式 $\\dfrac{-nA+mB}{m-n}$ で、分かっているのは $A=2$・比 $3:1$・外分点 $11$。未知の $B$ について解けない？",
         },
-        { layer: 3, text: "前題と同じく内分の $n$ を $-n$ に。$A(0)$ 側を負にして掛け、分母は $5 - 3$。$B(10)$ より右の外にできる——前題と同じ符号の置き換え。" },
+        { layer: 3, text: "$\\dfrac{-1 \\cdot 2 + 3B}{3-1} = 11$ → $-2 + 3B = 22$ → $B = 8$。「外分（質的変化）」＋「逆算（逆）」の複合。二つの変化を重ねても、使う式は同じ。" },
       ],
-      formulaPreview: "(−3·0+5·10)/2 = 25",
+      formulaPreview: "(−1·2 + 3B)/2 = 11 → B = 8",
     },
   ],
   derivation: `**中心の問い** ｜ 直線上の 2 点について、距離・真ん中・分ける点を、計算だけで出せないか？
