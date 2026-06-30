@@ -285,7 +285,10 @@ class Parser {
  */
 export function evaluateAnswer(input: string): number | null {
   if (input == null) return null;
-  const normalized = normalizeInput(input);
+  // 後方互換：旧 parseAnswer はカンマ・空白を除去してから解釈していた
+  // （桁区切り「1,080」「30,000」を学習者が打っても通る）。同じ前処理を踏襲する。
+  // 複数解パス（judgeSolutionSet）は先にカンマで分割してから各片を渡すので無影響。
+  const normalized = normalizeInput(input).replace(/[,\s]/g, "");
   const tokens = tokenize(normalized);
   if (tokens === null || tokens.length === 0) return null;
   try {
