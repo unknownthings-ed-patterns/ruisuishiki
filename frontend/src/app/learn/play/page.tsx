@@ -5,7 +5,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { MathBody, MathText } from "@/components/Math";
 import { PolyaQuestionsPanel } from "@/components/PolyaQuestions";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
-import { findStaticSeries } from "@/lib/seriesCatalog";
+import { findStaticSeries, resolveSeriesId } from "@/lib/seriesCatalog";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -99,9 +99,22 @@ export default function Play() {
     const params = new URLSearchParams(window.location.search);
 
     // 系列を選ぶ：?seriesId=xxx で
+    // 0) 廃止系列の旧 seriesId なら現行 seriesId へ読み替え（static export 対応の
+    //    クライアント側リダイレクト）。URL も正規の seriesId に書き換える。
     // 1) 静的カタログにあるか確認、2) なければ教師作成系列を localStorage から探す、
     // 3) どちらにもなければ既定の RATIO_BASIC_SERIES
-    const seriesIdParam = params.get("seriesId");
+    const rawSeriesIdParam = params.get("seriesId");
+    const seriesIdParam = rawSeriesIdParam
+      ? resolveSeriesId(rawSeriesIdParam)
+      : null;
+    if (rawSeriesIdParam && seriesIdParam && seriesIdParam !== rawSeriesIdParam) {
+      params.set("seriesId", seriesIdParam);
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + "?" + params.toString(),
+      );
+    }
     let activeSeries: LearnerSeries = RATIO_BASIC_SERIES;
     if (seriesIdParam) {
       const staticSeries = findStaticSeries(seriesIdParam);

@@ -35,9 +35,9 @@ import {
   ALGEBRA2_GEO_NTH_SERIES,
   ALGEBRA2_GEO_SUM_SERIES,
   ALGEBRA2_LOG_SERIES,
-  ALGEBRA2_TRIG_PERIOD_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
+import { TRIG_GENERAL_ANGLE_SERIES, TRIG_SERIES_LIST } from "./seriesTrig";
 import {
   ADV_BUNDLE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
@@ -486,11 +486,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
   },
   /* 数Ⅱ: 三角関数 */
   {
-    series: ALGEBRA2_TRIG_PERIOD_SERIES,
+    series: TRIG_GENERAL_ANGLE_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "三角関数",
-    shortDescription: "三角関数の周期 — 360°ごとの繰り返し",
+    shortDescription:
+      "一般角と三角関数の値 — 単位円の座標で sin・cos・tan を読む。鈍角・1回転超え・負の角・周期まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
@@ -569,8 +570,28 @@ export const STATIC_CATALOG: CatalogEntry[] = [
   },
 ];
 
+/**
+ * 廃止した系列の旧 seriesId → 現行 seriesId のリダイレクト表。
+ *
+ * 本サイトは GitHub Pages の static export で、系列は URL の `?seriesId=` クエリで
+ * 選ばれる（パスではない）。static export では Next.js の `redirects()` が効かないため、
+ * リダイレクトは学習者ビュー（learn/play）側で seriesId を読み替える形で実現する。
+ *
+ * - algebra2_trig_period_01（旧「三角関数の周期」）→ trig_general_angle_01
+ *   周期の内容は系列1（一般角）の step8 に吸収済み。旧URL のリンク切れを防ぐ。
+ */
+export const SERIES_REDIRECTS: Record<string, string> = {
+  algebra2_trig_period_01: "trig_general_angle_01",
+};
+
+/** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
+export function resolveSeriesId(seriesId: string): string {
+  return SERIES_REDIRECTS[seriesId] ?? seriesId;
+}
+
 export function findStaticSeries(seriesId: string): LearnerSeries | null {
-  const found = STATIC_CATALOG.find((e) => e.series.id === seriesId);
+  const resolved = resolveSeriesId(seriesId);
+  const found = STATIC_CATALOG.find((e) => e.series.id === resolved);
   return found?.series ?? null;
 }
 
@@ -580,6 +601,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
+  ...TRIG_SERIES_LIST,
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,
 ];

@@ -1,160 +1,11 @@
 /**
  * 数学Ⅱ・B の系列カタログ。
- * 三角関数の周期性・対数。
+ * 対数・数列・ベクトル・微分など。
+ * （三角関数は seriesTrig.ts に独立。旧「三角関数の周期」系列は
+ *   trig_general_angle_01 に吸収して廃止＝周期は系列1 step8 で回収。）
  */
 
 import type { LearnerSeries } from "./types";
-
-/** T1: 三角関数の周期性。x°を[0°,360°)に正規化 */
-export const ALGEBRA2_TRIG_PERIOD_SERIES: LearnerSeries = {
-  id: "algebra2_trig_period_01",
-  title: "三角関数の周期",
-  subtitle:
-    "$\\sin x°, \\cos x°$ は 360° ごとに同じ値。x を [0°, 360°) に直す5問。",
-  patternId: "T1",
-  unit: "algebra_2",
-  revelationLabel: "角度を 360° で割った余りが、基本周期での同値角",
-  derivation: `**三角関数は「単位円上の座標」**
-
-$\\sin\\theta$ や $\\cos\\theta$ は、もともと **単位円**（半径 1 の円）の上の点の座標で定義されます。
-
-単位円の中心を原点とし、x 軸の正の向きから **角度 $\\theta$ 回転** した点を考えると、その座標は：
-
-$$(\\cos\\theta,\\ \\sin\\theta)$$
-
-つまり、$\\cos$ が **x 座標**、$\\sin$ が **y 座標**。
-
-**「1 周回ると戻る」から周期 360°**
-
-円を1周回ると、もとの位置に戻ります。だから：
-
-$$\\sin(\\theta + 360°) = \\sin\\theta,\\quad \\cos(\\theta + 360°) = \\cos\\theta$$
-
-これが **三角関数の周期性**——$360°$ ごとに同じ値を取ります。
-
-**$\\sin 370°$ は $\\sin 10°$ と同じ**
-
-$370°$ は「$360°$ + $10°$」なので、$10°$ と同じ点。だから $\\sin 370° = \\sin 10°$。
-
-**たくさん回っても同じ**
-
-$\\sin 720°$ は「$360° \\times 2$」で **2 周回って原点に戻る**。だから $\\sin 0° = 0$ と同じ。
-
-一般化すると、**$\\sin$ や $\\cos$ の角度を「360 で割った余り」** に変換すると、$0°$〜$360°$ の範囲の **同じ値の角** に直せます。
-
-$$\\theta_{\\text{基本}} = \\theta \\bmod 360°$$
-
-「mod」（モッド）は割り算の余りを表す記号。たとえば $370 \\bmod 360 = 10$、$540 \\bmod 360 = 180$、$720 \\bmod 360 = 0$。
-
-**周期 360° の意味**
-
-「360°（または $2\\pi$）ごとに同じ値を繰り返す」——この性質を **周期 $360°$** と言います。三角関数の最も基本的な性質です。
-
-**負の角度・1 周以上**
-
-- $\\sin(-30°)$ も意味があります。これは時計回りに $30°$ 回転した点。
-- $\\sin(1000°)$ なら、$1000 \\bmod 360 = 280$ なので、$\\sin 280°$ と同じ。
-
-**応用：周期は時間や空間にも現れる**
-
-- **季節**：1年（365日）周期
-- **波**：音波・光波・電波——すべて周期関数の重ね合わせ
-- **円運動**：振り子・歯車・タイヤ
-
-三角関数の周期性は、世界中の **周期的な現象** を記述する基本道具。フーリエ変換という手法を使うと、複雑な信号も三角関数の重ね合わせで表現できます。
-
-**「単位円の1点」を回転させる視点が出発点**——これがすべての三角関数の理解の鍵です。`,
-  steps: [
-    {
-      id: "step1",
-      position: 1,
-      questionText:
-        "$\\sin 370°$ は、$0° \\leq x < 360°$ では $\\sin x°$ と等しいです。$x$ はいくつでしょう？",
-      answer: 10,
-      unit: "°",
-      unknownLabel: "x",
-      variationFromPrevious: null,
-      compareWithStepId: null,
-      hints: [
-        { layer: 1, text: "$\\sin$ は 360° ごとに同じ値を取る。" },
-        { layer: 2, text: "370° = 360° + 10°。" },
-        { layer: 3, text: "$x = 10$。" },
-      ],
-      formulaPreview: "370 mod 360 = 10",
-    },
-    {
-      id: "step2",
-      position: 2,
-      questionText:
-        "$\\sin 450°$ は、$0° \\leq x < 360°$ では $\\sin x°$ と等しいです。$x$ はいくつでしょう？",
-      answer: 90,
-      unit: "°",
-      unknownLabel: "x",
-      variationFromPrevious: "same",
-      compareWithStepId: "step1",
-      hints: [
-        { layer: 1, text: "前と同じ。360° を引く。" },
-        { layer: 2, text: "450° - 360° = 90°。" },
-        { layer: 3, text: "$x = 90$。" },
-      ],
-      formulaPreview: "450 mod 360 = 90",
-    },
-    {
-      id: "step3",
-      position: 3,
-      questionText:
-        "$\\sin 720°$ は、$0° \\leq x < 360°$ では $\\sin x°$ と等しいです。$x$ はいくつでしょう？",
-      answer: 0,
-      unit: "°",
-      unknownLabel: "x",
-      variationFromPrevious: "same",
-      compareWithStepId: "step2",
-      hints: [
-        { layer: 1, text: "360° の2周分。" },
-        { layer: 2, text: "720° = 360° × 2 + 0°。" },
-        { layer: 3, text: "$x = 0$。" },
-      ],
-      formulaPreview: "720 mod 360 = 0",
-    },
-    {
-      id: "step4",
-      position: 4,
-      questionText:
-        "$\\sin 540°$ は、$0° \\leq x < 360°$ では $\\sin x°$ と等しいです。$x$ はいくつでしょう？",
-      answer: 180,
-      unit: "°",
-      unknownLabel: "x",
-      variationFromPrevious: "same",
-      compareWithStepId: "step3",
-      hints: [
-        { layer: 1, text: "540° から 360° を引く。" },
-        { layer: 2, text: "540° - 360° = 180°。" },
-        { layer: 3, text: "$x = 180$。" },
-      ],
-      formulaPreview: "540 mod 360 = 180",
-    },
-    {
-      id: "step5",
-      position: 5,
-      questionText:
-        "$\\cos 405°$ は、$0° \\leq x < 360°$ では $\\cos x°$ と等しいです。$x$ はいくつでしょう？",
-      answer: 45,
-      unit: "°",
-      unknownLabel: "x",
-      variationFromPrevious: "qualitative",
-      compareWithStepId: "step4",
-      hints: [
-        {
-          layer: 1,
-          text: "$\\sin$ から $\\cos$ に変わっただけ。周期は同じ 360°。",
-        },
-        { layer: 2, text: "405° - 360° = 45°。" },
-        { layer: 3, text: "$x = 45$。" },
-      ],
-      formulaPreview: "405 mod 360 = 45",
-    },
-  ],
-};
 
 /** L1: 対数の値 log_b(v) */
 export const ALGEBRA2_LOG_SERIES: LearnerSeries = {
@@ -1195,7 +1046,6 @@ $$\\hat{v} = \\frac{\\vec{v}}{|\\vec{v}|}$$
 };
 
 export const ALGEBRA_2_SERIES_LIST: LearnerSeries[] = [
-  ALGEBRA2_TRIG_PERIOD_SERIES,
   ALGEBRA2_LOG_SERIES,
   ALGEBRA2_ARITH_NTH_SERIES,
   ALGEBRA2_ARITH_SUM_SERIES,

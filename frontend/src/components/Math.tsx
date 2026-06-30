@@ -4160,6 +4160,139 @@ export function CircleStep1() {
 }
 
 /**
+ * 一般角・三角関数 系列1 Step 1 / 辞書「単位円」の足場図。
+ * 半径 1 の単位円と、x 軸から θ 回した第 1 象限の点 P。
+ * sinθ = P の y 座標、cosθ = P の x 座標、tanθ = OP の傾き を示す。
+ * 答えの数値（1/2 など）は描かない——配置・関係だけ（自得を裏切らない）。
+ */
+export function UnitCircleStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // viewBox 280x280、原点 O = (130, 150)、半径 1 = 96 px
+  // P は θ ≒ 33°：(130 + 96cos33, 150 - 96sin33) ≒ (210.5, 97.7)
+  const ox = 130;
+  const oy = 150;
+  const px = 210.5;
+  const py = 97.7;
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="半径 1 の単位円。x 軸から θ 回した点 P の y 座標が sinθ、x 座標が cosθ"
+    >
+      {/* 軸 */}
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 単位円 */}
+      <circle cx={ox} cy={oy} r="96" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* x 座標（O → P の真下、cosθ） */}
+      <line x1={ox} y1={oy} x2={px} y2={oy} stroke={accent} strokeWidth="1.6" />
+      {/* y 座標（P → x 軸、破線、sinθ） */}
+      <line x1={px} y1={oy} x2={px} y2={py} stroke={accent} strokeWidth="1.6" strokeDasharray="3,2" />
+      {/* 半径 OP */}
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={stroke} strokeWidth="1.6" />
+
+      {/* 角 θ の弧 */}
+      <path d={`M ${ox + 34} ${oy} A 34 34 0 0 0 ${ox + 28.5} ${oy - 18.5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={ox + 40} y={oy - 8} fontSize="11" fill={muted} fontStyle="italic">θ</text>
+
+      {/* 直角マーカー at (px, oy) */}
+      <polyline points={`${px - 6},${oy} ${px - 6},${oy - 6} ${px},${oy - 6}`} fill="none" stroke={muted} strokeWidth="0.8" />
+
+      {/* O と P */}
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+      <text x={px + 6} y={py - 2} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">P</text>
+
+      {/* 半径 = 1 のラベル */}
+      <text x={ox + 28} y={oy - 40} fontSize="11" fill={stroke} fontStyle="italic">1</text>
+
+      {/* 座標の意味（数値は書かない） */}
+      <text x={(ox + px) / 2 - 6} y={oy + 15} fontSize="10.5" fill={accent} textAnchor="middle">cosθ</text>
+      <text x={px + 8} y={(oy + py) / 2 + 4} fontSize="10.5" fill={accent}>sinθ</text>
+
+      {/* 凡例 */}
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        sinθ = P の y 座標 ／ cosθ = P の x 座標 ／ tanθ = OP の傾き
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 一般角・三角関数 系列1 Step 4（質的変化）の足場図。
+ * 第 2 象限（左上）の点 P：x 座標が負・y 座標が正になる「符号が出る」場面。
+ * 答えの数値は描かず、符号（x < 0, y > 0）と配置だけを示す。
+ */
+export function UnitCircleQ2() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 原点 O = (140, 150)、半径 1 = 96 px、P は θ ≒ 123°：
+  // (140 + 96cos123, 150 - 96sin123) ≒ (87.7, 69.5)
+  const ox = 140;
+  const oy = 150;
+  const px = 87.7;
+  const py = 69.5;
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円の第 2 象限の点 P。x 座標は負、y 座標は正"
+    >
+      {/* 軸 */}
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 第 2 象限の淡い網（左上） */}
+      <rect x={ox - 96} y={oy - 96} width="96" height="96" fill="color-mix(in oklch, var(--accent) 4%, transparent)" />
+
+      {/* 単位円 */}
+      <circle cx={ox} cy={oy} r="96" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* x 座標（O の真上の足 → P、負側、accent 破線） */}
+      <line x1={ox} y1={oy} x2={px} y2={oy} stroke={accent} strokeWidth="1.6" />
+      {/* y 座標（P → x 軸、破線） */}
+      <line x1={px} y1={oy} x2={px} y2={py} stroke={accent} strokeWidth="1.6" strokeDasharray="3,2" />
+      {/* 半径 OP */}
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={stroke} strokeWidth="1.6" />
+
+      {/* 直角マーカー at (px, oy) */}
+      <polyline points={`${px + 6},${oy} ${px + 6},${oy - 6} ${px},${oy - 6}`} fill="none" stroke={muted} strokeWidth="0.8" />
+
+      {/* O と P */}
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <text x={ox + 5} y={oy + 14} fontSize="10" fill={muted}>O</text>
+      <text x={px - 6} y={py - 4} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600" textAnchor="end">P</text>
+
+      {/* 符号ラベル（数値でなく符号だけ） */}
+      <text x={(ox + px) / 2} y={oy + 15} fontSize="10.5" fill={accent} textAnchor="middle">x 座標 &lt; 0</text>
+      <text x={px - 8} y={(oy + py) / 2 + 4} fontSize="10.5" fill={accent} textAnchor="end">y 座標 &gt; 0</text>
+
+      {/* 凡例 */}
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        第 2 象限：P は y 軸より左 → x 座標（cosθ）が負になる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -6391,6 +6524,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <UnitTriangleSinCos />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_CIRCLE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitCircleStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_CIRCLE_Q2>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitCircleQ2 />
             </div>
           );
         }
