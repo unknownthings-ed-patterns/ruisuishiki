@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { MathBody, MathText } from "@/components/Math";
+import {
+  ANSWER_TOL,
+  evaluateAnswer,
+  judgeSolutionSet,
+} from "@/lib/answerEval";
 import { PolyaQuestionsPanel } from "@/components/PolyaQuestions";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
 import { findStaticSeries, resolveSeriesId } from "@/lib/seriesCatalog";
@@ -17,57 +22,7 @@ import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
 type Status = "answering" | "correct" | "incorrect" | "skipped" | "completed";
 
-/**
- * 入力文字列の全角を半角に正規化する。
- * 日本語入力モードのまま答えても自然に通るように。
- *
- * 対応：
- * - 全角数字 ０１２３４５６７８９ → 半角 0123456789
- * - 全角ピリオド／句点 ． 。 → 半角 .
- * - 全角コンマ／読点 ， 、 → 半角 ,
- * - 全角スラッシュ ／ → 半角 /
- * - 全角マイナス／長音／ダッシュ ー − – — → 半角 -
- * - 全角プラス ＋ → 半角 +
- */
-function normalizeInput(input: string): string {
-  return input
-    .replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
-    .replace(/[．。]/g, ".")
-    .replace(/[，、]/g, ",")
-    .replace(/／/g, "/")
-    .replace(/[ー−–—―]/g, "-")
-    .replace(/＋/g, "+");
-}
-
-/**
- * 学習者の入力を数値として解釈する。
- *
- * 受け付ける形式：
- * - 整数：「5」「-3」「１２３」（全角も OK）
- * - 小数：「0.5」「-1.25」「０．５」
- * - 分数：「1/2」「-3/4」「６／４」「6/4」（約分前でも比較は数値で）
- *
- * 半角・全角のスペースとカンマは無視。
- * 不正な入力は null を返す（再評価しない）。
- */
-function parseAnswer(input: string): number | null {
-  // 全角→半角正規化、空白とカンマを除去
-  const cleaned = normalizeInput(input).replace(/[,\s]/g, "");
-  if (cleaned === "") return null;
-
-  // 分数形式：a/b（a, b はそれぞれ整数 or 小数で、符号も許容）
-  const fractionMatch = cleaned.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
-  if (fractionMatch) {
-    const num = parseFloat(fractionMatch[1]);
-    const den = parseFloat(fractionMatch[2]);
-    if (den === 0 || Number.isNaN(num) || Number.isNaN(den)) return null;
-    return num / den;
-  }
-
-  // 通常の数値
-  const parsed = parseFloat(cleaned);
-  return Number.isNaN(parsed) ? null : parsed;
-}
+// 入力の正規化・数値評価・複数解判定は @/lib/answerEval に集約（テスト可能・後方互換）。
 
 export default function Play() {
   const [series, setSeries] = useState<LearnerSeries>(RATIO_BASIC_SERIES);
@@ -83,10 +38,20 @@ export default function Play() {
    * 戻ると元のステップに戻る。
    */
   const [showingDerivation, setShowingDerivation] = useState(false);
+  /** 解答入力欄への参照（π・√ パレットをカーソル位置に挿入するため）。 */
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const step = series.steps[stepIndex];
   const totalSteps = series.steps.length;
   const isLast = stepIndex === totalSteps - 1;
+
+  // 入力補助 UI の出し分け（無指定＝従来の素の数値入力・ローフロア維持）。
+  const affordances = step.inputAffordances ?? [];
+  const showPalette =
+    affordances.includes("pi") || affordances.includes("sqrt");
+  const showPiButton = affordances.includes("pi");
+  const showSqrtButton = affordances.includes("sqrt");
+  const showMultiHint = affordances.includes("multi");
 
   // 「比較せよ」のヒント表示用に、前題を取得
   const comparedStep: LearnerStep | null = useMemo(() => {
@@ -172,7 +137,8 @@ export default function Play() {
         setUserAnswer("");
       } else if (record.correct) {
         setStatus("correct");
-        setUserAnswer(String(step.answer));
+        // 複数解 step は単数値を入れ戻すと誤解を生むので空のまま。
+        setUserAnswer(step.solutionSet ? "" : String(step.answer));
       } else {
         setStatus("answering");
         setUserAnswer("");
@@ -239,12 +205,20 @@ export default function Play() {
     // 正答後は再評価しない（次へボタンで進む）
     if (status === "correct") return;
 
-    const parsed = parseAnswer(userAnswer);
-    if (parsed === null) return;
+    let isCorrect: boolean;
+    if (step.solutionSet) {
+      // 複数解："," 区切りで分割し、多重集合一致（順不同・過不足なし・TOL=1e-6）。
+      if (userAnswer.trim() === "") return;
+      isCorrect = judgeSolutionSet(userAnswer, step.solutionSet);
+    } else {
+      // 単数解：従来通り。評価不能（null）は再評価しない（試行に数えない）。
+      const parsed = evaluateAnswer(userAnswer);
+      if (parsed === null) return;
+      isCorrect = Math.abs(parsed - step.answer) < ANSWER_TOL;
+    }
 
     const nextAttempts = attempts + 1;
     setAttempts(nextAttempts);
-    const isCorrect = Math.abs(parsed - step.answer) < 1e-6;
 
     if (isCorrect) {
       setStatus("correct");
@@ -335,6 +309,31 @@ export default function Play() {
   function handleAnswerChange(e: React.ChangeEvent<HTMLInputElement>) {
     setUserAnswer(e.target.value);
     // 入力を書き換えた瞬間、誤答メッセージは消す（書き直し中の摩擦を減らす）
+    if (status === "incorrect") {
+      setStatus("answering");
+    }
+  }
+
+  /**
+   * π・√ パレットボタン：記号をカーソル位置に挿入する。
+   * 選択範囲があれば置き換え、挿入後はキャレットを挿入文字の直後へ。
+   */
+  function insertAtCursor(text: string) {
+    const el = inputRef.current;
+    if (!el) {
+      setUserAnswer((v) => v + text);
+    } else {
+      const start = el.selectionStart ?? userAnswer.length;
+      const end = el.selectionEnd ?? userAnswer.length;
+      const next = userAnswer.slice(0, start) + text + userAnswer.slice(end);
+      setUserAnswer(next);
+      const caret = start + text.length;
+      // setState 反映後にキャレットを復元（フォーカスも戻す）
+      requestAnimationFrame(() => {
+        el.focus();
+        el.setSelectionRange(caret, caret);
+      });
+    }
     if (status === "incorrect") {
       setStatus("answering");
     }
@@ -848,6 +847,7 @@ export default function Play() {
                   {step.unknownLabel}
                 </span>
                 <input
+                  ref={inputRef}
                   type="text"
                   inputMode="text"
                   value={userAnswer}
@@ -855,7 +855,9 @@ export default function Play() {
                   autoFocus
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xl tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
                   aria-label={step.unknownLabel}
-                  placeholder="例：3 / 0.5 / 1/2"
+                  placeholder={
+                    showPalette ? "例：√3/2, pi/6" : "例：3 / 0.5 / 1/2"
+                  }
                 />
                 <span
                   className="text-foreground shrink-0"
@@ -865,12 +867,68 @@ export default function Play() {
                 </span>
               </div>
 
-              <p
-                className="text-muted"
-                style={{ fontSize: "11px", letterSpacing: "0.05em" }}
-              >
-                分数は <span className="tnum">1/2</span> のように書けます
-              </p>
+              {/* π・√ 挿入パレット（その step が記号を使うときだけ）。
+                  既存の素の問題には何も足さない＝ローフロア維持。 */}
+              {showPalette && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {showPiButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("π")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="π を挿入"
+                    >
+                      π
+                    </button>
+                  )}
+                  {showSqrtButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("√")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="√（ルート）を挿入"
+                    >
+                      √
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* 記法ヘルプ：素の step は分数の書き方だけ。π/√ step は記号ヘルプに差し替え。 */}
+              {showPalette ? (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  √は <span className="tnum">√</span> ボタンか{" "}
+                  <span className="tnum">sqrt</span>、πは{" "}
+                  <span className="tnum">π</span> ボタンか{" "}
+                  <span className="tnum">pi</span>。例：
+                  <span className="tnum">√3/2, pi/6</span>
+                </p>
+              ) : (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em" }}
+                >
+                  分数は <span className="tnum">1/2</span> のように書けます
+                </p>
+              )}
+
+              {/* 複数解ヒント（multi の step のみ）。個数を言わずに「全部入れてね」。 */}
+              {showMultiHint && (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  解が複数あるときは{" "}
+                  <span className="tnum">&quot;,&quot;</span>{" "}
+                  で区切って全部入れてね（例：
+                  <span className="tnum">π/6, 5π/6</span>）
+                </p>
+              )}
 
               {status === "incorrect" && (
                 <p
