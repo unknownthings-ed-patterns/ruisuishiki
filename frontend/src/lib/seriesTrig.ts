@@ -384,5 +384,335 @@ $$\\sin^2\\theta + \\cos^2\\theta = 1$$
 「直角三角形でしか測れなかった $\\sin$・$\\cos$・$\\tan$ を、なぜ鈍角・$1$ 回転超え・負の角まで同じ $3$ つで測れるのか？」——答えは、測る場所を**三角形から [単位円] の点 $P$ へ移した**から。$\\sin$＝ $P$ の $y$、$\\cos$＝ $P$ の $x$、$\\tan$＝ $OP$ の傾き。$P$ はどんな角にも置けるので、符号は象限が、$1$ 回転超えは周期が、負の角は時計回りが引き受ける。直角三角形という狭い入口を、円という広い世界に開いたもの——それが [三角関数] です。`,
 };
 
+/** TRIG2: 弧度法（角のものさしを変える）。系列1（単位円読み）をラジアンで再利用。 */
+export const TRIG_RADIAN_SERIES: LearnerSeries = {
+  id: "trig_radian_01",
+  title: "弧度法（角のものさしを変える）",
+  subtitle:
+    "数Ⅱ・B 三角関数より — 角を『弧の長さ』で測る弧度法。度との換算から、ラジアンで三角関数を読むまで $10$ 問。",
+  patternId: "TRIG2",
+  unit: "algebra_2",
+  revelationLabel:
+    "弧度法：角の大きさ＝半径 $1$ の円で切り取る弧の長さ。$180° = \\pi$、度→ラジアンは $\\times\\dfrac{\\pi}{180}$、ラジアン→度は $\\times\\dfrac{180}{\\pi}$",
+  drivingQuestion:
+    "角を『度』でなく『半径 $1$ の円の弧の長さ』で測ると、なぜ $\\pi$ が角の自然な目盛りになる？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "半径 $1$ の円のふちに沿って、$x$ 軸の正の向きから反時計回りに**半周**ぶん進みます。点 $P$ が通った**弧の長さ**を、そのまま角の大きさとする測り方を [弧度法]（ラジアン）といいます。$180°$（半周）は何ラジアンでしょう？",
+      answer: Math.PI,
+      unit: "",
+      unknownLabel: "180° をラジアンで",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "[単位円]（半径 $1$）の全周の長さは、円周の公式でいくつだったかな？ 半周ならその半分。角を「弧の長さ」で測る、という新しい物差しで考えてみよう。",
+        },
+        {
+          layer: 2,
+          text: "半径 $1$ の円の全周は $2\\pi r = 2\\pi$。$180°$ はちょうど半周だから、弧の長さは全周の半分。全周 $2\\pi$ の半分は？",
+        },
+        {
+          layer: 3,
+          text: "[弧度法] では「角の大きさ ＝ 半径 $1$ の円で切り取る弧の長さ」。全周（$360°$）の弧の長さは $2\\pi \\times 1 = 2\\pi$。$180°$ はその半分なので $\\pi$。よって $180° = \\pi$（ラジアン）。これが度とラジアンをつなぐ大もとの関係。",
+        },
+      ],
+      formulaPreview: "180° = 半周の弧長 = π",
+      figureMarker: "<<UNIT_CIRCLE_STEP1>>",
+      inputAffordances: ["pi"],
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText: "同じ [弧度法] で、$90°$ は何ラジアンでしょう？",
+      answer: Math.PI / 2,
+      unit: "",
+      unknownLabel: "90° をラジアンで",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$180° = \\pi$ が分かった。$90°$ は $180°$ のちょうど半分の角。弧の長さも半分になりそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは角が半分になっただけ。$180° = \\pi$ の半分の角なら、弧の長さも $\\pi$ の半分。",
+        },
+        {
+          layer: 3,
+          text: "角が半分なら弧の長さも半分。$180° = \\pi$ だから $90° = \\dfrac{\\pi}{2}$。$180°$ を基準に「何分の一か」で測れる。",
+        },
+      ],
+      formulaPreview: "90° = π ÷ 2 = π/2",
+      inputAffordances: ["pi"],
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText: "$45°$ は何ラジアンでしょう？",
+      answer: Math.PI / 4,
+      unit: "",
+      unknownLabel: "45° をラジアンで",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。やることは同じ「$180° = \\pi$ を基準に、何分のいくつか」。$45°$ は $180°$ の何分の一？",
+        },
+        {
+          layer: 2,
+          text: "前題は $180°$ の $\\dfrac{1}{2}$ だった。今度の $45°$ は $180°$ の $\\dfrac{1}{4}$。基準 $\\pi$ を何分の一する？",
+        },
+        {
+          layer: 3,
+          text: "$45° = \\dfrac{180°}{4}$ なので $\\dfrac{\\pi}{4}$。$180° = \\pi$ さえ覚えれば、$90° = \\dfrac{\\pi}{2}$・$60° = \\dfrac{\\pi}{3}$・$45° = \\dfrac{\\pi}{4}$・$30° = \\dfrac{\\pi}{6}$ はみな「$\\pi$ を何分の一」で出せる。",
+        },
+      ],
+      formulaPreview: "45° = π ÷ 4 = π/4",
+      inputAffordances: ["pi"],
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText: "$150°$ は何ラジアンでしょう？",
+      answer: (Math.PI * 5) / 6,
+      unit: "",
+      unknownLabel: "150° をラジアンで",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは「$180°$ をきれいに何分の一」で出せた。でも $150°$ はそう割り切れない。度をラジアンに直す**一般の方法**はないかな？ $180° = \\pi$ という等式をヒントに。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「きれいに割り切れない角」になったこと。$180° = \\pi$ の両辺を $180$ で割れば $1° = \\dfrac{\\pi}{180}$。あとは度に何をかければいい？",
+        },
+        {
+          layer: 3,
+          text: "$180° = \\pi$ より $1° = \\dfrac{\\pi}{180}$。だから度→ラジアンは $\\times\\dfrac{\\pi}{180}$。$150° \\times \\dfrac{\\pi}{180} = \\dfrac{150\\pi}{180} = \\dfrac{5\\pi}{6}$。きれいな角も割り切れない角も、この一本の掛け算でラジアンに直せる。",
+        },
+      ],
+      formulaPreview: "150° × (π/180) = 5π/6",
+      inputAffordances: ["pi"],
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "今度は逆に、$\\dfrac{\\pi}{3}$ ラジアンは何度でしょう？（答えは度の数で）",
+      answer: 60,
+      unit: "°",
+      unknownLabel: "π/3 ラジアンを度で",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは『度からラジアンへ』直していた。今度は反対向きで『ラジアンから度へ』。前題で使った掛け算を、逆向きにするとどうなる？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは向きだけ（ラジアン→度）。度→ラジアンが $\\times\\dfrac{\\pi}{180}$ なら、その逆は何を掛ける？",
+        },
+        {
+          layer: 3,
+          text: "度→ラジアンが $\\times\\dfrac{\\pi}{180}$ だったので、逆のラジアン→度は $\\times\\dfrac{180}{\\pi}$。$\\dfrac{\\pi}{3} \\times \\dfrac{180}{\\pi} = \\dfrac{180}{3} = 60$。よって $60°$。$\\pi$ が約分で消えて度が残る。",
+        },
+      ],
+      formulaPreview: "(π/3) × (180/π) = 60°",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$\\dfrac{7\\pi}{6}$ ラジアンは何度でしょう？（答えは度の数で）",
+      answer: 210,
+      unit: "°",
+      unknownLabel: "7π/6 ラジアンを度で",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ『ラジアンから度へ』の向き。前題で使った戻し方は、中身が $\\dfrac{7\\pi}{6}$ に変わってもそのまま使えそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは中身の分数だけ。$\\dfrac{7\\pi}{6}$ に $\\dfrac{180}{\\pi}$ を掛けると、$\\pi$ が消えてどんな計算が残る？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{7\\pi}{6} \\times \\dfrac{180}{\\pi} = \\dfrac{7 \\times 180}{6} = 7 \\times 30 = 210$。よって $210°$。前題と同じ手を、分数を変えて繰り返すだけ。",
+        },
+      ],
+      formulaPreview: "(7π/6) × (180/π) = 210°",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "ここからはラジアンのまま三角関数の値を読みます。$\\cos\\dfrac{2\\pi}{3}$ はいくつでしょう？",
+      answer: -0.5,
+      unit: "",
+      unknownLabel: "cos(2π/3)",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは角を度とラジアンで**言い換える**話だった。今度は言い換えでなく、その角の $\\cos$ の**値**を読む。$\\dfrac{2\\pi}{3}$ は [単位円] のどこ？ [一般角] でやった「$\\cos$ ＝ $P$ の $x$ 座標」がそのまま使えそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「度に直してから読むのでなく、ラジアンのまま単位円で読む」こと。$\\dfrac{2\\pi}{3}$ は度でいうと $120°$——単位円のどの象限？ そこの $x$ 座標の符号は？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{2\\pi}{3} = 120°$ で、[単位円] の左上（第 $2$ 象限）。系列1でやった通り $\\cos$ ＝ $P$ の $x$ 座標で、左上だから負。大きさは $60°$ の鏡うつしで $\\dfrac{1}{2}$。よって $\\cos\\dfrac{2\\pi}{3} = -\\dfrac{1}{2}$。**ラジアンは度の言い換えにすぎない**から、単位円の読み方はそっくり同じ。",
+        },
+      ],
+      formulaPreview: "cos(2π/3) = cos120° = P の x 座標 = −1/2",
+      figureMarker: "<<UNIT_CIRCLE_Q2>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText: "$\\sin\\dfrac{7\\pi}{4}$ はいくつでしょう？",
+      answer: -1 / Math.sqrt(2),
+      unit: "",
+      unknownLabel: "sin(7π/4)",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「ラジアンのまま単位円で値を読む」。$\\dfrac{7\\pi}{4}$ は単位円のどこ？ 今度は $\\sin$（高さ＝$y$ 座標）。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、読むのが $\\cos$（横）から $\\sin$（高さ）へ、角も変わったこと。$\\dfrac{7\\pi}{4}$ は度でいうと $315°$——右下（第 $4$ 象限）。そこの高さ（$y$）の符号は？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{7\\pi}{4} = 315°$ で右下の第 $4$ 象限。$\\sin$ ＝ $P$ の $y$ 座標で、下にあるので負。大きさは $45°$ の鏡うつしで $\\dfrac{1}{\\sqrt{2}}$。よって $\\sin\\dfrac{7\\pi}{4} = -\\dfrac{1}{\\sqrt{2}}$。入力は √ ボタンで `-1/√2`。",
+        },
+      ],
+      formulaPreview: "sin(7π/4) = sin315° = P の y 座標 = −1/√2",
+      inputAffordances: ["sqrt"],
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText: "$\\tan\\left(-\\dfrac{13\\pi}{6}\\right)$ はいくつでしょう？",
+      answer: -1 / Math.sqrt(3),
+      unit: "",
+      unknownLabel: "tan(−13π/6)",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。これは合わせ技。系列1でやった「負の角（時計回り）」と「$1$ 回転を超えたら取り除く（周期）」を、今度はラジアンで思い出そう。まず何をすれば角が小さくなる？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「負」かつ「$1$ 周を超えた」こと。$1$ 周はラジアンで $2\\pi = \\dfrac{12\\pi}{6}$。$-\\dfrac{13\\pi}{6}$ からひと回りぶんを足して取り除くと、どの角が残る？",
+        },
+        {
+          layer: 3,
+          text: "$1$ 周は $2\\pi = \\dfrac{12\\pi}{6}$。$-\\dfrac{13\\pi}{6} + \\dfrac{12\\pi}{6} = -\\dfrac{\\pi}{6}$（時計回りに $\\dfrac{\\pi}{6}$）。$-\\dfrac{\\pi}{6} = -30°$ は右下の点で、$\\tan$（傾き＝$y \\div x$）は縦が負・横が正だから負。大きさは $\\dfrac{1}{\\sqrt{3}}$。よって $-\\dfrac{1}{\\sqrt{3}}$。「周期（$2\\pi$ を取り除く）」＋「負＝時計回り」の複合を、ラジアンで行ったもの。",
+        },
+      ],
+      formulaPreview: "−13π/6 + 2π = −π/6 → tan(−π/6) = −1/√3",
+      inputAffordances: ["sqrt"],
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "最後に定義へ戻ります。半径 $1$ の円で、中心角が $\\dfrac{\\pi}{2}$ ラジアンの扇形（ピザの一切れ）の、**弧の長さ**はいくつでしょう？",
+      answer: Math.PI / 2,
+      unit: "",
+      unknownLabel: "半径1・中心角 π/2 の弧の長さ",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。[弧度法] では「角の大きさ ＝ 半径 $1$ の円で切り取る弧の長さ」だった。では中心角が $\\dfrac{\\pi}{2}$ ラジアンなら、弧の長さは？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、角を「半周」でなく $\\dfrac{\\pi}{2}$ で与えられたこと。ラジアンの定義そのものを逆に読めば、答えは考えるまでもない——角の値と弧の長さは、半径 $1$ でどんな関係だった？",
+        },
+        {
+          layer: 3,
+          text: "[弧度法] の定義は「半径 $1$ での弧の長さ ＝ 角のラジアン値」。だから中心角 $\\dfrac{\\pi}{2}$ ラジアンの弧の長さは、そのまま $\\dfrac{\\pi}{2}$。（半径 $r$ なら弧長 $= r\\theta$。$r = 1$ だから $= \\theta$。）ラジアンとは「弧の長さで測った角」——ぐるっと一周して定義に戻ってきた。",
+        },
+      ],
+      formulaPreview: "弧長 = rθ = 1 × π/2 = π/2",
+      inputAffordances: ["pi"],
+    },
+  ],
+  derivation: `**中心の問い** ｜ 角を『度』でなく『半径 $1$ の円の弧の長さ』で測ると、なぜ $\\pi$ が角の自然な目盛りになる？
+
+────────
+
+**「度」は人間が決めた目盛り——$360$ という数に必然性はない。**
+
+$1$ 周を $360°$ に分けるのは古代バビロニアの約束事で、数学的な必然ではありません。円そのものが持っている「自然な長さ」は、半径と円周——半径 $1$ の円なら円周は $2\\pi$ です。そこで角を、**その角が半径 $1$ の円から切り取る弧の長さ**で測ることにします。これが [弧度法]（ラジアン）。
+
+<<UNIT_CIRCLE_STEP1>>
+
+**大もとの関係**：半周（$180°$）が切り取る弧は、円周 $2\\pi$ の半分＝ $\\pi$。だから
+
+$$180° = \\pi \\ (\\text{ラジアン})$$
+
+**ここが胚細胞**：この $1$ 本の等式さえあれば、度とラジアンは自由に行き来できます。
+
+$$1° = \\dfrac{\\pi}{180} \\quad\\Longrightarrow\\quad \\text{度→ラジアンは} \\times\\dfrac{\\pi}{180}, \\quad \\text{ラジアン→度は} \\times\\dfrac{180}{\\pi}$$
+
+**Step 1〜3：$180° = \\pi$ を基準に、きれいな角を測る**
+
+$90° = \\dfrac{\\pi}{2}$、$45° = \\dfrac{\\pi}{4}$。「$180°$ の何分の一か」で、$60° = \\dfrac{\\pi}{3}$・$30° = \\dfrac{\\pi}{6}$ もすぐ出ます。
+
+**Step 4〜6：割り切れない角と、逆向きの変換**
+
+$150°$ のように「$180°$ の何分の一」で出ない角は、一般の掛け算 $\\times\\dfrac{\\pi}{180}$ を使う（$150° \\times \\dfrac{\\pi}{180} = \\dfrac{5\\pi}{6}$）。逆にラジアンを度に戻すときは $\\times\\dfrac{180}{\\pi}$（$\\dfrac{\\pi}{3} \\to 60°$）。$\\pi$ が約分で消えるのが目印です。
+
+**Step 7〜9：ラジアンのまま三角関数を読む（[一般角] の再利用）**
+
+$$\\cos\\dfrac{2\\pi}{3} = \\cos 120° = -\\dfrac{1}{2}, \\quad \\sin\\dfrac{7\\pi}{4} = \\sin 315° = -\\dfrac{1}{\\sqrt{2}}, \\quad \\tan\\left(-\\dfrac{13\\pi}{6}\\right) = -\\dfrac{1}{\\sqrt{3}}$$
+
+**ラジアンは度の言い換えにすぎない**ので、系列1の [単位円] の読み方（$\\sin$＝$y$ 座標・$\\cos$＝$x$ 座標・符号は象限・周期は $2\\pi$ を取り除く・負は時計回り）が、そっくりそのまま効きます。ただし、これからは $2\\pi$ が「$1$ 周」の合言葉になります。
+
+────────
+
+**もっと深く** — なぜ数学はラジアンを選ぶのか
+
+**弧長・面積が $\\theta$ でそのまま書ける**：半径 $r$ の扇形の弧長は $r\\theta$、面積は $\\dfrac{1}{2}r^2\\theta$（$\\theta$ はラジアン）。度で書くと $\\dfrac{\\pi}{180}$ が式にこびりつきますが、ラジアンなら消えます。Step 10 で見た「半径 $1$ なら弧長 ＝ $\\theta$」は、その一番素朴な姿。
+
+**微分がきれいになる**：$\\theta$ がラジアンのときだけ $(\\sin\\theta)' = \\cos\\theta$ が成り立ちます（度だと余計な係数が出る）。だから数Ⅲ以降・物理・工学はラジアン一択。
+
+**波の言語**：$\\sin\\theta$ を $\\theta$ を増やしながら描くと波になります（音・光・交流）。その「$1$ 周期」が $2\\pi$。ラジアンは波の自然な物差しでもあります。
+
+────────
+
+**問いに戻ると**
+
+「なぜ $\\pi$ が角の自然な目盛りになるのか？」——角を「半径 $1$ の円が切り取る弧の長さ」で測ると決めた瞬間、半周の弧はまさに $\\pi$ になり、$180° = \\pi$ が生まれる。円が生まれつき持っている長さ（円周 $2\\pi$）で角を測るからこそ、$\\pi$ が目盛りの主役になる。度は人間の約束、ラジアンは円の言葉——同じ角を、円自身のものさしで読み直したものが [弧度法] です。`,
+};
+
 /** 三角関数ユニットの系列リスト（カタログ登録用）。 */
-export const TRIG_SERIES_LIST: LearnerSeries[] = [TRIG_GENERAL_ANGLE_SERIES];
+export const TRIG_SERIES_LIST: LearnerSeries[] = [
+  TRIG_GENERAL_ANGLE_SERIES,
+  TRIG_RADIAN_SERIES,
+];

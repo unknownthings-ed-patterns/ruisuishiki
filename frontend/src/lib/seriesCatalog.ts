@@ -37,7 +37,11 @@ import {
   ALGEBRA2_LOG_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
-import { TRIG_GENERAL_ANGLE_SERIES, TRIG_SERIES_LIST } from "./seriesTrig";
+import {
+  TRIG_GENERAL_ANGLE_SERIES,
+  TRIG_RADIAN_SERIES,
+  TRIG_SERIES_LIST,
+} from "./seriesTrig";
 import {
   ADV_BUNDLE_SERIES,
   ADV_CIRCLE_EQUATION_SERIES,
@@ -492,6 +496,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "一般角と三角関数の値 — 単位円の座標で sin・cos・tan を読む。鈍角・1回転超え・負の角・周期まで",
+  },
+  {
+    series: TRIG_RADIAN_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "弧度法 — 角を弧の長さで測る。度との換算（180°=π）から、ラジアンで三角関数を読むまで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
