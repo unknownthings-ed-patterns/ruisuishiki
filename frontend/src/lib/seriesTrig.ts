@@ -403,6 +403,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       questionText:
         "半径 $1$ の円のふちに沿って、$x$ 軸の正の向きから反時計回りに**半周**ぶん進みます。点 $P$ が通った**弧の長さ**を、そのまま角の大きさとする測り方を [弧度法]（ラジアン）といいます。$180°$（半周）は何ラジアンでしょう？",
       answer: Math.PI,
+      answerDisplay: "π",
       unit: "",
       unknownLabel: "180° をラジアンで",
       variationFromPrevious: null,
@@ -430,6 +431,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       position: 2,
       questionText: "同じ [弧度法] で、$90°$ は何ラジアンでしょう？",
       answer: Math.PI / 2,
+      answerDisplay: "π/2",
       unit: "",
       unknownLabel: "90° をラジアンで",
       variationFromPrevious: "same",
@@ -456,6 +458,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       position: 3,
       questionText: "$45°$ は何ラジアンでしょう？",
       answer: Math.PI / 4,
+      answerDisplay: "π/4",
       unit: "",
       unknownLabel: "45° をラジアンで",
       variationFromPrevious: "same",
@@ -482,6 +485,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       position: 4,
       questionText: "$150°$ は何ラジアンでしょう？",
       answer: (Math.PI * 5) / 6,
+      answerDisplay: "5π/6",
       unit: "",
       unknownLabel: "150° をラジアンで",
       variationFromPrevious: "plus_alpha",
@@ -561,6 +565,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       questionText:
         "ここからはラジアンのまま三角関数の値を読みます。$\\cos\\dfrac{2\\pi}{3}$ はいくつでしょう？",
       answer: -0.5,
+      answerDisplay: "−1/2",
       unit: "",
       unknownLabel: "cos(2π/3)",
       variationFromPrevious: "qualitative",
@@ -587,6 +592,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       position: 8,
       questionText: "$\\sin\\dfrac{7\\pi}{4}$ はいくつでしょう？",
       answer: -1 / Math.sqrt(2),
+      answerDisplay: "−1/√2",
       unit: "",
       unknownLabel: "sin(7π/4)",
       variationFromPrevious: "same",
@@ -613,6 +619,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       position: 9,
       questionText: "$\\tan\\left(-\\dfrac{13\\pi}{6}\\right)$ はいくつでしょう？",
       answer: -1 / Math.sqrt(3),
+      answerDisplay: "−1/√3",
       unit: "",
       unknownLabel: "tan(−13π/6)",
       variationFromPrevious: "composite",
@@ -640,6 +647,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
       questionText:
         "最後に定義へ戻ります。半径 $1$ の円で、中心角が $\\dfrac{\\pi}{2}$ ラジアンの扇形（ピザの一切れ）の、**弧の長さ**はいくつでしょう？",
       answer: Math.PI / 2,
+      answerDisplay: "π/2",
       unit: "",
       unknownLabel: "半径1・中心角 π/2 の弧の長さ",
       variationFromPrevious: "plus_alpha",
@@ -711,8 +719,372 @@ $$\\cos\\dfrac{2\\pi}{3} = \\cos 120° = -\\dfrac{1}{2}, \\quad \\sin\\dfrac{7\\
 「なぜ $\\pi$ が角の自然な目盛りになるのか？」——角を「半径 $1$ の円が切り取る弧の長さ」で測ると決めた瞬間、半周の弧はまさに $\\pi$ になり、$180° = \\pi$ が生まれる。円が生まれつき持っている長さ（円周 $2\\pi$）で角を測るからこそ、$\\pi$ が目盛りの主役になる。度は人間の約束、ラジアンは円の言葉——同じ角を、円自身のものさしで読み直したものが [弧度法] です。`,
 };
 
+/** TRIG3: 三角方程式（値から角を求める）。系列1の逆向き（値→角）＋系列2（範囲を radian で）。
+ *  範囲付き（0≤θ<2π 等）で有限解にし solutionSet で採点。不等式は「両端の角」を採点し、
+ *  区間（点→弧）と一般解（+2nπ）は derivation で言葉として扱う（岩井先生と合意・2026-07-01）。 */
+export const TRIG_EQUATION_SERIES: LearnerSeries = {
+  id: "trig_equation_01",
+  title: "三角方程式（値から角を求める）",
+  subtitle:
+    "数Ⅱ・B 三角関数より — 値から角を逆に求める。単位円の逆読み・範囲で解を絞る・不等式（点→弧）まで $10$ 問。",
+  patternId: "TRIG3",
+  unit: "algebra_2",
+  revelationLabel:
+    "三角方程式：値→角は「[単位円] のどこがその値になるか」を逆に読む。範囲（$0 \\le \\theta < 2\\pi$ 等）で解の個数が決まり、不等式は点でなく弧（区間）になる",
+  drivingQuestion:
+    "『角→値』を逆にして『値→角』を求めるには？ $\\sin\\theta = \\dfrac{1}{2}$ になる点は [単位円] のどこ？ 範囲を決めると解が絞れ、決めなければ無数にある——のはなぜ？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "系列1では「角 → 値」を読みました。今度は逆に「値 → 角」を探します。$0 \\le \\theta < 2\\pi$ で、$\\sin\\theta = \\dfrac{1}{2}$ となる $\\theta$ を**すべて**求めましょう（複数あるので「,」で区切って）。",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6, 5π/6",
+      solutionSet: [Math.PI / 6, (Math.PI * 5) / 6],
+      unit: "",
+      unknownLabel: "sinθ=1/2 の解（0≤θ<2π）",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "[単位円] で $\\sin\\theta$ は点 $P$ の高さ（$y$ 座標）だった。今度はその高さが決まっていて、角を探す。高さがちょうど $\\dfrac{1}{2}$ になる点は、円の上に何か所ある？",
+        },
+        {
+          layer: 2,
+          text: "高さ（$y$ 座標）が $\\dfrac{1}{2}$ の横線を引くと、円と $2$ 点で交わる。右上に $1$ つ、左上にもう $1$ つ。左右で対称——それぞれ何度の点？",
+        },
+        {
+          layer: 3,
+          text: "$\\sin\\theta = P$ の $y$ 座標。$y = \\dfrac{1}{2}$ の横線は円と $2$ 点で交わる：第 $1$ 象限の $30° = \\dfrac{\\pi}{6}$ と、その左右対称で第 $2$ 象限の $150° = \\dfrac{5\\pi}{6}$。だから解は $\\dfrac{\\pi}{6}, \\dfrac{5\\pi}{6}$。「角→値」を逆に読むと、$1$ つの値から $2$ つの角が出る。",
+        },
+      ],
+      formulaPreview: "sinθ=1/2 → y=1/2 の点は π/6 と 5π/6",
+      figureMarker: "<<UNIT_CIRCLE_STEP1>>",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$0 \\le \\theta < 2\\pi$ で、$\\sin\\theta = \\dfrac{\\sqrt{3}}{2}$ となる $\\theta$ をすべて求めましょう。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3, 2π/3",
+      solutionSet: [Math.PI / 3, (Math.PI * 2) / 3],
+      unit: "",
+      unknownLabel: "sinθ=√3/2 の解（0≤θ<2π）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。やり方は同じ「その高さになる点を [単位円] で探す」。変わったのは狙う高さの値だけ。前題と同じく、左右対称に $2$ つ出そう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは高さの値だけ。今度の高さになる第 $1$ 象限の角は $60°$。前題と同じ「もう $1$ つは左右対称の第 $2$ 象限」を使うと、相手はどこ？",
+        },
+        {
+          layer: 3,
+          text: "第 $1$ 象限で高さがこの値になるのは $60° = \\dfrac{\\pi}{3}$。前題と同じく左右対称の相手が第 $2$ 象限にあり、$180° - 60° = 120° = \\dfrac{2\\pi}{3}$。よって $\\dfrac{\\pi}{3}, \\dfrac{2\\pi}{3}$。値が変わっても「第 $1$ 象限＋その鏡」の型は同じ。",
+        },
+      ],
+      formulaPreview: "sinθ=√3/2 → π/3 と 180°−60°=2π/3",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$0 \\le \\theta < 2\\pi$ で、$\\cos\\theta = \\dfrac{1}{2}$ となる $\\theta$ をすべて求めましょう。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3, 5π/3",
+      solutionSet: [Math.PI / 3, (Math.PI * 5) / 3],
+      unit: "",
+      unknownLabel: "cosθ=1/2 の解（0≤θ<2π）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは $\\sin$（高さ＝縦）で探していた。今度は $\\cos$。読む向きが縦から横（$x$ 座標）に移る。横の位置がその値になる点は、円のどこ？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「読むのが縦から横（$\\cos$＝$x$ 座標）へ」の $1$ 点。横の位置で対称なのは上下——上半分に $1$ つ、下半分に鏡うつしがもう $1$ つ。第 $1$ 象限の角は $60°$。下の相手は？",
+        },
+        {
+          layer: 3,
+          text: "$\\cos\\theta = P$ の $x$ 座標。横の位置がこの値になるのは第 $1$ 象限の $60° = \\dfrac{\\pi}{3}$ と、$x$ 軸で上下対称の第 $4$ 象限 $300° = \\dfrac{5\\pi}{3}$。よって $\\dfrac{\\pi}{3}, \\dfrac{5\\pi}{3}$。$\\sin$ は左右対称だったが、$\\cos$ は上下対称——対称の軸が変わる。",
+        },
+      ],
+      formulaPreview: "cosθ=1/2 → π/3 と 上下対称の 5π/3",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$0 \\le \\theta < 2\\pi$ で、$\\tan\\theta = \\sqrt{3}$ となる $\\theta$ をすべて求めましょう。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3, 4π/3",
+      solutionSet: [Math.PI / 3, (Math.PI * 4) / 3],
+      unit: "",
+      unknownLabel: "tanθ=√3 の解（0≤θ<2π）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは座標（縦か横）$1$ つを読んでいた。今度は $\\tan$＝直線 $OP$ の傾き。傾きがその値になる直線を原点から引くと、円と何か所で交わる？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「点の座標」でなく「原点を通る直線の傾き」で探すこと。傾きが決まった直線は原点を突き抜けるので、円の**反対側**でもう一度交わる。第 $1$ 象限の角は $60°$。反対側は何度ずれる？",
+        },
+        {
+          layer: 3,
+          text: "$\\tan\\theta$＝直線 $OP$ の傾き。傾きがこの値になる直線は第 $1$ 象限の $60° = \\dfrac{\\pi}{3}$ を通り、原点の反対側（第 $3$ 象限）でも円と交わる：$60° + 180° = 240° = \\dfrac{4\\pi}{3}$。$\\tan$ は $180°$（$\\pi$）ごとに同じ値——だから解は $\\dfrac{\\pi}{3}, \\dfrac{4\\pi}{3}$。$\\sin \\cdot \\cos$ の「$2$ 点」とは対称の仕組みが違う。",
+        },
+      ],
+      formulaPreview: "tanθ=√3 → π/3 と 反対側 π/3+π=4π/3",
+      figureMarker: "<<UNIT_CIRCLE_STEP1>>",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$0 \\le \\theta < 2\\pi$ で、$\\tan\\theta = -\\sqrt{3}$ となる $\\theta$ をすべて求めましょう。",
+      answer: (Math.PI * 2) / 3,
+      answerDisplay: "2π/3, 5π/3",
+      solutionSet: [(Math.PI * 2) / 3, (Math.PI * 5) / 3],
+      unit: "",
+      unknownLabel: "tanθ=−√3 の解（0≤θ<2π）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。やり方は同じ「傾きがその値の直線と円の交点」。変わったのは傾きの符号がマイナスになったこと。傾きが負の直線は、どの向きに傾く？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは傾きの符号だけ。傾きが負なら直線は右下がり——第 $2$ 象限と第 $4$ 象限を通る。前題と同じく「$180°$ 離れて $2$ 点」。第 $2$ 象限の角は $120°$。相手は？",
+        },
+        {
+          layer: 3,
+          text: "傾きが負の直線は右下がりで、第 $2$ 象限の $120° = \\dfrac{2\\pi}{3}$ と、$180°$ 反対の第 $4$ 象限 $300° = \\dfrac{5\\pi}{3}$ で円と交わる。よって $\\dfrac{2\\pi}{3}, \\dfrac{5\\pi}{3}$。前題と同じ「$\\pi$ ごとに $2$ 点」を、符号だけ変えて繰り返した。",
+        },
+      ],
+      formulaPreview: "tanθ=−√3 → 右下がりの直線 → 2π/3 と 5π/3",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "今度は逆向きの問いです。$0 \\le \\theta < 2\\pi$ で、ある方程式 $\\sin\\theta = \\square$ の解が $\\theta = \\dfrac{\\pi}{4}, \\dfrac{3\\pi}{4}$ の $2$ つだけでした。$\\square$ に入る値はいくつでしょう？",
+      answer: 1 / Math.sqrt(2),
+      answerDisplay: "1/√2",
+      unit: "",
+      unknownLabel: "解が π/4, 3π/4 になる sinθ の値",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは『値から角』を求めていた。今度はその**逆**で『角から値』に戻る。$\\dfrac{\\pi}{4}, \\dfrac{3\\pi}{4}$ の点の高さ（$\\sin$）を読めば、右辺の値が分かりそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは向きだけ（角から値へ戻す）。$\\dfrac{\\pi}{4} = 45°$ の点の高さ（$y$ 座標）を [単位円] で読めばいい。もう一方の $\\dfrac{3\\pi}{4}$ は左右対称なので高さは同じ。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{\\pi}{4} = 45°$ の点の高さは $\\sin 45° = \\dfrac{1}{\\sqrt{2}}$。$\\dfrac{3\\pi}{4} = 135°$ は左右対称で高さは同じ。だから $\\sin\\theta = \\dfrac{1}{\\sqrt{2}}$ が、その $2$ 解を生む方程式。$\\square = \\dfrac{1}{\\sqrt{2}}$（入力は √ ボタンで `1/√2`）。値→角の逆は、角→値の読み取り。",
+        },
+      ],
+      formulaPreview: "π/4, 3π/4 の高さ = sin45° = 1/√2",
+      inputAffordances: ["sqrt"],
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "範囲を広げます。$0 \\le \\theta < 4\\pi$（$2$ 周ぶん）で、$\\sin\\theta = \\dfrac{1}{2}$ となる $\\theta$ をすべて求めましょう。",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6, 5π/6, 13π/6, 17π/6",
+      solutionSet: [
+        Math.PI / 6,
+        (Math.PI * 5) / 6,
+        (Math.PI * 13) / 6,
+        (Math.PI * 17) / 6,
+      ],
+      unit: "",
+      unknownLabel: "sinθ=1/2 の解（0≤θ<4π）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。方程式は同じ $\\sin\\theta = \\dfrac{1}{2}$。変わったのは範囲が $1$ 周から $2$ 周に広がったこと。$2$ 周まわると、同じ高さの点を何回通る？",
+        },
+        {
+          layer: 2,
+          text: "step1 で見つけた $2$ 解に、もう $1$ 周ぶん（$2\\pi$ を足したもの）を加えるだけ。ひと回りすると同じ点に戻るから、$\\dfrac{\\pi}{6}$ と $\\dfrac{5\\pi}{6}$ のそれぞれに $2\\pi$ を足すと？",
+        },
+        {
+          layer: 3,
+          text: "step1 の解 $\\dfrac{\\pi}{6}, \\dfrac{5\\pi}{6}$ は $1$ 周目。$2$ 周目は各々に $2\\pi = \\dfrac{12\\pi}{6}$ を足して $\\dfrac{13\\pi}{6}, \\dfrac{17\\pi}{6}$。よって $4$ 解 $\\dfrac{\\pi}{6}, \\dfrac{5\\pi}{6}, \\dfrac{13\\pi}{6}, \\dfrac{17\\pi}{6}$。**範囲が広いほど解は増える**——範囲を外して無限に回れば、解は無数（$+2n\\pi$）になる。だから「範囲を決める」ことが解を有限に絞る鍵。",
+        },
+      ],
+      formulaPreview: "0≤θ<4π：π/6, 5π/6 に +2π した 13π/6, 17π/6 も",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "ここからは不等式です。$0 \\le \\theta < 2\\pi$ で、$\\sin\\theta \\ge \\dfrac{\\sqrt{3}}{2}$ を満たす $\\theta$ の範囲を考えます。その**範囲の両端の角**を答えましょう（$2$ つ、順不同）。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3, 2π/3（この間が解）",
+      solutionSet: [Math.PI / 3, (Math.PI * 2) / 3],
+      unit: "",
+      unknownLabel: "sinθ≥√3/2 の範囲の両端（0≤θ<2π）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は「ちょうどその高さになる角」を点で求めた。今度は「その高さ**以上**」。ちょうどの $2$ 点は同じでも、答えは点でなく、その間の**弧**になりそう？",
+        },
+        {
+          layer: 2,
+          text: "step2 で出した $2$ 点が、今度は「境界」になる。高さがその値**以上**なのは、円の上の方の帯——その $2$ 点にはさまれた弧。だから答えは「両端の角」＝step2 と同じ $2$ 角。間が解の範囲。",
+        },
+        {
+          layer: 3,
+          text: "等号 $\\sin\\theta = \\dfrac{\\sqrt{3}}{2}$ の解は step2 の $\\dfrac{\\pi}{3}, \\dfrac{2\\pi}{3}$。高さがそれ**以上**になるのは、この $2$ 点にはさまれた上側の弧、つまり $\\dfrac{\\pi}{3} \\le \\theta \\le \\dfrac{2\\pi}{3}$。方程式の答えは「点」、不等式の答えは「弧（区間）」——両端の角は $\\dfrac{\\pi}{3}, \\dfrac{2\\pi}{3}$。",
+        },
+      ],
+      formulaPreview: "sinθ≥√3/2 → 境界 π/3, 2π/3 の間の弧",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$0 \\le \\theta < 2\\pi$ で、$\\cos\\theta \\le \\dfrac{1}{2}$ を満たす $\\theta$ の範囲の**両端の角**を答えましょう（$2$ つ、順不同）。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3, 5π/3（この間が解）",
+      solutionSet: [Math.PI / 3, (Math.PI * 5) / 3],
+      unit: "",
+      unknownLabel: "cosθ≤1/2 の範囲の両端（0≤θ<2π）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。やり方は同じ「まず境界（等号）の $2$ 角を出し、間の弧を見る」。変わったのは $\\sin$ から $\\cos$（横）へ、そして「以上」でなく「以下」。境界の $2$ 角はどこ？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、読むのが横（$\\cos$）で、向きが「以下」なこと。境界 $\\cos\\theta = \\dfrac{1}{2}$ は step3 で出した $2$ 角。横の位置がその値**以下**（＝より左）なのは、その $2$ 角にはさまれた左側の広い弧。両端は？",
+        },
+        {
+          layer: 3,
+          text: "境界 $\\cos\\theta = \\dfrac{1}{2}$ の解は $\\dfrac{\\pi}{3}, \\dfrac{5\\pi}{3}$（step3）。横の位置がそれ**以下**なのは、この $2$ 角にはさまれた左まわりの弧 $\\dfrac{\\pi}{3} \\le \\theta \\le \\dfrac{5\\pi}{3}$。両端の角は $\\dfrac{\\pi}{3}, \\dfrac{5\\pi}{3}$。前題と同じ「境界→間の弧」を、$\\cos$・以下で繰り返した。",
+        },
+      ],
+      formulaPreview: "cosθ≤1/2 → 境界 π/3, 5π/3 の間（左側）の弧",
+      inputAffordances: ["pi", "multi"],
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "仕上げの総合問題です。$0 \\le \\theta < 2\\pi$ で、$2\\cos\\theta + \\sqrt{2} \\le 0$ を満たす $\\theta$ の範囲の**両端の角**を答えましょう（$2$ つ、順不同）。",
+      answer: (Math.PI * 3) / 4,
+      answerDisplay: "3π/4, 5π/4（この間が解）",
+      solutionSet: [(Math.PI * 3) / 4, (Math.PI * 5) / 4],
+      unit: "",
+      unknownLabel: "2cosθ+√2≤0 の範囲の両端（0≤θ<2π）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。不等式を解くのは同じ。ただし今回は $\\cos$ がむき出しでなく、係数と数がくっついている。まず前題の形（$\\cos\\theta \\le$ 何か）に整えられそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「先に式を整理する」ひと手間が要ること。$2\\cos\\theta + \\sqrt{2} \\le 0$ を、$\\cos\\theta$ だけが残るように移項して割る。整理できれば、あとは前題と同じ「境界の $2$ 角→間の弧」。整理するとどんな不等式？",
+        },
+        {
+          layer: 3,
+          text: "$2\\cos\\theta + \\sqrt{2} \\le 0$ を整理：$2\\cos\\theta \\le -\\sqrt{2}$、両辺 $\\div 2$ で $\\cos\\theta \\le -\\dfrac{1}{\\sqrt{2}}$。境界 $\\cos\\theta = -\\dfrac{1}{\\sqrt{2}}$ は $135° = \\dfrac{3\\pi}{4}$ と $225° = \\dfrac{5\\pi}{4}$。横の位置がそれ以下（より左）なのは、その間の左側の弧 $\\dfrac{3\\pi}{4} \\le \\theta \\le \\dfrac{5\\pi}{4}$。両端は $\\dfrac{3\\pi}{4}, \\dfrac{5\\pi}{4}$。「式を整理」＋「不等式を弧で読む」の複合。",
+        },
+      ],
+      formulaPreview: "2cosθ+√2≤0 → cosθ≤−1/√2 → 境界 3π/4, 5π/4",
+      inputAffordances: ["pi", "multi"],
+    },
+  ],
+  derivation: `**中心の問い** ｜ 『角→値』を逆にして『値→角』を求めるには？ $\\sin\\theta = \\dfrac{1}{2}$ になる点は [単位円] のどこ？ 範囲を決めると解が絞れ、決めなければ無数にある——のはなぜ？
+
+────────
+
+**系列1・2は「角 → 値」。三角方程式はその矢印を逆に読む。**
+
+系列1では角から [単位円] の座標を読み（$\\sin\\theta = P$ の $y$ 座標）、系列2ではその角を [弧度法] で測りました。三角方程式は逆で、**値が先に決まっていて、その値になる角（＝ $P$ の場所）を探します**。
+
+<<UNIT_CIRCLE_STEP1>>
+
+**なぜ $1$ つの値から $2$ つの角が出るのか**：$\\sin\\theta = \\dfrac{1}{2}$ は「高さ $\\dfrac{1}{2}$ の横線」。この線は円と $2$ 点で交わります（第 $1$ 象限と第 $2$ 象限）。だから $\\dfrac{\\pi}{6}$ と $\\dfrac{5\\pi}{6}$。
+
+**関数ごとに対称の軸が違う**（Step 1〜5）：
+
+| 方程式 | 探し方 | 対称 | 解の例（$0 \\le \\theta < 2\\pi$） |
+|---|---|---|---|
+| $\\sin\\theta = k$ | 高さ（$y$）の横線 | 左右（$y$ 軸） | $\\dfrac{\\pi}{6}, \\dfrac{5\\pi}{6}$ |
+| $\\cos\\theta = k$ | 横（$x$）の縦線 | 上下（$x$ 軸） | $\\dfrac{\\pi}{3}, \\dfrac{5\\pi}{3}$ |
+| $\\tan\\theta = k$ | 原点を通る傾き $k$ の直線 | 原点対称（$\\pi$ ごと） | $\\dfrac{\\pi}{3}, \\dfrac{4\\pi}{3}$ |
+
+**逆の逆**（Step 6）：解の角が分かっていれば、その点の座標を読んで右辺の値に戻せる（$\\dfrac{\\pi}{4}, \\dfrac{3\\pi}{4} \\Rightarrow \\sin\\theta = \\dfrac{1}{\\sqrt{2}}$）。行きも帰りも [単位円] の同じ図。
+
+**範囲が解の個数を決める**（Step 7・中心の問いの核心）：
+
+$\\sin\\theta = \\dfrac{1}{2}$ の解は、$0 \\le \\theta < 2\\pi$ なら $2$ つ、$0 \\le \\theta < 4\\pi$ なら $4$ つ。ひと回り（$2\\pi$）ごとに同じ点に戻るからです。**範囲を外して何周でも回れば、解は無数**になります：
+
+$$\\theta = \\dfrac{\\pi}{6} + 2n\\pi, \\quad \\dfrac{5\\pi}{6} + 2n\\pi \\quad (n \\text{ は整数})$$
+
+これを**一般解**と呼びます（$+2n\\pi$）。無数にある解を有限に絞るために「$0 \\le \\theta < 2\\pi$」のような**範囲**を決める——これが三角方程式の作法。
+
+**不等式は「点」でなく「弧」**（Step 8〜10・質的変化）：
+
+$\\sin\\theta \\ge \\dfrac{\\sqrt{3}}{2}$ の答えは、点ではなく **$2$ つの境界にはさまれた弧（区間）** $\\dfrac{\\pi}{3} \\le \\theta \\le \\dfrac{2\\pi}{3}$。解き方は「まず等号の境界を求め、その間の弧を読む」。$2\\cos\\theta + \\sqrt{2} \\le 0$ のように係数がついても、$\\cos\\theta \\le -\\dfrac{1}{\\sqrt{2}}$ に整理すれば同じ手が効きます。
+
+────────
+
+**もっと深く** — 三角方程式が開く世界
+
+**周期性の顔**：解が $+2n\\pi$ で無数に並ぶのは、三角関数が周期 $2\\pi$ を持つから。方程式の「無数の解」は、波が同じ高さを何度も通ることの言い換えです。
+
+**合成・加法定理へ**：$\\sin\\theta + \\cos\\theta = 1$ のような式も、加法定理や合成（$r\\sin(\\theta + \\alpha)$ の形）を使えば、結局「$\\sin(\\text{何か}) = k$」の三角方程式に帰着します。
+
+**波の制御**：交流回路・音・振動で「ある大きさ以上になる時間帯」を求めるのは、まさに三角不等式（弧を求める問題）。
+
+────────
+
+**問いに戻ると**
+
+「値→角はどう求め、なぜ範囲で解が変わるのか？」——値は [単位円] 上の「横線・縦線・傾きの直線」に対応し、それが円と交わる点が角。$\\sin$ は左右・$\\cos$ は上下・$\\tan$ は原点対称に $2$ 点を生む。ひと回りごとに解が増えるので、範囲を決めなければ $+2n\\pi$ で無数——だから「$0 \\le \\theta < 2\\pi$」と枠を決めて有限に絞る。不等式なら答えは点でなく弧。すべては系列1で作った [単位円] の逆読みです。`,
+};
+
 /** 三角関数ユニットの系列リスト（カタログ登録用）。 */
 export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_GENERAL_ANGLE_SERIES,
   TRIG_RADIAN_SERIES,
+  TRIG_EQUATION_SERIES,
 ];

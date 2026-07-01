@@ -239,8 +239,7 @@ export default function SeriesPreview() {
                   className="mt-2 text-muted tnum print-hide-answer"
                   style={{ fontSize: "13px" }}
                 >
-                  → {step.unknownLabel}: {step.answer}
-                  {step.unit}
+                  → {step.unknownLabel}: {step.answerDisplay ?? `${step.answer}${step.unit}`}
                 </p>
                 {/* 印刷時のみ：答え欄の枠 */}
                 <div

@@ -38,6 +38,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
   TRIG_RADIAN_SERIES,
   TRIG_SERIES_LIST,
@@ -504,6 +505,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "弧度法 — 角を弧の長さで測る。度との換算（180°=π）から、ラジアンで三角関数を読むまで",
+  },
+  {
+    series: TRIG_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "三角方程式 — 値から角を逆に求める。単位円の逆読み・範囲で解を絞る・不等式（点→弧）まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {

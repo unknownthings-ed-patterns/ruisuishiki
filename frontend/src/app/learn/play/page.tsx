@@ -24,6 +24,15 @@ type Status = "answering" | "correct" | "incorrect" | "skipped" | "completed";
 
 // 入力の正規化・数値評価・複数解判定は @/lib/answerEval に集約（テスト可能・後方互換）。
 
+/**
+ * 正解・スキップ表示用に、人が読める答え文字列を返す。
+ * step.answerDisplay があればそれ（例 "π/6, 5π/6"・"π/2"）、無ければ生値＋単位。
+ * answer が π・無理数・複数解のとき、生の小数（1.5707…）を見せないため。
+ */
+function displayAnswer(step: LearnerStep): string {
+  return step.answerDisplay ?? `${step.answer}${step.unit}`;
+}
+
 export default function Play() {
   const [series, setSeries] = useState<LearnerSeries>(RATIO_BASIC_SERIES);
   const [stepIndex, setStepIndex] = useState(0);
@@ -744,8 +753,7 @@ export default function Play() {
                       >
                         → {comparedStep.unknownLabel}は{" "}
                         <span className="text-foreground">
-                          {comparedStep.answer}
-                          {comparedStep.unit}
+                          {displayAnswer(comparedStep)}
                         </span>
                       </p>
                     </article>
@@ -991,7 +999,7 @@ export default function Play() {
                   className="text-muted"
                   style={{ fontSize: "14px", letterSpacing: "0.05em" }}
                 >
-                  → スキップ。{step.unknownLabel} は {step.answer}{step.unit}。
+                  → スキップ。{step.unknownLabel} は {displayAnswer(step)}。
                 </p>
                 {step.formulaPreview && (
                   <p
@@ -1034,7 +1042,7 @@ export default function Play() {
                   className="text-success font-medium"
                   style={{ fontSize: "14px", letterSpacing: "0.1em" }}
                 >
-                  ✓ 正解。{step.unknownLabel}は {step.answer}{step.unit}。
+                  ✓ 正解。{step.unknownLabel}は {displayAnswer(step)}。
                 </p>
                 {attempts > 1 && (
                   <p
