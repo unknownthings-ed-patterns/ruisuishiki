@@ -119,6 +119,10 @@ export default function HaikuPlay() {
   // 観点抽出 step で選んだ観点（ViewpointList の各項目の選択状態）。
   const [vpChecked, setVpChecked] = useState<boolean[]>([]);
   const viewpointList = getViewpointList(SERIES.genreId);
+  // 清書カード（§7.2）：自作句を大きく縦書き表示・匿名切替。句会で見せ合う。
+  const [showCard, setShowCard] = useState(false);
+  const [authorName, setAuthorName] = useState("");
+  const [showName, setShowName] = useState(false); // 既定は匿名（選のあと作者を明かす運用）
 
   const step = SERIES.steps[stepIndex];
   const total = SERIES.steps.length;
@@ -141,6 +145,7 @@ export default function HaikuPlay() {
       if (resume >= SERIES.steps.length) setCompleted(true);
       else if (resume > 0) setStepIndex(resume);
     }
+    setAuthorName(window.localStorage.getItem("kokugo_author") ?? "");
     setHydrated(true);
   }, []);
 
@@ -176,6 +181,7 @@ export default function HaikuPlay() {
     } else {
       setVpChecked([]);
     }
+    setShowCard(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex]);
 
@@ -574,6 +580,15 @@ export default function HaikuPlay() {
             <p className="text-muted" style={{ fontSize: "12px" }}>
               ※五・七・五にしても、外してもいい。メーターはあなたの音を見せる鏡だよ。
             </p>
+            <button
+              type="button"
+              onClick={() => setShowCard(true)}
+              disabled={!work.trim()}
+              className="self-start px-6 py-2 rounded-lg border border-accent text-accent disabled:opacity-30"
+              style={{ fontSize: "14px", letterSpacing: "0.1em" }}
+            >
+              清書カードにする →
+            </button>
           </section>
         )}
 
@@ -657,6 +672,82 @@ export default function HaikuPlay() {
           </button>
         </div>
       </div>
+
+      {/* 清書カード（§7.2）：全画面・縦書き・匿名切替。句会で見せ合う。 */}
+      {showCard && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6"
+          style={{ background: "var(--background)" }}
+          role="dialog"
+          aria-label="清書カード"
+        >
+          <p
+            className="font-serif text-foreground text-center"
+            style={{
+              writingMode: "vertical-rl",
+              fontSize: "clamp(28px, 6vw, 56px)",
+              lineHeight: 1.9,
+              letterSpacing: "0.18em",
+              maxHeight: "60vh",
+            }}
+          >
+            {work}
+          </p>
+          <p className="text-muted" style={{ fontSize: "15px", letterSpacing: "0.1em" }}>
+            {showName && authorName.trim() ? authorName : "よみ人しらず"}
+          </p>
+
+          {/* コントロール（印刷には出さない） */}
+          <div className="flex flex-col items-center gap-3 no-print">
+            <div className="flex items-center gap-2">
+              <input
+                value={authorName}
+                onChange={(e) => {
+                  setAuthorName(e.target.value);
+                  window.localStorage.setItem("kokugo_author", e.target.value);
+                }}
+                placeholder="名前（任意）"
+                className="rounded-md border px-3 py-1"
+                style={{ borderColor: "var(--border)", background: "var(--surface)", fontSize: "14px", width: "10em" }}
+                aria-label="名前"
+              />
+              <button
+                type="button"
+                onClick={() => setShowName((v) => !v)}
+                className="px-4 py-1 rounded-md border border-border text-muted"
+                style={{ fontSize: "13px" }}
+              >
+                {showName ? "名前をかくす" : "名前を見せる"}
+              </button>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="px-5 py-2 rounded-lg border border-accent text-accent"
+                style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+              >
+                印刷
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowCard(false)}
+                className="px-5 py-2 rounded-lg bg-accent text-background"
+                style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+              >
+                とじる
+              </button>
+            </div>
+          </div>
+          <style jsx global>{`
+            @media print {
+              .no-print {
+                display: none !important;
+              }
+            }
+          `}</style>
+        </div>
+      )}
     </main>
   );
 }
