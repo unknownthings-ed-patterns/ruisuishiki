@@ -223,15 +223,19 @@ export default function HaikuPlay() {
             できた句を、だれかと読み合ってみよう（句会）。
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            {/* 同一ルートへの client 遷移だと completed state が残るので、
-                フルリロードして確実に最初から歩けるよう <a> にする。 */}
-            <a
-              href="/learn/haiku/?fresh=1"
+            {/* アプリ内でリセット（画面遷移しないので basePath 非依存で確実）。 */}
+            <button
+              type="button"
+              onClick={() => {
+                clearSeriesHistory(SERIES.id);
+                setStepIndex(0);
+                setCompleted(false);
+              }}
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
               style={{ letterSpacing: "0.2em" }}
             >
               もう一度
-            </a>
+            </button>
             <Link
               href="/learn/"
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
