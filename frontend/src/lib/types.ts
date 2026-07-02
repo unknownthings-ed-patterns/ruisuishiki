@@ -119,6 +119,172 @@ export type StepRecord = {
    * 正答率や weeklyCorrect には数えない。
    */
   skipped?: boolean;
+  /**
+   * 国語ステップで、その step で参照/自己チェックした観点の id（第3弾§5.7）。
+   * 集計軸「ジャンル×オペレータ×観点×ヒント到達層」の観点軸に使う。
+   * 数学系列では未指定（完全後方互換）。
+   */
+  viewpointRefs?: string[];
   /** ISO 8601 文字列。 */
   answeredAt: string;
+};
+
+/* ============================================================================
+ * 国語ユニット（俳句）の型（第3弾§5・加法的拡張）
+ *
+ * 設計方針：既存の数学型（LearnerStep / LearnerSeries）は一切変更しない。
+ * 第3弾§5.1 の inline スケッチは既存 step に kind を足す形だったが、
+ * LearnerStep の数学専用フィールド（answer: number, formulaPreview, unit,
+ * unknownLabel）は必須なので、そこに国語 step を混ぜると「必須→任意」の
+ * 変更が要る。第3弾§4.1/§5 が繰り返す「既存フィールドの変更はゼロ・加法的」
+ * を最優先し、国語は独立型 KokugoStep / KokugoSeries として定義する
+ * （Hint / VariationOp は共用）。play/page.tsx は型で分岐する（§7.1「分岐追加」）。
+ * ========================================================================== */
+
+/**
+ * 国語ステップの種別（第3弾§5.1）。
+ * 牧口四段階（読み比べ→観点抽出→制約付き産出→自由制作）を step 列に乗せる。
+ */
+export type StepKind =
+  | "exercise" // 判定あり（音数識別・季語選択・並べ替え等。決定的判定）
+  | "comparison" // 読み比べ（模範句の並置＋気づきの選択/記述。正誤なし）
+  | "creation"; // 産出（本歌取・自作。制約充足＋自己チェック。正誤なし）
+
+/** 産出スロットの制約（本歌取の穴埋め等。第3弾§5.2）。 */
+export type SlotConstraint = {
+  /** このスロットの目標音数（例 5）。moraCount で可視化する。 */
+  moraCount?: number;
+  /** 季語であること（季語表と照合）。 */
+  mustBeKigo?: boolean;
+  /** 元句の語（「差し替え」の担保。丸写し防止でなく差し替えを促す）。 */
+  forbidWords?: string[];
+};
+
+/**
+ * 国語 step の入力仕様（第3弾§5.2）。
+ * inputAffordances（数学側）の国語版。step.kind と組で使う。
+ */
+export type KokugoInput =
+  | { type: "choice"; options: string[]; answerIndex: number } // 決定的判定（音数・季語識別）
+  | { type: "reorder"; segments: string[]; answerOrder: number[] } // 並べ替え（語順の比較）
+  | { type: "fillIn"; template: string; slotConstraints: SlotConstraint[] } // 本歌取（穴埋め産出）
+  | { type: "haikuText" }; // 自由律の1行入力＋よみがな欄（§6.2）
+
+/**
+ * 産出 step の充足チェック（第3弾§5.3）。
+ * 判定ではなく可視化（G2）。作品の合否宣告・点数化・添削・代筆はしない。
+ */
+export type CreationCheck = {
+  /** 目標音数の分節（俳句なら [5,7,5]）。 */
+  meterTarget: number[];
+  /** 音数チェックは正誤にしない。ぴったり/字余り/字足らずを表示するだけ。 */
+  meterPolicy: "visualize";
+  /** 季語表との照合結果を表示するだけ（判定しない）。 */
+  kigoCheck?: "visualize";
+  /**
+   * 観点リストからの自己チェック項目。
+   * 読み比べ step より後の step にのみ提示する（発見が先・G1。§7.1）。
+   */
+  selfChecklist: string[];
+};
+
+/**
+ * 模範文（模範句）。第3弾§5.4・§9（調達計画）。
+ * ※docs や背骨には現物を書かない（G12）。現物はこのデータファイルにのみ置く。
+ */
+export type MentorText = {
+  id: string;
+  /** 句の本文（漢字かな交じり可）。 */
+  text: string;
+  /** よみがな（音数表示用。moraCount の入力）。 */
+  reading?: string;
+  author: string;
+  /** 出典（memory ruisuishiki-citation-format の書式）。 */
+  sourceNote: string;
+  /**
+   * 権利区分（G12）。PD は「戦前没の俳人」に限定。
+   * original＝設計者/先生の自作。licensed＝許諾済み（実名は載せない）。
+   */
+  rights: "PD" | "original" | "licensed";
+  /** 季語（あれば）。 */
+  kigo?: { word: string; season: "春" | "夏" | "秋" | "冬" | "新年" };
+  /**
+   * この句が担う観点（"オノマトペ"・"対比" 等）。
+   * 教師/設計者ビュー用。子ども UI には出さない（発見を奪わない・G1／数学の文型タグ=F1と同じ）。
+   */
+  viewpointTags: string[];
+  /**
+   * 学習者作品を模範文プールに入れる場合の許諾フラグ。
+   * 将来のオンライン句会の道もこのフラグで残す（実装はしない・Q4）。
+   */
+  shareable: boolean;
+};
+
+/** 国語ステップ（第3弾§5・KokugoStep）。Hint / VariationOp は数学と共用。 */
+export type KokugoStep = {
+  id: string;
+  position: number;
+  kind: StepKind;
+  /** 問い/読み比べの指示/産出の指示。 */
+  questionText: string;
+  /** この step で並置・参照する模範句の id（読み比べ・本歌取の元句）。 */
+  mentorTextRefs?: string[];
+  /** 入力仕様（exercise/creation。comparison は気づき記録なので任意）。 */
+  input?: KokugoInput;
+  /** 産出 step の可視化・自己チェック（creation のみ）。 */
+  creationCheck?: CreationCheck;
+  hints: Hint[];
+  /** 前題からの差分オペレータ（先頭ステップは null）。 */
+  variationFromPrevious: VariationOp | null;
+  /** 「比較せよ」で参照する前題（模範句カード）の step id。 */
+  compareWithStepId: string | null;
+  /**
+   * 図のマーカー。「フェードアウトする足場」に従い Step 1 と質的変化 step のみ。
+   * 答え（＝観点）を先に見せない（figure-does-not-reveal-answer は清書カード/模範句カードにも適用）。
+   */
+  figureMarker?: string;
+};
+
+/** 国語系列（第3弾§5・KokugoSeries）。 */
+export type KokugoSeries = {
+  id: string; // 例 "kokugo_haiku_form_01"
+  title: string;
+  subtitle: string;
+  /** ジャンル id（"haiku"）。ViewpointList と対応。 */
+  genreId: string;
+  unit: string; // 例 "俳句"
+  steps: KokugoStep[];
+  /** 中心の問い（胚細胞モデル。全 step 上部に常駐帯で表示）。 */
+  drivingQuestion?: string;
+};
+
+/**
+ * 観点リスト（第3弾§5.5）。版を持つ生き物。
+ * 句会・読み比べ由来の追記で version が上がる（Q4裁定の核）。
+ */
+export type ViewpointItem = {
+  /** "季語がある"・"音をそろえている" 等。 */
+  text: string;
+  /** どこ由来で追記されたか。 */
+  addedIn: "initial" | "kukai" | "reading";
+  /** ISO 日付。 */
+  addedAt?: string;
+};
+export type ViewpointList = {
+  genreId: string; // "haiku"
+  version: number;
+  items: ViewpointItem[];
+};
+
+/**
+ * 句会記録（第3弾§5.6）。localStorage。アプリは記録係（Q4）。
+ * 本文は書かなくてよい（個人情報最小化）。
+ */
+export type KukaiRecord = {
+  date: string;
+  seriesId?: string;
+  /** 最高得点句のメモ（本文任意）。 */
+  bestWorkNote?: string;
+  /** 「なぜよかったか」の観点メモ → ViewpointList への追記候補。 */
+  whyGoodNotes: string[];
 };

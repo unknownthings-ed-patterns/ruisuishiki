@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:mora": "tsc src/lib/moraCount.ts src/lib/moraCount.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/moraCount.test.js"
   },
   "dependencies": {
     "@types/react-katex": "^3.0.4",
