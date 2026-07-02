@@ -21,6 +21,7 @@ import { MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
 import { KOKUGO_HAIKU_FORM_SERIES } from "@/lib/seriesKokugoHaiku";
+import { getViewpointList } from "@/lib/viewpointLists";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -113,8 +114,11 @@ export default function HaikuPlay() {
   const [reading, setReading] = useState("");
   const [checked, setChecked] = useState<boolean[]>([]);
   // 読み比べ（comparison）step の「気づき」メモ。localStorage に軽量保存する
-  // （正式な履歴の国語軸・ViewpointList への昇格は段階3）。
+  // （正式な履歴の国語軸・句会記録との統合は段階3の後続）。
   const [note, setNote] = useState("");
+  // 観点抽出 step で選んだ観点（ViewpointList の各項目の選択状態）。
+  const [vpChecked, setVpChecked] = useState<boolean[]>([]);
+  const viewpointList = getViewpointList(SERIES.genreId);
 
   const step = SERIES.steps[stepIndex];
   const total = SERIES.steps.length;
@@ -162,6 +166,16 @@ export default function HaikuPlay() {
         ? window.localStorage.getItem(noteKey(step.id)) ?? ""
         : "",
     );
+    if (step.pickViewpoints && viewpointList) {
+      const saved =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem(vpKey(step.id))
+          : null;
+      const chosen: string[] = saved ? JSON.parse(saved) : [];
+      setVpChecked(viewpointList.items.map((it) => chosen.includes(it.text)));
+    } else {
+      setVpChecked([]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex]);
 
@@ -337,6 +351,43 @@ export default function HaikuPlay() {
 
         {/* 気づきメモ（読み比べ step）。canon §7.1「気づきを選ぶ/書く」。
             観点リスト（選べるリスト）は初期版の項目選定が先生マターのため段階3で追加。 */}
+        {step.pickViewpoints && viewpointList && (
+          <section
+            className="rounded-lg border border-border px-5 py-4 flex flex-col gap-2"
+            style={{ background: "var(--surface)" }}
+            aria-label="いいなと思うところをえらぶ"
+          >
+            <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+              いいなと思うところ（えらんでいいよ・あとで増えるよ）
+            </span>
+            {viewpointList.items.map((it, i) => (
+              <label key={i} className="flex items-start gap-2 cursor-pointer" style={{ fontSize: "15px" }}>
+                <input
+                  type="checkbox"
+                  checked={vpChecked[i] ?? false}
+                  onChange={() =>
+                    setVpChecked((c) => {
+                      const next = [...c];
+                      next[i] = !next[i];
+                      window.localStorage.setItem(
+                        vpKey(step.id),
+                        JSON.stringify(
+                          viewpointList.items
+                            .filter((_, j) => next[j])
+                            .map((v) => v.text),
+                        ),
+                      );
+                      return next;
+                    })
+                  }
+                  className="mt-1"
+                />
+                <span className="text-foreground">{it.text}</span>
+              </label>
+            ))}
+          </section>
+        )}
+
         {step.kind === "comparison" && (
           <section className="flex flex-col gap-2" aria-label="きづいたこと">
             <label className="flex flex-col gap-1">
@@ -613,6 +664,11 @@ export default function HaikuPlay() {
 /** 気づきメモの localStorage キー（段階3で正式な履歴の国語軸へ昇格予定）。 */
 function noteKey(stepId: string): string {
   return `kokugo_note:${SERIES.id}:${stepId}`;
+}
+
+/** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
+function vpKey(stepId: string): string {
+  return `kokugo_vp:${SERIES.id}:${stepId}`;
 }
 
 /** fillIn テンプレートを「＿」の連続で区切り、テキストとスロットに分解。 */

@@ -254,7 +254,8 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
       position: 8,
       kind: "comparison",
       questionText:
-        "ここまで、いろいろな句を読みくらべてきたね。あなたが「いいな」と思った句には、どんなところがあった？ 気づいたことを、下の欄に自分のことばで書いてみよう。",
+        "ここまで、いろいろな句を読みくらべてきたね。あなたが「いいな」と思った句には、どんなところがあった？ 下のリストから選んだり、自分のことばで書いたりしてみよう。",
+      pickViewpoints: true,
       hints: [
         {
           layer: 1,

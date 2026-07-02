@@ -243,6 +243,12 @@ export type KokugoStep = {
    * 答え（＝観点）を先に見せない（figure-does-not-reveal-answer は清書カード/模範句カードにも適用）。
    */
   figureMarker?: string;
+  /**
+   * 観点抽出 step で、ジャンルの ViewpointList（現在の版）をチェックリストとして
+   * 提示するか。読み比べの後の step にのみ true にする（発見が先・G1）。
+   * 選択は「発見の記録」であり採点ではない。
+   */
+  pickViewpoints?: boolean;
 };
 
 /** 国語系列（第3弾§5・KokugoSeries）。 */
