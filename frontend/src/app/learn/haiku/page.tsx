@@ -358,7 +358,7 @@ export default function HaikuPlay() {
             aria-label="いいなと思うところをえらぶ"
           >
             <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
-              いいなと思うところ（えらんでいいよ・あとで増えるよ）
+              いいなと思うところ（えらんでいいよ）
             </span>
             {viewpointList.items.map((it, i) => (
               <label key={i} className="flex items-start gap-2 cursor-pointer" style={{ fontSize: "15px" }}>
