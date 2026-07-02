@@ -1,0 +1,628 @@
+"use client";
+
+/**
+ * 国語ユニット（俳句）の学習者ビュー。
+ *
+ * 数学の play/page.tsx（LearnerSeries 専用・1123行）とは別型 KokugoSeries を
+ * 扱うため、既存ページを壊さないよう独立ルートにした（正典§7.1「分岐追加」の
+ * 加法的解釈）。共有プリミティブ（MathText・countMora・storage）は再利用する。
+ *
+ * 中核ふるまい（正典§6.3・§7・§8）：
+ *  - 音数は判定でなく可視化（meterPolicy: "visualize"。字余り・字足らずも俳句・G2）。
+ *  - creation（本歌取・自作）に「答えを見る」ボタンを置かない（代筆禁止・G10）。
+ *  - 観点セルフチェックは読み比べ後の creation step にのみ出す（発見が先・G1）。
+ *  - 模範句の viewpointTags は子ども UI に出さない（G1）。
+ *  - ヒントは3層を順に開く（比較の指さし）。
+ */
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { MathText } from "@/components/Math";
+import { countMora } from "@/lib/moraCount";
+import { getMentorText } from "@/lib/mentorTexts";
+import { KOKUGO_HAIKU_FORM_SERIES } from "@/lib/seriesKokugoHaiku";
+import {
+  clearSeriesHistory,
+  getResumeIndex,
+  loadSeriesHistory,
+  saveStepRecord,
+} from "@/lib/storage";
+
+const SERIES = KOKUGO_HAIKU_FORM_SERIES;
+
+/** 音数メーター：かな文字列の拍を可視化する（正誤ではない）。 */
+function MoraMeter({
+  reading,
+  target,
+}: {
+  reading: string;
+  target?: number;
+}) {
+  const n = countMora(reading);
+  let note = "";
+  let tone = "var(--muted)";
+  if (target != null) {
+    if (n === target) {
+      note = `${target}音ぴったり`;
+      tone = "var(--accent)";
+    } else if (n > target) {
+      note = `${target}音より ${n - target} 多い（字余りも俳句だよ）`;
+      tone = "var(--foreground)";
+    } else {
+      note = `${target}音より ${target - n} 少ない`;
+      tone = "var(--foreground)";
+    }
+  }
+  return (
+    <span
+      className="inline-flex items-center gap-2 tnum"
+      style={{ fontSize: "12px", letterSpacing: "0.08em", color: tone }}
+    >
+      <span aria-hidden>{"●".repeat(Math.min(n, 20))}</span>
+      <span>
+        {n}音{note ? `・${note}` : ""}
+      </span>
+    </span>
+  );
+}
+
+/** 模範句カード（縦書き）。viewpointTags は出さない（G1）。 */
+function MentorCard({ id }: { id: string }) {
+  const m = getMentorText(id);
+  if (!m) return null;
+  return (
+    <article
+      className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"
+      style={{ background: "var(--surface)" }}
+    >
+      <p
+        className="font-serif text-foreground"
+        style={{
+          writingMode: "vertical-rl",
+          fontSize: "20px",
+          lineHeight: 1.9,
+          letterSpacing: "0.12em",
+          maxHeight: "12em",
+        }}
+      >
+        {m.text}
+      </p>
+      {m.reading && (
+        <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.05em" }}>
+          {m.reading}（{countMora(m.reading)}音）
+        </span>
+      )}
+      <span className="text-muted" style={{ fontSize: "12px" }}>
+        — {m.author}
+      </span>
+    </article>
+  );
+}
+
+export default function HaikuPlay() {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [completed, setCompleted] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+  const [hintsOpened, setHintsOpened] = useState(0);
+
+  // 入力状態（step 種別ごと）
+  const [choice, setChoice] = useState<number | null>(null);
+  const [order, setOrder] = useState<number[]>([]);
+  const [slots, setSlots] = useState<string[]>([]);
+  const [work, setWork] = useState("");
+  const [reading, setReading] = useState("");
+  const [checked, setChecked] = useState<boolean[]>([]);
+  // 読み比べ（comparison）step の「気づき」メモ。localStorage に軽量保存する
+  // （正式な履歴の国語軸・ViewpointList への昇格は段階3）。
+  const [note, setNote] = useState("");
+
+  const step = SERIES.steps[stepIndex];
+  const total = SERIES.steps.length;
+  const isLast = stepIndex === total - 1;
+  const input = step.input;
+
+  // 復元（初回のみ）：?fresh=1 でクリア、なければ resume 位置へ
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("fresh") === "1") {
+      clearSeriesHistory(SERIES.id);
+      window.history.replaceState(null, "", window.location.pathname);
+      setStepIndex(0);
+    } else {
+      const history = loadSeriesHistory(SERIES.id);
+      const resume = getResumeIndex(
+        history,
+        SERIES.steps.map((s) => s.id),
+      );
+      if (resume >= SERIES.steps.length) setCompleted(true);
+      else if (resume > 0) setStepIndex(resume);
+    }
+    setHydrated(true);
+  }, []);
+
+  // step が変わるたびに入力状態をリセット
+  useEffect(() => {
+    setHintsOpened(0);
+    setChoice(null);
+    setOrder([]);
+    setWork("");
+    setReading("");
+    if (input?.type === "fillIn") {
+      setSlots(new Array(input.slotConstraints.length).fill(""));
+    } else {
+      setSlots([]);
+    }
+    setChecked(
+      step.creationCheck
+        ? new Array(step.creationCheck.selfChecklist.length).fill(false)
+        : [],
+    );
+    setNote(
+      typeof window !== "undefined"
+        ? window.localStorage.getItem(noteKey(step.id)) ?? ""
+        : "",
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stepIndex]);
+
+  // exercise は正解で解錠。comparison / creation は常に進める（判定しない）。
+  const choiceCorrect =
+    input?.type === "choice" && choice === input.answerIndex;
+  const reorderCorrect =
+    input?.type === "reorder" &&
+    order.length === input.segments.length &&
+    order.every((v, i) => v === input.answerOrder[i]);
+  const canAdvance =
+    step.kind !== "exercise" || choiceCorrect || reorderCorrect;
+
+  function persist() {
+    saveStepRecord(SERIES.id, {
+      stepId: step.id,
+      attempts: 1,
+      hintsOpened: Math.min(hintsOpened, 3) as 0 | 1 | 2 | 3,
+      correct: true, // 国語は「取り組んだ＝addressed」を進度に使う（正答率にしない・G8）
+      answeredAt: new Date().toISOString(),
+    });
+  }
+
+  function handleNext() {
+    persist();
+    if (isLast) {
+      setCompleted(true); // 完了画面へ（stepIndex は範囲内に保つ）
+    } else {
+      setStepIndex((i) => i + 1);
+    }
+  }
+
+  const comparedStep = useMemo(
+    () =>
+      step.compareWithStepId
+        ? SERIES.steps.find((s) => s.id === step.compareWithStepId) ?? null
+        : null,
+    [step.compareWithStepId],
+  );
+
+  if (!hydrated) {
+    return <main className="min-h-screen" aria-hidden />;
+  }
+
+  // 完了画面
+  if (completed) {
+    return (
+      <main className="flex min-h-screen flex-col items-center px-6 py-16">
+        <div className="w-full max-w-2xl flex flex-col items-center gap-10">
+          <h1
+            className="font-serif text-foreground text-center"
+            style={{ fontSize: "clamp(32px, 4vw, 48px)", letterSpacing: "0.08em" }}
+          >
+            おわり
+          </h1>
+          <p className="text-muted text-center" style={{ fontSize: "16px", lineHeight: 2 }}>
+            {total} の問いを歩きました。
+            <br />
+            できた句を、だれかと読み合ってみよう（句会）。
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* 同一ルートへの client 遷移だと completed state が残るので、
+                フルリロードして確実に最初から歩けるよう <a> にする。 */}
+            <a
+              href="/learn/haiku/?fresh=1"
+              className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              もう一度
+            </a>
+            <Link
+              href="/learn/"
+              className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              系列カタログ
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      {/* 上部ナビ */}
+      <nav
+        className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+        style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+        aria-label="サイト全体のナビゲーション"
+      >
+        <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
+          <div className="flex items-baseline gap-3" style={{ fontSize: "12px", letterSpacing: "0.05em" }}>
+            <Link href="/learn/" className="text-muted hover:text-foreground transition-colors">
+              ← 学ぶ
+            </Link>
+            <span className="text-muted opacity-30" aria-hidden>/</span>
+            <Link href="/" className="text-muted hover:text-foreground transition-colors">
+              ホーム
+            </Link>
+          </div>
+          <span className="text-muted truncate" style={{ fontSize: "12px", letterSpacing: "0.08em" }}>
+            {SERIES.title}
+          </span>
+        </div>
+      </nav>
+
+      <div className="flex-1 mx-auto w-full max-w-2xl px-6 py-8 flex flex-col gap-6">
+        {/* 中心の問い */}
+        {SERIES.drivingQuestion && (
+          <section
+            className="rounded-lg border border-accent/30 px-5 py-3"
+            style={{ background: "color-mix(in oklch, var(--surface) 85%, var(--accent) 15%)" }}
+            aria-label="中心の問い"
+          >
+            <span className="block text-muted mb-1" style={{ fontSize: "10px", letterSpacing: "0.25em" }}>
+              中心の問い
+            </span>
+            <p className="text-foreground" style={{ fontSize: "13px", lineHeight: 1.7, letterSpacing: "0.02em" }}>
+              <MathText text={SERIES.drivingQuestion} />
+            </p>
+          </section>
+        )}
+
+        {/* 進度（文型タグは出さない・G1/F1） */}
+        <header className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {SERIES.steps.map((_, i) => (
+              <span
+                key={i}
+                className="block rounded-full transition-colors duration-300"
+                style={{
+                  width: 8,
+                  height: 8,
+                  background: i <= stepIndex ? "var(--accent)" : "var(--border)",
+                  opacity: i < stepIndex ? 0.5 : 1,
+                }}
+                aria-hidden
+              />
+            ))}
+          </div>
+          <span className="text-muted tnum" style={{ fontSize: "13px", letterSpacing: "0.1em" }}>
+            Step {stepIndex + 1} / 全 {total} 問
+          </span>
+        </header>
+
+        {/* 問題文 */}
+        <section className="p-6 sm:p-8 rounded-lg border border-border" style={{ background: "var(--surface)" }}>
+          <p
+            className="text-foreground"
+            style={{ fontSize: "clamp(16px, 1.2rem, 19px)", lineHeight: 1.9, letterSpacing: "0.04em" }}
+          >
+            <MathText text={step.questionText} />
+          </p>
+        </section>
+
+        {/* 模範句（読み比べの素材。読み比べ・本歌取ではここが主役） */}
+        {step.mentorTextRefs && step.mentorTextRefs.length > 0 && (
+          <section
+            className="grid gap-4"
+            style={{ gridTemplateColumns: `repeat(${Math.min(step.mentorTextRefs.length, 2)}, minmax(0, 1fr))` }}
+            aria-label="読みくらべる句"
+          >
+            {step.mentorTextRefs.map((id) => (
+              <MentorCard key={id} id={id} />
+            ))}
+          </section>
+        )}
+
+        {/* 気づきメモ（読み比べ step）。canon §7.1「気づきを選ぶ/書く」。
+            観点リスト（選べるリスト）は初期版の項目選定が先生マターのため段階3で追加。 */}
+        {step.kind === "comparison" && (
+          <section className="flex flex-col gap-2" aria-label="きづいたこと">
+            <label className="flex flex-col gap-1">
+              <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+                きづいたこと（同じところ・ちがうところ・いいなと思ったところ）
+              </span>
+              <textarea
+                value={note}
+                onChange={(e) => {
+                  setNote(e.target.value);
+                  window.localStorage.setItem(noteKey(step.id), e.target.value);
+                }}
+                rows={3}
+                placeholder="自分のことばで書いてみよう"
+                className="rounded-md border px-3 py-2"
+                style={{
+                  borderColor: "var(--accent-soft)",
+                  background: "var(--background)",
+                  fontSize: "15px",
+                  lineHeight: 1.7,
+                  resize: "vertical",
+                }}
+              />
+            </label>
+          </section>
+        )}
+
+        {/* ── 入力 UI（種別ごと）── */}
+        {input?.type === "choice" && (
+          <section className="flex flex-col gap-2" aria-label="えらぶ">
+            {input.options.map((opt, i) => {
+              const picked = choice === i;
+              const showRight = picked && choiceCorrect;
+              const showWrong = picked && !choiceCorrect;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setChoice(i)}
+                  className="px-5 py-3 rounded-lg border text-left transition-colors"
+                  style={{
+                    borderColor: showRight
+                      ? "var(--accent)"
+                      : showWrong
+                      ? "var(--border)"
+                      : "var(--border)",
+                    background: showRight
+                      ? "color-mix(in oklch, var(--surface) 70%, var(--accent-warm) 30%)"
+                      : "var(--surface)",
+                    fontSize: "16px",
+                  }}
+                >
+                  {opt}
+                  {showRight && <span className="text-accent ml-2">✓ そのとおり</span>}
+                  {showWrong && <span className="text-muted ml-2">もう一度・ヒントを見てね</span>}
+                </button>
+              );
+            })}
+          </section>
+        )}
+
+        {input?.type === "reorder" && (
+          <section className="flex flex-col gap-4" aria-label="ならべかえ">
+            <div className="flex flex-wrap gap-2">
+              {input.segments.map((seg, i) => {
+                const used = order.includes(i);
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    disabled={used}
+                    onClick={() => setOrder((o) => [...o, i])}
+                    className="px-4 py-2 rounded-lg border font-serif transition-opacity"
+                    style={{
+                      borderColor: "var(--border)",
+                      background: "var(--surface)",
+                      opacity: used ? 0.3 : 1,
+                      fontSize: "17px",
+                    }}
+                  >
+                    {seg}（{countMora(seg)}音）
+                  </button>
+                );
+              })}
+            </div>
+            <div className="flex items-center gap-2 flex-wrap min-h-[2.5rem]">
+              {order.map((idx, pos) => (
+                <span key={pos} className="font-serif text-foreground" style={{ fontSize: "18px" }}>
+                  {input.segments[idx]}
+                  {pos < order.length - 1 && <span className="text-muted mx-1">／</span>}
+                </span>
+              ))}
+              {order.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setOrder([])}
+                  className="text-muted ml-2"
+                  style={{ fontSize: "12px" }}
+                >
+                  やりなおす
+                </button>
+              )}
+            </div>
+            {order.length === input.segments.length && (
+              <p style={{ fontSize: "14px" }} className={reorderCorrect ? "text-accent" : "text-muted"}>
+                {reorderCorrect ? "✓ 五・七・五になったね" : "五・七・五の順になっているかな？ 音を数えてみよう"}
+              </p>
+            )}
+          </section>
+        )}
+
+        {input?.type === "fillIn" && (
+          <section className="flex flex-col gap-3" aria-label="あなをうめる">
+            <div className="flex flex-wrap items-center gap-2 font-serif" style={{ fontSize: "18px" }}>
+              {renderTemplate(input.template).map((part, i) =>
+                part.slot == null ? (
+                  <span key={i} className="text-foreground">
+                    {part.text}
+                  </span>
+                ) : (
+                  <span key={i} className="inline-flex flex-col gap-1">
+                    <input
+                      value={slots[part.slot] ?? ""}
+                      onChange={(e) =>
+                        setSlots((s) => {
+                          const next = [...s];
+                          next[part.slot as number] = e.target.value;
+                          return next;
+                        })
+                      }
+                      placeholder="よみがな"
+                      className="rounded-md border px-3 py-1"
+                      style={{
+                        borderColor: "var(--accent-soft)",
+                        background: "var(--background)",
+                        width: "8em",
+                        fontSize: "16px",
+                      }}
+                      aria-label={`${part.slot + 1}つめのあな（よみがな）`}
+                    />
+                    <MoraMeter
+                      reading={slots[part.slot] ?? ""}
+                      target={input.slotConstraints[part.slot]?.moraCount}
+                    />
+                  </span>
+                ),
+              )}
+            </div>
+            <p className="text-muted" style={{ fontSize: "12px" }}>
+              ※音の数はメーターで見えるだけ。正解を出す機械ではないよ（字余りも俳句）。
+            </p>
+          </section>
+        )}
+
+        {input?.type === "haikuText" && (
+          <section className="flex flex-col gap-3" aria-label="いっくつくる">
+            <label className="flex flex-col gap-1">
+              <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+                作品（漢字かなまじりでOK）
+              </span>
+              <input
+                value={work}
+                onChange={(e) => setWork(e.target.value)}
+                className="rounded-md border px-3 py-2"
+                style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "17px" }}
+              />
+            </label>
+            <label className="flex flex-col gap-1">
+              <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+                よみがな（ひらがな。音を数えるのに使うよ）
+              </span>
+              <input
+                value={reading}
+                onChange={(e) => setReading(e.target.value)}
+                placeholder="ぜんぶひらがなで"
+                className="rounded-md border px-3 py-2"
+                style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "17px" }}
+              />
+            </label>
+            <MoraMeter
+              reading={reading}
+              target={step.creationCheck?.meterTarget.reduce((a, b) => a + b, 0)}
+            />
+            <p className="text-muted" style={{ fontSize: "12px" }}>
+              ※五・七・五にしても、外してもいい。メーターはあなたの音を見せる鏡だよ。
+            </p>
+          </section>
+        )}
+
+        {/* 観点セルフチェック（creation step のみ・読み比べの後） */}
+        {step.creationCheck && step.creationCheck.selfChecklist.length > 0 && (
+          <section
+            className="rounded-lg border border-border px-5 py-4 flex flex-col gap-2"
+            style={{ background: "var(--surface)" }}
+            aria-label="じぶんでたしかめる"
+          >
+            <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+              じぶんでたしかめる
+            </span>
+            {step.creationCheck.selfChecklist.map((item, i) => (
+              <label key={i} className="flex items-start gap-2 cursor-pointer" style={{ fontSize: "14px" }}>
+                <input
+                  type="checkbox"
+                  checked={checked[i] ?? false}
+                  onChange={() =>
+                    setChecked((c) => {
+                      const next = [...c];
+                      next[i] = !next[i];
+                      return next;
+                    })
+                  }
+                  className="mt-1"
+                />
+                <span className="text-foreground">{item}</span>
+              </label>
+            ))}
+          </section>
+        )}
+
+        {/* ヒント（3層を順に開く・比較の指さし） */}
+        <section className="flex flex-col gap-3" aria-label="ヒント">
+          {step.hints.slice(0, hintsOpened).map((hint) => (
+            <div
+              key={hint.layer}
+              className="px-5 py-4 rounded-lg border border-accent-soft"
+              style={{ background: "color-mix(in oklch, var(--surface) 80%, var(--accent-soft) 20%)" }}
+            >
+              <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+                ヒント {hint.layer}
+              </span>
+              <p className="mt-1.5 text-foreground" style={{ fontSize: "15px", lineHeight: 1.8 }}>
+                <MathText text={hint.text} />
+              </p>
+            </div>
+          ))}
+          {hintsOpened < 3 && (
+            <button
+              type="button"
+              onClick={() => setHintsOpened((n) => Math.min(n + 1, 3))}
+              className="self-start text-accent"
+              style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+            >
+              ヒント{hintsOpened === 0 ? "を見る" : "をもう一つ"} →
+            </button>
+          )}
+        </section>
+
+        {/* ナビゲーション */}
+        <div className="flex items-center justify-between pt-2">
+          <button
+            type="button"
+            onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+            disabled={stepIndex === 0}
+            className="text-muted disabled:opacity-30"
+            style={{ fontSize: "14px", letterSpacing: "0.1em" }}
+          >
+            ← 前へ
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={!canAdvance}
+            className="px-8 py-3 rounded-lg bg-accent text-background disabled:opacity-30"
+            style={{ letterSpacing: "0.15em" }}
+          >
+            {isLast ? "おわる" : canAdvance ? "次へ →" : "えらんでね"}
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+/** 気づきメモの localStorage キー（段階3で正式な履歴の国語軸へ昇格予定）。 */
+function noteKey(stepId: string): string {
+  return `kokugo_note:${SERIES.id}:${stepId}`;
+}
+
+/** fillIn テンプレートを「＿」の連続で区切り、テキストとスロットに分解。 */
+function renderTemplate(tmpl: string): { text?: string; slot?: number }[] {
+  const parts: { text?: string; slot?: number }[] = [];
+  const re = /＿+/g;
+  let last = 0;
+  let si = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(tmpl))) {
+    if (m.index > last) parts.push({ text: tmpl.slice(last, m.index) });
+    parts.push({ slot: si++ });
+    last = m.index + m[0].length;
+  }
+  if (last < tmpl.length) parts.push({ text: tmpl.slice(last) });
+  return parts;
+}

@@ -194,6 +194,33 @@ export default function LearnIndex() {
           </section>
         )}
 
+        {/* 国語（俳句）ユニット。数学カタログ（LearnerSeries 型）とは別型なので
+            独立セクション＋独立ルート（/learn/haiku）で提供する。 */}
+        <section className="flex flex-col gap-4">
+          <h2
+            className="text-foreground"
+            style={{ fontSize: "13px", letterSpacing: "0.3em" }}
+          >
+            国語（俳句）
+          </h2>
+          <Link
+            href="/learn/haiku/"
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="text-foreground font-serif"
+              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+            >
+              五七五のかたち（音数とリズム）
+            </span>
+            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              声に出して音を数え、五・七・五という「器」が何をしてくれるかを歩く。読みくらべ →
+              まねっこ → 一句づくりまで、全 10 問。
+            </span>
+          </Link>
+        </section>
+
         {/* 静的カタログ：subject（学年領域）でグループ化、topicGroup で折りたたみ可能 */}
         {!hasHydrated ? (
           <p className="text-muted" style={{ fontSize: "13px" }}>
