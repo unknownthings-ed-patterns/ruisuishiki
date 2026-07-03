@@ -508,41 +508,53 @@ export default function HaikuPlay() {
 
         {input?.type === "fillIn" && (
           <section className="flex flex-col gap-3" aria-label="あなをうめる">
-            <div className="flex flex-wrap items-center gap-2 font-serif" style={{ fontSize: "18px" }}>
+            {/* かたちのプレビュー（あなは「◯音」の箱で示す） */}
+            <p
+              className="font-serif text-foreground flex flex-wrap items-center gap-1"
+              style={{ fontSize: "18px", letterSpacing: "0.06em" }}
+            >
               {renderTemplate(input.template).map((part, i) =>
                 part.slot == null ? (
-                  <span key={i} className="text-foreground">
-                    {part.text}
-                  </span>
+                  <span key={i}>{part.text}</span>
                 ) : (
-                  <span key={i} className="inline-flex flex-col gap-1">
-                    <input
-                      value={slots[part.slot] ?? ""}
-                      onChange={(e) =>
-                        setSlots((s) => {
-                          const next = [...s];
-                          next[part.slot as number] = e.target.value;
-                          return next;
-                        })
-                      }
-                      placeholder="よみがな"
-                      className="rounded-md border px-3 py-1"
-                      style={{
-                        borderColor: "var(--accent-soft)",
-                        background: "var(--background)",
-                        width: "8em",
-                        fontSize: "16px",
-                      }}
-                      aria-label={`${part.slot + 1}つめのあな（よみがな）`}
-                    />
-                    <MoraMeter
-                      reading={slots[part.slot] ?? ""}
-                      target={input.slotConstraints[part.slot]?.moraCount}
-                    />
+                  <span
+                    key={i}
+                    className="inline-block rounded border border-accent-soft px-2 text-muted"
+                    style={{ fontSize: "13px" }}
+                  >
+                    {input.slotConstraints[part.slot]?.moraCount ?? ""}音
                   </span>
                 ),
               )}
-            </div>
+            </p>
+            {/* あなごとに、ラベル付きの入力欄を縦に積む（スマホでも見やすい） */}
+            {input.slotConstraints.map((c, si) => (
+              <label key={si} className="flex flex-col gap-1">
+                <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+                  {input.slotConstraints.length > 1
+                    ? si === 0
+                      ? "上のことば"
+                      : "下のことば"
+                    : "あなのことば"}
+                  （{c.moraCount}音・よみがな）
+                </span>
+                <input
+                  value={slots[si] ?? ""}
+                  onChange={(e) =>
+                    setSlots((s) => {
+                      const next = [...s];
+                      next[si] = e.target.value;
+                      return next;
+                    })
+                  }
+                  placeholder="ぜんぶひらがなで"
+                  className="rounded-md border px-3 py-2"
+                  style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "16px" }}
+                  aria-label={`${si + 1}つめのあな（よみがな）`}
+                />
+                <MoraMeter reading={slots[si] ?? ""} target={c.moraCount} />
+              </label>
+            ))}
             <p className="text-muted" style={{ fontSize: "12px" }}>
               ※音の数はメーターで見えるだけ。正解を出す機械ではないよ（字余りも俳句）。
             </p>
