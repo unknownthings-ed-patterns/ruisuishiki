@@ -4,6 +4,7 @@ import "katex/dist/katex.min.css";
 import React, { useState } from "react";
 import { BlockMath, InlineMath } from "react-katex";
 import { GLOSSARY, type GlossaryEntry, type VerifyResult } from "@/lib/glossary";
+import { seriesHref } from "@/lib/seriesCatalog";
 
 /**
  * 用語リンク：[用語名] と書かれた部分が、辞書に登録されていれば
@@ -69,7 +70,7 @@ function TermLink({ term }: { term: string }) {
               )}
               {entry.relatedSeriesId && (
                 <a
-                  href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
+                  href={seriesHref(entry.relatedSeriesId)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-accent hover:underline"
@@ -220,7 +221,7 @@ function EasyExplanationModal({
         {relatedSeriesId && (
           <span className="block mt-6 pt-4 border-t border-border">
             <a
-              href={`/learn/play/?seriesId=${relatedSeriesId}`}
+              href={seriesHref(relatedSeriesId)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-background transition-transform hover:scale-[1.02]"

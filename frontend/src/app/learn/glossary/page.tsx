@@ -9,6 +9,7 @@ import {
   StructuredDictionaryPage,
 } from "@/components/Math";
 import { GLOSSARY } from "@/lib/glossary";
+import { seriesHref } from "@/lib/seriesCatalog";
 
 /**
  * 辞書ページ専用ルート。
@@ -143,7 +144,7 @@ function GlossaryEntryView({ term }: { term: string }) {
       {entry.relatedSeriesId && (
         <div className="mt-8 pt-6 border-t border-border">
           <Link
-            href={`/learn/play/?seriesId=${entry.relatedSeriesId}`}
+            href={seriesHref(entry.relatedSeriesId)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-background transition-transform hover:scale-[1.02]"
             style={{ fontSize: "13px", letterSpacing: "0.15em" }}
           >

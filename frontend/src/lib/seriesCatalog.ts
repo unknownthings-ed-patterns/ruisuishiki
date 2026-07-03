@@ -626,3 +626,13 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,
 ];
+
+/**
+ * 系列 id から学習者ビューの URL を作る。
+ * 国語（俳句）系列は別ルート /learn/haiku、数学系列は /learn/play。
+ */
+export function seriesHref(seriesId: string): string {
+  return seriesId.startsWith("kokugo_")
+    ? `/learn/haiku/?seriesId=${seriesId}`
+    : `/learn/play/?seriesId=${seriesId}`;
+}
