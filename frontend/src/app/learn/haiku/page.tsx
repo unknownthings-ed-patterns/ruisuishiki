@@ -35,11 +35,65 @@ const SERIES = KOKUGO_HAIKU_FORM_SERIES;
 function MoraMeter({
   reading,
   target,
+  segments,
 }: {
   reading: string;
   target?: number;
+  segments?: number[]; // [5,7,5] のとき区切り表示（canon §6.2）
 }) {
   const n = countMora(reading);
+
+  // 五・七・五の区切り表示（●=入力ずみ ○=あきわく ｜=くぎり）。色でなく形で示す。
+  if (segments && segments.length > 0) {
+    const total = segments.reduce((a, b) => a + b, 0);
+    let rem = n;
+    const parts = segments.map((seg) => {
+      const filled = Math.min(rem, seg);
+      rem -= filled;
+      return { seg, filled };
+    });
+    const extra = rem; // 字余り分
+    const note =
+      n === total
+        ? `${total}音ぴったり`
+        : n > total
+        ? `字余り ＋${n - total}（字余りも俳句だよ）`
+        : `字足らず －${total - n}`;
+    return (
+      <span
+        className="inline-flex flex-wrap items-center gap-1 tnum"
+        style={{ fontSize: "13px", letterSpacing: "0.08em" }}
+        aria-label={`${n}音・${note}`}
+      >
+        {parts.map((p, i) => (
+          <span key={i} className="inline-flex items-center">
+            <span className="text-accent" aria-hidden>
+              {"●".repeat(p.filled)}
+            </span>
+            <span className="text-muted" aria-hidden>
+              {"○".repeat(p.seg - p.filled)}
+            </span>
+            {i < parts.length - 1 && (
+              <span className="text-muted mx-1" aria-hidden>
+                ｜
+              </span>
+            )}
+          </span>
+        ))}
+        {extra > 0 && (
+          <span className="text-foreground" aria-hidden>
+            {" ＋"}
+            {"●".repeat(extra)}
+          </span>
+        )}
+        <span className="text-muted ml-2">
+          {n}音・{note}
+        </span>
+      </span>
+    );
+  }
+
+  // 合計だけの表示（fillIn スロットなど）
   let note = "";
   let tone = "var(--muted)";
   if (target != null) {
@@ -155,8 +209,9 @@ export default function HaikuPlay() {
     setHintsOpened(0);
     setChoice(null);
     setOrder([]);
-    setWork("");
-    setReading("");
+    const savedHaiku = step.input?.type === "haikuText" ? loadHaiku(step.id) : null;
+    setWork(savedHaiku?.work ?? "");
+    setReading(savedHaiku?.reading ?? "");
     if (input?.type === "fillIn") {
       setSlots(new Array(input.slotConstraints.length).fill(""));
     } else {
@@ -405,8 +460,9 @@ export default function HaikuPlay() {
           </p>
         </section>
 
-        {/* 模範句（読み比べの素材。読み比べ・本歌取ではここが主役） */}
-        {step.mentorTextRefs && step.mentorTextRefs.length > 0 && (
+        {/* 模範句（読み比べの素材）。読み比べ(comparison)ではここが主役。
+            作る(creation)では上部に出さず、ヒント横に「くらべる句」として添える。 */}
+        {step.kind === "comparison" && step.mentorTextRefs && step.mentorTextRefs.length > 0 && (
           <section
             className="grid gap-4"
             style={{ gridTemplateColumns: `repeat(${Math.min(step.mentorTextRefs.length, 2)}, minmax(0, 1fr))` }}
@@ -631,7 +687,10 @@ export default function HaikuPlay() {
               </span>
               <input
                 value={work}
-                onChange={(e) => setWork(e.target.value)}
+                onChange={(e) => {
+                  setWork(e.target.value);
+                  saveHaiku(step.id, e.target.value, reading);
+                }}
                 className="rounded-md border px-3 py-2"
                 style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "17px" }}
               />
@@ -642,16 +701,16 @@ export default function HaikuPlay() {
               </span>
               <input
                 value={reading}
-                onChange={(e) => setReading(e.target.value)}
+                onChange={(e) => {
+                  setReading(e.target.value);
+                  saveHaiku(step.id, work, e.target.value);
+                }}
                 placeholder="ぜんぶひらがなで"
                 className="rounded-md border px-3 py-2"
                 style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "17px" }}
               />
             </label>
-            <MoraMeter
-              reading={reading}
-              target={step.creationCheck?.meterTarget.reduce((a, b) => a + b, 0)}
-            />
+            <MoraMeter reading={reading} segments={step.creationCheck?.meterTarget} />
             <p className="text-muted" style={{ fontSize: "12px" }}>
               ※五・七・五にしても、外してもいい。メーターはあなたの音を見せる鏡だよ。
             </p>
@@ -699,6 +758,47 @@ export default function HaikuPlay() {
 
         {/* ヒント（3層を順に開く・比較の指さし） */}
         <section className="flex flex-col gap-3" aria-label="ヒント">
+          {/* 作る step では、ヒントを開いたら「くらべる句」を横に添える（比較の指さし）。
+              本歌があればその句、無ければ「さっきつくった句」（前 step の自作）。 */}
+          {step.kind === "creation" &&
+            hintsOpened >= 1 &&
+            (() => {
+              const refs = step.mentorTextRefs ?? [];
+              const prior =
+                refs.length === 0 && step.compareWithStepId
+                  ? loadHaiku(step.compareWithStepId)
+                  : null;
+              if (refs.length === 0 && !prior?.work) return null;
+              return (
+                <article
+                  className="rounded-lg border border-border p-4 flex flex-col gap-2 animate-fade-in"
+                  style={{ background: "var(--surface)" }}
+                  aria-label="くらべる句"
+                >
+                  <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+                    {refs.length ? "元の句" : "さっきの句"}
+                  </span>
+                  <div className="flex flex-wrap gap-4 justify-center">
+                    {refs.length ? (
+                      refs.map((id) => <MentorCard key={id} id={id} />)
+                    ) : (
+                      <p
+                        className="font-serif text-foreground"
+                        style={{
+                          writingMode: "vertical-rl",
+                          whiteSpace: "nowrap",
+                          fontSize: "clamp(15px, 2.4vh, 20px)",
+                          letterSpacing: "0.12em",
+                          maxHeight: "40vh",
+                        }}
+                      >
+                        {prior?.work}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              );
+            })()}
           {step.hints.slice(0, hintsOpened).map((hint) => (
             <div
               key={hint.layer}
@@ -879,6 +979,22 @@ function collectFootprints(): {
 /** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
 function vpKey(stepId: string): string {
   return `kokugo_vp:${SERIES.id}:${stepId}`;
+}
+
+/** 自作句（作品＋よみがな）の localStorage キー。次の step の「さっきの句」参照・清書に使う。 */
+function haikuKey(stepId: string): string {
+  return `kokugo_haiku:${SERIES.id}:${stepId}`;
+}
+function saveHaiku(stepId: string, work: string, reading: string): void {
+  window.localStorage.setItem(haikuKey(stepId), JSON.stringify({ work, reading }));
+}
+function loadHaiku(stepId: string): { work: string; reading: string } | null {
+  try {
+    const raw = window.localStorage.getItem(haikuKey(stepId));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
 }
 
 /** fillIn テンプレートを「＿」の連続で区切り、テキストとスロットに分解。 */
