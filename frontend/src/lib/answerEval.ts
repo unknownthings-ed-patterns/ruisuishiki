@@ -53,6 +53,12 @@ type Token =
   | { kind: "lparen" }
   | { kind: "rparen" };
 
+type FactorValue = {
+  value: number;
+  /** π・√ を含む factor か。暗黙積を num×num に広げないために使う。 */
+  symbolic: boolean;
+};
+
 /**
  * 文字列をトークン列に分解する。未知の文字に当たったら null（＝パース不能）。
  * 空白は無視。π・√ の記号も pi・sqrt の英単語も受ける。
@@ -206,23 +212,34 @@ class Parser {
   }
 
   private parseTerm(): number {
-    let value = this.parseFactor();
+    let left = this.parseFactor();
     for (;;) {
       const t = this.peek();
       if (!t) break;
       if (t.kind === "op" && (t.value === "*" || t.value === "/")) {
         this.next();
         const rhs = this.parseFactor();
-        value = t.value === "*" ? value * rhs : value / rhs;
+        left = {
+          value: t.value === "*" ? left.value * rhs.value : left.value / rhs.value,
+          symbolic: left.symbolic || rhs.symbolic,
+        };
       } else if (this.startsFactor(t)) {
-        // 演算子なしで factor が続く＝暗黙の積（5π, 2√3, 3(…) 等）
+        // 演算子なしで factor が続く＝暗黙の積。
+        // ローフロア shorthand の 5π・2√3 は許すが、2 3・2(3) のような
+        // num×num 形式は、桁区切り/隣接ミスを誤採点しやすいので禁止する。
         const rhs = this.parseFactor();
-        value = value * rhs;
+        if (!left.symbolic && !rhs.symbolic) {
+          throw new Error("implicit num*num is not allowed");
+        }
+        left = {
+          value: left.value * rhs.value,
+          symbolic: left.symbolic || rhs.symbolic,
+        };
       } else {
         break;
       }
     }
-    return value;
+    return left.value;
   }
 
   /** そのトークンが factor の開始になりうるか（暗黙の積の判定に使う）。 */
@@ -236,36 +253,39 @@ class Parser {
     // 注意：op('-'/'+') は暗黙の積の連結に含めない（"2-3" を 2*(-3) にしないため）。
   }
 
-  private parseFactor(): number {
+  private parseFactor(): FactorValue {
     const t = this.peek();
     if (!t) throw new Error("unexpected end of input");
 
     if (t.kind === "sqrt") {
       this.next();
       const inner = this.parseFactor();
-      if (inner < 0) throw new Error("sqrt of negative");
-      return Math.sqrt(inner);
+      if (inner.value < 0) throw new Error("sqrt of negative");
+      return { value: Math.sqrt(inner.value), symbolic: true };
     }
     if (t.kind === "op" && (t.value === "-" || t.value === "+")) {
       this.next();
       const inner = this.parseFactor();
-      return t.value === "-" ? -inner : inner;
+      return {
+        value: t.value === "-" ? -inner.value : inner.value,
+        symbolic: inner.symbolic,
+      };
     }
     return this.parsePrimary();
   }
 
-  private parsePrimary(): number {
+  private parsePrimary(): FactorValue {
     const t = this.next();
     if (!t) throw new Error("unexpected end of input");
-    if (t.kind === "num") return t.value;
-    if (t.kind === "pi") return Math.PI;
+    if (t.kind === "num") return { value: t.value, symbolic: false };
+    if (t.kind === "pi") return { value: Math.PI, symbolic: true };
     if (t.kind === "lparen") {
       const value = this.parseExpression();
       const close = this.next();
       if (!close || close.kind !== "rparen") {
         throw new Error("missing closing paren");
       }
-      return value;
+      return { value, symbolic: false };
     }
     throw new Error("unexpected token in primary");
   }
@@ -285,10 +305,12 @@ class Parser {
  */
 export function evaluateAnswer(input: string): number | null {
   if (input == null) return null;
-  // 後方互換：旧 parseAnswer はカンマ・空白を除去してから解釈していた
+  // 後方互換：旧 parseAnswer はカンマを除去してから解釈していた
   // （桁区切り「1,080」「30,000」を学習者が打っても通る）。同じ前処理を踏襲する。
+  // 空白は除去せず tokenizer に任せる。これにより "2 3" を "23" に畳まず、
+  // num×num の隣接ミスとして弾ける。
   // 複数解パス（judgeSolutionSet）は先にカンマで分割してから各片を渡すので無影響。
-  const normalized = normalizeInput(input).replace(/[,\s]/g, "");
+  const normalized = normalizeInput(input).replace(/,/g, "");
   const tokens = tokenize(normalized);
   if (tokens === null || tokens.length === 0) return null;
   try {
