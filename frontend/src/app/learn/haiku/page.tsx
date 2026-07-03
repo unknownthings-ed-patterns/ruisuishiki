@@ -80,10 +80,11 @@ function MentorCard({ id }: { id: string }) {
         className="font-serif text-foreground"
         style={{
           writingMode: "vertical-rl",
-          fontSize: "20px",
-          lineHeight: 1.9,
+          // 俳句は縦書き1行（1列）。折り返して複数列にしない。
+          whiteSpace: "nowrap",
+          fontSize: "clamp(15px, 2.4vh, 20px)",
           letterSpacing: "0.12em",
-          maxHeight: "12em",
+          maxHeight: "60vh",
         }}
       >
         {m.text}
@@ -685,10 +686,10 @@ export default function HaikuPlay() {
             className="font-serif text-foreground text-center"
             style={{
               writingMode: "vertical-rl",
-              fontSize: "clamp(28px, 6vw, 56px)",
-              lineHeight: 1.9,
+              // 俳句は縦書き1行（1列）。折り返さず、高さは画面に収まるよう文字サイズを決める。
+              whiteSpace: "nowrap",
+              fontSize: "clamp(20px, 4vh, 44px)",
               letterSpacing: "0.18em",
-              maxHeight: "60vh",
             }}
           >
             {work}
