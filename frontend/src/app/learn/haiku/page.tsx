@@ -243,6 +243,68 @@ export default function HaikuPlay() {
             <br />
             できた句を、だれかと読み合ってみよう（句会）。
           </p>
+
+          {/* あしあと（履歴の国語軸・G8）。正答率は出さない。
+              オペレータ×ヒント到達層×見つけた観点で「歩き」をふり返る。 */}
+          {(() => {
+            const fp = collectFootprints();
+            return (
+              <section
+                className="w-full rounded-lg border border-border p-6 flex flex-col gap-4"
+                style={{ background: "var(--surface)" }}
+                aria-label="あしあと"
+              >
+                <h2 className="text-foreground" style={{ fontSize: "13px", letterSpacing: "0.3em" }}>
+                  あしあと
+                </h2>
+                <p className="text-muted" style={{ fontSize: "14px" }}>
+                  歩いた step：{fp.walked} / {total}
+                </p>
+                <div className="flex flex-col gap-1">
+                  <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.15em" }}>
+                    じっくり考えたところ（ヒントをよく開いた）
+                  </span>
+                  {fp.hard.length === 0 ? (
+                    <span className="text-foreground" style={{ fontSize: "14px" }}>
+                      すっと歩けたね
+                    </span>
+                  ) : (
+                    <ul className="flex flex-col gap-1">
+                      {fp.hard.map((h, i) => (
+                        <li key={i} className="text-foreground" style={{ fontSize: "14px" }}>
+                          ・{h.op}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.15em" }}>
+                    見つけた「いいところ」
+                  </span>
+                  {fp.chosen.length === 0 ? (
+                    <span className="text-muted" style={{ fontSize: "13px" }}>
+                      （まだ選んでいないよ）
+                    </span>
+                  ) : (
+                    <ul className="flex flex-col gap-1">
+                      {fp.chosen.map((c, i) => (
+                        <li key={i} className="text-foreground" style={{ fontSize: "14px" }}>
+                          ・{c}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {fp.noteCount > 0 && (
+                    <span className="text-muted" style={{ fontSize: "13px" }}>
+                      気づきを書いた：{fp.noteCount} か所
+                    </span>
+                  )}
+                </div>
+              </section>
+            );
+          })()}
+
           <div className="flex flex-col sm:flex-row gap-4">
             {/* アプリ内でリセット（画面遷移しないので basePath 非依存で確実）。 */}
             <button
@@ -765,9 +827,53 @@ export default function HaikuPlay() {
   );
 }
 
-/** 気づきメモの localStorage キー（段階3で正式な履歴の国語軸へ昇格予定）。 */
+/** 気づきメモの localStorage キー。 */
 function noteKey(stepId: string): string {
   return `kokugo_note:${SERIES.id}:${stepId}`;
+}
+
+/** オペレータの子ども向けラベル（履歴の国語軸で使う）。 */
+const OP_LABEL_JA: Record<string, string> = {
+  same: "同じかたちで作る",
+  inverse: "ならべかえ・逆",
+  plus_alpha: "じょうけんを足す",
+  qualitative: "かたちを変える（自由律）",
+  composite: "重ねわざ",
+};
+
+/**
+ * あしあと（履歴の国語軸・G8）を localStorage から集める。
+ * 正答率は出さない——オペレータ×ヒント到達層×見つけた観点でふり返る。
+ */
+function collectFootprints(): {
+  walked: number;
+  hard: { op: string }[];
+  chosen: string[];
+  noteCount: number;
+} {
+  const history = loadSeriesHistory(SERIES.id);
+  const walked = new Set(history.map((r) => r.stepId)).size;
+  const hard: { op: string }[] = [];
+  for (const r of history) {
+    if (r.hintsOpened >= 2) {
+      const st = SERIES.steps.find((s) => s.id === r.stepId);
+      const op = st?.variationFromPrevious;
+      if (op && OP_LABEL_JA[op]) hard.push({ op: OP_LABEL_JA[op] });
+    }
+  }
+  let chosen: string[] = [];
+  try {
+    const raw = window.localStorage.getItem(vpKey("step8"));
+    if (raw) chosen = JSON.parse(raw);
+  } catch {
+    chosen = [];
+  }
+  let noteCount = 0;
+  for (const s of SERIES.steps) {
+    const n = window.localStorage.getItem(noteKey(s.id));
+    if (n && n.trim()) noteCount++;
+  }
+  return { walked, hard, chosen, noteCount };
 }
 
 /** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
