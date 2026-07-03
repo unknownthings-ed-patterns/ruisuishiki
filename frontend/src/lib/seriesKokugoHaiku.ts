@@ -149,11 +149,11 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
       position: 5,
       kind: "creation",
       questionText:
-        "一茶の句のかたちを借りて、まねっこで作ってみよう（[本歌取]）。「一茶」のところに、あなたのことば（自分の名前や、応援したいだれか）を $3$ 音で入れてみて。",
-      mentorTextRefs: ["haiku_yasegaeru"],
+        "芭蕉の句のかたちを借りて、まねっこで作ってみよう（[本歌取]）。「蛙（かわず）」のところに、池に飛びこむ何か・あなたの見たものを $3$ 音で入れてみて。",
+      mentorTextRefs: ["haiku_furuike"],
       input: {
         type: "fillIn",
-        template: "やせ蛙 まけるな＿＿＿ これにあり",
+        template: "古池や ＿＿＿飛びこむ 水の音",
         slotConstraints: [{ moraCount: 3 }],
       },
       creationCheck: {
@@ -171,11 +171,11 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "変えるのは真ん中の「一茶」のところ一つだけ。ここは $3$ 音。あなたのことばも $3$ 音にすると、まわりの音がくずれない。声に出して数えてみよう。",
+          text: "変えるのは「かわず（蛙）」のところ一つだけ。ここは $3$ 音。あなたのことばも $3$ 音にすると、まわりの音がくずれない。声に出して数えてみよう。",
         },
         {
           layer: 3,
-          text: "一茶は「一茶」＝自分の名前をここに置いて、句の中に作者が顔を出したね。前後の「まけるな」「これにあり」はそのまま。あなたは同じ場所に、$3$ 音のあなたのことばを置く番——作り方は元の句が見せてくれている。",
+          text: "芭蕉は「かわず（蛙）」が池に飛びこむ音をとらえたね。「ふるいけや」「とびこむ」「みずのおと」はそのまま。あなたは同じ場所に、$3$ 音の「池に飛びこむ何か」を置く番——作り方は元の句が見せてくれている。",
         },
       ],
       variationFromPrevious: "same",
