@@ -129,6 +129,54 @@ export const HAIKU_MENTOR_TEXTS: MentorText[] = [
     viewpointTags: ["拗音", "長音", "撥音", "促音"],
     shareable: false,
   },
+
+  // ── 系列②「季語」用 ──────────────────────────────
+  // PD（季語が明快な句・識別/季節あて）
+  {
+    id: "haiku_yuki_shiki",
+    text: "いくたびも雪の深さを尋ねけり",
+    reading: "いくたびもゆきのふかさをたずねけり",
+    author: "正岡子規",
+    sourceNote: "正岡子規（1867–1902）。没後100年超によりパブリックドメイン。",
+    rights: "PD",
+    kigo: { word: "雪", season: "冬" },
+    viewpointTags: ["季語（冬）", "くり返し", "病床の景"],
+    shareable: false,
+  },
+  {
+    id: "haiku_harunoumi",
+    text: "春の海ひねもすのたりのたりかな",
+    reading: "はるのうみひねもすのたりのたりかな",
+    author: "与謝蕪村",
+    sourceNote: "与謝蕪村（1716–1784）。没後100年超によりパブリックドメイン。",
+    rights: "PD",
+    kigo: { word: "春の海", season: "春" },
+    viewpointTags: ["季語（春）", "くり返しの音", "のどかさ"],
+    shareable: false,
+  },
+  // 季語交換ペア（自作）。同じ句型で季語だけ替え、世界が春↔秋に変わる（質的変化の核）。
+  {
+    id: "orig_tsugakuro_haru",
+    text: "さくら咲く一年生の通学路",
+    reading: "さくらさくいちねんせいのつうがくろ",
+    author: "（自作）",
+    sourceNote: "設計者の自作（季語交換ペアの春側）。",
+    rights: "original",
+    kigo: { word: "さくら", season: "春" },
+    viewpointTags: ["季語（春）", "はじまりの希望"],
+    shareable: false,
+  },
+  {
+    id: "orig_tsugakuro_aki",
+    text: "もみじ散る一年生の通学路",
+    reading: "もみじちるいちねんせいのつうがくろ",
+    author: "（自作）",
+    sourceNote: "設計者の自作（季語交換ペアの秋側・同型で季語だけ替えた相方）。",
+    rights: "original",
+    kigo: { word: "もみじ", season: "秋" },
+    viewpointTags: ["季語（秋）", "落ち着き・移ろい"],
+    shareable: false,
+  },
 ];
 
 /** id から模範句を引く（未登録は undefined）。 */

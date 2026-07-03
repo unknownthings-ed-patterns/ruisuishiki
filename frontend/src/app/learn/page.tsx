@@ -204,7 +204,7 @@ export default function LearnIndex() {
             国語（俳句）
           </h2>
           <Link
-            href="/learn/haiku/"
+            href="/learn/haiku/?seriesId=kokugo_haiku_form_01"
             className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
             style={{ background: "var(--surface)" }}
           >
@@ -212,11 +212,27 @@ export default function LearnIndex() {
               className="text-foreground font-serif"
               style={{ fontSize: "17px", letterSpacing: "0.04em" }}
             >
-              五七五のかたち（音数とリズム）
+              1. 五七五のかたち（音数とリズム）
             </span>
             <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
               声に出して音を数え、五・七・五という「器」が何をしてくれるかを歩く。読みくらべ →
               まねっこ → 一句づくりまで、全 10 問。
+            </span>
+          </Link>
+          <Link
+            href="/learn/haiku/?seriesId=kokugo_haiku_kigo_01"
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="text-foreground font-serif"
+              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+            >
+              2. 季語——季節のことばが景色をはこぶ
+            </span>
+            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              たった一語の季語で句の世界ぜんぶの季節が決まる。季語さがし → 季語交換で世界が変わる →
+              季語で一句まで、全 10 問。
             </span>
           </Link>
         </section>

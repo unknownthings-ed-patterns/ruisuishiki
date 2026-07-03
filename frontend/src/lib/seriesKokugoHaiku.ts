@@ -346,7 +346,331 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
   ],
 };
 
-/** 国語（俳句）系列のリスト。カタログ登録は段階3のUI統合で行う。 */
+/**
+ * 系列②「季語——季節のことばが景色をはこぶ」。
+ *
+ * 正典 §3.2 系列②。質的変化（季語交換）が核。逆（句→季節⇄季節→季語）も重点。
+ * ヒント L1/L2 では技法名「季語」を出さず「季節のことば」で言い換える（先出し禁止・
+ * audit §8.2-1）。「季語」は L3・問題文にのみ出す。
+ */
+export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
+  id: "kokugo_haiku_kigo_01",
+  title: "季語——季節のことばが景色をはこぶ",
+  subtitle:
+    "俳句ユニットより — たった一語で句の世界ぜんぶの季節が決まる。読み比べ→季語交換→季語で一句まで $10$ 問。",
+  genreId: "haiku",
+  unit: "俳句",
+  drivingQuestion:
+    "たった一語の[季語]が、なぜ季節も・場所も・心もちまで決めてしまう？ 季語を一つ替えると、世界はどう変わる？",
+  steps: [
+    // Step1 comparison 基本原形：季節をつげる言葉さがし
+    {
+      id: "step1",
+      position: 1,
+      kind: "comparison",
+      questionText:
+        "二つの句を声に出して読もう。それぞれ、いつの季節の句かな？ どの言葉を見て、季節がわかった？",
+      mentorTextRefs: ["haiku_kaki", "haiku_nanohana"],
+      hints: [
+        {
+          layer: 1,
+          text: "読むと、季節が目にうかぶ句があるね。どの言葉が「今は◯◯だよ」と季節を教えてくれている？",
+        },
+        {
+          layer: 2,
+          text: "二つの句をくらべてみよう。片方は実りの秋、もう片方は明るい春。その季節を決めているのは、それぞれ一つの言葉——どれだろう？",
+        },
+        {
+          layer: 3,
+          text: "「柿くへば…」の[季語]は『柿』（秋）、「菜の花や…」の[季語]は『菜の花』（春）。たった一語が句ぜんぶの季節を決めている。この季節をはこぶ言葉を[季語]というよ。",
+        },
+      ],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      figureMarker: "<<HAIKU_KIGO_STEP1>>",
+    },
+    // Step2 exercise 同：季語の識別
+    {
+      id: "step2",
+      position: 2,
+      kind: "exercise",
+      questionText:
+        "「いくたびも雪の深さを尋ねけり」で、季節をつげている[季語]はどれ？",
+      mentorTextRefs: ["haiku_yuki_shiki"],
+      input: {
+        type: "choice",
+        options: ["いくたびも", "雪", "たずねけり"],
+        answerIndex: 1,
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "前の句と同じさがし方でいいよ。何が同じ？ 季節を教えてくれる言葉を、声に出してさがしてみよう。",
+        },
+        {
+          layer: 2,
+          text: "変わったのは句だけ、さがすことは同じ。三つの中で「冬」を目にうかばせる言葉はどれ？",
+        },
+        {
+          layer: 3,
+          text: "この句の[季語]は『雪』で、冬をはこんでいる。「いくたびも」「たずねけり」は季節を持たない。季節をつげる一語＝『雪』。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+    },
+    // Step3 exercise 逆：句→季節あて
+    {
+      id: "step3",
+      position: 3,
+      kind: "exercise",
+      questionText:
+        "「春の海ひねもすのたりのたりかな」——この句の季節はいつ？",
+      mentorTextRefs: ["haiku_harunoumi"],
+      input: {
+        type: "choice",
+        options: ["春", "夏", "秋", "冬"],
+        answerIndex: 0,
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "今までは言葉から季節をさがしたね。今度は逆に、句ぜんたいから季節を感じとってみよう。どんな景色が見える？",
+        },
+        {
+          layer: 2,
+          text: "変わったのは向き——言葉さがしから、季節あて。『春の海』がのたりのたり…どの季節の海がうかぶ？",
+        },
+        {
+          layer: 3,
+          text: "『春の海』が季節をはこぶ[季語]。だから季節は春。言葉→季節（読み）と、季節→言葉（このあとやるよ）は、向きが逆の関係。",
+        },
+      ],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+    },
+    // Step4 comparison 質的変化：季語交換で世界が変わる
+    {
+      id: "step4",
+      position: 4,
+      kind: "comparison",
+      questionText:
+        "よく似た二つの句を読みくらべよう。ちがうのは、はじめの季節のことば一つだけ。世界はどう変わった？",
+      mentorTextRefs: ["orig_tsugakuro_haru", "orig_tsugakuro_aki"],
+      hints: [
+        {
+          layer: 1,
+          text: "同じ「一年生の通学路」だね。何が同じで、何が違う？ 二つを声に出して、うかぶ景色をくらべてみよう。",
+        },
+        {
+          layer: 2,
+          text: "変わったのは、はじめの一語だけ。片方は花びらの舞う道、もう片方は落ち葉の道。同じ通学路が、まるでちがう気もちになる——変えたのはどこ？",
+        },
+        {
+          layer: 3,
+          text: "「さくら」を「もみじ」に替えただけで、春のはじまりの希望が、秋の移ろいに変わった。季節のことば（[季語]）を一つ替えると、句の世界ぜんぶが変わる——これが[季語]の力。",
+        },
+      ],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      figureMarker: "<<HAIKU_KIGO_STEP4>>",
+    },
+    // Step5 creation 同：季語を替える本歌取
+    {
+      id: "step5",
+      position: 5,
+      kind: "creation",
+      questionText:
+        "今度は自分で。「一年生の通学路」はそのままに、上の五音を季節のことばに変えて、通学路の季節を変えてみよう（[本歌取]）。",
+      mentorTextRefs: ["orig_tsugakuro_haru"],
+      input: {
+        type: "fillIn",
+        template: "＿＿＿＿＿ 一年生の 通学路",
+        slotConstraints: [{ moraCount: 5, mustBeKigo: true }],
+      },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "上の五音に、季節をつげる言葉を入れた",
+          "声に出して五・七・五になっているか数えた",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "元の句と、あなたの句、何が同じで何を変える？ 変えるのは、はじめの五音だけだよ。",
+        },
+        {
+          layer: 2,
+          text: "変えるのは、はじめの五音一か所。ここに、あなたのえらんだ季節の景色を入れる。五音におさまってる？ 声に出して数えてみよう。",
+        },
+        {
+          layer: 3,
+          text: "「さくらさく」（春）を「もみじちる」（秋）に替えると、同じ通学路が別の季節になったね。あなたも同じ場所に、五音の季節のことばを置く番——作り方は元の句が見せている。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+    },
+    // Step6 comparison ＋α：季語に連想の景色を足す
+    {
+      id: "step6",
+      position: 6,
+      kind: "comparison",
+      questionText:
+        "「柿くへば鐘が鳴るなり法隆寺」。秋をつげる『柿』のほかに、お寺の鐘の音もあるね。季節のことばに、もう一つの景色を足すと、句はどう感じられる？ 気づきを書いてみよう。",
+      mentorTextRefs: ["haiku_kaki"],
+      hints: [
+        {
+          layer: 1,
+          text: "季節のことばだけの句と、この句、何がちがう？ 『柿』のほかに、耳に聞こえてくるものは？",
+        },
+        {
+          layer: 2,
+          text: "変わったのは、季節のことばに『鐘の音』がもう一つ足されたこと。季節＋もう一つの景色。二つが重なると、あなたには何が見える？ 聞こえる？",
+        },
+        {
+          layer: 3,
+          text: "『柿』（秋）に『鐘が鳴る』音が足されて、秋の夕暮れのお寺がうかぶ。季節のことばに、その季節に合う景色や音をもう一つ足すと、句はぐっと濃くなる。",
+        },
+      ],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+    },
+    // Step7 comparison 観点抽出（観点リストに季語が育つ）
+    {
+      id: "step7",
+      position: 7,
+      kind: "comparison",
+      questionText:
+        "ここまで、季節のことばの力を見てきたね。あなたが「いいな」と思った句には、どんなところがあった？ 下のリストから選んだり、自分のことばで書いたりしてみよう。",
+      pickViewpoints: true,
+      hints: [
+        {
+          layer: 1,
+          text: "どの句が心にのこった？ その句の、どこがよかった？ これまでとくらべて、新しく気づいたことはある？",
+        },
+        {
+          layer: 2,
+          text: "たとえば、季節が目にうかぶところ？ 一語で世界が決まるところ？ 一つ選んでみよう。",
+        },
+        {
+          layer: 3,
+          text: "正解はないよ。今回は、季節のことば（[季語]）が世界をはこぶ力に気づいた人が多いはず。あなたの気づきが、次に句をつくるときの「めじるし」になる。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+    },
+    // Step8 creation 複合：季節をえらんで季語で一句
+    {
+      id: "step8",
+      position: 8,
+      kind: "creation",
+      questionText:
+        "季節を一つえらんで、その季節のことばを入れた句をつくろう。（作品とよみがなを書いてね）",
+      mentorTextRefs: ["orig_tsugakuro_haru", "haiku_kaki"],
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "季節をつげる言葉を入れた",
+          "step7 で選んだ「いいところ」を入れてみた",
+          "声に出してリズムを確かめた",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "これまでの「まねっこ」と、何が同じで何が違う？ 今度は季節も言葉も、あなたがえらぶ。どの季節にする？",
+        },
+        {
+          layer: 2,
+          text: "step4 でやった「季節を替えると世界が変わる」ことと、句をつくることを重ねてみよう。まず季節を一つ決める。それから、その季節の景色を五・七・五に。",
+        },
+        {
+          layer: 3,
+          text: "作り方はもう手の中にあるよ。季節のことばを一つ置いて、そのまわりに見た景色をそえる。メーターで音を見ながら、あなたの一句をととのえてね。",
+        },
+      ],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+    },
+    // Step9 creation 逆：季節を先に決めて季語→句
+    {
+      id: "step9",
+      position: 9,
+      kind: "creation",
+      questionText:
+        "今度は「冬」の句をつくってみよう。冬をつげる言葉（雪・こたつ・つらら…）を入れて、一句。",
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: ["冬をつげる言葉を入れた", "声に出して数えた"],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "前の句づくりと、向きが逆だね。前は季節をえらんだ。今度は季節が先に「冬」と決まっている。何を入れれば冬になる？",
+        },
+        {
+          layer: 2,
+          text: "変わったのは向き——季節が先に決まっていること。冬の景色を思いうかべて、それをつげる言葉を一つえらぶ。どんな冬が見える？",
+        },
+        {
+          layer: 3,
+          text: "「冬」と決まっているなら、雪・こたつ・つらら…冬をはこぶ言葉から一つえらんで、まん中に置く。季節→言葉→句、の順で作れる。",
+        },
+      ],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step8",
+    },
+    // Step10 creation 自由制作：好きな季語で一句
+    {
+      id: "step10",
+      position: 10,
+      kind: "creation",
+      questionText:
+        "最後は自由に。好きな季節・好きな季節のことばで、一句つくろう。できたら清書カードにして、読み合ってみよう。",
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "この句の季節が、読む人に伝わる",
+          "いちばん伝えたいことが言える",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "前の一句と、何が同じで何が違う？ 作り方は同じ。今度は季節も言葉も、ぜんぶあなたのもの。",
+        },
+        {
+          layer: 2,
+          text: "今、いちばん心が動く季節はいつ？ その季節で見たもの・感じたものを一つ、五・七・五にのせてみよう。",
+        },
+        {
+          layer: 3,
+          text: "季節のことばは、たった一語で読む人を同じ景色へつれていく魔法。うまく作ろうとしなくていい。あなたの見た季節を、正直に置けば一句になる。",
+        },
+      ],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+    },
+  ],
+};
+
+/** 国語（俳句）系列のリスト。 */
 export const KOKUGO_HAIKU_SERIES_LIST: KokugoSeries[] = [
   KOKUGO_HAIKU_FORM_SERIES,
+  KOKUGO_HAIKU_KIGO_SERIES,
 ];
+
+/** id から国語系列を引く（未登録は undefined）。 */
+export function getKokugoSeries(id: string): KokugoSeries | undefined {
+  return KOKUGO_HAIKU_SERIES_LIST.find((s) => s.id === id);
+}

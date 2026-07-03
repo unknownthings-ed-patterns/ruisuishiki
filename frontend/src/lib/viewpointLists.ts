@@ -15,16 +15,24 @@
 
 import type { ViewpointList } from "./types";
 
-/** 俳句の観点リスト・初期版（v1）。系列①「五七五のかたち」で見せる。 */
+/**
+ * 俳句の観点リスト。育つ生き物。
+ * 各項目は revealedInSeries で「どの系列から見せるか」を持ち、系列の核を先出ししない（G1）。
+ * - 初期3項目（五七五/リズム/見たまま）＝系列①から（revealedInSeries 未指定＝initial）
+ * - 季語＝系列②「季語」で解禁（addedIn:"reading"）。系列①では見えない
+ */
 export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "haiku",
-  version: 1,
+  version: 2,
   items: [
     { text: "五七五になっている", addedIn: "initial" },
     { text: "リズムがよい（声に出して気持ちいい）", addedIn: "initial" },
     { text: "見たこと（見たまま）を書いている", addedIn: "initial" },
-    // 季語は初期に入れない（系列②の発見に取っておく・G1）。
-    // 子どもが読み比べで気づいたら addedIn:"reading"、句会由来なら "kukai" で足す。
+    {
+      text: "季節のことば（季語）がある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_haiku_kigo_01",
+    },
   ],
 };
 

@@ -16,12 +16,16 @@
  */
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
-import { KOKUGO_HAIKU_FORM_SERIES } from "@/lib/seriesKokugoHaiku";
+import {
+  KOKUGO_HAIKU_SERIES_LIST,
+  getKokugoSeries,
+} from "@/lib/seriesKokugoHaiku";
 import { getViewpointList } from "@/lib/viewpointLists";
+import type { KokugoSeries, ViewpointItem } from "@/lib/types";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -29,7 +33,21 @@ import {
   saveStepRecord,
 } from "@/lib/storage";
 
-const SERIES = KOKUGO_HAIKU_FORM_SERIES;
+/**
+ * 現在の系列で見せる観点（revealedInSeries で系列の核を先出ししない・G1）。
+ * その系列とそれ以前で解禁された項目のみ返す。
+ */
+function visibleViewpointItems(series: KokugoSeries): ViewpointItem[] {
+  const vl = getViewpointList(series.genreId);
+  if (!vl) return [];
+  const order = KOKUGO_HAIKU_SERIES_LIST.findIndex((s) => s.id === series.id);
+  return vl.items.filter(
+    (it) =>
+      !it.revealedInSeries ||
+      KOKUGO_HAIKU_SERIES_LIST.findIndex((s) => s.id === it.revealedInSeries) <=
+        order,
+  );
+}
 
 /** 音数メーター：かな文字列の拍を可視化する（正誤ではない）。 */
 function MoraMeter({
@@ -156,6 +174,7 @@ function MentorCard({ id }: { id: string }) {
 }
 
 export default function HaikuPlay() {
+  const [series, setSeries] = useState<KokugoSeries>(KOKUGO_HAIKU_SERIES_LIST[0]);
   const [stepIndex, setStepIndex] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -173,43 +192,51 @@ export default function HaikuPlay() {
   const [note, setNote] = useState("");
   // 観点抽出 step で選んだ観点（ViewpointList の各項目の選択状態）。
   const [vpChecked, setVpChecked] = useState<boolean[]>([]);
-  const viewpointList = getViewpointList(SERIES.genreId);
+  const shownViewpoints = visibleViewpointItems(series);
   // 清書カード（§7.2）：自作句を大きく縦書き表示・匿名切替。句会で見せ合う。
   const [showCard, setShowCard] = useState(false);
   const [authorName, setAuthorName] = useState("");
   const [showName, setShowName] = useState(false); // 既定は匿名（選のあと作者を明かす運用）
 
-  const step = SERIES.steps[stepIndex];
-  const total = SERIES.steps.length;
+  const step = series.steps[stepIndex];
+  const total = series.steps.length;
   const isLast = stepIndex === total - 1;
   const input = step.input;
 
-  // 復元（初回のみ）：?fresh=1 でクリア、なければ resume 位置へ
+  // 復元（初回のみ）：URL ?seriesId で系列を選び、?fresh=1 でクリア、なければ resume 位置へ
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const sid = params.get("seriesId");
+    const resolved = (sid && getKokugoSeries(sid)) || KOKUGO_HAIKU_SERIES_LIST[0];
+    setSeries(resolved);
     if (params.get("fresh") === "1") {
-      clearSeriesHistory(SERIES.id);
-      window.history.replaceState(null, "", window.location.pathname);
+      clearSeriesHistory(resolved.id);
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + `?seriesId=${resolved.id}`,
+      );
       setStepIndex(0);
     } else {
-      const history = loadSeriesHistory(SERIES.id);
+      const history = loadSeriesHistory(resolved.id);
       const resume = getResumeIndex(
         history,
-        SERIES.steps.map((s) => s.id),
+        resolved.steps.map((s) => s.id),
       );
-      if (resume >= SERIES.steps.length) setCompleted(true);
+      if (resume >= resolved.steps.length) setCompleted(true);
       else if (resume > 0) setStepIndex(resume);
     }
     setAuthorName(window.localStorage.getItem("kokugo_author") ?? "");
     setHydrated(true);
   }, []);
 
-  // step が変わるたびに入力状態をリセット
+  // step（または系列）が変わるたびに入力状態をリセット
   useEffect(() => {
     setHintsOpened(0);
     setChoice(null);
     setOrder([]);
-    const savedHaiku = step.input?.type === "haikuText" ? loadHaiku(step.id) : null;
+    const savedHaiku =
+      step.input?.type === "haikuText" ? loadHaiku(series.id, step.id) : null;
     setWork(savedHaiku?.work ?? "");
     setReading(savedHaiku?.reading ?? "");
     if (input?.type === "fillIn") {
@@ -224,22 +251,22 @@ export default function HaikuPlay() {
     );
     setNote(
       typeof window !== "undefined"
-        ? window.localStorage.getItem(noteKey(step.id)) ?? ""
+        ? window.localStorage.getItem(noteKey(series.id, step.id)) ?? ""
         : "",
     );
-    if (step.pickViewpoints && viewpointList) {
+    if (step.pickViewpoints) {
       const saved =
         typeof window !== "undefined"
-          ? window.localStorage.getItem(vpKey(step.id))
+          ? window.localStorage.getItem(vpKey(series.id, step.id))
           : null;
       const chosen: string[] = saved ? JSON.parse(saved) : [];
-      setVpChecked(viewpointList.items.map((it) => chosen.includes(it.text)));
+      setVpChecked(shownViewpoints.map((it) => chosen.includes(it.text)));
     } else {
       setVpChecked([]);
     }
     setShowCard(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepIndex]);
+  }, [stepIndex, series.id]);
 
   // exercise は正解で解錠。comparison / creation は常に進める（判定しない）。
   const choiceCorrect =
@@ -252,7 +279,7 @@ export default function HaikuPlay() {
     step.kind !== "exercise" || choiceCorrect || reorderCorrect;
 
   function persist() {
-    saveStepRecord(SERIES.id, {
+    saveStepRecord(series.id, {
       stepId: step.id,
       attempts: 1,
       hintsOpened: Math.min(hintsOpened, 3) as 0 | 1 | 2 | 3,
@@ -269,14 +296,6 @@ export default function HaikuPlay() {
       setStepIndex((i) => i + 1);
     }
   }
-
-  const comparedStep = useMemo(
-    () =>
-      step.compareWithStepId
-        ? SERIES.steps.find((s) => s.id === step.compareWithStepId) ?? null
-        : null,
-    [step.compareWithStepId],
-  );
 
   if (!hydrated) {
     return <main className="min-h-screen" aria-hidden />;
@@ -302,7 +321,7 @@ export default function HaikuPlay() {
           {/* あしあと（履歴の国語軸・G8）。正答率は出さない。
               オペレータ×ヒント到達層×見つけた観点で「歩き」をふり返る。 */}
           {(() => {
-            const fp = collectFootprints();
+            const fp = collectFootprints(series);
             return (
               <section
                 className="w-full rounded-lg border border-border p-6 flex flex-col gap-4"
@@ -365,7 +384,7 @@ export default function HaikuPlay() {
             <button
               type="button"
               onClick={() => {
-                clearSeriesHistory(SERIES.id);
+                clearSeriesHistory(series.id);
                 setStepIndex(0);
                 setCompleted(false);
               }}
@@ -406,14 +425,14 @@ export default function HaikuPlay() {
             </Link>
           </div>
           <span className="text-muted truncate" style={{ fontSize: "12px", letterSpacing: "0.08em" }}>
-            {SERIES.title}
+            {series.title}
           </span>
         </div>
       </nav>
 
       <div className="flex-1 mx-auto w-full max-w-2xl px-6 py-8 flex flex-col gap-6">
         {/* 中心の問い */}
-        {SERIES.drivingQuestion && (
+        {series.drivingQuestion && (
           <section
             className="rounded-lg border border-accent/30 px-5 py-3"
             style={{ background: "color-mix(in oklch, var(--surface) 85%, var(--accent) 15%)" }}
@@ -423,7 +442,7 @@ export default function HaikuPlay() {
               中心の問い
             </span>
             <p className="text-foreground" style={{ fontSize: "13px", lineHeight: 1.7, letterSpacing: "0.02em" }}>
-              <MathText text={SERIES.drivingQuestion} />
+              <MathText text={series.drivingQuestion} />
             </p>
           </section>
         )}
@@ -431,7 +450,7 @@ export default function HaikuPlay() {
         {/* 進度（文型タグは出さない・G1/F1） */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {SERIES.steps.map((_, i) => (
+            {series.steps.map((_, i) => (
               <span
                 key={i}
                 className="block rounded-full transition-colors duration-300"
@@ -476,7 +495,7 @@ export default function HaikuPlay() {
 
         {/* 気づきメモ（読み比べ step）。canon §7.1「気づきを選ぶ/書く」。
             観点リスト（選べるリスト）は初期版の項目選定が先生マターのため段階3で追加。 */}
-        {step.pickViewpoints && viewpointList && (
+        {step.pickViewpoints && shownViewpoints.length > 0 && (
           <section
             className="rounded-lg border border-border px-5 py-4 flex flex-col gap-2"
             style={{ background: "var(--surface)" }}
@@ -485,7 +504,7 @@ export default function HaikuPlay() {
             <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
               いいなと思うところ（えらんでいいよ）
             </span>
-            {viewpointList.items.map((it, i) => (
+            {shownViewpoints.map((it, i) => (
               <label key={i} className="flex items-start gap-2 cursor-pointer" style={{ fontSize: "15px" }}>
                 <input
                   type="checkbox"
@@ -495,9 +514,9 @@ export default function HaikuPlay() {
                       const next = [...c];
                       next[i] = !next[i];
                       window.localStorage.setItem(
-                        vpKey(step.id),
+                        vpKey(series.id, step.id),
                         JSON.stringify(
-                          viewpointList.items
+                          shownViewpoints
                             .filter((_, j) => next[j])
                             .map((v) => v.text),
                         ),
@@ -523,7 +542,7 @@ export default function HaikuPlay() {
                 value={note}
                 onChange={(e) => {
                   setNote(e.target.value);
-                  window.localStorage.setItem(noteKey(step.id), e.target.value);
+                  window.localStorage.setItem(noteKey(series.id, step.id), e.target.value);
                 }}
                 rows={3}
                 placeholder="自分のことばで書いてみよう"
@@ -689,7 +708,7 @@ export default function HaikuPlay() {
                 value={work}
                 onChange={(e) => {
                   setWork(e.target.value);
-                  saveHaiku(step.id, e.target.value, reading);
+                  saveHaiku(series.id, step.id, e.target.value, reading);
                 }}
                 className="rounded-md border px-3 py-2"
                 style={{ borderColor: "var(--accent-soft)", background: "var(--background)", fontSize: "17px" }}
@@ -703,7 +722,7 @@ export default function HaikuPlay() {
                 value={reading}
                 onChange={(e) => {
                   setReading(e.target.value);
-                  saveHaiku(step.id, work, e.target.value);
+                  saveHaiku(series.id, step.id, work, e.target.value);
                 }}
                 placeholder="ぜんぶひらがなで"
                 className="rounded-md border px-3 py-2"
@@ -766,7 +785,7 @@ export default function HaikuPlay() {
               const refs = step.mentorTextRefs ?? [];
               const prior =
                 refs.length === 0 && step.compareWithStepId
-                  ? loadHaiku(step.compareWithStepId)
+                  ? loadHaiku(series.id, step.compareWithStepId)
                   : null;
               if (refs.length === 0 && !prior?.work) return null;
               return (
@@ -928,8 +947,29 @@ export default function HaikuPlay() {
 }
 
 /** 気づきメモの localStorage キー。 */
-function noteKey(stepId: string): string {
-  return `kokugo_note:${SERIES.id}:${stepId}`;
+function noteKey(seriesId: string, stepId: string): string {
+  return `kokugo_note:${seriesId}:${stepId}`;
+}
+
+/** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
+function vpKey(seriesId: string, stepId: string): string {
+  return `kokugo_vp:${seriesId}:${stepId}`;
+}
+
+/** 自作句（作品＋よみがな）の localStorage キー。次の step の「さっきの句」参照・清書に使う。 */
+function haikuKey(seriesId: string, stepId: string): string {
+  return `kokugo_haiku:${seriesId}:${stepId}`;
+}
+function saveHaiku(seriesId: string, stepId: string, work: string, reading: string): void {
+  window.localStorage.setItem(haikuKey(seriesId, stepId), JSON.stringify({ work, reading }));
+}
+function loadHaiku(seriesId: string, stepId: string): { work: string; reading: string } | null {
+  try {
+    const raw = window.localStorage.getItem(haikuKey(seriesId, stepId));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
 }
 
 /** オペレータの子ども向けラベル（履歴の国語軸で使う）。 */
@@ -945,56 +985,38 @@ const OP_LABEL_JA: Record<string, string> = {
  * あしあと（履歴の国語軸・G8）を localStorage から集める。
  * 正答率は出さない——オペレータ×ヒント到達層×見つけた観点でふり返る。
  */
-function collectFootprints(): {
+function collectFootprints(series: KokugoSeries): {
   walked: number;
   hard: { op: string }[];
   chosen: string[];
   noteCount: number;
 } {
-  const history = loadSeriesHistory(SERIES.id);
+  const history = loadSeriesHistory(series.id);
   const walked = new Set(history.map((r) => r.stepId)).size;
   const hard: { op: string }[] = [];
   for (const r of history) {
     if (r.hintsOpened >= 2) {
-      const st = SERIES.steps.find((s) => s.id === r.stepId);
+      const st = series.steps.find((s) => s.id === r.stepId);
       const op = st?.variationFromPrevious;
       if (op && OP_LABEL_JA[op]) hard.push({ op: OP_LABEL_JA[op] });
     }
   }
   let chosen: string[] = [];
-  try {
-    const raw = window.localStorage.getItem(vpKey("step8"));
-    if (raw) chosen = JSON.parse(raw);
-  } catch {
-    chosen = [];
+  const pvStep = series.steps.find((s) => s.pickViewpoints);
+  if (pvStep) {
+    try {
+      const raw = window.localStorage.getItem(vpKey(series.id, pvStep.id));
+      if (raw) chosen = JSON.parse(raw);
+    } catch {
+      chosen = [];
+    }
   }
   let noteCount = 0;
-  for (const s of SERIES.steps) {
-    const n = window.localStorage.getItem(noteKey(s.id));
+  for (const s of series.steps) {
+    const n = window.localStorage.getItem(noteKey(series.id, s.id));
     if (n && n.trim()) noteCount++;
   }
   return { walked, hard, chosen, noteCount };
-}
-
-/** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
-function vpKey(stepId: string): string {
-  return `kokugo_vp:${SERIES.id}:${stepId}`;
-}
-
-/** 自作句（作品＋よみがな）の localStorage キー。次の step の「さっきの句」参照・清書に使う。 */
-function haikuKey(stepId: string): string {
-  return `kokugo_haiku:${SERIES.id}:${stepId}`;
-}
-function saveHaiku(stepId: string, work: string, reading: string): void {
-  window.localStorage.setItem(haikuKey(stepId), JSON.stringify({ work, reading }));
-}
-function loadHaiku(stepId: string): { work: string; reading: string } | null {
-  try {
-    const raw = window.localStorage.getItem(haikuKey(stepId));
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
 }
 
 /** fillIn テンプレートを「＿」の連続で区切り、テキストとスロットに分解。 */

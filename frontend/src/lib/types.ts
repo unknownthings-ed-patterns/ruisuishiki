@@ -275,6 +275,11 @@ export type ViewpointItem = {
   addedIn: "initial" | "kukai" | "reading";
   /** ISO 日付。 */
   addedAt?: string;
+  /**
+   * この観点を初めて見せる系列 id（未指定＝initial＝最初から見せる）。
+   * 各系列の核となる観点を先出ししないため（G1）。例：季語は系列②で解禁。
+   */
+  revealedInSeries?: string;
 };
 export type ViewpointList = {
   genreId: string; // "haiku"
