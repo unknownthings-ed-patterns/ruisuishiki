@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:mora": "tsc src/lib/moraCount.ts src/lib/moraCount.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/moraCount.test.js"
+    "test:mora": "tsc src/lib/moraCount.ts src/lib/moraCount.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/moraCount.test.js",
+    "test:stats": "tsc src/lib/storage.ts src/lib/storage.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/storage.test.js"
   },
   "dependencies": {
     "@types/react-katex": "^3.0.4",

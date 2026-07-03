@@ -113,15 +113,23 @@ export type LearningStats = {
   seriesEngaged: number;
 };
 
-export function calculateLearningStats(): LearningStats {
-  const all = loadAllHistory();
-  const now = Date.now();
+export type SeriesHistory = { seriesId: string; records: StepRecord[] };
+
+function isLearningTopStatsSeries(seriesId: string): boolean {
+  return !seriesId.startsWith("kokugo_");
+}
+
+export function calculateLearningStatsFromHistory(
+  all: SeriesHistory[],
+  now: number = Date.now(),
+): LearningStats {
   const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
   let weeklyCorrect = 0;
   let lifetimeCorrect = 0;
   let lifetimeAttempts = 0;
   let seriesEngaged = 0;
-  for (const { records } of all) {
+  for (const { seriesId, records } of all) {
+    if (!isLearningTopStatsSeries(seriesId)) continue;
     let engaged = false;
     for (const r of records) {
       lifetimeAttempts += r.attempts;
@@ -142,4 +150,8 @@ export function calculateLearningStats(): LearningStats {
       lifetimeAttempts > 0 ? lifetimeCorrect / lifetimeAttempts : null,
     seriesEngaged,
   };
+}
+
+export function calculateLearningStats(): LearningStats {
+  return calculateLearningStatsFromHistory(loadAllHistory());
 }
