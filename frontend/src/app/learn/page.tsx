@@ -235,6 +235,22 @@ export default function LearnIndex() {
               季語で一句まで、全 10 問。
             </span>
           </Link>
+          <Link
+            href="/learn/haiku/?seriesId=kokugo_haiku_kire_01"
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="text-foreground font-serif"
+              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+            >
+              3. 切れ——「や・かな・けり」が向かい合わせるもの
+            </span>
+            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              句を「切れ」で二つに割ると、間と対比が生まれる。切れさがし → 二つのものの対比 →
+              切れで一句まで、全 10 問。
+            </span>
+          </Link>
         </section>
 
         {/* 静的カタログ：subject（学年領域）でグループ化、topicGroup で折りたたみ可能 */}

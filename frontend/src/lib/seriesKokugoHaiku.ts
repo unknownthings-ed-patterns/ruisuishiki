@@ -664,10 +664,330 @@ export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
   ],
 };
 
+/**
+ * 系列③「切れ——『や・かな・けり』が向かい合わせるもの」。
+ *
+ * 正典 §3.2 系列③。＋α（切れ字という制約）・複合（季語＋切れ字＋対比）が重点。
+ * 胚細胞＝対比（二物の並置で、言わない意味が生まれる）。
+ * ヒント L1/L2 では「切れ・切れ字」を出さず「区切る字／向かい合わせる」で言い換える
+ * （先出し禁止・audit §8.2-1）。「切れ字・切れ」は L3・問題文にのみ。
+ */
+export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
+  id: "kokugo_haiku_kire_01",
+  title: "切れ——「や・かな・けり」が向かい合わせるもの",
+  subtitle:
+    "俳句ユニットより — 句を「切れ」で二つに割ると、間と対比が生まれる。切れさがし→対比の発見→切れで一句まで $10$ 問。",
+  genreId: "haiku",
+  unit: "俳句",
+  drivingQuestion:
+    "句を「切れ」で二つに割ると、なぜ言っていないはずの意味が、二つのものの間に生まれるのだろう？",
+  steps: [
+    // Step1 comparison 基本原形：切れを感じる
+    {
+      id: "step1",
+      position: 1,
+      kind: "comparison",
+      questionText:
+        "声に出して読むと、一気に読まず、途中で一度すっと間があくところがあるね。どこで間があく？ 気づきを書いてみよう。",
+      mentorTextRefs: ["haiku_furuike"],
+      hints: [
+        {
+          layer: 1,
+          text: "一気に読まず、途中で一度すっと息をつくところがない？ どこで間があくだろう？",
+        },
+        {
+          layer: 2,
+          text: "「古池や…」の『や』のあたり、読むと一度止まる感じがする。その一字が、句を二つに分けている——どのあたり？",
+        },
+        {
+          layer: 3,
+          text: "「古池や／蛙飛びこむ水の音」。『や』のところで句がふたつに分かれる。この、ひと区切りをつくる字を[切れ字]、区切れることを『切れ』というよ。",
+        },
+      ],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      figureMarker: "<<HAIKU_KIRE_STEP1>>",
+    },
+    // Step2 exercise 同：区切る字さがし（や）
+    {
+      id: "step2",
+      position: 2,
+      kind: "exercise",
+      questionText:
+        "「菜の花や月は東に日は西に」で、ひと区切りをつくっている[切れ字]はどれ？",
+      mentorTextRefs: ["haiku_nanohana"],
+      input: { type: "choice", options: ["や", "月", "西に"], answerIndex: 0 },
+      hints: [
+        {
+          layer: 1,
+          text: "前の句と同じさがし方。何が同じ？ 一度すっと止まる、その字をさがそう。",
+        },
+        {
+          layer: 2,
+          text: "変わったのは句だけ。三つの中で、そこで一度止まって句を二つに分ける字はどれ？",
+        },
+        {
+          layer: 3,
+          text: "この句の[切れ字]は『や』。『菜の花や』で一度切れて、後に『月は東に日は西に』が広がる。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+    },
+    // Step3 exercise 同：別の区切る字（けり）
+    {
+      id: "step3",
+      position: 3,
+      kind: "exercise",
+      questionText:
+        "「いくたびも雪の深さを尋ねけり」を、終わりでぴたっと止めている[切れ字]はどれ？",
+      mentorTextRefs: ["haiku_yuki_shiki"],
+      input: {
+        type: "choice",
+        options: ["いくたびも", "深さ", "けり"],
+        answerIndex: 2,
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "また同じさがし方でいいよ。今度は、句の終わりをぴたっと止めている字は？",
+        },
+        {
+          layer: 2,
+          text: "変わったのは句だけ。終わりで『……なあ』と言い切って止める字はどれ？",
+        },
+        {
+          layer: 3,
+          text: "この句の[切れ字]は『けり』。『尋ねけり』と言い切って、しみじみ止まる。『や』は途中で、『けり』は終わりで切る——場所がちがう。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+    },
+    // Step4 comparison 質的変化：対比の指さし（切れの核）
+    {
+      id: "step4",
+      position: 4,
+      kind: "comparison",
+      questionText:
+        "『や』で区切ると、句は二つに分かれる。前は『古池』、後は『蛙が飛びこむ水の音』。この二つを並べると、何が生まれる？ 気づきを書こう。",
+      mentorTextRefs: ["haiku_furuike"],
+      hints: [
+        {
+          layer: 1,
+          text: "『や』の前と後、それぞれ何が置かれている？ 二つを見くらべてみよう。",
+        },
+        {
+          layer: 2,
+          text: "前は『古池』、後は『蛙が飛びこむ水の音』。しずかなものと、動く音。二つを並べると、あなたの心に何がうかぶ？",
+        },
+        {
+          layer: 3,
+          text: "『古池』（静けさ）と『蛙飛びこむ水の音』（動き）が、[切れ字]『や』をはさんで向かい合う。二つがぶつかると、どちらか一つでは出せない『静けさの深さ』が生まれる——これが[切れ]の力。",
+        },
+      ],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      figureMarker: "<<HAIKU_KIRE_STEP4>>",
+    },
+    // Step5 comparison ＋α：区切る字の有無ペア
+    {
+      id: "step5",
+      position: 5,
+      kind: "comparison",
+      questionText:
+        "よく似た二つの句。ちがうのは一字だけ。読んだ感じはどう変わった？ 気づきを書こう。",
+      mentorTextRefs: ["orig_yuyake_teikei", "orig_yuyake_kire"],
+      hints: [
+        {
+          layer: 1,
+          text: "同じ景色の句だね。何が同じで、何が違う？ 二つを声に出してくらべよう。",
+        },
+        {
+          layer: 2,
+          text: "変わったのは、はじめの一字『が』→『や』だけ。『夕焼けが…』はすーっと一つづき。『夕焼けや…』は『夕焼け！』で一度止まって、後の景色と向かい合う。読んだ感じはどう？",
+        },
+        {
+          layer: 3,
+          text: "『が』は文をつなぐ字、『や』は[切れ字]。一字替えるだけで、ひとつづきの説明が、二つのものの並置に変わる。区切る字を足すと、間（ま）と広がりが生まれる。",
+        },
+      ],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+    },
+    // Step6 creation 逆：叙述を区切る書き換え
+    {
+      id: "step6",
+      position: 6,
+      kind: "creation",
+      questionText:
+        "今度は自分で。『夕焼けが…』のような一つづきの句を、区切る字を入れて二つに割ってみよう（『が』のところに、区切る一字を）。",
+      mentorTextRefs: ["orig_yuyake_teikei"],
+      input: {
+        type: "fillIn",
+        template: "夕焼け＿ 山をそめてる 帰り道",
+        slotConstraints: [{ moraCount: 1 }],
+      },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "区切る一字を入れた",
+          "声に出して、そこで一度止まる感じがする",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "元の句と、あなたの句、何が同じで何を変える？ 変えるのは、一字だけだよ。",
+        },
+        {
+          layer: 2,
+          text: "変えるのは『が』の一か所。ここを、読むと一度止まる一字にすると、句が二つに分かれる。どんな一字があるかな？",
+        },
+        {
+          layer: 3,
+          text: "『夕焼けが』の『が』を『や』にすると、『夕焼けや』で切れて、後の景色と向かい合う。『や・かな・けり』が、この区切りをつくる字（[切れ字]）だよ。",
+        },
+      ],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+    },
+    // Step7 comparison 観点抽出（切れが観点リストに育つ）
+    {
+      id: "step7",
+      position: 7,
+      kind: "comparison",
+      questionText:
+        "ここまで、区切る字の働きを見てきたね。あなたが「いいな」と思った句には、どんなところがあった？ 下のリストから選んだり、書いたりしてみよう。",
+      pickViewpoints: true,
+      hints: [
+        {
+          layer: 1,
+          text: "どの句が心にのこった？ その句の、どこがよかった？ 新しく気づいたことはある？",
+        },
+        {
+          layer: 2,
+          text: "たとえば、二つのものが向かい合っているところ？ 一度止まって、間が生まれるところ？ 一つ選んでみよう。",
+        },
+        {
+          layer: 3,
+          text: "正解はないよ。今回は、区切る字が二つのものを向かい合わせる力に気づいた人が多いはず。あなたの気づきが、次のめじるしになる。",
+        },
+      ],
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+    },
+    // Step8 creation ＋α：区切る字を使って一句
+    {
+      id: "step8",
+      position: 8,
+      kind: "creation",
+      questionText:
+        "[切れ字]（や・かな・けり）を一つ使って、二つのものを向かい合わせた句をつくろう。（作品とよみがなを書いてね）",
+      mentorTextRefs: ["haiku_furuike"],
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "区切る字（や・かな・けり）を入れた",
+          "前と後で、二つのものが向かい合っている",
+          "声に出してリズムを確かめた",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "これまでの「まねっこ」と、何が同じで何が違う？ 今度は、向かい合わせる二つを、あなたがえらぶ。",
+        },
+        {
+          layer: 2,
+          text: "前の練習で足した『区切る一字』を、今度は自分の句に入れてみよう。まず二つのもの（たとえば静かなものと動くもの）を思いうかべて、間に区切る字を置く。",
+        },
+        {
+          layer: 3,
+          text: "作り方は手の中にあるよ。二つのものを選んで、間に『や・かな・けり』のどれかを置く。前と後がぶつかって、言わない意味が生まれる。",
+        },
+      ],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+    },
+    // Step9 creation 複合：季語＋切れ字＋対比
+    {
+      id: "step9",
+      position: 9,
+      kind: "creation",
+      questionText:
+        "季節のことば（[季語]）と、区切る字の両方を入れて、一句つくろう。",
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "季節のことばを入れた",
+          "区切る字を入れた",
+          "前と後が向かい合っている",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "これまで学んだことを、重ねてみよう。何と何を一つの句に入れる？",
+        },
+        {
+          layer: 2,
+          text: "系列②の『季節のことば』と、この系列の『区切る字』を、両方いっしょに。季節のものと、もう一つのものを、区切る字で向かい合わせてみよう。",
+        },
+        {
+          layer: 3,
+          text: "季節のことば＋区切る字＋二つの並置。三つが重なると、短い十七音が、大きな景色と気もちをはこぶ。",
+        },
+      ],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+    },
+    // Step10 creation 自由制作
+    {
+      id: "step10",
+      position: 10,
+      kind: "creation",
+      questionText:
+        "最後は自由に。区切る字を使っても、使わなくてもいい。あなたの見た二つの世界を、一句に。できたら清書カードにして読み合おう。",
+      input: { type: "haikuText" },
+      creationCheck: {
+        meterTarget: [5, 7, 5],
+        meterPolicy: "visualize",
+        selfChecklist: [
+          "この句で向かい合わせたかったものが言える",
+          "声に出していちばんしっくりくる形にした",
+        ],
+      },
+      hints: [
+        {
+          layer: 1,
+          text: "前の一句と、何が同じで何が違う？ 作り方は同じ。今度はぜんぶ自由。",
+        },
+        {
+          layer: 2,
+          text: "今、心にある二つのもの（見たもの・感じたこと）を思いうかべて、一つの句に置いてみよう。区切る字で分けても、そのままつなげてもいい。",
+        },
+        {
+          layer: 3,
+          text: "俳句は、二つのものを十七音で出会わせる小さな舞台。区切る字はそのための道具の一つ。あなたの見た世界を、正直に置けば一句になる。",
+        },
+      ],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+    },
+  ],
+};
+
 /** 国語（俳句）系列のリスト。 */
 export const KOKUGO_HAIKU_SERIES_LIST: KokugoSeries[] = [
   KOKUGO_HAIKU_FORM_SERIES,
   KOKUGO_HAIKU_KIGO_SERIES,
+  KOKUGO_HAIKU_KIRE_SERIES,
 ];
 
 /** id から国語系列を引く（未登録は undefined）。 */

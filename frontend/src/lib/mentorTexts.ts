@@ -177,6 +177,21 @@ export const HAIKU_MENTOR_TEXTS: MentorText[] = [
     viewpointTags: ["季語（秋）", "落ち着き・移ろい"],
     shareable: false,
   },
+
+  // ── 系列③「切れ」用 ──────────────────────────────
+  // 切れ字の有無ペア（＋α）。orig_yuyake_teikei（切れなし・叙述）の相方。
+  // 「が」を「や」に一字替えると、ひとつづきの叙述が「夕焼け！」で切れて二物の並置になる。
+  {
+    id: "orig_yuyake_kire",
+    text: "夕焼けや山をそめてる帰り道",
+    reading: "ゆうやけややまをそめてるかえりみち",
+    author: "（自作）",
+    sourceNote: "設計者の自作（切れ字の有無ペアの切れ字あり側。orig_yuyake_teikei の相方）。",
+    rights: "original",
+    kigo: { word: "夕焼け", season: "夏" },
+    viewpointTags: ["切れ（や）", "二物の並置"],
+    shareable: false,
+  },
 ];
 
 /** id から模範句を引く（未登録は undefined）。 */

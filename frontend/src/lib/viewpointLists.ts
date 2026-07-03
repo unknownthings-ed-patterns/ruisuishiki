@@ -33,6 +33,11 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
       addedIn: "reading",
       revealedInSeries: "kokugo_haiku_kigo_01",
     },
+    {
+      text: "二つのものを向かい合わせている（切れ）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_haiku_kire_01",
+    },
   ],
 };
 
