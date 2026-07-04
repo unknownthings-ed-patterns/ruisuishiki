@@ -49,12 +49,13 @@ function visibleViewpointItems(series: KokugoSeries): ViewpointItem[] {
   const vl = getViewpointList(series.genreId);
   if (!vl) return [];
   const order = KOKUGO_HAIKU_SERIES_LIST.findIndex((s) => s.id === series.id);
-  return vl.items.filter(
-    (it) =>
-      !it.revealedInSeries ||
-      KOKUGO_HAIKU_SERIES_LIST.findIndex((s) => s.id === it.revealedInSeries) <=
-        order,
-  );
+  return vl.items.filter((it) => {
+    if (!it.revealedInSeries) return true;
+    const revealedAt = KOKUGO_HAIKU_SERIES_LIST.findIndex(
+      (s) => s.id === it.revealedInSeries,
+    );
+    return revealedAt !== -1 && revealedAt <= order;
+  });
 }
 
 /** 音数メーター：かな文字列の拍を可視化する（正誤ではない）。 */
@@ -249,7 +250,12 @@ export default function HaikuPlay() {
     setWork(savedHaiku?.work ?? "");
     setReading(savedHaiku?.reading ?? "");
     if (input?.type === "fillIn") {
-      setSlots(new Array(input.slotConstraints.length).fill(""));
+      const savedSlots = loadFillInSlots(series.id, step.id);
+      setSlots(
+        input.slotConstraints.map((_, i) =>
+          typeof savedSlots?.[i] === "string" ? savedSlots[i] : "",
+        ),
+      );
     } else {
       setSlots([]);
     }
@@ -814,6 +820,7 @@ export default function HaikuPlay() {
                     setSlots((s) => {
                       const next = [...s];
                       next[si] = e.target.value;
+                      saveFillInSlots(series.id, step.id, next);
                       return next;
                     })
                   }
@@ -1114,6 +1121,23 @@ function noteKey(seriesId: string, stepId: string): string {
 /** 選んだ観点の localStorage キー（段階3後続で句会記録・版管理と統合）。 */
 function vpKey(seriesId: string, stepId: string): string {
   return `kokugo_vp:${seriesId}:${stepId}`;
+}
+
+/** fillIn の穴埋め入力の localStorage キー。戻る/再読込でも作りかけを保つ。 */
+function fillInKey(seriesId: string, stepId: string): string {
+  return `kokugo_fillin:${seriesId}:${stepId}`;
+}
+function saveFillInSlots(seriesId: string, stepId: string, slots: string[]): void {
+  window.localStorage.setItem(fillInKey(seriesId, stepId), JSON.stringify(slots));
+}
+function loadFillInSlots(seriesId: string, stepId: string): string[] | null {
+  try {
+    const raw = window.localStorage.getItem(fillInKey(seriesId, stepId));
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    return Array.isArray(parsed) ? parsed.filter((v) => typeof v === "string") : null;
+  } catch {
+    return null;
+  }
 }
 
 /** 自作句（作品＋よみがな）の localStorage キー。次の step の「さっきの句」参照・清書に使う。 */
