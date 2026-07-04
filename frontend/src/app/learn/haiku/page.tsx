@@ -33,6 +33,14 @@ import {
   saveStepRecord,
 } from "@/lib/storage";
 
+type HaikuAnthologyItem = {
+  seriesId: string;
+  seriesTitle: string;
+  stepId: string;
+  work: string;
+  reading: string;
+};
+
 /**
  * 現在の系列で見せる観点（revealedInSeries で系列の核を先出ししない・G1）。
  * その系列とそれ以前で解禁された項目のみ返す。
@@ -177,6 +185,7 @@ export default function HaikuPlay() {
   const [series, setSeries] = useState<KokugoSeries>(KOKUGO_HAIKU_SERIES_LIST[0]);
   const [stepIndex, setStepIndex] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [view, setView] = useState<"play" | "anthology">("play");
   const [hydrated, setHydrated] = useState(false);
   const [hintsOpened, setHintsOpened] = useState(0);
 
@@ -301,6 +310,103 @@ export default function HaikuPlay() {
     return <main className="min-h-screen" aria-hidden />;
   }
 
+  if (view === "anthology") {
+    const haikuWorks = collectHaikuAnthology();
+    return (
+      <main className="flex min-h-screen flex-col">
+        <nav
+          className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+          style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+          aria-label="サイト全体のナビゲーション"
+        >
+          <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => setView("play")}
+              className="text-muted hover:text-foreground transition-colors"
+              style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+            >
+              ← もどる
+            </button>
+            <span className="text-muted truncate" style={{ fontSize: "12px", letterSpacing: "0.08em" }}>
+              わたしの句集
+            </span>
+          </div>
+        </nav>
+        <div className="flex-1 mx-auto w-full max-w-2xl px-6 py-10 flex flex-col gap-8">
+          <header className="flex items-center justify-between gap-4">
+            <h1
+              className="font-serif text-foreground"
+              style={{ fontSize: "clamp(28px, 4vw, 40px)", letterSpacing: "0.12em" }}
+            >
+              わたしの句集
+            </h1>
+            <span className="text-muted tnum" style={{ fontSize: "13px", letterSpacing: "0.1em" }}>
+              {haikuWorks.length}句
+            </span>
+          </header>
+
+          {haikuWorks.length === 0 ? (
+            <p className="text-muted text-center py-16" style={{ fontSize: "15px", lineHeight: 2 }}>
+              まだ句がありません。系列を歩くと、ここにたまっていくよ
+            </p>
+          ) : (
+            <section className="flex flex-col gap-5" aria-label="保存した句">
+              {haikuWorks.map((item) => (
+                <article
+                  key={`${item.seriesId}:${item.stepId}`}
+                  className="rounded-lg border border-border px-5 py-5 flex items-center justify-between gap-5"
+                  style={{ background: "var(--surface)" }}
+                >
+                  <div className="flex min-w-0 flex-1 items-center gap-5">
+                    <p
+                      className="font-serif text-foreground"
+                      style={{
+                        writingMode: "vertical-rl",
+                        whiteSpace: "nowrap",
+                        fontSize: "clamp(16px, 3vh, 24px)",
+                        letterSpacing: "0.14em",
+                        maxHeight: "42vh",
+                      }}
+                    >
+                      {item.work}
+                    </p>
+                    <span className="text-muted" style={{ fontSize: "12px", lineHeight: 1.7 }}>
+                      {item.seriesTitle}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setWork(item.work);
+                      setReading(item.reading);
+                      setShowCard(true);
+                    }}
+                    className="shrink-0 px-4 py-2 rounded-lg border border-accent text-accent"
+                    style={{ fontSize: "13px", letterSpacing: "0.08em" }}
+                  >
+                    清書カードにする
+                  </button>
+                </article>
+              ))}
+            </section>
+          )}
+        </div>
+
+        {showCard && (
+          <HaikuCardOverlay
+            work={work}
+            authorName={authorName}
+            showName={showName}
+            setAuthorName={setAuthorName}
+            setShowName={setShowName}
+            onClose={() => setShowCard(false)}
+          />
+        )}
+      </main>
+    );
+  }
+
   // 完了画面
   if (completed) {
     return (
@@ -380,6 +486,14 @@ export default function HaikuPlay() {
           })()}
 
           <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              type="button"
+              onClick={() => setView("anthology")}
+              className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              わたしの句集
+            </button>
             {/* アプリ内でリセット（画面遷移しないので basePath 非依存で確実）。 */}
             <button
               type="button"
@@ -427,6 +541,14 @@ export default function HaikuPlay() {
           <span className="text-muted truncate" style={{ fontSize: "12px", letterSpacing: "0.08em" }}>
             {series.title}
           </span>
+          <button
+            type="button"
+            onClick={() => setView("anthology")}
+            className="text-accent hover:text-foreground transition-colors"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+          >
+            わたしの句集
+          </button>
         </div>
       </nav>
 
@@ -545,7 +667,11 @@ export default function HaikuPlay() {
                   window.localStorage.setItem(noteKey(series.id, step.id), e.target.value);
                 }}
                 rows={3}
-                placeholder="自分のことばで書いてみよう"
+                placeholder={
+                  series.id === "kokugo_haiku_kire_01"
+                    ? "わからないところも、そのまま書いていい"
+                    : "自分のことばで書いてみよう"
+                }
                 className="rounded-md border px-3 py-2"
                 style={{
                   borderColor: "var(--accent-soft)",
@@ -869,80 +995,107 @@ export default function HaikuPlay() {
 
       {/* 清書カード（§7.2）：全画面・縦書き・匿名切替。句会で見せ合う。 */}
       {showCard && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6"
-          style={{ background: "var(--background)" }}
-          role="dialog"
-          aria-label="清書カード"
-        >
-          <p
-            className="font-serif text-foreground text-center"
-            style={{
-              writingMode: "vertical-rl",
-              // 俳句は縦書き1行（1列）。折り返さず、高さは画面に収まるよう文字サイズを決める。
-              whiteSpace: "nowrap",
-              fontSize: "clamp(20px, 4vh, 44px)",
-              letterSpacing: "0.18em",
-            }}
-          >
-            {work}
-          </p>
-          <p className="text-muted" style={{ fontSize: "15px", letterSpacing: "0.1em" }}>
-            {showName && authorName.trim() ? authorName : "よみ人しらず"}
-          </p>
-
-          {/* コントロール（印刷には出さない） */}
-          <div className="flex flex-col items-center gap-3 no-print">
-            <div className="flex items-center gap-2">
-              <input
-                value={authorName}
-                onChange={(e) => {
-                  setAuthorName(e.target.value);
-                  window.localStorage.setItem("kokugo_author", e.target.value);
-                }}
-                placeholder="名前（任意）"
-                className="rounded-md border px-3 py-1"
-                style={{ borderColor: "var(--border)", background: "var(--surface)", fontSize: "14px", width: "10em" }}
-                aria-label="名前"
-              />
-              <button
-                type="button"
-                onClick={() => setShowName((v) => !v)}
-                className="px-4 py-1 rounded-md border border-border text-muted"
-                style={{ fontSize: "13px" }}
-              >
-                {showName ? "名前をかくす" : "名前を見せる"}
-              </button>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="px-5 py-2 rounded-lg border border-accent text-accent"
-                style={{ fontSize: "13px", letterSpacing: "0.1em" }}
-              >
-                印刷
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowCard(false)}
-                className="px-5 py-2 rounded-lg bg-accent text-background"
-                style={{ fontSize: "13px", letterSpacing: "0.1em" }}
-              >
-                とじる
-              </button>
-            </div>
-          </div>
-          <style jsx global>{`
-            @media print {
-              .no-print {
-                display: none !important;
-              }
-            }
-          `}</style>
-        </div>
+        <HaikuCardOverlay
+          work={work}
+          authorName={authorName}
+          showName={showName}
+          setAuthorName={setAuthorName}
+          setShowName={setShowName}
+          onClose={() => setShowCard(false)}
+        />
       )}
     </main>
+  );
+}
+
+function HaikuCardOverlay({
+  work,
+  authorName,
+  showName,
+  setAuthorName,
+  setShowName,
+  onClose,
+}: {
+  work: string;
+  authorName: string;
+  showName: boolean;
+  setAuthorName: (name: string) => void;
+  setShowName: (updater: (value: boolean) => boolean) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6"
+      style={{ background: "var(--background)" }}
+      role="dialog"
+      aria-label="清書カード"
+    >
+      <p
+        className="font-serif text-foreground text-center"
+        style={{
+          writingMode: "vertical-rl",
+          // 俳句は縦書き1行（1列）。折り返さず、高さは画面に収まるよう文字サイズを決める。
+          whiteSpace: "nowrap",
+          fontSize: "clamp(20px, 4vh, 44px)",
+          letterSpacing: "0.18em",
+        }}
+      >
+        {work}
+      </p>
+      <p className="text-muted" style={{ fontSize: "15px", letterSpacing: "0.1em" }}>
+        {showName && authorName.trim() ? authorName : "よみ人しらず"}
+      </p>
+
+      {/* コントロール（印刷には出さない） */}
+      <div className="flex flex-col items-center gap-3 no-print">
+        <div className="flex items-center gap-2">
+          <input
+            value={authorName}
+            onChange={(e) => {
+              setAuthorName(e.target.value);
+              window.localStorage.setItem("kokugo_author", e.target.value);
+            }}
+            placeholder="名前（任意）"
+            className="rounded-md border px-3 py-1"
+            style={{ borderColor: "var(--border)", background: "var(--surface)", fontSize: "14px", width: "10em" }}
+            aria-label="名前"
+          />
+          <button
+            type="button"
+            onClick={() => setShowName((v) => !v)}
+            className="px-4 py-1 rounded-md border border-border text-muted"
+            style={{ fontSize: "13px" }}
+          >
+            {showName ? "名前をかくす" : "名前を見せる"}
+          </button>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="px-5 py-2 rounded-lg border border-accent text-accent"
+            style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+          >
+            印刷
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-5 py-2 rounded-lg bg-accent text-background"
+            style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+          >
+            とじる
+          </button>
+        </div>
+      </div>
+      <style jsx global>{`
+        @media print {
+          .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
 
@@ -970,6 +1123,26 @@ function loadHaiku(seriesId: string, stepId: string): { work: string; reading: s
   } catch {
     return null;
   }
+}
+
+/** 全俳句系列の haikuText step から、自作句だけを集める。 */
+function collectHaikuAnthology(): HaikuAnthologyItem[] {
+  const items: HaikuAnthologyItem[] = [];
+  for (const s of KOKUGO_HAIKU_SERIES_LIST) {
+    for (const st of s.steps) {
+      if (st.input?.type !== "haikuText") continue;
+      const saved = loadHaiku(s.id, st.id);
+      if (!saved?.work.trim()) continue;
+      items.push({
+        seriesId: s.id,
+        seriesTitle: s.title,
+        stepId: st.id,
+        work: saved.work,
+        reading: saved.reading,
+      });
+    }
+  }
+  return items;
 }
 
 /** オペレータの子ども向けラベル（履歴の国語軸で使う）。 */
