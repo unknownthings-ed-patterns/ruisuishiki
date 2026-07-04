@@ -43,6 +43,9 @@ export const HAIKU_MENTOR_TEXTS: MentorText[] = [
     viewpointTags: ["切れ（や）", "東と西の対比", "広がり"],
     shareable: false,
   },
+  // 在庫（未使用・読み比べ/句会の追加素材）。系列本文では未参照だが、
+  // G4「アンソロジーを厚く」に沿って残す。「呼びかけ・応援」は句会で子ども
+  // から出やすい観点で、observedIn:"kukai" の初出候補（第6弾 Q4 推奨裁定）。
   {
     id: "haiku_yasegaeru",
     text: "やせ蛙まけるな一茶これにあり",
@@ -75,7 +78,7 @@ export const HAIKU_MENTOR_TEXTS: MentorText[] = [
     reading: "せきをしてもひとり",
     author: "尾崎放哉",
     sourceNote:
-      "尾崎放哉（1885–1926）。自由律俳句。没後100年近くパブリックドメイン。",
+      "尾崎放哉（1885–1926）。自由律俳句。没後100年（1926没）によりパブリックドメイン。",
     rights: "PD",
     viewpointTags: ["自由律（型なし）", "孤独", "短さ"],
     shareable: false,
