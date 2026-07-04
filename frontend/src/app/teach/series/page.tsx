@@ -4,13 +4,37 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
+import { findStaticSeries } from "@/lib/seriesCatalog";
 import { deleteTeacherSeries, getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries } from "@/lib/types";
+
+type MyProblemKind = "similar" | "inverse" | "condition";
+
+type MyProblemRecord = {
+  kind: MyProblemKind;
+  text: string;
+  updatedAt: string;
+};
+
+type LearnerNote = {
+  stepId: string;
+  stepPosition: number;
+  text: string;
+};
+
+const MY_PROBLEM_LABELS: Record<MyProblemKind, string> = {
+  similar: "にている問題（数をかえる）",
+  inverse: "さかさま問題（きくものをかえる）",
+  condition: "条件をたす問題",
+};
 
 export default function SeriesPreview() {
   const router = useRouter();
   const [id, setId] = useState<string>("");
   const [series, setSeries] = useState<LearnerSeries | null>(null);
+  const [myProblem, setMyProblem] = useState<MyProblemRecord | null>(null);
+  const [qualNotes, setQualNotes] = useState<LearnerNote[]>([]);
+  const [isTeacherOwned, setIsTeacherOwned] = useState(false);
   const [hasHydrated, setHasHydrated] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -19,7 +43,14 @@ export default function SeriesPreview() {
     const seriesId = params.get("id") ?? "";
     setId(seriesId);
     if (seriesId) {
-      setSeries(getTeacherSeries(seriesId));
+      const teacherSeries = getTeacherSeries(seriesId);
+      const activeSeries = teacherSeries ?? findStaticSeries(seriesId);
+      setSeries(activeSeries);
+      setIsTeacherOwned(Boolean(teacherSeries));
+      if (activeSeries) {
+        setMyProblem(loadMyProblem(activeSeries.id));
+        setQualNotes(loadQualNotes(activeSeries));
+      }
     }
     setHasHydrated(true);
   }, []);
@@ -149,14 +180,16 @@ export default function SeriesPreview() {
           >
             印刷（PDF保存）
           </button>
-          <button
-            type="button"
-            onClick={() => setShowDeleteConfirm(true)}
-            className="inline-flex items-center justify-center px-6 py-3 text-muted hover:text-warning transition-colors no-print"
-            style={{ letterSpacing: "0.1em" }}
-          >
-            削除
-          </button>
+          {isTeacherOwned && (
+            <button
+              type="button"
+              onClick={() => setShowDeleteConfirm(true)}
+              className="inline-flex items-center justify-center px-6 py-3 text-muted hover:text-warning transition-colors no-print"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              削除
+            </button>
+          )}
         </nav>
 
         {/* 削除確認 */}
@@ -192,6 +225,64 @@ export default function SeriesPreview() {
               </button>
             </div>
           </div>
+        )}
+
+        {(myProblem || qualNotes.length > 0) && (
+          <section className="flex flex-col gap-3">
+            <h2
+              className="text-foreground"
+              style={{ fontSize: "13px", letterSpacing: "0.3em" }}
+            >
+              学習者の作った問題
+            </h2>
+            <div
+              className="rounded-lg border border-border p-5"
+              style={{ background: "var(--surface)" }}
+            >
+              {myProblem && (
+                <article>
+                  <span
+                    className="text-accent"
+                    style={{ fontSize: "12px", letterSpacing: "0.12em" }}
+                  >
+                    {MY_PROBLEM_LABELS[myProblem.kind]}
+                  </span>
+                  <p
+                    className="mt-2 whitespace-pre-wrap text-foreground"
+                    style={{ fontSize: "14px", lineHeight: 1.9 }}
+                  >
+                    {myProblem.text}
+                  </p>
+                </article>
+              )}
+              {qualNotes.length > 0 && (
+                <div
+                  className={myProblem ? "mt-5 border-t border-border pt-5" : ""}
+                >
+                  <span
+                    className="text-muted"
+                    style={{ fontSize: "12px", letterSpacing: "0.12em" }}
+                  >
+                    質的変化のひとことメモ
+                  </span>
+                  <ul className="mt-3 flex flex-col gap-2">
+                    {qualNotes.map((note) => (
+                      <li
+                        key={note.stepId}
+                        className="flex gap-3 text-foreground"
+                        style={{ fontSize: "14px", lineHeight: 1.8 }}
+                      >
+                        <span className="text-muted tnum shrink-0">
+                          {note.stepPosition}.
+                        </span>
+                        <span className="whitespace-pre-wrap">{note.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </section>
         )}
 
         {/* 問題プレビュー */}
@@ -262,6 +353,60 @@ export default function SeriesPreview() {
       </div>
     </main>
   );
+}
+
+function myProblemKey(seriesId: string): string {
+  return `ruisuishiki:my_problem:${seriesId}`;
+}
+
+function qualNoteKey(seriesId: string, stepId: string): string {
+  return `ruisuishiki:qual_note:${seriesId}:${stepId}`;
+}
+
+function loadMyProblem(seriesId: string): MyProblemRecord | null {
+  try {
+    const raw = window.localStorage.getItem(myProblemKey(seriesId));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<MyProblemRecord>;
+    if (
+      parsed.kind !== "similar" &&
+      parsed.kind !== "inverse" &&
+      parsed.kind !== "condition"
+    ) {
+      return null;
+    }
+    if (typeof parsed.text !== "string" || parsed.text.trim() === "") {
+      return null;
+    }
+    return {
+      kind: parsed.kind,
+      text: parsed.text,
+      updatedAt:
+        typeof parsed.updatedAt === "string" ? parsed.updatedAt : "",
+    };
+  } catch {
+    return null;
+  }
+}
+
+function loadQualNotes(series: LearnerSeries): LearnerNote[] {
+  const notes: LearnerNote[] = [];
+  for (const step of series.steps) {
+    if (step.variationFromPrevious !== "qualitative") continue;
+    try {
+      const text = window.localStorage.getItem(qualNoteKey(series.id, step.id));
+      if (text && text.trim()) {
+        notes.push({
+          stepId: step.id,
+          stepPosition: step.position,
+          text,
+        });
+      }
+    } catch {
+      return notes;
+    }
+  }
+  return notes;
 }
 
 function labelOfOp(op: string): string {

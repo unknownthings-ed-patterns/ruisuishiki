@@ -21,6 +21,19 @@ import { getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
 type Status = "answering" | "correct" | "incorrect" | "skipped" | "completed";
+type MyProblemKind = "similar" | "inverse" | "condition";
+
+type MyProblemRecord = {
+  kind: MyProblemKind;
+  text: string;
+  updatedAt: string;
+};
+
+const MY_PROBLEM_OPTIONS: { kind: MyProblemKind; label: string }[] = [
+  { kind: "similar", label: "にている問題（数をかえる）" },
+  { kind: "inverse", label: "さかさま問題（きくものをかえる）" },
+  { kind: "condition", label: "条件をたす問題" },
+];
 
 // 入力の正規化・数値評価・複数解判定は @/lib/answerEval に集約（テスト可能・後方互換）。
 
@@ -41,6 +54,13 @@ export default function Play() {
   const [attempts, setAttempts] = useState(0);
   const [hintsOpened, setHintsOpened] = useState<0 | 1 | 2 | 3>(0);
   const [status, setStatus] = useState<Status>("answering");
+  const [myProblem, setMyProblem] = useState<MyProblemRecord>({
+    kind: "similar",
+    text: "",
+    updatedAt: "",
+  });
+  const [qualNote, setQualNote] = useState("");
+  const [showQualRevelation, setShowQualRevelation] = useState(false);
   /**
    * 「公式の景色」（derivation）を mid-series で見ているか。
    * ヒント 3 でも理解できなかった学習者の脱出口（F4 予防）。
@@ -136,6 +156,16 @@ export default function Play() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const history = loadSeriesHistory(series.id);
+    const resume = getResumeIndex(
+      history,
+      series.steps.map((s) => s.id),
+    );
+    if (resume >= series.steps.length) {
+      setStatus("completed");
+      setShowingDerivation(false);
+      setShowQualRevelation(false);
+      return;
+    }
     const record = history.find((r) => r.stepId === step.id);
     if (record) {
       // 既に取り組んだ step に来た（戻ったか、再訪）
@@ -160,8 +190,23 @@ export default function Play() {
       setStatus((current) => (current === "completed" ? current : "answering"));
     }
     setShowingDerivation(false);
+    setShowQualRevelation(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setMyProblem(loadMyProblem(series.id));
+  }, [series.id]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (step.variationFromPrevious !== "qualitative") {
+      setQualNote("");
+      return;
+    }
+    setQualNote(loadQualNote(series.id, step.id));
+  }, [series.id, step.id, step.variationFromPrevious]);
 
   // 正答時・スキップ時に Enter キーで「次の問題へ」を押せるようにする
   useEffect(() => {
@@ -323,6 +368,32 @@ export default function Play() {
     }
   }
 
+  function handleMyProblemKindChange(kind: MyProblemKind) {
+    const next = {
+      ...myProblem,
+      kind,
+      updatedAt: new Date().toISOString(),
+    };
+    setMyProblem(next);
+    saveMyProblem(series.id, next);
+  }
+
+  function handleMyProblemTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const next = {
+      ...myProblem,
+      text: e.target.value,
+      updatedAt: new Date().toISOString(),
+    };
+    setMyProblem(next);
+    saveMyProblem(series.id, next);
+  }
+
+  function handleQualNoteChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const next = e.target.value;
+    setQualNote(next);
+    saveQualNote(series.id, step.id, next);
+  }
+
   /**
    * π・√ パレットボタン：記号をカーソル位置に挿入する。
    * 選択範囲があれば置き換え、挿入後はキャレットを挿入文字の直後へ。
@@ -445,6 +516,58 @@ export default function Play() {
               </div>
             </details>
           )}
+
+          <section
+            className="w-full rounded-lg border border-border p-6 sm:p-8"
+            style={{ background: "var(--surface)" }}
+            aria-label="じぶんの問題"
+          >
+            <h2
+              className="font-serif text-foreground"
+              style={{ fontSize: "16px", letterSpacing: "0.08em" }}
+            >
+              じぶんの問題をつくってみよう（かけたらでOK）
+            </h2>
+            <div
+              className="mt-4 flex flex-wrap gap-2"
+              role="radiogroup"
+              aria-label="やり方"
+            >
+              {MY_PROBLEM_OPTIONS.map((option) => {
+                const selected = myProblem.kind === option.kind;
+                return (
+                  <button
+                    key={option.kind}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    onClick={() => handleMyProblemKindChange(option.kind)}
+                    className="inline-flex items-center justify-center rounded-lg border px-4 py-2 transition-colors"
+                    style={{
+                      borderColor: selected ? "var(--accent)" : "var(--border)",
+                      color: selected ? "var(--accent)" : "var(--muted)",
+                      background: selected
+                        ? "color-mix(in oklch, var(--surface) 75%, var(--accent-soft) 25%)"
+                        : "transparent",
+                      fontSize: "13px",
+                      letterSpacing: "0.03em",
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+            <textarea
+              value={myProblem.text}
+              onChange={handleMyProblemTextChange}
+              rows={4}
+              className="mt-4 w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-foreground focus-visible:outline-none focus-visible:border-accent transition-colors"
+              style={{ fontSize: "14px", lineHeight: 1.8 }}
+              placeholder="もんだい文をかいてみよう（こたえも書いていい）"
+              aria-label="じぶんの問題"
+            />
+          </section>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Link
@@ -619,73 +742,112 @@ export default function Play() {
 
           {/* 質的変化の正答時：「同じ仕組みだった」の発見演出
               桝田の言う「喜びのグレードアップ」を、これまでの全式を並べることで支える */}
-          {status === "correct" && step.variationFromPrevious === "qualitative" && (
-            <section
-              className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in-slow"
-              style={{
-                background:
-                  "color-mix(in oklch, var(--surface) 75%, var(--accent-warm) 25%)",
-              }}
-              aria-label="同じ仕組みだった"
-            >
-              <p
-                className="font-serif text-foreground text-center"
+          {status === "correct" &&
+            step.variationFromPrevious === "qualitative" &&
+            !showQualRevelation && (
+              <section
+                className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in"
                 style={{
-                  fontSize: "clamp(20px, 1.5rem, 24px)",
-                  letterSpacing: "0.08em",
+                  background:
+                    "color-mix(in oklch, var(--surface) 78%, var(--accent-warm) 22%)",
                 }}
+                aria-label="質的変化のメモ"
               >
-                気づいたかな?
-              </p>
-              <p
-                className="mt-4 text-foreground/85 text-center"
-                style={{ fontSize: "14px", lineHeight: 2 }}
+                <label
+                  className="block font-serif text-foreground"
+                  style={{ fontSize: "16px", letterSpacing: "0.08em" }}
+                  htmlFor="qual-note"
+                >
+                  まえの問題と、なにがかわった？（ひとことでOK）
+                </label>
+                <textarea
+                  id="qual-note"
+                  value={qualNote}
+                  onChange={handleQualNoteChange}
+                  rows={3}
+                  className="mt-4 w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-foreground focus-visible:outline-none focus-visible:border-accent transition-colors"
+                  style={{ fontSize: "14px", lineHeight: 1.8 }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowQualRevelation(true)}
+                  className="mt-4 inline-flex items-center justify-center rounded-lg bg-accent px-6 py-2.5 text-background transition-transform duration-150 hover:scale-[1.02]"
+                  style={{ fontSize: "13px", letterSpacing: "0.15em" }}
+                >
+                  たねあかしを見る
+                </button>
+              </section>
+            )}
+
+          {status === "correct" &&
+            step.variationFromPrevious === "qualitative" &&
+            showQualRevelation && (
+              <section
+                className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in-slow"
+                style={{
+                  background:
+                    "color-mix(in oklch, var(--surface) 75%, var(--accent-warm) 25%)",
+                }}
+                aria-label="同じ仕組みだった"
               >
-                ここまでの問題はすべて
-                <br />
-                <span className="font-serif">
-                  「<MathText text={series.revelationLabel ?? "同じ仕組み"} />」
-                </span>
-                <br />
-                という同じ仕組みでした。
-              </p>
-              <ol
-                className="mt-6 flex flex-col gap-2.5 max-w-sm mx-auto tnum"
-                aria-label="解いた問題の式の一覧"
-              >
-                {series.steps.slice(0, stepIndex + 1).map((s, i) => (
-                  <li
-                    key={s.id}
-                    className="flex items-baseline justify-between animate-revelation-row"
-                    style={{
-                      animationDelay: `${300 + i * 120}ms`,
-                      opacity: 0,
-                      animationFillMode: "forwards",
-                    }}
-                  >
-                    <span
-                      className="text-muted shrink-0"
-                      style={{ fontSize: "11px", letterSpacing: "0.15em" }}
+                <p
+                  className="font-serif text-foreground text-center"
+                  style={{
+                    fontSize: "clamp(20px, 1.5rem, 24px)",
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  気づいたかな?
+                </p>
+                <p
+                  className="mt-4 text-foreground/85 text-center"
+                  style={{ fontSize: "14px", lineHeight: 2 }}
+                >
+                  ここまでの問題はすべて
+                  <br />
+                  <span className="font-serif">
+                    「<MathText text={series.revelationLabel ?? "同じ仕組み"} />」
+                  </span>
+                  <br />
+                  という同じ仕組みでした。
+                </p>
+                <ol
+                  className="mt-6 flex flex-col gap-2.5 max-w-sm mx-auto tnum"
+                  aria-label="解いた問題の式の一覧"
+                >
+                  {series.steps.slice(0, stepIndex + 1).map((s, i) => (
+                    <li
+                      key={s.id}
+                      className="flex items-baseline justify-between animate-revelation-row"
+                      style={{
+                        animationDelay: `${300 + i * 120}ms`,
+                        opacity: 0,
+                        animationFillMode: "forwards",
+                      }}
                     >
-                      {s.position}.
-                    </span>
-                    <span
-                      className="flex-1 px-3 text-foreground text-center"
-                      style={{ fontSize: "15px" }}
-                    >
-                      <MathText text={s.formulaPreview} />
-                    </span>
-                    <span
-                      className="text-muted shrink-0"
-                      style={{ fontSize: "12px" }}
-                    >
-                      ({s.unit})
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )}
+                      <span
+                        className="text-muted shrink-0"
+                        style={{ fontSize: "11px", letterSpacing: "0.15em" }}
+                      >
+                        {s.position}.
+                      </span>
+                      <span
+                        className="flex-1 px-3 text-foreground text-center"
+                        style={{ fontSize: "15px" }}
+                      >
+                        <MathText text={s.formulaPreview} />
+                      </span>
+                      <span
+                        className="text-muted shrink-0"
+                        style={{ fontSize: "12px" }}
+                      >
+                        ({s.unit})
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
 
           {/* ヒント表示（問題文の真下に積層） */}
           {hintsOpened > 0 && !showingDerivation && (
@@ -944,7 +1106,9 @@ export default function Play() {
                   style={{ fontSize: "13px", letterSpacing: "0.05em" }}
                   role="status"
                 >
-                  ちがうみたい。ヒントを見るか、もう一度考えてみよう。
+                  {attempts >= 2 && step.compareWithStepId !== null
+                    ? "まえの問題ではうまくいった。なにがおなじで、なにがちがうか、もういちどくらべてみよう。"
+                    : "ちがうみたい。ヒントを見るか、もう一度考えてみよう。"}
                 </p>
               )}
 
@@ -1120,4 +1284,58 @@ export default function Play() {
       `}</style>
     </main>
   );
+}
+
+function myProblemKey(seriesId: string): string {
+  return `ruisuishiki:my_problem:${seriesId}`;
+}
+
+function qualNoteKey(seriesId: string, stepId: string): string {
+  return `ruisuishiki:qual_note:${seriesId}:${stepId}`;
+}
+
+function saveMyProblem(seriesId: string, record: MyProblemRecord): void {
+  try {
+    window.localStorage.setItem(myProblemKey(seriesId), JSON.stringify(record));
+  } catch {
+    // localStorage 不可でも学習は続ける。
+  }
+}
+
+function loadMyProblem(seriesId: string): MyProblemRecord {
+  try {
+    const raw = window.localStorage.getItem(myProblemKey(seriesId));
+    if (!raw) return { kind: "similar", text: "", updatedAt: "" };
+    const parsed = JSON.parse(raw) as Partial<MyProblemRecord>;
+    const kind: MyProblemKind =
+      parsed.kind === "similar" ||
+      parsed.kind === "inverse" ||
+      parsed.kind === "condition"
+        ? parsed.kind
+        : "similar";
+    return {
+      kind,
+      text: typeof parsed.text === "string" ? parsed.text : "",
+      updatedAt:
+        typeof parsed.updatedAt === "string" ? parsed.updatedAt : "",
+    };
+  } catch {
+    return { kind: "similar", text: "", updatedAt: "" };
+  }
+}
+
+function saveQualNote(seriesId: string, stepId: string, text: string): void {
+  try {
+    window.localStorage.setItem(qualNoteKey(seriesId, stepId), text);
+  } catch {
+    // localStorage 不可でも学習は続ける。
+  }
+}
+
+function loadQualNote(seriesId: string, stepId: string): string {
+  try {
+    return window.localStorage.getItem(qualNoteKey(seriesId, stepId)) ?? "";
+  } catch {
+    return "";
+  }
 }
