@@ -280,10 +280,17 @@ export default function HaikuPlay() {
   // exercise は正解で解錠。comparison / creation は常に進める（判定しない）。
   const choiceCorrect =
     input?.type === "choice" && choice === input.answerIndex;
+  // 並べ替えは「固定の語順」ではなく「モーラ列が 5-7-5 になる並び」で判定する。
+  // 同じ音数のかたまり（例：5音が二つ）が入れ替わった倒置の句も正解にするため。
+  // 目標のモーラ列は正典の answerOrder（5-7-5 になる並び）から導く。
   const reorderCorrect =
     input?.type === "reorder" &&
     order.length === input.segments.length &&
-    order.every((v, i) => v === input.answerOrder[i]);
+    (() => {
+      const segMora = input.segments.map((seg) => countMora(seg));
+      const targetMora = input.answerOrder.map((i) => segMora[i]);
+      return order.every((idx, pos) => segMora[idx] === targetMora[pos]);
+    })();
   const canAdvance =
     step.kind !== "exercise" || choiceCorrect || reorderCorrect;
 
