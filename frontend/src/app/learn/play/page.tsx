@@ -34,8 +34,6 @@ type InkPoint = {
   y: number;
 };
 
-type InkStroke = InkPoint[];
-
 const MY_PROBLEM_OPTIONS: { kind: MyProblemKind; label: string }[] = [
   { kind: "similar", label: "にている問題（数をかえる）" },
   { kind: "inverse", label: "さかさま問題（きくものをかえる）" },
@@ -54,32 +52,29 @@ function displayAnswer(step: LearnerStep): string {
 }
 
 function ProblemInkLayer({ resetKey }: { resetKey: string }) {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const activeStrokeRef = useRef<InkStroke | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lastPointRef = useRef<InkPoint | null>(null);
+  const activePointerIdRef = useRef<number | null>(null);
   const activeTouchIdRef = useRef<number | null>(null);
-  const frameRef = useRef<number | null>(null);
   const [enabled, setEnabled] = useState(false);
-  const [strokes, setStrokes] = useState<InkStroke[]>([]);
-  const [, setInkFrame] = useState(0);
+  const [hasInk, setHasInk] = useState(false);
 
   useEffect(() => {
-    if (frameRef.current !== null) {
-      window.cancelAnimationFrame(frameRef.current);
-      frameRef.current = null;
-    }
-    activeStrokeRef.current = null;
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
     activeTouchIdRef.current = null;
     setEnabled(false);
-    setStrokes([]);
-    setInkFrame((current) => current + 1);
+    clearInk();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetKey]);
 
   useEffect(() => {
+    prepareCanvas();
+    window.addEventListener("resize", clearInk);
     return () => {
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
-      }
+      window.removeEventListener("resize", clearInk);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -91,7 +86,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     const previousBodyTouchAction = body.style.touchAction;
 
     function preventPageDrag(event: TouchEvent) {
-      if (activeStrokeRef.current) event.preventDefault();
+      event.preventDefault();
     }
 
     html.style.overscrollBehavior = "none";
@@ -107,67 +102,97 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     };
   }, [enabled]);
 
-  function scheduleInkFrame() {
-    if (frameRef.current !== null) return;
-    frameRef.current = window.requestAnimationFrame(() => {
-      frameRef.current = null;
-      setInkFrame((current) => current + 1);
-    });
+  function configureContext(ctx: CanvasRenderingContext2D) {
+    const foreground = getComputedStyle(document.documentElement)
+      .getPropertyValue("--foreground")
+      .trim();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = foreground || "#111111";
+    ctx.fillStyle = foreground || "#111111";
+  }
+
+  function prepareCanvas(): CanvasRenderingContext2D | null {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    configureContext(ctx);
+    return ctx;
+  }
+
+  function clearInk() {
+    const canvas = canvasRef.current;
+    const ctx = prepareCanvas();
+    if (!canvas || !ctx) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+    setHasInk(false);
   }
 
   function pointFromClient(clientX: number, clientY: number): InkPoint | null {
-    const rect = svgRef.current?.getBoundingClientRect();
+    const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect || rect.width === 0 || rect.height === 0) return null;
     return {
-      x: Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100)),
-      y: Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100)),
+      x: Math.min(rect.width, Math.max(0, clientX - rect.left)),
+      y: Math.min(rect.height, Math.max(0, clientY - rect.top)),
     };
-  }
-
-  function appendPoint(point: InkPoint) {
-    const stroke = activeStrokeRef.current;
-    if (!stroke) return;
-    const last = stroke[stroke.length - 1];
-    if (last) {
-      const dx = point.x - last.x;
-      const dy = point.y - last.y;
-      if (dx * dx + dy * dy < 0.012) return;
-    }
-    stroke.push(point);
   }
 
   function startStroke(clientX: number, clientY: number) {
     const point = pointFromClient(clientX, clientY);
     if (!point) return false;
-    activeStrokeRef.current = [point];
-    scheduleInkFrame();
+    const ctx = prepareCanvas();
+    if (!ctx) return false;
+    lastPointRef.current = point;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 1.2, 0, Math.PI * 2);
+    ctx.fill();
+    setHasInk(true);
     return true;
   }
 
   function continueStroke(clientX: number, clientY: number) {
     const point = pointFromClient(clientX, clientY);
-    if (point) appendPoint(point);
+    const last = lastPointRef.current;
+    if (!point || !last) return;
+    const dx = point.x - last.x;
+    const dy = point.y - last.y;
+    if (dx * dx + dy * dy < 0.25) return;
+    const ctx = prepareCanvas();
+    if (!ctx) return;
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+    lastPointRef.current = point;
   }
 
-  function inkPath(points: InkStroke): string {
-    return points
-      .map((point, index) => {
-        const command = index === 0 ? "M" : "L";
-        return `${command} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
-      })
-      .join(" ");
-  }
-
-  function handlePointerDown(e: React.PointerEvent<SVGSVGElement>) {
+  function handlePointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
     if (!enabled) return;
     if (e.pointerType === "touch") return;
     e.preventDefault();
-    e.currentTarget.setPointerCapture(e.pointerId);
-    startStroke(e.clientX, e.clientY);
+    if (startStroke(e.clientX, e.clientY)) {
+      activePointerIdRef.current = e.pointerId;
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
   }
 
-  function handlePointerMove(e: React.PointerEvent<SVGSVGElement>) {
-    if (!enabled || !activeStrokeRef.current) return;
+  function handlePointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!enabled || activePointerIdRef.current !== e.pointerId) return;
     if (e.pointerType === "touch") return;
     e.preventDefault();
     const nativeEvents = e.nativeEvent.getCoalescedEvents();
@@ -175,16 +200,12 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     for (const pointerEvent of pointerEvents) {
       continueStroke(pointerEvent.clientX, pointerEvent.clientY);
     }
-    scheduleInkFrame();
   }
 
   function finishStroke() {
-    const stroke = activeStrokeRef.current;
-    if (!stroke || stroke.length === 0) return;
-    activeStrokeRef.current = null;
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
     activeTouchIdRef.current = null;
-    setStrokes((previous) => [...previous, stroke]);
-    scheduleInkFrame();
   }
 
   function changedTouchById(touches: React.TouchList, touchId: number) {
@@ -195,7 +216,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     return null;
   }
 
-  function handleTouchStart(e: React.TouchEvent<SVGSVGElement>) {
+  function handleTouchStart(e: React.TouchEvent<HTMLCanvasElement>) {
     if (!enabled || activeTouchIdRef.current !== null) return;
     const touch = e.changedTouches.item(0);
     if (!touch) return;
@@ -205,25 +226,21 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     }
   }
 
-  function handleTouchMove(e: React.TouchEvent<SVGSVGElement>) {
+  function handleTouchMove(e: React.TouchEvent<HTMLCanvasElement>) {
     const touchId = activeTouchIdRef.current;
-    if (!enabled || touchId === null || !activeStrokeRef.current) return;
+    if (!enabled || touchId === null || !lastPointRef.current) return;
     const touch = changedTouchById(e.changedTouches, touchId);
     if (!touch) return;
     e.preventDefault();
     continueStroke(touch.clientX, touch.clientY);
-    scheduleInkFrame();
   }
 
-  function handleTouchEnd(e: React.TouchEvent<SVGSVGElement>) {
+  function handleTouchEnd(e: React.TouchEvent<HTMLCanvasElement>) {
     const touchId = activeTouchIdRef.current;
     if (touchId === null || !changedTouchById(e.changedTouches, touchId)) return;
     e.preventDefault();
     finishStroke();
   }
-
-  const activeStroke = activeStrokeRef.current;
-  const hasInk = strokes.length > 0 || activeStroke !== null;
 
   return (
     <>
@@ -246,12 +263,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         {hasInk && (
           <button
             type="button"
-            onClick={() => {
-              setStrokes([]);
-              activeStrokeRef.current = null;
-              activeTouchIdRef.current = null;
-              scheduleInkFrame();
-            }}
+            onClick={clearInk}
             className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
           >
@@ -260,11 +272,9 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         )}
       </div>
 
-      <svg
-        ref={svgRef}
+      <canvas
+        ref={canvasRef}
         className="fixed inset-0 z-40 h-screen w-screen touch-none print:hidden"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
         aria-hidden
         style={{
           pointerEvents: enabled ? "auto" : "none",
@@ -279,22 +289,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
-      >
-        {[...strokes, ...(activeStroke ? [activeStroke] : [])].map(
-          (stroke, index) => (
-            <path
-              key={index}
-              d={inkPath(stroke)}
-              fill="none"
-              stroke="var(--foreground)"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2.2}
-              vectorEffect="non-scaling-stroke"
-            />
-          ),
-        )}
-      </svg>
+      />
     </>
   );
 }
