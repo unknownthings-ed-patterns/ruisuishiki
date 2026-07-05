@@ -55,23 +55,58 @@ function displayAnswer(step: LearnerStep): string {
 
 function ProblemInkLayer({ resetKey }: { resetKey: string }) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const activeStrokeRef = useRef<InkStroke | null>(null);
+  const frameRef = useRef<number | null>(null);
   const [enabled, setEnabled] = useState(false);
   const [strokes, setStrokes] = useState<InkStroke[]>([]);
-  const [activeStroke, setActiveStroke] = useState<InkStroke | null>(null);
+  const [, setInkFrame] = useState(0);
 
   useEffect(() => {
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
+    }
+    activeStrokeRef.current = null;
     setEnabled(false);
     setStrokes([]);
-    setActiveStroke(null);
+    setInkFrame((current) => current + 1);
   }, [resetKey]);
 
-  function pointFromEvent(e: React.PointerEvent<SVGSVGElement>): InkPoint | null {
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  function scheduleInkFrame() {
+    if (frameRef.current !== null) return;
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = null;
+      setInkFrame((current) => current + 1);
+    });
+  }
+
+  function pointFromClient(clientX: number, clientY: number): InkPoint | null {
     const rect = svgRef.current?.getBoundingClientRect();
     if (!rect || rect.width === 0 || rect.height === 0) return null;
     return {
-      x: Math.min(100, Math.max(0, ((e.clientX - rect.left) / rect.width) * 100)),
-      y: Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100)),
+      x: Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100)),
+      y: Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100)),
     };
+  }
+
+  function appendPoint(point: InkPoint) {
+    const stroke = activeStrokeRef.current;
+    if (!stroke) return;
+    const last = stroke[stroke.length - 1];
+    if (last) {
+      const dx = point.x - last.x;
+      const dy = point.y - last.y;
+      if (dx * dx + dy * dy < 0.012) return;
+    }
+    stroke.push(point);
   }
 
   function inkPath(points: InkStroke): string {
@@ -85,27 +120,35 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
 
   function handlePointerDown(e: React.PointerEvent<SVGSVGElement>) {
     if (!enabled) return;
-    const point = pointFromEvent(e);
+    const point = pointFromClient(e.clientX, e.clientY);
     if (!point) return;
     e.preventDefault();
     e.currentTarget.setPointerCapture(e.pointerId);
-    setActiveStroke([point]);
+    activeStrokeRef.current = [point];
+    scheduleInkFrame();
   }
 
   function handlePointerMove(e: React.PointerEvent<SVGSVGElement>) {
-    if (!enabled || !activeStroke) return;
-    const point = pointFromEvent(e);
-    if (!point) return;
+    if (!enabled || !activeStrokeRef.current) return;
     e.preventDefault();
-    setActiveStroke((current) => (current ? [...current, point] : current));
+    const nativeEvents = e.nativeEvent.getCoalescedEvents();
+    const pointerEvents = nativeEvents.length > 0 ? nativeEvents : [e.nativeEvent];
+    for (const pointerEvent of pointerEvents) {
+      const point = pointFromClient(pointerEvent.clientX, pointerEvent.clientY);
+      if (point) appendPoint(point);
+    }
+    scheduleInkFrame();
   }
 
   function finishStroke() {
-    if (!activeStroke || activeStroke.length === 0) return;
-    setStrokes((previous) => [...previous, activeStroke]);
-    setActiveStroke(null);
+    const stroke = activeStrokeRef.current;
+    if (!stroke || stroke.length === 0) return;
+    activeStrokeRef.current = null;
+    setStrokes((previous) => [...previous, stroke]);
+    scheduleInkFrame();
   }
 
+  const activeStroke = activeStrokeRef.current;
   const hasInk = strokes.length > 0 || activeStroke !== null;
 
   return (
@@ -131,7 +174,8 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
             type="button"
             onClick={() => {
               setStrokes([]);
-              setActiveStroke(null);
+              activeStrokeRef.current = null;
+              scheduleInkFrame();
             }}
             className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
@@ -147,7 +191,11 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         aria-hidden
-        style={{ pointerEvents: enabled ? "auto" : "none" }}
+        style={{
+          pointerEvents: enabled ? "auto" : "none",
+          touchAction: "none",
+          userSelect: "none",
+        }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={finishStroke}
