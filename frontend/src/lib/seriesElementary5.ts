@@ -613,382 +613,340 @@ export const E5_DECIMAL_DIV_SERIES: LearnerSeries = {
   id: "e5_decimal_div_01",
   title: "小数でわることの意味",
   subtitle:
-    "小数でわることを、何こ分・何倍・1あたりの量として読む10問。",
+    "数直線で2つの量の関係をそろえ、1あたりの量として読む10問。",
   patternId: "EL5",
   unit: "elementary_5",
-  revelationLabel: "わられる数とわる数を同じ倍率で見直しても、商は変わらない",
+  revelationLabel: "小数で表された長さでも、数直線にそろえると1あたりをわり算で求められる",
   drivingQuestion:
-    "同じ倍率で量の見方を変えても、1つ分や何倍はなぜ変わらない？",
-  derivation: `**小数のわり算は「同じ倍率で見直す」**
+    "小数で表された量でも、1あたりを求める式はどう立てればよい？",
+  derivation: `**中心の問い** ｜ 小数で表された量でも、1あたりを求める式はどう立てればよい？
 
-$2.4 \\div 0.6$ を計算するには、両方を **10 倍** して：
+たとえば、リボンを $2.5$ m 買ったら代金が $300$ 円だったとします。
 
-$$2.4 \\div 0.6 = 24 \\div 6 = 4$$
+求めたいのは、$1$ m のねだんです。
 
-「**両方に同じ倍率を掛けると、わり算の答えは変わらない**」——これが小数のわり算の核心です。
+<<DECIMAL_DIV_STEP1>>
 
-**なぜ「両方を 10 倍してよい」のか**
+数直線では、下の線に長さ、上の線に代金をそろえて置きます。
 
-「24 ÷ 6」と「2.4 ÷ 0.6」の関係は、**分数** で見るとよくわかります：
+- $2.5$ m のところが $300$ 円
+- $1$ m のところが □ 円
 
-$$\\frac{2.4}{0.6} = \\frac{2.4 \\times 10}{0.6 \\times 10} = \\frac{24}{6} = 4$$
+このとき、□ 円が $2.5$ 個分で $300$ 円になるので、
 
-「**分母と分子の両方に同じ数を掛けても、分数の値は変わらない**」という原理を使っているだけ。
+$$□ \\times 2.5 = 300$$
 
-**わり算と分数は同じもの**
+だから、□ は
 
-そもそも、$\\dfrac{a}{b}$ は「$a \\div b$」のこと。だから：
+$$300 \\div 2.5$$
 
-- 「分母と分子の両方に同じ数を掛けても変わらない」
-- 「わられる数とわる数の両方に同じ数を掛けても、答えは変わらない」
+で求められます。
 
-は、まったく同じ話です。
+**大事なのは、式の前に量の関係を置くこと**
 
-**わる数を整数にするのがコツ**
+小数でわることは、急に新しい意味になるわけではありません。
 
-小数のわり算では、**わる数（÷の右）を整数にする** ことを最初の目標にします。
+- 「全体の代金」÷「買った長さ」＝「1mのねだん」
+- 「全体の重さ」÷「長さ」＝「1mの重さ」
+- 「比べる量」÷「もとにする量」＝「何倍」
 
-| 元の式 | 何倍する？ | 直した式 |
-|---|---|---|
-| $2.4 \\div 0.6$ | 10 倍 | $24 \\div 6 = 4$ |
-| $0.48 \\div 0.06$ | 100 倍 | $48 \\div 6 = 8$ |
-| $7.2 \\div 1.2$ | 10 倍 | $72 \\div 12 = 6$ |
-| $5 \\div 0.25$ | 100 倍 | $500 \\div 25 = 20$ |
+数直線にすると、何を $1$ と見るのか、どの量をわるのかが見えます。
 
-「わる数の小数点を **右に動かして整数にする**」、そして「わられる数の小数点を **同じ数だけ動かす**」。
+**問いに戻ると**
 
-大事なのは、片方だけを変えるのではなく、**両方を同じ倍率で見直す** ことです。
-
-**「÷ 0.5 は ÷ 1/2、つまり × 2」**
-
-$10 \\div 0.5$ の場合：
-
-$$10 \\div 0.5 = 10 \\div \\frac{1}{2} = 10 \\times 2 = 20$$
-
-「1 より小さい数で割ると **大きくなる**」のは、ここからも見えてきます。「**$\\dfrac{1}{2}$ で割る $= 2$ を掛ける**」というふしぎな関係。
-
-**1 より大きい数で割ると小さくなる**
-
-逆に $10 \\div 2 = 5$、$10 \\div 5 = 2$ のように、1 より大きい数で割れば結果は小さくなる。
-
-| わる数 | 結果 |
-|---|---|
-| 1 より大きい | 小さくなる |
-| ちょうど 1 | 変わらない |
-| 1 より小さい（0 より大） | 大きくなる |
-
-これは小学校で混乱しやすい点ですが、上の関係を覚えておくと安心です。
-
-**割り切れないとき：余り or 小数で続ける**
-
-整数で割り切れないとき、
-
-- **余りを出す**（例：$10 \\div 3 = 3$ あまり $1$）
-- **小数で続ける**（例：$10 \\div 3 = 3.333\\ldots$）
-
-の 2 通りの扱い方があります。状況によって使い分けます。
-
-**応用：単価の計算・速さ・人口密度**
-
-割り算は「1 つあたりの量」を求める道具：
-
-- $\\dfrac{\\text{代金}}{\\text{個数}} = $ 1 個あたりの値段
-- $\\dfrac{\\text{道のり}}{\\text{時間}} = $ 速さ
-- $\\dfrac{\\text{人口}}{\\text{面積}} = $ 人口密度
-
-「**全体 ÷ 個数 = 1 つあたり**」は、量を比べる基本道具。小数の割り算ができれば、現実の量の話で困らなくなります。`,
+小数で表された量でも、数直線で「全体」と「1あたり」をそろえると、整数のときと同じようにわり算の式を立てられます。`,
   steps: [
     {
       id: "step1",
       position: 1,
       questionText:
-        "$7.2$ L のジュースを $3$ 人で等しく分けます。1人分は何 L でしょう？",
-      answer: 2.4,
-      unit: "L",
-      unknownLabel: "1人分",
+        "$2.5$ m のリボンを買ったら、代金は $300$ 円でした。このリボン $1$ m のねだんは何円でしょう？",
+      answer: 120,
+      unit: "円",
+      unknownLabel: "1mのねだん",
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
         {
           layer: 1,
           text:
-            "全体を同じ大きさの3つに分けるとき、求めているのはどの1つ分かな？",
+            "数直線の上の量と下の量は、どのように対応しているかな？",
         },
         {
           layer: 2,
           text:
-            "見る量は、全体のジュースの量と、分ける人数。1人分という同じ大きさのまとまりを考えよう。",
+            "見ているのは、全体の代金と、1mあたりの代金の対応。",
         },
         {
           layer: 3,
           text:
-            "$7.2 \\div 3$ を計算する。$72 \\div 3 = 24$ なので、$7.2 \\div 3 = 2.4$。1人分は $2.4$ L。",
+            "$□ \\times 2.5 = 300$ なので、$□ = 300 \\div 2.5 = 120$。1mのねだんは $120$ 円。",
         },
       ],
-      formulaPreview: "7.2 ÷ 3 = 2.4",
+      formulaPreview: "300 ÷ 2.5 = 120",
       figureMarker: "<<DECIMAL_DIV_STEP1>>",
     },
     {
       id: "step2",
       position: 2,
       questionText:
-        "$9.6$ L の水を $4$ 本のびんに等しく入れます。1本分は何 L でしょう？",
-      answer: 2.4,
-      unit: "L",
-      unknownLabel: "1本分",
+        "$1.5$ m のホースの重さをはかったら、$270$ g でした。このホース $1$ m の重さは何 g でしょう？",
+      answer: 180,
+      unit: "g",
+      unknownLabel: "1mの重さ",
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
           text:
-            "前題と比べてみよう。全体を同じ大きさに分けて、1つ分を求めるところは同じ。何が変わった？",
+            "前題と同じように、下の線に長さ、上の線に重さを置こう。",
         },
         {
           layer: 2,
           text:
-            "変わったのは、全体の量と、分ける数。求めるものは同じく1つ分。",
+            "変わったのは、上の量が代金から重さになったこと。",
         },
         {
           layer: 3,
           text:
-            "$9.6 \\div 4$ を計算する。$96 \\div 4 = 24$ なので、$9.6 \\div 4 = 2.4$。1本分は $2.4$ L。",
+            "$270 \\div 1.5 = 180$。1mの重さは $180$ g。",
         },
       ],
-      formulaPreview: "9.6 ÷ 4 = 2.4",
+      formulaPreview: "270 ÷ 1.5 = 180",
     },
     {
       id: "step3",
       position: 3,
       questionText:
-        "$7.2$ m のリボンを、$0.3$ m ずつ切ります。何本できるでしょう？",
-      answer: 24,
-      unit: "本",
-      unknownLabel: "本数",
+        "$6.3$ m の鉄のぼうの重さが $7.56$ kg でした。この鉄のぼう $1$ m の重さは何 kg でしょう？",
+      answer: 1.2,
+      unit: "kg",
+      unknownLabel: "1mの重さ",
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
           text:
-            "前題と比べてみよう。全体をいくつ分に分けられるかを見ている点は似ている。わる数はどう変わった？",
+            "前題より数が細かくなった。けれど、数直線では同じく「全体 ÷ 長さ」で $1$ m を求める。",
         },
         {
           layer: 2,
           text:
-            "変わったのは、1つ分の長さが整数ではなく小数になったこと。",
+            "変わったのは、長さも重さも小数で細かく表されていること。",
         },
         {
           layer: 3,
           text:
-            "$7.2 \\div 0.3$ を、両方10倍して $72 \\div 3$ と見る。$72 \\div 3 = 24$ だから、$24$ 本できる。",
+            "$75.6 \\div 63 = 1.2$。1mの重さは $1.2$ kg。",
         },
       ],
-      formulaPreview: "7.2 ÷ 0.3 = 72 ÷ 3 = 24",
+      formulaPreview: "7.56 ÷ 6.3 = 1.2",
     },
     {
       id: "step4",
       position: 4,
       questionText:
-        "$4.8$ kg の小麦粉を、$0.6$ kg ずつ袋に入れます。何袋できるでしょう？",
-      answer: 8,
-      unit: "袋",
-      unknownLabel: "袋の数",
+        "$0.8$ m の青いリボンの代金が $240$ 円でした。このリボン $1$ m のねだんは何円でしょう？",
+      answer: 300,
+      unit: "円",
+      unknownLabel: "1mのねだん",
       variationFromPrevious: "same",
-      compareWithStepId: "step3",
-      hints: [
-        {
-          layer: 1,
-          text:
-            "前題と比べてみよう。小数の1つ分が、全体の中にいくつ入るかを見ているところは同じ。",
-        },
-        {
-          layer: 2,
-          text:
-            "変わったのは、量の種類と数。わる数が小数であるところは前題と同じ。",
-        },
-        {
-          layer: 3,
-          text:
-            "$4.8 \\div 0.6$ を、両方10倍して $48 \\div 6$ と見る。$48 \\div 6 = 8$ だから、$8$ 袋できる。",
-        },
-      ],
-      formulaPreview: "4.8 ÷ 0.6 = 48 ÷ 6 = 8",
-    },
-    {
-      id: "step5",
-      position: 5,
-      questionText:
-        "$0.4$ m ずつ切ったら、$9$ 本できました。もとのリボンは何 m だったでしょう？",
-      answer: 3.6,
-      unit: "m",
-      unknownLabel: "もとの長さ",
-      variationFromPrevious: "inverse",
-      compareWithStepId: "step3",
-      hints: [
-        {
-          layer: 1,
-          text:
-            "前題たちと比べてみよう。今度は、全体から本数を求めるのではなく、本数から全体へ戻っている。",
-        },
-        {
-          layer: 2,
-          text:
-            "変わったのは求める向き。1本分と本数がわかっていて、全体をたしかめる問題になった。",
-        },
-        {
-          layer: 3,
-          text:
-            "1本が $0.4$ m で $9$ 本だから、全体は $0.4 \\times 9 = 3.6$。もとのリボンは $3.6$ m。",
-        },
-      ],
-      formulaPreview: "0.4 × 9 = 3.6",
-    },
-    {
-      id: "step6",
-      position: 6,
-      questionText:
-        "$0.25$ L ずつ入れると、$12$ 本の小びんがいっぱいになりました。全部で何 L ありますか？",
-      answer: 3,
-      unit: "L",
-      unknownLabel: "全部の量",
-      variationFromPrevious: "same",
-      compareWithStepId: "step5",
-      hints: [
-        {
-          layer: 1,
-          text:
-            "前題と比べてみよう。1つ分と個数から、全体へ戻るところは同じ。何が変わった？",
-        },
-        {
-          layer: 2,
-          text:
-            "変わったのは、1つ分が小数第2位まであることと、数える単位が本になったこと。",
-        },
-        {
-          layer: 3,
-          text:
-            "1本が $0.25$ L で $12$ 本だから、全体は $0.25 \\times 12 = 3$。全部で $3$ L。",
-        },
-      ],
-      formulaPreview: "0.25 × 12 = 3",
-    },
-    {
-      id: "step7",
-      position: 7,
-      questionText:
-        "$2.4$ m の布は、$6$ m の布の何倍でしょう？",
-      answer: 0.4,
-      unit: "倍",
-      unknownLabel: "何倍",
-      variationFromPrevious: "qualitative",
       compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
           text:
-            "前題までと比べてみよう。今度は同じ大きさに分けるより、基準の量と比べて何倍かを見ている。",
+            "前題と同じく、求めたいのは $1$ m のところ。$0.8$ m は $1$ m より短い。",
         },
         {
           layer: 2,
           text:
-            "変わったのは、基準の量のほうが比べる量より大きいこと。答えの大きさを先に見積もってみよう。",
+            "変わったのは、買った長さが1mより短いこと。",
         },
         {
           layer: 3,
           text:
-            "何倍かは $2.4 \\div 6$ で求める。$24 \\div 6 = 4$ なので、$2.4 \\div 6 = 0.4$。$2.4$ m は $6$ m の $0.4$ 倍。",
+            "$240 \\div 0.8 = 300$。1mのねだんは $300$ 円。",
         },
       ],
-      formulaPreview: "2.4 ÷ 6 = 0.4",
-      figureMarker: "<<DECIMAL_DIV_STEP7>>",
+      formulaPreview: "240 ÷ 0.8 = 300",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$1.2$ m の赤いリボンの代金が $240$ 円でした。このリボン $1$ m のねだんは何円でしょう？",
+      answer: 200,
+      unit: "円",
+      unknownLabel: "1mのねだん",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "前題と比べよう。今度は $1.2$ m が $1$ m より長い。",
+        },
+        {
+          layer: 2,
+          text:
+            "変わったのは、買った長さが1mより長いこと。",
+        },
+        {
+          layer: 3,
+          text:
+            "$240 \\div 1.2 = 200$。1mのねだんは $200$ 円。",
+        },
+      ],
+      formulaPreview: "240 ÷ 1.2 = 200",
+      figureMarker: "<<DECIMAL_DIV_STEP5>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "リボン $1$ m のねだんは $160$ 円です。$2.5$ m 買うと、代金は何円でしょう？",
+      answer: 400,
+      unit: "円",
+      unknownLabel: "代金",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "前題までと逆向き。今度は $1$ m の量から、$2.5$ m の全体へ進む。",
+        },
+        {
+          layer: 2,
+          text:
+            "変わったのは求める向き。1mあたりから全体へ進むこと。",
+        },
+        {
+          layer: 3,
+          text:
+            "$160 \\times 2.5 = 400$。代金は $400$ 円。",
+        },
+      ],
+      formulaPreview: "160 × 2.5 = 400",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$4.5$ m のホースの重さが $0.9$ kg でした。このホース $1$ m の重さは何 kg でしょう？",
+      answer: 0.2,
+      unit: "kg",
+      unknownLabel: "1mの重さ",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text:
+            "前題と比べてみよう。全体の重さが小さいときも、同じ見方が使えるかな？",
+        },
+        {
+          layer: 2,
+          text:
+            "変わったのは、全体の重さが1kgより小さいこと。",
+        },
+        {
+          layer: 3,
+          text:
+            "$0.9 \\div 4.5 = 0.2$。1mの重さは $0.2$ kg。",
+        },
+      ],
+      formulaPreview: "0.9 ÷ 4.5 = 0.2",
     },
     {
       id: "step8",
       position: 8,
       questionText:
-        "$3.6$ m のひもは、$9$ m のひもの何倍でしょう？",
-      answer: 0.4,
-      unit: "倍",
-      unknownLabel: "何倍",
+        "$2.4$ m のテープの代金が $360$ 円でした。このテープ $1$ m のねだんは何円でしょう？",
+      answer: 150,
+      unit: "円",
+      unknownLabel: "1mのねだん",
       variationFromPrevious: "same",
-      compareWithStepId: "step7",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
           text:
-            "前題と比べてみよう。基準の量と比べて何倍かを求めるところは同じ。",
+            "前題までと同じ。全体の代金を、長さでわって $1$ m を求める。",
         },
         {
           layer: 2,
           text:
-            "変わったのは、比べる量と基準の量。基準のほうが大きいところは同じ。",
+            "変わったのは、長さと代金の組み合わせ。",
         },
         {
           layer: 3,
           text:
-            "$3.6 \\div 9$ を計算する。$36 \\div 9 = 4$ なので、$3.6 \\div 9 = 0.4$。$0.4$ 倍。",
+            "$360 \\div 2.4 = 150$。1mのねだんは $150$ 円。",
         },
       ],
-      formulaPreview: "3.6 ÷ 9 = 0.4",
+      formulaPreview: "360 ÷ 2.4 = 150",
     },
     {
       id: "step9",
       position: 9,
       questionText:
-        "$0.84$ L の液体は、$0.7$ L の液体の何倍でしょう？",
-      answer: 1.2,
-      unit: "倍",
-      unknownLabel: "何倍",
+        "$0.6$ m のテープの代金が $90$ 円でした。このテープ $1$ m のねだんは何円でしょう？",
+      answer: 150,
+      unit: "円",
+      unknownLabel: "1mのねだん",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step8",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
           text:
-            "前題と比べてみよう。何倍かを求める点は同じ。今度は、比べる量も基準の量も小数になっている。",
+            "前題と比べてみよう。買った長さと1mの位置関係はどう変わったかな？",
         },
         {
           layer: 2,
           text:
-            "変わったのは、わる数も小数になったこと。両方を同じ倍率で見直せる形かを考えよう。",
+            "変わったのは、買った長さがさらに短くなったこと。",
         },
         {
           layer: 3,
           text:
-            "$0.84 \\div 0.7$ を、両方10倍して $8.4 \\div 7$ と見る。$8.4 \\div 7 = 1.2$ だから、$1.2$ 倍。",
+            "$90 \\div 0.6 = 150$。1mのねだんは $150$ 円。",
         },
       ],
-      formulaPreview: "0.84 ÷ 0.7 = 8.4 ÷ 7 = 1.2",
+      formulaPreview: "90 ÷ 0.6 = 150",
     },
     {
       id: "step10",
       position: 10,
       questionText:
-        "$5.2$ kg の米を、$0.8$ kg ずつ袋に入れます。何袋分になるでしょう？",
-      answer: 6.5,
-      unit: "袋分",
-      unknownLabel: "袋分",
+        "$3.6$ L のペンキで $5.4$ m$^2$ ぬれました。$1$ L で何 m$^2$ ぬれるでしょう？",
+      answer: 1.5,
+      unit: "m^2",
+      unknownLabel: "1Lでぬれる面積",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
           text:
-            "前題と比べてみよう。わる数が小数で、答えも整数とは限らない。何倍・何個分を見る考えはつながっている。",
+            "前題と比べてみよう。今度は、どの量を1にそろえたいかな？",
         },
         {
           layer: 2,
           text:
-            "変わったのは、場面が何倍から何袋分になったこと。わる数が小数である点は前題と同じ。",
+            "変わったのは、1mではなく1Lあたりを見ること。",
         },
         {
           layer: 3,
           text:
-            "$5.2 \\div 0.8$ を、両方10倍して $52 \\div 8$ と見る。$52 \\div 8 = 6.5$ だから、$6.5$ 袋分になる。",
+            "$5.4 \\div 3.6 = 1.5$。$1$ Lで $1.5$ m$^2$ ぬれる。",
         },
       ],
-      formulaPreview: "5.2 ÷ 0.8 = 52 ÷ 8 = 6.5",
+      formulaPreview: "5.4 ÷ 3.6 = 1.5",
     },
   ],
 };
@@ -999,35 +957,39 @@ export const E5_DECIMAL_DIV_ALGORITHM_SERIES: LearnerSeries = {
   id: "e5_decimal_div_algorithm_01",
   title: "小数の除法の考え方と筆算形式",
   subtitle:
-    "わる数を整数にするため、両方を同じ倍率で見直して筆算につなぐ10問。",
+    "数直線で量関係を確かめ、わる数を整数にして筆算につなぐ10問。",
   patternId: "EL5D2",
   unit: "elementary_5",
   revelationLabel: "わる数を整数にするために、わられる数も同じだけ動かす",
   drivingQuestion:
-    "見た目の小数点を動かしても、同じわり算だと言えるのはなぜ？",
-  derivation: `**中心の問い** ｜ 見た目の小数点を動かしても、同じわり算だと言えるのはなぜ？
+    "数直線で同じ関係を保ったまま、筆算ではどう整数のわり算に直せばよい？",
+  derivation: `**中心の問い** ｜ 数直線で同じ関係を保ったまま、筆算ではどう整数のわり算に直せばよい？
 
-小数の除法の筆算は、最初に **わる数を整数にする** ところから始まります。
+数直線で $1$ あたりを求める式を立てると、たとえば次のようになります。
 
-$$4.8 \\div 0.6 = 48 \\div 6$$
+$$7.56 \\div 6.3$$
+
+下の線の $6.3$ m と上の線の $7.56$ kg は対応しています。筆算では、この対応をこわさずに、両方を $10$ 倍して見直します。
+
+$$7.56 \\div 6.3 = 75.6 \\div 63$$
 
 <<DECIMAL_DIV_ALGORITHM_STEP7>>
 
-これは、わる数だけを変えているのではありません。わられる数とわる数を、同じ倍率で見直しています。
+これは、わる数だけを変えているのではありません。数直線の上下を同じ倍率で見直しているので、対応の関係が保たれます。
 
-$$\\frac{4.8}{0.6} = \\frac{48}{6}$$
+$$\\frac{7.56}{6.3} = \\frac{75.6}{63}$$
 
 筆算で小数点を動かす操作は、実はこの等しい分数の考えを短く書いたものです。
 
 **問いに戻ると**
 
-小数点を動かしてよいのは、両方を同じ倍率で見直しているからです。片方だけを動かすのではなく、わる数を整数にするために、わられる数も同じだけ動かす。これが小数の除法の筆算形式の骨です。`,
+小数点を動かしてよいのは、数直線の対応を同じ倍率で見直しているからです。片方だけを動かすのではなく、わる数を整数にするために、わられる数も同じだけ動かす。これが小数の除法の筆算形式の骨です。`,
   steps: [
-    { id: "step1", position: 1, questionText: "$4.8 \\div 0.6$ は、筆算でわる数を整数にすると $N \\div 6$ と見られます。$N$ はいくつでしょう？", answer: 48, unit: "", unknownLabel: "N", variationFromPrevious: null, compareWithStepId: null, hints: [
-      { layer: 1, text: "小数でわるとき、わる数を整数として見直すには、何を同じように変える必要があるかな？" },
-      { layer: 2, text: "見るところは、わる数とわられる数の小数点の動きがそろっているかどうか。" },
-      { layer: 3, text: "$0.6$ を $6$ と見るには10倍する。同じように $4.8$ も10倍して $48$。だから $4.8 \\div 0.6 = 48 \\div 6$ で、$N=48$。" },
-    ], formulaPreview: "4.8 ÷ 0.6 = 48 ÷ 6", figureMarker: "<<DECIMAL_DIV_ALGORITHM_STEP1>>" },
+    { id: "step1", position: 1, questionText: "$7.56 \\div 6.3$ は、筆算でわる数を整数にすると $N \\div 63$ と見られます。$N$ はいくつでしょう？", answer: 75.6, unit: "", unknownLabel: "N", variationFromPrevious: null, compareWithStepId: null, hints: [
+      { layer: 1, text: "数直線では、上下の量を同じ倍率で見直す。わる数 $6.3$ を $63$ にするには何倍かな？" },
+      { layer: 2, text: "$6.3$ を $63$ と見るには10倍する。上の量である $7.56$ も10倍する。" },
+      { layer: 3, text: "$7.56 \\times 10 = 75.6$。だから $7.56 \\div 6.3 = 75.6 \\div 63$ で、$N=75.6$。" },
+    ], formulaPreview: "7.56 ÷ 6.3 = 75.6 ÷ 63", figureMarker: "<<DECIMAL_DIV_ALGORITHM_STEP1>>" },
     { id: "step2", position: 2, questionText: "$7.2 \\div 0.9$ は、わる数を整数にすると $N \\div 9$ と見られます。$N$ はいくつでしょう？", answer: 72, unit: "", unknownLabel: "N", variationFromPrevious: "same", compareWithStepId: "step1", hints: [
       { layer: 1, text: "前題と比べてみよう。わる数を整数に見直すところは同じ。何が変わった？" },
       { layer: 2, text: "変わったのは、わられる数とわる数の組だけ。小数点の動き方は同じ。" },
@@ -1082,29 +1044,31 @@ export const E5_DECIMAL_DIV_PURE_DECIMAL_SERIES: LearnerSeries = {
   id: "e5_decimal_div_pure_decimal_01",
   title: "純小数でわるときの商と被除数の関係",
   subtitle:
-    "一より小さい数でわると商が大きくなる理由を、何こ分・何倍で読む10問。",
+    "数直線で1より小さいわる数を読み、商が大きくなる理由を考える10問。",
   patternId: "EL5D3",
   unit: "elementary_5",
   revelationLabel: "一より小さい数でわると、商は被除数より大きくなることがある",
   drivingQuestion:
-    "わり算なのに答えが大きくなるのは、何を数えているからだろう？",
-  derivation: `**中心の問い** ｜ わり算なのに答えが大きくなるのは、何を数えているからだろう？
+    "1より小さい数でわると商が大きくなることがあるのは、数直線ではどう見える？",
+  derivation: `**中心の問い** ｜ 1より小さい数でわると商が大きくなることがあるのは、数直線ではどう見える？
 
 わり算は、いつも「小さくする」計算ではありません。
 
 $$3 \\div 0.5 = 6$$
 
-これは「3 の中に 0.5 がいくつ入るか」を数えています。0.5 は 1 より小さいので、1 つずつ数えるよりたくさん入ります。
+これは「$3$ m の中に $0.5$ m がいくつ入るか」を数えています。数直線で見ると、$1$ m より短いまとまりを数えるので、まとまりの数はもとの $3$ より大きくなります。
+
+<<DECIMAL_DIV_PURE_STEP1>>
 
 **問いに戻ると**
 
-純小数でわると商が大きくなるのは、全体を小さな単位で数え直しているからです。わり算の意味を「何こ分」「何倍」として読めば、答えが大きくなることはふしぎではなくなります。`,
+純小数でわると商が大きくなるのは、全体を $1$ より小さな単位で数え直しているからです。数直線で「1より短いまとまりが何こ分か」を読むと、答えが大きくなることはふしぎではなくなります。`,
   steps: [
     { id: "step1", position: 1, questionText: "$3$ m のリボンを $0.5$ m ずつ切ります。何本できますか？", answer: 6, unit: "本", unknownLabel: "本数", variationFromPrevious: null, compareWithStepId: null, hints: [
-      { layer: 1, text: "全体の中に、小さいひとまとまりがいくつ入るか、どこを見ればよさそうかな？" },
-      { layer: 2, text: "見るところは、切る長さが一より小さいこと。" },
+      { layer: 1, text: "数直線では、どんなまとまりを何こ分として見ればよいかな？" },
+      { layer: 2, text: "$0.5$ m は $1$ m より短いので、$3$ m の中には $3$ 個より多く入る。" },
       { layer: 3, text: "$3 \\div 0.5$ を計算する。$0.5$ m は半分の長さなので、$3$ m には $6$ 個入る。答えは $6$ 本。" },
-    ], formulaPreview: "3 ÷ 0.5 = 6" },
+    ], formulaPreview: "3 ÷ 0.5 = 6", figureMarker: "<<DECIMAL_DIV_PURE_STEP1>>" },
     { id: "step2", position: 2, questionText: "$4$ L の水を $0.5$ L ずつ入れます。何本分になりますか？", answer: 8, unit: "本分", unknownLabel: "本分", variationFromPrevious: "same", compareWithStepId: "step1", hints: [
       { layer: 1, text: "前題と比べてみよう。小さいまとまりがいくつ入るかを見るところは同じ。" },
       { layer: 2, text: "変わったのは、全体の量と場面だけ。" },
@@ -1134,7 +1098,7 @@ $$3 \\div 0.5 = 6$$
       { layer: 1, text: "前題までと比べてみよう。今度は、同じことを何倍という言葉で読んでいる。" },
       { layer: 2, text: "変わったのは、単位の場面ではなく数どうしの倍として見ること。" },
       { layer: 3, text: "何倍かは $2 \\div 0.4$。両方10倍して $20 \\div 4 = 5$。答えは $5$ 倍。" },
-    ], formulaPreview: "2 ÷ 0.4 = 20 ÷ 4 = 5", figureMarker: "<<DECIMAL_DIV_STEP7>>" },
+    ], formulaPreview: "2 ÷ 0.4 = 20 ÷ 4 = 5", figureMarker: "<<DECIMAL_DIV_PURE_STEP7>>" },
     { id: "step8", position: 8, questionText: "$1.8$ は $0.6$ の何倍ですか？", answer: 3, unit: "倍", unknownLabel: "何倍", variationFromPrevious: "same", compareWithStepId: "step7", hints: [
       { layer: 1, text: "前題と比べてみよう。小さい基準を何こ分か見るところは同じ。" },
       { layer: 2, text: "変わったのは、比べる数と基準の数。" },
@@ -1159,13 +1123,13 @@ export const E5_DECIMAL_DIV_ROUNDING_SERIES: LearnerSeries = {
   id: "e5_decimal_div_rounding_01",
   title: "商を概数で表すときの処理の仕方",
   subtitle:
-    "商をどの位まで求め、どの位を見て四捨五入するかを読む10問。",
+    "数直線で概数の幅を見て、商をどの位で丸めるかを読む10問。",
   patternId: "EL5D4",
   unit: "elementary_5",
   revelationLabel: "求めたい位の一つ下まで計算して、その位で四捨五入する",
   drivingQuestion:
-    "答えをぴったり出せないとき、どこまで計算すれば十分と言える？",
-  derivation: `**中心の問い** ｜ 答えをぴったり出せないとき、どこまで計算すれば十分と言える？
+    "答えをぴったり出せないとき、数直線ではどのあたりの数として表せばよい？",
+  derivation: `**中心の問い** ｜ 答えをぴったり出せないとき、数直線ではどのあたりの数として表せばよい？
 
 小数のわり算では、商が続いて終わらないことがあります。そのときは、目的に合わせて概数にします。
 
@@ -1173,17 +1137,19 @@ export const E5_DECIMAL_DIV_ROUNDING_SERIES: LearnerSeries = {
 
 $$5 \\div 3 = 1.66\\cdots \\approx 1.7$$
 
+<<DECIMAL_DIV_ROUNDING_STEP1>>
+
 小数第二位までの概数なら、小数第三位を見ます。
 
 **問いに戻ると**
 
-概数は、途中であきらめることではありません。どの位まで必要かを決め、その一つ下の位まで調べて判断することです。`,
+概数は、途中であきらめることではありません。数直線で近い目もりへ寄せるために、どの位まで必要かを決め、その一つ下の位まで調べて判断することです。`,
   steps: [
     { id: "step1", position: 1, questionText: "$5 \\div 3$ の商を小数第一位までの概数で表します。答えはいくつですか？", answer: 1.7, unit: "", unknownLabel: "概数", variationFromPrevious: null, compareWithStepId: null, hints: [
-      { layer: 1, text: "ほしい位を決めたあと、どこを見れば四捨五入できそうかな？" },
-      { layer: 2, text: "見るところは、小数第一位を決めるための次の位。" },
+      { layer: 1, text: "数直線では、商をどの目もりの近くに置けばよさそうかな？" },
+      { layer: 2, text: "小数第一位まで表すので、小数第二位を見て四捨五入する。" },
       { layer: 3, text: "$5 \\div 3 = 1.66\\cdots$。小数第一位までなら小数第二位を見る。第二位が $6$ なので、答えは $1.7$。" },
-    ], formulaPreview: "5 ÷ 3 = 1.66... ≈ 1.7" },
+    ], formulaPreview: "5 ÷ 3 = 1.66... ≈ 1.7", figureMarker: "<<DECIMAL_DIV_ROUNDING_STEP1>>" },
     { id: "step2", position: 2, questionText: "$8 \\div 3$ の商を小数第一位までの概数で表します。答えはいくつですか？", answer: 2.7, unit: "", unknownLabel: "概数", variationFromPrevious: "same", compareWithStepId: "step1", hints: [
       { layer: 1, text: "前題と比べてみよう。小数第一位まで表すところは同じ。何が変わった？" },
       { layer: 2, text: "変わったのは、わられる数だけ。見る位は同じ。" },
@@ -1238,29 +1204,33 @@ export const E5_DECIMAL_DIV_REMAINDER_SERIES: LearnerSeries = {
   id: "e5_decimal_div_remainder_01",
   title: "余りがある場合の余りの小数点の位置",
   subtitle:
-    "筆算で小数点を動かしたあと、余りをもとの単位に戻して読む10問。",
+    "数直線で残った長さを確かめ、筆算の余りの小数点を読む10問。",
   patternId: "EL5D5",
   unit: "elementary_5",
   revelationLabel: "余りは、もとのわられる数の小数点の位置に戻して読む",
   drivingQuestion:
-    "筆算で数を大きくして計算した余りは、もとの量ではどんな大きさになる？",
-  derivation: `**中心の問い** ｜ 筆算で数を大きくして計算した余りは、もとの量ではどんな大きさになる？
+    "筆算で出た余りは、数直線のもとの量ではどんな大きさになる？",
+  derivation: `**中心の問い** ｜ 筆算で出た余りは、数直線のもとの量ではどんな大きさになる？
 
 小数のわり算では、計算しやすくするために数を大きくして見ることがあります。
 
 $$5.7 \\div 2 = 2 \\text{ あまり } 1.7$$
 
+数直線では、$2$ m を $2$ 本取ると $4$ m、残りは $5.7-4=1.7$ m です。
+
+<<DECIMAL_DIV_REMAINDER_STEP1>>
+
 筆算の途中で $57$ と見ても、余りの $17$ をそのまま $17$ と読んではいけません。もとの数は $5.7$ なので、余りも $1.7$ と読む必要があります。
 
 **問いに戻ると**
 
-余りは「残った量」です。だから、計算のために一時的に動かした小数点ではなく、もとの量の小数点の位置に戻して読む。これが余りの小数点の位置の決め方です。`,
+余りは「数直線に本当に残った量」です。だから、計算のために一時的に動かした小数点ではなく、もとの量の小数点の位置に戻して読む。これが余りの小数点の位置の決め方です。`,
   steps: [
     { id: "step1", position: 1, questionText: "$5.7$ m のリボンを $2$ m ずつ切ります。$2$ 本切れたとき、余りは何 m ですか？", answer: 1.7, unit: "m", unknownLabel: "余り", variationFromPrevious: null, compareWithStepId: null, hints: [
-      { layer: 1, text: "余りは、切ったあとに本当に残っている長さ。どこを見ればその長さが分かりそうかな？" },
-      { layer: 2, text: "見るところは、もとの長さの小数点の位置。" },
+      { layer: 1, text: "数直線では、使った分と残った分はどこに見えるかな？" },
+      { layer: 2, text: "見るところは、まとまりを取ったあとに残る部分の長さ。" },
       { layer: 3, text: "$5.7 - 2 \\times 2 = 1.7$。余りは $1.7$ m。" },
-    ], formulaPreview: "5.7 ÷ 2 = 2 あまり 1.7" },
+    ], formulaPreview: "5.7 ÷ 2 = 2 あまり 1.7", figureMarker: "<<DECIMAL_DIV_REMAINDER_STEP1>>" },
     { id: "step2", position: 2, questionText: "$7.8$ L の水を $3$ L ずつ入れます。$2$ 本分入れたとき、余りは何 L ですか？", answer: 1.8, unit: "L", unknownLabel: "余り", variationFromPrevious: "same", compareWithStepId: "step1", hints: [
       { layer: 1, text: "前題と比べてみよう。整数のまとまりを取ったあと、残りをもとの単位で読むところは同じ。" },
       { layer: 2, text: "変わったのは、全体の量と一つ分の量。" },

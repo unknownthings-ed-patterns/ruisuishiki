@@ -6498,7 +6498,7 @@ export function CongruenceStep7() {
   );
 }
 
-/** 小5「小数のわり算」Step 1：全体を等しい3つに分ける入口図。 */
+/** 小5「小数のわり算」Step 1：1mあたりを読む二段数直線。 */
 export function DecimalDivisionStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -6506,109 +6506,241 @@ export function DecimalDivisionStep1() {
   const fillColor = "color-mix(in oklch, var(--accent) 7%, transparent)";
   return (
     <svg
-      viewBox="0 0 520 240"
+      viewBox="0 0 560 260"
       className="w-full h-auto"
-      style={{ maxWidth: 540 }}
+      style={{ maxWidth: 560 }}
       role="img"
-      aria-label="7.2リットルのジュースを3人で等しく分ける図"
+      aria-label="2.5メートルで300円のリボンから1メートルのねだんを読む二段数直線"
     >
-      <rect
-        x="55"
-        y="62"
-        width="410"
-        height="46"
-        rx="6"
-        fill={fillColor}
-        stroke={stroke}
-        strokeWidth="1.8"
-      />
-      <line x1="191.7" y1="62" x2="191.7" y2="108" stroke={stroke} strokeWidth="1.4" />
-      <line x1="328.3" y1="62" x2="328.3" y2="108" stroke={stroke} strokeWidth="1.4" />
-      <text x="260" y="50" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
-        全体 7.2 L
+      <rect x="58" y="44" width="444" height="170" rx="12" fill={fillColor} stroke="none" />
+      <text x="86" y="36" fontSize="14" fill={stroke} fontWeight="600">
+        1mのねだんを □ 円とする
       </text>
-      <text x="123" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
-        ?
+      <line x1="92" y1="98" x2="474" y2="98" stroke={stroke} strokeWidth="2.2" />
+      <line x1="92" y1="138" x2="474" y2="138" stroke={stroke} strokeWidth="2.2" />
+
+      {[92, 245, 474].map((x) => (
+        <g key={x}>
+          <line x1={x} y1="88" x2={x} y2="148" stroke={stroke} strokeWidth="1.5" />
+        </g>
+      ))}
+
+      <text x="92" y="82" fontSize="13" fill={muted} textAnchor="middle">
+        0
       </text>
-      <text x="260" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
-        ?
+      <text x="245" y="82" fontSize="17" fill={accent} textAnchor="middle" fontWeight="700">
+        □
       </text>
-      <text x="397" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
-        ?
+      <text x="474" y="82" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        300
       </text>
-      <path d="M 123 112 L 123 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
-      <path d="M 260 112 L 260 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
-      <path d="M 397 112 L 397 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
-      <circle cx="123" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <circle cx="260" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <circle cx="397" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
-      <text x="123" y="176" fontSize="13" fill={muted} textAnchor="middle">
-        1人分
+      <text x="506" y="103" fontSize="13" fill={muted}>
+        円
       </text>
-      <text x="260" y="176" fontSize="13" fill={muted} textAnchor="middle">
-        1人分
+      <text x="92" y="168" fontSize="13" fill={muted} textAnchor="middle">
+        0
       </text>
-      <text x="397" y="176" fontSize="13" fill={muted} textAnchor="middle">
-        1人分
+      <text x="245" y="168" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        1
       </text>
-      <text x="260" y="218" fontSize="12" fill={muted} textAnchor="middle">
-        同じ大きさの3つに分ける
+      <text x="474" y="168" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        2.5
+      </text>
+      <text x="506" y="142" fontSize="13" fill={muted}>
+        m
+      </text>
+
+      <path d="M 245 58 C 310 36 414 42 474 72" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 462 68 L 474 72 L 465 80" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="360" y="45" fontSize="13" fill={accent} textAnchor="middle">
+        ×2.5
+      </text>
+      <path d="M 245 188 C 310 212 414 207 474 178" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 466 170 L 474 178 L 462 181" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="360" y="224" fontSize="13" fill={accent} textAnchor="middle">
+        ×2.5
+      </text>
+
+      <text x="280" y="244" fontSize="13" fill={muted} textAnchor="middle">
+        1mのところと2.5mのところを、上下でそろえて読む
       </text>
     </svg>
   );
 }
 
-/** 小5「小数のわり算」Step 7：基準量より小さい何倍を読む図。 */
-export function DecimalDivisionStep7() {
+/** 小5「小数のわり算」Step 5：1より長い長さから1mあたりを読む図。 */
+export function DecimalDivisionStep5() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
   return (
     <svg
-      viewBox="0 0 520 230"
+      viewBox="0 0 560 230"
       className="w-full h-auto"
       style={{ maxWidth: 540 }}
       role="img"
-      aria-label="2.4メートルの布を6メートルの布と比べて何倍かを見る図"
+      aria-label="1.2メートルで240円のリボンについて1メートルのねだんを考える二段数直線"
     >
-      <text x="70" y="48" fontSize="14" fill={stroke} fontWeight="600">
-        基準 6 m
+      <rect x="56" y="46" width="442" height="128" rx="12" fill={fillColor} stroke="none" />
+      <line x1="92" y1="92" x2="472" y2="92" stroke={stroke} strokeWidth="2.2" />
+      <line x1="92" y1="132" x2="472" y2="132" stroke={stroke} strokeWidth="2.2" />
+      {[92, 396, 472].map((x) => (
+        <line key={x} x1={x} y1="82" x2={x} y2="142" stroke={stroke} strokeWidth="1.5" />
+      ))}
+      <text x="92" y="76" fontSize="13" fill={muted} textAnchor="middle">
+        0
       </text>
-      <rect
-        x="70"
-        y="62"
-        width="380"
-        height="34"
-        rx="5"
-        fill="none"
-        stroke={stroke}
-        strokeWidth="1.7"
-      />
-      <line x1="222" y1="62" x2="222" y2="96" stroke={muted} strokeWidth="1" strokeDasharray="4,4" />
-      <line x1="374" y1="62" x2="374" y2="96" stroke={muted} strokeWidth="1" strokeDasharray="4,4" />
-      <text x="260" y="116" fontSize="12" fill={muted} textAnchor="middle">
-        この全体を1倍と見る
+      <text x="396" y="76" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        □
       </text>
+      <text x="472" y="76" fontSize="17" fill={accent} textAnchor="middle" fontWeight="700">
+        240
+      </text>
+      <text x="506" y="96" fontSize="13" fill={muted}>
+        円
+      </text>
+      <text x="92" y="160" fontSize="13" fill={muted} textAnchor="middle">
+        0
+      </text>
+      <text x="396" y="160" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        1
+      </text>
+      <text x="472" y="160" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        1.2
+      </text>
+      <text x="506" y="136" fontSize="13" fill={muted}>
+        m
+      </text>
+      <path d="M 472 180 L 396 180" stroke={accent} strokeWidth="1.8" />
+      <path d="M 404 172 L 396 180 L 404 188" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="434" y="204" fontSize="13" fill={accent} textAnchor="middle">
+        1mのところは、1.2mの左側
+      </text>
+    </svg>
+  );
+}
 
-      <text x="70" y="154" fontSize="14" fill={stroke} fontWeight="600">
-        比べる 2.4 m
+/** 小5「純小数でわる」Step 7：小さい基準で何倍かを読む数直線。 */
+export function DecimalDivisionPureStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const xFor = (v: number) => 70 + v * 190;
+  return (
+    <svg
+      viewBox="0 0 520 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 540 }}
+      role="img"
+      aria-label="2が0.4の何倍かを小さい基準で考える数直線"
+    >
+      <rect x="46" y="46" width="430" height="104" rx="12" fill={fillColor} stroke="none" />
+      <line x1={xFor(0)} y1="94" x2={xFor(2)} y2="94" stroke={stroke} strokeWidth="2.2" />
+      {[0, 0.4, 1, 2].map((v) => (
+        <g key={v}>
+          <line x1={xFor(v)} y1="82" x2={xFor(v)} y2="108" stroke={v === 0.4 ? accent : stroke} strokeWidth="1.6" />
+          <text x={xFor(v)} y="132" fontSize="13" fill={v === 0.4 ? accent : stroke} textAnchor="middle" fontWeight={v === 0.4 ? "700" : "400"}>
+            {v}
+          </text>
+        </g>
+      ))}
+      <path d={`M ${xFor(0.4)} 66 C ${xFor(0.8)} 38 ${xFor(1.6)} 38 ${xFor(2)} 66`} fill="none" stroke={accent} strokeWidth="1.7" strokeDasharray="5,4" />
+      <text x="260" y="180" fontSize="13" fill={muted} textAnchor="middle">
+        0.4を1つ分と見ると、2は何こ分？
       </text>
-      <rect
-        x="70"
-        y="168"
-        width="152"
-        height="34"
-        rx="5"
-        fill={fillColor}
-        stroke={accent}
-        strokeWidth="1.8"
-      />
-      <path d="M 70 207 L 222 207" stroke={accent} strokeWidth="1.5" />
-      <path d="M 70 202 L 70 212" stroke={accent} strokeWidth="1.5" />
-      <path d="M 222 202 L 222 212" stroke={accent} strokeWidth="1.5" />
-      <text x="146" y="224" fontSize="12" fill={accent} textAnchor="middle">
-        何倍？
+    </svg>
+  );
+}
+
+/** 小5「純小数でわる」Step 1：0.5mのまとまりを数える数直線。 */
+export function DecimalDivisionPureStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const ticks = [0, 0.5, 1, 1.5, 2, 2.5, 3];
+  const xFor = (v: number) => 74 + v * 126;
+  return (
+    <svg viewBox="0 0 520 210" className="w-full h-auto" style={{ maxWidth: 540 }} role="img" aria-label="3メートルの中に0.5メートルが何こ入るかを考える数直線">
+      <rect x="48" y="46" width="426" height="100" rx="12" fill={fillColor} stroke="none" />
+      <line x1="74" y1="92" x2="452" y2="92" stroke={stroke} strokeWidth="2.2" />
+      {ticks.map((v) => (
+        <g key={v}>
+          <line x1={xFor(v)} y1="82" x2={xFor(v)} y2="102" stroke={stroke} strokeWidth={Number.isInteger(v) ? 1.8 : 1.2} />
+          <text x={xFor(v)} y="128" fontSize="12" fill={Number.isInteger(v) ? stroke : muted} textAnchor="middle">
+            {v}
+          </text>
+        </g>
+      ))}
+      {[0, 0.5, 1, 1.5, 2, 2.5].map((v) => (
+        <g key={v}>
+          <path d={`M ${xFor(v) + 6} 70 C ${xFor(v) + 34} 50 ${xFor(v + 0.5) - 34} 50 ${xFor(v + 0.5) - 6} 70`} fill="none" stroke={accent} strokeWidth="1.5" />
+        </g>
+      ))}
+      <text x="263" y="176" fontSize="13" fill={muted} textAnchor="middle">
+        0.5mのまとまりが、3mの中に何こ入る？
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「商を概数で表す」Step 1：1.66...を1.7へ丸める数直線。 */
+export function DecimalDivisionRoundingStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg viewBox="0 0 520 200" className="w-full h-auto" style={{ maxWidth: 540 }} role="img" aria-label="5割る3の商を小数第一位までの概数にするときに近い目もりを考える数直線">
+      <rect x="52" y="50" width="416" height="90" rx="12" fill={fillColor} stroke="none" />
+      <line x1="92" y1="96" x2="430" y2="96" stroke={stroke} strokeWidth="2.2" />
+      {[1.5, 1.6, 1.7, 1.8].map((v, i) => {
+        const x = 92 + i * 112;
+        return (
+          <g key={v}>
+            <line x1={x} y1="84" x2={x} y2="108" stroke={stroke} strokeWidth="1.6" />
+            <text x={x} y="130" fontSize="13" fill={stroke} textAnchor="middle">
+              {v}
+            </text>
+          </g>
+        );
+      })}
+      <text x="260" y="184" fontSize="13" fill={muted} textAnchor="middle">
+        商はどのあたりにくる？
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「余り」Step 1：5.7mから2mを2本取った残りを読む数直線。 */
+export function DecimalDivisionRemainderStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const xFor = (v: number) => 70 + v * 66;
+  return (
+    <svg viewBox="0 0 520 220" className="w-full h-auto" style={{ maxWidth: 540 }} role="img" aria-label="5.7メートルから2メートルを2本取った余りを読む数直線">
+      <rect x="46" y="48" width="430" height="112" rx="12" fill={fillColor} stroke="none" />
+      <line x1={xFor(0)} y1="98" x2={xFor(6)} y2="98" stroke={stroke} strokeWidth="2.2" />
+      {[0, 2, 4, 5.7].map((v) => (
+        <g key={v}>
+          <line x1={xFor(v)} y1="84" x2={xFor(v)} y2="112" stroke={v === 5.7 ? accent : stroke} strokeWidth="1.7" />
+          <text x={xFor(v)} y="136" fontSize="13" fill={v === 5.7 ? accent : stroke} textAnchor="middle" fontWeight={v === 5.7 ? "700" : "400"}>
+            {v}
+          </text>
+        </g>
+      ))}
+      <path d={`M ${xFor(0) + 8} 70 C ${xFor(1)} 44 ${xFor(1)} 44 ${xFor(2) - 8} 70`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={`M ${xFor(2) + 8} 70 C ${xFor(3)} 44 ${xFor(3)} 44 ${xFor(4) - 8} 70`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={`M ${xFor(4) + 6} 122 C ${xFor(4.85)} 152 ${xFor(4.85)} 152 ${xFor(5.7) - 6} 122`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x={(xFor(4) + xFor(5.7)) / 2} y="174" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        余り ?
+      </text>
+      <text x="260" y="202" fontSize="13" fill={muted} textAnchor="middle">
+        余りは、もとの数直線に残った長さで読む
       </text>
     </svg>
   );
@@ -6627,7 +6759,7 @@ export function DecimalDivisionAlgorithmStep1() {
       className="w-full h-auto"
       style={{ maxWidth: 560 }}
       role="img"
-      aria-label="小数のわり算の筆算で、わる数とわられる数の小数点を同じだけ動かす図"
+      aria-label="7.56割る6.3の筆算で、わる数とわられる数の小数点を同じだけ動かす図"
     >
       <text x="105" y="42" fontSize="13" fill={muted} textAnchor="middle">
         もとの筆算
@@ -6637,12 +6769,12 @@ export function DecimalDivisionAlgorithmStep1() {
         )
       </text>
       <text x="58" y="124" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
-        0.6
+        6.3
       </text>
       <text x="122" y="124" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
-        4.8
+        7.56
       </text>
-      <circle cx="142" cy="128" r="2.8" fill={accent} />
+      <circle cx="150" cy="128" r="2.8" fill={accent} />
       <circle cx="65" cy="128" r="2.8" fill={accent} />
 
       <path d="M 216 112 L 316 112" stroke={muted} strokeWidth="1.6" strokeDasharray="5,4" />
@@ -6660,16 +6792,16 @@ export function DecimalDivisionAlgorithmStep1() {
         )
       </text>
       <text x="370" y="124" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
-        6
+        63
       </text>
       <text x="434" y="124" fontSize="26" fill={accent} fontWeight="700" fontFamily={mono}>
-        ?
+        N
       </text>
       <text x="420" y="185" fontSize="13" fill={muted} textAnchor="middle">
         わられる数も同じだけ動く
       </text>
       <text x="280" y="226" fontSize="12" fill={muted} textAnchor="middle">
-        筆算の小数点移動は、同じ倍率で見直すこと
+        筆算の小数点移動は、数直線の上下を同じ倍率で見直すこと
       </text>
     </svg>
   );
@@ -6688,7 +6820,7 @@ export function DecimalDivisionAlgorithmStep7() {
       className="w-full h-auto"
       style={{ maxWidth: 560 }}
       role="img"
-      aria-label="4.8割る0.6を48割る6の筆算に直し、商を上に立てる図"
+      aria-label="小数のわり算を筆算で見直し、商を上に立てる場所を考える図"
     >
       <text x="112" y="46" fontSize="13" fill={muted} textAnchor="middle">
         小数の筆算
@@ -6698,10 +6830,10 @@ export function DecimalDivisionAlgorithmStep7() {
         )
       </text>
       <text x="60" y="135" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
-        0.6
+        6.3
       </text>
       <text x="126" y="135" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
-        4.8
+        7.56
       </text>
 
       <path d="M 224 122 L 316 122" stroke={muted} strokeWidth="1.6" strokeDasharray="5,4" />
@@ -6719,17 +6851,17 @@ export function DecimalDivisionAlgorithmStep7() {
         )
       </text>
       <text x="370" y="143" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
-        6
+        63
       </text>
       <text x="434" y="143" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
-        48
+        N
       </text>
       <path d="M 402 160 L 476 160" stroke={muted} strokeWidth="1.3" />
       <text x="438" y="181" fontSize="18" fill={muted} textAnchor="middle">
-        0
+        ?
       </text>
       <text x="280" y="235" fontSize="12" fill={muted} textAnchor="middle">
-        直した整数の筆算で、商を上に立てる
+        直した筆算で、商を上に立てる
       </text>
     </svg>
   );
@@ -6788,10 +6920,38 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
-        if (trimmed === "<<DECIMAL_DIV_STEP7>>") {
+        if (trimmed === "<<DECIMAL_DIV_STEP5>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
-              <DecimalDivisionStep7 />
+              <DecimalDivisionStep5 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_PURE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionPureStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_PURE_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionPureStep7 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_ROUNDING_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionRoundingStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_REMAINDER_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionRemainderStep1 />
             </div>
           );
         }
