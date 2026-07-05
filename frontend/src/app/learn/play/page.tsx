@@ -29,6 +29,13 @@ type MyProblemRecord = {
   updatedAt: string;
 };
 
+type InkPoint = {
+  x: number;
+  y: number;
+};
+
+type InkStroke = InkPoint[];
+
 const MY_PROBLEM_OPTIONS: { kind: MyProblemKind; label: string }[] = [
   { kind: "similar", label: "にている問題（数をかえる）" },
   { kind: "inverse", label: "さかさま問題（きくものをかえる）" },
@@ -44,6 +51,125 @@ const MY_PROBLEM_OPTIONS: { kind: MyProblemKind; label: string }[] = [
  */
 function displayAnswer(step: LearnerStep): string {
   return step.answerDisplay ?? `${step.answer}${step.unit}`;
+}
+
+function ProblemInkLayer({ resetKey }: { resetKey: string }) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [enabled, setEnabled] = useState(false);
+  const [strokes, setStrokes] = useState<InkStroke[]>([]);
+  const [activeStroke, setActiveStroke] = useState<InkStroke | null>(null);
+
+  useEffect(() => {
+    setEnabled(false);
+    setStrokes([]);
+    setActiveStroke(null);
+  }, [resetKey]);
+
+  function pointFromEvent(e: React.PointerEvent<SVGSVGElement>): InkPoint | null {
+    const rect = svgRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) return null;
+    return {
+      x: Math.min(100, Math.max(0, ((e.clientX - rect.left) / rect.width) * 100)),
+      y: Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100)),
+    };
+  }
+
+  function inkPath(points: InkStroke): string {
+    return points
+      .map((point, index) => {
+        const command = index === 0 ? "M" : "L";
+        return `${command} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+      })
+      .join(" ");
+  }
+
+  function handlePointerDown(e: React.PointerEvent<SVGSVGElement>) {
+    if (!enabled) return;
+    const point = pointFromEvent(e);
+    if (!point) return;
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setActiveStroke([point]);
+  }
+
+  function handlePointerMove(e: React.PointerEvent<SVGSVGElement>) {
+    if (!enabled || !activeStroke) return;
+    const point = pointFromEvent(e);
+    if (!point) return;
+    e.preventDefault();
+    setActiveStroke((current) => (current ? [...current, point] : current));
+  }
+
+  function finishStroke() {
+    if (!activeStroke || activeStroke.length === 0) return;
+    setStrokes((previous) => [...previous, activeStroke]);
+    setActiveStroke(null);
+  }
+
+  const hasInk = strokes.length > 0 || activeStroke !== null;
+
+  return (
+    <>
+      <div className="fixed right-4 top-4 z-50 flex items-center gap-1 print:hidden">
+        <button
+          type="button"
+          aria-pressed={enabled}
+          onClick={() => setEnabled((current) => !current)}
+          className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-3 transition-colors"
+          style={{
+            borderColor: enabled ? "var(--foreground)" : "var(--border)",
+            background: enabled ? "var(--foreground)" : "var(--surface)",
+            color: enabled ? "var(--background)" : "var(--foreground)",
+            fontSize: "12px",
+            letterSpacing: "0.08em",
+          }}
+        >
+          線
+        </button>
+        {hasInk && (
+          <button
+            type="button"
+            onClick={() => {
+              setStrokes([]);
+              setActiveStroke(null);
+            }}
+            className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+          >
+            消す
+          </button>
+        )}
+      </div>
+
+      <svg
+        ref={svgRef}
+        className="fixed inset-0 z-40 h-screen w-screen touch-none print:hidden"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden
+        style={{ pointerEvents: enabled ? "auto" : "none" }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={finishStroke}
+        onPointerCancel={finishStroke}
+      >
+        {[...strokes, ...(activeStroke ? [activeStroke] : [])].map(
+          (stroke, index) => (
+            <path
+              key={index}
+              d={inkPath(stroke)}
+              fill="none"
+              stroke="var(--foreground)"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.2}
+              vectorEffect="non-scaling-stroke"
+            />
+          ),
+        )}
+      </svg>
+    </>
+  );
 }
 
 export default function Play() {
@@ -714,8 +840,9 @@ export default function Play() {
           {/* 問題文（mid-series で公式の景色を読んでいる時は隠す） */}
           {!showingDerivation && (
             <section
-              className="p-6 sm:p-10 rounded-lg border border-border transition-colors duration-500"
+              className="relative overflow-hidden p-6 sm:p-10 rounded-lg border border-border transition-colors duration-500"
               style={{
+                minHeight: "clamp(300px, 44vh, 460px)",
                 background:
                   status === "correct" ? "color-mix(in oklch, var(--surface) 70%, var(--accent-warm) 30%)" : "var(--surface)",
               }}
@@ -737,6 +864,7 @@ export default function Play() {
                   <MathBody text={step.figureMarker} />
                 </div>
               )}
+              <ProblemInkLayer resetKey={`${series.id}:${step.id}`} />
             </section>
           )}
 
