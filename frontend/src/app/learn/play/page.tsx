@@ -276,9 +276,10 @@ export default function Play() {
     setHasHydrated(true);
   }, []);
 
-  // 問題が変わるたびに状態を更新。
+  // 問題や系列が変わるたびに状態を更新。
   // 「← 前へ」で戻ったときは履歴から状態を復元する（correct / skipped を見える形に）。
   // 「次へ」で前進したときは新規 step なので初期状態（answering / 空入力）に。
+  // 初回表示では既定系列から URL 指定系列へ差し替わるため、series 変更でも必ず走らせる。
   useEffect(() => {
     if (typeof window === "undefined") return;
     const history = loadSeriesHistory(series.id);
@@ -313,12 +314,12 @@ export default function Play() {
       setUserAnswer("");
       setAttempts(0);
       setHintsOpened(0);
-      setStatus((current) => (current === "completed" ? current : "answering"));
+      setStatus("answering");
     }
     setShowingDerivation(false);
     setShowQualRevelation(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepIndex]);
+  }, [series.id, series.steps, step.id, stepIndex]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

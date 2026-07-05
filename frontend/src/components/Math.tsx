@@ -6363,6 +6363,378 @@ export function TrigTable() {
   );
 }
 
+/** 小5「合同な図形」Step 1：対応する点・辺を読む入口図。 */
+export function CongruenceStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 500 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 520 }}
+      role="img"
+      aria-label="合同な三角形 ABC と DEF。対応する点と辺をたどる図"
+    >
+      <polygon
+        points="70,185 165,185 112,70"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.8"
+      />
+      <polygon
+        points="330,185 425,185 372,70"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.8"
+      />
+
+      <text x="62" y="205" fontSize="14" fill={stroke} fontWeight="600">
+        A
+      </text>
+      <text x="168" y="205" fontSize="14" fill={stroke} fontWeight="600">
+        B
+      </text>
+      <text x="106" y="60" fontSize="14" fill={stroke} fontWeight="600">
+        C
+      </text>
+      <text x="322" y="205" fontSize="14" fill={stroke} fontWeight="600">
+        D
+      </text>
+      <text x="428" y="205" fontSize="14" fill={stroke} fontWeight="600">
+        E
+      </text>
+      <text x="366" y="60" fontSize="14" fill={stroke} fontWeight="600">
+        F
+      </text>
+
+      <path d="M 92 190 L 92 180" stroke={accent} strokeWidth="2" />
+      <path d="M 113 190 L 113 180" stroke={accent} strokeWidth="2" />
+      <path d="M 352 190 L 352 180" stroke={accent} strokeWidth="2" />
+      <path d="M 373 190 L 373 180" stroke={accent} strokeWidth="2" />
+
+      <path d="M 52 215 C 145 240, 335 240, 448 215" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4,4" />
+      <text x="250" y="236" fontSize="12" fill={muted} textAnchor="middle">
+        ぴったり重ねると、対応する辺どうしが重なる
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「合同な図形」Step 7：読むことから作ることへの質的変化図。 */
+export function CongruenceStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 520 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 540 }}
+      role="img"
+      aria-label="三角形 ABC と、それに合同に作る三角形 DEF。対応する3つの辺をそろえる図"
+    >
+      <polygon
+        points="80,200 175,200 124,72"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.8"
+      />
+      <polygon
+        points="345,200 440,200 389,72"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.8"
+        strokeDasharray="5,4"
+      />
+
+      <text x="72" y="220" fontSize="14" fill={stroke} fontWeight="600">
+        A
+      </text>
+      <text x="178" y="220" fontSize="14" fill={stroke} fontWeight="600">
+        B
+      </text>
+      <text x="118" y="62" fontSize="14" fill={stroke} fontWeight="600">
+        C
+      </text>
+      <text x="337" y="220" fontSize="14" fill={stroke} fontWeight="600">
+        D
+      </text>
+      <text x="443" y="220" fontSize="14" fill={stroke} fontWeight="600">
+        E
+      </text>
+      <text x="383" y="62" fontSize="14" fill={stroke} fontWeight="600">
+        F
+      </text>
+
+      <text x="128" y="215" fontSize="12" fill={accent} textAnchor="middle">
+        5cm
+      </text>
+      <text x="145" y="132" fontSize="12" fill={accent}>
+        6cm
+      </text>
+      <text x="90" y="132" fontSize="12" fill={accent}>
+        7cm
+      </text>
+
+      <text x="392" y="215" fontSize="12" fill={accent} textAnchor="middle">
+        5cm
+      </text>
+      <text x="411" y="132" fontSize="12" fill={accent}>
+        6cm
+      </text>
+      <text x="346" y="132" fontSize="12" fill={muted}>
+        ?
+      </text>
+
+      <path d="M 205 136 L 310 136" stroke={muted} strokeWidth="1.4" strokeDasharray="4,4" />
+      <path d="M 298 130 L 310 136 L 298 142" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="260" y="122" fontSize="12" fill={muted} textAnchor="middle">
+        合同に作る
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「小数のわり算」Step 1：全体を等しい3つに分ける入口図。 */
+export function DecimalDivisionStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 520 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 540 }}
+      role="img"
+      aria-label="7.2リットルのジュースを3人で等しく分ける図"
+    >
+      <rect
+        x="55"
+        y="62"
+        width="410"
+        height="46"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.8"
+      />
+      <line x1="191.7" y1="62" x2="191.7" y2="108" stroke={stroke} strokeWidth="1.4" />
+      <line x1="328.3" y1="62" x2="328.3" y2="108" stroke={stroke} strokeWidth="1.4" />
+      <text x="260" y="50" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="600">
+        全体 7.2 L
+      </text>
+      <text x="123" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
+        ?
+      </text>
+      <text x="260" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
+        ?
+      </text>
+      <text x="397" y="92" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">
+        ?
+      </text>
+      <path d="M 123 112 L 123 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
+      <path d="M 260 112 L 260 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
+      <path d="M 397 112 L 397 146" stroke={muted} strokeWidth="1.2" strokeDasharray="4,4" />
+      <circle cx="123" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="260" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="397" cy="171" r="24" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="123" y="176" fontSize="13" fill={muted} textAnchor="middle">
+        1人分
+      </text>
+      <text x="260" y="176" fontSize="13" fill={muted} textAnchor="middle">
+        1人分
+      </text>
+      <text x="397" y="176" fontSize="13" fill={muted} textAnchor="middle">
+        1人分
+      </text>
+      <text x="260" y="218" fontSize="12" fill={muted} textAnchor="middle">
+        同じ大きさの3つに分ける
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「小数のわり算」Step 7：基準量より小さい何倍を読む図。 */
+export function DecimalDivisionStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 520 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 540 }}
+      role="img"
+      aria-label="2.4メートルの布を6メートルの布と比べて何倍かを見る図"
+    >
+      <text x="70" y="48" fontSize="14" fill={stroke} fontWeight="600">
+        基準 6 m
+      </text>
+      <rect
+        x="70"
+        y="62"
+        width="380"
+        height="34"
+        rx="5"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.7"
+      />
+      <line x1="222" y1="62" x2="222" y2="96" stroke={muted} strokeWidth="1" strokeDasharray="4,4" />
+      <line x1="374" y1="62" x2="374" y2="96" stroke={muted} strokeWidth="1" strokeDasharray="4,4" />
+      <text x="260" y="116" fontSize="12" fill={muted} textAnchor="middle">
+        この全体を1倍と見る
+      </text>
+
+      <text x="70" y="154" fontSize="14" fill={stroke} fontWeight="600">
+        比べる 2.4 m
+      </text>
+      <rect
+        x="70"
+        y="168"
+        width="152"
+        height="34"
+        rx="5"
+        fill={fillColor}
+        stroke={accent}
+        strokeWidth="1.8"
+      />
+      <path d="M 70 207 L 222 207" stroke={accent} strokeWidth="1.5" />
+      <path d="M 70 202 L 70 212" stroke={accent} strokeWidth="1.5" />
+      <path d="M 222 202 L 222 212" stroke={accent} strokeWidth="1.5" />
+      <text x="146" y="224" fontSize="12" fill={accent} textAnchor="middle">
+        何倍？
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「小数の除法の考え方と筆算形式」Step 1：小数点を同じだけ動かす筆算。 */
+export function DecimalDivisionAlgorithmStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
+  return (
+    <svg
+      viewBox="0 0 560 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 560 }}
+      role="img"
+      aria-label="小数のわり算の筆算で、わる数とわられる数の小数点を同じだけ動かす図"
+    >
+      <text x="105" y="42" fontSize="13" fill={muted} textAnchor="middle">
+        もとの筆算
+      </text>
+      <path d="M 98 85 L 178 85" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <text x="84" y="126" fontSize="48" fill={stroke} fontFamily={mono}>
+        )
+      </text>
+      <text x="58" y="124" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        0.6
+      </text>
+      <text x="122" y="124" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
+        4.8
+      </text>
+      <circle cx="142" cy="128" r="2.8" fill={accent} />
+      <circle cx="65" cy="128" r="2.8" fill={accent} />
+
+      <path d="M 216 112 L 316 112" stroke={muted} strokeWidth="1.6" strokeDasharray="5,4" />
+      <path d="M 303 105 L 316 112 L 303 119" fill="none" stroke={muted} strokeWidth="1.6" />
+      <text x="266" y="95" fontSize="12" fill={muted} textAnchor="middle">
+        同じだけ右へ
+      </text>
+
+      <text x="420" y="42" fontSize="13" fill={muted} textAnchor="middle">
+        わる数を整数にした筆算
+      </text>
+      <rect x="332" y="72" width="170" height="90" rx="8" fill={fillColor} stroke="none" />
+      <path d="M 412 85 L 486 85" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <text x="398" y="126" fontSize="48" fill={stroke} fontFamily={mono}>
+        )
+      </text>
+      <text x="370" y="124" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        6
+      </text>
+      <text x="434" y="124" fontSize="26" fill={accent} fontWeight="700" fontFamily={mono}>
+        ?
+      </text>
+      <text x="420" y="185" fontSize="13" fill={muted} textAnchor="middle">
+        わられる数も同じだけ動く
+      </text>
+      <text x="280" y="226" fontSize="12" fill={muted} textAnchor="middle">
+        筆算の小数点移動は、同じ倍率で見直すこと
+      </text>
+    </svg>
+  );
+}
+
+/** 小5「小数の除法の考え方と筆算形式」Step 7：直した筆算で商を読む図。 */
+export function DecimalDivisionAlgorithmStep7() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
+  return (
+    <svg
+      viewBox="0 0 560 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 560 }}
+      role="img"
+      aria-label="4.8割る0.6を48割る6の筆算に直し、商を上に立てる図"
+    >
+      <text x="112" y="46" fontSize="13" fill={muted} textAnchor="middle">
+        小数の筆算
+      </text>
+      <path d="M 102 96 L 190 96" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <text x="88" y="137" fontSize="48" fill={stroke} fontFamily={mono}>
+        )
+      </text>
+      <text x="60" y="135" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        0.6
+      </text>
+      <text x="126" y="135" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
+        4.8
+      </text>
+
+      <path d="M 224 122 L 316 122" stroke={muted} strokeWidth="1.6" strokeDasharray="5,4" />
+      <path d="M 303 115 L 316 122 L 303 129" fill="none" stroke={muted} strokeWidth="1.6" />
+      <text x="270" y="105" fontSize="12" fill={muted} textAnchor="middle">
+        10倍して直す
+      </text>
+
+      <rect x="330" y="60" width="180" height="140" rx="8" fill={fillColor} stroke="none" />
+      <text x="448" y="86" fontSize="26" fill={accent} fontWeight="700" textAnchor="middle" fontFamily={mono}>
+        ?
+      </text>
+      <path d="M 412 104 L 492 104" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <text x="398" y="145" fontSize="48" fill={stroke} fontFamily={mono}>
+        )
+      </text>
+      <text x="370" y="143" fontSize="24" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        6
+      </text>
+      <text x="434" y="143" fontSize="26" fill={stroke} fontWeight="600" fontFamily={mono}>
+        48
+      </text>
+      <path d="M 402 160 L 476 160" stroke={muted} strokeWidth="1.3" />
+      <text x="438" y="181" fontSize="18" fill={muted} textAnchor="middle">
+        0
+      </text>
+      <text x="280" y="235" fontSize="12" fill={muted} textAnchor="middle">
+        直した整数の筆算で、商を上に立てる
+      </text>
+    </svg>
+  );
+}
+
 /**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
@@ -6392,6 +6764,48 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <CuboidIsometric />
+            </div>
+          );
+        }
+        if (trimmed === "<<CONGRUENCE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CongruenceStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CONGRUENCE_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CongruenceStep7 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionStep7 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_ALGORITHM_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionAlgorithmStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<DECIMAL_DIV_ALGORITHM_STEP7>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DecimalDivisionAlgorithmStep7 />
             </div>
           );
         }

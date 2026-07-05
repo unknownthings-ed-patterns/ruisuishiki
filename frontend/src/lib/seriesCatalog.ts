@@ -66,7 +66,12 @@ import {
 } from "./seriesAdvanced";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
+  E5_CONGRUENT_FIGURES_SERIES,
   E5_CIRCUMFERENCE_SERIES,
+  E5_DECIMAL_DIV_ALGORITHM_SERIES,
+  E5_DECIMAL_DIV_PURE_DECIMAL_SERIES,
+  E5_DECIMAL_DIV_REMAINDER_SERIES,
+  E5_DECIMAL_DIV_ROUNDING_SERIES,
   E5_DECIMAL_DIV_SERIES,
   E5_DECIMAL_MULT_SERIES,
   E5_DECIMAL_PLACE_SERIES,
@@ -173,7 +178,36 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     series: E5_DECIMAL_DIV_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "5. 小数のわり算（今ここ）",
+    topicGroup: "5. 小数のわり算",
+    shortDescription: "5-1. 小数でわることの意味",
+  },
+  {
+    series: E5_DECIMAL_DIV_ALGORITHM_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    topicGroup: "5. 小数のわり算",
+    shortDescription: "5-2. 小数の除法の考え方と筆算形式",
+  },
+  {
+    series: E5_DECIMAL_DIV_PURE_DECIMAL_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    topicGroup: "5. 小数のわり算",
+    shortDescription: "5-3. 純小数でわるときの商と被除数の関係",
+  },
+  {
+    series: E5_DECIMAL_DIV_ROUNDING_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    topicGroup: "5. 小数のわり算",
+    shortDescription: "5-4. 商を概数で表すときの処理",
+  },
+  {
+    series: E5_DECIMAL_DIV_REMAINDER_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    topicGroup: "5. 小数のわり算",
+    shortDescription: "5-5. 余りの小数点の位置",
   },
   {
     series: E5_LCM_SERIES,
@@ -206,34 +240,40 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "10. 多角形の角",
   },
   {
+    series: E5_CONGRUENT_FIGURES_SERIES,
+    subject: "elementary",
+    subjectLabel: "小5・東京書籍",
+    shortDescription: "11. 合同な図形 — 対応する辺・角",
+  },
+  {
     series: RATIO_BASIC_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "11. 割合の入り口",
+    shortDescription: "12. 割合の入り口",
   },
   {
     series: E5_CIRCUMFERENCE_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "12. 円周の長さ",
+    shortDescription: "13. 円周の長さ",
   },
   {
     series: E5_TRIANGLE_AREA_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "13. 三角形の面積",
+    shortDescription: "14. 三角形の面積",
   },
   {
     series: E5_PARALLELOGRAM_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "14. 平行四辺形の面積",
+    shortDescription: "15. 平行四辺形の面積",
   },
   {
     series: E5_TRAPEZOID_AREA_SERIES,
     subject: "elementary",
     subjectLabel: "小5・東京書籍",
-    shortDescription: "15. 台形の面積",
+    shortDescription: "16. 台形の面積",
   },
   /* === 高校数学Ⅰ・A（数Ⅰ の章順 → 数A の章順）=== */
   /* 数Ⅰ: 数と式 */
