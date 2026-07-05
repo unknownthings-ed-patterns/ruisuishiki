@@ -56,6 +56,7 @@ function displayAnswer(step: LearnerStep): string {
 function ProblemInkLayer({ resetKey }: { resetKey: string }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const activeStrokeRef = useRef<InkStroke | null>(null);
+  const activeTouchIdRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
   const [enabled, setEnabled] = useState(false);
   const [strokes, setStrokes] = useState<InkStroke[]>([]);
@@ -67,6 +68,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
       frameRef.current = null;
     }
     activeStrokeRef.current = null;
+    activeTouchIdRef.current = null;
     setEnabled(false);
     setStrokes([]);
     setInkFrame((current) => current + 1);
@@ -79,6 +81,31 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverscroll = html.style.overscrollBehavior;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyTouchAction = body.style.touchAction;
+
+    function preventPageDrag(event: TouchEvent) {
+      if (activeStrokeRef.current) event.preventDefault();
+    }
+
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.touchAction = "none";
+    document.addEventListener("touchmove", preventPageDrag, { passive: false });
+
+    return () => {
+      html.style.overscrollBehavior = previousHtmlOverscroll;
+      body.style.overflow = previousBodyOverflow;
+      body.style.touchAction = previousBodyTouchAction;
+      document.removeEventListener("touchmove", preventPageDrag);
+    };
+  }, [enabled]);
 
   function scheduleInkFrame() {
     if (frameRef.current !== null) return;
@@ -109,6 +136,19 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     stroke.push(point);
   }
 
+  function startStroke(clientX: number, clientY: number) {
+    const point = pointFromClient(clientX, clientY);
+    if (!point) return false;
+    activeStrokeRef.current = [point];
+    scheduleInkFrame();
+    return true;
+  }
+
+  function continueStroke(clientX: number, clientY: number) {
+    const point = pointFromClient(clientX, clientY);
+    if (point) appendPoint(point);
+  }
+
   function inkPath(points: InkStroke): string {
     return points
       .map((point, index) => {
@@ -120,22 +160,20 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
 
   function handlePointerDown(e: React.PointerEvent<SVGSVGElement>) {
     if (!enabled) return;
-    const point = pointFromClient(e.clientX, e.clientY);
-    if (!point) return;
+    if (e.pointerType === "touch") return;
     e.preventDefault();
     e.currentTarget.setPointerCapture(e.pointerId);
-    activeStrokeRef.current = [point];
-    scheduleInkFrame();
+    startStroke(e.clientX, e.clientY);
   }
 
   function handlePointerMove(e: React.PointerEvent<SVGSVGElement>) {
     if (!enabled || !activeStrokeRef.current) return;
+    if (e.pointerType === "touch") return;
     e.preventDefault();
     const nativeEvents = e.nativeEvent.getCoalescedEvents();
     const pointerEvents = nativeEvents.length > 0 ? nativeEvents : [e.nativeEvent];
     for (const pointerEvent of pointerEvents) {
-      const point = pointFromClient(pointerEvent.clientX, pointerEvent.clientY);
-      if (point) appendPoint(point);
+      continueStroke(pointerEvent.clientX, pointerEvent.clientY);
     }
     scheduleInkFrame();
   }
@@ -144,8 +182,44 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     const stroke = activeStrokeRef.current;
     if (!stroke || stroke.length === 0) return;
     activeStrokeRef.current = null;
+    activeTouchIdRef.current = null;
     setStrokes((previous) => [...previous, stroke]);
     scheduleInkFrame();
+  }
+
+  function changedTouchById(touches: React.TouchList, touchId: number) {
+    for (let index = 0; index < touches.length; index += 1) {
+      const touch = touches.item(index);
+      if (touch && touch.identifier === touchId) return touch;
+    }
+    return null;
+  }
+
+  function handleTouchStart(e: React.TouchEvent<SVGSVGElement>) {
+    if (!enabled || activeTouchIdRef.current !== null) return;
+    const touch = e.changedTouches.item(0);
+    if (!touch) return;
+    e.preventDefault();
+    if (startStroke(touch.clientX, touch.clientY)) {
+      activeTouchIdRef.current = touch.identifier;
+    }
+  }
+
+  function handleTouchMove(e: React.TouchEvent<SVGSVGElement>) {
+    const touchId = activeTouchIdRef.current;
+    if (!enabled || touchId === null || !activeStrokeRef.current) return;
+    const touch = changedTouchById(e.changedTouches, touchId);
+    if (!touch) return;
+    e.preventDefault();
+    continueStroke(touch.clientX, touch.clientY);
+    scheduleInkFrame();
+  }
+
+  function handleTouchEnd(e: React.TouchEvent<SVGSVGElement>) {
+    const touchId = activeTouchIdRef.current;
+    if (touchId === null || !changedTouchById(e.changedTouches, touchId)) return;
+    e.preventDefault();
+    finishStroke();
   }
 
   const activeStroke = activeStrokeRef.current;
@@ -175,6 +249,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
             onClick={() => {
               setStrokes([]);
               activeStrokeRef.current = null;
+              activeTouchIdRef.current = null;
               scheduleInkFrame();
             }}
             className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
@@ -200,6 +275,10 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         onPointerMove={handlePointerMove}
         onPointerUp={finishStroke}
         onPointerCancel={finishStroke}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         {[...strokes, ...(activeStroke ? [activeStroke] : [])].map(
           (stroke, index) => (
