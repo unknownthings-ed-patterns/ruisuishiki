@@ -177,6 +177,39 @@ export default function Home() {
             </li>
             <li>
               <a
+                href={`${BP}/theory/04-国語版統合理論.md`}
+                className="text-accent hover:underline"
+              >
+                国語版第 1 弾：統合理論
+              </a>
+              <span className="text-muted ml-2">
+                — 推理式を国語の読み書きへひらく基本テーゼ
+              </span>
+            </li>
+            <li>
+              <a
+                href={`${BP}/theory/05-国語版批判的検討.md`}
+                className="text-accent hover:underline"
+              >
+                国語版第 2 弾：批判的検討
+              </a>
+              <span className="text-muted ml-2">
+                — 国語版の失敗モード G1〜G12 と修正版テーゼ
+              </span>
+            </li>
+            <li>
+              <a
+                href={`${BP}/theory/06-国語版MVP仕様書.md`}
+                className="text-accent hover:underline"
+              >
+                国語版第 3 弾：MVP 仕様書
+              </a>
+              <span className="text-muted ml-2">
+                — 俳句ユニットを実装に落とす仕様書
+              </span>
+            </li>
+            <li>
+              <a
                 href={`${BP}/theory/README.md`}
                 className="text-accent hover:underline"
               >
