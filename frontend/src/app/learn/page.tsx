@@ -208,16 +208,27 @@ export default function LearnIndex() {
           >
             国語（俳句）
           </h2>
+          <p className="text-muted -mt-2" style={{ fontSize: "13px", lineHeight: 1.8 }}>
+            はじめてなら、まず「五七五のかたち」から。声に出して数えるところから始まります。
+          </p>
           <Link
             href="/learn/haiku/?seriesId=kokugo_haiku_form_01"
             className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
             style={{ background: "var(--surface)" }}
           >
-            <span
-              className="text-foreground font-serif"
-              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
-            >
-              1. 五七五のかたち（音数とリズム）
+            <span className="flex flex-wrap items-center gap-2">
+              <span
+                className="text-foreground font-serif"
+                style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+              >
+                1. 五七五のかたち（音数とリズム）
+              </span>
+              <span
+                className="rounded border border-accent/40 px-2 py-0.5 text-accent"
+                style={{ fontSize: "11px", letterSpacing: "0.08em" }}
+              >
+                はじめてはこちら
+              </span>
             </span>
             <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
               声に出して音を数え、五・七・五という「器」が何をしてくれるかを歩く。読みくらべ →

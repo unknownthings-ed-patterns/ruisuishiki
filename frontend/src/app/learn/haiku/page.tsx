@@ -541,13 +541,13 @@ export default function HaikuPlay() {
         style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
         aria-label="サイト全体のナビゲーション"
       >
-        <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
-          <div className="flex items-baseline gap-3" style={{ fontSize: "12px", letterSpacing: "0.05em" }}>
-            <Link href="/learn/" className="text-muted hover:text-foreground transition-colors">
+        <div className="mx-auto w-full max-w-2xl px-4 sm:px-6 py-2 flex items-center justify-between gap-3">
+          <div className="flex shrink-0 items-baseline gap-2 sm:gap-3" style={{ fontSize: "12px", letterSpacing: "0.05em" }}>
+            <Link href="/learn/" className="text-muted hover:text-foreground transition-colors whitespace-nowrap">
               ← 学ぶ
             </Link>
-            <span className="text-muted opacity-30" aria-hidden>/</span>
-            <Link href="/" className="text-muted hover:text-foreground transition-colors">
+            <span className="hidden sm:inline text-muted opacity-30" aria-hidden>/</span>
+            <Link href="/" className="hidden sm:inline text-muted hover:text-foreground transition-colors whitespace-nowrap">
               ホーム
             </Link>
           </div>
@@ -557,7 +557,7 @@ export default function HaikuPlay() {
           <button
             type="button"
             onClick={() => setView("anthology")}
-            className="text-accent hover:text-foreground transition-colors"
+            className="shrink-0 text-accent hover:text-foreground transition-colors whitespace-nowrap"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
           >
             わたしの句集

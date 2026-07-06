@@ -23,9 +23,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ruisuishiki — 算数・数学を、考える喜びへ",
+  title: "ruisuishiki — 算数・数学とことばを、考える喜びへ",
   description:
-    "戸田城外『推理式指導算術』(1930) をAI時代に再構成する算数・数学教育プラットホーム。子どもも大人も学べる、無料・天下無双の質を目指して。",
+    "戸田城外『推理式指導算術』(1930) をAI時代に再構成し、算数・数学と国語の系列としてひらく教育プラットホーム。子どもも大人も学べる、無料・天下無双の質を目指して。",
 };
 
 export default function RootLayout({

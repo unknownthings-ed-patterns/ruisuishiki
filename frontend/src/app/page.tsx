@@ -60,6 +60,9 @@ export default function Home() {
             作る
           </Link>
         </nav>
+        <p className="text-muted -mt-6" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+          「作る」はいま、算数・数学の系列づくりが中心です。国語版はまず「学ぶ」から俳句ユニットを歩けます。
+        </p>
 
         <section
           aria-label="今歩ける入口"
@@ -118,6 +121,13 @@ export default function Home() {
             再構成し、算数・数学だけでなく国語の読み書きにもひらく試みです。
             背後にある理論文書を公開しています——
             <strong>アプリは消えても、考え方は残るように</strong>。
+          </p>
+          <p
+            className="text-foreground/85 mb-6"
+            style={{ fontSize: "14px", lineHeight: 1.9 }}
+          >
+            国語版は、俳句ユニットから試験公開しています。声に出して読みくらべ、
+            五七五・季語・切れという小さな装置が、ことばの世界をどう変えるかを歩きます。
           </p>
           <p
             className="text-foreground/85 mb-6"
