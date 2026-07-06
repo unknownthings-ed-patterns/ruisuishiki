@@ -22,7 +22,7 @@ export default function Home() {
             className="text-muted"
             style={{ fontSize: "clamp(16px, 1.125rem, 18px)" }}
           >
-            算数・数学を、考える喜びへ。
+            算数・数学とことばを、考える喜びへ。
           </p>
         </header>
 
@@ -32,6 +32,8 @@ export default function Home() {
           style={{ fontSize: "clamp(15px, 1rem, 16px)", lineHeight: 2 }}
         >
           戸田城外『推理式指導算術』(1930) の方法論を、
+          <br className="hidden sm:inline" />
+          数とことばの系列としてひらきなおし、
           <br className="hidden sm:inline" />
           子どもにも、大人にも、教師にも開かれた
           <br className="hidden sm:inline" />
@@ -59,6 +61,42 @@ export default function Home() {
           </Link>
         </nav>
 
+        <section
+          aria-label="今歩ける入口"
+          className="w-full grid gap-3 sm:grid-cols-2 text-left"
+        >
+          <Link
+            href="/learn/"
+            className="rounded-lg border border-border px-5 py-4 transition-colors hover:border-accent/50"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="block text-foreground font-serif"
+              style={{ fontSize: "16px", letterSpacing: "0.05em" }}
+            >
+              算数・数学の系列
+            </span>
+            <span className="block text-muted mt-1" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              小学校算数から高校数学まで、前題と比べながら歩く。
+            </span>
+          </Link>
+          <Link
+            href="/learn/haiku/?seriesId=kokugo_haiku_form_01"
+            className="rounded-lg border border-border px-5 py-4 transition-colors hover:border-accent/50"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="block text-foreground font-serif"
+              style={{ fontSize: "16px", letterSpacing: "0.05em" }}
+            >
+              国語（俳句）の系列
+            </span>
+            <span className="block text-muted mt-1" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              声に出して読みくらべ、五七五・季語・切れを見つける。
+            </span>
+          </Link>
+        </section>
+
         {/* この方法論について（理論文書） */}
         <section
           aria-labelledby="theory-heading"
@@ -77,7 +115,8 @@ export default function Home() {
             style={{ fontSize: "14px", lineHeight: 1.9 }}
           >
             このプロジェクトは戸田城外『推理式指導算術』(1930) の方法論を AI 時代に
-            再構成する試みです。背後にある理論文書を公開しています——
+            再構成し、算数・数学だけでなく国語の読み書きにもひらく試みです。
+            背後にある理論文書を公開しています——
             <strong>アプリは消えても、考え方は残るように</strong>。
           </p>
           <p

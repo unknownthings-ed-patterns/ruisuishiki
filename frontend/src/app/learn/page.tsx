@@ -156,7 +156,7 @@ export default function LearnIndex() {
             className="text-muted max-w-prose"
             style={{ fontSize: "clamp(15px, 1rem, 16px)", lineHeight: 2 }}
           >
-            小学校の算数から、高校の数と式まで。
+            算数・数学、そしてことばの系列へ。
             <br className="hidden sm:inline" />
             戸田の系列原則で編まれた問題を、ひとつずつ歩いてみてください。
           </p>
@@ -165,32 +165,37 @@ export default function LearnIndex() {
         {/* 学習統計（履歴が1問でもあれば表示） */}
         {hasHydrated && stats && stats.lifetimeCorrect > 0 && (
           <section
-            className="rounded-lg border border-border p-5 sm:p-6 flex flex-wrap items-baseline justify-around gap-x-8 gap-y-3"
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-4"
             style={{ background: "var(--surface)" }}
-            aria-label="学習の足あと"
+            aria-label="算数・数学の足あと"
           >
-            <Stat
-              label="今週"
-              value={stats.weeklyCorrect.toLocaleString()}
-              unit="問"
-            />
-            <Stat
-              label="累計"
-              value={stats.lifetimeCorrect.toLocaleString()}
-              unit="問"
-            />
-            {stats.lifetimeAccuracy !== null && (
+            <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+              算数・数学の足あと
+            </span>
+            <div className="flex flex-wrap items-baseline justify-around gap-x-8 gap-y-3">
               <Stat
-                label="正答率"
-                value={Math.round(stats.lifetimeAccuracy * 100).toString()}
-                unit="%"
+                label="今週"
+                value={stats.weeklyCorrect.toLocaleString()}
+                unit="問"
               />
-            )}
-            <Stat
-              label="歩いた系列"
-              value={stats.seriesEngaged.toString()}
-              unit="本"
-            />
+              <Stat
+                label="累計"
+                value={stats.lifetimeCorrect.toLocaleString()}
+                unit="問"
+              />
+              {stats.lifetimeAccuracy !== null && (
+                <Stat
+                  label="正答率"
+                  value={Math.round(stats.lifetimeAccuracy * 100).toString()}
+                  unit="%"
+                />
+              )}
+              <Stat
+                label="歩いた系列"
+                value={stats.seriesEngaged.toString()}
+                unit="本"
+              />
+            </div>
           </section>
         )}
 
