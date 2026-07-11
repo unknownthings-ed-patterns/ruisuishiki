@@ -858,7 +858,7 @@ export const TRIG_EQUATION_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "tanθ=√3 → π/3 と 反対側 π/3+π=4π/3",
-      figureMarker: "<<UNIT_CIRCLE_STEP1>>",
+      figureMarker: "<<UNIT_CIRCLE_TAN_LINE>>",
       inputAffordances: ["pi", "multi"],
     },
     {
@@ -979,6 +979,7 @@ export const TRIG_EQUATION_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "sinθ≥√3/2 → 境界 π/3, 2π/3 の間の弧",
+      figureMarker: "<<UNIT_CIRCLE_ARC>>",
       inputAffordances: ["pi", "multi"],
     },
     {

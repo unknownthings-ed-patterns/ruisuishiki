@@ -4294,6 +4294,119 @@ export function UnitCircleQ2() {
 }
 
 /**
+ * 三角方程式 系列3 Step 4（質的変化）の足場図。
+ * tanθ を「原点を通る直線の傾き」として見ると、同じ直線が単位円の
+ * 反対側でも交わることを示す。具体角・傾きの値・答えは描かない。
+ */
+export function UnitCircleTanLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 5%, transparent)";
+  const ox = 140;
+  const oy = 150;
+  const px = 221;
+  const py = 99;
+  const qx = 59;
+  const qy = 201;
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="原点を通る同じ傾きの直線が、単位円の手前側と反対側の2点で交わる図"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      <circle cx={ox} cy={oy} r="96" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 原点を突き抜ける1本の直線 */}
+      <line x1="30" y1="219" x2="250" y2="81" stroke={accent} strokeWidth="1.8" />
+      <circle cx={qx} cy={qy} r="4" fill={accent} />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={ox - 7} y={oy + 15} fontSize="10" fill={muted} textAnchor="end">O</text>
+      <text x={px + 7} y={py - 4} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">P</text>
+      <text x={qx - 7} y={qy + 15} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600" textAnchor="end">P′</text>
+
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        同じ傾きの直線は、原点の反対側でも円と交わる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 三角方程式 系列3 Step 8（質的変化）の足場図。
+ * 方程式の「2点」が、不等式では境界になり、その間の弧へ広がることを示す。
+ * 境界の角度・高さの値・答えは描かない。
+ */
+export function UnitCircleArc() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 4%, transparent)";
+  const arcFill = "color-mix(in oklch, var(--accent) 13%, transparent)";
+  const ox = 140;
+  const oy = 150;
+  const leftX = 66.7;
+  const rightX = 213.3;
+  const boundaryY = 88;
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上の2つの境界点と、その間に広がる上側の弧を示す図"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      <circle cx={ox} cy={oy} r="96" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 境界線と、その上側の領域 */}
+      <path
+        d={`M ${leftX} ${boundaryY} A 96 96 0 0 1 ${rightX} ${boundaryY} L ${leftX} ${boundaryY} Z`}
+        fill={arcFill}
+        stroke="none"
+      />
+      <line
+        x1="40"
+        y1={boundaryY}
+        x2="240"
+        y2={boundaryY}
+        stroke={muted}
+        strokeWidth="0.9"
+        strokeDasharray="4,3"
+      />
+      <path
+        d={`M ${leftX} ${boundaryY} A 96 96 0 0 1 ${rightX} ${boundaryY}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <circle cx={leftX} cy={boundaryY} r="4" fill={accent} />
+      <circle cx={rightX} cy={boundaryY} r="4" fill={accent} />
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={leftX - 7} y={boundaryY + 17} fontSize="10" fill={accent} textAnchor="end">境界</text>
+      <text x={rightX + 7} y={boundaryY + 17} fontSize="10" fill={accent}>境界</text>
+
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        ちょうどの2点が境界になり、その間の弧へ広がる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7113,6 +7226,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <UnitCircleQ2 />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_CIRCLE_TAN_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitCircleTanLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_CIRCLE_ARC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitCircleArc />
             </div>
           );
         }
