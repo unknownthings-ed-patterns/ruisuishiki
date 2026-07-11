@@ -15,6 +15,7 @@ import {
   clearSeriesHistory,
   getResumeIndex,
   loadSeriesHistory,
+  saveSeriesCompletion,
   saveStepRecord,
 } from "@/lib/storage";
 import { getTeacherSeries } from "@/lib/teacherStorage";
@@ -540,6 +541,7 @@ export default function Play() {
 
   function handleNext() {
     if (isLast) {
+      saveSeriesCompletion(series.id);
       setStatus("completed");
     } else {
       setStepIndex((i) => i + 1);

@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import {
   calculateLearningStatsFromHistory,
   calculateOperatorView,
+  selectRevisitCandidate,
 } from "./storage";
 import type { StepRecord, VariationOp } from "./types";
 
@@ -162,3 +163,54 @@ assert.deepEqual(operatorView, {
 });
 
 console.log("operator view: boundaries and old series redirects are covered");
+
+const revisit = selectRevisitCandidate(
+  [
+    {
+      seriesId: "recent_complete",
+      completed: true,
+      records: [record("last", 1, true, 3)],
+      completionDates: [],
+    },
+    {
+      seriesId: "old_complete",
+      completed: true,
+      records: [record("last", 1, true, 10)],
+      completionDates: [],
+    },
+    {
+      seriesId: "older_but_revisited",
+      completed: true,
+      records: [record("last", 1, true, 30)],
+      completionDates: [new Date(now - 8 * dayMs).toISOString()],
+    },
+    {
+      seriesId: "unfinished",
+      completed: false,
+      records: [record("last", 1, true, 20)],
+      completionDates: [],
+    },
+  ],
+  now,
+);
+
+assert.deepEqual(revisit, {
+  seriesId: "old_complete",
+  completedAt: new Date(now - 10 * dayMs).toISOString(),
+  daysSinceCompletion: 10,
+});
+
+assert.equal(
+  selectRevisitCandidate(
+    [{
+      seriesId: "recent_only",
+      completed: true,
+      records: [record("last", 1, true, 6)],
+      completionDates: [],
+    }],
+    now,
+  ),
+  null,
+);
+
+console.log("revisit: seven-day threshold, migration fallback, and one-item selection are covered");

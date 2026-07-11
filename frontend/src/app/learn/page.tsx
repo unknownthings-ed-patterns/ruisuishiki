@@ -21,7 +21,11 @@ import {
   type LearningStats,
   type OperatorViewData,
   loadAllHistory,
+  loadSeriesCompletions,
   loadSeriesHistory,
+  saveSeriesCompletion,
+  selectRevisitCandidate,
+  type RevisitCandidate,
 } from "@/lib/storage";
 import {
   listTeacherSeries,
@@ -57,6 +61,7 @@ export default function LearnIndex() {
   const [teacherSeries, setTeacherSeries] = useState<TeacherSeriesSummary[]>([]);
   const [stats, setStats] = useState<LearningStats | null>(null);
   const [operatorView, setOperatorView] = useState<OperatorViewData | null>(null);
+  const [revisit, setRevisit] = useState<RevisitCandidate | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
   // 折りたたまれた topicGroup（key は `${subject}|${topicGroup}`）。
   // デフォルトは「全グループ畳む。ただし進行中の系列を含むグループだけ自動展開」。
@@ -80,6 +85,30 @@ export default function LearnIndex() {
       };
     });
     setCatalog(withProgress);
+    const revisitCandidate = selectRevisitCandidate(
+      withProgress.map((item) => {
+        const seriesId = item.entry.series.id;
+        const records = loadSeriesHistory(seriesId);
+        const completionDates = loadSeriesCompletions(seriesId);
+        return {
+          seriesId,
+          completed: item.resumeIndex >= item.total,
+          records,
+          completionDates,
+        };
+      }),
+    );
+    setRevisit(revisitCandidate);
+    if (revisitCandidate) {
+      // 旧形式の完了履歴を、再訪後も残る専用キーへ一度だけ移行する。
+      const completions = loadSeriesCompletions(revisitCandidate.seriesId);
+      if (completions.length === 0) {
+        saveSeriesCompletion(
+          revisitCandidate.seriesId,
+          revisitCandidate.completedAt,
+        );
+      }
+    }
     setTeacherSeries(listTeacherSeries());
     const allHistory = loadAllHistory();
     const opIndex = buildStepOpIndex();
@@ -179,6 +208,46 @@ export default function LearnIndex() {
             戸田の系列原則で編まれた問題を、ひとつずつ歩いてみてください。
           </p>
         </header>
+
+        {hasHydrated && revisit && (() => {
+          const item = catalog.find(
+            ({ entry }) => entry.series.id === revisit.seriesId,
+          );
+          if (!item) return null;
+          return (
+            <section
+              className="rounded-lg border border-accent/40 p-5 sm:p-6 flex flex-col gap-3"
+              style={{ background: "var(--surface)" }}
+              aria-label="そろそろ再訪"
+            >
+              <span
+                className="text-accent"
+                style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+              >
+                そろそろ再訪
+              </span>
+              <h2
+                className="font-serif text-foreground"
+                style={{ fontSize: "19px", letterSpacing: "0.05em" }}
+              >
+                {item.entry.series.title}
+              </h2>
+              <p className="text-muted" style={{ fontSize: "14px", lineHeight: 1.9 }}>
+                この系列を歩いてから {revisit.daysSinceCompletion}日。
+                もういちど歩くと、記憶がつよくなるころです。
+                <br />
+                思い出しにくいのは、効いているしるし。
+              </p>
+              <Link
+                href={`/learn/play/?seriesId=${revisit.seriesId}&fresh=1`}
+                className="self-start inline-flex items-center justify-center rounded-lg border border-accent px-5 py-3 text-accent hover:bg-accent/5 transition-colors"
+                style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+              >
+                もういちど歩く →
+              </Link>
+            </section>
+          );
+        })()}
 
         {/* 算数・数学の足あと（オペレータを主役にする） */}
         {hasHydrated &&

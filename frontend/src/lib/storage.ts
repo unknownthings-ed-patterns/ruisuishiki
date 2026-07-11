@@ -12,6 +12,8 @@
 import type { StepRecord, VariationOp } from "./types";
 
 const STORAGE_PREFIX = "ruisuishiki:history:";
+const COMPLETION_PREFIX = "ruisuishiki:completion:";
+export const REVISIT_INTERVAL_DAYS = 7;
 
 function storageKey(seriesId: string): string {
   return STORAGE_PREFIX + seriesId;
@@ -54,6 +56,91 @@ export function clearSeriesHistory(seriesId: string): void {
   } catch {
     // 失敗しても続ける
   }
+}
+
+/** 系列を歩き終えた日時の履歴を読む。再訪で問題履歴を消しても保持する。 */
+export function loadSeriesCompletions(seriesId: string): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(COMPLETION_PREFIX + seriesId);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((value): value is string => typeof value === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+/** 系列の完了日時を追記する。 */
+export function saveSeriesCompletion(
+  seriesId: string,
+  completedAt: string = new Date().toISOString(),
+): void {
+  if (typeof window === "undefined") return;
+  try {
+    const completions = loadSeriesCompletions(seriesId);
+    if (completions.includes(completedAt)) return;
+    window.localStorage.setItem(
+      COMPLETION_PREFIX + seriesId,
+      JSON.stringify([...completions, completedAt]),
+    );
+  } catch {
+    // localStorage 不可でも学習自体は続けられる
+  }
+}
+
+export type RevisitCandidateInput = {
+  seriesId: string;
+  completed: boolean;
+  records: StepRecord[];
+  completionDates: string[];
+};
+
+export type RevisitCandidate = {
+  seriesId: string;
+  completedAt: string;
+  daysSinceCompletion: number;
+};
+
+/**
+ * 完了系列から、再訪時期を迎えた1件を選ぶ。
+ * 完了日キーのない旧履歴は、最後に答えた日時を初回完了日として扱う。
+ */
+export function selectRevisitCandidate(
+  candidates: RevisitCandidateInput[],
+  now: number = Date.now(),
+  intervalDays: number = REVISIT_INTERVAL_DAYS,
+): RevisitCandidate | null {
+  const dayMs = 24 * 60 * 60 * 1000;
+  const due = candidates.flatMap((candidate) => {
+    if (!candidate.completed) return [];
+    const timestamps = candidate.completionDates
+      .map((value) => new Date(value).getTime())
+      .filter((value) => !Number.isNaN(value));
+    if (timestamps.length === 0) {
+      timestamps.push(
+        ...candidate.records
+          .map((record) => new Date(record.answeredAt).getTime())
+          .filter((value) => !Number.isNaN(value)),
+      );
+    }
+    if (timestamps.length === 0) return [];
+    const completedAtMs = Math.max(...timestamps);
+    const daysSinceCompletion = Math.floor((now - completedAtMs) / dayMs);
+    if (daysSinceCompletion < intervalDays) return [];
+    return [{
+      seriesId: candidate.seriesId,
+      completedAt: new Date(completedAtMs).toISOString(),
+      daysSinceCompletion,
+    }];
+  });
+  return due.sort(
+    (a, b) =>
+      b.daysSinceCompletion - a.daysSinceCompletion ||
+      a.seriesId.localeCompare(b.seriesId),
+  )[0] ?? null;
 }
 
 /**
