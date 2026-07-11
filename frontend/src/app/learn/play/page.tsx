@@ -1421,7 +1421,7 @@ export default function Play() {
                     className="text-muted/80 tnum"
                     style={{ fontSize: "12px" }}
                   >
-                    {step.formulaPreview}
+                    <MathText text={step.formulaPreview} />
                   </p>
                 )}
               </div>

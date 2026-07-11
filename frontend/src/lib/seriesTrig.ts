@@ -608,7 +608,7 @@ export const TRIG_RADIAN_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\dfrac{7\\pi}{4} = 315°$ で右下の第 $4$ 象限。$\\sin$ ＝ $P$ の $y$ 座標で、下にあるので負。大きさは $45°$ の鏡うつしで $\\dfrac{1}{\\sqrt{2}}$。よって $\\sin\\dfrac{7\\pi}{4} = -\\dfrac{1}{\\sqrt{2}}$。入力は √ ボタンで `-1/√2`。",
+          text: "$\\dfrac{7\\pi}{4} = 315°$ で右下の第 $4$ 象限。$\\sin$ ＝ $P$ の $y$ 座標で、下にあるので負。大きさは $45°$ の鏡うつしで $\\dfrac{1}{\\sqrt{2}}$。よって $\\sin\\dfrac{7\\pi}{4} = -\\dfrac{1}{\\sqrt{2}}$。",
         },
       ],
       formulaPreview: "sin(7π/4) = sin315° = P の y 座標 = −1/√2",
@@ -903,7 +903,7 @@ export const TRIG_EQUATION_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\dfrac{\\pi}{4} = 45°$ の点の高さは $\\sin 45° = \\dfrac{1}{\\sqrt{2}}$。$\\dfrac{3\\pi}{4} = 135°$ は左右対称で高さは同じ。だから $\\sin\\theta = \\dfrac{1}{\\sqrt{2}}$ が、その $2$ 解を生む方程式。$\\square = \\dfrac{1}{\\sqrt{2}}$（入力は √ ボタンで `1/√2`）。値→角の逆は、角→値の読み取り。",
+          text: "$\\dfrac{\\pi}{4} = 45°$ の点の高さは $\\sin 45° = \\dfrac{1}{\\sqrt{2}}$。$\\dfrac{3\\pi}{4} = 135°$ は左右対称で高さは同じ。だから $\\sin\\theta = \\dfrac{1}{\\sqrt{2}}$ が、その $2$ 解を生む方程式。$\\square = \\dfrac{1}{\\sqrt{2}}$。値→角の逆は、角→値の読み取り。",
         },
       ],
       formulaPreview: "π/4, 3π/4 の高さ = sin45° = 1/√2",
