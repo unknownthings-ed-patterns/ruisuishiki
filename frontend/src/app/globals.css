@@ -170,6 +170,33 @@ h1, h2, h3 {
   .print-only {
     display: block !important;
   }
+
+  /* 国語の清書カードは、背後の学習画面を除外してカードだけを1枚にする。 */
+  .haiku-card-print-mode {
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .haiku-card-print-mode > :not(.haiku-card-print-root) {
+    display: none !important;
+  }
+  .haiku-card-print-root {
+    position: static !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    height: 267mm !important;
+    min-height: 267mm !important;
+    padding: 18mm !important;
+    overflow: hidden !important;
+    background: white !important;
+    color: black !important;
+    break-after: avoid-page;
+    break-inside: avoid-page;
+  }
+  .haiku-card-print-root p {
+    color: black !important;
+  }
 }
 
 .print-only {

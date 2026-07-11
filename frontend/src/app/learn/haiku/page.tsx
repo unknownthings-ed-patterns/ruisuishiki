@@ -326,7 +326,9 @@ export default function HaikuPlay() {
   if (view === "anthology") {
     const haikuWorks = collectHaikuAnthology();
     return (
-      <main className="flex min-h-screen flex-col">
+      <main
+        className={`flex min-h-screen flex-col${showCard ? " haiku-card-print-mode" : ""}`}
+      >
         <nav
           className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
           style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
@@ -534,7 +536,9 @@ export default function HaikuPlay() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col">
+    <main
+      className={`flex min-h-screen flex-col${showCard ? " haiku-card-print-mode" : ""}`}
+    >
       {/* 上部ナビ */}
       <nav
         className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
@@ -1039,7 +1043,7 @@ function HaikuCardOverlay({
 }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6"
+      className="haiku-card-print-root fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6"
       style={{ background: "var(--background)" }}
       role="dialog"
       aria-label="清書カード"
@@ -1102,13 +1106,6 @@ function HaikuCardOverlay({
           </button>
         </div>
       </div>
-      <style jsx global>{`
-        @media print {
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
