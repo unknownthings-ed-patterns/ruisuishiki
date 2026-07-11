@@ -5,8 +5,11 @@
  * 国語ユニットの kokugo_* 履歴はトップ統計から除外する。
  */
 import assert from "node:assert/strict";
-import { calculateLearningStatsFromHistory } from "./storage";
-import type { StepRecord } from "./types";
+import {
+  calculateLearningStatsFromHistory,
+  calculateOperatorView,
+} from "./storage";
+import type { StepRecord, VariationOp } from "./types";
 
 const now = Date.UTC(2026, 6, 4, 12, 0, 0);
 const dayMs = 24 * 60 * 60 * 1000;
@@ -16,12 +19,15 @@ function record(
   attempts: number,
   correct: boolean,
   daysAgo: number,
+  hintsOpened: 0 | 1 | 2 | 3 = 0,
+  skipped = false,
 ): StepRecord {
   return {
     stepId,
     attempts,
-    hintsOpened: 0,
+    hintsOpened,
     correct,
+    skipped,
     answeredAt: new Date(now - daysAgo * dayMs).toISOString(),
   };
 }
@@ -64,3 +70,95 @@ assert.deepEqual(stats, {
 });
 
 console.log("storage stats: kokugo_* histories are excluded");
+
+const opByStep = new Map<string, VariationOp | null>([
+  ["trig_general_angle_01::entry", null],
+  ["trig_general_angle_01::same", "same"],
+  ["trig_general_angle_01::inverse-old", "inverse"],
+  ["trig_general_angle_01::inverse-new", "inverse"],
+  ["trig_general_angle_01::plus", "plus_alpha"],
+  ["trig_general_angle_01::qualitative", "qualitative"],
+  ["trig_general_angle_01::composite", "composite"],
+]);
+const canonicalSeriesId = (seriesId: string) =>
+  seriesId === "algebra2_trig_period_01"
+    ? "trig_general_angle_01"
+    : seriesId;
+const operatorView = calculateOperatorView(
+  [
+    {
+      seriesId: "algebra2_trig_period_01",
+      records: [
+        record("entry", 1, true, 1, 3),
+        record("same", 2, true, 1, 2),
+        record("inverse-old", 1, false, 8, 3, true),
+        record("removed-step", 1, true, 1, 3),
+      ],
+    },
+    {
+      seriesId: "trig_general_angle_01",
+      records: [
+        record("inverse-new", 3, true, 1, 3),
+        record("plus", 1, true, 1, 1),
+        record("qualitative", 1, false, 1, 2),
+        record("composite", 2, true, 8, 2),
+      ],
+    },
+    {
+      seriesId: "kokugo_haiku_form_01",
+      records: [record("same", 10, true, 1, 3)],
+    },
+  ],
+  (seriesId, stepId) => opByStep.get(`${seriesId}::${stepId}`),
+  now,
+  canonicalSeriesId,
+);
+
+assert.deepEqual(operatorView, {
+  footprints: [
+    {
+      op: "same",
+      addressed: 1,
+      deepThought: 1,
+      workedExample: 0,
+      weeklyDeepThought: 1,
+      correctAttempts: { sum: 2, count: 1 },
+    },
+    {
+      op: "inverse",
+      addressed: 2,
+      deepThought: 2,
+      workedExample: 2,
+      weeklyDeepThought: 1,
+      correctAttempts: { sum: 3, count: 1 },
+    },
+    {
+      op: "plus_alpha",
+      addressed: 1,
+      deepThought: 0,
+      workedExample: 0,
+      weeklyDeepThought: 0,
+      correctAttempts: { sum: 1, count: 1 },
+    },
+    {
+      op: "qualitative",
+      addressed: 0,
+      deepThought: 1,
+      workedExample: 0,
+      weeklyDeepThought: 1,
+      correctAttempts: { sum: 0, count: 0 },
+    },
+    {
+      op: "composite",
+      addressed: 1,
+      deepThought: 1,
+      workedExample: 0,
+      weeklyDeepThought: 0,
+      correctAttempts: { sum: 2, count: 1 },
+    },
+  ],
+  focusOp: "inverse",
+  focusSeries: [{ seriesId: "trig_general_angle_01", deepSteps: 2 }],
+});
+
+console.log("operator view: boundaries and old series redirects are covered");

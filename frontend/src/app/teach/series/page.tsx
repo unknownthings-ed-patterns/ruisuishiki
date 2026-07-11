@@ -4,7 +4,23 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
-import { findStaticSeries } from "@/lib/seriesCatalog";
+import {
+  OPERATOR_LABELS,
+  OperatorFootprintView,
+} from "@/components/OperatorFootprintView";
+import {
+  buildStepOpIndex,
+  findStaticSeries,
+  resolveSeriesId,
+  stepOpFromIndex,
+} from "@/lib/seriesCatalog";
+import {
+  calculateOperatorView,
+  loadAllHistory,
+  type OperatorFootprint,
+  type OperatorViewData,
+  type SeriesHistory,
+} from "@/lib/storage";
 import { deleteTeacherSeries, getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries } from "@/lib/types";
 
@@ -22,6 +38,12 @@ type LearnerNote = {
   text: string;
 };
 
+type SeriesOperatorRow = {
+  seriesId: string;
+  title: string;
+  footprints: OperatorFootprint[];
+};
+
 const MY_PROBLEM_LABELS: Record<MyProblemKind, string> = {
   similar: "にている問題（数をかえる）",
   inverse: "さかさま問題（きくものをかえる）",
@@ -30,10 +52,11 @@ const MY_PROBLEM_LABELS: Record<MyProblemKind, string> = {
 
 export default function SeriesPreview() {
   const router = useRouter();
-  const [id, setId] = useState<string>("");
   const [series, setSeries] = useState<LearnerSeries | null>(null);
   const [myProblem, setMyProblem] = useState<MyProblemRecord | null>(null);
   const [qualNotes, setQualNotes] = useState<LearnerNote[]>([]);
+  const [operatorView, setOperatorView] = useState<OperatorViewData | null>(null);
+  const [operatorRows, setOperatorRows] = useState<SeriesOperatorRow[]>([]);
   const [isTeacherOwned, setIsTeacherOwned] = useState(false);
   const [hasHydrated, setHasHydrated] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -41,7 +64,6 @@ export default function SeriesPreview() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const seriesId = params.get("id") ?? "";
-    setId(seriesId);
     if (seriesId) {
       const teacherSeries = getTeacherSeries(seriesId);
       const activeSeries = teacherSeries ?? findStaticSeries(seriesId);
@@ -52,6 +74,54 @@ export default function SeriesPreview() {
         setQualNotes(loadQualNotes(activeSeries));
       }
     }
+    const allHistory = loadAllHistory();
+    const opIndex = buildStepOpIndex();
+    const opOf = (historySeriesId: string, stepId: string) =>
+      stepOpFromIndex(opIndex, historySeriesId, stepId);
+    setOperatorView(
+      calculateOperatorView(
+        allHistory,
+        opOf,
+        Date.now(),
+        resolveSeriesId,
+      ),
+    );
+    const groupedHistory = new Map<string, SeriesHistory>();
+    for (const history of allHistory) {
+      const canonicalId = resolveSeriesId(history.seriesId);
+      if (canonicalId.startsWith("kokugo_")) continue;
+      const found = findStaticSeries(canonicalId);
+      if (!found) continue;
+      const grouped = groupedHistory.get(canonicalId) ?? {
+        seriesId: canonicalId,
+        records: [],
+      };
+      grouped.records.push(...history.records);
+      groupedHistory.set(canonicalId, grouped);
+    }
+    setOperatorRows(
+      [...groupedHistory.values()]
+        .map((history) => {
+          const found = findStaticSeries(history.seriesId)!;
+          const view = calculateOperatorView(
+            [history],
+            opOf,
+            Date.now(),
+            resolveSeriesId,
+          );
+          return {
+            seriesId: history.seriesId,
+            title: found.title,
+            footprints: view.footprints,
+          };
+        })
+        .filter((row) =>
+          row.footprints.some(
+            (footprint) =>
+              footprint.addressed > 0 || footprint.deepThought > 0,
+          ),
+        ),
+    );
     setHasHydrated(true);
   }, []);
 
@@ -281,6 +351,70 @@ export default function SeriesPreview() {
                   </ul>
                 </div>
               )}
+            </div>
+          </section>
+        )}
+
+        {operatorView && operatorRows.length > 0 && (
+          <section className="flex flex-col gap-3">
+            <h2
+              className="text-foreground"
+              style={{ fontSize: "13px", letterSpacing: "0.3em" }}
+            >
+              学習の足あと（このブラウザ）
+            </h2>
+            <div
+              className="rounded-lg border border-border p-5 flex flex-col gap-5"
+              style={{ background: "var(--surface)" }}
+            >
+              <OperatorFootprintView data={operatorView} />
+              <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+                この足あとはこのブラウザの学習記録です（サーバーには送られていません）。
+              </p>
+              <div className="overflow-x-auto">
+                <table
+                  className="w-full border-collapse text-left"
+                  style={{ fontSize: "12px" }}
+                >
+                  <thead>
+                    <tr className="border-b border-border text-muted">
+                      <th className="py-2 pr-4 font-normal">系列</th>
+                      {operatorView.footprints.map((footprint) => (
+                        <th
+                          key={footprint.op}
+                          className="px-3 py-2 text-center font-normal whitespace-nowrap"
+                        >
+                          {OPERATOR_LABELS[footprint.op]}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {operatorRows.map((row) => (
+                      <tr key={row.seriesId} className="border-b border-border/70">
+                        <th
+                          scope="row"
+                          className="py-3 pr-4 font-normal text-foreground min-w-48"
+                        >
+                          <MathText text={row.title} />
+                        </th>
+                        {row.footprints.map((footprint) => (
+                          <td
+                            key={footprint.op}
+                            className="px-3 py-3 text-center text-muted tnum whitespace-nowrap"
+                            aria-label={`${OPERATOR_LABELS[footprint.op]} じっくり ${footprint.deepThought}、歩いた ${footprint.addressed}`}
+                          >
+                            {footprint.deepThought}/{footprint.addressed}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-muted" style={{ fontSize: "11px" }}>
+                各セルは「じっくり考えた step / 歩いた step」。
+              </p>
             </div>
           </section>
         )}

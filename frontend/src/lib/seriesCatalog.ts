@@ -97,7 +97,7 @@ import {
   STATISTICS_SERIES_LIST,
   STATS_MEDIAN_SERIES,
 } from "./seriesStats";
-import type { LearnerSeries } from "./types";
+import type { LearnerSeries, VariationOp } from "./types";
 
 export type SeriesSubject =
   | "elementary"
@@ -666,6 +666,29 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,
 ];
+
+/** `${seriesId}::${stepId}` → 前題からの変化オペレータ。 */
+export function buildStepOpIndex(): Map<string, VariationOp | null> {
+  const index = new Map<string, VariationOp | null>();
+  for (const series of ALL_STATIC_SERIES) {
+    for (const step of series.steps) {
+      index.set(
+        `${series.id}::${step.id}`,
+        step.variationFromPrevious,
+      );
+    }
+  }
+  return index;
+}
+
+/** 旧系列 id を現行 id に直してから、step のオペレータを引く。 */
+export function stepOpFromIndex(
+  index: Map<string, VariationOp | null>,
+  seriesId: string,
+  stepId: string,
+): VariationOp | null | undefined {
+  return index.get(`${resolveSeriesId(seriesId)}::${stepId}`);
+}
 
 /**
  * 系列 id から学習者ビューの URL を作る。

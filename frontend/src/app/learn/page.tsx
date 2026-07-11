@@ -3,17 +3,24 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
+import { OperatorFootprintView } from "@/components/OperatorFootprintView";
 import {
+  buildStepOpIndex,
   type CatalogEntry,
+  resolveSeriesId,
   type SeriesSubject,
+  stepOpFromIndex,
   STATIC_CATALOG,
   SUBJECT_GROUP_LABEL,
   SUBJECT_ORDER,
 } from "@/lib/seriesCatalog";
 import {
-  calculateLearningStats,
+  calculateLearningStatsFromHistory,
+  calculateOperatorView,
   getResumeIndex,
   type LearningStats,
+  type OperatorViewData,
+  loadAllHistory,
   loadSeriesHistory,
 } from "@/lib/storage";
 import {
@@ -49,6 +56,7 @@ export default function LearnIndex() {
   const [catalog, setCatalog] = useState<CatalogWithProgress[]>([]);
   const [teacherSeries, setTeacherSeries] = useState<TeacherSeriesSummary[]>([]);
   const [stats, setStats] = useState<LearningStats | null>(null);
+  const [operatorView, setOperatorView] = useState<OperatorViewData | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
   // 折りたたまれた topicGroup（key は `${subject}|${topicGroup}`）。
   // デフォルトは「全グループ畳む。ただし進行中の系列を含むグループだけ自動展開」。
@@ -73,7 +81,17 @@ export default function LearnIndex() {
     });
     setCatalog(withProgress);
     setTeacherSeries(listTeacherSeries());
-    setStats(calculateLearningStats());
+    const allHistory = loadAllHistory();
+    const opIndex = buildStepOpIndex();
+    setStats(calculateLearningStatsFromHistory(allHistory));
+    setOperatorView(
+      calculateOperatorView(
+        allHistory,
+        (seriesId, stepId) => stepOpFromIndex(opIndex, seriesId, stepId),
+        Date.now(),
+        resolveSeriesId,
+      ),
+    );
 
     // 折りたたみ状態を決定
     let resolvedCollapsed: Set<string> | null = null;
@@ -162,8 +180,15 @@ export default function LearnIndex() {
           </p>
         </header>
 
-        {/* 学習統計（履歴が1問でもあれば表示） */}
-        {hasHydrated && stats && stats.lifetimeCorrect > 0 && (
+        {/* 算数・数学の足あと（オペレータを主役にする） */}
+        {hasHydrated &&
+          stats &&
+          operatorView &&
+          (stats.lifetimeCorrect > 0 ||
+            operatorView.footprints.some(
+              (footprint) =>
+                footprint.addressed > 0 || footprint.deepThought > 0,
+            )) && (
           <section
             className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-4"
             style={{ background: "var(--surface)" }}
@@ -172,30 +197,7 @@ export default function LearnIndex() {
             <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
               算数・数学の足あと
             </span>
-            <div className="flex flex-wrap items-baseline justify-around gap-x-8 gap-y-3">
-              <Stat
-                label="今週"
-                value={stats.weeklyCorrect.toLocaleString()}
-                unit="問"
-              />
-              <Stat
-                label="累計"
-                value={stats.lifetimeCorrect.toLocaleString()}
-                unit="問"
-              />
-              {stats.lifetimeAccuracy !== null && (
-                <Stat
-                  label="正答率"
-                  value={Math.round(stats.lifetimeAccuracy * 100).toString()}
-                  unit="%"
-                />
-              )}
-              <Stat
-                label="歩いた系列"
-                value={stats.seriesEngaged.toString()}
-                unit="本"
-              />
-            </div>
+            <OperatorFootprintView data={operatorView} stats={stats} />
           </section>
         )}
 
@@ -551,42 +553,5 @@ function CatalogCard({ item }: { item: CatalogWithProgress }) {
         )}
       </Link>
     </li>
-  );
-}
-
-function Stat({
-  label,
-  value,
-  unit,
-}: {
-  label: string;
-  value: string;
-  unit?: string;
-}) {
-  return (
-    <div className="flex flex-col items-center">
-      <span
-        className="text-muted"
-        style={{ fontSize: "11px", letterSpacing: "0.2em" }}
-      >
-        {label}
-      </span>
-      <p className="mt-1 flex items-baseline gap-1">
-        <span
-          className="font-serif text-foreground tnum"
-          style={{ fontSize: "clamp(22px, 1.75rem, 28px)" }}
-        >
-          {value}
-        </span>
-        {unit && (
-          <span
-            className="text-muted"
-            style={{ fontSize: "12px", letterSpacing: "0.05em" }}
-          >
-            {unit}
-          </span>
-        )}
-      </p>
-    </div>
   );
 }

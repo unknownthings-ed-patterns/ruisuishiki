@@ -9,7 +9,7 @@
  * 単純な正答率ではなく、どの変化オペレータで詰まったかを保持する。
  */
 
-import type { StepRecord } from "./types";
+import type { StepRecord, VariationOp } from "./types";
 
 const STORAGE_PREFIX = "ruisuishiki:history:";
 
@@ -115,6 +115,34 @@ export type LearningStats = {
 
 export type SeriesHistory = { seriesId: string; records: StepRecord[] };
 
+const OPERATOR_ORDER: VariationOp[] = [
+  "same",
+  "inverse",
+  "plus_alpha",
+  "qualitative",
+  "composite",
+];
+
+export type OperatorFootprint = {
+  op: VariationOp;
+  addressed: number;
+  deepThought: number;
+  workedExample: number;
+  weeklyDeepThought: number;
+  correctAttempts: { sum: number; count: number };
+};
+
+export type OperatorViewData = {
+  footprints: OperatorFootprint[];
+  focusOp: VariationOp | null;
+  focusSeries: { seriesId: string; deepSteps: number }[];
+};
+
+type FocusSeriesAccumulator = {
+  deepSteps: number;
+  latestAnsweredAt: number;
+};
+
 function isLearningTopStatsSeries(seriesId: string): boolean {
   return !seriesId.startsWith("kokugo_");
 }
@@ -154,4 +182,104 @@ export function calculateLearningStatsFromHistory(
 
 export function calculateLearningStats(): LearningStats {
   return calculateLearningStatsFromHistory(loadAllHistory());
+}
+
+export function calculateOperatorView(
+  all: SeriesHistory[],
+  opOf: (
+    seriesId: string,
+    stepId: string,
+  ) => VariationOp | null | undefined,
+  now: number = Date.now(),
+  canonicalSeriesId: (seriesId: string) => string = (seriesId) => seriesId,
+): OperatorViewData {
+  const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+  const footprints = new Map<VariationOp, OperatorFootprint>(
+    OPERATOR_ORDER.map((op) => [
+      op,
+      {
+        op,
+        addressed: 0,
+        deepThought: 0,
+        workedExample: 0,
+        weeklyDeepThought: 0,
+        correctAttempts: { sum: 0, count: 0 },
+      },
+    ]),
+  );
+  const seriesByOp = new Map<
+    VariationOp,
+    Map<string, FocusSeriesAccumulator>
+  >();
+
+  for (const { seriesId, records } of all) {
+    const canonicalId = canonicalSeriesId(seriesId);
+    if (!isLearningTopStatsSeries(canonicalId)) continue;
+    for (const record of records) {
+      const op = opOf(canonicalId, record.stepId);
+      if (op === null || op === undefined) continue;
+      const footprint = footprints.get(op);
+      if (!footprint) continue;
+
+      if (record.correct || record.skipped) footprint.addressed++;
+      if (record.correct) {
+        footprint.correctAttempts.sum += record.attempts;
+        footprint.correctAttempts.count++;
+      }
+      if (record.hintsOpened >= 2) {
+        footprint.deepThought++;
+        const answeredAt = new Date(record.answeredAt).getTime();
+        if (!Number.isNaN(answeredAt) && answeredAt >= oneWeekAgo) {
+          footprint.weeklyDeepThought++;
+        }
+        let bySeries = seriesByOp.get(op);
+        if (!bySeries) {
+          bySeries = new Map();
+          seriesByOp.set(op, bySeries);
+        }
+        const current = bySeries.get(canonicalId) ?? {
+          deepSteps: 0,
+          latestAnsweredAt: 0,
+        };
+        current.deepSteps++;
+        if (!Number.isNaN(answeredAt)) {
+          current.latestAnsweredAt = Math.max(
+            current.latestAnsweredAt,
+            answeredAt,
+          );
+        }
+        bySeries.set(canonicalId, current);
+      }
+      if (record.hintsOpened === 3) footprint.workedExample++;
+    }
+  }
+
+  const orderedFootprints = OPERATOR_ORDER.map((op) => footprints.get(op)!);
+  const focus = orderedFootprints.reduce<OperatorFootprint | null>(
+    (best, candidate) => {
+      if (!best) return candidate;
+      if (candidate.weeklyDeepThought !== best.weeklyDeepThought) {
+        return candidate.weeklyDeepThought > best.weeklyDeepThought
+          ? candidate
+          : best;
+      }
+      return candidate.deepThought > best.deepThought ? candidate : best;
+    },
+    null,
+  );
+  const focusOp = focus && focus.deepThought > 0 ? focus.op : null;
+  const focusSeries = focusOp
+    ? [...(seriesByOp.get(focusOp)?.entries() ?? [])]
+        .sort((a, b) => {
+          const recent = b[1].latestAnsweredAt - a[1].latestAnsweredAt;
+          return recent !== 0 ? recent : b[1].deepSteps - a[1].deepSteps;
+        })
+        .slice(0, 3)
+        .map(([seriesId, value]) => ({
+          seriesId,
+          deepSteps: value.deepSteps,
+        }))
+    : [];
+
+  return { footprints: orderedFootprints, focusOp, focusSeries };
 }
