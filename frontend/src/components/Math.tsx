@@ -4980,6 +4980,80 @@ export function TrigDoubleAngle() {
 }
 
 /**
+ * 合成系列の足場図（C1/C2 共通実装）：sin の係数 a を x 座標・cos の係数 b を
+ * y 座標とする点 P(a, b) と、OP の長さ r・x 軸となす角 α。
+ * r・α の値は書かない（それが問い）。quadrant2 で第 2 象限版（C2）。
+ */
+function TrigCompositionPointBase({ quadrant2 }: { quadrant2: boolean }) {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = quadrant2 ? 150 : 90;
+  const oy = 170;
+  const ang = quadrant2 ? (135 * Math.PI) / 180 : (48 * Math.PI) / 180;
+  const L = 118;
+  const px = ox + L * Math.cos(ang);
+  const py = oy - L * Math.sin(ang);
+  return (
+    <svg
+      viewBox="0 0 280 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label={
+        quadrant2
+          ? "sin の係数が負のとき、点 P(a, b) は第 2 象限に移る。OP の長さと x 軸からの角が合成の鍵"
+          : "sin の係数 a を x 座標、cos の係数 b を y 座標とする点 P(a, b)。OP の長さ r と角 α が合成の鍵"
+      }
+    >
+      <line x1="14" y1={oy} x2="266" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="18" x2={ox} y2="228" stroke={muted} strokeWidth="0.5" />
+      <text x="262" y={oy + 13} fontSize="9" fill={muted}>X</text>
+      <text x={ox - 4} y="20" fontSize="9" fill={muted} textAnchor="end">Y</text>
+
+      {/* P への線分と破線の座標 */}
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={accent} strokeWidth="1.8" />
+      <line x1={px} y1={oy} x2={px} y2={py} stroke={muted} strokeWidth="0.8" strokeDasharray="3,3" />
+      <line x1={ox} y1={py} x2={px} y2={py} stroke={muted} strokeWidth="0.8" strokeDasharray="3,3" />
+
+      {/* α の弧 */}
+      {quadrant2 ? (
+        <path d={`M ${ox + 30} ${oy} A 30 30 0 0 0 ${ox + 30 * Math.cos(ang)} ${oy - 30 * Math.sin(ang)}`} fill="none" stroke={muted} strokeWidth="1" />
+      ) : (
+        <path d={`M ${ox + 30} ${oy} A 30 30 0 0 0 ${ox + 30 * Math.cos(ang)} ${oy - 30 * Math.sin(ang)}`} fill="none" stroke={muted} strokeWidth="1" />
+      )}
+      <text x={ox + (quadrant2 ? 34 : 38)} y={oy - 14} fontSize="11" fill={muted} fontStyle="italic">α</text>
+
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <text x={px + (quadrant2 ? -8 : 8)} y={py - 6} fontSize="10.5" fill={accent} fontStyle="italic" textAnchor={quadrant2 ? "end" : "start"}>P(a, b)</text>
+      <text x={(ox + px) / 2 + (quadrant2 ? -14 : 10)} y={(oy + py) / 2 - 6} fontSize="10.5" fill={accent} fontStyle="italic">r</text>
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={ox + 5} y={oy + 14} fontSize="10" fill={muted}>O</text>
+
+      {/* 係数の説明 */}
+      <text x={px} y={oy + 14} fontSize="9.5" fill={muted} textAnchor="middle">a（sin の係数）</text>
+      <text x={quadrant2 ? ox + 6 : ox - 6} y={py + 3} fontSize="9.5" fill={muted} textAnchor={quadrant2 ? "start" : "end"}>b（cos の係数）</text>
+
+      <text x="140" y="237" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        {quadrant2
+          ? "係数が負なら、P は第 1 象限を出る——α は鈍角や負の角になる"
+          : "OP の長さ r と、x 軸からの角 α——この 2 つが合成された波の正体"}
+      </text>
+    </svg>
+  );
+}
+
+/** 合成系列 Step 1 の足場図（C1）：第 1 象限の点 P(a, b)。 */
+export function TrigCompositionPoint() {
+  return <TrigCompositionPointBase quadrant2={false} />;
+}
+
+/** 合成系列 Step 6 の足場図（C2）：係数が負で P が第 2 象限にある版。 */
+export function TrigCompositionPointQ2() {
+  return <TrigCompositionPointBase quadrant2={true} />;
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7883,6 +7957,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigDoubleAngle />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_COMPOSITION_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigCompositionPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_COMPOSITION_POINT_Q2>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigCompositionPointQ2 />
             </div>
           );
         }

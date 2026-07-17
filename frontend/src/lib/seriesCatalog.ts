@@ -39,6 +39,7 @@ import {
 } from "./seriesAlgebra2";
 import {
   TRIG_ADDITION_SERIES,
+  TRIG_COMPOSITION_SERIES,
   TRIG_DOUBLE_HALF_SERIES,
   TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
@@ -598,6 +599,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "2倍角・半角 — 加法定理の特殊化と逆読みで公式を生やす。cos2θ の 3 つの顔・次数下げ・倍角方程式まで",
+  },
+  {
+    series: TRIG_COMPOSITION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "合成 — a sinθ + b cosθ を 1 つの波に。点 (a,b) の長さと向きが振幅と位相。方程式・最大最小まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
