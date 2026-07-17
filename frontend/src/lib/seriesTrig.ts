@@ -1818,6 +1818,349 @@ export const TRIG_GRAPH_SERIES: LearnerSeries = {
 「円の高さを開くと、なぜ波になる？」——回る点の高さは、上がって・下がって・$1$ 周で必ず元に戻る。この「必ず戻る」が横軸の上でくり返し模様＝波になる。周期 $2\\pi$ は円の $1$ 周そのもの。「なぜ $4$ つのつまみであらゆる波が作れる？」——波の個性は「高さ・細かさ・横ずれ・上下」の $4$ つで決まり、それぞれ $a$・$b$・$p$・$q$ が独立に受け持つから。しかもこのつまみは二次関数から持ち越した**グラフ変換の言語**——円運動と波、そして関数一般のグラフが、$1$ つの文法でつながりました。`,
 };
 
+/** TRIG6: 三角関数の性質・変換公式（単位円の対称性で読み替え）。
+ *  4 つの折り返し（x 軸・y 軸・原点・y=x）が角の変換を「符号」と「sin↔cos 入れ替え」に翻訳する。
+ *  関数名を答えさせる形は現行入力に無いので、値（分数・√）で問う（背骨 §4 の方針）。
+ *  背骨: docs/trig_continuation_series_design_fable.md §4（Fable 5 設計・Fable 5 実装）。 */
+export const TRIG_PROPERTY_SERIES: LearnerSeries = {
+  id: "trig_property_01",
+  title: "三角関数の性質（対称性で読み替える）",
+  subtitle:
+    "数Ⅱ・B 三角関数より — $-\\theta$・$\\pi\\pm\\theta$・$\\dfrac{\\pi}{2}-\\theta$ を単位円の折り返しで読む。覚えずに導く $10$ 問。",
+  patternId: "TRIG6",
+  unit: "algebra_2",
+  revelationLabel:
+    "単位円の 4 つの折り返し（x 軸・y 軸・原点・y=x）が、角の変換を「符号の反転」と「sin↔cos の入れ替え」に翻訳する——覚える公式は 1 つもない",
+  drivingQuestion:
+    "角は無限にあるのに、覚える値は第 $1$ 象限のひと握りで足りるのはなぜ？——単位円の折り返し（対称）が、角の変換を『符号の反転』と『$\\sin\\leftrightarrow\\cos$ の入れ替え』に翻訳してしまうとしたら？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "系列1・2で「$1$ 回転を超えた角は、ぐるっと回って同じ点に戻る」ことを見ました。この見方で、$\\sin\\dfrac{9\\pi}{4}$ の値を求めましょう。",
+      answer: 1 / Math.sqrt(2),
+      answerDisplay: "1/√2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin(9π/4)",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$\\dfrac{9\\pi}{4}$ は $1$ 周（$2\\pi$）より大きい角。[単位円] の点は $1$ 周すると元に戻るのだった——$1$ 周ぶんを取り除くと、この点はどの角の点と同じ場所にいる？",
+        },
+        {
+          layer: 2,
+          text: "$1$ 周は $2\\pi = \\dfrac{8\\pi}{4}$。$\\dfrac{9\\pi}{4}$ からそれを取り除くと残りはいくつ？ その角の $\\sin$ は特別角の表にある値だね。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{9\\pi}{4} - 2\\pi = \\dfrac{9\\pi}{4} - \\dfrac{8\\pi}{4} = \\dfrac{\\pi}{4}$。点は $\\dfrac{\\pi}{4}$ と同じ場所なので $\\sin\\dfrac{9\\pi}{4} = \\sin\\dfrac{\\pi}{4} = \\dfrac{1}{\\sqrt{2}}$。式で書けば $\\sin(\\theta + 2\\pi) = \\sin\\theta$——**周期性**。これがこの系列の「読み替え」第 $1$ 号。",
+        },
+      ],
+      formulaPreview: "9π/4 − 2π = π/4 → sin(9π/4) = sin(π/4) = 1/√2",
+      figureMarker: "<<UNIT_CIRCLE_STEP1>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "今度はマイナスの角です。$\\cos\\left(-\\dfrac{\\pi}{3}\\right)$ の値を求めましょう。",
+      answer: 0.5,
+      answerDisplay: "1/2",
+      unit: "",
+      unknownLabel: "cos(−π/3)",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は「回りすぎた角」を戻した。今度は「逆回りの角」。$-\\dfrac{\\pi}{3}$ の点は、$+\\dfrac{\\pi}{3}$ の点をどの線で折り返した場所にある？ 折り返しても変わらない座標はどっち？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「$1$ 周戻す」でなく「$x$ 軸で折り返す」こと。$-\\theta$ の点は $\\theta$ の点と**上下対称**（$x$ 軸対称）——横の座標（$\\cos$）は同じで、縦（$\\sin$）だけ符号が変わる。今回読むのは横の座標だね。",
+        },
+        {
+          layer: 3,
+          text: "$-\\dfrac{\\pi}{3}$ の点は $\\dfrac{\\pi}{3}$ の点を $x$ 軸で折り返した位置。$x$ 座標（$\\cos$）は折り返しで変わらないので $\\cos\\left(-\\dfrac{\\pi}{3}\\right) = \\cos\\dfrac{\\pi}{3} = \\dfrac{1}{2}$。式では $\\cos(-\\theta) = \\cos\\theta$（$\\sin(-\\theta) = -\\sin\\theta$、$\\tan(-\\theta) = -\\tan\\theta$）。**折り返しで何が保たれ何が反転するか**を見るだけ。",
+        },
+      ],
+      formulaPreview: "−θ は x 軸対称 → cos はそのまま → cos(−π/3) = 1/2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText: "$\\sin\\left(-\\dfrac{\\pi}{6}\\right)$ の値を求めましょう。",
+      answer: -0.5,
+      answerDisplay: "−1/2",
+      unit: "",
+      unknownLabel: "sin(−π/6)",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「$x$ 軸での折り返し」。変わったのは読む座標が横（$\\cos$）から縦（$\\sin$）になったこと。上下の折り返しで、縦の座標はどうなる？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは読む座標だけ。$x$ 軸で折り返すと、上にあった点は下へ——縦の座標（$\\sin$）は符号が反転する。$\\sin\\dfrac{\\pi}{6}$ の値に、その反転を効かせると？",
+        },
+        {
+          layer: 3,
+          text: "$-\\dfrac{\\pi}{6}$ の点は $\\dfrac{\\pi}{6}$ の点の上下鏡うつし。縦の座標は符号だけ変わるので $\\sin\\left(-\\dfrac{\\pi}{6}\\right) = -\\sin\\dfrac{\\pi}{6} = -\\dfrac{1}{2}$。前題（$\\cos$ は不変）と合わせて「$x$ 軸対称：$\\cos$ 保存・$\\sin$ 反転」が揃った。",
+        },
+      ],
+      formulaPreview: "−θ は x 軸対称 → sin は反転 → sin(−π/6) = −1/2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "折り返す軸が変わります。$\\cos\\dfrac{5\\pi}{6}$ を、$\\dfrac{5\\pi}{6} = \\pi - \\dfrac{\\pi}{6}$ と見て求めましょう。",
+      answer: -Math.sqrt(3) / 2,
+      answerDisplay: "−√3/2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "cos(5π/6)",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2・3 と比べてみよう。あちらは $x$ 軸（上下）の折り返しだった。$\\pi - \\theta$ の点は、$\\theta$ の点をどの軸で折り返した場所にある？ 図の $2$ 点の並び方を見てみよう。",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは折り返す軸が $x$ 軸から **$y$ 軸**（左右）に移ったこと。左右の折り返しでは、高さ（$\\sin$）が保たれ、横（$\\cos$）の符号が反転する——$x$ 軸対称とちょうど役割が逆だね。",
+        },
+        {
+          layer: 3,
+          text: "$\\pi - \\dfrac{\\pi}{6}$ の点は $\\dfrac{\\pi}{6}$ の点の**左右鏡うつし**（$y$ 軸対称）。横の座標は符号だけ変わるので $\\cos\\dfrac{5\\pi}{6} = -\\cos\\dfrac{\\pi}{6} = -\\dfrac{\\sqrt{3}}{2}$。式では $\\cos(\\pi-\\theta) = -\\cos\\theta$・$\\sin(\\pi-\\theta) = \\sin\\theta$。**どの軸で折るかで、保存と反転の役が入れ替わる**。",
+        },
+      ],
+      formulaPreview: "π−θ は y 軸対称 → cos は反転 → cos(5π/6) = −√3/2",
+      figureMarker: "<<TRIG_SYMMETRY_Y_AXIS>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$\\sin\\dfrac{7\\pi}{6}$ を、$\\dfrac{7\\pi}{6} = \\pi + \\dfrac{\\pi}{6}$ と見て求めましょう。",
+      answer: -0.5,
+      answerDisplay: "−1/2",
+      unit: "",
+      unknownLabel: "sin(7π/6)",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$\\pi$ を「引く」でなく「足す」形になった。$\\pi + \\theta$ の点は、$\\theta$ の点とどんな位置関係？（半周まわった先——折り返しの言葉でいうと何対称？）",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは対称の種類が $y$ 軸から**原点**に移ったこと。半周先の点は原点をはさんで反対側——横も縦も**両方**符号が反転する。今回読むのは縦（$\\sin$）。",
+        },
+        {
+          layer: 3,
+          text: "$\\pi + \\dfrac{\\pi}{6}$ の点は $\\dfrac{\\pi}{6}$ の点の**原点対称**（半周先）。縦も横も符号が反転するので $\\sin\\dfrac{7\\pi}{6} = -\\sin\\dfrac{\\pi}{6} = -\\dfrac{1}{2}$。式では $\\sin(\\pi+\\theta) = -\\sin\\theta$・$\\cos(\\pi+\\theta) = -\\cos\\theta$（両方反転だから $\\tan(\\pi+\\theta) = \\tan\\theta$ は不変——系列5で見た $\\tan$ の周期 $\\pi$ の正体）。",
+        },
+      ],
+      formulaPreview: "π+θ は原点対称 → sin も cos も反転 → sin(7π/6) = −1/2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "逆向きに探します。$0 \\le \\theta < 2\\pi$、$\\theta \\ne \\dfrac{\\pi}{3}$ で、$\\sin\\theta = \\sin\\dfrac{\\pi}{3}$ となる**もう $1$ つの角** $\\theta$ を求めましょう。",
+      answer: (2 * Math.PI) / 3,
+      answerDisplay: "2π/3",
+      inputAffordances: ["pi"],
+      unit: "",
+      unknownLabel: "sinθ=sin(π/3) のもう 1 つの解",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。step4 は「変換した角の値を読む」向きだった。今度は**逆**——「同じ値になる相手の角はどこ？」。$\\sin$ が同じ＝高さが同じ点は、単位円のどこに、どんな対称で並んでいた？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは矢印の向きだけ（値から角へ）。高さが同じ $2$ 点は **$y$ 軸対称**に向かい合う——step4 で使った $\\pi - \\theta$ の関係を、今度は「相手探し」に使えばいい。$\\dfrac{\\pi}{3}$ の相手は？",
+        },
+        {
+          layer: 3,
+          text: "高さ（$\\sin$）が同じ点は $y$ 軸対称のペア。$\\dfrac{\\pi}{3}$ の相手は $\\pi - \\dfrac{\\pi}{3} = \\dfrac{2\\pi}{3}$。よって $\\theta = \\dfrac{2\\pi}{3}$。[三角方程式]（系列3）で「$\\sin$ の解は左右対称に $2$ つ」だったのは、この $\\pi - \\theta$ の対称そのものだった——公式と解の個数が $1$ 本につながる。",
+        },
+      ],
+      formulaPreview: "sin が同じ = y 軸対称 → 相手は π − π/3 = 2π/3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "最大の山場です。$\\sin\\theta = \\dfrac{2}{7}$ のとき、$\\cos\\left(\\dfrac{\\pi}{2} - \\theta\\right)$ の値を求めましょう。（$\\dfrac{2}{7}$ は特別角の値ではありません——でも求められます）",
+      answer: 2 / 7,
+      answerDisplay: "2/7",
+      unit: "",
+      unknownLabel: "cos(π/2−θ)（sinθ=2/7）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4・5 と比べてみよう。これまでの折り返しは $x$ 軸・$y$ 軸・原点で、$\\sin$ は $\\sin$ のまま・$\\cos$ は $\\cos$ のままだった。今度の $\\dfrac{\\pi}{2} - \\theta$ は**斜めの直線 $y = x$** での折り返し。この折り返しで、点の $x$ 座標と $y$ 座標には何が起きる？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは「座標が**入れ替わる**」こと。$y = x$ で折り返すと点 $(a, b)$ は $(b, a)$ に移る——横だった値が縦に、縦だった値が横になる。つまり $\\dfrac{\\pi}{2} - \\theta$ の点の $x$ 座標（$\\cos$）は、元の点の**どの座標**と同じ？",
+        },
+        {
+          layer: 3,
+          text: "$y = x$ での折り返しで座標が入れ替わるので、$\\cos\\left(\\dfrac{\\pi}{2} - \\theta\\right) = \\sin\\theta$（同様に $\\sin\\left(\\dfrac{\\pi}{2} - \\theta\\right) = \\cos\\theta$）。だから値は $\\dfrac{2}{7}$——$\\theta$ が特別角でなくても、**入れ替えの公式だけで答えが出る**。符号の反転しか起こさなかった今までの折り返しと違い、$y = x$ は $\\sin$ と $\\cos$ を入れ替える——ここがこの系列いちばんの質的転換。",
+        },
+      ],
+      formulaPreview: "y=x 折り返しで座標交換 → cos(π/2−θ) = sinθ = 2/7",
+      figureMarker: "<<TRIG_SYMMETRY_DIAGONAL>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\cos\\theta = \\dfrac{3}{8}$ のとき、$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$ の値を求めましょう。",
+      answer: 3 / 8,
+      answerDisplay: "3/8",
+      unit: "",
+      unknownLabel: "sin(π/2+θ)（cosθ=3/8）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「$\\dfrac{\\pi}{2}$ がらみの読み替え」。変わったのは引き算が足し算になったこと。$\\dfrac{\\pi}{2} + \\theta = \\dfrac{\\pi}{2} - (-\\theta)$ と見れば、前題の入れ替えと step2 の折り返しの**合わせ読み**にできそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは符号だけ。$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$ は、前題の入れ替え（$\\sin$ と $\\cos$ が交代）を効かせると $\\cos$ の何かになる。$+\\theta$ と $-\\theta$ の違いは step2・3 の $x$ 軸対称で処理できる——$\\cos$ は $-\\theta$ に強かったね。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{\\pi}{2} + \\theta = \\dfrac{\\pi}{2} - (-\\theta)$ と読む。入れ替えで $\\sin\\left(\\dfrac{\\pi}{2} - (-\\theta)\\right) = \\cos(-\\theta)$、さらに $x$ 軸対称で $\\cos(-\\theta) = \\cos\\theta$。よって $\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right) = \\cos\\theta = \\dfrac{3}{8}$。**知らない変換も、知っている折り返しの組み合わせに分解すれば読める**。",
+        },
+      ],
+      formulaPreview: "π/2+θ = π/2−(−θ) → sin(π/2+θ) = cos(−θ) = cosθ = 3/8",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "変換を重ねます。$\\sin\\theta = \\dfrac{1}{4}$ のとき、$\\sin(\\theta + 3\\pi)$ の値を求めましょう。",
+      answer: -0.25,
+      answerDisplay: "−1/4",
+      unit: "",
+      unknownLabel: "sin(θ+3π)（sinθ=1/4）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "step1（$1$ 周取り除く）と step5（半周＝原点対称）を思い出そう。$3\\pi$ はそのどちらでもない大きさ——でも「$1$ 周」と「半周」に**分けられ**そう？",
+        },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、足す角が $\\pi$ でなく $3\\pi$ になったこと。$3\\pi = 2\\pi + \\pi$——まず step1 の周期性で $2\\pi$ を取り除けば、残るのは step5 でやった形そのもの。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin(\\theta + 3\\pi) = \\sin(\\theta + \\pi + 2\\pi)$。周期性（step1）で $2\\pi$ が消えて $\\sin(\\theta + \\pi)$、原点対称（step5）で $\\sin(\\theta+\\pi) = -\\sin\\theta$。よって $-\\dfrac{1}{4}$。**大きな変換は、基本の折り返しを順に効かせて降ろす**——$2$ 段重ねの読み替え。",
+        },
+      ],
+      formulaPreview: "θ+3π = (θ+π)+2π → sin(θ+π) = −sinθ = −1/4",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "仕上げです。どんな $\\theta$ でも、$\\sin(\\pi + \\theta) + \\sin(-\\theta) + 2\\sin(\\pi - \\theta)$ の値は**同じ数**になります。その値を求めましょう。",
+      answer: 0,
+      unit: "",
+      unknownLabel: "sin(π+θ)+sin(−θ)+2sin(π−θ) の値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "この式には、この系列で覚えた折り返しが $3$ 種類も同居している。$1$ 項ずつ、どの折り返し（原点・$x$ 軸・$y$ 軸）だったかを思い出して、ぜんぶ $\\sin\\theta$ の言葉に読み替えたら、式はどうなりそう？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは「読み替えを**式の簡約**に使う」こと。$\\pi + \\theta$ は原点対称（step5）、$-\\theta$ は $x$ 軸対称（step3）、$\\pi - \\theta$ は $y$ 軸対称（step4——$\\sin$ は保存）。$3$ 項とも $\\sin\\theta$ だけの式に直して足し合わせると？",
+        },
+        {
+          layer: 3,
+          text: "$\\sin(\\pi+\\theta) = -\\sin\\theta$（原点対称）、$\\sin(-\\theta) = -\\sin\\theta$（$x$ 軸対称）、$\\sin(\\pi-\\theta) = \\sin\\theta$（$y$ 軸対称・保存）。代入すると $-\\sin\\theta - \\sin\\theta + 2\\sin\\theta = 0$。$\\theta$ が消えて、どんな角でも $0$。**バラバラに見えた項が、折り返しの翻訳で打ち消し合う**——変換公式は式を軽くする道具でもある。",
+        },
+      ],
+      formulaPreview: "−sinθ − sinθ + 2sinθ = 0（θ によらない）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 角は無限にあるのに、覚える値は第 $1$ 象限のひと握りで足りるのはなぜ？——単位円の折り返し（対称）が、角の変換を『符号の反転』と『$\\sin\\leftrightarrow\\cos$ の入れ替え』に翻訳してしまうとしたら？
+
+────────
+
+**公式は覚えない。折り返しから、その場で導く。**
+
+$\\sin(\\pi - \\theta)$・$\\cos(-\\theta)$・$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$……この単元は公式の数がやたら多く見えます。でも暗記は要りません。すべては [単位円] の **$4$ つの折り返し**の言い換えだからです。「忘れない」ことより「**忘れても導ける**」ことが、この単元のほんとうの目標です。
+
+| 変換 | 対称 | 起きること | 公式 |
+|---|---|---|---|
+| $\\theta + 2\\pi$ | （$1$ 周して同じ点） | 何も変わらない | $\\sin(\\theta+2\\pi) = \\sin\\theta$ |
+| $-\\theta$ | $x$ 軸対称（上下） | $\\sin$ だけ反転 | $\\cos(-\\theta) = \\cos\\theta,\\ \\sin(-\\theta) = -\\sin\\theta$ |
+| $\\pi - \\theta$ | $y$ 軸対称（左右） | $\\cos$ だけ反転 | $\\sin(\\pi-\\theta) = \\sin\\theta,\\ \\cos(\\pi-\\theta) = -\\cos\\theta$ |
+| $\\pi + \\theta$ | 原点対称（半周） | 両方反転 | $\\sin(\\pi+\\theta) = -\\sin\\theta,\\ \\cos(\\pi+\\theta) = -\\cos\\theta$ |
+| $\\dfrac{\\pi}{2} - \\theta$ | $y = x$ 対称（斜め） | **座標が入れ替わる** | $\\sin\\left(\\dfrac{\\pi}{2}-\\theta\\right) = \\cos\\theta,\\ \\cos\\left(\\dfrac{\\pi}{2}-\\theta\\right) = \\sin\\theta$ |
+
+<<TRIG_SYMMETRY_Y_AXIS>>
+
+**ここが胚細胞**：図形の**対称性が計算を減らす**。無限にある角も、折り返せば必ず第 $1$ 象限のどれかに重なる。だから覚える値はひと握りでよく、残りは「どの折り返しか」→「何が保たれ・何が反転し・何が入れ替わるか」の翻訳だけ。対称性で場合の数を減らす発想は、偶関数・奇関数、積分の対称性利用、あらゆる「基準に帰着させる」思考へ転移します。
+
+**Step 1〜3：時計と鏡**。周期性（$1$ 周で戻る）と $x$ 軸対称（$-\\theta$：$\\cos$ 保存・$\\sin$ 反転）。
+
+**Step 4〜5：折る軸が変わる**。$y$ 軸対称（$\\pi-\\theta$：$\\sin$ 保存・$\\cos$ 反転）と原点対称（$\\pi+\\theta$：両方反転）。両方反転だから $\\tan(\\pi+\\theta) = \\tan\\theta$——系列5で見た「$\\tan$ の周期は $\\pi$」の正体がここで割れます。
+
+**Step 6：対称を逆に使う**。$\\sin$ が同じ値になる相手の角は $y$ 軸対称のペア（$\\theta$ と $\\pi-\\theta$）。[三角方程式] の「解は $2$ つ」は、この対称の顔だった——公式と解の個数が $1$ 本につながります。
+
+**Step 7〜8：座標の入れ替え（最大の山場）**。$y = x$ で折り返すと点 $(a, b)$ は $(b, a)$ へ——$x$ と $y$ が入れ替わるので、$\\cos\\left(\\dfrac{\\pi}{2}-\\theta\\right) = \\sin\\theta$。**$\\sin$ が $\\cos$ に化ける**のはこの斜めの折り返しだけ。$\\dfrac{2}{7}$ のような特別角でない値でも、入れ替えの公式だけで答えが出る——公式が「表にない角」を撃ち抜く瞬間です。$\\dfrac{\\pi}{2}+\\theta$ 型は $\\dfrac{\\pi}{2}-(-\\theta)$ と分解して、入れ替え＋$x$ 軸対称の合わせ読みで。
+
+**Step 9〜10：重ねる・簡約する**。$\\theta + 3\\pi$ は「$2\\pi$ を取り除いて半周」の $2$ 段重ね。$\\sin(\\pi+\\theta) + \\sin(-\\theta) + 2\\sin(\\pi-\\theta) = 0$ のような式も、$1$ 項ずつ翻訳すれば $\\theta$ が消える——変換公式は式を軽くする道具でもあります。
+
+────────
+
+**もっと深く** — 対称性の言葉
+
+**偶関数・奇関数**：$\\cos(-\\theta) = \\cos\\theta$ を「$\\cos$ は偶関数」、$\\sin(-\\theta) = -\\sin\\theta$ を「$\\sin$ は奇関数」と呼びます。グラフでいえば $\\cos$ は $y$ 軸対称、$\\sin$ は原点対称——単位円の折り返しが、グラフの対称性として再登場します。
+
+**グラフとの往復**：$\\sin\\left(\\theta + \\dfrac{\\pi}{2}\\right) = \\cos\\theta$ は、[三角関数のグラフ] で見た「$\\cos$ は $\\sin$ の横ずれ」を単位円側から言い直したもの。同じ事実が、円では「折り返し」、グラフでは「[位相] のずれ」という別の顔で現れる。
+
+**この先へ**：実はこの表の公式ぜんぶが、次の系列の**加法定理**から機械的に導けます（$\\pi$ や $\\dfrac{\\pi}{2}$ を「足す角」として展開するだけ）。対称性で見る目と、定理で導く手——2 本立てになったとき、この単元は完成します。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 章構成（三角関数の性質・単位円の対称性による導出・「忘れても導ける」の方針）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「覚える値がひと握りで足りるのはなぜ？」——無限の角はすべて、$4$ つの折り返し（$x$ 軸・$y$ 軸・原点・$y=x$）で第 $1$ 象限に帰着するから。折り返しは座標の**符号**を反転させるか（$3$ つの軸）、座標を**入れ替える**か（$y=x$）しかしない。だから角の変換は「符号の反転」と「$\\sin\\leftrightarrow\\cos$ の入れ替え」に翻訳され、覚えるのは第 $1$ 象限の値と折り返しの見方だけでいい。**対称性が、無限を有限に畳む**——それがこの単元の景色です。`,
+};
+
 /** 三角関数ユニットの系列リスト（カタログ登録用）。 */
 export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_GENERAL_ANGLE_SERIES,
@@ -1825,4 +2168,5 @@ export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_EQUATION_SERIES,
   TRIG_IDENTITY_SERIES,
   TRIG_GRAPH_SERIES,
+  TRIG_PROPERTY_SERIES,
 ];

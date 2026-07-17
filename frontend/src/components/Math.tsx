@@ -4705,6 +4705,119 @@ export function TrigTanGraph() {
 }
 
 /**
+ * 性質系列 Step 4 の足場図（S1）：単位円上の θ の点と π−θ の点が
+ * y 軸対称に向かい合う。座標の値は書かない（符号と配置だけ）。
+ */
+export function TrigSymmetryYAxis() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const ox = 140;
+  const oy = 140;
+  const r = 92;
+  const th = (35 * Math.PI) / 180;
+  const px = ox + r * Math.cos(th);
+  const py = oy - r * Math.sin(th);
+  const qx = ox - r * Math.cos(th);
+  const qy = py;
+  return (
+    <svg
+      viewBox="0 0 280 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上で θ の点と π−θ の点が y 軸に関して対称に向かい合う図"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="18" x2={ox} y2="252" stroke={muted} strokeWidth="0.7" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="20" fontSize="9" fill={muted} textAnchor="end">y</text>
+      <circle cx={ox} cy={oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 2 本の半径 */}
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={stroke} strokeWidth="1.5" />
+      <line x1={ox} y1={oy} x2={qx} y2={qy} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 対称を示す水平の破線 */}
+      <line x1={qx} y1={qy} x2={px} y2={py} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+
+      {/* 折り返しの矢印（上側の弧） */}
+      <path d={`M ${px - 14} ${py - 14} A ${r + 14} ${r + 14} 0 0 0 ${qx + 14} ${qy - 14}`} fill="none" stroke={muted} strokeWidth="0.9" markerEnd="url(#arrowS1)" />
+      <defs>
+        <marker id="arrowS1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)" />
+        </marker>
+      </defs>
+
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <circle cx={qx} cy={qy} r="3.5" fill={accent} />
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={px + 7} y={py + 2} fontSize="10.5" fill={accent} fontStyle="italic">θ の点</text>
+      <text x={qx - 7} y={qy + 2} fontSize="10.5" fill={accent} fontStyle="italic" textAnchor="end">π−θ の点</text>
+      <text x={ox + 5} y={oy + 14} fontSize="10" fill={muted}>O</text>
+
+      <text x="140" y="264" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        y 軸で折り返すと重なる 2 点——高さは同じ、横の符号だけ反対
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 性質系列 Step 7 の足場図（S2）：直線 y = x での折り返しで、点 (a, b) が
+ * (b, a) に移る——座標の入れ替わり。値は文字のまま（答えを書かない）。
+ */
+export function TrigSymmetryDiagonal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const ox = 130;
+  const oy = 150;
+  const r = 92;
+  const th = (28 * Math.PI) / 180;
+  const px = ox + r * Math.cos(th);
+  const py = oy - r * Math.sin(th);
+  const qx = ox + r * Math.sin(th);
+  const qy = oy - r * Math.cos(th);
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上の点 (a, b) を直線 y = x で折り返すと (b, a) に移る——座標が入れ替わる"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+      <circle cx={ox} cy={oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 直線 y = x（45°） */}
+      <line x1={ox - 105} y1={oy + 105} x2={ox + 118} y2={oy - 118} stroke={muted} strokeWidth="1" strokeDasharray="6,4" />
+      <text x={ox + 108} y={oy - 120} fontSize="9.5" fill={muted} fontStyle="italic">y = x</text>
+
+      {/* 2 点と半径 */}
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={stroke} strokeWidth="1.4" />
+      <line x1={ox} y1={oy} x2={qx} y2={qy} stroke={stroke} strokeWidth="1.4" />
+      <line x1={px} y1={py} x2={qx} y2={qy} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <circle cx={qx} cy={qy} r="3.5" fill={accent} />
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={px + 7} y={py + 3} fontSize="10.5" fill={accent} fontStyle="italic">(a, b)</text>
+      <text x={qx + 7} y={qy - 4} fontSize="10.5" fill={accent} fontStyle="italic">(b, a)</text>
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+
+      <text x="140" y="274" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        y = x で折り返すと、x 座標と y 座標が入れ替わる
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7573,6 +7686,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigTanGraph />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_SYMMETRY_Y_AXIS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigSymmetryYAxis />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_SYMMETRY_DIAGONAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigSymmetryDiagonal />
             </div>
           );
         }

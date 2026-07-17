@@ -42,6 +42,7 @@ import {
   TRIG_GENERAL_ANGLE_SERIES,
   TRIG_GRAPH_SERIES,
   TRIG_IDENTITY_SERIES,
+  TRIG_PROPERTY_SERIES,
   TRIG_RADIAN_SERIES,
   TRIG_SERIES_LIST,
 } from "./seriesTrig";
@@ -571,6 +572,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "グラフ — 円運動を開くと波になる。振幅・周期・位相・上下の 4 つのつまみと、tan の漸近線まで",
+  },
+  {
+    series: TRIG_PROPERTY_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "性質 — −θ・π±θ・π/2−θ を単位円の折り返しで読み替える。覚える公式ゼロで無限の角を第 1 象限へ",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
