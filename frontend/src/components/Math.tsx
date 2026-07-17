@@ -4470,6 +4470,240 @@ export function UnitCircleIdentity() {
   );
 }
 
+/** サイン波の SVG パス文字列を作るヘルパ（グラフ系の足場図で共用）。
+ *  x0..x1 の横幅に cycles 周期ぶんの sin を描く。amp は px 単位の振幅、
+ *  phase は周期単位（0.25 = 1/4 周期の右ずれ）。 */
+function sinePath(
+  x0: number,
+  x1: number,
+  midY: number,
+  amp: number,
+  cycles: number,
+  phase = 0,
+): string {
+  const n = 96;
+  const pts: string[] = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    const x = x0 + (x1 - x0) * t;
+    const y = midY - amp * Math.sin(2 * Math.PI * (cycles * t - phase));
+    pts.push(`${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`);
+  }
+  return pts.join(" ");
+}
+
+/**
+ * グラフ系列 Step 1 の足場図（W1）：単位円を回る点の高さを、角を横軸に
+ * 開いて写し取ると波になる。周期の数値ラベルは書かない（それが問い）。
+ */
+export function TrigCircleToWave() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 左：単位円（中心 (60, 80)・半径 40）。P は θ=50°
+  const cx = 60;
+  const cy = 80;
+  const r = 40;
+  const th = (50 * Math.PI) / 180;
+  const px = cx + r * Math.cos(th);
+  const py = cy - r * Math.sin(th);
+  // 右：波（x 120→300、1 周期、振幅 40、中心線 y=80）
+  const waveX = px + (120 - cx) * 0 + 120; // 波の開始 x
+  const waveEnd = 300;
+  const wavePeakX = waveX + (waveEnd - waveX) * (50 / 360);
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="単位円を回る点の高さを、角を横軸にして写し取ると波（サインカーブ）になる"
+    >
+      {/* 左：単位円 */}
+      <circle cx={cx} cy={cy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <line x1={cx - r - 8} y1={cy} x2={cx + r + 8} y2={cy} stroke={muted} strokeWidth="0.5" />
+      <line x1={cx} y1={cy - r - 8} x2={cx} y2={cy + r + 8} stroke={muted} strokeWidth="0.5" />
+      <line x1={cx} y1={cy} x2={px} y2={py} stroke={stroke} strokeWidth="1.4" />
+      <circle cx={px} cy={py} r="3" fill={accent} />
+      <text x={px + 4} y={py - 4} fontSize="10" fill={accent} fontStyle="italic" fontWeight="600">P</text>
+      {/* 回る向きの矢印 */}
+      <path d={`M ${cx + r + 4} ${cy - 10} A ${r + 6} ${r + 6} 0 0 0 ${cx + 14} ${cy - r - 4}`} fill="none" stroke={muted} strokeWidth="0.9" markerEnd="url(#arrowW1)" />
+      <defs>
+        <marker id="arrowW1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)" />
+        </marker>
+      </defs>
+      <text x={cx} y={cy + r + 20} fontSize="9.5" fill={muted} textAnchor="middle">単位円を回る点</text>
+
+      {/* 高さを写す破線 */}
+      <line x1={px} y1={py} x2={wavePeakX} y2={py} stroke={accent} strokeWidth="0.9" strokeDasharray="3,3" />
+
+      {/* 右：波の軸 */}
+      <line x1={waveX - 6} y1={cy} x2={waveEnd + 10} y2={cy} stroke={muted} strokeWidth="0.5" />
+      <text x={waveEnd + 12} y={cy + 3} fontSize="9" fill={muted}>θ</text>
+      {/* 1 周期ぶんの sin 波（数値ラベルは書かない） */}
+      <path d={sinePath(waveX, waveEnd, cy, r, 1)} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={wavePeakX} cy={py} r="2.6" fill={accent} />
+      <text x={(waveX + waveEnd) / 2} y={cy + r + 20} fontSize="9.5" fill={muted} textAnchor="middle">
+        角を横軸に、高さを写し取る
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * グラフ系列 Step 5 の足場図（W2）：元の波（破線）と、右へずれた波（実線）。
+ * ずれの量の数値は書かない（それが問い）。
+ */
+export function TrigWavePhase() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 20;
+  const x1 = 300;
+  const midY = 70;
+  const amp = 42;
+  const shift = 0.11; // 周期単位の右ずれ（見た目用）
+  const arrowY = midY - amp - 8;
+  return (
+    <svg
+      viewBox="0 0 320 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="元の波と、横に平行移動した波。波の形は同じで、位置だけが右へずれている"
+    >
+      <line x1={x0 - 6} y1={midY} x2={x1 + 10} y2={midY} stroke={muted} strokeWidth="0.5" />
+      <text x={x1 + 12} y={midY + 3} fontSize="9" fill={muted}>θ</text>
+      {/* 元の波（破線・muted） */}
+      <path d={sinePath(x0, x1, midY, amp, 1.5)} fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="5,4" />
+      {/* ずれた波（実線・accent） */}
+      <path d={sinePath(x0, x1, midY, amp, 1.5, shift)} fill="none" stroke={accent} strokeWidth="1.8" />
+      {/* ずれを示す矢印（山→山） */}
+      <line x1={x0 + (x1 - x0) * (0.25 / 1.5)} y1={arrowY} x2={x0 + (x1 - x0) * (0.25 / 1.5 + shift / 1.5)} y2={arrowY} stroke={accent} strokeWidth="1.2" markerEnd="url(#arrowW2)" />
+      <defs>
+        <marker id="arrowW2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
+        </marker>
+      </defs>
+      <text x="160" y="140" fontSize="9.5" fill={muted} textAnchor="middle" fontStyle="italic">
+        形は同じ、位置だけが横へずれる——山も谷もゼロ点も、そっくり同じだけ動く
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * グラフ系列 Step 7 の足場図（W3）：読み取り用の波形。横軸の目盛り（π/2, π,
+ * 3π/2, 2π）だけが与えられ、式のラベルは書かない（式を読むことが問い）。
+ * 波は 0〜2π に 2 周期（周期 π）。
+ */
+export function TrigWaveReading() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 30;
+  const x1 = 290;
+  const midY = 66;
+  const amp = 40;
+  const tick = (k: number) => x0 + ((x1 - x0) * k) / 4; // k/4 × 2π の位置
+  return (
+    <svg
+      viewBox="0 0 320 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横軸に π/2 ごとの目盛りが入った波形。0 から 2π までに 2 回くり返している"
+    >
+      <line x1={x0 - 8} y1={midY} x2={x1 + 12} y2={midY} stroke={muted} strokeWidth="0.5" />
+      <text x={x1 + 14} y={midY + 3} fontSize="9" fill={muted}>θ</text>
+      <line x1={x0} y1={midY - amp - 6} x2={x0} y2={midY + amp + 6} stroke={muted} strokeWidth="0.5" />
+      {/* y = ±1 の目盛り */}
+      <line x1={x0 - 3} y1={midY - amp} x2={x0 + 3} y2={midY - amp} stroke={stroke} strokeWidth="0.8" />
+      <text x={x0 - 6} y={midY - amp + 3} fontSize="8.5" fill={muted} textAnchor="end">1</text>
+      <line x1={x0 - 3} y1={midY + amp} x2={x0 + 3} y2={midY + amp} stroke={stroke} strokeWidth="0.8" />
+      <text x={x0 - 6} y={midY + amp + 3} fontSize="8.5" fill={muted} textAnchor="end">−1</text>
+      {/* 横軸目盛り */}
+      {[1, 2, 3, 4].map((k) => (
+        <g key={k}>
+          <line x1={tick(k)} y1={midY - 3} x2={tick(k)} y2={midY + 3} stroke={stroke} strokeWidth="0.8" />
+        </g>
+      ))}
+      <text x={tick(1)} y={midY + 16} fontSize="9" fill={muted} textAnchor="middle">π/2</text>
+      <text x={tick(2)} y={midY + 16} fontSize="9" fill={muted} textAnchor="middle">π</text>
+      <text x={tick(3)} y={midY + 16} fontSize="9" fill={muted} textAnchor="middle">3π/2</text>
+      <text x={tick(4)} y={midY + 16} fontSize="9" fill={muted} textAnchor="middle">2π</text>
+      <text x={x0} y={midY + 16} fontSize="9" fill={muted} textAnchor="middle">0</text>
+      {/* 0〜2π に 2 周期の波（式ラベルなし） */}
+      <path d={sinePath(x0, x1, midY, amp, 2)} fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="160" y="140" fontSize="9.5" fill={muted} textAnchor="middle" fontStyle="italic">
+        目盛りから、波が 1 回くり返す長さを読み取ろう
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * グラフ系列 Step 8 の足場図（W4）：y = tanθ のグラフと漸近線（破線）。
+ * 周期の値は書かない（それが問い）。漸近線の位置 −π/2・π/2・3π/2 は目盛りとして与える。
+ */
+export function TrigTanGraph() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 24;
+  const x1 = 296;
+  const midY = 72;
+  const scale = 16; // y=1 の px
+  // −3π/4 〜 7π/4 を横幅に対応させる（2.5π ぶん）
+  const thetaMin = -0.75 * Math.PI;
+  const thetaMax = 1.75 * Math.PI;
+  const toX = (t: number) => x0 + ((t - thetaMin) / (thetaMax - thetaMin)) * (x1 - x0);
+  const branch = (center: number) => {
+    const pts: string[] = [];
+    const n = 60;
+    for (let i = 0; i <= n; i++) {
+      const t = center - 0.42 * Math.PI + (0.84 * Math.PI * i) / n;
+      const y = midY - scale * Math.tan(t - center);
+      pts.push(`${i === 0 ? "M" : "L"} ${toX(t).toFixed(1)} ${y.toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  const asymptotes = [-Math.PI / 2, Math.PI / 2, (3 * Math.PI) / 2];
+  const asymLabels = ["−π/2", "π/2", "3π/2"];
+  return (
+    <svg
+      viewBox="0 0 320 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="y = tanθ のグラフ。π/2 の奇数倍の縦の漸近線に沿って、同じ形の枝がくり返し並ぶ"
+    >
+      <line x1={x0 - 6} y1={midY} x2={x1 + 10} y2={midY} stroke={muted} strokeWidth="0.5" />
+      <text x={x1 + 12} y={midY + 3} fontSize="9" fill={muted}>θ</text>
+      {/* 漸近線 */}
+      {asymptotes.map((a, i) => (
+        <g key={i}>
+          <line x1={toX(a)} y1="12" x2={toX(a)} y2="126" stroke={muted} strokeWidth="0.9" strokeDasharray="4,3" />
+          <text x={toX(a)} y="138" fontSize="9" fill={muted} textAnchor="middle">{asymLabels[i]}</text>
+        </g>
+      ))}
+      {/* O の目盛り */}
+      <line x1={toX(0)} y1={midY - 3} x2={toX(0)} y2={midY + 3} stroke={stroke} strokeWidth="0.8" />
+      <text x={toX(0) + 2} y={midY + 14} fontSize="9" fill={muted}>O</text>
+      <text x={toX(Math.PI)} y={midY + 14} fontSize="9" fill={muted} textAnchor="middle">π</text>
+      <line x1={toX(Math.PI)} y1={midY - 3} x2={toX(Math.PI)} y2={midY + 3} stroke={stroke} strokeWidth="0.8" />
+      {/* tan の枝（3 本） */}
+      <path d={branch(0)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <path d={branch(Math.PI)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <path d={branch(-Math.PI)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <text x="160" y="149" fontSize="9.5" fill={muted} textAnchor="middle" fontStyle="italic">
+        同じ形の枝が、縦の壁（漸近線）ごとにくり返す
+      </text>
+    </svg>
+  );
+}
+
 /**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
@@ -7311,6 +7545,34 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <UnitCircleIdentity />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_CIRCLE_TO_WAVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigCircleToWave />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_WAVE_PHASE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigWavePhase />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_WAVE_READING>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigWaveReading />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_TAN_GRAPH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigTanGraph />
             </div>
           );
         }

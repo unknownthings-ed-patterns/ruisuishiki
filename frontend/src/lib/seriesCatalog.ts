@@ -40,6 +40,7 @@ import {
 import {
   TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
+  TRIG_GRAPH_SERIES,
   TRIG_IDENTITY_SERIES,
   TRIG_RADIAN_SERIES,
   TRIG_SERIES_LIST,
@@ -562,6 +563,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "相互関係 — sin²θ+cos²θ=1 が 3 つの関数を縛る。1 つの値と象限から残りを決め、対称式・方程式まで",
+  },
+  {
+    series: TRIG_GRAPH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "グラフ — 円運動を開くと波になる。振幅・周期・位相・上下の 4 つのつまみと、tan の漸近線まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
