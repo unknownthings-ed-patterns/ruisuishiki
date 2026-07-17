@@ -4818,6 +4818,115 @@ export function TrigSymmetryDiagonal() {
 }
 
 /**
+ * 加法定理系列 Step 1 の足場図（A1）：単位円上に角 α と、その上に重ねた β。
+ * 「角を足す＝回転を重ねる」の配置だけを示す。値は書かない。
+ */
+export function TrigAngleSum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const ox = 140;
+  const oy = 156;
+  const r = 100;
+  const a = (28 * Math.PI) / 180;
+  const ab = (73 * Math.PI) / 180;
+  const p1x = ox + r * Math.cos(a);
+  const p1y = oy - r * Math.sin(a);
+  const p2x = ox + r * Math.cos(ab);
+  const p2y = oy - r * Math.sin(ab);
+  return (
+    <svg
+      viewBox="0 0 280 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上で角 α の上に角 β を重ねると α+β の点に届く——角の和は回転の重ね"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="24" x2={ox} y2="258" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <circle cx={ox} cy={oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* α の半径と α+β の半径 */}
+      <line x1={ox} y1={oy} x2={p1x} y2={p1y} stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      <line x1={ox} y1={oy} x2={p2x} y2={p2y} stroke={stroke} strokeWidth="1.6" />
+
+      {/* α の弧（内側） */}
+      <path d={`M ${ox + 40} ${oy} A 40 40 0 0 0 ${ox + 40 * Math.cos(a)} ${oy - 40 * Math.sin(a)}`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x={ox + 52} y={oy - 9} fontSize="11" fill={muted} fontStyle="italic">α</text>
+      {/* β の弧（外側・α の上に重ねる） */}
+      <path d={`M ${ox + 56 * Math.cos(a)} ${oy - 56 * Math.sin(a)} A 56 56 0 0 0 ${ox + 56 * Math.cos(ab)} ${oy - 56 * Math.sin(ab)}`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x={ox + 64 * Math.cos((a + ab) / 2)} y={oy - 64 * Math.sin((a + ab) / 2) + 4} fontSize="11" fill={accent} fontStyle="italic">β</text>
+
+      <circle cx={p1x} cy={p1y} r="2.6" fill={muted} />
+      <circle cx={p2x} cy={p2y} r="3.5" fill={accent} />
+      <text x={p1x + 6} y={p1y + 3} fontSize="9.5" fill={muted} fontStyle="italic">α の点</text>
+      <text x={p2x + 6} y={p2y - 2} fontSize="10" fill={accent} fontStyle="italic">α+β の点</text>
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        α まで回して、さらに β 回す——足した角の点の座標は、元の 2 つの角から作れる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 加法定理系列 Step 9 の足場図（A2）：原点を通る 2 直線と、そのなす角 θ。
+ * 傾きの値・角の値は書かない（それが問い）。
+ */
+export function TrigLinesAngle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 140;
+  const oy = 150;
+  // 直線1（急な正の傾き）・直線2（ゆるい負の傾き）
+  const a1 = Math.atan(2.2);
+  const a2 = Math.atan(-0.45);
+  const L = 118;
+  const line = (ang: number) => ({
+    x1: ox - L * Math.cos(ang),
+    y1: oy + L * Math.sin(ang),
+    x2: ox + L * Math.cos(ang),
+    y2: oy - L * Math.sin(ang),
+  });
+  const l1 = line(a1);
+  const l2 = line(a2);
+  return (
+    <svg
+      viewBox="0 0 280 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="原点で交わる 2 本の直線と、その間のなす角 θ"
+    >
+      <line x1="16" y1={oy} x2="264" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="16" x2={ox} y2="244" stroke={muted} strokeWidth="0.5" />
+      <text x="260" y={oy + 13} fontSize="9" fill={muted}>x</text>
+
+      <line {...l1} stroke={stroke} strokeWidth="1.6" />
+      <line {...l2} stroke={stroke} strokeWidth="1.6" />
+      <text x={l1.x2 + 4} y={l1.y2 + 8} fontSize="10" fill={muted} fontStyle="italic">ℓ₁</text>
+      <text x={l2.x2 + 4} y={l2.y2 + 3} fontSize="10" fill={muted} fontStyle="italic">ℓ₂</text>
+
+      {/* なす角 θ の弧（2 直線の間・鋭角側） */}
+      <path d={`M ${ox + 44 * Math.cos(a2)} ${oy - 44 * Math.sin(a2)} A 44 44 0 0 0 ${ox + 44 * Math.cos(a1)} ${oy - 44 * Math.sin(a1)}`} fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x={ox + 56 * Math.cos((a1 + a2) / 2)} y={oy - 56 * Math.sin((a1 + a2) / 2) + 4} fontSize="12" fill={accent} fontStyle="italic">θ</text>
+
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+
+      <text x="140" y="256" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        2 本の直線のなす角——それぞれの傾き（tan）から作れる？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7700,6 +7809,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigSymmetryDiagonal />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_ANGLE_SUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigAngleSum />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_LINES_ANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigLinesAngle />
             </div>
           );
         }

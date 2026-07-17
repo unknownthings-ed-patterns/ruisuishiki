@@ -2161,6 +2161,356 @@ $\\sin(\\pi - \\theta)$・$\\cos(-\\theta)$・$\\sin\\left(\\dfrac{\\pi}{2} + \\
 「覚える値がひと握りで足りるのはなぜ？」——無限の角はすべて、$4$ つの折り返し（$x$ 軸・$y$ 軸・原点・$y=x$）で第 $1$ 象限に帰着するから。折り返しは座標の**符号**を反転させるか（$3$ つの軸）、座標を**入れ替える**か（$y=x$）しかしない。だから角の変換は「符号の反転」と「$\\sin\\leftrightarrow\\cos$ の入れ替え」に翻訳され、覚えるのは第 $1$ 象限の値と折り返しの見方だけでいい。**対称性が、無限を有限に畳む**——それがこの単元の景色です。`,
 };
 
+/** TRIG7: 加法定理（角の和＝回転の合成）。
+ *  表に無い角の値を、既知の角の和・差に分解して作る。逆読み（畳む）となす角まで。
+ *  背骨: docs/trig_continuation_series_design_fable.md §5（Fable 5 設計・Fable 5 実装。
+ *  op 配列は実装時に一部調整：和→差（＋α）→cos型（質）→cos差（同）→tan型（質）→畳む（逆・同）→象限つき（＋α)→なす角・逆読み合流（複合×2））。 */
+export const TRIG_ADDITION_SERIES: LearnerSeries = {
+  id: "trig_addition_01",
+  title: "加法定理（角の和は、回転の重ねがけ）",
+  subtitle:
+    "数Ⅱ・B 三角関数より — 表に無い角を既知の角の和・差に分解して作る。sin・cos・tan の加法定理から 2 直線のなす角まで $10$ 問。",
+  patternId: "TRIG7",
+  unit: "algebra_2",
+  revelationLabel:
+    "$\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$——角を足すことは単位円で回転を重ねること。だから和の値は、元の 2 角の値の積と和で組み立てられる",
+  drivingQuestion:
+    "表に載っていない角の値が、すでに知っている角の値の掛け算と足し算だけで組み立てられるのはなぜ？——角を『足す』ことは、単位円の上で回転を『重ねる』ことだとしたら？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$\\dfrac{5\\pi}{12}$（$= 75°$）は特別角の表にありません。でも $\\dfrac{5\\pi}{12} = \\dfrac{\\pi}{6} + \\dfrac{\\pi}{4}$ と、表にある $2$ つの角の**和**には分解できます。加法定理 $\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$ を使って、$\\sin\\dfrac{5\\pi}{12}$ の値を求めましょう。",
+      answer: (Math.sqrt(6) + Math.sqrt(2)) / 4,
+      answerDisplay: "(√6+√2)/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin(5π/12)",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "[単位円] で「角の和」をつくるとは、$\\alpha$ まで回してから、さらに $\\beta$ 回すこと。届いた先の点の高さが $\\sin(\\alpha+\\beta)$。定理の右辺に並ぶ $4$ つの部品（$\\sin\\dfrac{\\pi}{6}$・$\\cos\\dfrac{\\pi}{4}$・$\\cos\\dfrac{\\pi}{6}$・$\\sin\\dfrac{\\pi}{4}$）は、どれも表にある値だね。まず部品を全部そろえてみよう。",
+        },
+        {
+          layer: 2,
+          text: "$\\alpha = \\dfrac{\\pi}{6}$、$\\beta = \\dfrac{\\pi}{4}$ として、定理の右辺「$\\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$」に部品を入れるだけ。それぞれの値は $\\dfrac{1}{2}$・$\\dfrac{1}{\\sqrt{2}}$・$\\dfrac{\\sqrt{3}}{2}$・$\\dfrac{1}{\\sqrt{2}}$——組み立てると？",
+        },
+        {
+          layer: 3,
+          text: "$\\sin\\dfrac{5\\pi}{12} = \\sin\\dfrac{\\pi}{6}\\cos\\dfrac{\\pi}{4} + \\cos\\dfrac{\\pi}{6}\\sin\\dfrac{\\pi}{4} = \\dfrac{1}{2}\\cdot\\dfrac{1}{\\sqrt{2}} + \\dfrac{\\sqrt{3}}{2}\\cdot\\dfrac{1}{\\sqrt{2}} = \\dfrac{1+\\sqrt{3}}{2\\sqrt{2}} = \\dfrac{\\sqrt{2}+\\sqrt{6}}{4}$。**知らない角の値が、知っている値の積と和だけで組み上がった**——これが加法定理の力。",
+        },
+      ],
+      formulaPreview: "sin(π/6+π/4) = (1/2)(1/√2)+(√3/2)(1/√2) = (√6+√2)/4",
+      figureMarker: "<<TRIG_ANGLE_SUM>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "今度は**差**です。$\\dfrac{\\pi}{12}$（$= 15°$）を $\\dfrac{\\pi}{4} - \\dfrac{\\pi}{6}$ と分解して、$\\sin\\dfrac{\\pi}{12}$ の値を求めましょう。（差の公式：$\\sin(\\alpha-\\beta) = \\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$）",
+      answer: (Math.sqrt(6) - Math.sqrt(2)) / 4,
+      answerDisplay: "(√6−√2)/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin(π/12)",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。組み立て方はそっくりで、変わったのは「足す」が「引く」になったこと。差の公式は、和の公式のどこか $1$ か所だけが変わっている——どこ？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは真ん中の符号だけ（$+$ が $-$ に）。部品は $\\alpha = \\dfrac{\\pi}{4}$、$\\beta = \\dfrac{\\pi}{6}$ の $\\sin$・$\\cos$ で、全部表にある。前題と同じように部品をそろえて、今度は引き算で組む。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin\\dfrac{\\pi}{12} = \\sin\\dfrac{\\pi}{4}\\cos\\dfrac{\\pi}{6} - \\cos\\dfrac{\\pi}{4}\\sin\\dfrac{\\pi}{6} = \\dfrac{1}{\\sqrt{2}}\\cdot\\dfrac{\\sqrt{3}}{2} - \\dfrac{1}{\\sqrt{2}}\\cdot\\dfrac{1}{2} = \\dfrac{\\sqrt{3}-1}{2\\sqrt{2}} = \\dfrac{\\sqrt{6}-\\sqrt{2}}{4}$。差の公式は、和の公式の $\\beta$ を $-\\beta$ に置き換えたもの（$\\sin(-\\beta) = -\\sin\\beta$——系列「性質」の折り返しがここで効く）。",
+        },
+      ],
+      formulaPreview: "sin(π/4−π/6) = (√3−1)/(2√2) = (√6−√2)/4",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$\\cos$ の番です。$\\cos\\dfrac{5\\pi}{12}$ を、$\\dfrac{5\\pi}{12} = \\dfrac{\\pi}{6} + \\dfrac{\\pi}{4}$ と分解して求めましょう。（$\\cos$ の加法定理：$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$——符号に注意）",
+      answer: (Math.sqrt(6) - Math.sqrt(2)) / 4,
+      answerDisplay: "(√6−√2)/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "cos(5π/12)",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。同じ角の分解なのに、今度は $\\cos$。$\\sin$ の公式は「種類ちがいのペアの**和**」だった。$\\cos$ の公式は、ペアの組み方と真ん中の符号が両方変わる——どう変わっている？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは公式の**構造**：$\\sin$ は $\\sin\\cos + \\cos\\sin$（種類ちがい・足す）、$\\cos$ は $\\cos\\cos - \\sin\\sin$（種類そろい・引く）。「足した角なのに引き算」がいちばんの罠。部品は step1 と同じ $4$ つの値だよ。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos\\dfrac{5\\pi}{12} = \\cos\\dfrac{\\pi}{6}\\cos\\dfrac{\\pi}{4} - \\sin\\dfrac{\\pi}{6}\\sin\\dfrac{\\pi}{4} = \\dfrac{\\sqrt{3}}{2}\\cdot\\dfrac{1}{\\sqrt{2}} - \\dfrac{1}{2}\\cdot\\dfrac{1}{\\sqrt{2}} = \\dfrac{\\sqrt{3}-1}{2\\sqrt{2}} = \\dfrac{\\sqrt{6}-\\sqrt{2}}{4}$。step2 の $\\sin\\dfrac{\\pi}{12}$ と同じ値になった——$\\cos\\dfrac{5\\pi}{12} = \\sin\\left(\\dfrac{\\pi}{2} - \\dfrac{5\\pi}{12}\\right) = \\sin\\dfrac{\\pi}{12}$（性質の系列の入れ替え）だから。別の道が同じ場所に着くのは、正しさの検算にもなる。",
+        },
+      ],
+      formulaPreview: "cos(π/6+π/4) = (√3/2)(1/√2)−(1/2)(1/√2) = (√6−√2)/4",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$\\cos$ の**差**で反復します。$\\cos\\dfrac{\\pi}{12}$ を、$\\dfrac{\\pi}{12} = \\dfrac{\\pi}{4} - \\dfrac{\\pi}{6}$ と分解して求めましょう。",
+      answer: (Math.sqrt(6) + Math.sqrt(2)) / 4,
+      answerDisplay: "(√6+√2)/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "cos(π/12)",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ $\\cos$ の公式で、和が差に変わっただけ。$\\sin$ のとき（step1 と step2）は真ん中の符号が入れ替わった——$\\cos$ の差では、どうなると思う？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは「差」になったことだけ。$\\cos(\\alpha-\\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$——$\\cos$ は差のとき**足し算**になる（$\\sin$ とあべこべ）。部品を入れて組み立てよう。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos\\dfrac{\\pi}{12} = \\cos\\dfrac{\\pi}{4}\\cos\\dfrac{\\pi}{6} + \\sin\\dfrac{\\pi}{4}\\sin\\dfrac{\\pi}{6} = \\dfrac{1}{\\sqrt{2}}\\cdot\\dfrac{\\sqrt{3}}{2} + \\dfrac{1}{\\sqrt{2}}\\cdot\\dfrac{1}{2} = \\dfrac{\\sqrt{3}+1}{2\\sqrt{2}} = \\dfrac{\\sqrt{6}+\\sqrt{2}}{4}$。$4$ つの公式が出そろった：$\\sin$ は種類ちがいのペアで符号そのまま、$\\cos$ は種類そろいのペアで符号が逆転する。",
+        },
+      ],
+      formulaPreview: "cos(π/4−π/6) = (√3+1)/(2√2) = (√6+√2)/4",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$3$ 人目、$\\tan$ です。$\\tan(\\alpha+\\beta) = \\dfrac{\\tan\\alpha + \\tan\\beta}{1 - \\tan\\alpha\\tan\\beta}$ を使って、$\\tan\\dfrac{5\\pi}{12}$（$\\dfrac{5\\pi}{12} = \\dfrac{\\pi}{4} + \\dfrac{\\pi}{6}$）の値を求めましょう。",
+      answer: 2 + Math.sqrt(3),
+      answerDisplay: "2+√3",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "tan(5π/12)",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1〜4 と比べてみよう。$\\sin$・$\\cos$ の公式は「積の和・差」の $1$ 階建てだった。$\\tan$ の公式は**分数**——$2$ 階建ての新しい形。でも部品は $\\tan\\dfrac{\\pi}{4}$ と $\\tan\\dfrac{\\pi}{6}$ の $2$ つだけ。まず部品の値は？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは分数の形だけ。$\\tan\\dfrac{\\pi}{4} = 1$、$\\tan\\dfrac{\\pi}{6} = \\dfrac{1}{\\sqrt{3}}$ を、分子「和」・分母「$1 -$ 積」に入れる。分母と分子に $\\sqrt{3}$ を掛けると整理しやすいよ。",
+        },
+        {
+          layer: 3,
+          text: "$\\tan\\dfrac{5\\pi}{12} = \\dfrac{1 + \\dfrac{1}{\\sqrt{3}}}{1 - 1\\cdot\\dfrac{1}{\\sqrt{3}}} = \\dfrac{\\sqrt{3}+1}{\\sqrt{3}-1}$（分母分子に $\\sqrt{3}$）。さらに分母分子に $\\sqrt{3}+1$ を掛けて $\\dfrac{(\\sqrt{3}+1)^2}{3-1} = \\dfrac{4+2\\sqrt{3}}{2} = 2+\\sqrt{3}$。$\\tan$ の公式は $\\dfrac{\\sin(\\alpha+\\beta)}{\\cos(\\alpha+\\beta)}$ を $\\cos\\alpha\\cos\\beta$ で約分した姿——$\\sin$・$\\cos$ から導ける子ども公式。",
+        },
+      ],
+      formulaPreview: "tan(π/4+π/6) = (1+1/√3)/(1−1/√3) = 2+√3",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "公式を**後ろから**読みます。$\\sin\\dfrac{\\pi}{5}\\cos\\dfrac{\\pi}{20} + \\cos\\dfrac{\\pi}{5}\\sin\\dfrac{\\pi}{20}$ の値を求めましょう。（$\\dfrac{\\pi}{5}$ も $\\dfrac{\\pi}{20}$ も特別角ではありません——でも求められます）",
+      answer: 1 / Math.sqrt(2),
+      answerDisplay: "1/√2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin(π/5)cos(π/20)+cos(π/5)sin(π/20)",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。step1 では公式の左辺（$1$ つの角）から右辺（展開形）へ進んだ。今度は式が**右辺の形**で与えられている。この並び——種類ちがいのペアの和——は、どこかで見た形では？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは矢印の向きだけ。この式は $\\sin(\\alpha+\\beta)$ の展開形そのもので、$\\alpha = \\dfrac{\\pi}{5}$、$\\beta = \\dfrac{\\pi}{20}$。展開を**畳んで** $1$ つの角に戻すと、その角は特別角になっていない？",
+        },
+        {
+          layer: 3,
+          text: "与式 $= \\sin\\left(\\dfrac{\\pi}{5} + \\dfrac{\\pi}{20}\\right) = \\sin\\dfrac{4\\pi + \\pi}{20} = \\sin\\dfrac{5\\pi}{20} = \\sin\\dfrac{\\pi}{4} = \\dfrac{1}{\\sqrt{2}}$。バラバラの $4$ つの値は $1$ つも求められないのに、**畳むと答えが出る**。公式は前からだけでなく後ろからも読める——この「畳む」が、のちの合成の入口になる。",
+        },
+      ],
+      formulaPreview: "= sin(π/5+π/20) = sin(π/4) = 1/√2",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "畳む練習をもう $1$ つ。$\\cos\\dfrac{2\\pi}{9}\\cos\\dfrac{\\pi}{9} - \\sin\\dfrac{2\\pi}{9}\\sin\\dfrac{\\pi}{9}$ の値を求めましょう。",
+      answer: 0.5,
+      answerDisplay: "1/2",
+      unit: "",
+      unknownLabel: "cos(2π/9)cos(π/9)−sin(2π/9)sin(π/9)",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「畳む」向き。変わったのはペアの種類——今度は種類そろい（$\\cos\\cos$ と $\\sin\\sin$）で真ん中が引き算。この構造はどの公式の右辺？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、畳む先が $\\sin$ でなく $\\cos$ なことだけ。$\\cos\\cos - \\sin\\sin$ は $\\cos(\\alpha+\\beta)$ の展開形。$\\alpha = \\dfrac{2\\pi}{9}$、$\\beta = \\dfrac{\\pi}{9}$ で畳むと、角はいくつになる？",
+        },
+        {
+          layer: 3,
+          text: "与式 $= \\cos\\left(\\dfrac{2\\pi}{9} + \\dfrac{\\pi}{9}\\right) = \\cos\\dfrac{3\\pi}{9} = \\cos\\dfrac{\\pi}{3} = \\dfrac{1}{2}$。前題（$\\sin$ 型）と同じ手を $\\cos$ 型で繰り返した。**「展開形を見たら畳めないか疑う」**——この目が育つと、複雑な式がただの特別角に化ける。",
+        },
+      ],
+      formulaPreview: "= cos(2π/9+π/9) = cos(π/3) = 1/2",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "値が式でなく**条件**で与えられます。$\\alpha, \\beta$ はともに第 $1$ 象限の角で、$\\sin\\alpha = \\dfrac{4}{5}$、$\\cos\\beta = \\dfrac{5}{13}$ とします。$\\sin(\\alpha+\\beta)$ の値を求めましょう。",
+      answer: 56 / 65,
+      answerDisplay: "56/65",
+      unit: "",
+      unknownLabel: "sin(α+β)（sinα=4/5・cosβ=5/13）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。公式は同じだけれど、部品が足りない——右辺には $\\cos\\alpha$ と $\\sin\\beta$ も要るのに、与えられていない。足りない部品を自力で作る道具を、前の系列で身につけていなかった？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは「部品集めから始める」こと。[相互関係]（$1$ つの値と象限から残りが決まる）で、$\\sin\\alpha$ から $\\cos\\alpha$ を、$\\cos\\beta$ から $\\sin\\beta$ を先に出す。第 $1$ 象限だからどちらも符号はプラス。部品が $4$ つそろったら、あとは step1 と同じ。",
+        },
+        {
+          layer: 3,
+          text: "[相互関係] より $\\cos\\alpha = \\sqrt{1 - \\dfrac{16}{25}} = \\dfrac{3}{5}$、$\\sin\\beta = \\sqrt{1 - \\dfrac{25}{169}} = \\dfrac{12}{13}$（第 $1$ 象限なので正）。組み立てて $\\sin(\\alpha+\\beta) = \\dfrac{4}{5}\\cdot\\dfrac{5}{13} + \\dfrac{3}{5}\\cdot\\dfrac{12}{13} = \\dfrac{20 + 36}{65} = \\dfrac{56}{65}$。**加法定理と相互関係の合流**——前の系列の道具が、部品工場として働く。",
+        },
+      ],
+      formulaPreview: "cosα=3/5, sinβ=12/13 → (4/5)(5/13)+(3/5)(12/13) = 56/65",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "図形に使います。$2$ 直線 $y = 2x$ と $y = -3x$ のなす角（$0$ より大きく $\\dfrac{\\pi}{2}$ 以下）を求めましょう。",
+      answer: Math.PI / 4,
+      answerDisplay: "π/4",
+      inputAffordances: ["pi"],
+      unit: "",
+      unknownLabel: "y=2x と y=−3x のなす角",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "系列1で「$\\tan$ ＝ 直線の傾き」だった。$2$ 直線それぞれが $x$ 軸となす角を $\\alpha$・$\\beta$ とすると、なす角は $\\alpha - \\beta$——差の角。角そのものは表に無いのに、$\\tan\\alpha$ と $\\tan\\beta$ なら分かっている。step5 の分数の公式が、差の形でも使えないかな？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは「$\\tan$ の加法定理を図形に使う」こと。$\\tan\\alpha = 2$、$\\tan\\beta = -3$（傾きそのもの）を $\\tan(\\alpha-\\beta) = \\dfrac{\\tan\\alpha - \\tan\\beta}{1 + \\tan\\alpha\\tan\\beta}$ に入れる。出てきた値が負なら、その角は鈍角——「なす角」は鋭角で答える約束だから、最後にもうひと工夫。",
+        },
+        {
+          layer: 3,
+          text: "$\\tan(\\alpha-\\beta) = \\dfrac{2-(-3)}{1+2\\cdot(-3)} = \\dfrac{5}{-5} = -1$。$\\tan$ が $-1$ になる角は $\\dfrac{3\\pi}{4}$（鈍角）。なす角は $\\dfrac{\\pi}{2}$ 以下で答える約束なので、$\\pi - \\dfrac{3\\pi}{4} = \\dfrac{\\pi}{4}$。$\\alpha$ も $\\beta$ も具体的に求められないのに、なす角だけが分かってしまう——$\\tan$ の加法定理が橋渡しをした。",
+        },
+      ],
+      formulaPreview: "tan(α−β) = (2+3)/(1−6) = −1 → 鈍角 3π/4 → なす角 π/4",
+      figureMarker: "<<TRIG_LINES_ANGLE>>",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "仕上げです。$2$ 直線 $y = (2+\\sqrt{3})x$ と $y = x$ のなす角を求めましょう。（step5 の答えが再登場します）",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6",
+      inputAffordances: ["pi"],
+      unit: "",
+      unknownLabel: "y=(2+√3)x と y=x のなす角",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「傾きからなす角」。ただ今回は、$1$ 本目の直線の傾きの値に見覚えがないかな——step5 の答えと同じ数では？ 気づくと計算せずに答えが見える。気づかなくても、前題の手はそのまま使える。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは値だけ。道は $2$ 本ある：①前題どおり公式に入れて計算する。②$\\tan\\dfrac{5\\pi}{12} = 2+\\sqrt{3}$（step5）と $\\tan\\dfrac{\\pi}{4} = 1$ を思い出せば、なす角は $2$ つの角の**差**として引き算だけで出る。どちらでも同じ答えに着くよ。",
+        },
+        {
+          layer: 3,
+          text: "道②：$y=(2+\\sqrt{3})x$ が $x$ 軸となす角は $\\dfrac{5\\pi}{12}$（step5 の逆読み）、$y=x$ は $\\dfrac{\\pi}{4} = \\dfrac{3\\pi}{12}$。なす角 $= \\dfrac{5\\pi}{12} - \\dfrac{3\\pi}{12} = \\dfrac{2\\pi}{12} = \\dfrac{\\pi}{6}$。道①でも $\\dfrac{(2+\\sqrt{3})-1}{1+(2+\\sqrt{3})} = \\dfrac{1+\\sqrt{3}}{3+\\sqrt{3}} = \\dfrac{1}{\\sqrt{3}}$ で $\\dfrac{\\pi}{6}$。**公式で押す道と、逆読みで見抜く道が同じ答えで合流する**——公式を「使う」から「読む」へ。",
+        },
+      ],
+      formulaPreview: "tanθ = (1+√3)/(3+√3) = 1/√3 → θ = π/6",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 表に載っていない角の値が、すでに知っている角の値の掛け算と足し算だけで組み立てられるのはなぜ？——角を『足す』ことは、単位円の上で回転を『重ねる』ことだとしたら？
+
+────────
+
+**まず、やってはいけない変形から。**
+
+$$\\sin(\\alpha+\\beta) \\ne \\sin\\alpha + \\sin\\beta$$
+
+$\\sin$ は「掛け算」ではないので、カッコの中に分配はできません（$\\sin$ は $\\theta$ という角への**操作**であって、$\\sin \\times \\theta$ ではない）。では $\\sin(\\alpha+\\beta)$ をバラす正しい道は何か——それがこの単元の主役、**加法定理**です：
+
+$$\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$$
+$$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$$
+
+覚え方の骨：**$\\sin$ は種類ちがいのペアの和、$\\cos$ は種類そろいのペアの差**。
+
+<<TRIG_ANGLE_SUM>>
+
+**なぜ成り立つのか（証明の心臓部）**：[単位円] 上で角 $\\alpha+\\beta$ の点 $P$ をとり、$P$ から「角 $\\alpha$ の方向の軸」に垂線を下ろすと、図の中に直角三角形が $3$ つ生まれます。斜辺 $1$ の三角形から $\\sin(\\alpha+\\beta)$ と $\\cos(\\alpha+\\beta)$ を、残り $2$ つの三角形（斜辺 $\\cos\\beta$・斜辺 $\\sin\\beta$）から $4$ つの積を読み取ると、$P$ の高さが「$\\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$」、横が「$\\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$」と**組み立てられている**ことが図から直接見えます。角を足す＝回転を重ねる、そして重ねた回転の座標は元の $2$ つの回転の座標の積和で書ける——これが定理の正体です。
+
+**ここが胚細胞**：**知らないものを、知っているものの和に分解して作る**。$\\dfrac{5\\pi}{12}$ は表に無いが $\\dfrac{\\pi}{6} + \\dfrac{\\pi}{4}$ に割れる。分解 → 部品は既知 → 定理で組み立て。この「既知への分解」は、素因数分解にも、ベクトルの分解にも、この先の複素数の回転にも流れている発想です。
+
+**Step 1〜4：$4$ つの顔**。和の $\\sin$、差の $\\sin$（$\\beta \\to -\\beta$ と置き換えれば導ける——性質の系列の折り返しが部品）、和の $\\cos$（**足した角なのに引き算**が最大の罠）、差の $\\cos$。$\\cos\\dfrac{5\\pi}{12} = \\sin\\dfrac{\\pi}{12}$ のように別の道が同じ値に着くのは、検算であり、入れ替え公式（性質）との合流でもあります。
+
+**Step 5：$\\tan$ は子ども公式**。$\\tan(\\alpha+\\beta) = \\dfrac{\\tan\\alpha+\\tan\\beta}{1-\\tan\\alpha\\tan\\beta}$ は、$\\dfrac{\\sin(\\alpha+\\beta)}{\\cos(\\alpha+\\beta)}$ の分母分子を $\\cos\\alpha\\cos\\beta$ で割っただけ。忘れても $\\sin$・$\\cos$ から $1$ 分で再建できます。
+
+**Step 6〜7：後ろから読む（逆）**。$\\sin\\dfrac{\\pi}{5}\\cos\\dfrac{\\pi}{20} + \\cos\\dfrac{\\pi}{5}\\sin\\dfrac{\\pi}{20}$——部品は $1$ つも求められないのに、**畳めば** $\\sin\\dfrac{\\pi}{4}$。「展開形を見たら畳めないか疑う」目は、次の次の系列（合成）で主役になります。
+
+**Step 8：相互関係との合流**。部品が足りなければ、[相互関係] が部品工場になる（$\\sin\\alpha = \\dfrac{4}{5}$ から $\\cos\\alpha = \\dfrac{3}{5}$）。
+
+**Step 9〜10：$2$ 直線のなす角**。傾き＝$\\tan$（系列1）だから、$2$ 直線のなす角は $\\tan(\\alpha-\\beta)$ で出せます。結果が負なら鈍角——「なす角」は $\\dfrac{\\pi}{2}$ 以下で答える約束なので $\\pi$ から引く。$\\alpha$ も $\\beta$ も分からないのに差だけ分かる——加法定理が橋渡しする、少し不思議で爽快な応用です。
+
+────────
+
+**もっと深く** — 加法定理は公式の屋台骨
+
+**性質の公式はぜんぶ子ども**：$\\sin(\\pi - \\theta) = \\sin\\pi\\cos\\theta - \\cos\\pi\\sin\\theta = 0 + \\sin\\theta$。前の系列で「折り返し」から導いた変換公式は、加法定理に $\\pi$ や $\\dfrac{\\pi}{2}$ を入れるだけでも全部出てきます。対称で見る目と、定理で導く手——$2$ 本立てが揃いました。
+
+**$2$ 倍角・合成もここから**：$\\beta = \\alpha$ と置けば $2$ 倍角の公式（次の系列）、後ろから読めば合成（その次）。この章の残りの公式は、すべて加法定理のバリエーションです。**屋台骨は $1$ 本、枝はそこから生やす**。
+
+**回転の合成として**：加法定理は「角 $\\alpha$ の回転のあとに角 $\\beta$ の回転をすると、角 $\\alpha+\\beta$ の回転になる」ことの座標表示。数Ⅲの複素数平面では、これが「絶対値 $1$ の複素数の掛け算＝回転」として再登場します。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 章構成（加法定理・tan の加法定理・2 直線のなす角）と証明の方針（単位円上の直角三角形による幾何的説明）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「表に無い角の値が、既知の値の積と和で組み立てられるのはなぜ？」——角を足すことは [単位円] で回転を**重ねる**ことであり、重ねた先の点の座標は、元の $2$ つの回転の座標（$\\sin\\alpha, \\cos\\alpha, \\sin\\beta, \\cos\\beta$）の**積の組み合わせ**で幾何的に組み上がっているから。だから知らない角は、知っている角の和に**分解**すればいい。前から読めば「バラす」、後ろから読めば「畳む」——$1$ 本の定理が、この章のすべての公式の屋台骨になります。`,
+};
+
 /** 三角関数ユニットの系列リスト（カタログ登録用）。 */
 export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_GENERAL_ANGLE_SERIES,
@@ -2169,4 +2519,5 @@ export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_IDENTITY_SERIES,
   TRIG_GRAPH_SERIES,
   TRIG_PROPERTY_SERIES,
+  TRIG_ADDITION_SERIES,
 ];

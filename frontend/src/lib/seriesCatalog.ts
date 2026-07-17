@@ -38,6 +38,7 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  TRIG_ADDITION_SERIES,
   TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
   TRIG_GRAPH_SERIES,
@@ -580,6 +581,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "性質 — −θ・π±θ・π/2−θ を単位円の折り返しで読み替える。覚える公式ゼロで無限の角を第 1 象限へ",
+  },
+  {
+    series: TRIG_ADDITION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "加法定理 — 表に無い角を既知の角の和に分解して作る。バラす・畳む・2 直線のなす角まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
