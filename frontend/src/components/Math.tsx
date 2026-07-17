@@ -4927,6 +4927,59 @@ export function TrigLinesAngle() {
 }
 
 /**
+ * 2倍角系列 Step 1 の足場図（D1）：単位円上の θ の点と、その 2 倍の角 2θ の点。
+ * 「同じ角をもう一度重ねる」配置だけを示す。値は書かない。
+ */
+export function TrigDoubleAngle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const ox = 140;
+  const oy = 156;
+  const r = 100;
+  const a = (32 * Math.PI) / 180;
+  const p1x = ox + r * Math.cos(a);
+  const p1y = oy - r * Math.sin(a);
+  const p2x = ox + r * Math.cos(2 * a);
+  const p2y = oy - r * Math.sin(2 * a);
+  return (
+    <svg
+      viewBox="0 0 280 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上の θ の点と 2θ の点——同じ角をもう一度重ねると倍の角に届く"
+    >
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="24" x2={ox} y2="258" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <circle cx={ox} cy={oy} r={r} fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      <line x1={ox} y1={oy} x2={p1x} y2={p1y} stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      <line x1={ox} y1={oy} x2={p2x} y2={p2y} stroke={stroke} strokeWidth="1.6" />
+
+      {/* θ の弧と、その上に重ねるもう 1 つの θ */}
+      <path d={`M ${ox + 40} ${oy} A 40 40 0 0 0 ${ox + 40 * Math.cos(a)} ${oy - 40 * Math.sin(a)}`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x={ox + 50 * Math.cos(a / 2)} y={oy - 50 * Math.sin(a / 2) + 4} fontSize="11" fill={muted} fontStyle="italic">θ</text>
+      <path d={`M ${ox + 56 * Math.cos(a)} ${oy - 56 * Math.sin(a)} A 56 56 0 0 0 ${ox + 56 * Math.cos(2 * a)} ${oy - 56 * Math.sin(2 * a)}`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x={ox + 68 * Math.cos((3 * a) / 2)} y={oy - 68 * Math.sin((3 * a) / 2) + 4} fontSize="11" fill={accent} fontStyle="italic">θ</text>
+
+      <circle cx={p1x} cy={p1y} r="2.6" fill={muted} />
+      <circle cx={p2x} cy={p2y} r="3.5" fill={accent} />
+      <text x={p1x + 6} y={p1y + 3} fontSize="9.5" fill={muted} fontStyle="italic">θ の点</text>
+      <text x={p2x + 6} y={p2y - 2} fontSize="10" fill={accent} fontStyle="italic">2θ の点</text>
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        同じ角を、わざともう一度重ねる——2θ の座標は θ の座標から作れる？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7823,6 +7876,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigLinesAngle />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_DOUBLE_ANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigDoubleAngle />
             </div>
           );
         }

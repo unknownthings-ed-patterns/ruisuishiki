@@ -915,9 +915,44 @@ $$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$$
     relatedTerms: `- [単位円] — 回転の重ねがけの舞台
 - [相互関係] — 部品（$\\cos\\alpha$ 等）が足りないときの部品工場
 - [変換公式] — 加法定理に $\\pi$ や $\\dfrac{\\pi}{2}$ を入れた特殊例
+- [2倍角の公式] — $\\beta = \\alpha$ と置いた特殊化
 - [三角関数の合成] — 加法定理を後ろから読む技
 - [タンジェント] — 傾き＝$\\tan$ がなす角の応用を支える`,
     relatedSeriesId: "trig_addition_01",
+  },
+
+  /* ===== 2倍角の公式 ===== */
+  "2倍角の公式": {
+    reading: "にばいかくのこうしき",
+    short:
+      "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$・$\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 1-2\\sin^2\\theta = 2\\cos^2\\theta - 1$。加法定理の 2 角を同じにした特殊化。",
+    meaning: `**加法定理の 2 つの角を、わざと同じにする——それだけで生える公式。**
+
+$2\\theta = \\theta + \\theta$ と見て [加法定理] に入れると：
+
+$$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta, \\quad \\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta$$
+
+さらに [相互関係] を差し込むと、$\\cos 2\\theta$ は **$3$ つの顔**を持ちます：$\\cos^2\\theta - \\sin^2\\theta = 1 - 2\\sin^2\\theta = 2\\cos^2\\theta - 1$。手元の材料（$\\sin$ しか無い／$\\cos$ しか無い）に合わせて顔を選べます。
+
+**数値の例**：$\\sin\\theta = \\dfrac{3}{5}$、$\\cos\\theta = \\dfrac{4}{5}$ なら $\\sin 2\\theta = 2 \\cdot \\dfrac{3}{5} \\cdot \\dfrac{4}{5} = \\dfrac{24}{25}$。
+
+────────
+
+**もっと深く**——**逆から読むと半角と次数下げ**：$\\cos 2\\theta = 1 - 2\\sin^2\\theta$ を解き直すと $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1-\\cos\\theta}{2}$（半角の公式）、次数に注目して読むと $\\sin^2\\theta = \\dfrac{1-\\cos 2\\theta}{2}$（次数下げ——$2$ 乗が $1$ 次に降りる）。次数下げは微分・積分の章で $\\sin^2 x$ の積分を支える主役になります。$3$ 倍角も $\\sin(2\\theta+\\theta)$ に加法定理をもう $1$ 回でいつでも導けます——覚える在庫より、生やす手つき。`,
+    figures: `**θ をもう一度重ねると 2θ**
+
+<<TRIG_DOUBLE_ANGLE>>
+
+同じ角の重ねがけ。2θ の座標は θ の sin・cos の積と 2 乗で組み上がります。`,
+    scenes: `- **倍角の方程式**：$\\sin 2\\theta = \\sin\\theta$ 型は倍角をほどいて「割らずにくくる」
+- **次数下げ**：$\\sin^2\\dfrac{\\pi}{8}$ のような表に無い角の $2$ 乗を、倍の角の $\\cos$ に降ろす
+- **最大・最小**：$\\sin\\theta\\cos\\theta$ 混じりの関数を $2\\theta$ の式に統一してから [三角関数の合成] へ
+- **積分**（数Ⅱ微積・数Ⅲ）：$\\sin^2 x$・$\\cos^2 x$ の積分は次数下げが定石`,
+    relatedTerms: `- [加法定理] — 親。$\\beta = \\alpha$ の特殊化が 2 倍角
+- [相互関係] — $\\cos 2\\theta$ の 3 つの顔を作る変身装置
+- [三角方程式] — 倍角方程式の解の逆読み
+- [三角関数の合成] — 次数下げのあとに待っている技`,
+    relatedSeriesId: "trig_double_half_01",
   },
 
   /* ===== 数Ⅱ・B 図形と方程式 ===== */

@@ -2511,6 +2511,350 @@ $$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$$
 「表に無い角の値が、既知の値の積と和で組み立てられるのはなぜ？」——角を足すことは [単位円] で回転を**重ねる**ことであり、重ねた先の点の座標は、元の $2$ つの回転の座標（$\\sin\\alpha, \\cos\\alpha, \\sin\\beta, \\cos\\beta$）の**積の組み合わせ**で幾何的に組み上がっているから。だから知らない角は、知っている角の和に**分解**すればいい。前から読めば「バラす」、後ろから読めば「畳む」——$1$ 本の定理が、この章のすべての公式の屋台骨になります。`,
 };
 
+/** TRIG8: 2倍角・半角の公式（特殊化と逆読みが新しい公式を生む）。
+ *  加法定理の 2 角をわざと同じにする特殊化。cos2θ の 3 つの顔・半角（逆読み）・次数下げまで。
+ *  ※池田本は半角を独立の節にせず次数下げで扱う。本系列は半角を「逆」の 2 step に置き、
+ *  次数下げを微分積分への縦の鎖として厚めに扱う（D4・実装時判断）。
+ *  背骨: docs/trig_continuation_series_design_fable.md §6（Fable 5 設計・Fable 5 実装）。 */
+export const TRIG_DOUBLE_HALF_SERIES: LearnerSeries = {
+  id: "trig_double_half_01",
+  title: "2倍角・半角の公式（公式は自分で生やせる）",
+  subtitle:
+    "数Ⅱ・B 三角関数より — 加法定理の 2 角をわざと同じにすると倍角が、逆に読むと半角・次数下げが生えてくる $10$ 問。",
+  patternId: "TRIG8",
+  unit: "algebra_2",
+  revelationLabel:
+    "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$——新しい公式を覚えたのではなく、加法定理の $\\beta$ に $\\alpha$ を入れただけ。特殊化と逆読みで、公式は手元で生やせる",
+  drivingQuestion:
+    "新しい公式を $1$ つも覚えていないのに、加法定理の $2$ つの角をわざと『同じ』にするだけで、倍角・半角・次数下げの公式が全部手元に生えてくるのはなぜ？——公式は前からだけでなく、後ろからも読めるとしたら？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "加法定理 $\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$ の $2$ つの角を、わざと**同じ角** $\\theta$ にしてみます。$\\theta$ は第 $1$ 象限の角で $\\sin\\theta = \\dfrac{3}{5}$、$\\cos\\theta = \\dfrac{4}{5}$ のとき、$\\sin 2\\theta$ の値を求めましょう。",
+      answer: 24 / 25,
+      answerDisplay: "24/25",
+      unit: "",
+      unknownLabel: "sin2θ（sinθ=3/5・cosθ=4/5）",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$2\\theta = \\theta + \\theta$——[加法定理] の $\\alpha$ にも $\\beta$ にも同じ $\\theta$ を入れるだけ。$\\sin(\\theta+\\theta)$ を加法定理でひらくと、右辺はどんな形になるかな？",
+        },
+        {
+          layer: 2,
+          text: "$\\sin(\\theta+\\theta) = \\sin\\theta\\cos\\theta + \\cos\\theta\\sin\\theta$——同じ項が $2$ つ並ぶから、まとめると $2\\sin\\theta\\cos\\theta$。あとは与えられた $2$ つの値を入れるだけ。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta = 2 \\cdot \\dfrac{3}{5} \\cdot \\dfrac{4}{5} = \\dfrac{24}{25}$。**新しい公式を覚えたのではない**——[加法定理] の $2$ つの角をわざと同じにした（特殊化）だけで、$2$ 倍角の公式が手元に生えた。",
+        },
+      ],
+      formulaPreview: "sin2θ = 2sinθcosθ = 2·(3/5)·(4/5) = 24/25",
+      figureMarker: "<<TRIG_DOUBLE_ANGLE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "別の値で反復します。$\\theta$ は第 $1$ 象限の角で $\\sin\\theta = \\dfrac{5}{13}$、$\\cos\\theta = \\dfrac{12}{13}$ のとき、$\\sin 2\\theta$ の値を求めましょう。",
+      answer: 120 / 169,
+      answerDisplay: "120/169",
+      unit: "",
+      unknownLabel: "sin2θ（sinθ=5/13・cosθ=12/13）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。生やした公式はそのまま、変わったのは材料の値だけ。同じ手がそのまま使えるね？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは $\\sin\\theta$・$\\cos\\theta$ の値だけ。前題で生やした $\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ に、新しい材料を入れる。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin 2\\theta = 2 \\cdot \\dfrac{5}{13} \\cdot \\dfrac{12}{13} = \\dfrac{120}{169}$。一度生やした公式は道具になる——材料を替えて確かめる反復。",
+        },
+      ],
+      formulaPreview: "sin2θ = 2·(5/13)·(12/13) = 120/169",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$\\cos$ でも同じことをします。$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$ の $2$ 角を同じ $\\theta$ にして、$\\sin\\theta = \\dfrac{3}{5}$、$\\cos\\theta = \\dfrac{4}{5}$（step1 と同じ）のとき $\\cos 2\\theta$ の値を求めましょう。",
+      answer: 7 / 25,
+      answerDisplay: "7/25",
+      unit: "",
+      unknownLabel: "cos2θ（sinθ=3/5・cosθ=4/5）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。同じ特殊化を、今度は $\\cos$ の加法定理でやるだけ。$\\cos(\\theta+\\theta)$ をひらくと、どんな形が生えてくる？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、使う加法定理が $\\cos$ 版になったこと。$\\cos(\\theta+\\theta) = \\cos\\theta\\cos\\theta - \\sin\\theta\\sin\\theta$——$2$ 乗の差の形。値を入れると？",
+        },
+        {
+          layer: 3,
+          text: "$\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = \\dfrac{16}{25} - \\dfrac{9}{25} = \\dfrac{7}{25}$。$\\sin 2\\theta$（積の形）とちがい、$\\cos 2\\theta$ は **$2$ 乗の差**。この形が次の step で「変身」する。",
+        },
+      ],
+      formulaPreview: "cos2θ = cos²θ − sin²θ = 16/25 − 9/25 = 7/25",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "今度は $\\sin\\theta = \\dfrac{1}{4}$ **だけ**が分かっています（象限は不明）。それでも $\\cos 2\\theta$ の値は $1$ つに決まります。求めましょう。",
+      answer: 7 / 8,
+      answerDisplay: "7/8",
+      unit: "",
+      unknownLabel: "cos2θ（sinθ=1/4 のみ）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。材料が半分しかない——$\\cos\\theta$ が無い。でも [相互関係] を思い出すと、$2$ 乗の差の式から $\\cos$ の $2$ 乗を**消す**ことができないかな？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは「$\\cos\\theta$ 抜きで済ませる」こと。[相互関係] $\\cos^2\\theta = 1 - \\sin^2\\theta$ を step3 の式に入れると、$\\cos 2\\theta$ が $\\sin$ だけの顔 $1 - 2\\sin^2\\theta$ に変身する。しかも $2$ 乗しか出てこないから、象限（符号）も要らない。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = (1 - \\sin^2\\theta) - \\sin^2\\theta = 1 - 2\\sin^2\\theta = 1 - 2 \\cdot \\dfrac{1}{16} = \\dfrac{7}{8}$。**$\\cos 2\\theta$ が $\\sin$ だけの顔に化けた**——[相互関係] が顔の変身を担う。$2$ 乗だけの式だから符号の心配もない（象限不明でも決まる理由）。",
+        },
+      ],
+      formulaPreview: "cos2θ = 1 − 2sin²θ = 1 − 2/16 = 7/8",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "逆側の顔です。$\\cos\\theta = \\dfrac{2}{3}$ **だけ**が分かっているとき、$\\cos 2\\theta$ の値を求めましょう。",
+      answer: -1 / 9,
+      answerDisplay: "−1/9",
+      unit: "",
+      unknownLabel: "cos2θ（cosθ=2/3 のみ）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。今度は $\\sin$ が無くて $\\cos$ だけ。前題と同じ変身の手で、$2$ 乗の差の式から今度は $\\sin$ の $2$ 乗を消せないかな？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは消す相手だけ。$\\sin^2\\theta = 1 - \\cos^2\\theta$ を入れると、$\\cos 2\\theta$ は $\\cos$ だけの顔 $2\\cos^2\\theta - 1$ になる。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos 2\\theta = \\cos^2\\theta - (1 - \\cos^2\\theta) = 2\\cos^2\\theta - 1 = 2 \\cdot \\dfrac{4}{9} - 1 = -\\dfrac{1}{9}$。これで $\\cos 2\\theta$ の **$3$ つの顔**（$\\cos^2-\\sin^2$／$1-2\\sin^2$／$2\\cos^2-1$）が出そろった。どの顔を使うかは「手元にどの材料があるか」で選ぶ。",
+        },
+      ],
+      formulaPreview: "cos2θ = 2cos²θ − 1 = 8/9 − 1 = −1/9",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$\\tan$ も特殊化します。$\\tan\\theta = \\dfrac{1}{2}$ のとき、$\\tan 2\\theta$ の値を求めましょう。（$\\tan$ の加法定理の $2$ 角を同じにする）",
+      answer: 4 / 3,
+      answerDisplay: "4/3",
+      unit: "",
+      unknownLabel: "tan2θ（tanθ=1/2）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1・3 と同じ特殊化を、$\\tan$ の加法定理（分数の公式）でやってみよう。$\\tan(\\theta+\\theta)$ の分子と分母は、それぞれどんな形になる？",
+        },
+        {
+          layer: 2,
+          text: "分子は「和」が同じもの $2$ つで $2\\tan\\theta$、分母は「$1 -$ 積」が $1 - \\tan^2\\theta$。材料は $\\tan\\theta = \\dfrac{1}{2}$ の $1$ つだけで足りる。",
+        },
+        {
+          layer: 3,
+          text: "$\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1 - \\tan^2\\theta} = \\dfrac{2 \\cdot \\dfrac{1}{2}}{1 - \\dfrac{1}{4}} = \\dfrac{1}{\\dfrac{3}{4}} = \\dfrac{4}{3}$。$\\sin$・$\\cos$・$\\tan$ の $3$ つとも、特殊化ひとつで倍角の公式が生えた。",
+        },
+      ],
+      formulaPreview: "tan2θ = 2·(1/2) ÷ (1−1/4) = 4/3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "公式を**後ろから**読みます。$0 < \\theta < \\pi$ で $\\cos\\theta = \\dfrac{1}{8}$ のとき、**半分の角**の $\\sin\\dfrac{\\theta}{2}$ の値を求めましょう。",
+      answer: Math.sqrt(7) / 4,
+      answerDisplay: "√7/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin(θ/2)（cosθ=1/8・0<θ<π）",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 の「$\\sin$ だけの顔」を思い出そう。あの式で「倍の関係」にある $2$ つの角は、$2\\theta$ と $\\theta$ だった。いま知りたいのは半分の角——$\\theta$ とは、ちょうど倍の関係。step4 の式の角を**半分ずらして**読み直せないかな？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは読む向きだけ。$\\cos 2\\theta = 1 - 2\\sin^2\\theta$ の $\\theta$ を $\\dfrac{\\theta}{2}$ に置き換えると $\\cos\\theta = 1 - 2\\sin^2\\dfrac{\\theta}{2}$——知りたい $\\sin\\dfrac{\\theta}{2}$ について**逆に解ける**形。最後の符号は範囲 $0 < \\theta < \\pi$ が決める。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos\\theta = 1 - 2\\sin^2\\dfrac{\\theta}{2}$ を変形して $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\cos\\theta}{2} = \\dfrac{1 - \\dfrac{1}{8}}{2} = \\dfrac{7}{16}$。$0 < \\theta < \\pi$ なら $0 < \\dfrac{\\theta}{2} < \\dfrac{\\pi}{2}$ で $\\sin\\dfrac{\\theta}{2} > 0$、よって $\\dfrac{\\sqrt{7}}{4}$。**倍角の公式を逆に読むと、半角の公式が生える**——前から読めば倍角、後ろから読めば半角。",
+        },
+      ],
+      formulaPreview: "sin²(θ/2) = (1−cosθ)/2 = 7/16 → sin(θ/2) = √7/4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "同じ読み方で $\\cos$ も。$0 < \\theta < \\pi$ で $\\cos\\theta = \\dfrac{1}{8}$（前題と同じ）のとき、$\\cos\\dfrac{\\theta}{2}$ の値を求めましょう。",
+      answer: 0.75,
+      answerDisplay: "3/4",
+      unit: "",
+      unknownLabel: "cos(θ/2)（cosθ=1/8・0<θ<π）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。同じ「倍角を逆から読む」。変わったのは、使う顔が $\\sin$ 用でなく $\\cos$ 用になること。step5 の顔（$\\cos$ だけの顔）を半分ずらして読み直すと？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは顔だけ。$\\cos 2\\theta = 2\\cos^2\\theta - 1$ の角を半分にして $\\cos\\theta = 2\\cos^2\\dfrac{\\theta}{2} - 1$。これを $\\cos\\dfrac{\\theta}{2}$ について逆に解く。符号は前題と同じく範囲が決める。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos^2\\dfrac{\\theta}{2} = \\dfrac{1 + \\cos\\theta}{2} = \\dfrac{1 + \\dfrac{1}{8}}{2} = \\dfrac{9}{16}$。$0 < \\dfrac{\\theta}{2} < \\dfrac{\\pi}{2}$ で正だから $\\cos\\dfrac{\\theta}{2} = \\dfrac{3}{4}$。半角の公式 $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1-\\cos\\theta}{2}$・$\\cos^2\\dfrac{\\theta}{2} = \\dfrac{1+\\cos\\theta}{2}$ は、暗記でなく**倍角の逆読み**として手元で生やせる。",
+        },
+      ],
+      formulaPreview: "cos²(θ/2) = (1+cosθ)/2 = 9/16 → cos(θ/2) = 3/4",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "使い道が変わります。$\\sin^2\\dfrac{\\pi}{8}$ の値を求めましょう。（$\\dfrac{\\pi}{8}$ は特別角ではありません——でも「$2$ 乗を $1$ 次に下げる」と求められます）",
+      answer: (2 - Math.sqrt(2)) / 4,
+      answerDisplay: "(2−√2)/4",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "sin²(π/8)",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "step7 と比べてみよう。あそこで出た式は「$2$ 乗」と「$1$ 次のコサイン」をつなぐ橋だった。いま問われている角の**倍**は $\\dfrac{\\pi}{4}$——それなら表にある角では？ 橋を「$2$ 乗を消す」向きに渡れないかな？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは使う目的：値でなく**次数を下げる**こと。$\\sin^2\\theta = \\dfrac{1 - \\cos 2\\theta}{2}$（step7 の式そのもの）に $\\theta = \\dfrac{\\pi}{8}$ を入れると、右辺の角は $\\dfrac{\\pi}{4}$——特別角の $\\cos$ になる。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin^2\\dfrac{\\pi}{8} = \\dfrac{1 - \\cos\\dfrac{\\pi}{4}}{2} = \\dfrac{1 - \\dfrac{1}{\\sqrt{2}}}{2} = \\dfrac{\\sqrt{2}-1}{2\\sqrt{2}} = \\dfrac{2-\\sqrt{2}}{4}$。**$2$ 乗（$2$ 次）が $1$ 次の $\\cos$ に下がった**——これが「次数下げ」。$2$ 乗のままでは手が出ない式を $1$ 次に降ろすこの技は、微分・積分の章で主役級の働きをする。",
+        },
+      ],
+      formulaPreview: "sin²(π/8) = (1 − cos(π/4))/2 = (2−√2)/4",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "仕上げは方程式との合流です。$0 \\le \\theta < 2\\pi$ で、$\\sin 2\\theta = \\sin\\theta$ を満たす $\\theta$ を**すべて**求めましょう（複数あるので「,」で区切って。$0$ も忘れずに）。",
+      answer: 0,
+      answerDisplay: "0, π/3, π, 5π/3",
+      solutionSet: [0, Math.PI / 3, Math.PI, (Math.PI * 5) / 3],
+      inputAffordances: ["pi", "multi"],
+      unit: "",
+      unknownLabel: "sin2θ=sinθ の解（0≤θ<2π）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "左辺には $2\\theta$、右辺には $\\theta$——角がそろっていないままでは [三角方程式] にできない。この系列で生やした公式で、左辺を $\\theta$ だけの式に**そろえる**ことはできないかな？",
+        },
+        {
+          layer: 2,
+          text: "新しいのは「倍角をほどいてから方程式を解く」こと。$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ でほどくと $2\\sin\\theta\\cos\\theta - \\sin\\theta = 0$。ここで両辺を $\\sin\\theta$ で割りたくなるが——$\\sin\\theta$ が $0$ の可能性があるから割れない。割る代わりに**くくる**と、方程式が $2$ つに分かれる。",
+        },
+        {
+          layer: 3,
+          text: "$2\\sin\\theta\\cos\\theta - \\sin\\theta = 0$ を $\\sin\\theta$ でくくって $\\sin\\theta(2\\cos\\theta - 1) = 0$。よって $\\sin\\theta = 0$ または $\\cos\\theta = \\dfrac{1}{2}$。[三角方程式] の逆読みで、$\\sin\\theta = 0$ から $\\theta = 0, \\pi$、$\\cos\\theta = \\dfrac{1}{2}$ から $\\theta = \\dfrac{\\pi}{3}, \\dfrac{5\\pi}{3}$。合わせて $4$ つ。**「割らずにくくる」**——$\\sin\\theta = 0$ の解を失わないための、方程式の大事な作法。",
+        },
+      ],
+      formulaPreview: "sinθ(2cosθ−1) = 0 → θ = 0, π と π/3, 5π/3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 新しい公式を $1$ つも覚えていないのに、加法定理の $2$ つの角をわざと『同じ』にするだけで、倍角・半角・次数下げの公式が全部手元に生えてくるのはなぜ？——公式は前からだけでなく、後ろからも読めるとしたら？
+
+────────
+
+**特殊化——$\\beta$ に $\\alpha$ を入れる、それだけ。**
+
+[加法定理] は $2$ つの角 $\\alpha, \\beta$ について成り立つ**一般**の定理。一般に成り立つなら、$\\beta = \\alpha$ という**特別な場合**にも当然成り立ちます：
+
+$$\\sin 2\\theta = \\sin(\\theta+\\theta) = \\sin\\theta\\cos\\theta + \\cos\\theta\\sin\\theta = 2\\sin\\theta\\cos\\theta$$
+$$\\cos 2\\theta = \\cos(\\theta+\\theta) = \\cos^2\\theta - \\sin^2\\theta$$
+
+<<TRIG_DOUBLE_ANGLE>>
+
+**$\\cos 2\\theta$ の $3$ つの顔**：$2$ 乗の差の形に [相互関係]（$\\sin^2\\theta + \\cos^2\\theta = 1$）を差し込むと、顔が変わります：
+
+$$\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 1 - 2\\sin^2\\theta = 2\\cos^2\\theta - 1$$
+
+$\\sin$ だけの顔・$\\cos$ だけの顔——**どの顔を使うかは、手元にある材料で選ぶ**（Step 4〜5）。$2$ 乗しか現れないから、象限が不明でも値が決まるのもポイント。$\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1-\\tan^2\\theta}$ も同じ特殊化です（Step 6）。
+
+**ここが胚細胞**：**特殊化と逆読みが、新しい公式を生む**。公式集を増やしたのではなく、$1$ 本の定理を「特別な場合に絞る」「後ろから読む」という $2$ つの操作で耕した。$3$ 倍角が欲しければ $\\sin(2\\theta+\\theta)$ に加法定理をもう $1$ 回——何倍角でも、**加法定理を繰り返せば必ず導けます**。覚える公式の在庫より、生やす手つきを持つこと。
+
+**半角＝倍角の逆読み**（Step 7〜8）：$\\cos 2\\theta = 1 - 2\\sin^2\\theta$ の角を半分にして（$2\\theta \\to \\theta$、$\\theta \\to \\dfrac{\\theta}{2}$）、知りたい方について解き直すと：
+
+$$\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\cos\\theta}{2}, \\quad \\cos^2\\dfrac{\\theta}{2} = \\dfrac{1 + \\cos\\theta}{2}$$
+
+$2$ 乗をほどく最後の $\\pm$ は、いつものように範囲（象限）が決めます——[相互関係] の Step 4 と同じ原理。
+
+**次数下げ**（Step 9）：半角の式を「角」でなく「**次数**」に注目して読み直すと、$\\sin^2\\theta = \\dfrac{1 - \\cos 2\\theta}{2}$・$\\cos^2\\theta = \\dfrac{1 + \\cos 2\\theta}{2}$——**$2$ 乗（$2$ 次）が $1$ 次に下がる**変形になります。$\\sin^2\\dfrac{\\pi}{8}$ のような「表に無い角の $2$ 乗」も、倍の角 $\\dfrac{\\pi}{4}$ の $\\cos$ に降りて計算できる。この技は微分・積分の章で $\\sin^2 x$ を積分するときの主役——ここが微積への縦の鎖の起点です。
+
+**倍角方程式**（Step 10）：$\\sin 2\\theta = \\sin\\theta$ は、倍角をほどいて角をそろえ、**割らずにくくる**（$\\sin\\theta$ で割ると $\\sin\\theta = 0$ の解を失う）のが作法。[三角方程式]（系列3）との合流点です。
+
+────────
+
+**もっと深く** — 「導ける」ということの強さ
+
+公式を忘れることは、恥ずかしいことではありません。この系列で見たとおり、倍角も半角も次数下げも、**加法定理 $1$ 本から $1$ 分で再建できる**からです。「忘れない」ための暗記カードより、「忘れても生やせる」導出の手つき——これが数学の記憶術の正体です。
+
+**$3$ つの顔の使い分け**は、この先の応用で効きます：方程式で $\\cos$ に統一したいなら $2\\cos^2\\theta - 1$、$\\sin$ に統一したいなら $1 - 2\\sin^2\\theta$、次数を下げたいなら逆向きに。**式変形の選択は「今どの形が欲しいか」から逆算する**——目的が顔を選びます。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅱ・B 入門問題精講 改訂版』旺文社
+  — 章構成（$2$ 倍角の公式・派生公式の導出方針・倍角の方程式）を参考。半角は同書では次数下げとして扱われる（本系列は「逆読み」の $2$ 問として独立に置いた）。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+「覚えていないのに公式が生えてくるのはなぜ？」——[加法定理] が**一般**の定理だから。一般は特殊を含む：$\\beta = \\alpha$ と絞れば倍角が生え、[相互関係] を差し込めば $\\cos 2\\theta$ の $3$ つの顔が生え、逆から読めば半角と次数下げが生える。公式は在庫ではなく、$1$ 本の屋台骨（加法定理）から**その場で生やすもの**。「前から読む・後ろから読む・特別な場合に絞る」——この $3$ つの手つきが、公式集を $1$ 本の定理に畳んでしまいます。`,
+};
+
 /** 三角関数ユニットの系列リスト（カタログ登録用）。 */
 export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_GENERAL_ANGLE_SERIES,
@@ -2520,4 +2864,5 @@ export const TRIG_SERIES_LIST: LearnerSeries[] = [
   TRIG_GRAPH_SERIES,
   TRIG_PROPERTY_SERIES,
   TRIG_ADDITION_SERIES,
+  TRIG_DOUBLE_HALF_SERIES,
 ];

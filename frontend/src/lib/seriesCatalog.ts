@@ -39,6 +39,7 @@ import {
 } from "./seriesAlgebra2";
 import {
   TRIG_ADDITION_SERIES,
+  TRIG_DOUBLE_HALF_SERIES,
   TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
   TRIG_GRAPH_SERIES,
@@ -589,6 +590,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "加法定理 — 表に無い角を既知の角の和に分解して作る。バラす・畳む・2 直線のなす角まで",
+  },
+  {
+    series: TRIG_DOUBLE_HALF_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "2倍角・半角 — 加法定理の特殊化と逆読みで公式を生やす。cos2θ の 3 つの顔・次数下げ・倍角方程式まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
