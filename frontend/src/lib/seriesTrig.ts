@@ -2192,7 +2192,7 @@ export const TRIG_ADDITION_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "[単位円] で「角の和」をつくるとは、$\\alpha$ まで回してから、さらに $\\beta$ 回すこと。届いた先の点の高さが $\\sin(\\alpha+\\beta)$。定理の右辺に並ぶ $4$ つの部品（$\\sin\\dfrac{\\pi}{6}$・$\\cos\\dfrac{\\pi}{4}$・$\\cos\\dfrac{\\pi}{6}$・$\\sin\\dfrac{\\pi}{4}$）は、どれも表にある値だね。まず部品を全部そろえてみよう。",
+          text: "[単位円] で「角の和」をつくるとは、$\\alpha$ まで回してから、さらに $\\beta$ 回すこと。届いた先の点の高さが $\\sin(\\alpha+\\beta)$。定理の右辺に並ぶ $4$ つの部品（$\\sin\\dfrac{\\pi}{6}$・$\\cos\\dfrac{\\pi}{4}$・$\\cos\\dfrac{\\pi}{6}$・$\\sin\\dfrac{\\pi}{4}$）は、どれも表にある値だね。まず部品を全部そろえられるかな？",
         },
         {
           layer: 2,
