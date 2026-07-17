@@ -4407,6 +4407,70 @@ export function UnitCircleArc() {
 }
 
 /**
+ * 相互関係 系列 Step 1 の足場図（T1）：単位円上の点 P と、x 軸への垂線が作る
+ * 直角三角形。辺は 1（斜辺）・sinθ（縦）・cosθ（横）のラベルだけを示し、
+ * 恒等式そのものは書かない（Socratic に気づかせる。答えの数値も見せない）。
+ */
+export function UnitCircleIdentity() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const triFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  // viewBox 280x280、原点 O = (130, 150)、半径 1 = 96 px
+  // P は θ ≒ 37°：(130 + 96cos37, 150 - 96sin37) ≒ (206.7, 92.2)
+  const ox = 130;
+  const oy = 150;
+  const px = 206.7;
+  const py = 92.2;
+  return (
+    <svg
+      viewBox="0 0 280 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 280 }}
+      role="img"
+      aria-label="単位円上の点 P から x 軸に垂線を下ろすと、斜辺 1・縦 sinθ・横 cosθ の直角三角形ができる"
+    >
+      {/* 軸 */}
+      <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
+      <line x1={ox} y1="20" x2={ox} y2="262" stroke={muted} strokeWidth="0.5" />
+      <text x="258" y={oy + 13} fontSize="9" fill={muted}>x</text>
+      <text x={ox - 4} y="22" fontSize="9" fill={muted} textAnchor="end">y</text>
+
+      {/* 単位円 */}
+      <circle cx={ox} cy={oy} r="96" fill={fillColor} stroke={stroke} strokeWidth="1.5" />
+
+      {/* 直角三角形（塗り） */}
+      <polygon points={`${ox},${oy} ${px},${oy} ${px},${py}`} fill={triFill} stroke="none" />
+
+      {/* 横（cosθ）・縦（sinθ）・斜辺（1） */}
+      <line x1={ox} y1={oy} x2={px} y2={oy} stroke={accent} strokeWidth="1.8" />
+      <line x1={px} y1={oy} x2={px} y2={py} stroke={accent} strokeWidth="1.8" />
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={stroke} strokeWidth="1.8" />
+
+      {/* 直角マーカー */}
+      <polyline points={`${px - 7},${oy} ${px - 7},${oy - 7} ${px},${oy - 7}`} fill="none" stroke={muted} strokeWidth="0.8" />
+
+      {/* O と P */}
+      <circle cx={ox} cy={oy} r="3" fill={stroke} />
+      <circle cx={px} cy={py} r="3.5" fill={accent} />
+      <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
+      <text x={px + 6} y={py - 2} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">P</text>
+
+      {/* 辺のラベル */}
+      <text x={(ox + px) / 2} y={oy + 15} fontSize="10.5" fill={accent} textAnchor="middle">cosθ</text>
+      <text x={px + 8} y={(oy + py) / 2 + 4} fontSize="10.5" fill={accent}>sinθ</text>
+      <text x={(ox + px) / 2 - 14} y={(oy + py) / 2 - 4} fontSize="11" fill={stroke} fontStyle="italic">1</text>
+
+      {/* 凡例（恒等式は書かない——問いの形で） */}
+      <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+        斜辺 1 の直角三角形——三平方の定理は、この 3 辺に何を言っている？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 円の方程式 Step 6 の足場図：2 点 A(1, 2), B(7, 10) を直径の両端とする状態。
  * 中心 M（中点）と、それを直径とする円を示す。答えの数値は見せない。
  */
@@ -7240,6 +7304,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <UnitCircleArc />
+            </div>
+          );
+        }
+        if (trimmed === "<<UNIT_CIRCLE_IDENTITY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <UnitCircleIdentity />
             </div>
           );
         }

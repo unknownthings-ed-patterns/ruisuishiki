@@ -40,6 +40,7 @@ import {
 import {
   TRIG_EQUATION_SERIES,
   TRIG_GENERAL_ANGLE_SERIES,
+  TRIG_IDENTITY_SERIES,
   TRIG_RADIAN_SERIES,
   TRIG_SERIES_LIST,
 } from "./seriesTrig";
@@ -553,6 +554,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角関数",
     shortDescription:
       "三角方程式 — 値から角を逆に求める。単位円の逆読み・範囲で解を絞る・不等式（点→弧）まで",
+  },
+  {
+    series: TRIG_IDENTITY_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "三角関数",
+    shortDescription:
+      "相互関係 — sin²θ+cos²θ=1 が 3 つの関数を縛る。1 つの値と象限から残りを決め、対称式・方程式まで",
   },
   /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
   {
