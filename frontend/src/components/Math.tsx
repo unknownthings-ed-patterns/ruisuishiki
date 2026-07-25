@@ -264,28 +264,32 @@ function renderTermLinks(text: string, keyPrefix: string): React.ReactNode[] {
   return parts;
 }
 
-function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] {
-  // まず **強調** をパースし、その隙間で [用語] をパースする
+/**
+ * `$...$` を KaTeX インライン数式に、`[用語]` を TermLink に変換する。
+ * 強調の内側でも同じ処理を通したいので、独立した関数にしてある。
+ */
+function renderMathAndTerms(
+  text: string,
+  keyPrefix: string,
+): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  const regex = /\*\*([^*\n]+)\*\*/g;
+  const regex = /\$([^$\n]+)\$/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let keyCounter = 0;
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      const between = text.slice(lastIndex, match.index);
-      parts.push(...renderTermLinks(between, `${keyPrefix}b${keyCounter}`));
+      const before = text.slice(lastIndex, match.index);
+      parts.push(...renderTermLinks(before, `${keyPrefix}m${keyCounter}`));
     }
     parts.push(
-      <strong key={`${keyPrefix}b${keyCounter++}`} className="text-foreground">
-        {match[1]}
-      </strong>
+      <InlineMath key={`${keyPrefix}m${keyCounter++}`} math={match[1]} />
     );
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < text.length) {
     const tail = text.slice(lastIndex);
-    parts.push(...renderTermLinks(tail, `${keyPrefix}bt${keyCounter}`));
+    parts.push(...renderTermLinks(tail, `${keyPrefix}mt${keyCounter}`));
   }
   return parts;
 }
@@ -298,26 +302,32 @@ function renderBoldSegments(text: string, keyPrefix: string): React.ReactNode[] 
  * 例：「$(x+1)(x+2)$ を展開すると $x^2 + \\square x + 2$ になります。」
  *
  * $...$ の外は通常テキストとして表示する。
+ *
+ * パース順は **強調 → 数式・用語**。逆順にすると `**周期は $n-1$ 桁以下**` の
+ * ような「数式をまたぐ強調」で `**` が別断片に分かれ、閉じ側が見つからずに
+ * アスタリスクがそのまま学習者に見えてしまう。
  */
 export function MathText({ text }: { text: string }) {
   const parts: React.ReactNode[] = [];
-  const regex = /\$([^$\n]+)\$/g;
+  const regex = /\*\*([^*\n]+)\*\*/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let keyCounter = 0;
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
       const before = text.slice(lastIndex, match.index);
-      parts.push(...renderBoldSegments(before, `m${keyCounter}`));
+      parts.push(...renderMathAndTerms(before, `p${keyCounter}`));
     }
     parts.push(
-      <InlineMath key={`m${keyCounter++}`} math={match[1]} />
+      <strong key={`b${keyCounter}`} className="text-foreground">
+        {renderMathAndTerms(match[1], `s${keyCounter++}`)}
+      </strong>
     );
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < text.length) {
     const tail = text.slice(lastIndex);
-    parts.push(...renderBoldSegments(tail, `mt${keyCounter}`));
+    parts.push(...renderMathAndTerms(tail, `pt${keyCounter}`));
   }
   return <>{parts}</>;
 }
@@ -7628,6 +7638,193 @@ export function DecimalDivisionAlgorithmStep7() {
 }
 
 /**
+ * 数と式 系列1 Step 1：数の入れ子（自然数 ⊂ 整数 ⊂ 有理数）。
+ * 外に出る矢印には「引き算」「割り算」だけを書き、
+ * その先に何があるか（負の数・分数・無理数の名前）は書かない＝問いで終える。
+ */
+export function NumberExpansionStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="自然数が整数に、整数が有理数に含まれる入れ子の図。外へ出る矢印に引き算・割り算のラベル"
+    >
+      <rect x="20" y="24" width="250" height="180" rx="14" fill={fillColor} stroke={muted} strokeWidth="1" />
+      <rect x="46" y="52" width="198" height="126" rx="12" fill="none" stroke={muted} strokeWidth="1" />
+      <rect x="72" y="80" width="146" height="72" rx="10" fill="none" stroke={stroke} strokeWidth="1.4" />
+
+      <text x="145" y="120" fontSize="13" fill={stroke} textAnchor="middle">
+        自然数
+      </text>
+      <text x="145" y="140" fontSize="11" fill={muted} textAnchor="middle">
+        1, 2, 3, …
+      </text>
+      <text x="145" y="70" fontSize="12" fill={muted} textAnchor="middle">
+        整数
+      </text>
+      <text x="145" y="42" fontSize="12" fill={muted} textAnchor="middle">
+        有理数
+      </text>
+
+      <path d="M 218 116 L 262 116" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 252 110 L 262 116 L 252 122" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="286" y="112" fontSize="11" fill={accent} textAnchor="middle">
+        引き算
+      </text>
+      <text x="286" y="127" fontSize="11" fill={accent} textAnchor="middle">
+        割り算
+      </text>
+
+      <path d="M 270 150 L 316 150" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="5,4" />
+      <path d="M 306 144 L 316 150 L 306 156" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="330" y="154" fontSize="20" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="230" fontSize="11" fill={muted} textAnchor="middle">
+        できない計算に出会うたび、外側の枠が増えてきた
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列1 Step 6：わり算の筆算で「同じ余りが再来する」様子。
+ * 商の数字は書かず（答えを見せない）、余りが循環して戻る矢印と
+ * 「同じところに戻ったら？」の問いで終える。
+ */
+export function RepeatingDecimalStep6() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
+  return (
+    <svg
+      viewBox="0 0 360 256"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="わり算の筆算で余りが同じ値に戻る循環の図。商の数字は書かない"
+    >
+      <text x="24" y="34" fontSize="12" fill={muted}>
+        筆算のとちゅうに出てくる「余り」
+      </text>
+
+      <circle cx="90" cy="90" r="20" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="90" y="95" fontSize="14" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        余り
+      </text>
+      <circle cx="200" cy="90" r="20" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="200" y="95" fontSize="14" fill={stroke} textAnchor="middle" fontFamily={mono}>
+        余り
+      </text>
+      <circle cx="200" cy="170" r="20" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="200" y="175" fontSize="14" fill={accent} textAnchor="middle" fontFamily={mono}>
+        余り
+      </text>
+
+      <path d="M 112 90 L 176 90" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d="M 166 84 L 176 90 L 166 96" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d="M 200 112 L 200 146" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d="M 194 136 L 200 146 L 206 136" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path
+        d="M 180 170 C 120 170 90 140 90 114"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="6,4"
+      />
+      <path d="M 84 124 L 90 112 L 96 124" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="240" y="150" fontSize="11" fill={accent}>
+        前と同じ余りが再来
+      </text>
+
+      <text x="180" y="230" fontSize="11" fill={muted} textAnchor="middle">
+        同じ余りに戻ったら、そのあとの数字はどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列1 Step 10：1 辺 1 の正方形の対角線を数直線に倒す図。
+ * 対角線の長さの値（√2 ≒ 1.41…）は書かない。目盛りだけ置いて
+ * 「目盛りのすきまに落ちる長さ」を問いで終える。
+ */
+export function IrrationalDiagonal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const Oy = 190;
+  const unit = 74;
+  const Ox = 46;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="1 辺 1 の正方形の対角線を数直線の上に倒した図。対角線の長さの値は書かない"
+    >
+      <rect x={Ox} y={Oy - unit} width={unit} height={unit} rx="2" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <path d={`M ${Ox} ${Oy} L ${Ox + unit} ${Oy - unit}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x={Ox + unit * 0.72} y={Oy - 10} fontSize="11" fill={muted} textAnchor="middle">
+        1
+      </text>
+      <text x={Ox - 12} y={Oy - unit / 2} fontSize="11" fill={muted} textAnchor="middle">
+        1
+      </text>
+
+      <line x1="20" y1={Oy} x2="344" y2={Oy} stroke={muted} strokeWidth="1" />
+      {[0, 1, 2, 3, 4].map((k) => (
+        <g key={k}>
+          <line x1={Ox + k * (unit / 2)} y1={Oy - 5} x2={Ox + k * (unit / 2)} y2={Oy + 5} stroke={muted} strokeWidth="1" />
+        </g>
+      ))}
+      <text x={Ox} y={Oy + 19} fontSize="11" fill={muted} textAnchor="middle">
+        0
+      </text>
+      <text x={Ox + unit} y={Oy + 19} fontSize="11" fill={muted} textAnchor="middle">
+        1
+      </text>
+      <text x={Ox + 2 * unit} y={Oy + 19} fontSize="11" fill={muted} textAnchor="middle">
+        2
+      </text>
+
+      <path
+        d={`M ${Ox + unit} ${Oy - unit} A ${unit * 1.414} ${unit * 1.414} 0 0 1 ${Ox + unit * 1.414} ${Oy}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5,4"
+      />
+      <circle cx={Ox + unit * 1.414} cy={Oy} r="4" fill={accent} />
+
+      <text x="240" y="60" fontSize="11" fill={muted}>
+        対角線を数直線に倒すと、
+      </text>
+      <text x="240" y="78" fontSize="11" fill={muted}>
+        どの目盛りにも重ならない
+      </text>
+      <text x="240" y="100" fontSize="18" fill={accent} fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
+        この長さは、分数で言い当てられる？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
@@ -8426,6 +8623,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <LPStep10 />
+            </div>
+          );
+        }
+        if (trimmed === "<<NUMBER_EXPANSION_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <NumberExpansionStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<REPEATING_DECIMAL_STEP6>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RepeatingDecimalStep6 />
+            </div>
+          );
+        }
+        if (trimmed === "<<IRRATIONAL_DIAGONAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IrrationalDiagonal />
             </div>
           );
         }
