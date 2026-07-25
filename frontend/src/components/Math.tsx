@@ -6907,6 +6907,391 @@ export function TrigTanReorient() {
   );
 }
 
+/** 斜辺が未知の直角三角形（答えの長さは書かない）。 */
+export function TrigHypUnknown() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="となりの辺が既知で斜辺が未知の直角三角形"
+    >
+      <polygon
+        points="50,180 230,180 50,70"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <polyline
+        points="50,172 58,172 58,180"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      <path
+        d="M 70,180 A 20,20 0 0,0 63,163"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="78" y="175" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="140" y="198" fontSize="12" fill={muted} textAnchor="middle">
+        となり
+      </text>
+      <text
+        x="155"
+        y="110"
+        fontSize="13"
+        fill={accent}
+        fontWeight="600"
+        textAnchor="middle"
+      >
+        斜辺 ？
+      </text>
+      <text
+        x="160"
+        y="220"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        角ととなりから、斜辺は読める？
+      </text>
+    </svg>
+  );
+}
+
+/** 正三角形を半分にした 30-60-90（答えの比は書かない）。 */
+export function TrigEquilateralHalf() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="正三角形を半分にした直角三角形。辺の比は？"
+    >
+      <polygon
+        points="60,200 280,200 170,40"
+        fill="none"
+        stroke="var(--border)"
+        strokeWidth="1.2"
+        strokeDasharray="4,3"
+      />
+      <polygon
+        points="170,200 280,200 170,40"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <polyline
+        points="170,192 178,192 178,200"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      <text x="210" y="198" fontSize="11" fill={muted} textAnchor="middle">
+        半分
+      </text>
+      <text x="155" y="120" fontSize="12" fill={accent} fontStyle="italic">
+        60°
+      </text>
+      <text x="250" y="130" fontSize="12" fill={accent} fontStyle="italic">
+        30°
+      </text>
+      <text
+        x="170"
+        y="228"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        正三角形を半分——辺の比は図から生える
+      </text>
+    </svg>
+  );
+}
+
+/** 鋭角三角形に垂線を下ろした図（高さ・答えは書かない）。 */
+export function TrigAcuteAltitude() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="鋭角三角形に垂線を下ろす。高さはどの辺と角で読める？"
+    >
+      <polygon
+        points="40,190 320,190 120,50"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <line
+        x1="120"
+        y1="50"
+        x2="120"
+        y2="190"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="4,3"
+      />
+      <polyline
+        points="120,182 128,182 128,190"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <path
+        d="M 60,190 A 22,22 0 0,0 52,172"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="68" y="178" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="128" y="120" fontSize="12" fill={accent} fontWeight="600">
+        h ？
+      </text>
+      <text
+        x="180"
+        y="218"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        垂線を下ろすと、直角三角形が現れる
+      </text>
+    </svg>
+  );
+}
+
+/** 上半の単位円（0°〜180°）。答えの座標は書かない。 */
+export function TrigUnitSemi() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="上半の単位円。点Pの座標は角でどう読める？"
+    >
+      <line x1="30" y1="160" x2="290" y2="160" stroke={muted} strokeWidth="1" />
+      <line x1="160" y1="160" x2="160" y2="20" stroke={muted} strokeWidth="1" />
+      <path
+        d="M 40,160 A 120,120 0 0,1 280,160"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <circle cx="100" cy="56" r="4" fill={accent} />
+      <line
+        x1="160"
+        y1="160"
+        x2="100"
+        y2="56"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="88" y="50" fontSize="13" fill={accent} fontWeight="600">
+        P
+      </text>
+      <text x="275" y="175" fontSize="11" fill={muted}>
+        0°
+      </text>
+      <text x="155" y="18" fontSize="11" fill={muted}>
+        90°
+      </text>
+      <text x="28" y="175" fontSize="11" fill={muted}>
+        180°
+      </text>
+      <text
+        x="160"
+        y="195"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        高さ＝？ 横＝？——直角三角形が無くても読める
+      </text>
+    </svg>
+  );
+}
+
+/** 鈍角を含む三角形（答えの辺・面積は書かない）。 */
+export function TrigObtuseTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="鈍角を含む三角形。挟む角と2辺から何が読める？"
+    >
+      <polygon
+        points="40,60 300,180 80,180"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <path
+        d="M 100,180 A 24,24 0 0,0 88,158"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="108" y="168" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="70" y="50" fontSize="12" fill={muted}>
+        鈍角？
+      </text>
+      <text
+        x="180"
+        y="210"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        直角でなくても、2辺と挟む角で面積は？
+      </text>
+    </svg>
+  );
+}
+
+/** 3辺だけの三角形（角・面積の答えは書かない）。 */
+export function TrigSssTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="3辺だけが分かっている三角形。角の度数なしで面積は？"
+    >
+      <polygon
+        points="50,180 290,180 200,50"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <text x="170" y="198" fontSize="12" fill={muted} textAnchor="middle">
+        a
+      </text>
+      <text x="255" y="120" fontSize="12" fill={muted}>
+        b
+      </text>
+      <text x="110" y="120" fontSize="12" fill={muted}>
+        c
+      </text>
+      <text x="185" y="100" fontSize="13" fill={accent} fontWeight="600">
+        θ ？
+      </text>
+      <text
+        x="170"
+        y="215"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        角の度数は分からなくても、面積は出せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 外接円と三角形（R の値は書かない）。 */
+export function TrigCircumTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形とその外接円。辺と対角は円を介してどう結ばれる？"
+    >
+      <circle
+        cx="160"
+        cy="130"
+        r="90"
+        fill="none"
+        stroke="var(--border)"
+        strokeWidth="1.4"
+      />
+      <polygon
+        points="90,180 250,170 140,60"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <circle cx="160" cy="130" r="3" fill={accent} />
+      <text x="168" y="128" fontSize="12" fill={accent} fontWeight="600">
+        O
+      </text>
+      <line
+        x1="160"
+        y1="130"
+        x2="250"
+        y2="170"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="3,3"
+      />
+      <text x="210" y="140" fontSize="12" fill={accent} fontStyle="italic">
+        R ？
+      </text>
+      <text
+        x="160"
+        y="230"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        向かい合う辺と角——円が要るのはなぜ？
+      </text>
+    </svg>
+  );
+}
+
 /**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
@@ -10691,6 +11076,55 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigTanReorient />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_HYP_UNKNOWN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigHypUnknown />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_EQUILATERAL_HALF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigEquilateralHalf />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_ACUTE_ALTITUDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigAcuteAltitude />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_UNIT_SEMI>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigUnitSemi />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_OBTUSE_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigObtuseTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_SSS_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigSssTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_CIRCUM_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigCircumTriangle />
             </div>
           );
         }

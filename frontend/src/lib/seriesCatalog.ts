@@ -94,6 +94,13 @@ import {
 } from "./seriesFunctionsGraphs";
 import {
   TR_TAN_RATIO_SERIES,
+  TR_SINCOS_SERIES,
+  TR_SPECIAL_SERIES,
+  TR_AREA_COSINE_SERIES,
+  TR_OBTUSE_SERIES,
+  TR_IDENTITY_RATIO_SERIES,
+  TR_COSINE_APP_SERIES,
+  TR_SINE_LAW_SERIES,
   TRIG_RATIO_SERIES_LIST,
 } from "./seriesTrigRatio";
 import {
@@ -429,6 +436,55 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角比",
     shortDescription:
       "タンジェントと比 — 相似で運ぶ比に名前を付け、向きが変わっても辺を読む",
+  },
+  {
+    series: TR_SINCOS_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "サイン・コサイン — 斜辺をものさしにした辺の読み",
+  },
+  {
+    series: TR_SPECIAL_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "1つから残りと有名角 — 三平方と図形から比を生やす",
+  },
+  {
+    series: TR_AREA_COSINE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "垂線で面積と余弦 — 直角でなくても辺と角がつながる",
+  },
+  {
+    series: TR_OBTUSE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "鈍角への拡張 — 定義を単位円の座標に移す",
+  },
+  {
+    series: TR_IDENTITY_RATIO_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "相互関係 — 1つと象限から残りが決まる",
+  },
+  {
+    series: TR_COSINE_APP_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "面積と余弦の応用 — 3辺だけで面積へ",
+  },
+  {
+    series: TR_SINE_LAW_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription: "正弦定理と外接円 — 辺と対角を円で結ぶ",
   },
   /* 数Ⅰ: 集合と命題 */
   {
