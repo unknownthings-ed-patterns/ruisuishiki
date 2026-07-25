@@ -8781,6 +8781,123 @@ export function DiscriminantThreeCases() {
 }
 
 /**
+ * 関数とグラフ 系列1 Step 1：入力→関数箱→出力の対応図。
+ * 出力の具体値は書かず、「ただ1つ？」の問いで終える。
+ */
+export function FuncBoxStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="x を入れると y がただ1つ出てくる関数の箱。出力の値は書かない"
+    >
+      <text x="48" y="78" fontSize="14" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 68 72 L 118 72" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 108 66 L 118 72 L 108 78" fill="none" stroke={accent} strokeWidth="1.5" />
+
+      <rect x="122" y="40" width="116" height="64" rx="10" fill={fillColor} stroke={stroke} strokeWidth="1.4" />
+      <text x="180" y="68" fontSize="13" fill={stroke} textAnchor="middle">
+        関数
+      </text>
+      <text x="180" y="88" fontSize="11" fill={muted} textAnchor="middle">
+        y = ⋯
+      </text>
+
+      <path d="M 242 72 L 292 72" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 282 66 L 292 72 L 282 78" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="318" y="78" fontSize="14" fill={stroke} textAnchor="middle">
+        y
+      </text>
+      <text x="318" y="98" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="140" fontSize="12" fill={muted} textAnchor="middle">
+        1回の入力に対して、出てくる y はいくつ？
+      </text>
+      <text x="180" y="162" fontSize="11" fill={muted} textAnchor="middle">
+        「ただ1つ」とは、何を禁じている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 関数とグラフ 系列1 Step 5/9：上り坂／下り坂と変域の端。
+ * 端点の座標値は書かず、「最大はどちらの端？」で終える。
+ */
+export function LinearSlopeDomain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="傾きが正の直線と負の直線。変域の両端に点だけ置き、値は書かない"
+    >
+      {/* 左：上り坂 */}
+      <text x="90" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        傾き &gt; 0
+      </text>
+      <line x1="30" y1="150" x2="150" y2="150" stroke={muted} strokeWidth="1" />
+      <line x1="40" y1="170" x2="40" y2="50" stroke={muted} strokeWidth="1" />
+      <line
+        x1="50"
+        y1="140"
+        x2="140"
+        y2="70"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="4,3"
+      />
+      <line x1="70" y1="124" x2="120" y2="86" stroke={accent} strokeWidth="2.2" />
+      <circle cx="70" cy="124" r="4" fill={accent} />
+      <circle cx="120" cy="86" r="4" fill={accent} />
+      <text x="90" y="190" fontSize="11" fill={muted} textAnchor="middle">
+        変域の端だけ実線
+      </text>
+
+      {/* 右：下り坂 */}
+      <text x="270" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        傾き &lt; 0
+      </text>
+      <line x1="210" y1="150" x2="330" y2="150" stroke={muted} strokeWidth="1" />
+      <line x1="220" y1="170" x2="220" y2="50" stroke={muted} strokeWidth="1" />
+      <line
+        x1="230"
+        y1="70"
+        x2="320"
+        y2="140"
+        stroke={stroke}
+        strokeWidth="1.5"
+        strokeDasharray="4,3"
+      />
+      <line x1="250" y1="86" x2="300" y2="124" stroke={accent} strokeWidth="2.2" />
+      <circle cx="250" cy="86" r="4" fill={accent} />
+      <circle cx="300" cy="124" r="4" fill={accent} />
+      <text x="270" y="190" fontSize="11" fill={muted} textAnchor="middle">
+        高い端はどちら？
+      </text>
+
+      <text x="180" y="212" fontSize="11" fill={muted} textAnchor="middle">
+        最大はどちらの端？——傾きの符号が決める
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
@@ -9712,6 +9829,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <DiscriminantThreeCases />
+            </div>
+          );
+        }
+        if (trimmed === "<<FUNC_BOX_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FuncBoxStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<LINEAR_SLOPE_DOMAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LinearSlopeDomain />
             </div>
           );
         }

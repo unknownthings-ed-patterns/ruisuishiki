@@ -77,6 +77,10 @@ import {
   NUMBERS_EXPRESSIONS_SERIES_LIST,
 } from "./seriesNumbersExpressions";
 import {
+  FG_FUNCTION_LINEAR_SERIES,
+  FUNCTIONS_GRAPHS_SERIES_LIST,
+} from "./seriesFunctionsGraphs";
+import {
   E5_CONGRUENT_FIGURES_SERIES,
   E5_CIRCUMFERENCE_SERIES,
   E5_DECIMAL_DIV_ALGORITHM_SERIES,
@@ -343,6 +347,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
     shortDescription: "判別式 — 解を求めずに個数を読む",
+  },
+  /* 数Ⅰ: 関数と関数のグラフ（池田第2章。背骨 docs/functions_graphs_series_design.md） */
+  {
+    series: FG_FUNCTION_LINEAR_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "関数の対応と1次関数 — 傾き・切片・変域の端点",
   },
   /* 数Ⅰ: 集合と命題 */
   {
@@ -742,6 +754,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ELEMENTARY_5_SERIES_LIST,
   RATIO_BASIC_SERIES,
   ...NUMBERS_EXPRESSIONS_SERIES_LIST,
+  ...FUNCTIONS_GRAPHS_SERIES_LIST,
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
