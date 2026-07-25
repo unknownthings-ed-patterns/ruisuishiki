@@ -1053,6 +1053,6 @@ export const ALGEBRA_2_SERIES_LIST: LearnerSeries[] = [
   ALGEBRA2_GEO_SUM_SERIES,
   ALGEBRA2_DOT_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
-  ALGEBRA2_EXP_SERIES,
+  /* ALGEBRA2_EXP_SERIES は seriesExpLog.ts の algebra2_exp_extend_01 へ吸収（カタログ外） */
   ALGEBRA2_DIFF_SERIES,
 ];

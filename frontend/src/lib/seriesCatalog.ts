@@ -22,12 +22,15 @@ import {
   ALGEBRA2_ARITH_SUM_SERIES,
   ALGEBRA2_DIFF_SERIES,
   ALGEBRA2_DOT_SERIES,
-  ALGEBRA2_EXP_SERIES,
   ALGEBRA2_GEO_NTH_SERIES,
   ALGEBRA2_GEO_SUM_SERIES,
   ALGEBRA2_LOG_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
+import {
+  EXP_LOG_SERIES_LIST,
+  XEL_EXP_EXTEND_SERIES,
+} from "./seriesExpLog";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -657,20 +660,23 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "合成 — a sinθ + b cosθ を 1 つの波に。点 (a,b) の長さと向きが振幅と位相。方程式・最大最小まで",
   },
-  /* 数Ⅱ: 指数関数と対数関数（指数 → 対数） */
+  /* 数Ⅱ: 指数関数・対数関数（背骨 docs/exp_log_series_design.md）
+   * 系列1 実装済。旧 algebra2_exp_01 は SERIES_REDIRECTS へ。
+   * 旧 algebra2_log_01 は系列5 実装までカタログに残す。 */
   {
-    series: ALGEBRA2_EXP_SERIES,
+    series: XEL_EXP_EXTEND_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "指数関数と対数関数",
-    shortDescription: "指数 b^n",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "指数の拡張 — 法則をコンパスに 0乗・マイナス乗・分数乗へ。同類項の注意まで",
   },
   {
     series: ALGEBRA2_LOG_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "指数関数と対数関数",
-    shortDescription: "対数の入り口 — log_b v の計算",
+    topicGroup: "指数関数・対数関数",
+    shortDescription: "対数の入り口 — log_b v の計算（系列5 で置き換え予定）",
   },
   /* 数Ⅱ: 微分・積分 */
   {
@@ -759,6 +765,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   adv_quad_graph_01: "algebra1_quad_general_graph_01",
   algebra_quad_vertex_01: "algebra1_quad_general_graph_01",
   adv_quad_min_01: "algebra1_quad_minmax_01",
+  /* 指数関数・対数関数（背骨 D3）：系列1 へ吸収 */
+  algebra2_exp_01: "algebra2_exp_extend_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
@@ -780,6 +788,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
+  ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,

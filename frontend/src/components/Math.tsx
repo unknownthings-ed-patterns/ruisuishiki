@@ -7970,6 +7970,214 @@ export function ExponentAddVsMul() {
 }
 
 /**
+ * 指数拡張 系列1 Step 1：回数ブロックと「0個のかけ算？」
+ * a^0=1 の答えは書かない。
+ */
+export function ExpZeroBlock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const boxes = [40, 78, 116];
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="a を並べてかける回数の図。0個のときの値は問いで終える"
+    >
+      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        a を m 回かける
+      </text>
+      {boxes.map((x, i) => (
+        <g key={i}>
+          <rect
+            x={x}
+            y="48"
+            width="32"
+            height="40"
+            rx="6"
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text
+            x={x + 16}
+            y="74"
+            fontSize="15"
+            fill={stroke}
+            textAnchor="middle"
+            fontStyle="italic"
+          >
+            a
+          </text>
+        </g>
+      ))}
+      <text x="170" y="74" fontSize="16" fill={muted} textAnchor="middle">
+        …
+      </text>
+      <rect
+        x="200"
+        y="48"
+        width="32"
+        height="40"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x="216" y="74" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      <text x="180" y="120" fontSize="12" fill={muted} textAnchor="middle">
+        では、0 回分のかけ算は？
+      </text>
+      <rect
+        x="130"
+        y="136"
+        width="100"
+        height="40"
+        rx="8"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeDasharray="5,4"
+      />
+      <text x="180" y="162" fontSize="22" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="180" y="202" fontSize="11" fill={muted} textAnchor="middle">
+        かけても相手を変えない数は何？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数拡張 系列1 Step 5：比一定の半歩（分数乗）。
+ * √a の具体値は書かない。
+ */
+export function ExpHalfStep() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="指数が1増えると決まった倍率。半歩の倍率は問いで終える"
+    >
+      <text x="40" y="40" fontSize="13" fill={muted}>
+        指数
+      </text>
+      <text x="36" y="78" fontSize="15" fill={stroke} textAnchor="middle">
+        0
+      </text>
+      <text x="120" y="78" fontSize="15" fill={stroke} textAnchor="middle">
+        1/2
+      </text>
+      <text x="204" y="78" fontSize="15" fill={stroke} textAnchor="middle">
+        1
+      </text>
+      <text x="288" y="78" fontSize="15" fill={stroke} textAnchor="middle">
+        3/2
+      </text>
+      <path d="M 50 90 L 300 90" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 36 90 L 36 100" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 120 90 L 120 100" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 204 90 L 204 100" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 288 90 L 288 100" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="40" y="130" fontSize="13" fill={muted}>
+        値
+      </text>
+      <text x="36" y="158" fontSize="15" fill={stroke} textAnchor="middle">
+        1
+      </text>
+      <text x="120" y="158" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="204" y="158" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      <text x="288" y="158" fontSize="15" fill={muted} textAnchor="middle">
+        …
+      </text>
+      <path
+        d="M 50 168 C 80 188 100 188 110 168"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="180" y="192" fontSize="11" fill={muted} textAnchor="middle">
+        1歩で a 倍なら、半歩の倍率は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数拡張 系列1 Step 9：引ける／くくれる対比。
+ * 簡約後の答えは書かない。
+ */
+export function ExpLikeTerms() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="指数の引き算ではまとめられない。くくると見える対比。答えは書かない"
+    >
+      <rect x="16" y="24" width="152" height="140" rx="12" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="92" y="48" fontSize="12" fill={muted} textAnchor="middle">
+        指数を引く？
+      </text>
+      <text x="92" y="88" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a^p − a^q
+      </text>
+      <path d="M 92 102 L 92 120" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 86 112 L 92 122 L 98 112" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="92" y="148" fontSize="20" fill={muted} textAnchor="middle" fontWeight="700">
+        ×
+      </text>
+
+      <rect
+        x="192"
+        y="24"
+        width="152"
+        height="140"
+        rx="12"
+        fill={fillColor}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="268" y="48" fontSize="12" fill={accent} textAnchor="middle">
+        くくると？
+      </text>
+      <text x="268" y="88" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a^q ( □ − 1 )
+      </text>
+      <path d="M 268 102 L 268 120" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 262 112 L 268 122 L 274 112" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="268" y="148" fontSize="22" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="200" fontSize="11" fill={muted} textAnchor="middle">
+        引き算に指数法則は使える？ くくると何が見える？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 数と式 系列3 Step 1：分配の「軸足」を移す矢印図。
  * どの項とどの項をかけるかを矢印で示すだけ。積の結果は書かない。
  */
@@ -9983,6 +10191,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ExponentAddVsMul />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_ZERO_BLOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpZeroBlock />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_HALF_STEP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpHalfStep />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_LIKE_TERMS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpLikeTerms />
             </div>
           );
         }

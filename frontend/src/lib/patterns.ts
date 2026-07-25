@@ -25,7 +25,7 @@ export type PatternId =
   /* 数Ⅱ・B の追加（網羅化） */
   | "A1" | "A2" | "VEC1" | "DIFF1"
   /* 数Ⅱ・B の追加2 */
-  | "G1" | "G2" | "EXP1" | "VEC2"
+  | "G1" | "G2" | "EXP1" | "EXP2" | "VEC2"
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
@@ -847,6 +847,21 @@ const EXP1: PatternSpec = {
   evaluate: (k) => ({ unknownName: "result", answer: k.b ** k.n }),
 };
 
+/** EXP2: 指数の拡張（0・負・分数乗）——学習者系列 algebra2_exp_extend_01 */
+const EXP2: PatternSpec = {
+  id: "EXP2",
+  unit: "algebra_2",
+  naturalLanguage: "指数の拡張（法則をコンパスに）",
+  formulaTemplate: "a^r（r は整数または有理数）",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "integer", min: 2, max: 16 } },
+    { name: "r", role: "指数", unknown: false, domain: { kind: "decimal", min: -5, max: 5 } },
+    { name: "result", role: "値", unknown: true, domain: { kind: "decimal", min: -1000, max: 1000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: k.a ** k.r }),
+};
+
 /** VEC2: ベクトルの大きさ |v| = √(a²+b²)（整数結果ピタゴラス数） */
 const VEC2: PatternSpec = {
   id: "VEC2",
@@ -1395,7 +1410,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
-  G1, G2, EXP1, VEC2,
+  G1, G2, EXP1, EXP2, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
@@ -1415,7 +1430,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
-  G1, G2, EXP1, VEC2,
+  G1, G2, EXP1, EXP2, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
