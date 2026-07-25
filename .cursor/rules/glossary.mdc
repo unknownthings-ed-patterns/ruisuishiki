@@ -1,0 +1,33 @@
+---
+description: 辞書エントリ（glossary.ts）の3セクション構造とコミット前 audit
+globs: frontend/src/lib/glossary.ts
+alwaysApply: false
+---
+
+# 辞書エントリを書く
+
+教師のワークシート方式に由来する3セクション構造。**どんなに短い用語でも3つ揃える**。「短いから省略」は禁止（過去に実部・虚部・共役複素数で `scenes` を落として指摘された）。
+
+- **§1 `meaning`**: 中心の問い ｜ … → `────` → 本文（考え方の核を1文に絞る）→ `────` もっと深く → `────` 問いに戻ると。**数値を入れた具体例を1つ＋図**を置く（低い床。例: 中点なら $A(2), B(8)$ なら $(2+8)/2 = 5$）。図は `Math.tsx` に定義済みのマーカー `<<NUMLINE_MID>>` 等を**転用**する（新規SVG不要）
+- **§2 `scenes`**: 「使う場面 — 生活の中では？」。「川幅をどう測る？」のような puzzle 形式の問いを主役、リストは従。ここに「もっと深く」区切りは置かない
+- **§3 `relatedTerms`**: `[用語]` で横スライドできるよう最低2項目
+
+## 規律
+
+- 結果（公式の値）から始めない。「なぜそう考えるか」「なぜその操作が効くか」を絵と言葉で並走させる（魚より釣り方）
+- `relatedSeriesId` を設定し、系列側からも `[用語]` で参照して**双方向**にする
+- `[用語]` の綴りが GLOSSARY のキーに実在するか確認（タイポで素通しになる）
+- `short` に `$...$` を書いてよい（TermLink ツールチップは MathText 経由で描画される）
+- 図は他書の模写でなくオリジナル。出典は APA 3点セット
+
+```bash
+# 3セクション欠落チェック（対象用語を列挙して回す）
+python3 -c "
+import re
+content = open('src/lib/glossary.ts').read()
+for term in ['中点', '内分']:
+    body = re.search(rf'  {term}: \{{(.*?)^  \}},', content, re.M | re.S).group(1)
+    for key in ('meaning', 'scenes', 'relatedTerms'):
+        if f'{key}:' not in body: print(term, 'MISSING', key)
+"
+```

@@ -1,0 +1,46 @@
+---
+description: ruisuishiki の全作業に効く核（入口・譲らない原則・進め方・安全境界）
+alwaysApply: true
+---
+
+# ruisuishiki コア
+
+戸田城外『推理式指導算術』(1930) の方法論をAI時代に再構成する学習サイト。無料・GitHub Pages 公開・static export 前提。学習（学習者ビュー）と教材生成（教師ビュー）は同一の生成系から派生させる。
+
+## 入口（正の順序）
+
+1. `CLAUDE.md`（= `AGENTS.md`）— ビジョン・お手本7条件・チェックリストの正
+2. 理論4文書（Obsidian Vault `教育のパタン・ランゲージ/個人/推理式指導算術*.md`）— コードと齟齬があれば**文書が正**
+3. `docs/`（背骨設計・品質基準・handoff）
+4. 進捗と運用知の正は**リポジトリ外**の Claude Code メモリ: `~/.claude/projects/-Users-iwaiteruhisa/memory/*.md`
+
+着手前に、作業の種類に応じて該当メモリを Read する（「知っている」と「照合した」は別物）:
+
+| 作業 | Read するメモリ |
+|---|---|
+| 新規系列 | `feedback_ruisuishiki_core_principles` `feedback_mirror_best_existing_series` `feedback_driving_question_embryo_cell` `feedback_figure_*` |
+| 辞書 | `feedback_glossary_series_content_philosophy` `feedback_ruisuishiki_citation_format` |
+| 進め方・優先順位 | `feedback_ruisuishiki_development_loop` `project_ruisuishiki_math` / `project_ruisuishiki_kokugo` |
+| デプロイ | `feedback_site_deployment_check` |
+
+## 絶対に譲らない
+
+- ヒントは**解説ではなく「比較の指さし」**。解き方・公式名・部分計算・答えを Layer 1/2 に出さない
+- 5オペレータ（同・逆・＋α・質的変化・複合）を系列に最低1問ずつ。**配列は一度に差異1つ**
+- 子ども側UIに文型タグを出さない（F1）。履歴の集計軸は**文型×オペレータ**で、正答率に堕とさない（F8）
+- 失敗モード F1〜F10 に触れる設計は、コードを書く前に警告して修正案を出す
+
+## 進め方
+
+- 新規系列の優先順位は**岩井先生の学習進度**が決める。「次はこれを作りましょう」と先回りしない
+- lint / pre-commit / CI ゲートは頼まれない限り提案しない（原則がまだ動いているため保留中）
+- 方針転換（スタック変更・データ構造の大改訂）は着手前に確認する
+- 記号計算は SymPy 一択。mathjs 等に置き換えない
+
+## 安全境界
+
+- `git config` はリポジトリ単位のみ。`~/.gitconfig` は触らない。`.env` はコミットしない
+- 参考書の**構成・章順は借りてよいが問題の値はオリジナル**。章順の基準は池田洋介『入門問題精講』の目次
+- 出典は3点セット（「出典」見出し＋APA風書誌＋`— ` 注記）。著者は必ず「池田洋介」と明記する
+- 「反映されない・動かない」と言われたら、スクショを求める前に Actions・ローカルビルド・ログを自分で調べる
+- 読めない資料を推測で埋めない。中止すべきときは中止を先に勧める

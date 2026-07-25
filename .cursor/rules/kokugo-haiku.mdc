@@ -1,0 +1,31 @@
+---
+description: 国語ユニット（俳句）の品質基準と禁止条項 G1/G2/G10/G12
+globs: frontend/src/lib/seriesKokugoHaiku.ts,frontend/src/lib/viewpointLists.ts,scripts/audit_hints_kokugo.py
+alwaysApply: false
+---
+
+# 国語ユニット（推理式指導読方・俳句）
+
+正典は vault `個人/` の国語版3文書 ＋ `docs/段階0_俳句背骨_kokugo.md`。検収手順と新系列の書き方は **`docs/kokugo_series_handoff.md` を必読**。数学と混ぜない（オペレータビュー等は観点軸込みの別設計・先取りしない）。
+
+## 禁止条項（最上位）
+
+- **代筆は絶対しない（G10）**。L3 でも子どもの句を作らない。「作り方は元の句が見せている」で終える
+- **基準の先出しをしない（G1）**。観点・技法名を読み比べの前に出さない。核観点は `revealedInSeries` で解禁
+- **機械が「正解」を発明しない（G2）**。メーターは可視化のみ・字余りも俳句として判定しない
+- **模範句は PD（戦前没・没年明記）／自作／許諾のみ（G12）**。docs や背骨に現物を書かない
+
+## 7条件（数学版の mirror）
+
+1. 中心の問い＝共通胚細胞「小さな装置が大きな意味の体系を呼び出す」の一つの相を「なぜ」で問う
+2. 5オペレータ網羅（系列単位）＋質的変化は系列の核の発見と一致
+3. ヒント3層: L1 技法名ゼロの呼びかけ／L2 差異1つ・技法名は子どもの語彙に言い換え（季語→季節のことば、切れ字→区切る字）／L3 は**模範句側**の言語化（技法名・`[用語]` 解禁）。L1/L2 に `[用語]` を出さない
+4. 牧口勾配の step 骨格（読み比べ→識別→最小対→本歌取→観点抽出→複合→自由制作）
+5. 最小対の比較ペアは一点差（相方は自作が主力）。模範句は全件 `sourceNote` ＋ `rights`・`reading` を `countMora` で検算・ユニーク7〜9句
+6. 足場のフェードアウト（図は step1 と質的変化のみ・俳句本文は縦書き1列 nowrap）
+7. 辞書連動と縦の鎖（`relatedSeriesId` 双方向・後続系列は前系列を名指す）
+
+```bash
+python3 scripts/audit_hints_kokugo.py          # 準拠 100%（exit 0）
+cd frontend && npx tsc --noEmit && npm run test:mora && npm run build
+```

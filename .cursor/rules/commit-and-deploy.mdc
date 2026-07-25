@@ -1,0 +1,34 @@
+---
+description: コミット・push・デプロイ確認の手順と、先生の未コミット作業と並走するときの stash dance
+alwaysApply: false
+---
+
+# コミットとデプロイ
+
+1. **機械チェックを通してから commit する**
+
+```bash
+python3 scripts/audit_hints.py          # 数学（対象ファイルが ✅ か）
+python3 scripts/audit_hints_kokugo.py   # 国語（100%・exit 0）
+cd frontend && npx tsc --noEmit && npm run test && npm run build
+```
+
+2. **コミットメッセージに設計文書のどの節を実装したかを書く**
+   例: `feat: 系列9 三角関数の合成 trig_composition_01（背骨 §7・D3）` / `fix: 系列4 step9 L1 の誤り訂正（和→積）`
+
+3. **push したら反映まで確認する**。`.github/workflows/deploy.yml` の成否を GitHub API / `gh` で見て、本番URLで実際に動くか確認する。failure ならローカルビルドで原因を特定し、直して push してから報告する（スクショを求めない）
+
+4. **先生が長期間未コミットの作業を抱えたファイルに触るときは stash dance**（自分の修正だけを切り離してコミットする）
+
+```bash
+cp <file> /tmp/x.snapshot
+git stash push -m user-work-temp -- <file>   # 自分の編集も一緒に退避される
+# 自分の編集だけを再適用
+git add <file> && git commit
+git stash pop                                 # 先生の作業が auto-merge で戻る
+diff /tmp/x.snapshot <file>                   # 期待: 差分なし
+```
+
+複数ファイルにまたがるなら stash dance せず、独立ファイルだけコミットして「残りは先生が次にコミットするとき自然に含まれる」とメッセージに明記する。
+
+5. `git config` はリポジトリ単位のみ。lint / pre-commit hook / CI ゲートは頼まれない限り入れない

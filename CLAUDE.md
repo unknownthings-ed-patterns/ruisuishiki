@@ -262,6 +262,24 @@ npm run build                            # static export が通ること
 - **失敗モードF1〜F10に該当する設計はその場で警告**。修正案を提示してからコードを書く
 - **コミットメッセージは設計文書のどの節を実装したかを明示**（例: 第3弾§5.3 P1パターン実装）
 
+## Cursor で開発するとき
+
+- このリポジトリ（`~/ruisuishiki`）を**ワークスペースのルートとして開く**（ホーム直下だとプロジェクト指示が効きにくい）
+- Cursor は `AGENTS.md` をネイティブに読む（本ファイルへのシンボリックリンク）。設定「Include third-party Plugins, Skills and other configs」が ON なら `CLAUDE.md` も読める
+- 常時適用・ファイル種別ごとの短いルールは `.cursor/rules/` にある
+
+| ルール | 効く場面 |
+|---|---|
+| `ruisuishiki-core.mdc` | 常時適用。入口・譲らない原則・進め方・安全境界 |
+| `series-authoring.mdc` | `frontend/src/lib/series*.ts` |
+| `glossary.mdc` | `frontend/src/lib/glossary.ts` |
+| `frontend-ui.mdc` | `frontend/src/app/**`・`frontend/src/components/**` |
+| `kokugo-haiku.mdc` | 国語ユニット |
+| `new-unit-workflow.mdc` | 新単元・単元の作り変え（背骨→実装・一次資料・委譲） |
+| `commit-and-deploy.mdc` | コミット・push・デプロイ確認・stash dance |
+
+進捗と運用知の正は**リポジトリ外**の Claude Code メモリ（`~/.claude/projects/-Users-iwaiteruhisa/memory/*.md`）。Cursor でも作業前に該当メモリを読む（対応表は `ruisuishiki-core.mdc`）。
+
 ## 関連プロジェクト
 
 - **そら子** (`/Users/iwaiteruhisa/sora`)——MVP段階7で接続予定。学習履歴の読み出しAPI
@@ -270,8 +288,10 @@ npm run build                            # static export が通ること
 
 ## 役割分担（拡張フェーズの想定）
 
-| フェーズ | Claude Code | Codex |
+| フェーズ | Claude Code | Codex / Cursor |
 |---|---|---|
 | MVP（段階1〜6） | 主担当 | 不使用 |
 | 拡張（段階7以降） | 設計レビュー・哲学整合・難所実装 | 多学年展開・テスト量産・CI |
 | 復帰時のfable-5 | （fable-5）全体レビュー | — |
+
+Cursor は Codex と同じ枠（**機械で検収が閉じる仕事**——audit / tsc / test / build が通れば合否が決まる作業）を担う。設計判断・哲学整合は Claude 側に残す。

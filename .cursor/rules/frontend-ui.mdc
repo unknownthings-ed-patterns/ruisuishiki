@@ -1,0 +1,36 @@
+---
+description: 学習者・教師ビューUIの規律（authored 文字列の描画・static export・ローカル保存・F1/F8）
+globs: frontend/src/app/**/*.tsx,frontend/src/components/**/*.tsx
+alwaysApply: false
+---
+
+# UI の規律
+
+## authored 文字列は必ず MathText / MathBody で描画する
+
+`$...$` の数式・`**強調**`・`[用語]` リンクを含むフィールドを JSX で `{series.drivingQuestion}` と直書きすると、`$D = b^2-4ac$` が literal で見えてしまう。
+
+対象: `series.drivingQuestion` `revelationLabel` `subtitle` `title` `shortDescription` / `glossaryEntry.short` `meaning` `scenes` `relatedTerms` / `step.questionText` `hints[].text` `formulaPreview`
+
+inline は `<MathText text={...} />`、複数段落・`$$...$$`・`────`・表・`<<FIGURE>>` マーカーを含むなら `<MathBody text={...} />`。
+
+`MathText` のパース順は **強調 → 数式・用語**（`renderMathAndTerms` が強調の内側でも走る）。逆順にすると `**周期は $n-1$ 桁以下**` のような数式をまたぐ強調で `**` が別断片に分かれ、アスタリスクが学習者に見える。数式の中に `**` を書かないこと（強調と誤認される）。
+
+```bash
+# frontend/ で実行。MathText 経由のヒットも混ざるので、素の {…} 描画だけ目視で拾う
+grep -rnE '\{(entry|series|glossary|step)\.[a-zA-Z]+\}' src/app src/components
+```
+
+## 配布と保存の制約
+
+- **static export（GitHub Pages）で動く形を保つ**。`next.config` の redirects などサーバ機能に頼らない（旧 series id は `SERIES_REDIRECTS` ＋ `resolveSeriesId` ＋ URL 正規化でクライアント側処理）
+- 学習者ビューは **LLM を呼ばない・APIキーを要求しない**。学習履歴は localStorage（運営に送らない）。教師の生成は BYOK でブラウザ保存
+- 判定は `answer` / `solutionSet`、画面表示は `answerDisplay`。`Math.PI/2` を生値で出して「1.5707…」と見せない
+- Next.js はこのリポジトリの版が正。書く前に `node_modules/next/dist/docs/` の該当ガイドを読む（`frontend/AGENTS.md`）
+
+## 見せ方
+
+- 子ども側に文型タグを出さない（F1）。文型は教師ビューのみ
+- 統計は**文型×オペレータ軸**が主役。正答率は「くわしく」内に降格して残す（F8）
+- 図・観点リスト・メーターは「フェードアウトする足場」。機械が「正解」を発明しない
+- 作問欄・ひとことメモは採点しない（任意・localStorage 保存・教師ビューは読み取り専用）
