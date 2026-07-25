@@ -7825,65 +7825,92 @@ export function IrrationalDiagonal() {
 }
 
 /**
- * 数と式 系列2 Step 1：a を並べたかけ算で「指数＝回数」を示す。
- * 合計の回数は書かず、「つなぐと回数は？」の問いで終える。
+ * 数と式 系列2 Step 1：x を並べたかけ算で「指数＝回数」を示す。
+ * step1 の問題 $x^3 \cdot x^6$ に合わせ、3回分と6回分の2グループを描く。
+ * 合計の回数（答え）は書かず、「つなぐと回数は？」の問いで終える。
  */
 export function ExponentCountStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
-  const items = [
-    { x: 36, label: "a" },
-    { x: 96, label: "a" },
-    { x: 156, label: "a" },
-    { x: 216, label: "a" },
-    { x: 276, label: "a" },
-  ];
+  /** 左グループ＝3回分、右グループ＝6回分（問題の指数に対応。合計は描かない） */
+  const left = [28, 60, 92];
+  const right = [148, 180, 212, 244, 276, 308];
+  const box = (x: number, key: string) => (
+    <g key={key}>
+      <rect
+        x={x}
+        y="58"
+        width="28"
+        height="36"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text
+        x={x + 14}
+        y="82"
+        fontSize="15"
+        fill={stroke}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        x
+      </text>
+    </g>
+  );
   return (
     <svg
-      viewBox="0 0 360 220"
+      viewBox="0 0 360 230"
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="a を並べてかけ算する図。合計の回数は書かない"
+      aria-label="x を3回かけたものと6回かけたものをつなぐ図。合計の回数は書かない"
     >
-      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
-        a を並べてかけると…
+      <text x="180" y="26" fontSize="12" fill={muted} textAnchor="middle">
+        x を並べてかけると…
       </text>
 
-      {items.map((it, idx) => (
-        <g key={idx}>
-          <rect
-            x={it.x}
-            y="56"
-            width="44"
-            height="44"
-            rx="8"
-            fill={fillColor}
-            stroke={stroke}
-            strokeWidth="1.3"
-          />
-          <text x={it.x + 22} y="84" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic">
-            {it.label}
-          </text>
-          {idx < items.length - 1 && (
-            <text x={it.x + 52} y="84" fontSize="16" fill={muted} textAnchor="middle">
-              ×
-            </text>
-          )}
-        </g>
-      ))}
+      {left.map((x, i) => box(x, `L${i}`))}
+      {right.map((x, i) => box(x, `R${i}`))}
 
-      <path d="M 58 118 L 58 148 L 300 148 L 300 118" fill="none" stroke={accent} strokeWidth="1.3" />
-      <path d="M 58 118 L 52 128" fill="none" stroke={accent} strokeWidth="1.3" />
-      <path d="M 300 118 L 306 128" fill="none" stroke={accent} strokeWidth="1.3" />
-      <text x="180" y="172" fontSize="12" fill={accent} textAnchor="middle">
-        かけた回数
+      {/* グループの括り */}
+      <path
+        d="M 28 104 L 28 118 L 120 118 L 120 104"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      <text x="74" y="134" fontSize="11" fill={muted} textAnchor="middle">
+        3回分
+      </text>
+      <path
+        d="M 148 104 L 148 118 L 336 118 L 336 104"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      <text x="242" y="134" fontSize="11" fill={muted} textAnchor="middle">
+        6回分
       </text>
 
-      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
-        2回分と3回分をつなぐと、回数はどうなる？
+      {/* つなぐ矢印（合計は ?） */}
+      <path
+        d="M 74 148 L 74 168 L 242 168 L 242 148"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+      />
+      <path d="M 74 148 L 68 158" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 242 148 L 248 158" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="180" y="188" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="216" fontSize="11" fill={muted} textAnchor="middle">
+        3回分と6回分をつなぐと、回数はどうなる？
       </text>
     </svg>
   );
