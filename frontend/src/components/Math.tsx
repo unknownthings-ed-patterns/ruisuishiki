@@ -7825,6 +7825,935 @@ export function IrrationalDiagonal() {
 }
 
 /**
+ * 数と式 系列2 Step 1：a を並べたかけ算で「指数＝回数」を示す。
+ * 合計の回数は書かず、「つなぐと回数は？」の問いで終える。
+ */
+export function ExponentCountStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const items = [
+    { x: 36, label: "a" },
+    { x: 96, label: "a" },
+    { x: 156, label: "a" },
+    { x: 216, label: "a" },
+    { x: 276, label: "a" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="a を並べてかけ算する図。合計の回数は書かない"
+    >
+      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        a を並べてかけると…
+      </text>
+
+      {items.map((it, idx) => (
+        <g key={idx}>
+          <rect
+            x={it.x}
+            y="56"
+            width="44"
+            height="44"
+            rx="8"
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.3"
+          />
+          <text x={it.x + 22} y="84" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic">
+            {it.label}
+          </text>
+          {idx < items.length - 1 && (
+            <text x={it.x + 52} y="84" fontSize="16" fill={muted} textAnchor="middle">
+              ×
+            </text>
+          )}
+        </g>
+      ))}
+
+      <path d="M 58 118 L 58 148 L 300 148 L 300 118" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 58 118 L 52 128" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 300 118 L 306 128" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="180" y="172" fontSize="12" fill={accent} textAnchor="middle">
+        かけた回数
+      </text>
+
+      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
+        2回分と3回分をつなぐと、回数はどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列2 Step 5：かけ算では指数が足せる／足し算ではまとまらない対比。
+ * 足し算側は「？」で終え、まとめ方の答えは書かない。
+ */
+export function ExponentAddVsMul() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="かけ算のときと足し算のときの指数の対比図。足し算側は問いで終える"
+    >
+      <rect x="16" y="28" width="152" height="160" rx="12" fill={fillColor} stroke={muted} strokeWidth="1" />
+      <text x="92" y="52" fontSize="12" fill={accent} textAnchor="middle">
+        かけ算のとき
+      </text>
+      <text x="92" y="88" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a² × a³
+      </text>
+      <path d="M 92 102 L 92 122" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 86 114 L 92 124 L 98 114" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="92" y="148" fontSize="12" fill={muted} textAnchor="middle">
+        回数を足せる
+      </text>
+      <text x="92" y="170" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a · a · a · a · a
+      </text>
+
+      <rect x="192" y="28" width="152" height="160" rx="12" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="268" y="52" fontSize="12" fill={muted} textAnchor="middle">
+        足し算のとき
+      </text>
+      <text x="268" y="88" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a² + a³
+      </text>
+      <path d="M 268 102 L 268 122" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 262 114 L 268 124 L 274 114" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="268" y="158" fontSize="22" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
+        足し算でも、同じように1つにまとまる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列3 Step 1：分配の「軸足」を移す矢印図。
+ * どの項とどの項をかけるかを矢印で示すだけ。積の結果は書かない。
+ */
+export function ExpandPivotStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="かっこのかけ算で軸足を移す矢印図。積の結果は書かない"
+    >
+      <text x="180" y="30" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (x + p)(y + q)
+      </text>
+
+      <circle cx="110" cy="90" r="16" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="110" y="95" fontSize="14" fill={accent} textAnchor="middle" fontStyle="italic">
+        x
+      </text>
+      <text x="140" y="95" fontSize="14" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <circle cx="170" cy="90" r="16" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="170" y="95" fontSize="14" fill={muted} textAnchor="middle" fontStyle="italic">
+        p
+      </text>
+
+      <circle cx="230" cy="90" r="16" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="230" y="95" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        y
+      </text>
+      <text x="260" y="95" fontSize="14" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <circle cx="290" cy="90" r="16" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="290" y="95" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        q
+      </text>
+
+      <path d="M 122 102 C 150 130 200 130 218 106" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 210 112 L 220 104 L 214 118" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 122 102 C 160 150 250 150 278 106" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 270 112 L 280 104 L 274 118" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="70" y="140" fontSize="11" fill={accent}>
+        軸足 x
+      </text>
+
+      <path d="M 170 108 L 170 168 L 230 168" fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="5,4" />
+      <path d="M 220 162 L 230 168 L 220 174" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d="M 170 168 L 290 168" fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="5,4" />
+      <path d="M 280 162 L 290 168 L 280 174" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="70" y="172" fontSize="11" fill={muted}>
+        次に軸足 p
+      </text>
+
+      <text x="180" y="214" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="180" y="238" fontSize="11" fill={muted} textAnchor="middle">
+        全部で何回のかけ算が起きる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列3 Step 4：打ち消される項に取り消し線を引く図。
+ * 係数や具体値は書かず、「何が消えるか」だけを問う。
+ */
+export function ExpandCancelStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="打ち消される項に取り消し線を引いた図。係数は書かない"
+    >
+      <text x="180" y="34" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (x + □)(x − □)
+      </text>
+
+      <path d="M 180 48 L 180 72" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 174 64 L 180 74 L 186 64" fill="none" stroke={muted} strokeWidth="1.2" />
+
+      <text x="70" y="110" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x²
+      </text>
+      <text x="110" y="110" fontSize="15" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <text x="160" y="110" fontSize="15" fill={muted} textAnchor="middle" fontStyle="italic">
+        □x
+      </text>
+      <line x1="136" y1="104" x2="184" y2="104" stroke={accent} strokeWidth="1.8" />
+      <text x="210" y="110" fontSize="15" fill={muted} textAnchor="middle">
+        −
+      </text>
+      <text x="250" y="110" fontSize="15" fill={muted} textAnchor="middle" fontStyle="italic">
+        □x
+      </text>
+      <line x1="226" y1="104" x2="274" y2="104" stroke={accent} strokeWidth="1.8" />
+      <text x="290" y="110" fontSize="15" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <text x="320" y="110" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
+        …
+      </text>
+
+      <text x="180" y="148" fontSize="11" fill={accent} textAnchor="middle">
+        反対向きの項が打ち消し合う
+      </text>
+
+      <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
+        残るのはどの項？　x の係数はどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列3 Step 8／系列4 Step 9：かたまりを囲む図（共用）。
+ * 囲みだけ示し、展開や因数分解の結果は書かない。
+ */
+export function ChunkBox() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="式のなかのかたまりを囲んだ図。展開結果は書かない"
+    >
+      <text x="180" y="36" fontSize="12" fill={muted} textAnchor="middle">
+        かたまりを1つの文字と見る
+      </text>
+
+      <rect x="48" y="70" width="110" height="52" rx="10" fill={fillColor} stroke={accent} strokeWidth="1.6" />
+      <text x="103" y="102" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x + y
+      </text>
+      <text x="178" y="102" fontSize="16" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <text x="210" y="102" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        p
+      </text>
+
+      <text x="250" y="102" fontSize="18" fill={muted} textAnchor="middle">
+        )
+      </text>
+      <text x="36" y="102" fontSize="18" fill={muted} textAnchor="middle">
+        (
+      </text>
+
+      <rect x="48" y="148" width="110" height="52" rx="10" fill={fillColor} stroke={accent} strokeWidth="1.6" />
+      <text x="103" y="180" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x + y
+      </text>
+      <text x="178" y="180" fontSize="16" fill={muted} textAnchor="middle">
+        −
+      </text>
+      <text x="210" y="180" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        p
+      </text>
+      <text x="250" y="180" fontSize="18" fill={muted} textAnchor="middle">
+        )
+      </text>
+      <text x="36" y="180" fontSize="18" fill={muted} textAnchor="middle">
+        (
+      </text>
+
+      <text x="290" y="102" fontSize="11" fill={accent}>
+        同じ塊
+      </text>
+      <path d="M 160 122 L 160 148" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4,3" />
+
+      <text x="180" y="220" fontSize="11" fill={muted} textAnchor="middle">
+        この囲みを1文字に置き換えると、何の公式になる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列4 Step 1：展開⇄因数分解の往復（ばらす／組み立てる）。
+ * 具体式は置かず、文字のままの関係だけを示す。
+ */
+export function FactoringRoundtripStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="展開と因数分解の往復図。具体式は書かない"
+    >
+      <rect x="24" y="70" width="120" height="70" rx="12" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="84" y="100" fontSize="13" fill={stroke} textAnchor="middle">
+        積の形
+      </text>
+      <text x="84" y="122" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        (　)(　)
+      </text>
+
+      <rect x="216" y="70" width="120" height="70" rx="12" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="276" y="100" fontSize="13" fill={stroke} textAnchor="middle">
+        和の形
+      </text>
+      <text x="276" y="122" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        □ + □ + …
+      </text>
+
+      <path d="M 150 88 L 208 88" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 198 82 L 210 88 L 198 94" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="180" y="78" fontSize="11" fill={accent} textAnchor="middle">
+        ばらす
+      </text>
+
+      <path d="M 208 122 L 150 122" fill="none" stroke={muted} strokeWidth="1.5" />
+      <path d="M 160 116 L 148 122 L 160 128" fill="none" stroke={muted} strokeWidth="1.5" />
+      <text x="180" y="146" fontSize="11" fill={muted} textAnchor="middle">
+        組み立てる
+      </text>
+
+      <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
+        組み立てるときは、何を探せばよい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列4 Step 5：「積が○になる組」の候補表。
+ * 和の欄は空のまま残し、問いで終える（答えの組は書かない）。
+ */
+export function FactoringSearchTable() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const rows = [
+    { a: "1", b: "○" },
+    { a: "2", b: "…" },
+    { a: "…", b: "…" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="積が丸になる組の候補表。和の欄は空で問いで終える"
+    >
+      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        積が ○ になる組を並べる
+      </text>
+
+      <rect x="50" y="48" width="260" height="140" rx="8" fill={fillColor} stroke={muted} strokeWidth="1" />
+      <line x1="50" y1="84" x2="310" y2="84" stroke={muted} strokeWidth="1" />
+      <line x1="136" y1="48" x2="136" y2="188" stroke={muted} strokeWidth="1" />
+      <line x1="222" y1="48" x2="222" y2="188" stroke={muted} strokeWidth="1" />
+
+      <text x="93" y="72" fontSize="12" fill={stroke} textAnchor="middle">
+        一方
+      </text>
+      <text x="179" y="72" fontSize="12" fill={stroke} textAnchor="middle">
+        他方
+      </text>
+      <text x="266" y="72" fontSize="12" fill={accent} textAnchor="middle">
+        和
+      </text>
+
+      {rows.map((r, idx) => {
+        const y = 112 + idx * 28;
+        return (
+          <g key={idx}>
+            <text x="93" y={y} fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+              {r.a}
+            </text>
+            <text x="179" y={y} fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+              {r.b}
+            </text>
+            <text x="266" y={y} fontSize="16" fill={accent} textAnchor="middle">
+              {idx === 0 ? "?" : ""}
+            </text>
+            {idx < rows.length - 1 && (
+              <line x1="50" y1={y + 10} x2="310" y2={y + 10} stroke={muted} strokeWidth="0.6" strokeDasharray="3,3" />
+            )}
+          </g>
+        );
+      })}
+
+      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
+        和が x の係数と一致する組はどれ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列5 Step 1：傾いた天秤に同じ重さを足す図。
+ * 傾きが保たれることだけ示し、負の数をかける場面は描かない。
+ */
+export function IneqBalanceStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="傾いた天秤の両側に同じ重さを足す図。負の数をかける場面は描かない"
+    >
+      <line x1="180" y1="48" x2="180" y2="170" stroke={muted} strokeWidth="1.4" />
+      <polygon points="180,170 150,200 210,200" fill="none" stroke={muted} strokeWidth="1.2" />
+
+      <line x1="90" y1="70" x2="270" y2="100" stroke={stroke} strokeWidth="2" />
+      <circle cx="180" cy="85" r="4" fill={stroke} />
+
+      <rect x="58" y="78" width="44" height="28" rx="4" fill={fillColor} stroke={stroke} strokeWidth="1.2" />
+      <text x="80" y="97" fontSize="12" fill={stroke} textAnchor="middle">
+        左
+      </text>
+      <rect x="248" y="108" width="44" height="28" rx="4" fill={fillColor} stroke={stroke} strokeWidth="1.2" />
+      <text x="270" y="127" fontSize="12" fill={stroke} textAnchor="middle">
+        右
+      </text>
+
+      <path d="M 80 70 L 80 52" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 74 60 L 80 50 L 86 60" fill="none" stroke={accent} strokeWidth="1.3" />
+      <rect x="66" y="28" width="28" height="18" rx="3" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <text x="80" y="41" fontSize="10" fill={accent} textAnchor="middle">
+        +w
+      </text>
+
+      <path d="M 270 100 L 270 82" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 264 90 L 270 80 L 276 90" fill="none" stroke={accent} strokeWidth="1.3" />
+      <rect x="256" y="58" width="28" height="18" rx="3" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="3,2" />
+      <text x="270" y="71" fontSize="10" fill={accent} textAnchor="middle">
+        +w
+      </text>
+
+      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
+        同じ重さを両側に足すと、傾きはどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列5 Step 4：数直線上の範囲（塗りと矢印）。
+ * 境界の値は書かず、向きと塗りだけを示す。
+ */
+export function IneqNumlineFlip() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const y = 110;
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線上の範囲を塗りと矢印で示した図。境界の値は書かない"
+    >
+      <text x="180" y="36" fontSize="12" fill={muted} textAnchor="middle">
+        不等式の答えは「範囲」
+      </text>
+
+      <line x1="30" y1={y} x2="330" y2={y} stroke={muted} strokeWidth="1.2" />
+      <path d="M 320 104 L 332 110 L 320 116" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 40 104 L 28 110 L 40 116" fill="none" stroke={muted} strokeWidth="1.2" />
+
+      <rect x="40" y={y - 14} width="140" height="28" fill={fillColor} stroke="none" />
+      <line x1="40" y1={y} x2="180" y2={y} stroke={accent} strokeWidth="3" />
+      <circle cx="180" cy={y} r="6" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 52 92 L 40 110" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 48 100 L 40 110 L 56 108" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <text x="180" y="150" fontSize="11" fill={muted} textAnchor="middle">
+        境界（値は伏せる）
+      </text>
+      <text x="100" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        この側
+      </text>
+
+      <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
+        向きが裏返ると、塗る側はどう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列5 Step 8：2本の数直線と共通部分。
+ * 境界値は書かず、重なりの塗りだけを示す。
+ */
+export function IneqNumlineAnd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="2本の数直線と共通部分の図。境界の値は書かない"
+    >
+      <text x="40" y="40" fontSize="12" fill={muted}>
+        条件 A
+      </text>
+      <line x1="30" y1="60" x2="330" y2="60" stroke={muted} strokeWidth="1.1" />
+      <rect x="80" y="48" width="180" height="24" fill={fillColor} />
+      <line x1="80" y1="60" x2="260" y2="60" stroke={stroke} strokeWidth="2.4" />
+      <circle cx="80" cy="60" r="5" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <circle cx="260" cy="60" r="5" fill={stroke} />
+
+      <text x="40" y="110" fontSize="12" fill={muted}>
+        条件 B
+      </text>
+      <line x1="30" y1="130" x2="330" y2="130" stroke={muted} strokeWidth="1.1" />
+      <rect x="140" y="118" width="160" height="24" fill={fillColor} />
+      <line x1="140" y1="130" x2="300" y2="130" stroke={stroke} strokeWidth="2.4" />
+      <circle cx="140" cy="130" r="5" fill={stroke} />
+      <circle cx="300" cy="130" r="5" fill="none" stroke={stroke} strokeWidth="1.4" />
+
+      <text x="40" y="180" fontSize="12" fill={accent}>
+        共通部分
+      </text>
+      <line x1="30" y1="200" x2="330" y2="200" stroke={muted} strokeWidth="1.1" />
+      <rect x="140" y="188" width="120" height="24" fill={fillColor} />
+      <line x1="140" y1="200" x2="260" y2="200" stroke={accent} strokeWidth="3" />
+      <circle cx="140" cy="200" r="5" fill={accent} />
+      <circle cx="260" cy="200" r="5" fill={accent} />
+
+      <text x="180" y="246" fontSize="11" fill={muted} textAnchor="middle">
+        重なっている区間に入る整数は、いくつある？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列6 Step 1：原点から等距離の2点。
+ * 距離の値や座標は書かず、「いくつあるか」を問う。
+ */
+export function QuadPmStep1() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 120;
+  const Ox = 180;
+  const d = 90;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="原点から等距離にある2点の数直線。値は書かない"
+    >
+      <text x="180" y="36" fontSize="12" fill={muted} textAnchor="middle">
+        2乗して同じ数になる点
+      </text>
+
+      <line x1="30" y1={y} x2="330" y2={y} stroke={muted} strokeWidth="1.2" />
+      <path d="M 320 114 L 332 120 L 320 126" fill="none" stroke={muted} strokeWidth="1.2" />
+
+      <circle cx={Ox} cy={y} r="3" fill={muted} />
+      <text x={Ox} y={y + 22} fontSize="12" fill={muted} textAnchor="middle">
+        0
+      </text>
+
+      <circle cx={Ox - d} cy={y} r="6" fill={accent} />
+      <circle cx={Ox + d} cy={y} r="6" fill={accent} />
+      <path
+        d={`M ${Ox - d} ${y - 18} A ${d} ${d * 0.35} 0 0 1 ${Ox + d} ${y - 18}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5,4"
+      />
+      <text x={Ox} y={y - 36} fontSize="11" fill={accent} textAnchor="middle">
+        同じ距離
+      </text>
+
+      <text x={Ox - d} y={y + 36} fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x={Ox + d} y={y + 36} fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
+        原点から同じ距離の点は、いくつある？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列6 Step 4：1本の2次方程式が2本の1次方程式に分岐する図。
+ * α, β は文字のまま残し、具体値は書かない。
+ */
+export function QuadSplitStep4() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="2次方程式が2本の1次方程式に分かれる図。アルファとベータは文字のまま"
+    >
+      <rect x="90" y="28" width="180" height="40" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="54" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (x − α)(x − β) = 0
+      </text>
+
+      <path d="M 140 72 L 100 110" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 108 104 L 98 112 L 112 112" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 220 72 L 260 110" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 248 112 L 262 112 L 252 104" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="40" y="120" width="120" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="100" y="146" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x − α = 0
+      </text>
+      <rect x="200" y="120" width="120" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="260" y="146" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x − β = 0
+      </text>
+
+      <text x="180" y="188" fontSize="12" fill={muted} textAnchor="middle">
+        積が 0 ⇒ どちらかが 0
+      </text>
+
+      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
+        1本の2次方程式は、何本の1次方程式に分かれる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列7 Step 1：面積の切り貼りで平方完成のイメージ。
+ * 足りない角に足す値は書かず、「？」のまま問いで終える。
+ */
+export function CompleteSquareArea() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const sideFill = "color-mix(in oklch, var(--foreground) 5%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="平方完成の面積図。足りない角に足す値は書かない"
+    >
+      <rect x="70" y="40" width="120" height="120" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="130" y="108" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x²
+      </text>
+
+      <rect x="190" y="40" width="50" height="120" fill={sideFill} stroke={stroke} strokeWidth="1.2" />
+      <text x="215" y="108" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        (b/2)x
+      </text>
+      <rect x="70" y="160" width="120" height="50" fill={sideFill} stroke={stroke} strokeWidth="1.2" />
+      <text x="130" y="190" fontSize="12" fill={muted} textAnchor="middle" fontStyle="italic">
+        (b/2)x
+      </text>
+
+      <rect
+        x="190"
+        y="160"
+        width="50"
+        height="50"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="5,3"
+      />
+      <text x="215" y="190" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="130" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        x
+      </text>
+      <text x="215" y="32" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        b/2
+      </text>
+
+      <text x="180" y="246" fontSize="11" fill={muted} textAnchor="middle">
+        正方形に足りない角には、何を足せばよい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列7 Step 5：一般形→平方完成→基本形→解 の帰着チャート。
+ * 矢印と段階名だけ示し、具体値は書かない。
+ */
+export function ReductionChart() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const boxes = [
+    { y: 28, label: "一般形", sub: "ax² + bx + c = 0" },
+    { y: 84, label: "平方完成", sub: "(x + □)² = …" },
+    { y: 140, label: "基本形", sub: "□² = A" },
+    { y: 196, label: "解", sub: "± …" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="一般形から解への帰着チャート。矢印だけ示し値は書かない"
+    >
+      {boxes.map((b, idx) => (
+        <g key={idx}>
+          <rect
+            x="90"
+            y={b.y}
+            width="180"
+            height="42"
+            rx="8"
+            fill={idx === 2 ? fillColor : "none"}
+            stroke={idx === 2 ? accent : stroke}
+            strokeWidth={idx === 2 ? 1.5 : 1.2}
+          />
+          <text x="180" y={b.y + 18} fontSize="12" fill={idx === 2 ? accent : stroke} textAnchor="middle">
+            {b.label}
+          </text>
+          <text x="180" y={b.y + 34} fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+            {b.sub}
+          </text>
+          {idx < boxes.length - 1 && (
+            <>
+              <path d={`M 180 ${b.y + 42} L 180 ${b.y + 54}`} fill="none" stroke={muted} strokeWidth="1.2" />
+              <path
+                d={`M 174 ${b.y + 48} L 180 ${b.y + 56} L 186 ${b.y + 48}`}
+                fill="none"
+                stroke={muted}
+                strokeWidth="1.2"
+              />
+            </>
+          )}
+        </g>
+      ))}
+
+      <text x="180" y="258" fontSize="11" fill={muted} textAnchor="middle">
+        どこまで帰着すれば、既知の問いに落ちる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列8 Step 1：解の公式からルートの中だけを枠で囲って取り出す。
+ * 符号の場合分け（Dの正負）は書かない。
+ */
+export function DiscriminantExtract() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="解の公式からルートの中だけを枠で囲った図。場合分けは書かない"
+    >
+      <text x="180" y="36" fontSize="12" fill={muted} textAnchor="middle">
+        解の公式
+      </text>
+
+      <text x="70" y="100" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic">
+        x =
+      </text>
+      <text x="118" y="84" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        −b ± √
+      </text>
+      <rect x="168" y="62" width="96" height="32" rx="6" fill={fillColor} stroke={accent} strokeWidth="1.6" />
+      <text x="216" y="84" fontSize="15" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        b² − 4ac
+      </text>
+      <line x1="110" y1="96" x2="280" y2="96" stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="118" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        2a
+      </text>
+
+      <path d="M 216 96 L 216 150" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 210 142 L 216 152 L 222 142" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="216" y="172" fontSize="12" fill={accent} textAnchor="middle">
+        ここだけ取り出す
+      </text>
+
+      <text x="180" y="212" fontSize="11" fill={muted} textAnchor="middle">
+        解の個数を決めているのは、どの部分？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数と式 系列8 Step 5：放物線と x 軸の交わり方3通り。
+ * D>0 / D=0 / D<0 のラベルだけ置き、交点の値は書かない。
+ */
+export function DiscriminantThreeCases() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const axisY = 95;
+  const panels = [
+    {
+      x: 20,
+      label: "D > 0",
+      // 下に開く放物線が x 軸を2点で切る
+      path: `M 28 55 Q 70 145 112 55`,
+      dots: [48, 92],
+      note: "2点",
+    },
+    {
+      x: 130,
+      label: "D = 0",
+      // 頂点で x 軸に接する
+      path: `M 138 55 Q 180 ${axisY + 2} 222 55`,
+      dots: [180],
+      note: "接する",
+    },
+    {
+      x: 240,
+      label: "D < 0",
+      // x 軸の上側だけで交わらない
+      path: "M 248 50 Q 290 78 332 50",
+      dots: [],
+      note: "交わらない",
+    },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="判別式の符号による放物線とx軸の交わり方3通り。交点の値は書かない"
+    >
+      {panels.map((p, idx) => (
+        <g key={idx}>
+          <text x={p.x + 50} y="28" fontSize="12" fill={idx === 1 ? accent : muted} textAnchor="middle">
+            {p.label}
+          </text>
+          <line x1={p.x + 8} y1={axisY} x2={p.x + 92} y2={axisY} stroke={muted} strokeWidth="1" />
+          <path d={p.path} fill="none" stroke={stroke} strokeWidth="1.5" />
+          {p.dots.map((dx, j) => (
+            <circle key={j} cx={dx} cy={axisY} r="4" fill={accent} />
+          ))}
+          <text x={p.x + 50} y="130" fontSize="11" fill={muted} textAnchor="middle">
+            {p.note}
+          </text>
+        </g>
+      ))}
+
+      <text x="180" y="168" fontSize="12" fill={muted} textAnchor="middle">
+        交点の個数だけ見る
+      </text>
+      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
+        D = 0 のとき、解はいくつあると考える？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
@@ -8644,6 +9573,118 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <IrrationalDiagonal />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXPONENT_COUNT_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExponentCountStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXPONENT_ADD_VS_MUL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExponentAddVsMul />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXPAND_PIVOT_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpandPivotStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXPAND_CANCEL_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpandCancelStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<CHUNK_BOX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ChunkBox />
+            </div>
+          );
+        }
+        if (trimmed === "<<FACTORING_ROUNDTRIP_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FactoringRoundtripStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<FACTORING_SEARCH_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FactoringSearchTable />
+            </div>
+          );
+        }
+        if (trimmed === "<<INEQ_BALANCE_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqBalanceStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<INEQ_NUMLINE_FLIP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqNumlineFlip />
+            </div>
+          );
+        }
+        if (trimmed === "<<INEQ_NUMLINE_AND>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqNumlineAnd />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUAD_PM_STEP1>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadPmStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUAD_SPLIT_STEP4>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadSplitStep4 />
+            </div>
+          );
+        }
+        if (trimmed === "<<COMPLETE_SQUARE_AREA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CompleteSquareArea />
+            </div>
+          );
+        }
+        if (trimmed === "<<REDUCTION_CHART>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ReductionChart />
+            </div>
+          );
+        }
+        if (trimmed === "<<DISCRIMINANT_EXTRACT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DiscriminantExtract />
+            </div>
+          );
+        }
+        if (trimmed === "<<DISCRIMINANT_THREE_CASES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DiscriminantThreeCases />
             </div>
           );
         }
