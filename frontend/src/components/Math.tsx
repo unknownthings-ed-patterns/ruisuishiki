@@ -8784,6 +8784,258 @@ export function DiscriminantThreeCases() {
  * 関数とグラフ 系列1 Step 1：入力→関数箱→出力の対応図。
  * 出力の具体値は書かず、「ただ1つ？」の問いで終える。
  */
+
+/** 系列2 step1：a の符号と開き（目盛り値なし）。 */
+export function ParabolaOpeningBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="下に凸と上に凸の放物線。目盛り値は書かない">
+      <text x="90" y="24" fontSize="12" fill={muted} textAnchor="middle">a &gt; 0</text>
+      <line x1="30" y1="150" x2="150" y2="150" stroke={muted} strokeWidth="1" />
+      <line x1="90" y1="170" x2="90" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 40 60 Q 90 170 140 60" fill="none" stroke={accent} strokeWidth="2" />
+      <text x="270" y="24" fontSize="12" fill={muted} textAnchor="middle">a &lt; 0</text>
+      <line x1="210" y1="80" x2="330" y2="80" stroke={muted} strokeWidth="1" />
+      <line x1="270" y1="170" x2="270" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 220 150 Q 270 40 320 150" fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="180" y="192" fontSize="11" fill={muted} textAnchor="middle">開きの向きは a の符号だけが決める</text>
+    </svg>
+  );
+}
+
+/** 系列2 step5：平行移動＝値が遅れて現れる模式（数値空欄）。 */
+export function TranslateDelay() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 360 170" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="x を x-p に置き換えると値が遅れて現れる模式。数値は空欄">
+      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">x → x − p のとき、同じ高さは右へずれる</text>
+      <rect x="40" y="50" width="100" height="70" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="90" y="78" fontSize="12" fill={stroke} textAnchor="middle">もとの式</text>
+      <text x="90" y="100" fontSize="11" fill={muted} textAnchor="middle">x = □ で y = □</text>
+      <path d="M 150 85 L 200 85" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 190 79 L 200 85 L 190 91" fill="none" stroke={accent} strokeWidth="1.5" />
+      <rect x="210" y="50" width="110" height="70" rx="8" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={accent} strokeWidth="1.3" />
+      <text x="265" y="78" fontSize="12" fill={stroke} textAnchor="middle">置き換え後</text>
+      <text x="265" y="100" fontSize="11" fill={muted} textAnchor="middle">同じ y は x = □+p</text>
+      <text x="180" y="150" fontSize="11" fill={muted} textAnchor="middle">「1を引いたら −1 移動」ではない——遅延</text>
+    </svg>
+  );
+}
+
+/** 系列2/3：標準形の頂点（座標値なし）。 */
+export function StandardFormVertex() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="上に凸の放物線と頂点。座標値は書かない">
+      <line x1="40" y1="120" x2="260" y2="120" stroke={muted} strokeWidth="1" />
+      <line x1="150" y1="180" x2="150" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 60 160 Q 150 40 240 160" fill="none" stroke={accent} strokeWidth="2.2" />
+      <circle cx="150" cy="55" r="4.5" fill={accent} />
+      <text x="168" y="52" fontSize="12" fill={stroke}>頂点</text>
+      <line x1="150" y1="55" x2="150" y2="160" stroke={stroke} strokeWidth="1" strokeDasharray="3,3" />
+      <text x="150" y="190" fontSize="11" fill={muted} textAnchor="middle">y = a(x − p)² + q —— 頂点はどこ？</text>
+    </svg>
+  );
+}
+
+/** 系列3 step1：一般形→標準形の矢印（係数は文字）。 */
+export function GeneralToStandard() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 360 140" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="一般形から標準形への矢印。係数は文字のまま">
+      <rect x="20" y="35" width="130" height="60" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="85" y="60" fontSize="12" fill={stroke} textAnchor="middle">一般形</text>
+      <text x="85" y="80" fontSize="11" fill={muted} textAnchor="middle">ax²+bx+c</text>
+      <path d="M 160 65 L 210 65" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 200 59 L 210 65 L 200 71" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="185" y="52" fontSize="10" fill={accent} textAnchor="middle">平方完成</text>
+      <rect x="220" y="35" width="120" height="60" rx="8" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={accent} strokeWidth="1.3" />
+      <text x="280" y="60" fontSize="12" fill={stroke} textAnchor="middle">標準形</text>
+      <text x="280" y="80" fontSize="11" fill={muted} textAnchor="middle">a(x−p)²+q</text>
+      <text x="180" y="122" fontSize="11" fill={muted} textAnchor="middle">代数の帰着は、幾何の読み取りになる</text>
+    </svg>
+  );
+}
+
+/** 系列4：変域で切った放物線（最小／最大）。 */
+export function DomainWindowMin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="変域で切り取った下に凸の放物線。最小の位置は問いかけるのみ">
+      <line x1="40" y1="150" x2="260" y2="150" stroke={muted} strokeWidth="1" />
+      <line x1="80" y1="180" x2="80" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 50 40 Q 150 170 250 40" fill="none" stroke={stroke} strokeWidth="1.4" strokeDasharray="4,3" />
+      <path d="M 100 95 Q 150 155 200 95" fill="none" stroke={accent} strokeWidth="2.4" />
+      <circle cx="100" cy="95" r="3.5" fill={accent} />
+      <circle cx="200" cy="95" r="3.5" fill={accent} />
+      <line x1="100" y1="30" x2="100" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
+      <line x1="200" y1="30" x2="200" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
+      <text x="150" y="190" fontSize="11" fill={muted} textAnchor="middle">窓の中——最小はどこ？</text>
+    </svg>
+  );
+}
+
+export function DomainWindowMax() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="変域で切り取った上に凸の放物線。最大の位置は問いかけるのみ">
+      <line x1="40" y1="150" x2="260" y2="150" stroke={muted} strokeWidth="1" />
+      <line x1="80" y1="180" x2="80" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 50 170 Q 150 30 250 170" fill="none" stroke={stroke} strokeWidth="1.4" strokeDasharray="4,3" />
+      <path d="M 110 120 Q 150 55 190 120" fill="none" stroke={accent} strokeWidth="2.4" />
+      <circle cx="110" cy="120" r="3.5" fill={accent} />
+      <circle cx="190" cy="120" r="3.5" fill={accent} />
+      <text x="150" y="190" fontSize="11" fill={muted} textAnchor="middle">上に凸の窓——最大はどこ？</text>
+    </svg>
+  );
+}
+
+/** 系列5 step1：f(□) の穴あき表記。 */
+export function FNotationHole() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 140" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="f のかっこに穴。代入結果は書かない">
+      <text x="150" y="55" fontSize="28" fill={stroke} textAnchor="middle" fontFamily="serif">f (</text>
+      <rect x="168" y="32" width="36" height="36" rx="6" fill="none" stroke={accent} strokeWidth="1.8" strokeDasharray="4,3" />
+      <text x="210" y="55" fontSize="28" fill={stroke} textAnchor="middle" fontFamily="serif">) = ?</text>
+      <text x="150" y="100" fontSize="12" fill={muted} textAnchor="middle">かっこ内の数を、式の x の場所へ</text>
+      <text x="150" y="122" fontSize="11" fill={muted} textAnchor="middle">出てくる値は書かない——名前をつけただけ</text>
+    </svg>
+  );
+}
+
+/** 系列5 step5：長方形と辺の制約。 */
+export function RectConstraint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 180" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="長方形の辺に x と空欄。数値なし">
+      <rect x="70" y="40" width="160" height="90" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={stroke} strokeWidth="1.5" />
+      <text x="150" y="95" fontSize="13" fill={stroke} textAnchor="middle">面積 f(x)</text>
+      <text x="150" y="30" fontSize="12" fill={accent} textAnchor="middle">x</text>
+      <text x="248" y="90" fontSize="12" fill={accent}>□</text>
+      <text x="150" y="155" fontSize="11" fill={muted} textAnchor="middle">辺の長さは正？——それが変域</text>
+    </svg>
+  );
+}
+
+/** 系列5 step9：放物線と内接長方形（座標なし）。 */
+export function InscribedRect() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="放物線と内接長方形。座標値なし">
+      <line x1="40" y1="160" x2="260" y2="160" stroke={muted} strokeWidth="1" />
+      <line x1="150" y1="180" x2="150" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 60 160 Q 150 40 240 160" fill="none" stroke={stroke} strokeWidth="1.8" />
+      <rect x="110" y="100" width="80" height="60" fill="color-mix(in oklch, var(--accent) 8%, transparent)" stroke={accent} strokeWidth="1.6" />
+      <text x="150" y="130" fontSize="11" fill={accent} textAnchor="middle">t</text>
+      <text x="150" y="192" fontSize="11" fill={muted} textAnchor="middle">独立変数は t —— 放物線の x と混同しない</text>
+    </svg>
+  );
+}
+
+/** 系列6：3形対応チャート（具体式なし）。 */
+export function ThreeFormsChart() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const boxes = [
+    { x: 20, title: "一般形", part: "y 切片" },
+    { x: 125, title: "標準形", part: "頂点" },
+    { x: 230, title: "因数分解形", part: "x 切片" },
+  ];
+  return (
+    <svg viewBox="0 0 360 150" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="3つの形と読める部品。具体式なし">
+      {boxes.map((b) => (
+        <g key={b.title}>
+          <rect x={b.x} y={30} width={100} height={70} rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+          <text x={b.x + 50} y={58} fontSize="12" fill={stroke} textAnchor="middle">{b.title}</text>
+          <text x={b.x + 50} y={82} fontSize="12" fill={accent} textAnchor="middle">{b.part}</text>
+        </g>
+      ))}
+      <text x="180" y="130" fontSize="11" fill={muted} textAnchor="middle">目的が形を選ばせる——同じ放物線の顔</text>
+    </svg>
+  );
+}
+
+/** 系列7 step1：符号チャート（境界は N）。 */
+export function QuadIneqSign() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 360 160" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="放物線と x 軸。境界は N。答えの範囲は書かない">
+      <line x1="40" y1="100" x2="320" y2="100" stroke={muted} strokeWidth="1" />
+      <line x1="60" y1="140" x2="60" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 70 40 Q 180 160 290 40" fill="none" stroke={accent} strokeWidth="2" />
+      <circle cx="130" cy="100" r="4" fill={stroke} />
+      <circle cx="230" cy="100" r="4" fill={stroke} />
+      <text x="130" y="120" fontSize="12" fill={stroke} textAnchor="middle">N₁</text>
+      <text x="230" y="120" fontSize="12" fill={stroke} textAnchor="middle">N₂</text>
+      <text x="90" y="55" fontSize="11" fill={muted} textAnchor="middle">上？</text>
+      <text x="180" y="145" fontSize="11" fill={muted} textAnchor="middle">下？</text>
+      <text x="270" y="55" fontSize="11" fill={muted} textAnchor="middle">上？</text>
+      <text x="180" y="20" fontSize="11" fill={muted} textAnchor="middle">答えは点ではなく範囲</text>
+    </svg>
+  );
+}
+
+/** 系列7 step7：交わらない上側。 */
+export function AlwaysAbove() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 300 180" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="x 軸より上で交わらない放物線。頂点座標なし">
+      <line x1="40" y1="140" x2="260" y2="140" stroke={muted} strokeWidth="1" />
+      <line x1="80" y1="160" x2="80" y2="30" stroke={muted} strokeWidth="1" />
+      <path d="M 60 50 Q 150 120 240 50" fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x="150" y="170" fontSize="11" fill={muted} textAnchor="middle">交わらない・常に上 → すべての実数？</text>
+    </svg>
+  );
+}
+
+/** 系列8 step7：正根の失敗例2枚。 */
+export function ParamRootFail() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="正の2実数根の失敗例2枚。座標値なし">
+      <text x="90" y="24" fontSize="11" fill={muted} textAnchor="middle">失敗① 頂点が左</text>
+      <line x1="30" y1="120" x2="150" y2="120" stroke={muted} strokeWidth="1" />
+      <line x1="90" y1="160" x2="90" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 40 60 Q 70 150 140 70" fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx="55" cy="120" r="3" fill={accent} />
+      <circle cx="120" cy="120" r="3" fill={accent} />
+      <text x="270" y="24" fontSize="11" fill={muted} textAnchor="middle">失敗② 切片が非正</text>
+      <line x1="210" y1="120" x2="330" y2="120" stroke={muted} strokeWidth="1" />
+      <line x1="240" y1="160" x2="240" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 220 80 Q 280 160 320 50" fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx="255" cy="120" r="3" fill={accent} />
+      <circle cx="305" cy="120" r="3" fill={accent} />
+      <text x="180" y="185" fontSize="11" fill={muted} textAnchor="middle">D&gt;0 だけでは足りない——3条件のチェック</text>
+    </svg>
+  );
+}
+
 export function FuncBoxStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -9843,6 +10095,97 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <LinearSlopeDomain />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARABOLA_OPENING_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParabolaOpeningBundle />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRANSLATE_DELAY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TranslateDelay />
+            </div>
+          );
+        }
+        if (trimmed === "<<STANDARD_FORM_VERTEX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StandardFormVertex />
+            </div>
+          );
+        }
+        if (trimmed === "<<GENERAL_TO_STANDARD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeneralToStandard />
+            </div>
+          );
+        }
+        if (trimmed === "<<DOMAIN_WINDOW_MIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DomainWindowMin />
+            </div>
+          );
+        }
+        if (trimmed === "<<DOMAIN_WINDOW_MAX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DomainWindowMax />
+            </div>
+          );
+        }
+        if (trimmed === "<<F_NOTATION_HOLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FNotationHole />
+            </div>
+          );
+        }
+        if (trimmed === "<<RECT_CONSTRAINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <RectConstraint />
+            </div>
+          );
+        }
+        if (trimmed === "<<INSCRIBED_RECT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <InscribedRect />
+            </div>
+          );
+        }
+        if (trimmed === "<<THREE_FORMS_CHART>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ThreeFormsChart />
+            </div>
+          );
+        }
+        if (trimmed === "<<QUAD_INEQ_SIGN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <QuadIneqSign />
+            </div>
+          );
+        }
+        if (trimmed === "<<ALWAYS_ABOVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <AlwaysAbove />
+            </div>
+          );
+        }
+        if (trimmed === "<<PARAM_ROOT_FAIL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ParamRootFail />
             </div>
           );
         }

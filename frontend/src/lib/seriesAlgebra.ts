@@ -2251,10 +2251,8 @@ $$\\text{偏差値} = 50 + 10 \\times \\frac{得点 - 平均}{\\text{標準偏�
 /** 数学Ⅰ・A の全系列リスト（将来拡張）。 */
 export const ALGEBRA_1_SERIES_LIST: LearnerSeries[] = [
   // 旧「数と式」5系列＋判別式は seriesNumbersExpressions.ts に吸収（SERIES_REDIRECTS）。
-  ALGEBRA_QUAD_SUM_SERIES,
-  ALGEBRA_QUAD_PRODUCT_SERIES,
+  // 旧 2 次関数（vertex/sum/prod）は「関数と関数のグラフ」へ。sum/prod はカタログ外しのみ。
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
-  ALGEBRA_QUAD_VERTEX_SERIES,
   ALGEBRA_MEAN_SERIES,
   ALGEBRA_VARIANCE_SERIES,
   ALGEBRA_PERMUTATION_SERIES,

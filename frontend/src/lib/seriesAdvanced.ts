@@ -6191,9 +6191,7 @@ $y = 2 t x - t^2$ のように **パラメータ $t$ を含む直線** が、$t$
  *   → 11. 不等式と領域
  */
 export const ADVANCED_SERIES_LIST: LearnerSeries[] = [
-  // 数Ⅰ・A 2 次関数
-  ADV_QUAD_GRAPH_SERIES,
-  ADV_QUAD_MIN_SERIES,
+  // 旧 数Ⅰ・A 2 次関数（graph/min）は「関数と関数のグラフ」系列3・4へ吸収（SERIES_REDIRECTS）。
   // 数Ⅱ・B 複素数と方程式（図形と方程式の前）
   ADV_COMPLEX_NEW_NUMBER_SERIES,
   ADV_COMPLEX_QUADRATIC_SOLUTIONS_SERIES,

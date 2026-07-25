@@ -14,9 +14,6 @@ import {
   ALGEBRA_MEAN_SERIES,
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
   ALGEBRA_PERMUTATION_SERIES,
-  ALGEBRA_QUAD_PRODUCT_SERIES,
-  ALGEBRA_QUAD_SUM_SERIES,
-  ALGEBRA_QUAD_VERTEX_SERIES,
   ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
@@ -59,8 +56,6 @@ import {
   ADV_LINE_EQUATION_SERIES,
   ADV_NUMBER_LINE_SERIES,
   ADV_POINT_LINE_DISTANCE_SERIES,
-  ADV_QUAD_GRAPH_SERIES,
-  ADV_QUAD_MIN_SERIES,
   ADV_REMAINDER_THEOREM_SERIES,
   ADVANCED_SERIES_LIST,
 } from "./seriesAdvanced";
@@ -78,6 +73,13 @@ import {
 } from "./seriesNumbersExpressions";
 import {
   FG_FUNCTION_LINEAR_SERIES,
+  FG_QUAD_STANDARD_SERIES,
+  FG_QUAD_GENERAL_GRAPH_SERIES,
+  FG_QUAD_MINMAX_SERIES,
+  FG_FUNCTION_NOTATION_SERIES,
+  FG_QUAD_THREE_FORMS_SERIES,
+  FG_QUAD_INEQUALITY_SERIES,
+  FG_QUAD_PARAMETER_SERIES,
   FUNCTIONS_GRAPHS_SERIES_LIST,
 } from "./seriesFunctionsGraphs";
 import {
@@ -356,6 +358,55 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数と関数のグラフ",
     shortDescription: "関数の対応と1次関数 — 傾き・切片・変域の端点",
   },
+  {
+    series: FG_QUAD_STANDARD_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "標準形と平行移動 — 頂点・軸・遅延の置き換え",
+  },
+  {
+    series: FG_QUAD_GENERAL_GRAPH_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "一般形からグラフを読む — 平方完成→頂点",
+  },
+  {
+    series: FG_QUAD_MINMAX_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "変域付き最大・最小 — 軸と窓の位置関係",
+  },
+  {
+    series: FG_FUNCTION_NOTATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "関数記号と図形応用 — 変域制約と最適化",
+  },
+  {
+    series: FG_QUAD_THREE_FORMS_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "3つの形と方程式 — 切片・頂点・交点",
+  },
+  {
+    series: FG_QUAD_INEQUALITY_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "2次不等式 — グラフの上／下で範囲を読む",
+  },
+  {
+    series: FG_QUAD_PARAMETER_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "関数と関数のグラフ",
+    shortDescription: "パラメータと文字定数 — 場合分けのスイッチ",
+  },
   /* 数Ⅰ: 集合と命題 */
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
@@ -364,42 +415,9 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と命題",
     shortDescription: "必要条件・十分条件",
   },
-  /* 数Ⅰ: 2 次関数（グラフ → 頂点 → 最小値 → 判別式 → 解と係数） */
-  {
-    series: ADV_QUAD_GRAPH_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "2次関数のグラフを読む — 頂点・軸・y切片",
-  },
-  {
-    series: ALGEBRA_QUAD_VERTEX_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "頂点の x 座標",
-  },
-  {
-    series: ADV_QUAD_MIN_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "2次関数の最小値 — 平方完成",
-  },
-  {
-    series: ALGEBRA_QUAD_SUM_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "解と係数の関係（和） — 2次方程式",
-  },
-  {
-    series: ALGEBRA_QUAD_PRODUCT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "解と係数の関係（積） — 2次方程式",
-  },
+  /* 旧 topicGroup「2 次関数」は「関数と関数のグラフ」へ吸収。
+   * graph/vertex → 系列3、min → 系列4（SERIES_REDIRECTS）。
+   * sum/prod は第2章に節がないためカタログから外すのみ（リダイレクトなし）。 */
   /* 数Ⅰ: データの分析 */
   {
     series: ALGEBRA_MEAN_SERIES,
@@ -737,6 +755,10 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra_sqrt_simplify_01: "algebra1_completing_square_01",
   algebra_linear_ineq_01: "algebra1_linear_inequality_01",
   algebra_disc_01: "algebra1_discriminant_01",
+  /* 関数と関数のグラフ（背骨 D3）：吸収先を実装したのでリダイレクト */
+  adv_quad_graph_01: "algebra1_quad_general_graph_01",
+  algebra_quad_vertex_01: "algebra1_quad_general_graph_01",
+  adv_quad_min_01: "algebra1_quad_minmax_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
