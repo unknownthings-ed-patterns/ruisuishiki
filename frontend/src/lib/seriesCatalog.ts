@@ -72,6 +72,10 @@ import {
 } from "./seriesAdvanced";
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
+  NE_NUMBER_EXPANSION_SERIES,
+  NUMBERS_EXPRESSIONS_SERIES_LIST,
+} from "./seriesNumbersExpressions";
+import {
   E5_CONGRUENT_FIGURES_SERIES,
   E5_CIRCUMFERENCE_SERIES,
   E5_DECIMAL_DIV_ALGORITHM_SERIES,
@@ -282,7 +286,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "16. 台形の面積",
   },
   /* === 高校数学Ⅰ・A（数Ⅰ の章順 → 数A の章順）=== */
-  /* 数Ⅰ: 数と式 */
+  /* 数Ⅰ: 数と式（池田『入門問題精講』第1章の節順。背骨 docs/numbers_expressions_series_design.md） */
+  {
+    series: NE_NUMBER_EXPANSION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "数と式",
+    shortDescription: "数の拡張と小数 — 有限小数・循環小数・無理数",
+  },
   {
     series: ALGEBRA_EXPANSION_AB_SERIES,
     subject: "secondary",
@@ -713,6 +724,7 @@ export function findStaticSeries(seriesId: string): LearnerSeries | null {
 export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ELEMENTARY_5_SERIES_LIST,
   RATIO_BASIC_SERIES,
+  ...NUMBERS_EXPRESSIONS_SERIES_LIST,
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
