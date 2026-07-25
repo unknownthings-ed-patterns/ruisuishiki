@@ -10,19 +10,13 @@
 
 import {
   ALGEBRA_1_SERIES_LIST,
-  ALGEBRA_DISCRIMINANT_SERIES,
   ALGEBRA_DIVISOR_COUNT_SERIES,
-  ALGEBRA_EXPANSION_AB_SERIES,
-  ALGEBRA_EXPANSION_SQ_SERIES,
-  ALGEBRA_FACTORING_SERIES,
-  ALGEBRA_LINEAR_INEQ_SERIES,
   ALGEBRA_MEAN_SERIES,
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
   ALGEBRA_PERMUTATION_SERIES,
   ALGEBRA_QUAD_PRODUCT_SERIES,
   ALGEBRA_QUAD_SUM_SERIES,
   ALGEBRA_QUAD_VERTEX_SERIES,
-  ALGEBRA_SQRT_SIMPLIFY_SERIES,
   ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
@@ -73,6 +67,13 @@ import {
 import { RATIO_BASIC_SERIES } from "./seriesData";
 import {
   NE_NUMBER_EXPANSION_SERIES,
+  NE_EXPONENT_LAW_SERIES,
+  NE_EXPANSION_SERIES,
+  NE_FACTORING_SERIES,
+  NE_LINEAR_INEQUALITY_SERIES,
+  NE_QUAD_FACTOR_SOLVE_SERIES,
+  NE_COMPLETING_SQUARE_SERIES,
+  NE_DISCRIMINANT_SERIES,
   NUMBERS_EXPRESSIONS_SERIES_LIST,
 } from "./seriesNumbersExpressions";
 import {
@@ -295,39 +296,53 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "数の拡張と小数 — 有限小数・循環小数・無理数",
   },
   {
-    series: ALGEBRA_EXPANSION_AB_SERIES,
+    series: NE_EXPONENT_LAW_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
-    shortDescription: "乗法公式 (x+a)(x+b) — 展開",
+    shortDescription: "指数法則と式の整理 — 指数は「かけ算した回数」",
   },
   {
-    series: ALGEBRA_EXPANSION_SQ_SERIES,
+    series: NE_EXPANSION_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
-    shortDescription: "平方の展開 (x+a)²",
+    shortDescription: "式の展開 — 公式は分配法則の圧縮",
   },
   {
-    series: ALGEBRA_FACTORING_SERIES,
+    series: NE_FACTORING_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
-    shortDescription: "因数分解（展開の逆）",
+    shortDescription: "因数分解 — 展開の逆読みは探索になる",
   },
   {
-    series: ALGEBRA_SQRT_SIMPLIFY_SERIES,
+    series: NE_LINEAR_INEQUALITY_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
-    shortDescription: "平方根の簡単化",
+    shortDescription: "1次不等式 — 向きまで面倒を見る",
   },
   {
-    series: ALGEBRA_LINEAR_INEQ_SERIES,
+    series: NE_QUAD_FACTOR_SOLVE_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "数と式",
-    shortDescription: "1次不等式の解法",
+    shortDescription: "2次方程式 — 積が0になる形へ",
+  },
+  {
+    series: NE_COMPLETING_SQUARE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "数と式",
+    shortDescription: "平方完成と解の公式 — 基本形に帰着",
+  },
+  {
+    series: NE_DISCRIMINANT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "数と式",
+    shortDescription: "判別式 — 解を求めずに個数を読む",
   },
   /* 数Ⅰ: 集合と命題 */
   {
@@ -358,13 +373,6 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "2 次関数",
     shortDescription: "2次関数の最小値 — 平方完成",
-  },
-  {
-    series: ALGEBRA_DISCRIMINANT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "2 次関数",
-    shortDescription: "判別式 D = b²−4c — 2次方程式",
   },
   {
     series: ALGEBRA_QUAD_SUM_SERIES,
@@ -705,9 +713,18 @@ export const STATIC_CATALOG: CatalogEntry[] = [
  *
  * - algebra2_trig_period_01（旧「三角関数の周期」）→ trig_general_angle_01
  *   周期の内容は系列1（一般角）の step8 に吸収済み。旧URL のリンク切れを防ぐ。
+ * - 旧「数と式」5系列（初期プロトタイプ）→ 新ユニットの該当系列
+ *   背骨 docs/numbers_expressions_series_design.md D3。**吸収先を実装したものだけ**
+ *   ここへ移す（行き先が無いうちにリダイレクトすると学習者が迷子になる）。
  */
 export const SERIES_REDIRECTS: Record<string, string> = {
   algebra2_trig_period_01: "trig_general_angle_01",
+  algebra_expansion_ab_01: "algebra1_expansion_01",
+  algebra_expansion_sq_01: "algebra1_expansion_01",
+  algebra_factoring_01: "algebra1_factoring_01",
+  algebra_sqrt_simplify_01: "algebra1_completing_square_01",
+  algebra_linear_ineq_01: "algebra1_linear_inequality_01",
+  algebra_disc_01: "algebra1_discriminant_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
