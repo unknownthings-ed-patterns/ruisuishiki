@@ -4496,6 +4496,7 @@ $$\\text{川幅} = 10 \\times \\tan 60° \\approx 10 \\times 2 = \\text{約 } 20
 
 実は $\\tan \\theta = \\dfrac{\\sin \\theta}{\\cos \\theta}$（タンジェントは「サイン ÷ コサイン」で書けます）。
 三兄弟は別物に見えて、根っこは **同じ三角形の比** です。`,
+    relatedSeriesId: "algebra1_trig_tan_01",
   },
 
   サイン: {
@@ -4691,6 +4692,7 @@ $1°$ きざみで $\\sin, \\cos, \\tan$ の値を **小数第 4 位まで** 示
 - **無理数** — ルートを含む数。三角比の値の多くがこれ
 
 3 つの三角比は独立ではなく、$\\sin^2 \\theta + \\cos^2 \\theta = 1$ や $\\tan \\theta = \\dfrac{\\sin \\theta}{\\cos \\theta}$ のようにつながっています。`,
+    relatedSeriesId: "algebra1_trig_tan_01",
   },
 
   /* ===== 補助用語 ===== */

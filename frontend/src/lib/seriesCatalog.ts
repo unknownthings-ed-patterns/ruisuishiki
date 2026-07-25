@@ -93,6 +93,10 @@ import {
   FUNCTIONS_GRAPHS_SERIES_LIST,
 } from "./seriesFunctionsGraphs";
 import {
+  TR_TAN_RATIO_SERIES,
+  TRIG_RATIO_SERIES_LIST,
+} from "./seriesTrigRatio";
+import {
   E5_CONGRUENT_FIGURES_SERIES,
   E5_CIRCUMFERENCE_SERIES,
   E5_DECIMAL_DIV_ALGORITHM_SERIES,
@@ -416,6 +420,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "関数と関数のグラフ",
     shortDescription: "パラメータと文字定数 — 場合分けのスイッチ",
+  },
+  /* 数Ⅰ: 三角比（池田『入門問題精講』第3章。背骨 docs/trig_ratio_series_design.md） */
+  {
+    series: TR_TAN_RATIO_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "三角比",
+    shortDescription:
+      "タンジェントと比 — 相似で運ぶ比に名前を付け、向きが変わっても辺を読む",
   },
   /* 数Ⅰ: 集合と命題 */
   {
@@ -850,6 +863,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   RATIO_BASIC_SERIES,
   ...NUMBERS_EXPRESSIONS_SERIES_LIST,
   ...FUNCTIONS_GRAPHS_SERIES_LIST,
+  ...TRIG_RATIO_SERIES_LIST,
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,

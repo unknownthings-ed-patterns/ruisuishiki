@@ -6711,6 +6711,203 @@ export function TangentScale() {
 }
 
 /**
+ * 三角比系列1 step1：現場の大直角三角形とノートの小直角三角形（相似）。
+ * 答えの長さは書かず「同じなのは何？」で終える。
+ */
+export function TrigSimilarMeasure() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill =
+    "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 460 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 460 }}
+      role="img"
+      aria-label="相似な大小の直角三角形。角が同じとき、同じなのは辺の長さか比か？"
+    >
+      {/* 大三角形 */}
+      <polygon
+        points="40,200 200,200 40,60"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <polyline
+        points="40,192 48,192 48,200"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      <path
+        d="M 180,200 A 20,20 0 0,0 188.5,185"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="168" y="188" fontSize="12" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="120" y="218" fontSize="11" fill={muted} textAnchor="middle">
+        現場の底辺
+      </text>
+      <text x="28" y="130" fontSize="12" fill={accent} textAnchor="end" fontWeight="600">
+        ?
+      </text>
+      <text x="70" y="50" fontSize="11" fill={muted}>
+        現場
+      </text>
+
+      {/* 矢印 */}
+      <text
+        x="250"
+        y="120"
+        fontSize="12"
+        fill={muted}
+        textAnchor="middle"
+      >
+        同じ角
+      </text>
+      <path
+        d="M 220,140 L 280,140"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+        markerEnd="url(#trigSimArrow)"
+      />
+      <defs>
+        <marker
+          id="trigSimArrow"
+          markerWidth="6"
+          markerHeight="6"
+          refX="5"
+          refY="3"
+          orient="auto"
+        >
+          <path d="M0,0 L6,3 L0,6 Z" fill={muted} />
+        </marker>
+      </defs>
+
+      {/* 小三角形（ノート） */}
+      <rect
+        x="300"
+        y="70"
+        width="140"
+        height="130"
+        rx="4"
+        fill="none"
+        stroke="var(--border)"
+        strokeWidth="1"
+        strokeDasharray="4,3"
+      />
+      <text x="370" y="90" fontSize="10" fill={muted} textAnchor="middle">
+        ノート
+      </text>
+      <polygon
+        points="320,180 400,180 320,110"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <polyline
+        points="320,172 328,172 328,180"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      <path
+        d="M 385,180 A 14,14 0 0,0 391,170"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+      />
+      <text x="372" y="172" fontSize="11" fill={accent} fontStyle="italic">
+        θ
+      </text>
+
+      <text
+        x="230"
+        y="228"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        同じ角——同じなのは辺の長さ？ それとも比？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 三角比系列1 質的変化：向きが標準でない直角三角形。
+ * 縦に見える辺が「となり」になりうる——答えの辺の長さは書かない。
+ */
+export function TrigTanReorient() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill =
+    "color-mix(in oklch, var(--accent) 7%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="直角が左上の直角三角形。角θのとなりは縦に見える辺。向かいの辺は？"
+    >
+      {/* 直角が左上：頂点 (60,50) 直角、(60,200) 下、(220,50) 右 */}
+      <polygon
+        points="60,50 220,50 60,200"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <polyline
+        points="60,58 68,58 68,50"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      {/* θ at bottom (60,200) */}
+      <path
+        d="M 60,180 A 20,20 0 0,1 78,192"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="78" y="205" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      {/* 縦辺＝となり */}
+      <text x="48" y="130" fontSize="11" fill={muted} textAnchor="end">
+        となり
+      </text>
+      <text x="48" y="145" fontSize="10" fill={muted} textAnchor="end">
+        （縦に見える）
+      </text>
+      {/* 横辺＝向かい（答え側） */}
+      <text x="140" y="42" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        向かい ？
+      </text>
+      <text
+        x="160"
+        y="235"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        どの辺が『のぼり』？ 角から読もう
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -10480,6 +10677,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TangentScale />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_SIMILAR_MEASURE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigSimilarMeasure />
+            </div>
+          );
+        }
+        if (trimmed === "<<TRIG_TAN_REORIENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <TrigTanReorient />
             </div>
           );
         }
