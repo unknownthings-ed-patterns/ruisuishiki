@@ -25,7 +25,7 @@ export type PatternId =
   /* 数Ⅱ・B の追加（網羅化） */
   | "A1" | "A2" | "VEC1" | "DIFF1"
   /* 数Ⅱ・B の追加2 */
-  | "G1" | "G2" | "EXP1" | "EXP2" | "VEC2"
+  | "G1" | "G2" | "EXP1" | "EXP2" | "EXP3" | "EXP4" | "EXP5" | "LOG_DEF" | "LOG_LAWS" | "LOG_GRAPH" | "LOG_EQ" | "LOG10" | "VEC2"
   /* ★チャレンジ系列 */
   | "VV1" | "GR1" | "GR2" | "GR3" | "GR4"
   | "LN1" | "LN2" | "LN3" | "LN5" | "LN6" | "LN7" | "LN8"
@@ -862,6 +862,133 @@ const EXP2: PatternSpec = {
   evaluate: (k) => ({ unknownName: "result", answer: k.a ** k.r }),
 };
 
+/** EXP3: 指数関数のグラフと単調性——学習者系列 algebra2_exp_graph_01 */
+const EXP3: PatternSpec = {
+  id: "EXP3",
+  unit: "algebra_2",
+  naturalLanguage: "指数関数のグラフと単調性",
+  formulaTemplate: "y = a^x（a > 0, a ≠ 1）",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "x", role: "指数変数", unknown: false, domain: { kind: "decimal", min: -5, max: 5 } },
+    { name: "result", role: "値", unknown: true, domain: { kind: "decimal", min: 0, max: 100000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: k.a ** k.x }),
+};
+
+/** EXP4: 指数方程式・不等式——学習者系列 algebra2_exp_equation_01 */
+const EXP4: PatternSpec = {
+  id: "EXP4",
+  unit: "algebra_2",
+  naturalLanguage: "指数方程式・不等式",
+  formulaTemplate: "a^p = a^q または a^p ≶ a^q",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "p", role: "左辺の指数", unknown: false, domain: { kind: "decimal", min: -5, max: 5 } },
+    { name: "q", role: "右辺の指数", unknown: false, domain: { kind: "decimal", min: -5, max: 5 } },
+    { name: "result", role: "解または境界", unknown: true, domain: { kind: "decimal", min: -10, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: k.q - k.p }),
+};
+
+/** EXP5: 指数の置き換え（2次化）——学習者系列 algebra2_exp_quadratic_01 */
+const EXP5: PatternSpec = {
+  id: "EXP5",
+  unit: "algebra_2",
+  naturalLanguage: "指数の置き換え（2次化）",
+  formulaTemplate: "t = a^x, t^2 + bt + c = 0（t > 0）",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "b", role: "t の係数", unknown: false, domain: { kind: "integer", min: -10, max: 10 } },
+    { name: "c", role: "定数項", unknown: false, domain: { kind: "integer", min: -20, max: 20 } },
+    { name: "result", role: "解・境界・最値", unknown: true, domain: { kind: "decimal", min: -100, max: 1000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: k.c }),
+};
+
+/** LOG_DEF: 対数の定義と値——学習者系列 algebra2_log_def_01 */
+const LOG_DEF: PatternSpec = {
+  id: "LOG_DEF",
+  unit: "algebra_2",
+  naturalLanguage: "対数の定義 log_a(M) の値",
+  formulaTemplate: "a^r = M ↔ log_a(M) = r（M > 0, a > 0, a ≠ 1）",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "M", role: "真数", unknown: false, domain: { kind: "decimal", min: 0.01, max: 10000 } },
+    { name: "result", role: "対数の値または真数", unknown: true, domain: { kind: "decimal", min: -10, max: 10 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: Math.log(k.M) / Math.log(k.a) }),
+};
+
+/** LOG_LAWS: 対数法則と底の変換——学習者系列 algebra2_log_laws_01 */
+const LOG_LAWS: PatternSpec = {
+  id: "LOG_LAWS",
+  unit: "algebra_2",
+  naturalLanguage: "対数法則と底の変換",
+  formulaTemplate:
+    "log_a(MN)=log_a M+log_a N, log_a(M/N)=log_a M−log_a N, log_a(M^r)=r log_a M, log_b x=log_a x/log_a b",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 2, max: 10 } },
+    { name: "M", role: "真数", unknown: false, domain: { kind: "decimal", min: 0.01, max: 10000 } },
+    { name: "result", role: "対数の値・係数・真数", unknown: true, domain: { kind: "decimal", min: -10, max: 10000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: Math.log(k.M) / Math.log(k.a) }),
+};
+
+/** LOG_GRAPH: 対数関数のグラフと単調性——学習者系列 algebra2_log_graph_01 */
+const LOG_GRAPH: PatternSpec = {
+  id: "LOG_GRAPH",
+  unit: "algebra_2",
+  naturalLanguage: "対数関数 y=log_a x のグラフ・単調性・変域の最大最小",
+  formulaTemplate: "y = log_a x（x > 0, a > 0, a ≠ 1）",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "M", role: "真数（x）", unknown: false, domain: { kind: "decimal", min: 0.01, max: 10000 } },
+    { name: "result", role: "対数の値・最大最小・存在可否", unknown: true, domain: { kind: "decimal", min: -10, max: 10000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: Math.log(k.M) / Math.log(k.a) }),
+};
+
+/** LOG_EQ: 対数方程式・不等式（真数条件）——学習者系列 algebra2_log_equation_01 */
+const LOG_EQ: PatternSpec = {
+  id: "LOG_EQ",
+  unit: "algebra_2",
+  naturalLanguage: "対数方程式・不等式（真数条件つき）",
+  formulaTemplate:
+    "log_a M = log_a N ⇔ M = N（M,N>0）; log_a M < k ⇔ M < a^k（a>1）; 0<a<1 なら不等号反転",
+  variables: [
+    { name: "a", role: "底", unknown: false, domain: { kind: "decimal", min: 0.1, max: 10 } },
+    { name: "M", role: "真数", unknown: false, domain: { kind: "decimal", min: 0.01, max: 10000 } },
+    { name: "result", role: "解・境界値・解の個数", unknown: true, domain: { kind: "decimal", min: -10, max: 10000 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({ unknownName: "result", answer: Math.log(k.M) / Math.log(k.a) }),
+};
+
+/** LOG10: 常用対数と桁数——学習者系列 algebra2_common_log_01 */
+const LOG10: PatternSpec = {
+  id: "LOG10",
+  unit: "algebra_2",
+  naturalLanguage: "常用対数と桁数・最高位",
+  formulaTemplate:
+    "log10 N = n + f (0≤f<1); 桁数 = n+1 (N≥1); 最高位 = floor(10^f)",
+  variables: [
+    { name: "N", role: "真数", unknown: false, domain: { kind: "decimal", min: 0.0001, max: 1e15 } },
+    { name: "result", role: "桁数・最高位・整数部分", unknown: true, domain: { kind: "integer", min: -10, max: 20 } },
+  ],
+  difficultyTier: 2,
+  evaluate: (k) => ({
+    unknownName: "result",
+    answer: Math.floor(Math.log10(k.N)) + 1,
+  }),
+};
+
 /** VEC2: ベクトルの大きさ |v| = √(a²+b²)（整数結果ピタゴラス数） */
 const VEC2: PatternSpec = {
   id: "VEC2",
@@ -1410,7 +1537,7 @@ export const ALL_PATTERNS: Record<PatternId, PatternSpec> = {
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
-  G1, G2, EXP1, EXP2, VEC2,
+  G1, G2, EXP1, EXP2, EXP3, EXP4, EXP5, LOG_DEF, LOG_LAWS, LOG_GRAPH, LOG_EQ, LOG10, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,
@@ -1430,7 +1557,7 @@ export const PATTERN_LIST: PatternSpec[] = [
   EL11, EL12, EL13, EL14,
   Q3, Q4, MM1, IT1, VAR1,
   A1, A2, VEC1, DIFF1,
-  G1, G2, EXP1, EXP2, VEC2,
+  G1, G2, EXP1, EXP2, EXP3, EXP4, EXP5, LOG_DEF, LOG_LAWS, LOG_GRAPH, LOG_EQ, LOG10, VEC2,
   VV1, GR1, GR2, GR3, GR4,
   LN1, LN2, LN3, LN5, LN6, LN7, LN8,
   CR1, NL1, CR2, CR3,

@@ -24,12 +24,19 @@ import {
   ALGEBRA2_DOT_SERIES,
   ALGEBRA2_GEO_NTH_SERIES,
   ALGEBRA2_GEO_SUM_SERIES,
-  ALGEBRA2_LOG_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
   EXP_LOG_SERIES_LIST,
+  XEL_EXP_EQUATION_SERIES,
   XEL_EXP_EXTEND_SERIES,
+  XEL_EXP_GRAPH_SERIES,
+  XEL_EXP_QUADRATIC_SERIES,
+  XEL_LOG_DEF_SERIES,
+  XEL_LOG_LAWS_SERIES,
+  XEL_LOG_GRAPH_SERIES,
+  XEL_LOG_EQUATION_SERIES,
+  XEL_COMMON_LOG_SERIES,
 } from "./seriesExpLog";
 import {
   TRIG_ADDITION_SERIES,
@@ -661,8 +668,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "合成 — a sinθ + b cosθ を 1 つの波に。点 (a,b) の長さと向きが振幅と位相。方程式・最大最小まで",
   },
   /* 数Ⅱ: 指数関数・対数関数（背骨 docs/exp_log_series_design.md）
-   * 系列1 実装済。旧 algebra2_exp_01 は SERIES_REDIRECTS へ。
-   * 旧 algebra2_log_01 は系列5 実装までカタログに残す。 */
+   * 系列1〜9 実装済。旧 algebra2_exp_01 / algebra2_log_01 は SERIES_REDIRECTS へ。 */
   {
     series: XEL_EXP_EXTEND_SERIES,
     subject: "secondary2",
@@ -672,11 +678,68 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "指数の拡張 — 法則をコンパスに 0乗・マイナス乗・分数乗へ。同類項の注意まで",
   },
   {
-    series: ALGEBRA2_LOG_SERIES,
+    series: XEL_EXP_GRAPH_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "指数関数・対数関数",
-    shortDescription: "対数の入り口 — log_b v の計算（系列5 で置き換え予定）",
+    shortDescription:
+      "指数関数のグラフ — 底が向きを決める。大小比較・変域の最大最小まで",
+  },
+  {
+    series: XEL_EXP_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "指数方程式・不等式 — 底をそろえて指数を比べる。0<a<1 で向き反転",
+  },
+  {
+    series: XEL_EXP_QUADRATIC_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "指数の置き換え — t=a^x で2次に帰着。t>0 と変域の翻訳",
+  },
+  {
+    series: XEL_LOG_DEF_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "対数の定義と値 — a^x=M の x に名前。真数条件・分数底・逆向き",
+  },
+  {
+    series: XEL_LOG_LAWS_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "対数法則と底の変換 — 指数法則の逆読み。底をそろえる道具",
+  },
+  {
+    series: XEL_LOG_GRAPH_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "対数関数のグラフ — y=a^x を y=x で折り返す。単調性と変域の最大最小",
+  },
+  {
+    series: XEL_LOG_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "対数方程式・不等式 — 真数条件で解を裁く。0<a<1 で向き反転",
+  },
+  {
+    series: XEL_COMMON_LOG_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "指数関数・対数関数",
+    shortDescription:
+      "常用対数と桁数 — 累乗を肩の上の世界へ。桁数・最高位・仮数の規則",
   },
   /* 数Ⅱ: 微分・積分 */
   {
@@ -767,6 +830,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   adv_quad_min_01: "algebra1_quad_minmax_01",
   /* 指数関数・対数関数（背骨 D3）：系列1 へ吸収 */
   algebra2_exp_01: "algebra2_exp_extend_01",
+  /* 指数関数・対数関数（背骨 D3）：系列5 へ吸収 */
+  algebra2_log_01: "algebra2_log_def_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */

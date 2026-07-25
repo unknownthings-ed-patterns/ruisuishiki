@@ -3770,6 +3770,162 @@ export function ExpLogMirror() {
 }
 
 /**
+ * 対数 系列5 Step 5：y=a^x（y>0）と負の水平線が交わらない図。
+ * 真数が負なら対数は定義されない——交点は 0 個。
+ */
+export function LogNegMiss() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warn = "color-mix(in oklch, var(--accent) 70%, red 30%)";
+  const ox = 50;
+  const oy = 160;
+  const scaleX = 36;
+  const scaleY = 22;
+  const pts: string[] = [];
+  for (let i = -1.2; i <= 3.2; i += 0.2) {
+    const y = Math.pow(1.6, i);
+    pts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const negLineY = oy + 28;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="指数関数 y=a^x は y>0 のみ。負の水平線 y=-25 とは交わらない"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="24" x2={ox} y2={oy + 36} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 6} y="32" fontSize="10" fill={muted} textAnchor="end">
+        y
+      </text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <text x="240" y="48" fontSize="11" fill={stroke} fontStyle="italic">
+        y = a^x（y &gt; 0）
+      </text>
+      <line
+        x1="24"
+        y1={negLineY}
+        x2="320"
+        y2={negLineY}
+        stroke={warn}
+        strokeWidth="1.4"
+        strokeDasharray="7,5"
+      />
+      <text x="28" y={negLineY + 16} fontSize="11" fill={warn} fontWeight="600">
+        y = −25
+      </text>
+      <text x="180" y="210" fontSize="11" fill={muted} textAnchor="middle">
+        交点はいくつ？——真数が負なら [対数] は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数法則 系列6 Step 1・5：$x$ 軸の和 ↔ $y$ 軸の積（$y=a^x$ の schematic）。
+ * 答えの数値は書かない。
+ */
+export function LogAxisAdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const ox = 48;
+  const oy = 148;
+  const scaleX = 42;
+  const scaleY = 18;
+  const pts: string[] = [];
+  for (let i = -0.4; i <= 2.6; i += 0.15) {
+    const y = Math.pow(2.2, i);
+    pts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const x1 = ox + 0.6 * scaleX;
+  const x2 = ox + 1.4 * scaleX;
+  const x3 = ox + 2.2 * scaleX;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="y=a^x の x 軸の和が y 軸の積に対応する schematic。値は書かない"
+    >
+      <line x1="24" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="28" x2={ox} y2={oy + 28} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 6} y="36" fontSize="10" fill={muted} textAnchor="end">
+        y
+      </text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <text x="250" y="44" fontSize="11" fill={stroke} fontStyle="italic">
+        y = a^x
+      </text>
+
+      <line x1={x1} y1={oy + 6} x2={x2} y2={oy + 6} stroke={accent} strokeWidth="2" />
+      <line x1={x2} y1={oy + 6} x2={x3} y2={oy + 6} stroke={accent} strokeWidth="2" strokeDasharray="5,3" />
+      <text x={(x1 + x3) / 2} y={oy + 24} fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        x 軸：p + q
+      </text>
+
+      <rect x={x1 - 8} y={oy - 52} width={x3 - x1 + 16} height="36" rx="6" fill={fillColor} stroke={muted} strokeWidth="0.8" />
+      <text x={(x1 + x3) / 2} y={oy - 30} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">
+        y 軸：M · N
+      </text>
+
+      <text x="180" y="210" fontSize="11" fill={muted} textAnchor="middle">
+        [対数] の外側の和 ↔ 真数の中の積——指数法則の逆読み？
+      </text>
+      <text x="180" y="230" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        底をそろえた [対数] の和は、何を指している？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数法則 系列6 Step 9：底が異なる log が並ぶ式（値は書かない）。
+ */
+export function LogBaseMix() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const boxFill = "color-mix(in oklch, var(--surface) 80%, var(--accent) 20%)";
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が異なる対数の積。値は書かない"
+    >
+      <rect x="40" y="48" width="280" height="88" rx="8" fill={boxFill} stroke={stroke} strokeWidth="1" />
+      <text x="180" y="88" fontSize="22" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        log₅ M · log₇ N
+      </text>
+      <text x="180" y="118" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        底 5 と底 7——[対数法則] だけではそろわない
+      </text>
+
+      <line x1="100" y1="160" x2="260" y2="160" stroke={accent} strokeWidth="1.2" strokeDasharray="6,4" />
+      <text x="180" y="182" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        [底の変換公式] で底を 1 つに？
+      </text>
+      <text x="180" y="204" fontSize="11" fill={muted} textAnchor="middle">
+        底がバラバラの積——変換なしでは法則が使えない
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 点と直線の距離 Step 1 の足場図：直線 3x-4y-9=0 と点 (1, 6) の配置。
  * 答え（距離）も垂線も描かない、配置だけ。
  */
@@ -8178,6 +8334,853 @@ export function ExpLikeTerms() {
 }
 
 /**
+ * 指数関数 系列2 Step 1：a>1 の曲線＋(0,1) だけ印。
+ * 問う y の数値は書かない。
+ */
+export function ExpGraphInc() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 50;
+  const oy = 180;
+  const scaleX = 38;
+  const scaleY = 28;
+  const pts: string[] = [];
+  for (let i = -2; i <= 3; i += 0.25) {
+    const y = Math.pow(1.6, i);
+    const sx = ox + i * scaleX;
+    const sy = oy - y * scaleY;
+    pts.push(`${sx.toFixed(1)},${sy.toFixed(1)}`);
+  }
+  const p01x = ox;
+  const p01y = oy - 1 * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が1より大きい指数関数の曲線。原点側の通る点の y は問いで終える"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="20" x2={ox} y2={oy + 16} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 14} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 8} y="28" fontSize="10" fill={muted} textAnchor="end">
+        y
+      </text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <line
+        x1={p01x}
+        y1={oy}
+        x2={p01x}
+        y2={p01y}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="4,3"
+      />
+      <circle cx={p01x} cy={p01y} r="5" fill={accent} />
+      <text x={p01x + 10} y={p01y - 8} fontSize="11" fill={accent} fontWeight="600">
+        (0, ?)
+      </text>
+      <text x="180" y="212" fontSize="11" fill={muted} textAnchor="middle">
+        a &gt; 1 — 右へ行くほど y は大きい
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数関数 系列2 Step 5：増加／減少の2曲線。
+ * 大小の答えは書かない。
+ */
+export function ExpGraphBoth() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dec = "color-mix(in oklch, var(--foreground) 55%, transparent)";
+  const ox = 180;
+  const oy = 190;
+  const scaleX = 32;
+  const scaleY = 26;
+  const incPts: string[] = [];
+  const decPts: string[] = [];
+  for (let i = -2; i <= 2; i += 0.2) {
+    const yInc = Math.pow(1.55, i);
+    const yDec = Math.pow(0.65, i);
+    incPts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - yInc * scaleY).toFixed(1)}`);
+    decPts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - yDec * scaleY).toFixed(1)}`);
+  }
+  const p01y = oy - scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が1より大きい曲線と0と1のあいだの曲線。どちらが増えるか問いで終える"
+    >
+      <line x1="20" y1={oy} x2="340" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="24" x2={ox} y2={oy + 12} stroke={muted} strokeWidth="0.8" />
+      <polyline points={incPts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <polyline points={decPts.join(" ")} fill="none" stroke={dec} strokeWidth="1.7" strokeDasharray="6,4" />
+      <circle cx={ox} cy={p01y} r="4.5" fill={accent} />
+      <text x="300" y="56" fontSize="11" fill={stroke}>
+        a &gt; 1
+      </text>
+      <text x="300" y="72" fontSize="11" fill={dec}>
+        0 &lt; a &lt; 1
+      </text>
+      <path d="M 248 88 L 278 68" fill="none" stroke={stroke} strokeWidth="1" markerEnd="url(#expBothArrow)" />
+      <path d="M 248 108 L 218 88" fill="none" stroke={dec} strokeWidth="1" />
+      <defs>
+        <marker id="expBothArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill={stroke} />
+        </marker>
+      </defs>
+      <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
+        どちらが右へ行くほど y が大きくなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数関数 系列2 Step 9：変域付き曲線（端だけ示唆）。
+ * 最大／最小の値は書かない。
+ */
+export function ExpGraphDomain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const ox = 60;
+  const oy = 190;
+  const scaleX = 42;
+  const scaleY = 32;
+  const x0 = 0;
+  const x1 = 3;
+  const pts: string[] = [];
+  for (let i = x0; i <= x1; i += 0.15) {
+    const y = Math.pow(0.4, i);
+    pts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const leftX = ox + x0 * scaleX;
+  const rightX = ox + x1 * scaleX;
+  const leftY = oy - Math.pow(0.4, x0) * scaleY;
+  const rightY = oy - Math.pow(0.4, x1) * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="変域付きの減少する指数関数。最大をとる端は問いで終える"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox - 8} y1="24" x2={ox - 8} y2={oy + 12} stroke={muted} strokeWidth="0.8" />
+      <rect
+        x={leftX}
+        y="36"
+        width={rightX - leftX}
+        height={oy - 36}
+        fill={fillColor}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="5,4"
+        rx="4"
+      />
+      <line x1={leftX} y1="36" x2={leftX} y2={oy} stroke={accent} strokeWidth="1.2" />
+      <line x1={rightX} y1="36" x2={rightX} y2={oy} stroke={accent} strokeWidth="1.2" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx={leftX} cy={leftY} r="5" fill={accent} />
+      <circle cx={rightX} cy={rightY} r="4" fill={muted} />
+      <text x={leftX} y={oy + 16} fontSize="10" fill={accent} textAnchor="middle">
+        左端
+      </text>
+      <text x={rightX} y={oy + 16} fontSize="10" fill={muted} textAnchor="middle">
+        右端
+      </text>
+      <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
+        0 ≤ x ≤ 3 — 最大はどちらの端？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数関数 系列7 Step 1・5：y=a^x / y=log_a x / y=x の折り返し。
+ * 通る点の座標（答え）は書かない。
+ */
+export function LogGraphReflect() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dec = "color-mix(in oklch, var(--foreground) 55%, transparent)";
+  const ox = 52;
+  const oy = 188;
+  const scaleX = 34;
+  const scaleY = 22;
+  const base = 1.55;
+  const expPts: string[] = [];
+  const logPts: string[] = [];
+  for (let i = -0.8; i <= 2.4; i += 0.15) {
+    const y = Math.pow(base, i);
+    expPts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  for (let x = 0.35; x <= 3.6; x += 0.12) {
+    const y = Math.log(x) / Math.log(base);
+    logPts.push(`${(ox + x * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const mirrorPts = [
+    `${ox},${oy}`,
+    `${ox + 2.8 * scaleX},${oy - 2.8 * scaleY}`,
+  ].join(" ");
+  const p1x = ox + 1 * scaleX;
+  const p1y = oy - 0 * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="y=a^x と y=log_a x が y=x で折り返し合う。x=1 の y は問いで終える"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="24" x2={ox} y2={oy + 14} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 6} y="32" fontSize="10" fill={muted} textAnchor="end">
+        y
+      </text>
+      <polyline points={mirrorPts} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="5,4" />
+      <text x={ox + 2.6 * scaleX - 8} y={oy - 2.6 * scaleY - 6} fontSize="10" fill={muted} fontStyle="italic">
+        y = x
+      </text>
+      <polyline points={expPts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <polyline points={logPts.join(" ")} fill="none" stroke={accent} strokeWidth="1.7" />
+      <text x="248" y="44" fontSize="11" fill={stroke} fontStyle="italic">
+        y = a^x
+      </text>
+      <text x="248" y="62" fontSize="11" fill={accent} fontStyle="italic">
+        y = log_a x
+      </text>
+      <line x1={p1x} y1={oy} x2={p1x} y2={p1y - 10} stroke={dec} strokeWidth="1" strokeDasharray="4,3" />
+      <circle cx={p1x} cy={p1y} r="5" fill={accent} />
+      <text x={p1x + 10} y={p1y - 12} fontSize="11" fill={accent} fontWeight="600">
+        (1, ?)
+      </text>
+      <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
+        指数のグラフを y = x で折り返すと——[対数関数]？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数関数 系列7 Step 9：底 0<a<1 の減少曲線（値ラベルなし）。
+ * 真数の大小をそのまま使うと落とす——向きを疑う問いで終える。
+ */
+export function LogGraphDec() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const ox = 58;
+  const oy = 188;
+  const scaleX = 44;
+  const scaleY = 28;
+  const base = 0.4;
+  const x0 = 1;
+  const x1 = 3;
+  const pts: string[] = [];
+  for (let x = x0; x <= x1; x += 0.12) {
+    const y = Math.log(x) / Math.log(base);
+    pts.push(`${(ox + x * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const leftX = ox + x0 * scaleX;
+  const rightX = ox + x1 * scaleX;
+  const leftY = oy - Math.log(x0) / Math.log(base) * scaleY;
+  const rightY = oy - Math.log(x1) / Math.log(base) * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が1より小さい減少する対数関数。4点の大小は問いで終える"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox - 6} y1="28" x2={ox - 6} y2={oy + 12} stroke={muted} strokeWidth="0.8" />
+      <rect
+        x={leftX}
+        y="36"
+        width={rightX - leftX}
+        height={oy - 36}
+        fill={fillColor}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="5,4"
+        rx="4"
+      />
+      <line x1={leftX} y1="36" x2={leftX} y2={oy} stroke={accent} strokeWidth="1.2" />
+      <line x1={rightX} y1="36" x2={rightX} y2={oy} stroke={muted} strokeWidth="1.2" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx={leftX} cy={leftY} r="5" fill={accent} />
+      <circle cx={rightX} cy={rightY} r="4" fill={muted} />
+      <circle cx={ox + 1.6 * scaleX} cy={oy - (Math.log(1.6) / Math.log(base)) * scaleY} r="3.5" fill={stroke} />
+      <circle cx={ox + 2.2 * scaleX} cy={oy - (Math.log(2.2) / Math.log(base)) * scaleY} r="3.5" fill={stroke} />
+      <text x={leftX} y={oy + 16} fontSize="10" fill={accent} textAnchor="middle">
+        左端
+      </text>
+      <text x={rightX} y={oy + 16} fontSize="10" fill={muted} textAnchor="middle">
+        右端
+      </text>
+      <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
+        0 &lt; a &lt; 1 — 真数が大きいほど [対数] は小さい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数方程式 系列8 Step 1・5：真数条件の数直線（解の値は書かない）。
+ */
+export function LogDomainLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const oy = 120;
+  const xStart = 48;
+  const xEnd = 310;
+  const boundaryX = 110;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="真数条件の数直線。解の境界値は問いで終える"
+    >
+      <line x1={xStart} y1={oy} x2={xEnd} y2={oy} stroke={muted} strokeWidth="1" />
+      <polygon
+        points={`${boundaryX + 8},${oy - 5} ${xEnd - 4},${oy - 5} ${xEnd - 4},${oy + 5} ${boundaryX + 8},${oy + 5}`}
+        fill={fillColor}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="5,4"
+      />
+      <circle cx={boundaryX} cy={oy} r="5" fill="var(--surface)" stroke={accent} strokeWidth="2" />
+      <text x={boundaryX} y={oy + 22} fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        ?
+      </text>
+      <text x={boundaryX + 60} y={oy - 14} fontSize="11" fill={accent} fontWeight="600">
+        定義される x
+      </text>
+      <text x={xStart} y={oy + 22} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x="180" y="168" fontSize="11" fill={muted} textAnchor="middle">
+        log の真数が正——境界はどこ？
+      </text>
+      <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        [真数条件] を先に書かないと何が起きうる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 対数方程式 系列8 Step 9：t=log x と t の許容帯（解の値は書かない）。
+ */
+export function LogTBand() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 58;
+  const oy = 200;
+  const scaleX = 34;
+  const scaleY = 22;
+  const logPts: string[] = [];
+  for (let x = 0.35; x <= 3.2; x += 0.12) {
+    const t = Math.log(x) / Math.log(5);
+    logPts.push(`${(ox + x * scaleX).toFixed(1)},${(oy - (t + 2.5) * scaleY).toFixed(1)}`);
+  }
+  const bandTop = oy - 1.2 * scaleY;
+  const bandBot = oy - 2.8 * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="t=log x のグラフと t の許容帯。解の x は問いで終える"
+    >
+      <line x1="24" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox - 8} y1="28" x2={ox - 8} y2={oy + 10} stroke={muted} strokeWidth="0.8" />
+      <text x="318" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 14} y="36" fontSize="10" fill={muted} textAnchor="end">
+        t
+      </text>
+      <polyline points={logPts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <text x="248" y="48" fontSize="11" fill={stroke} fontStyle="italic">
+        t = log x
+      </text>
+      <rect
+        x={ox + 0.8 * scaleX}
+        y={bandBot}
+        width={2.4 * scaleX}
+        height={bandTop - bandBot}
+        fill="color-mix(in oklch, var(--accent) 12%, transparent)"
+        stroke={accent}
+        strokeWidth="0.8"
+        strokeDasharray="5,4"
+        rx="2"
+      />
+      <text x={ox + 2 * scaleX} y={bandBot - 8} fontSize="10" fill={accent} textAnchor="middle">
+        t の許容帯？
+      </text>
+      <line x1={ox} y1={oy - 0.2 * scaleY} x2="300" y2={oy - 0.2 * scaleY} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+      <text x="302" y={oy - 0.2 * scaleY - 4} fontSize="10" fill={accent}>
+        x &gt; 0
+      </text>
+      <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
+        2次を解いたあと——[真数条件] で残る x は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 常用対数 系列9 Step 1：$1.2\times10^k$ 型の桁が伸びる表（問う桁数は空欄）。
+ */
+export function SciNotationDigits() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const headerFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const rows = [
+    { k: "1", sample: "1.2 × 10¹", digits: "2" },
+    { k: "3", sample: "1.2 × 10³", digits: "4" },
+    { k: "6", sample: "1.2 × 10⁶", digits: "?" },
+  ];
+  const rowH = 36;
+  const tableTop = 52;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="科学記数法 1.2×10^k の桁数が n とどう対応するか。問う桁数は空欄"
+    >
+      <rect x="32" y={tableTop - 28} width="296" height="24" rx="4" fill={headerFill} stroke={muted} strokeWidth="0.8" />
+      <text x="180" y={tableTop - 12} fontSize="11" fill={stroke} textAnchor="middle" fontWeight="600">
+        $1 \\le A &lt; 10$ のとき $A \\times 10^n$ の [桁数]
+      </text>
+      {rows.map((row, i) => {
+        const y = tableTop + i * rowH;
+        return (
+          <g key={row.k}>
+            <rect x="32" y={y} width="296" height={rowH - 4} rx="4" fill="var(--surface)" stroke={muted} strokeWidth="0.8" />
+            <text x="52" y={y + 22} fontSize="12" fill={stroke} fontStyle="italic">
+              {row.sample}
+            </text>
+            <text x="268" y={y + 22} fontSize="13" fill={row.digits === "?" ? accent : muted} textAnchor="middle" fontWeight={row.digits === "?" ? 700 : 500}>
+              {row.digits} 桁
+            </text>
+            {i < rows.length - 1 && (
+              <text x="180" y={y + rowH + 2} fontSize="10" fill={accent} textAnchor="middle">
+                ↓ n が 1 増えると…
+              </text>
+            )}
+          </g>
+        );
+      })}
+      <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
+        肩の上 $n$ と [桁数] の関係——$n$ か $n+1$ か？
+      </text>
+      <text x="180" y="214" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        具体の $A \\times 10^n$ で確かめてみよう
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 常用対数 系列9 Step 5・9：元の世界（累乗）↔ 肩の上の世界（和）。
+ * 最終の $A\times10^n$ や桁数は書かない。
+ */
+export function Log10Shoulder() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const leftFill = "color-mix(in oklch, var(--surface) 85%, var(--foreground) 15%)";
+  const rightFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="累乗の世界と常用対数の肩の上の世界。桁数は問いで終える"
+    >
+      <rect x="24" y="36" width="130" height="120" rx="8" fill={leftFill} stroke={stroke} strokeWidth="1" />
+      <text x="89" y="58" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        元の世界
+      </text>
+      <text x="89" y="88" fontSize="18" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        2^30
+      </text>
+      <text x="89" y="112" fontSize="11" fill={muted} textAnchor="middle">
+        巨大な累乗
+      </text>
+      <text x="89" y="132" fontSize="10" fill={muted} textAnchor="middle">
+        かけ算が重なる
+      </text>
+
+      <path
+        d="M 168 96 L 192 96"
+        stroke={accent}
+        strokeWidth="2"
+        markerEnd="url(#log10Arrow)"
+      />
+      <defs>
+        <marker id="log10Arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="var(--accent)" />
+        </marker>
+      </defs>
+      <text x="180" y="84" fontSize="10" fill={accent} textAnchor="middle" fontWeight="600">
+        log₁₀
+      </text>
+      <text x="180" y="118" fontSize="10" fill={accent} textAnchor="middle">
+        翻訳
+      </text>
+
+      <rect x="206" y="36" width="130" height="120" rx="8" fill={rightFill} stroke={accent} strokeWidth="1.2" />
+      <text x="271" y="58" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        肩の上の世界
+      </text>
+      <text x="271" y="88" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic" fontWeight="600">
+        30 × log₁₀ 2
+      </text>
+      <text x="271" y="112" fontSize="11" fill={muted} textAnchor="middle">
+        かけ算 → 足し算
+      </text>
+      <text x="271" y="132" fontSize="10" fill={muted} textAnchor="middle">
+        整数部分 + 仮数
+      </text>
+
+      <rect x="48" y="172" width="264" height="56" rx="6" fill="color-mix(in oklch, var(--accent) 8%, transparent)" stroke={muted} strokeWidth="0.8" strokeDasharray="5,4" />
+      <text x="180" y="194" fontSize="11" fill={stroke} textAnchor="middle">
+        仮数を $0 \\le$ 仮数 $&lt; 1$ に揃えると…
+      </text>
+      <text x="180" y="214" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
+        [桁数] と最高位が同時に読める？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数方程式 系列3 Step 1：a>1 の曲線＋水平線。
+ * 交点の x は書かない。
+ */
+export function ExpEqLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 50;
+  const oy = 190;
+  const scaleX = 36;
+  const scaleY = 24;
+  const pts: string[] = [];
+  for (let i = -1.5; i <= 3.2; i += 0.2) {
+    const y = Math.pow(1.55, i);
+    pts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const lineY = oy - 3.2 * scaleY;
+  const meetX = ox + 2 * scaleX;
+  const meetY = oy - Math.pow(1.55, 2) * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が1より大きい指数関数と水平線。交点のxは問いで終える"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="24" x2={ox} y2={oy + 14} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 6} y="32" fontSize="10" fill={muted} textAnchor="end">
+        y
+      </text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <line
+        x1="24"
+        y1={lineY}
+        x2="320"
+        y2={lineY}
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="7,5"
+      />
+      <text x="28" y={lineY - 8} fontSize="11" fill={accent} fontWeight="600">
+        y = M
+      </text>
+      <circle cx={meetX} cy={meetY} r="5.5" fill={accent} />
+      <line
+        x1={meetX}
+        y1={meetY}
+        x2={meetX}
+        y2={oy}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="4,3"
+      />
+      <text x={meetX + 8} y={meetY - 10} fontSize="11" fill={accent} fontWeight="600">
+        交点（x = ?）
+      </text>
+      <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
+        水平線は曲線と何回交わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数不等式 系列3 Step 8：減少曲線＋不等号の向き反転。
+ * 境界の値は書かない。
+ */
+export function ExpIneqFlip() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dec = "color-mix(in oklch, var(--foreground) 60%, transparent)";
+  const ox = 60;
+  const oy = 190;
+  const scaleX = 38;
+  const scaleY = 28;
+  const pts: string[] = [];
+  for (let i = -1; i <= 3.5; i += 0.2) {
+    const y = Math.pow(0.55, i);
+    pts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const boundX = ox + 2.2 * scaleX;
+  const boundY = oy - Math.pow(0.55, 2.2) * scaleY;
+  const hY = boundY;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="減少する指数関数と水平境界。不等号の向き反転を矢印で示す。境界の値は書かない"
+    >
+      <line x1="20" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox - 6} y1="24" x2={ox - 6} y2={oy + 12} stroke={muted} strokeWidth="0.8" />
+      <polyline points={pts.join(" ")} fill="none" stroke={dec} strokeWidth="1.8" />
+      <line x1="24" y1={hY} x2="310" y2={hY} stroke={accent} strokeWidth="1.3" strokeDasharray="6,4" />
+      <text x="28" y={hY - 8} fontSize="11" fill={accent}>
+        境界 y = ?
+      </text>
+      <line x1={boundX} y1={boundY} x2={boundX} y2={oy} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+      <circle cx={boundX} cy={boundY} r="5" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="248" y="52" fontSize="11" fill={dec}>
+        0 &lt; a &lt; 1 — 右へ行くほど y は小さい
+      </text>
+      <path d="M 200 78 L 230 58" fill="none" stroke={stroke} strokeWidth="1.2" markerEnd="url(#expIneqInc)" />
+      <text x="236" y="56" fontSize="10" fill={stroke}>
+        a &gt; 1
+      </text>
+      <text x="236" y="70" fontSize="10" fill={stroke}>
+        p &lt; q ⇒ x &lt; ?
+      </text>
+      <path d="M 200 98 L 170 118" fill="none" stroke={dec} strokeWidth="1.2" markerEnd="url(#expIneqDec)" />
+      <text x="118" y="132" fontSize="10" fill={dec}>
+        0 &lt; a &lt; 1
+      </text>
+      <text x="118" y="146" fontSize="10" fill={dec}>
+        p &lt; q ⇒ x &gt; ?（反転）
+      </text>
+      <defs>
+        <marker id="expIneqInc" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill={stroke} />
+        </marker>
+        <marker id="expIneqDec" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill={dec} />
+        </marker>
+      </defs>
+      <text x="180" y="232" fontSize="11" fill={muted} textAnchor="middle">
+        底が 1 より小さいと、不等号だけ裏返る
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数の置き換え 系列4 Step 1・5：$t=a^x$ の曲線と正の $t$ 軸。
+ * 具体解・境界値は書かない。
+ */
+export function ExpTPos() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dec = "color-mix(in oklch, var(--foreground) 55%, transparent)";
+  const ox = 58;
+  const oy = 200;
+  const scaleX = 34;
+  const scaleY = 22;
+  const incPts: string[] = [];
+  for (let i = -1.2; i <= 2.8; i += 0.18) {
+    const t = Math.pow(1.6, i);
+    incPts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - t * scaleY).toFixed(1)}`);
+  }
+  const decPts: string[] = [];
+  for (let i = -1.2; i <= 2.8; i += 0.18) {
+    const t = Math.pow(0.62, i);
+    decPts.push(`${(ox + i * scaleX).toFixed(1)},${(oy - t * scaleY).toFixed(1)}`);
+  }
+  const bandTop = oy - 5 * scaleY;
+  const bandBot = oy - 1 * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="t=a^x の曲線と正の t 軸。具体解は問いで終える"
+    >
+      <line x1="24" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox - 8} y1="28" x2={ox - 8} y2={oy + 10} stroke={muted} strokeWidth="0.8" />
+      <text x="318" y={oy + 12} fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x={ox - 14} y="36" fontSize="10" fill={muted} textAnchor="end">
+        t
+      </text>
+      <rect
+        x={ox - 4}
+        y={bandTop}
+        width={2.8 * scaleX + 8}
+        height={bandBot - bandTop}
+        fill="color-mix(in oklch, var(--accent) 12%, transparent)"
+        stroke={accent}
+        strokeWidth="0.8"
+        strokeDasharray="5,4"
+        rx="2"
+      />
+      <text x={ox + scaleX + 6} y={bandTop + 14} fontSize="10" fill={accent}>
+        t の許容帯？
+      </text>
+      <polyline points={incPts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <polyline points={decPts.join(" ")} fill="none" stroke={dec} strokeWidth="1.4" strokeDasharray="6,4" />
+      <text x="248" y="52" fontSize="10" fill={stroke}>
+        a &gt; 1 — t は x と同じ向き
+      </text>
+      <text x="248" y="68" fontSize="10" fill={dec}>
+        0 &lt; a &lt; 1 — t は x と逆
+      </text>
+      <line x1={ox} y1={oy - 0.3 * scaleY} x2="300" y2={oy - 0.3 * scaleY} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+      <text x="302" y={oy - 0.3 * scaleY - 4} fontSize="10" fill={accent}>
+        t &gt; 0
+      </text>
+      <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
+        t = a^x — 正の t だけが x に戻せる
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 指数の置き換え 系列4 Step 9：変域付き放物線 f(t)=t²−6t+5。
+ * 頂点の y 座標は問いに残す。
+ */
+export function ExpTParabola() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 52;
+  const oy = 210;
+  const scaleT = 11;
+  const scaleY = 3.2;
+  const parPts: string[] = [];
+  for (let t = 0; t <= 28; t += 0.4) {
+    const y = t * t - 6 * t + 5;
+    parPts.push(`${(ox + t * scaleT).toFixed(1)},${(oy - y * scaleY).toFixed(1)}`);
+  }
+  const tMin = 1;
+  const tMax = 25;
+  const vx = ox + 3 * scaleT;
+  const vy = oy - (-4) * scaleY;
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="t の変域付き放物線。頂点の y は問いで終える"
+    >
+      <line x1="28" y1={oy} x2="330" y2={oy} stroke={muted} strokeWidth="0.8" />
+      <line x1={ox} y1="24" x2={ox} y2={oy + 8} stroke={muted} strokeWidth="0.8" />
+      <text x="322" y={oy + 12} fontSize="10" fill={muted}>
+        t
+      </text>
+      <text x={ox - 6} y="32" fontSize="10" fill={muted} textAnchor="end">
+        f(t)
+      </text>
+      <polyline points={parPts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+      <line
+        x1={ox + tMin * scaleT}
+        y1={oy - 2}
+        x2={ox + tMin * scaleT}
+        y2={oy + 6}
+        stroke={accent}
+        strokeWidth="1.4"
+      />
+      <line
+        x1={ox + tMax * scaleT}
+        y1={oy - 2}
+        x2={ox + tMax * scaleT}
+        y2={oy + 6}
+        stroke={accent}
+        strokeWidth="1.4"
+      />
+      <line
+        x1={ox + tMin * scaleT}
+        y1={oy + 4}
+        x2={ox + tMax * scaleT}
+        y2={oy + 4}
+        stroke={accent}
+        strokeWidth="2.2"
+      />
+      <text x={ox + tMin * scaleT - 4} y={oy + 18} fontSize="10" fill={accent} textAnchor="middle">
+        t = ?
+      </text>
+      <text x={ox + tMax * scaleT + 4} y={oy + 18} fontSize="10" fill={accent} textAnchor="middle">
+        t = ?
+      </text>
+      <circle cx={vx} cy={vy} r="5" fill="none" stroke={accent} strokeWidth="1.6" />
+      <line x1={vx} y1={vy} x2={vx} y2={oy} stroke={accent} strokeWidth="1" strokeDasharray="4,3" />
+      <text x={vx + 8} y={vy - 8} fontSize="11" fill={accent} fontWeight="600">
+        頂点（y = ?）
+      </text>
+      <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
+        変域内で頂点は使える？ 端点との大小は？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 数と式 系列3 Step 1：分配の「軸足」を移す矢印図。
  * どの項とどの項をかけるかを矢印で示すだけ。積の結果は書かない。
  */
@@ -9802,6 +10805,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<LOG_NEG_MISS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogNegMiss />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_AXIS_ADD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogAxisAdd />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_BASE_MIX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogBaseMix />
+            </div>
+          );
+        }
         if (trimmed === "<<NUMLINE_DIST>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -10212,6 +11236,97 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <ExpLikeTerms />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_GRAPH_INC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpGraphInc />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_GRAPH_BOTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpGraphBoth />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_GRAPH_DOMAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpGraphDomain />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_GRAPH_REFLECT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogGraphReflect />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_GRAPH_DEC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogGraphDec />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_DOMAIN_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogDomainLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_T_BAND>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogTBand />
+            </div>
+          );
+        }
+        if (trimmed === "<<SCI_NOTATION_DIGITS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SciNotationDigits />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG10_SHOULDER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <Log10Shoulder />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_EQ_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpEqLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_INEQ_FLIP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpIneqFlip />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_T_POS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpTPos />
+            </div>
+          );
+        }
+        if (trimmed === "<<EXP_T_PARABOLA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ExpTParabola />
             </div>
           );
         }

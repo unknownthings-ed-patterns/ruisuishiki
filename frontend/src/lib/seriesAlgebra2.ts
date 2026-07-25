@@ -1046,7 +1046,7 @@ $$\\hat{v} = \\frac{\\vec{v}}{|\\vec{v}|}$$
 };
 
 export const ALGEBRA_2_SERIES_LIST: LearnerSeries[] = [
-  ALGEBRA2_LOG_SERIES,
+  /* ALGEBRA2_LOG_SERIES は seriesExpLog.ts の algebra2_log_def_01 へ吸収（カタログ外） */
   ALGEBRA2_ARITH_NTH_SERIES,
   ALGEBRA2_ARITH_SUM_SERIES,
   ALGEBRA2_GEO_NTH_SERIES,
