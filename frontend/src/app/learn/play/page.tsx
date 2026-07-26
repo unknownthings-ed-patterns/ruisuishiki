@@ -821,13 +821,25 @@ export default function Play() {
           </section>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Link
-              href={`/learn/play/?seriesId=${series.id}&fresh=1`}
+            {/* アプリ内でリセット（画面遷移しないので、同一ページのクライアント遷移でも
+                マウント時 useEffect に頼らず確実にやり直せる）。俳句側と同型。 */}
+            <button
+              type="button"
+              onClick={() => {
+                clearSeriesHistory(series.id);
+                setStepIndex(0);
+                setUserAnswer("");
+                setAttempts(0);
+                setHintsOpened(0);
+                setShowingDerivation(false);
+                setShowQualRevelation(false);
+                setStatus("answering");
+              }}
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
               style={{ letterSpacing: "0.2em" }}
             >
               もう一度
-            </Link>
+            </button>
             <Link
               href="/learn/"
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
