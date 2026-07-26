@@ -6711,72 +6711,31 @@ export function TangentScale() {
 }
 
 /**
- * 三角比系列1 step1：現場の大直角三角形とノートの小直角三角形（相似）。
- * 答えの長さは書かず「同じなのは何？」で終える。
+ * 三角比系列1 step1：現場の川幅測量とノートの相似三角形。
+ * 教科書風の簡単な場面図。川幅＝直角三角形の「たて」の対応を見せる。
+ * 答えの長さ・完成した比・原典の 10m/68° は書かない。
  */
 export function TrigSimilarMeasure() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
+  const water =
+    "color-mix(in oklch, var(--background) 78%, var(--accent) 22%)";
   const fill =
     "color-mix(in oklch, var(--accent) 7%, transparent)";
+  const leaf =
+    "color-mix(in oklch, var(--accent) 35%, var(--foreground) 10%)";
+  // 現場: A=目印(向こう岸) B=直角(手前岸) C=歩いた地点
+  // AB が川幅（三角形のたて）、BC が歩いた辺（よこ）
+  const spiralYs = [58, 78, 98, 118, 138, 158];
   return (
     <svg
-      viewBox="0 0 460 240"
+      viewBox="0 0 480 280"
       className="w-full h-auto"
-      style={{ maxWidth: 460 }}
+      style={{ maxWidth: 480 }}
       role="img"
-      aria-label="相似な大小の直角三角形。角が同じとき、同じなのは辺の長さか比か？"
+      aria-label="川幅を測る現場の直角三角形と、同じ角のノートの小さな三角形。川幅は三角形のたてに対応する。長さの答えは書かない"
     >
-      {/* 大三角形 */}
-      <polygon
-        points="40,200 200,200 40,60"
-        fill={fill}
-        stroke={stroke}
-        strokeWidth="1.6"
-      />
-      <polyline
-        points="40,192 48,192 48,200"
-        fill="none"
-        stroke={stroke}
-        strokeWidth="1"
-      />
-      <path
-        d="M 180,200 A 20,20 0 0,0 188.5,185"
-        fill="none"
-        stroke={accent}
-        strokeWidth="1.3"
-      />
-      <text x="168" y="188" fontSize="12" fill={accent} fontStyle="italic">
-        θ
-      </text>
-      <text x="120" y="218" fontSize="11" fill={muted} textAnchor="middle">
-        現場の底辺
-      </text>
-      <text x="28" y="130" fontSize="12" fill={accent} textAnchor="end" fontWeight="600">
-        ?
-      </text>
-      <text x="70" y="50" fontSize="11" fill={muted}>
-        現場
-      </text>
-
-      {/* 矢印 */}
-      <text
-        x="250"
-        y="120"
-        fontSize="12"
-        fill={muted}
-        textAnchor="middle"
-      >
-        同じ角
-      </text>
-      <path
-        d="M 220,140 L 280,140"
-        fill="none"
-        stroke={muted}
-        strokeWidth="1"
-        markerEnd="url(#trigSimArrow)"
-      />
       <defs>
         <marker
           id="trigSimArrow"
@@ -6790,46 +6749,146 @@ export function TrigSimilarMeasure() {
         </marker>
       </defs>
 
-      {/* 小三角形（ノート） */}
-      <rect
-        x="300"
-        y="70"
-        width="140"
-        height="130"
-        rx="4"
-        fill="none"
-        stroke="var(--border)"
-        strokeWidth="1"
-        strokeDasharray="4,3"
-      />
-      <text x="370" y="90" fontSize="10" fill={muted} textAnchor="middle">
-        ノート
+      {/* —— 左：現場 —— */}
+      <text x="130" y="22" fontSize="12" fill={muted} textAnchor="middle">
+        現場
       </text>
+      <rect x="20" y="48" width="220" height="100" fill={water} opacity="0.55" />
+      <line x1="20" y1="48" x2="240" y2="48" stroke="var(--border)" strokeWidth="1" />
+      <line x1="20" y1="148" x2="240" y2="148" stroke="var(--border)" strokeWidth="1" />
+      <text x="230" y="105" fontSize="11" fill={muted} textAnchor="end">
+        川
+      </text>
+
       <polygon
-        points="320,180 400,180 320,110"
+        points="90,48 90,148 200,148"
         fill={fill}
         stroke={stroke}
-        strokeWidth="1.4"
+        strokeWidth="1.5"
       />
       <polyline
-        points="320,172 328,172 328,180"
+        points="90,140 98,140 98,148"
         fill="none"
         stroke={stroke}
         strokeWidth="1"
       />
       <path
-        d="M 385,180 A 14,14 0 0,0 391,170"
+        d="M 182,148 A 18,18 0 0,0 191,132"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="168" y="138" fontSize="13" fill={accent} fontStyle="italic">
+        θ
+      </text>
+
+      <rect
+        x="87"
+        y="30"
+        width="6"
+        height="18"
+        fill="color-mix(in oklch, var(--foreground) 35%, transparent)"
+      />
+      <circle cx="90" cy="22" r="11" fill={leaf} />
+      <circle cx="82" cy="28" r="8" fill={leaf} />
+      <circle cx="98" cy="28" r="8" fill={leaf} />
+      <text x="90" y="14" fontSize="11" fill={muted} textAnchor="middle">
+        A
+      </text>
+
+      <circle cx="200" cy="132" r="4.5" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <line x1="200" y1="136.5" x2="200" y2="148" stroke={stroke} strokeWidth="1.3" />
+      <text x="210" y="162" fontSize="11" fill={muted}>
+        C
+      </text>
+      <text x="78" y="162" fontSize="11" fill={muted} textAnchor="end">
+        B
+      </text>
+
+      <text x="78" y="100" fontSize="11" fill={accent} textAnchor="end" fontWeight="600">
+        ?
+      </text>
+      <text x="78" y="114" fontSize="10" fill={muted} textAnchor="end">
+        川幅
+      </text>
+      <text x="145" y="168" fontSize="10" fill={muted} textAnchor="middle">
+        歩いた
+      </text>
+
+      <text x="268" y="110" fontSize="12" fill={muted} textAnchor="middle">
+        相似
+      </text>
+      <path
+        d="M 248,120 L 288,120"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+        markerEnd="url(#trigSimArrow)"
+      />
+
+      <rect
+        x="300"
+        y="40"
+        width="160"
+        height="150"
+        rx="5"
+        fill="color-mix(in oklch, var(--background) 92%, var(--foreground) 4%)"
+        stroke="var(--border)"
+        strokeWidth="1.2"
+      />
+      <line x1="312" y1="48" x2="312" y2="182" stroke="var(--border)" strokeWidth="1" />
+      {spiralYs.map((y) => (
+        <circle
+          key={y}
+          cx="312"
+          cy={y}
+          r="2.2"
+          fill="none"
+          stroke={muted}
+          strokeWidth="0.9"
+        />
+      ))}
+      <text x="390" y="58" fontSize="11" fill={muted} textAnchor="middle">
+        ノート
+      </text>
+
+      <polygon
+        points="330,160 330,95 400,160"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <polyline
+        points="330,152 338,152 338,160"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1"
+      />
+      <path
+        d="M 386,160 A 14,14 0 0,0 393,148"
         fill="none"
         stroke={accent}
         strokeWidth="1.2"
       />
-      <text x="372" y="172" fontSize="11" fill={accent} fontStyle="italic">
+      <text x="372" y="152" fontSize="12" fill={accent} fontStyle="italic">
         θ
       </text>
+      <text x="318" y="128" fontSize="10" fill={accent} textAnchor="end">
+        川の向き
+      </text>
+      <text x="365" y="176" fontSize="10" fill={muted} textAnchor="middle">
+        歩いた向き
+      </text>
+      <text x="380" y="200" fontSize="10" fill={muted} textAnchor="middle">
+        （ここは測れる）
+      </text>
 
+      <text x="240" y="250" fontSize="12" fill={muted} textAnchor="middle">
+        三角形の「たて」↔ 川幅　「よこ」↔ 歩いた長さ
+      </text>
       <text
-        x="230"
-        y="228"
+        x="240"
+        y="270"
         fontSize="11"
         fill={muted}
         textAnchor="middle"
