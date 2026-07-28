@@ -11002,11 +11002,34 @@ export function LinearSlopeDomain() {
 }
 
 /**
+ * 段落全体が 1 つ以上の $$...$$ ディスプレイ数式だけなら、各ブロックの中身を返す。
+ * 空行なしで $$ が連続したときに貪欲マッチで壊れるのを防ぐ（非貪欲で逐次抽出）。
+ * 数式以外の文字が混ざる段落では null。
+ */
+function extractDisplayMathBlocks(trimmed: string): string[] | null {
+  const re = /\$\$([\s\S]+?)\$\$/g;
+  const blocks: string[] = [];
+  let lastEnd = 0;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(trimmed)) !== null) {
+    if (trimmed.slice(lastEnd, match.index).trim() !== "") {
+      return null;
+    }
+    blocks.push(match[1].trim());
+    lastEnd = match.index + match[0].length;
+  }
+  if (blocks.length === 0) return null;
+  if (trimmed.slice(lastEnd).trim() !== "") return null;
+  return blocks;
+}
+
+/**
  * 複数段落・ディスプレイ数式を含むテキストを KaTeX で描画する。
  *
  * 「公式の景色」のような導出説明用：
  * - 段落は空行で区切る
  * - $$...$$ だけの行は BlockMath（中央寄せのディスプレイ数式）
+ * - 空行なしで $$...$$ が連続しても、各ブロックを個別に描画する
  * - <<PARABOLA_UP>> のような特殊マーカーは対応する図に置き換える
  * - markdown 風の表（| col | col | / |---|---|）は <table> に変換
  * - 段落内の $...$ は InlineMath
@@ -12250,12 +12273,19 @@ export function MathBody({ text }: { text: string }) {
             />
           );
         }
-        // $$...$$ だけの段落は BlockMath
-        const blockMatch = trimmed.match(/^\$\$([\s\S]+)\$\$$/);
-        if (blockMatch) {
+        // $$...$$ だけの段落は BlockMath。
+        // 空行なしで $$...$$ が連続すると 1 段落になるため、
+        // 貪欲マッチだと中間の $$ が数式に混入し KaTeX が赤字エラーになる。
+        // 空白以外がすべて $$...$$ ブロックなら、各ブロックを個別に描画する。
+        const displayBlocks = extractDisplayMathBlocks(trimmed);
+        if (displayBlocks) {
           return (
-            <div key={i} className="my-4">
-              <BlockMath math={blockMatch[1].trim()} />
+            <div key={i}>
+              {displayBlocks.map((math, j) => (
+                <div key={j} className="my-4">
+                  <BlockMath math={math} />
+                </div>
+              ))}
             </div>
           );
         }
