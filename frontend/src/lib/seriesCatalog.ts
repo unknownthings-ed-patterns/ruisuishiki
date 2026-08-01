@@ -56,6 +56,7 @@ import {
   PROB_MULT_SERIES,
   PROB_REPEAT_SERIES,
   PROB_COND_SERIES,
+  PROB_POSTERIOR_SERIES,
 } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
@@ -636,6 +637,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "条件つき確率（情報が全体を縮める）— 情報とは全体の取り替え。戻さない引きの条件つき確率・乗法定理・くじ引きの公平性・独立の判定まで",
+  },
+  {
+    series: PROB_POSTERIOR_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "事後の確率（結果から、原因を問う）— 結果を新しい全体にして原因の道の割合を測る。時系列の逆転・機会が続く紛失・まれな原因の落とし穴・条件の向きの取り違えまで（ベイズの芽）",
   },
   /* 数Ⅰ: 集合と命題 */
   {

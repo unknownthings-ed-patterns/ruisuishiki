@@ -12372,6 +12372,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_POSTERIOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbPosterior />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13750,6 +13757,116 @@ export function ProbShrink() {
       </text>
       <text x="180" y="204" fontSize="12" fill={accent} textAnchor="middle">
         A が起こったと知ったとき、あなたの立っている「全体」はどちら？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 確率 系7 step1・辞書「事後の確率」: 結果の列だけを新しい全体にする面積図（PROB_SHRINK の逆読み）。
+ * 原因A・Bの2本の道が「結果が起こった世界」に流れ込み、その世界だけを新しい全体（分母）に取り替える。
+ * 確率・割合の値は書かない。
+ */
+export function ProbPosterior() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const discardFill = "color-mix(in oklch, var(--muted) 8%, transparent)";
+  const aFill = "color-mix(in oklch, var(--accent) 34%, transparent)";
+  const bFill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  // 左：もとの全体（原因A・Bの2行）。x 20..172, y 46..170
+  const lx = 20;
+  const ly = 46;
+  const lw = 152;
+  const lh = 124;
+  const aRow = 58; // 原因A の行の高さ（上）／残りが原因B の行
+  const aRes = 66; // 原因A の行のうち「結果が起こった」左部分の幅
+  const bRes = 42; // 原因B の行のうち「結果が起こった」左部分の幅
+  // 右：結果が起こった世界だけを取り出して新しい全体にする。x 232..332
+  const rx = 232;
+  const rw = 100;
+  const rTopH = 74; // 新しい全体の中の「原因A経由」の高さ（上）
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左はもとの全体で、上の行が原因A、下の行が原因B。各行の左の濃い部分が『その原因を通って結果が起こった』道で、右のうすい部分は結果が起こらなかった世界。右では、結果が起こった左の2つの部分だけを取り出して積み上げ、新しい全体をつくる——その中で原因A経由が占める割合が事後の確率。確率や割合の値は書かない"
+    >
+      {/* 左：もとの全体（原因A行・原因B行） */}
+      <rect
+        x={lx}
+        y={ly}
+        width={lw}
+        height={lh}
+        rx="6"
+        fill={discardFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      {/* 原因A行の「結果が起こった」道 */}
+      <rect x={lx} y={ly} width={aRes} height={aRow} fill={aFill} stroke={accent} strokeWidth="1.2" />
+      {/* 原因B行の「結果が起こった」道 */}
+      <rect x={lx} y={ly + aRow} width={bRes} height={lh - aRow} fill={bFill} stroke={accent} strokeWidth="1.2" />
+      {/* 行の区切り */}
+      <path d={`M ${lx} ${ly + aRow} L ${lx + lw} ${ly + aRow}`} stroke={stroke} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={lx + aRes / 2} y={ly + aRow / 2 + 4} fontSize="10.5" fill={stroke} textAnchor="middle">
+        A→結果
+      </text>
+      <text x={lx + bRes / 2} y={ly + aRow + (lh - aRow) / 2 + 4} fontSize="10.5" fill={stroke} textAnchor="middle">
+        B→結果
+      </text>
+      <text x={lx + lw - 6} y={ly + 16} fontSize="9.5" fill={muted} textAnchor="end">
+        原因A
+      </text>
+      <text x={lx + lw - 6} y={ly + aRow + 16} fontSize="9.5" fill={muted} textAnchor="end">
+        原因B
+      </text>
+      <text x={lx + aRes + (lw - aRes) / 2} y={ly + aRow / 2 + 4} fontSize="9" fill={muted} textAnchor="middle">
+        結果は
+      </text>
+      <text x={lx + aRes + (lw - aRes) / 2} y={ly + aRow / 2 + 15} fontSize="9" fill={muted} textAnchor="middle">
+        起こらず
+      </text>
+      <text x={lx + lw / 2} y={ly - 10} fontSize="10.5" fill={muted} textAnchor="middle">
+        起こりうるすべて
+      </text>
+      {/* 矢印：結果が起こった部分だけを取り出す */}
+      <path d="M 178 108 L 226 108" stroke={accent} strokeWidth="1.6" />
+      <path d="M 226 108 L 218 103 M 226 108 L 218 113" stroke={accent} strokeWidth="1.6" fill="none" />
+      <text x="202" y="98" fontSize="9.5" fill={accent} textAnchor="middle">
+        結果を知る
+      </text>
+      {/* 取り出しを示す点線 */}
+      <path d={`M ${lx + aRes} ${ly} L ${rx} ${ly}`} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d={`M ${lx + bRes} ${ly + lh} L ${rx} ${ly + lh}`} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      {/* 右：結果が起こった世界だけを新しい全体に */}
+      <rect
+        x={rx}
+        y={ly}
+        width={rw}
+        height={lh}
+        rx="6"
+        fill={bFill}
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <rect x={rx} y={ly} width={rw} height={rTopH} fill={aFill} stroke={accent} strokeWidth="1.2" />
+      <text x={rx + rw / 2} y={ly + rTopH / 2 + 4} fontSize="10" fill={stroke} textAnchor="middle">
+        A 経由
+      </text>
+      <text x={rx + rw / 2} y={ly + rTopH + (lh - rTopH) / 2 + 4} fontSize="10" fill={stroke} textAnchor="middle">
+        B 経由
+      </text>
+      <text x={rx + rw / 2} y={ly - 10} fontSize="10.5" fill={accent} textAnchor="middle">
+        新しい全体
+      </text>
+      <text x={rx + rw / 2} y={ly + lh + 16} fontSize="10" fill={accent} textAnchor="middle">
+        ＝結果が起こった世界
+      </text>
+      <text x="180" y="208" fontSize="12" fill={accent} textAnchor="middle">
+        結果が起こったと知ったとき、新しい「全体」はどの部分？
       </text>
     </svg>
   );
