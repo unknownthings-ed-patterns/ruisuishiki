@@ -46,6 +46,7 @@ import {
   COUNT_REPPERM_SERIES,
   COUNT_COMB_SERIES,
   COUNT_CIRCULAR_SERIES,
+  COUNT_SAMEKIND_SERIES,
 } from "./seriesCounting";
 import { PROB_DEF_SERIES } from "./seriesProbability";
 import {
@@ -562,6 +563,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "円順列 — 回して重なるなら同じ。割り算の道と固定の道・向かい合う・隣り合う・数珠（裏返し）・交互まで",
+  },
+  {
+    series: COUNT_SAMEKIND_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "同じものを含む順列 — 仮の区別をつけて数え、同じもの同士の入れかわりで割る。塊・隣り合わない・左右の順序・組分けまで",
   },
   /* 数Ⅰ・A: 確率 */
   {

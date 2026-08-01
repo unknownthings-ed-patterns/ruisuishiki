@@ -12393,6 +12393,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_SAME_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountSameBundle />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_BLOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountBlock />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_CIRCLE_NUM>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13968,6 +13982,95 @@ export function CountFlipPair() {
       <text x="170" y="88" fontSize="11" fill={accent} textAnchor="middle">裏返すと…</text>
       <text x="170" y="180" fontSize="11" fill={accent} textAnchor="middle">
         この 2 つを「同じ」とみなすなら、さらに何で割る？
+      </text>
+    </svg>
+  );
+}
+
+/** 系9 step1: 番号つきの列が、番号を消すと束になる図（同じものを含む順列）。総数は書かない。 */
+export function CountSameBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const chip = (x: number, y: number, label: string, sub: string, key: string) => (
+    <g key={key}>
+      <rect x={x - 16} y={y - 13} width="32" height="26" rx="5" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x={x - 3} y={y + 5} fontSize="13" fill={stroke} textAnchor="middle">{label}</text>
+      {sub ? (
+        <text x={x + 9} y={y + 8} fontSize="8" fill={muted} textAnchor="middle">{sub}</text>
+      ) : null}
+    </g>
+  );
+  /** 番号つき「か1 か2 い」と「か2 か1 い」が、番号を消すと同じ「かかい」に束なる */
+  const row = (y: number, labels: [string, string][], key: string) => (
+    <g key={key}>
+      {labels.map(([l, s], j) => chip(46 + j * 40, y, l, s, `${key}${j}`))}
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="番号をつけて区別した2つの列が、番号を消すと同じ1つの列に束ねられる図。総数は書かない"
+    >
+      <text x="86" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        番号つき（区別あり）
+      </text>
+      <text x="266" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        番号を消すと
+      </text>
+      <rect x="14" y="36" width="146" height="118" rx="10" fill={bundleFill} stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      {row(62, [["か", "1"], ["か", "2"], ["い", ""]], "r1")}
+      {row(122, [["か", "2"], ["か", "1"], ["い", ""]], "r2")}
+      <path d="M 166 95 L 212 95" fill="none" stroke={muted} strokeWidth="1.2" />
+      {row(95, [], "r0")}
+      <g>
+        {["か", "か", "い"].map((l, j) => (
+          <g key={`g${j}`}>
+            <rect x={226 + j * 40 - 16} y={82} width="32" height="26" rx="5" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+            <text x={226 + j * 40} y={100} fontSize="13" fill={stroke} textAnchor="middle">{l}</text>
+          </g>
+        ))}
+      </g>
+      <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        番号を消すと、いくつずつが同じ列に化ける？
+      </text>
+    </svg>
+  );
+}
+
+/** 系9 step5: 同じ文字のかたまりを1つの枠でくくる図。総数は書かない。 */
+export function CountBlock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const chip = (x: number, label: string, key: string) => (
+    <g key={key}>
+      <rect x={x - 15} y={78} width="30" height="28" rx="5" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x={x} y={97} fontSize="13" fill={stroke} textAnchor="middle">{label}</text>
+    </g>
+  );
+  const seq = ["り", "り", "り", "す", "と", "す", "と"];
+  return (
+    <svg
+      viewBox="0 0 340 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="り3枚をひとかたまりの枠でくくり、1文字あつかいで並べる図。かたまりの中は同じ文字。総数は書かない"
+    >
+      <rect x="16" y="66" width="112" height="52" rx="10" fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="5 3" />
+      {seq.map((l, j) => chip(34 + j * 38, l, `c${j}`))}
+      <text x="72" y="52" fontSize="11" fill={accent} textAnchor="middle">
+        ひとかたまり（1文字あつかい）
+      </text>
+      <text x="170" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        かたまりの中は同じ「り」——中の入れかえは、数える？
       </text>
     </svg>
   );
