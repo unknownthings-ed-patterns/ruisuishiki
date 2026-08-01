@@ -55,6 +55,7 @@ import {
   PROB_ADDSUB_SERIES,
   PROB_MULT_SERIES,
   PROB_REPEAT_SERIES,
+  PROB_COND_SERIES,
 } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
@@ -627,6 +628,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "反復試行（1本の道の確率 × 道の本数）— 「ちょうど r 回」は組合せで道を数えてかける。以上／以下の和・初めて起こる・先に3勝の優勝の順番の制約まで",
+  },
+  {
+    series: PROB_COND_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "条件つき確率（情報が全体を縮める）— 情報とは全体の取り替え。戻さない引きの条件つき確率・乗法定理・くじ引きの公平性・独立の判定まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {

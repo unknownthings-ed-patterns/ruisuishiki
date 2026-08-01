@@ -12365,6 +12365,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_SHRINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbShrink />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13659,6 +13666,90 @@ export function ProbPathsLast() {
       </text>
       <text x="180" y="192" fontSize="12" fill={accent} textAnchor="middle">
         最後のマスが決まっているとき、自由に並べられるのはどこまで？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系6 step1・辞書: 条件つき確率。左に面積1の全体と事象Aの帯、右に「Aが起こったと知ったあとの世界」＝Aの帯が新しい全体に拡大され、その中にBの領域。確率値は書かない。 */
+export function ProbShrink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const wholeFill = "color-mix(in oklch, var(--accent) 4%, transparent)";
+  const aFill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const bFill = "color-mix(in oklch, var(--accent) 34%, transparent)";
+  // 左：もとの全体（面積1）。x 24..168, y 46..170
+  const lx = 24;
+  const ly = 46;
+  const lw = 144;
+  const lh = 124;
+  const aH = 46; // A の帯の高さ（上から）
+  // 右：A が起こったと知ったあとの新しい全体（A の帯が拡大）。x 216..336
+  const rx = 216;
+  const rw = 120;
+  const bH = 78; // 新しい全体の中の B の領域（上から）
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左は面積1のもとの全体で、その中に事象Aの帯がある。右は、Aが起こったと知ったあとの新しい世界——Aの帯だけが拡大されて新しい全体になり、その中に事象Bの領域がある。左と右で、割合を測る全体そのものが取り替わっている。確率や割合の値は書かない"
+    >
+      {/* 左：もとの全体 */}
+      <rect
+        x={lx}
+        y={ly}
+        width={lw}
+        height={lh}
+        rx="8"
+        fill={wholeFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <rect x={lx} y={ly} width={lw} height={aH} fill={aFill} stroke={accent} strokeWidth="1.2" />
+      <text x={lx + lw / 2} y={ly + aH / 2 + 5} fontSize="13" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      <text x={lx + lw / 2} y={ly + lh - 10} fontSize="11" fill={muted} textAnchor="middle">
+        もとの全体 ＝ 1
+      </text>
+      <text x={lx + lw / 2} y={ly - 12} fontSize="11" fill={muted} textAnchor="middle">
+        まだ何も知らない
+      </text>
+      {/* 矢印：A が起こったと知る → 全体の取り替え */}
+      <path d="M 176 108 L 208 108" stroke={accent} strokeWidth="1.6" />
+      <path d="M 208 108 L 200 103 M 208 108 L 200 113" stroke={accent} strokeWidth="1.6" fill="none" />
+      <text x="192" y="98" fontSize="10.5" fill={accent} textAnchor="middle">
+        A を知る
+      </text>
+      {/* A の帯から新しい全体への広がり（点線） */}
+      <path d={`M ${lx + lw} ${ly} L ${rx} ${ly}`} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d={`M ${lx + lw} ${ly + aH} L ${rx} ${ly + lh}`} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      {/* 右：A が新しい全体に拡大 */}
+      <rect
+        x={rx}
+        y={ly}
+        width={rw}
+        height={lh}
+        rx="8"
+        fill={aFill}
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <rect x={rx} y={ly} width={rw} height={bH} fill={bFill} stroke={accent} strokeWidth="1.2" />
+      <text x={rx + rw / 2} y={ly + bH / 2 + 5} fontSize="13" fill={stroke} textAnchor="middle">
+        B
+      </text>
+      <text x={rx + rw / 2} y={ly + lh - 10} fontSize="11" fill={accent} textAnchor="middle">
+        新しい全体 ＝ A
+      </text>
+      <text x={rx + rw / 2} y={ly - 12} fontSize="11" fill={accent} textAnchor="middle">
+        A が起こった世界
+      </text>
+      <text x="180" y="204" fontSize="12" fill={accent} textAnchor="middle">
+        A が起こったと知ったとき、あなたの立っている「全体」はどちら？
       </text>
     </svg>
   );
