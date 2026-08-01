@@ -54,6 +54,7 @@ import {
   PROB_COUNT_SERIES,
   PROB_ADDSUB_SERIES,
   PROB_MULT_SERIES,
+  PROB_REPEAT_SERIES,
 } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
@@ -618,6 +619,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "かけ算（独立な試行——確率は面積で重なる）— 独立なら「ともに起こる」は縦×横の面積。確率つき樹形図・ちょうど1人・少なくとも1人の重ね技・戻さないと壊れる独立まで",
+  },
+  {
+    series: PROB_REPEAT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "反復試行（1本の道の確率 × 道の本数）— 「ちょうど r 回」は組合せで道を数えてかける。以上／以下の和・初めて起こる・先に3勝の優勝の順番の制約まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {

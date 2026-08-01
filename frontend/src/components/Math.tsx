@@ -12351,6 +12351,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_PATHS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbPaths />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROB_PATHS_LAST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbPathsLast />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13491,6 +13505,160 @@ export function ProbTreeWeighted() {
       })}
       <text x="180" y="226" fontSize="12" fill={accent} textAnchor="middle">
         枝の確率をかけながら道をたどると、その道の起こりやすさになる——どの道をたどる？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系5 step1・辞書: ◯×の道を数本並べる（反復試行）。どの道もかける数の顔ぶれは同じか。道の本数・確率は書かない。 */
+export function ProbPaths() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const hitFill = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  // 2回のうちちょうど1回「起こる（◯）」の2本の道：◯× と ×◯
+  const paths: ("hit" | "miss")[][] = [
+    ["hit", "miss"],
+    ["miss", "hit"],
+  ];
+  const cell = 44;
+  const gap = 10;
+  const x0 = 118;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="ちょうど1回起こる2本の道。上の道は「起こる・起こらない」、下の道は「起こらない・起こる」。どちらの道も、◯（起こる）が1つと×（起こらない）が1つ。道の本数や確率の値は書かない"
+    >
+      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
+        「ちょうど 1 回起こる」道を、ぜんぶ書き出すと
+      </text>
+      {paths.map((row, r) => (
+        <g key={r}>
+          {row.map((kind, c) => {
+            const cx = x0 + c * (cell + gap);
+            const cy = 70 + r * (cell + gap);
+            return (
+              <g key={c}>
+                <rect
+                  x={cx}
+                  y={cy}
+                  width={cell}
+                  height={cell}
+                  rx="7"
+                  fill={kind === "hit" ? hitFill : "transparent"}
+                  stroke={kind === "hit" ? accent : muted}
+                  strokeWidth="1.3"
+                />
+                <text
+                  x={cx + cell / 2}
+                  y={cy + cell / 2 + 6}
+                  fontSize="18"
+                  fill={kind === "hit" ? accent : muted}
+                  textAnchor="middle"
+                >
+                  {kind === "hit" ? "◯" : "×"}
+                </text>
+                <text
+                  x={cx + cell / 2}
+                  y={cy + cell + 16}
+                  fontSize="10"
+                  fill={muted}
+                  textAnchor="middle"
+                >
+                  {c + 1}回め
+                </text>
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      <text x="180" y="192" fontSize="12" fill={accent} textAnchor="middle">
+        どの道も、かける数の顔ぶれ（◯ と × の数）は同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系5 step9: 最後の1マスが◯で固定された道。手前だけが自由。確率は書かない。 */
+export function ProbPathsLast() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const freeFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const lockFill = "color-mix(in oklch, var(--accent) 24%, transparent)";
+  const cell = 44;
+  const gap = 10;
+  const n = 5;
+  const x0 = 40;
+  const y = 78;
+  const freeCount = n - 1;
+  const lastX = x0 + freeCount * (cell + gap);
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="5マスの道。最後の1マスだけが◯で決まっていて、その手前の4マスは自由に並べ替えられる。手前の4マスにはてなマークがつき、最後のマスには決まっている印がつく。確率の値は書かない"
+    >
+      {Array.from({ length: n }).map((_, c) => {
+        const cx = x0 + c * (cell + gap);
+        const isLast = c === n - 1;
+        return (
+          <g key={c}>
+            <rect
+              x={cx}
+              y={y}
+              width={cell}
+              height={cell}
+              rx="7"
+              fill={isLast ? lockFill : freeFill}
+              stroke={isLast ? accent : muted}
+              strokeWidth={isLast ? 1.7 : 1.2}
+              strokeDasharray={isLast ? undefined : "4 3"}
+            />
+            <text
+              x={cx + cell / 2}
+              y={y + cell / 2 + 6}
+              fontSize="18"
+              fill={isLast ? accent : muted}
+              textAnchor="middle"
+            >
+              {isLast ? "◯" : "？"}
+            </text>
+            <text
+              x={cx + cell / 2}
+              y={y + cell + 16}
+              fontSize="10"
+              fill={muted}
+              textAnchor="middle"
+            >
+              {c + 1}回め
+            </text>
+          </g>
+        );
+      })}
+      {/* 手前は自由のブラケット */}
+      <path
+        d={`M ${x0} ${y - 12} L ${x0 + freeCount * cell + (freeCount - 1) * gap} ${y - 12}`}
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      <text
+        x={x0 + (freeCount * cell + (freeCount - 1) * gap) / 2}
+        y={y - 18}
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+      >
+        ここは自由に並べ替えられる
+      </text>
+      <text x={lastX + cell / 2} y={y - 18} fontSize="11" fill={accent} textAnchor="middle">
+        決まっている
+      </text>
+      <text x="180" y="192" fontSize="12" fill={accent} textAnchor="middle">
+        最後のマスが決まっているとき、自由に並べられるのはどこまで？
       </text>
     </svg>
   );
