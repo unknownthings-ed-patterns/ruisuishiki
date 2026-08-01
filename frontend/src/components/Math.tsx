@@ -12316,6 +12316,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_PAIR_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountPairBundle />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_TRIPLE_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTripleBundle />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -12919,6 +12933,154 @@ export function CountVenn() {
       </text>
       <text x="170" y="182" fontSize="11" fill={accent} textAnchor="middle">
         まん中は「両方」——足すだけだと二回数えていない？
+      </text>
+    </svg>
+  );
+}
+
+/** 系4 step1: 区別ありの数えが2個ずつ束になる（重複度2）。組の総数は描かない。 */
+export function CountPairBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const chip = (x: number, y: number, label: string, key: string) => (
+    <g key={key}>
+      <rect
+        x={x - 30}
+        y={y - 13}
+        width="60"
+        height="26"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x={x} y={y + 5} fontSize="13" fill={stroke} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+  /** 「区別ありの数え」（あ→い と い→あ）が、同じ 1 組に束ねられる。 */
+  const rows = [
+    { y: 52, a: "あ→い", b: "い→あ" },
+    { y: 116, a: "あ→う", b: "う→あ" },
+    { y: 180, a: "い→う", b: "う→い" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 224"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="区別ありの数えが2個ずつ束になる図。あ→いとい→あが同じ1組に束ねられる。どの束にも2つずつ入っている。組の総数は書かない"
+    >
+      <text x="70" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        区別ありの数え（2つずつ）
+      </text>
+      <text x="262" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        同じ組
+      </text>
+      {rows.map((r, i) => (
+        <g key={`r${i}`}>
+          <rect
+            x="18"
+            y={r.y - 26}
+            width="104"
+            height="52"
+            rx="10"
+            fill={bundleFill}
+            stroke={accent}
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          {chip(70, r.y - 12, r.a, `a${i}`)}
+          {chip(70, r.y + 12, r.b, `b${i}`)}
+          <path
+            d={`M 126 ${r.y} L 226 ${r.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          {chip(262, r.y, r.a.slice(0, 1) + "・" + r.a.slice(-1), `g${i}`)}
+        </g>
+      ))}
+      <text x="70" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        どの束にも「2つずつ」——本当の組の数は？
+      </text>
+    </svg>
+  );
+}
+
+/** 系4 step5: 3つ組の並べ替えが束になる（重複度 3!=6）。組の総数は描かない。 */
+export function CountTripleBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  /** 同じ3人「あ・い・う」の並べ替え 6 通りが、1 つの組に束ねられる。 */
+  const perms = [
+    "あいう",
+    "あうい",
+    "いあう",
+    "いうあ",
+    "うあい",
+    "ういあ",
+  ];
+  const chip = (x: number, y: number, label: string, key: string) => (
+    <g key={key}>
+      <rect
+        x={x - 26}
+        y={y - 12}
+        width="52"
+        height="24"
+        rx="5"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.1"
+      />
+      <text x={x} y={y + 5} fontSize="12" fill={stroke} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="3つ組の並べ替えが束になる図。同じ3人あ・い・うの並べ替え6通りが、1つの組に束ねられる。束の中身は6つ。組の総数は書かない"
+    >
+      <text x="76" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        区別して並べる（順番つき）
+      </text>
+      <text x="272" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ組
+      </text>
+      <rect
+        x="16"
+        y="34"
+        width="120"
+        height="176"
+        rx="12"
+        fill={bundleFill}
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="4 3"
+      />
+      {perms.map((p, i) => chip(76, 54 + i * 30, p, `p${i}`))}
+      <path
+        d="M 140 122 L 232 122"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      {chip(272, 122, "あ・い・う", "grp")}
+      <text x="76" y="228" fontSize="11" fill={accent} textAnchor="middle">
+        1 組が「並べ替えの数」だけダブる——割る数は？
       </text>
     </svg>
   );

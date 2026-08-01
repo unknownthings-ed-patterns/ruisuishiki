@@ -42,6 +42,7 @@ import {
   COUNT_BASIC_SERIES,
   COUNT_PRODSUM_SERIES,
   COUNT_SUBTRACT_SERIES,
+  COUNT_DIVIDE_SERIES,
 } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
@@ -517,6 +518,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "引き算で数える — 数えにくいものは残り・重なりに取り替えて引く。背番号・残った方・包除原理まで",
+  },
+  {
+    series: COUNT_DIVIDE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "割り算で数える（重複度）— いったん区別して数え、均等なダブりの回数で割る。握手・対角線・3つ組まで",
   },
   {
     series: ALGEBRA_PERMUTATION_SERIES,
