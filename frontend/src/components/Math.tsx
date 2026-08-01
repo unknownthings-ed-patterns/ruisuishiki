@@ -12393,6 +12393,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_GRID_ARROWS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountGridArrows />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_STARS_BARS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountStarsBars />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_SAME_BUNDLE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -14071,6 +14085,93 @@ export function CountBlock() {
       </text>
       <text x="170" y="150" fontSize="11" fill={accent} textAnchor="middle">
         かたまりの中は同じ「り」——中の入れかえは、数える？
+      </text>
+    </svg>
+  );
+}
+
+/** 系10 step1: 格子の最短経路と矢印の列の対応。経路数は書かない。 */
+export function CountGridArrows() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const g0 = 30;
+  const cell = 34;
+  const lines = [0, 1, 2];
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="右2区画・上2区画の格子と、1本の最短経路を右右上上の矢印の列に分解する対応図。経路の総数は書かない"
+    >
+      {lines.map((k) => (
+        <g key={`gl${k}`}>
+          <path d={`M ${g0} ${138 - k * cell} L ${g0 + 2 * cell} ${138 - k * cell}`} fill="none" stroke={muted} strokeWidth="1" />
+          <path d={`M ${g0 + k * cell} 138 L ${g0 + k * cell} ${138 - 2 * cell}`} fill="none" stroke={muted} strokeWidth="1" />
+        </g>
+      ))}
+      {/* 例の経路：右右上上 */}
+      <path
+        d={`M ${g0} 138 L ${g0 + 2 * cell} 138 L ${g0 + 2 * cell} ${138 - 2 * cell}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="2.4"
+      />
+      <circle cx={g0} cy={138} r={4} fill={stroke} />
+      <circle cx={g0 + 2 * cell} cy={138 - 2 * cell} r={4} fill={accent} />
+      <text x={g0 - 8} y={156} fontSize="11" fill={muted}>家</text>
+      <text x={g0 + 2 * cell + 6} y={138 - 2 * cell + 4} fontSize="11" fill={muted}>公園</text>
+      <path d="M 128 100 L 168 100" fill="none" stroke={muted} strokeWidth="1.2" />
+      {["→", "→", "↑", "↑"].map((a, j) => (
+        <g key={`a${j}`}>
+          <rect x={182 + j * 36} y={84} width="30" height="30" rx="6" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={stroke} strokeWidth="1.1" />
+          <text x={197 + j * 36} y={105} fontSize="15" fill={accent} textAnchor="middle">{a}</text>
+        </g>
+      ))}
+      <text x="240" y="140" fontSize="11" fill={muted} textAnchor="middle">
+        この列から、道はひとつに決まる？
+      </text>
+      <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        道順と記号の列——数えるのは、どちらでもいい？
+      </text>
+    </svg>
+  );
+}
+
+/** 系10 step9: ○と仕切り棒の列と詰め合わせの対応（重複組合せ）。総数は書かない。 */
+export function CountStarsBars() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const seq = ["○", "○", "|", "○", "|", "|", "○", "○"];
+  return (
+    <svg
+      viewBox="0 0 340 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="○5個と仕切り棒3本の列が、4種類の個数の組（2個・1個・0個・2個）にちょうど1つ対応する図。総数は書かない"
+    >
+      {seq.map((c, j) => (
+        <g key={`s${j}`}>
+          <rect x={26 + j * 36} y={38} width="30" height="34" rx="6" fill={c === "|" ? "color-mix(in oklch, var(--accent) 12%, transparent)" : "color-mix(in oklch, var(--accent) 4%, transparent)"} stroke={c === "|" ? accent : stroke} strokeWidth="1.1" />
+          <text x={41 + j * 36} y={62} fontSize="15" fill={c === "|" ? accent : stroke} textAnchor="middle">{c}</text>
+        </g>
+      ))}
+      {[
+        { x: 60, label: "1種類め 2個" },
+        { x: 132, label: "2種類め 1個" },
+        { x: 190, label: "3種類め 0個" },
+        { x: 280, label: "4種類め 2個" },
+      ].map((t, j) => (
+        <text key={`t${j}`} x={t.x} y={j % 2 === 0 ? 100 : 120} fontSize="10" fill={muted} textAnchor="middle">
+          {t.label}
+        </text>
+      ))}
+      <text x="170" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        ○と棒の列ひとつで、詰め合わせはちょうどひとつ決まる？
       </text>
     </svg>
   );

@@ -47,6 +47,7 @@ import {
   COUNT_COMB_SERIES,
   COUNT_CIRCULAR_SERIES,
   COUNT_SAMEKIND_SERIES,
+  COUNT_BIJECTION_SERIES,
 } from "./seriesCounting";
 import { PROB_DEF_SERIES } from "./seriesProbability";
 import {
@@ -571,6 +572,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "同じものを含む順列 — 仮の区別をつけて数え、同じもの同士の入れかわりで割る。塊・隣り合わない・左右の順序・組分けまで",
+  },
+  {
+    series: COUNT_BIJECTION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "1対1の対応 — 過不足のない対応があれば個数は等しい。最短経路・図形の個数・重複組合せ（仕切り）まで単元の総仕上げ",
   },
   /* 数Ⅰ・A: 確率 */
   {
