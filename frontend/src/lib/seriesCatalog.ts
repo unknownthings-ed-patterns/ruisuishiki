@@ -38,7 +38,7 @@ import {
   XEL_LOG_EQUATION_SERIES,
   XEL_COMMON_LOG_SERIES,
 } from "./seriesExpLog";
-import { COUNT_BASIC_SERIES } from "./seriesCounting";
+import { COUNT_BASIC_SERIES, COUNT_PRODSUM_SERIES } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -497,6 +497,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "数え上げの基本 — 規則を決めて書き並べる。辞書式・樹形図・後もどりしない規則で「もれなく、重複なく」へ",
+  },
+  {
+    series: COUNT_PRODSUM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "積の法則と和の法則 — かけるか足すかは樹形図の形が決める。省略樹形図・場合分け・約数の個数まで",
   },
   {
     series: ALGEBRA_PERMUTATION_SERIES,

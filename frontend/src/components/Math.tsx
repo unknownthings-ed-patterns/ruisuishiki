@@ -12274,6 +12274,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_TREE_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeProduct />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_TREE_SUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeSum />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_TREE_UNEVEN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeUneven />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -12473,6 +12494,228 @@ export function CountTreeNoReturn() {
       </text>
       <text x="252" y="218" fontSize="12" fill={accent}>
         どこへ消えた？
+      </text>
+    </svg>
+  );
+}
+
+/** 系2 step1: 省略樹形図。どの枝からも同じ本数の枝が伸びる（積の法則）。総数は描かない。 */
+export function CountTreeProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  /** 1段目 3 本、そのどれからも 2段目が同じ本数（ここでは 3 本）伸びる略式図。 */
+  const firsts = [58, 116, 174];
+  const dot = (x: number, y: number, key: string) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="9"
+      fill={fillColor}
+      stroke={stroke}
+      strokeWidth="1.2"
+    />
+  );
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="省略樹形図。1段目のどの枝からも、同じ本数の2段目の枝が伸びる。総数は書かない"
+    >
+      <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        1段目
+      </text>
+      <text x="210" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        2段目（どこも同じ本数）
+      </text>
+      {firsts.map((fy, i) => (
+        <g key={`f${i}`}>
+          <path
+            d={`M 40 116 L 60 ${fy}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          {dot(60, fy, `n${i}`)}
+          {[-24, 0, 24].map((dy, j) => {
+            const cy = fy + dy;
+            return (
+              <g key={`c${i}${j}`}>
+                <path
+                  d={`M 69 ${fy} L 200 ${cy}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                {dot(200, cy, `cn${i}${j}`)}
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      {dot(40, 116, "root")}
+      <path
+        d="M 250 40 L 250 200"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="4 4"
+      />
+      <text x="262" y="112" fontSize="12" fill={accent}>
+        ぜんぶ描かずに
+      </text>
+      <text x="262" y="130" fontSize="12" fill={accent}>
+        数えられる？
+      </text>
+    </svg>
+  );
+}
+
+/** 系2 step5: 分かれて並ぶ2本の木（和の法則・場合分け）。総数は描かない。 */
+export function CountTreeSum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const dot = (x: number, y: number, key: string) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="9"
+      fill={fillColor}
+      stroke={stroke}
+      strokeWidth="1.2"
+    />
+  );
+  /** 左の木＝ある場合（枝 4 本）／右の木＝別の場合（枝 3 本）。同時には起こらない。 */
+  const tree = (
+    ox: number,
+    label: string,
+    ys: number[],
+    keyp: string,
+  ) => (
+    <g key={keyp}>
+      <text x={ox + 70} y="34" fontSize="11" fill={muted} textAnchor="middle">
+        {label}
+      </text>
+      <path
+        d={`M ${ox} 128 L ${ox + 22} 128`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      {dot(ox, 128, `${keyp}root`)}
+      {ys.map((cy, j) => (
+        <g key={`${keyp}c${j}`}>
+          <path
+            d={`M ${ox + 9} 128 L ${ox + 118} ${cy}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1"
+            strokeDasharray="3 3"
+          />
+          {dot(ox + 118, cy, `${keyp}n${j}`)}
+        </g>
+      ))}
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="分かれて並ぶ2本の木。左の場合と右の場合は同時には起こらない。総数は書かない"
+    >
+      {tree(20, "運動部を選ぶ", [76, 108, 140, 172], "L")}
+      {tree(190, "文化部を選ぶ", [92, 128, 164], "R")}
+      <path
+        d="M 170 44 L 170 196"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="2 5"
+      />
+      <text x="170" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        同時には起こらない——数えたら？
+      </text>
+    </svg>
+  );
+}
+
+/** 系2 step9: 枝数が場所で変わる樹形図（積の一発が壊れる）。総数は描かない。 */
+export function CountTreeUneven() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const dot = (x: number, y: number, key: string, faded = false) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="9"
+      fill={faded ? "none" : fillColor}
+      stroke={faded ? muted : stroke}
+      strokeWidth="1.2"
+      strokeDasharray={faded ? "3 3" : undefined}
+    />
+  );
+  /** 1段目の枝の先ごとに、2段目の枝の本数が変わる（ある枝は 2 本・別の枝は 3 本）。 */
+  const firsts = [
+    { y: 62, children: [46, 78] }, // しばりの強い枝＝本数が少ない
+    { y: 122, children: [104, 130, 156] },
+    { y: 182, children: [166, 196] },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="枝の数が場所で変わる樹形図。ある枝からは2本、別の枝からは3本が伸びる。どこも同じ本数ではない。総数は書かない"
+    >
+      <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        1段目
+      </text>
+      <text x="205" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        2段目（本数がそろわない）
+      </text>
+      {firsts.map((f, i) => (
+        <g key={`f${i}`}>
+          <path
+            d={`M 40 122 L 60 ${f.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          {dot(60, f.y, `n${i}`)}
+          {f.children.map((cy, j) => (
+            <g key={`c${i}${j}`}>
+              <path
+                d={`M 69 ${f.y} L 200 ${cy}`}
+                fill="none"
+                stroke={muted}
+                strokeWidth="1"
+                strokeDasharray="3 3"
+              />
+              {dot(200, cy, `cn${i}${j}`)}
+            </g>
+          ))}
+        </g>
+      ))}
+      {dot(40, 122, "root")}
+      <text x="252" y="106" fontSize="12" fill={accent}>
+        同じ数の
+      </text>
+      <text x="252" y="124" fontSize="12" fill={accent}>
+        かけ算でよい？
       </text>
     </svg>
   );
