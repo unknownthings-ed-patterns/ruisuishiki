@@ -12309,6 +12309,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_GRAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbGrain />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROB_COIN_SPLIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbCoinSplit />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROB_DICE_GRID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbDiceGrid />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -12934,6 +12955,226 @@ export function CountComplement() {
   );
 }
 
+/** 確率 系1 step1: 事象を均等な粒にたたき割る。確率値は書かない。 */
+export function ProbGrain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const blobFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const grainFill = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const cells: { x: number; y: number; hit: boolean }[] = [];
+  const hits = [1, 4, 6, 9, 10];
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 4; c++) {
+      const i = r * 4 + c;
+      cells.push({ x: 196 + c * 34, y: 52 + r * 34, hit: hits.includes(i) });
+    }
+  }
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左のいびつなかたまり（事象）を、右の同じ大きさの粒に割り直す。色つきの粒があてはまる場合。確率の値は書かない"
+    >
+      <path
+        d="M 30 90 Q 22 56 56 46 Q 84 34 110 54 Q 140 44 148 76 Q 160 104 132 122 Q 118 148 84 140 Q 46 148 36 118 Q 22 110 30 90 Z"
+        fill={blobFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="88" y="92" fontSize="12" fill={stroke} textAnchor="middle">
+        起こりやすさを
+      </text>
+      <text x="88" y="108" fontSize="12" fill={stroke} textAnchor="middle">
+        測りたい事象
+      </text>
+      <path d="M 158 96 L 186 96" stroke={accent} strokeWidth="1.6" />
+      <path d="M 186 96 l -7 -4 l 0 8 Z" fill={accent} />
+      {cells.map((cell, i) => (
+        <rect
+          key={i}
+          x={cell.x}
+          y={cell.y}
+          width="30"
+          height="30"
+          rx="4"
+          fill={cell.hit ? grainFill : "transparent"}
+          stroke={cell.hit ? accent : muted}
+          strokeWidth="1.2"
+        />
+      ))}
+      <text x="262" y="42" fontSize="12" fill={muted} textAnchor="middle">
+        同じ重さの粒に割る
+      </text>
+      <text x="180" y="196" fontSize="12" fill={accent} textAnchor="middle">
+        同じ重さの粒に割れたら、あとは何を数えればいい？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系1 step4: コイン2枚の分け方の対比。左の3分割は同じ重さか。確率値は書かない。 */
+export function ProbCoinSplit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const boxFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const grainFill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const leftLabels = ["2枚とも表", "1枚ずつ", "2枚とも裏"];
+  const rightLabels = ["A表 B表", "A表 B裏", "A裏 B表", "A裏 B裏"];
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左は「2枚とも表・1枚ずつ・2枚とも裏」の3つの箱に重さのはてなマーク。右はコインをA・Bと区別した4つの均等な粒。確率の値は書かない"
+    >
+      <text x="92" y="30" fontSize="12" fill={muted} textAnchor="middle">
+        枚数で分けた 3 つの箱
+      </text>
+      {leftLabels.map((label, i) => (
+        <g key={i}>
+          <rect
+            x="34"
+            y={44 + i * 46}
+            width="116"
+            height="36"
+            rx="7"
+            fill={boxFill}
+            stroke={stroke}
+            strokeWidth="1.3"
+          />
+          <text
+            x="84"
+            y={66 + i * 46}
+            fontSize="12"
+            fill={stroke}
+            textAnchor="middle"
+          >
+            {label}
+          </text>
+          <text
+            x="138"
+            y={67 + i * 46}
+            fontSize="13"
+            fill={accent}
+            textAnchor="middle"
+          >
+            ？
+          </text>
+        </g>
+      ))}
+      <path d="M 166 112 L 194 112" stroke={accent} strokeWidth="1.6" />
+      <path d="M 194 112 l -7 -4 l 0 8 Z" fill={accent} />
+      <text x="266" y="30" fontSize="12" fill={muted} textAnchor="middle">
+        A・B と名前をつけて割る
+      </text>
+      {rightLabels.map((label, i) => (
+        <g key={i}>
+          <rect
+            x="208"
+            y={44 + i * 34}
+            width="116"
+            height="26"
+            rx="6"
+            fill={grainFill}
+            stroke={accent}
+            strokeWidth="1.2"
+          />
+          <text
+            x="266"
+            y={61 + i * 34}
+            fontSize="11.5"
+            fill={stroke}
+            textAnchor="middle"
+          >
+            {label}
+          </text>
+        </g>
+      ))}
+      <text x="180" y="208" fontSize="12" fill={accent} textAnchor="middle">
+        左の 3 つの箱は、どれも同じ重さと言える？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系1 step9: サイコロ2個の6×6のマス。和のまとまり方を問う。マスの個数・確率は書かない。 */
+export function ProbDiceGrid() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cellFill = "color-mix(in oklch, var(--accent) 5%, transparent)";
+  const cells: { x: number; y: number }[] = [];
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      cells.push({ x: 96 + c * 28, y: 40 + r * 24 });
+    }
+  }
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="サイコロA・Bの目を縦横に並べた6×6の36マスの表。どのマスも同じ大きさ。和が同じマスの並び方を問う。個数や確率は書かない"
+    >
+      <text x="90" y="26" fontSize="12" fill={muted}>
+        B の目 →
+      </text>
+      <text x="30" y="52" fontSize="12" fill={muted}>
+        A の目
+      </text>
+      <text x="42" y="68" fontSize="12" fill={muted}>
+        ↓
+      </text>
+      {[1, 2, 3, 4, 5, 6].map((n, i) => (
+        <text
+          key={`b${n}`}
+          x={110 + i * 28}
+          y={36}
+          fontSize="11"
+          fill={stroke}
+          textAnchor="middle"
+        >
+          {n}
+        </text>
+      ))}
+      {[1, 2, 3, 4, 5, 6].map((n, i) => (
+        <text
+          key={`a${n}`}
+          x={84}
+          y={56 + i * 24}
+          fontSize="11"
+          fill={stroke}
+          textAnchor="end"
+        >
+          {n}
+        </text>
+      ))}
+      {cells.map((cell, i) => (
+        <rect
+          key={i}
+          x={cell.x}
+          y={cell.y}
+          width="26"
+          height="22"
+          rx="3"
+          fill={cellFill}
+          stroke={muted}
+          strokeWidth="1"
+        />
+      ))}
+      <text x="180" y="216" fontSize="12" fill={accent} textAnchor="middle">
+        36 のマスはみんな同じ重さ——和が同じマスは、どの向きに並ぶ？
+      </text>
+    </svg>
+  );
+}
+
 /** 系3 step8: 重なる2つの輪（包除原理）。重なりを二重に数えていないか。個数は描かない。 */
 export function CountVenn() {
   const stroke = "var(--foreground)";
@@ -13522,7 +13763,7 @@ export function CountPolygonPick() {
   const cx = 110;
   const cy = 118;
   const R = 76;
-  const N = 9;
+  const N = 13;
   const pts = Array.from({ length: N }, (_, k) => {
     const a = -Math.PI / 2 + (2 * Math.PI * k) / N;
     return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) };

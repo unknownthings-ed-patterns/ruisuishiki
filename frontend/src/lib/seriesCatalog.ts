@@ -44,6 +44,7 @@ import {
   COUNT_DIVIDE_SERIES,
   COUNT_PERM_SERIES,
   COUNT_REPPERM_SERIES,
+  COUNT_COMB_SERIES,
 } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
@@ -543,6 +544,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "重複順列（減らない枝）— 同じものを何度でも使えると「同じ数をかけ続ける」に。部屋割り・少なくとも1回・減る枝との対比まで",
+  },
+  {
+    series: COUNT_COMB_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "組合せ — 「選ぶ」は「並べる」を並べ替えの数で割ったもの。選ぶ＝残す・少なくとも条件・図形の個数・対角線の再導出まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {
