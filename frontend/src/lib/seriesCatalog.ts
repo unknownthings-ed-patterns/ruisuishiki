@@ -46,6 +46,7 @@ import {
   COUNT_REPPERM_SERIES,
   COUNT_COMB_SERIES,
 } from "./seriesCounting";
+import { PROB_DEF_SERIES } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -552,6 +553,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "組合せ — 「選ぶ」は「並べる」を並べ替えの数で割ったもの。選ぶ＝残す・少なくとも条件・図形の個数・対角線の再導出まで",
+  },
+  /* 数Ⅰ・A: 確率 */
+  {
+    series: PROB_DEF_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "確率の定義（均等な粒にたたき割る）— 起こりやすさが「同様に確からしい粒の個数の比」に。区別の原則・和の11通りの罠・じゃんけんまで",
   },
   /* 数Ⅰ: 集合と命題 */
   {
