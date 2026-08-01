@@ -45,6 +45,7 @@ import {
   COUNT_PERM_SERIES,
   COUNT_REPPERM_SERIES,
   COUNT_COMB_SERIES,
+  COUNT_CIRCULAR_SERIES,
 } from "./seriesCounting";
 import { PROB_DEF_SERIES } from "./seriesProbability";
 import {
@@ -553,6 +554,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "組合せ — 「選ぶ」は「並べる」を並べ替えの数で割ったもの。選ぶ＝残す・少なくとも条件・図形の個数・対角線の再導出まで",
+  },
+  {
+    series: COUNT_CIRCULAR_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "円順列 — 回して重なるなら同じ。割り算の道と固定の道・向かい合う・隣り合う・数珠（裏返し）・交互まで",
   },
   /* 数Ⅰ・A: 確率 */
   {

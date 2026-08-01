@@ -12393,6 +12393,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_CIRCLE_NUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountCircleNum />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_ROTATE_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountRotateBundle />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_FLIP_PAIR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountFlipPair />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_POLYGON_PICK>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13807,6 +13828,146 @@ export function CountPolygonPick() {
       <text x="250" y="136" fontSize="12" fill={accent} textAnchor="middle">三角形が1つ</text>
       <text x="110" y="224" fontSize="11" fill={accent} textAnchor="middle">
         「選ぶ」と「三角形を作る」は同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 系8 step1: 番号つき円卓。席が区別できるうちは、円卓もただの順列。 */
+export function CountCircleNum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const cx = 118;
+  const cy = 118;
+  const R = 72;
+  const N = 8;
+  const seats = Array.from({ length: N }, (_, k) => {
+    const a = -Math.PI / 2 + (2 * Math.PI * k) / N;
+    return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a), n: k + 1 };
+  });
+  return (
+    <svg
+      viewBox="0 0 340 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="1番から8番まで番号のついた席がある円卓の図。席が区別できる。座り方の総数は書かない"
+    >
+      <circle cx={cx} cy={cy} r={R - 26} fill="none" stroke={muted} strokeWidth="1.1" />
+      {seats.map((s) => (
+        <g key={`s${s.n}`}>
+          <circle cx={s.x} cy={s.y} r={15} fill={fillColor} stroke={stroke} strokeWidth="1.2" />
+          <text x={s.x} y={s.y + 4} fontSize="12" fill={stroke} textAnchor="middle">
+            {s.n}
+          </text>
+        </g>
+      ))}
+      <text x="262" y="106" fontSize="12" fill={muted} textAnchor="middle">席に番号が</text>
+      <text x="262" y="124" fontSize="12" fill={muted} textAnchor="middle">あるなら…</text>
+      <text x="118" y="228" fontSize="11" fill={accent} textAnchor="middle">
+        円くても、これは系5 の並べと同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 系8 step2: 1つの座り方が回転で束になる図。円順列の総数は書かない。 */
+export function CountRotateBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  /** 小さい円卓を 4 つ並べ、同じ座り方（甲乙丙…）が回転してゆく様子を示す */
+  const mini = (mx: number, rot: number, key: string) => {
+    const r = 26;
+    const labels = ["甲", "乙", "丙", "丁"];
+    return (
+      <g key={key}>
+        <circle cx={mx} cy={92} r={r - 12} fill="none" stroke={muted} strokeWidth="1" />
+        {labels.map((l, k) => {
+          const a = -Math.PI / 2 + (2 * Math.PI * ((k + rot) % 4)) / 4;
+          return (
+            <text
+              key={`${key}${k}`}
+              x={mx + r * Math.cos(a)}
+              y={92 + r * Math.sin(a) + 4}
+              fontSize="11"
+              fill={stroke}
+              textAnchor="middle"
+            >
+              {l}
+            </text>
+          );
+        })}
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="同じ座り方がテーブルごと回転して4つ並ぶ図。番号を消すと全部が同じ1つに束ねられる。総数は書かない"
+    >
+      <rect x="10" y="46" width="320" height="94" rx="12" fill={bundleFill} stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      {[0, 1, 2, 3].map((r) => mini(52 + r * 78, r, `m${r}`))}
+      <text x="170" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        1 つの座り方を、テーブルごと回すと…
+      </text>
+      <text x="170" y="164" fontSize="11" fill={accent} textAnchor="middle">
+        番号を消したら、この束はぜんぶ「同じ」——束の中身は何個？
+      </text>
+    </svg>
+  );
+}
+
+/** 系8 step9: 裏返しで重なる2つの配置（ブレスレット）。総数は書かない。 */
+export function CountFlipPair() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ring = (mx: number, mirror: boolean, key: string) => {
+    const r = 34;
+    const labels = ["あ", "い", "う", "え", "お"];
+    return (
+      <g key={key}>
+        <circle cx={mx} cy={100} r={r - 14} fill="none" stroke={muted} strokeWidth="1.1" />
+        {labels.map((l, k) => {
+          const base = -Math.PI / 2 + (2 * Math.PI * k) / 5;
+          const a = mirror ? Math.PI - base : base;
+          return (
+            <text
+              key={`${key}${k}`}
+              x={mx + r * Math.cos(a)}
+              y={100 + r * Math.sin(a) + 4}
+              fontSize="12"
+              fill={stroke}
+              textAnchor="middle"
+            >
+              {l}
+            </text>
+          );
+        })}
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="ビーズの輪と、それを裏返した鏡うつしの輪が並ぶ図。裏返して重なるものを同じとみなす。総数は書かない"
+    >
+      {ring(90, false, "a")}
+      {ring(250, true, "b")}
+      <path d="M 148 100 L 192 100" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 3" />
+      <text x="170" y="88" fontSize="11" fill={accent} textAnchor="middle">裏返すと…</text>
+      <text x="170" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        この 2 つを「同じ」とみなすなら、さらに何で割る？
       </text>
     </svg>
   );
