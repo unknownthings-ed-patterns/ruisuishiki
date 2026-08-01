@@ -53,6 +53,7 @@ import {
   PROB_DEF_SERIES,
   PROB_COUNT_SERIES,
   PROB_ADDSUB_SERIES,
+  PROB_MULT_SERIES,
 } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
@@ -609,6 +610,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "足し算と引き算（排反と余事象）— 排反なら足す・全体は1。余事象と「少なくとも1つ」を1から引く近道・場合の数と確率の2つの道の交差検算まで",
+  },
+  {
+    series: PROB_MULT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "かけ算（独立な試行——確率は面積で重なる）— 独立なら「ともに起こる」は縦×横の面積。確率つき樹形図・ちょうど1人・少なくとも1人の重ね技・戻さないと壊れる独立まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {

@@ -12337,6 +12337,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_AREA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbArea />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROB_TREE_WEIGHTED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbTreeWeighted />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13292,6 +13306,191 @@ export function ProbDisjoint() {
       </text>
       <text x="180" y="184" fontSize="12" fill={accent} textAnchor="middle">
         2 つが同時に起こらないとき、「A か B が起こる」の面積はどう作れる？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系4 step1: 独立な2試行の面積図。横=Aの割合・たて=Bの割合、重なる長方形がAかつB。面積（積の値）は書かない。 */
+export function ProbArea() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const wholeFill = "color-mix(in oklch, var(--accent) 4%, transparent)";
+  const bandFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const overlapFill = "color-mix(in oklch, var(--accent) 30%, transparent)";
+  // 1辺の正方形（面積1）。x0..x0+side, y0..y0+side
+  const x0 = 118;
+  const y0 = 40;
+  const side = 150;
+  // 横はば（Aの割合）・たてはば（Bの割合）——具体的な数値は書かない
+  const aW = 90; // A が起こる横の割合ぶん
+  const bH = 96; // B が起こる縦の割合ぶん（上から）
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="面積1の正方形。横はばが事象Aの起こる割合、たてはばが事象Bの起こる割合。左上の重なる長方形がAとBがともに起こる場合で、その面積はたて×横。面積や確率の値は書かない"
+    >
+      {/* 全体＝面積1の正方形 */}
+      <rect
+        x={x0}
+        y={y0}
+        width={side}
+        height={side}
+        fill={wholeFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      {/* Aの縦帯（横はば=Aの割合） */}
+      <rect
+        x={x0}
+        y={y0}
+        width={aW}
+        height={side}
+        fill={bandFill}
+        stroke="none"
+      />
+      {/* Bの横帯（たてはば=Bの割合） */}
+      <rect
+        x={x0}
+        y={y0}
+        width={side}
+        height={bH}
+        fill={bandFill}
+        stroke="none"
+      />
+      {/* 重なり＝AかつB */}
+      <rect
+        x={x0}
+        y={y0}
+        width={aW}
+        height={bH}
+        fill={overlapFill}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text
+        x={x0 + aW / 2}
+        y={y0 + bH / 2 - 4}
+        fontSize="11.5"
+        fill={stroke}
+        textAnchor="middle"
+      >
+        A かつ B
+      </text>
+      <text
+        x={x0 + aW / 2}
+        y={y0 + bH / 2 + 12}
+        fontSize="11.5"
+        fill={stroke}
+        textAnchor="middle"
+      >
+        （ともに起こる）
+      </text>
+      {/* 全体の目印 */}
+      <text x={x0 + side - 4} y={y0 + side - 8} fontSize="11" fill={muted} textAnchor="end">
+        全体の面積 ＝ 1
+      </text>
+      {/* 横の割合ブラケット（A） */}
+      <path
+        d={`M ${x0} ${y0 - 10} L ${x0 + aW} ${y0 - 10}`}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x={x0 + aW / 2} y={y0 - 16} fontSize="11" fill={accent} textAnchor="middle">
+        横：A の起こる割合
+      </text>
+      {/* たての割合ブラケット（B） */}
+      <path
+        d={`M ${x0 - 10} ${y0} L ${x0 - 10} ${y0 + bH}`}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text
+        x={x0 - 16}
+        y={y0 + bH / 2}
+        fontSize="11"
+        fill={accent}
+        textAnchor="middle"
+        transform={`rotate(-90 ${x0 - 16} ${y0 + bH / 2})`}
+      >
+        たて：B の起こる割合
+      </text>
+      <text x="180" y={y0 + side + 26} fontSize="12" fill={accent} textAnchor="middle">
+        縦の割合と横の割合から、重なりの面積は作れる？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系4 step5・系6 step5: 確率つき樹形図。枝に p と 1−p（起こる／起こらない）。道の終端の確率値は書かない。 */
+export function ProbTreeWeighted() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rootX = 44;
+  const rootY = 120;
+  const x1 = 150; // 1段目のノード
+  const x2 = 300; // 2段目（終端）
+  const y1a = 66; // 1段目 上（起こる）
+  const y1b = 174; // 1段目 下（起こらない）
+  const ends = [
+    { y: 40, top: true, top2: true },
+    { y: 92, top: true, top2: false },
+    { y: 148, top: false, top2: true },
+    { y: 200, top: false, top2: false },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="2段の樹形図。1段目は試行1が起こる（確率p）・起こらない（確率1−p）に分かれ、それぞれが2段目で試行2の起こる（q）・起こらない（1−q）に分かれる。各枝に確率の記号がつく。道の終端の確率の値は書かない"
+    >
+      {/* 根 */}
+      <circle cx={rootX} cy={rootY} r="4" fill={accent} />
+      <text x={rootX} y={rootY + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        スタート
+      </text>
+      {/* 1段目の枝 */}
+      <path d={`M ${rootX} ${rootY} L ${x1} ${y1a}`} stroke={stroke} strokeWidth="1.3" />
+      <path d={`M ${rootX} ${rootY} L ${x1} ${y1b}`} stroke={stroke} strokeWidth="1.3" />
+      <text x={(rootX + x1) / 2 - 6} y={(rootY + y1a) / 2 - 4} fontSize="11" fill={accent}>
+        p（起こる）
+      </text>
+      <text x={(rootX + x1) / 2 - 6} y={(rootY + y1b) / 2 + 14} fontSize="11" fill={accent}>
+        1−p（起こらない）
+      </text>
+      <circle cx={x1} cy={y1a} r="4" fill={accent} />
+      <circle cx={x1} cy={y1b} r="4" fill={accent} />
+      {/* 2段目の枝 */}
+      {ends.map((e, i) => {
+        const from = e.top ? y1a : y1b;
+        return (
+          <g key={i}>
+            <path
+              d={`M ${x1} ${from} L ${x2} ${e.y}`}
+              stroke={stroke}
+              strokeWidth="1.2"
+            />
+            <text
+              x={(x1 + x2) / 2}
+              y={(from + e.y) / 2 + (e.top2 ? -4 : 12)}
+              fontSize="10.5"
+              fill={muted}
+            >
+              {e.top2 ? "q" : "1−q"}
+            </text>
+            <circle cx={x2} cy={e.y} r="3.4" fill="none" stroke={accent} strokeWidth="1.2" />
+          </g>
+        );
+      })}
+      <text x="180" y="226" fontSize="12" fill={accent} textAnchor="middle">
+        枝の確率をかけながら道をたどると、その道の起こりやすさになる——どの道をたどる？
       </text>
     </svg>
   );
