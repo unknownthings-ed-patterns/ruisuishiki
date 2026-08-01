@@ -13,7 +13,6 @@ import {
   ALGEBRA_DIVISOR_COUNT_SERIES,
   ALGEBRA_MEAN_SERIES,
   ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
-  ALGEBRA_PERMUTATION_SERIES,
   ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
@@ -43,6 +42,7 @@ import {
   COUNT_PRODSUM_SERIES,
   COUNT_SUBTRACT_SERIES,
   COUNT_DIVIDE_SERIES,
+  COUNT_PERM_SERIES,
 } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
@@ -494,7 +494,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
   },
   /* 数A: 場合の数（池田『入門問題精講』第4章＝三角比の直後。
    * 背骨 docs/counting_series_design_fable.md・2026-08-01 裁定でここへ移動）。
-   * 旧 algebra_perm_01 は系5（順列）実装時に吸収・SERIES_REDIRECTS 予定。 */
+   * 旧 algebra_perm_01 は系5（順列）に吸収済み（SERIES_REDIRECTS）。 */
   {
     series: COUNT_BASIC_SERIES,
     subject: "secondary",
@@ -528,11 +528,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "割り算で数える（重複度）— いったん区別して数え、均等なダブりの回数で割る。握手・対角線・3つ組まで",
   },
   {
-    series: ALGEBRA_PERMUTATION_SERIES,
+    series: COUNT_PERM_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "場合の数",
-    shortDescription: "順列 P(n, 2)",
+    shortDescription:
+      "順列（減りながらかける）— 使ったものは使えない、が「減りながらかける」に。階乗・しばり・隣り合う・交互まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {
@@ -941,6 +942,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra2_exp_01: "algebra2_exp_extend_01",
   /* 指数関数・対数関数（背骨 D3）：系列5 へ吸収 */
   algebra2_log_01: "algebra2_log_def_01",
+  /* 場合の数（背骨 D3・§6）：旧「順列 P(n,2)」プロトタイプ → 系5「順列」へ吸収 */
+  algebra_perm_01: "algebra1_count_perm_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */

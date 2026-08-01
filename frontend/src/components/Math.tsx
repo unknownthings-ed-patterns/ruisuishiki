@@ -12330,6 +12330,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_TREE_SHRINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeShrink />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_SLOT_BOUND>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountSlotBound />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -13081,6 +13095,145 @@ export function CountTripleBundle() {
       {chip(272, 122, "あ・い・う", "grp")}
       <text x="76" y="228" fontSize="11" fill={accent} textAnchor="middle">
         1 組が「並べ替えの数」だけダブる——割る数は？
+      </text>
+    </svg>
+  );
+}
+
+/** 系5 step1: 減っていく枝の樹形図（順列）。使ったものは使えないので枝が1ずつやせる。総数は描かない。 */
+export function CountTreeShrink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const dot = (x: number, y: number, key: string) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="8"
+      fill={fillColor}
+      stroke={stroke}
+      strokeWidth="1.2"
+    />
+  );
+  /** 1段目 3 本 → そのどれからも 2 本（1 つ使ったので減る）→ さらに 1 本。 */
+  const firsts = [50, 116, 182];
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="減っていく枝の樹形図。1段目からは3本、そのどれからも2本、さらに1本と、使ったものが使えないので枝が1段ごとに1本ずつやせていく。総数は書かない"
+    >
+      <text x="52" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        左（3本）
+      </text>
+      <text x="160" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        中（2本）
+      </text>
+      <text x="268" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        右（1本）
+      </text>
+      {firsts.map((fy, i) => (
+        <g key={`f${i}`}>
+          <path
+            d={`M 30 116 L 52 ${fy}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          {dot(52, fy, `n${i}`)}
+          {[-18, 18].map((dy, j) => {
+            const my = fy + dy;
+            return (
+              <g key={`m${i}${j}`}>
+                <path
+                  d={`M 60 ${fy} L 160 ${my}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                {dot(160, my, `mn${i}${j}`)}
+                <path
+                  d={`M 168 ${my} L 268 ${my}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                {dot(268, my, `rn${i}${j}`)}
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      {dot(30, 116, "root")}
+      <text x="160" y="222" fontSize="11" fill={accent} textAnchor="middle">
+        枝が 3 → 2 → 1 とやせていく——なぜ？
+      </text>
+    </svg>
+  );
+}
+
+/** 系5 step5: しばりのある枠（先頭が限られた種類だけ）。総数は描かない。 */
+export function CountSlotBound() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const openFill = "color-mix(in oklch, var(--accent) 5%, transparent)";
+  const boundFill = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const slot = (
+    x: number,
+    label: string,
+    bound: boolean,
+    key: string,
+  ) => (
+    <g key={key}>
+      <rect
+        x={x}
+        y="70"
+        width="58"
+        height="58"
+        rx="8"
+        fill={bound ? boundFill : openFill}
+        stroke={bound ? accent : stroke}
+        strokeWidth={bound ? 1.6 : 1.2}
+        strokeDasharray={bound ? "5 3" : undefined}
+      />
+      <text
+        x={x + 29}
+        y="104"
+        fontSize="13"
+        fill={bound ? accent : muted}
+        textAnchor="middle"
+      >
+        {label}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="4つの枠が横に並び、いちばん左（先頭）の枠だけがしばりつきで、置ける種類が限られている。残りの枠は自由。しばりの強い所を先に決めるかを問う図。総数は書かない"
+    >
+      <text x="49" y="52" fontSize="11" fill={accent} textAnchor="middle">
+        しばりあり
+      </text>
+      <text x="223" y="52" fontSize="11" fill={muted} textAnchor="middle">
+        残りは自由に並べる
+      </text>
+      {slot(20, "限られた種類", true, "s0")}
+      {slot(106, "自由", false, "s1")}
+      {slot(192, "自由", false, "s2")}
+      {slot(278, "自由", false, "s3")}
+      <text x="170" y="160" fontSize="11" fill={accent} textAnchor="middle">
+        しばりの強い先頭から埋める？ 端から埋める？
       </text>
     </svg>
   );
