@@ -12295,6 +12295,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_SEQ_GAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountSeqGap />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_COMPLEMENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountComplement />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_VENN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountVenn />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -12716,6 +12737,188 @@ export function CountTreeUneven() {
       </text>
       <text x="252" y="124" fontSize="12" fill={accent}>
         かけ算でよい？
+      </text>
+    </svg>
+  );
+}
+
+/** 系3 step1: 背番号の列と「すき間」。連続する数と、その間のすき間。個数は描かない。 */
+export function CountSeqGap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  /** 連番の玉（値は伏せ、●で表す）と、玉と玉の「すき間」を弧で示す。 */
+  const xs = [56, 104, 152, 200, 248];
+  const cy = 108;
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="連続した番号の玉が横一列に並び、玉と玉のあいだに「すき間」の弧がある。玉の数とすき間の数のどちらが引き算の答えかを問う図。個数は書かない"
+    >
+      <text x="170" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        連続した番号がならぶ
+      </text>
+      <line
+        x1="36"
+        y1={cy}
+        x2="268"
+        y2={cy}
+        stroke={muted}
+        strokeWidth="1.2"
+      />
+      {xs.map((x, i) => (
+        <g key={`b${i}`}>
+          <circle
+            cx={x}
+            cy={cy}
+            r="12"
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          {i === 0 && (
+            <text x={x} y={cy + 4} fontSize="12" fill={stroke} textAnchor="middle">
+              始
+            </text>
+          )}
+          {i === xs.length - 1 && (
+            <text x={x} y={cy + 4} fontSize="12" fill={stroke} textAnchor="middle">
+              終
+            </text>
+          )}
+        </g>
+      ))}
+      {xs.slice(0, -1).map((x, i) => {
+        const mid = (x + xs[i + 1]) / 2;
+        return (
+          <g key={`g${i}`}>
+            <path
+              d={`M ${x + 12} ${cy - 4} Q ${mid} ${cy - 26} ${xs[i + 1] - 12} ${cy - 4}`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.3"
+              strokeDasharray="4 3"
+            />
+          </g>
+        );
+      })}
+      <text x="170" y="70" fontSize="11" fill={accent} textAnchor="middle">
+        すき間
+      </text>
+      <text x="170" y="162" fontSize="12" fill={accent} textAnchor="middle">
+        玉の数と「すき間」の数——どちらが引き算の答え？
+      </text>
+    </svg>
+  );
+}
+
+/** 系3 step4: 全体と「残った方」。ほしい方は直接数えず、残りを引く。個数は描かない。 */
+export function CountComplement() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const wholeFill = "color-mix(in oklch, var(--accent) 5%, transparent)";
+  const restFill = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="大きな四角が全体、その中の小さな角の領域が「残った方」。ほしいのは残り以外の部分で、全体から残りを引いて求める。個数は書かない"
+    >
+      <rect
+        x="24"
+        y="34"
+        width="292"
+        height="140"
+        rx="10"
+        fill={wholeFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="40" y="56" fontSize="12" fill={muted}>
+        全体（数は分かっている）
+      </text>
+      <rect
+        x="214"
+        y="104"
+        width="86"
+        height="56"
+        rx="8"
+        fill={restFill}
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="4 3"
+      />
+      <text x="257" y="128" fontSize="11" fill={accent} textAnchor="middle">
+        残った方
+      </text>
+      <text x="257" y="146" fontSize="11" fill={accent} textAnchor="middle">
+        （数えやすい）
+      </text>
+      <text x="110" y="120" fontSize="12" fill={stroke} textAnchor="middle">
+        ほしいのはこちら
+      </text>
+      <text x="170" y="192" fontSize="12" fill={accent} textAnchor="middle">
+        直接数える？ それとも全体から残りを引く？
+      </text>
+    </svg>
+  );
+}
+
+/** 系3 step8: 重なる2つの輪（包除原理）。重なりを二重に数えていないか。個数は描かない。 */
+export function CountVenn() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillA = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const fillB = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const fillOverlap = "color-mix(in oklch, var(--accent) 26%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="重なり合う2つの輪。左の輪がA、右の輪がB、真ん中の濃い部分が両方に入る重なり。重なりを二重に数えていないかを問う図。個数は書かない"
+    >
+      <circle
+        cx="132"
+        cy="100"
+        r="66"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <circle
+        cx="208"
+        cy="100"
+        r="66"
+        fill={fillB}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      {/* 重なり（レンズ形）を強調 */}
+      <path
+        d="M 170 47 A 66 66 0 0 1 170 153 A 66 66 0 0 1 170 47 Z"
+        fill={fillOverlap}
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="4 3"
+      />
+      <text x="104" y="104" fontSize="14" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      <text x="236" y="104" fontSize="14" fill={stroke} textAnchor="middle">
+        B
+      </text>
+      <text x="170" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        まん中は「両方」——足すだけだと二回数えていない？
       </text>
     </svg>
   );

@@ -38,7 +38,11 @@ import {
   XEL_LOG_EQUATION_SERIES,
   XEL_COMMON_LOG_SERIES,
 } from "./seriesExpLog";
-import { COUNT_BASIC_SERIES, COUNT_PRODSUM_SERIES } from "./seriesCounting";
+import {
+  COUNT_BASIC_SERIES,
+  COUNT_PRODSUM_SERIES,
+  COUNT_SUBTRACT_SERIES,
+} from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -505,6 +509,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "積の法則と和の法則 — かけるか足すかは樹形図の形が決める。省略樹形図・場合分け・約数の個数まで",
+  },
+  {
+    series: COUNT_SUBTRACT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "引き算で数える — 数えにくいものは残り・重なりに取り替えて引く。背番号・残った方・包除原理まで",
   },
   {
     series: ALGEBRA_PERMUTATION_SERIES,
