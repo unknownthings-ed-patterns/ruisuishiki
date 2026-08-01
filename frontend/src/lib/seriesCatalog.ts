@@ -43,6 +43,7 @@ import {
   COUNT_SUBTRACT_SERIES,
   COUNT_DIVIDE_SERIES,
   COUNT_PERM_SERIES,
+  COUNT_REPPERM_SERIES,
 } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
@@ -534,6 +535,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "場合の数",
     shortDescription:
       "順列（減りながらかける）— 使ったものは使えない、が「減りながらかける」に。階乗・しばり・隣り合う・交互まで",
+  },
+  {
+    series: COUNT_REPPERM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "重複順列（減らない枝）— 同じものを何度でも使えると「同じ数をかけ続ける」に。部屋割り・少なくとも1回・減る枝との対比まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {

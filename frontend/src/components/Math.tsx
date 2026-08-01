@@ -12344,6 +12344,41 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_TREE_CONST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeConst />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_ROOM_CHOICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountRoomChoice />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_TWO_TREES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTwoTrees />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_PERM_BUNDLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountPermBundle />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_POLYGON_PICK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountPolygonPick />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -13234,6 +13269,303 @@ export function CountSlotBound() {
       {slot(278, "自由", false, "s3")}
       <text x="170" y="160" fontSize="11" fill={accent} textAnchor="middle">
         しばりの強い先頭から埋める？ 端から埋める？
+      </text>
+    </svg>
+  );
+}
+
+/** 系6 step1: 減らない枝の樹形図（使っても減らない）。総数は描かない。 */
+export function CountTreeConst() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const dot = (x: number, y: number, key: string) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="8"
+      fill={fillColor}
+      stroke={stroke}
+      strokeWidth="1.2"
+    />
+  );
+  /** どの段からも同じ 3 本が伸び続ける（使っても減らない）。 */
+  const firsts = [50, 116, 182];
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="減らない枝の樹形図。1段目からは3本、そのどれからも3本、さらに3本と、使っても減らないので枝が段ごとに同じ本数のまま伸び続ける。総数は書かない"
+    >
+      <text x="52" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        1回め（3本）
+      </text>
+      <text x="160" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        2回め（3本）
+      </text>
+      <text x="268" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        3回め（3本）
+      </text>
+      {firsts.map((fy, i) => (
+        <g key={`f${i}`}>
+          <path
+            d={`M 30 116 L 52 ${fy}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          {dot(52, fy, `n${i}`)}
+          {[-16, 0, 16].map((dy, j) => {
+            const my = fy + dy;
+            return (
+              <g key={`m${i}${j}`}>
+                <path
+                  d={`M 60 ${fy} L 160 ${my}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                {dot(160, my, `mn${i}${j}`)}
+                <path
+                  d={`M 168 ${my} L 268 ${my}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+                {dot(268, my, `rn${i}${j}`)}
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      {dot(30, 116, "root")}
+      <text x="160" y="222" fontSize="11" fill={accent} textAnchor="middle">
+        枝が 3 → 3 → 3 と減らない——なぜ？
+      </text>
+    </svg>
+  );
+}
+
+/** 系6 step5: 人→部屋の対応（選ぶ側の視点）。分け方の総数は描かない。 */
+export function CountRoomChoice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const personFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const roomFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  /** 4 人の子（左）が、東・西の 2 部屋（右）のどちらかを選ぶ矢印。 */
+  const people = [40, 88, 136, 184];
+  return (
+    <svg
+      viewBox="0 0 340 224"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="人から部屋への対応図。一人ずつが東の部屋か西の部屋のどちらかを選ぶ。各人の選び方は2通りで、それが人数ぶん続く。分け方の総数は書かない"
+    >
+      <text x="56" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        一人ずつが
+      </text>
+      <text x="260" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        部屋を選ぶ（2通り）
+      </text>
+      {/* 部屋 */}
+      <rect x="228" y="40" width="86" height="52" rx="10" fill={roomFill} stroke={accent} strokeWidth="1.3" />
+      <text x="271" y="71" fontSize="13" fill={accent} textAnchor="middle">東の部屋</text>
+      <rect x="228" y="132" width="86" height="52" rx="10" fill={roomFill} stroke={accent} strokeWidth="1.3" />
+      <text x="271" y="163" fontSize="13" fill={accent} textAnchor="middle">西の部屋</text>
+      {/* 人と、どちらの部屋も選べる点線矢印 */}
+      {people.map((py, i) => (
+        <g key={`p${i}`}>
+          <circle cx="48" cy={py} r="12" fill={personFill} stroke={stroke} strokeWidth="1.2" />
+          <text x="48" y={py + 5} fontSize="12" fill={stroke} textAnchor="middle">{i + 1}</text>
+          <path d={`M 62 ${py} L 226 66`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+          <path d={`M 62 ${py} L 226 158`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+        </g>
+      ))}
+      <text x="150" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        「分ける」を「各人が選ぶ」と見ると？
+      </text>
+    </svg>
+  );
+}
+
+/** 系6 step10: 減る枝と減らない枝の対比。両方の総数は描かない。 */
+export function CountTwoTrees() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const dot = (x: number, y: number, key: string, faded = false) => (
+    <circle
+      key={key}
+      cx={x}
+      cy={y}
+      r="7"
+      fill={faded ? "none" : fillColor}
+      stroke={faded ? muted : stroke}
+      strokeWidth="1.1"
+      strokeDasharray={faded ? "3 3" : undefined}
+    />
+  );
+  /** 左＝減らない枝（3→3）／右＝減る枝（3→2）。同じ入口から、枝の伸び方だけがちがう。 */
+  return (
+    <svg
+      viewBox="0 0 340 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="減る枝と減らない枝の対比図。左は使っても減らないので枝が同じ本数のまま、右は使ったら減るので枝が1本ずつやせる。同じ入口から枝の伸び方だけがちがう。どちらの総数も書かない"
+    >
+      {/* 左：減らない枝 */}
+      <text x="86" y="24" fontSize="11" fill={accent} textAnchor="middle">
+        減らない枝（また使える）
+      </text>
+      {[54, 106, 158].map((fy, i) => (
+        <g key={`Lf${i}`}>
+          <path d={`M 24 106 L 44 ${fy}`} fill="none" stroke={muted} strokeWidth="1.1" />
+          {dot(44, fy, `Ln${i}`)}
+          {[-14, 0, 14].map((dy, j) => (
+            <g key={`Lc${i}${j}`}>
+              <path d={`M 51 ${fy} L 128 ${fy + dy}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+              {dot(128, fy + dy, `Lcn${i}${j}`)}
+            </g>
+          ))}
+        </g>
+      ))}
+      {dot(24, 106, "Lroot")}
+      <text x="86" y="204" fontSize="11" fill={muted} textAnchor="middle">
+        3 → 3
+      </text>
+      {/* 仕切り */}
+      <path d="M 170 40 L 170 200" fill="none" stroke={accent} strokeWidth="1.1" strokeDasharray="2 5" />
+      {/* 右：減る枝 */}
+      <text x="256" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        減る枝（使ったら消える）
+      </text>
+      {[54, 106, 158].map((fy, i) => (
+        <g key={`Rf${i}`}>
+          <path d={`M 196 106 L 216 ${fy}`} fill="none" stroke={muted} strokeWidth="1.1" />
+          {dot(216, fy, `Rn${i}`)}
+          {[-10, 10].map((dy, j) => (
+            <g key={`Rc${i}${j}`}>
+              <path d={`M 223 ${fy} L 300 ${fy + dy}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+              {dot(300, fy + dy, `Rcn${i}${j}`)}
+            </g>
+          ))}
+          {dot(300, fy - 26, `Rfade${i}`, true)}
+        </g>
+      ))}
+      {dot(196, 106, "Rroot")}
+      <text x="256" y="204" fontSize="11" fill={muted} textAnchor="middle">
+        3 → 2
+      </text>
+      <text x="170" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        分かれ目は「使ったら減るか、減らないか」だけ
+      </text>
+    </svg>
+  );
+}
+
+/** 系7 step1: 順列の一覧が同じ顔ぶれごとに束になる（順列→組）。組の総数は描かない。 */
+export function CountPermBundle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const chip = (x: number, y: number, label: string, key: string) => (
+    <g key={key}>
+      <rect x={x - 26} y={y - 12} width="52" height="24" rx="5" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x={x} y={y + 5} fontSize="12" fill={stroke} textAnchor="middle">{label}</text>
+    </g>
+  );
+  /** 同じ 3 人「甲・乙・丙」の並べ方 6 通り（順列）が、1 つの組に束ねられる。 */
+  const perms = ["甲乙丙", "甲丙乙", "乙甲丙", "乙丙甲", "丙甲乙", "丙乙甲"];
+  return (
+    <svg
+      viewBox="0 0 340 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="順列の一覧が同じ顔ぶれごとに束になる図。同じ3人の並べ方6通りが、順番を区別しない1つの組に束ねられる。束の中身は6つ。組の総数は書かない"
+    >
+      <text x="76" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        並べ方（順番あり）
+      </text>
+      <text x="272" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ組（順番なし）
+      </text>
+      <rect x="16" y="34" width="120" height="176" rx="12" fill={bundleFill} stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      {perms.map((p, i) => chip(76, 54 + i * 30, p, `p${i}`))}
+      <path d="M 140 122 L 232 122" fill="none" stroke={muted} strokeWidth="1.2" />
+      {chip(272, 122, "甲乙丙", "grp")}
+      <text x="76" y="228" fontSize="11" fill={accent} textAnchor="middle">
+        1 組が「並べ替えの数」だけ束になる——割る数は？
+      </text>
+    </svg>
+  );
+}
+
+/** 系7 step9: 多角形と頂点の選びの対応（3頂点で三角形）。図形の個数は描かない。 */
+export function CountPolygonPick() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dotFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const cx = 110;
+  const cy = 118;
+  const R = 76;
+  const N = 9;
+  const pts = Array.from({ length: N }, (_, k) => {
+    const a = -Math.PI / 2 + (2 * Math.PI * k) / N;
+    return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) };
+  });
+  const chosen = [0, 3, 5];
+  return (
+    <svg
+      viewBox="0 0 340 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="多角形の頂点から3つを選ぶと三角形が1つ決まる対応図。頂点を選ぶことと三角形を作ることが同じになる。三角形の総数は書かない"
+    >
+      {/* 多角形の辺 */}
+      <polygon
+        points={pts.map((p) => `${p.x},${p.y}`).join(" ")}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+      />
+      {/* 選んだ 3 頂点で作る三角形 */}
+      <polygon
+        points={chosen.map((k) => `${pts[k].x},${pts[k].y}`).join(" ")}
+        fill="color-mix(in oklch, var(--accent) 8%, transparent)"
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      {pts.map((p, k) => (
+        <circle
+          key={`v${k}`}
+          cx={p.x}
+          cy={p.y}
+          r={chosen.includes(k) ? 7 : 5}
+          fill={chosen.includes(k) ? dotFill : "none"}
+          stroke={chosen.includes(k) ? accent : stroke}
+          strokeWidth="1.3"
+        />
+      ))}
+      <text x="250" y="96" fontSize="12" fill={muted} textAnchor="middle">3 頂点を</text>
+      <text x="250" y="116" fontSize="12" fill={muted} textAnchor="middle">選ぶと</text>
+      <text x="250" y="136" fontSize="12" fill={accent} textAnchor="middle">三角形が1つ</text>
+      <text x="110" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        「選ぶ」と「三角形を作る」は同じ？
       </text>
     </svg>
   );
