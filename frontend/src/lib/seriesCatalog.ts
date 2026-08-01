@@ -49,7 +49,7 @@ import {
   COUNT_SAMEKIND_SERIES,
   COUNT_BIJECTION_SERIES,
 } from "./seriesCounting";
-import { PROB_DEF_SERIES } from "./seriesProbability";
+import { PROB_DEF_SERIES, PROB_COUNT_SERIES } from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -589,6 +589,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "確率の定義（均等な粒にたたき割る）— 起こりやすさが「同様に確からしい粒の個数の比」に。区別の原則・和の11通りの罠・じゃんけんまで",
+  },
+  {
+    series: PROB_COUNT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "場合の数との合流（分母と分子は同じ基準）— 順列・組合せがそのまま確率の分母に。内訳の積・区別する／しないの交差検算・どの2つも隣り合わないまで",
   },
   /* 数Ⅰ: 集合と命題 */
   {
