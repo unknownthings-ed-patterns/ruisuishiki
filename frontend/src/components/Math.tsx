@@ -12330,6 +12330,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_DISJOINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbDisjoint />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13219,6 +13226,72 @@ export function ProbDiceGrid() {
       ))}
       <text x="180" y="216" fontSize="12" fill={accent} textAnchor="middle">
         36 のマスはみんな同じ重さ——和が同じマスは、どの向きに並ぶ？
+      </text>
+    </svg>
+  );
+}
+
+/** 確率 系3 step1: 排反な2事象（重ならない2領域）と全体1。各確率値・答えは書かない。 */
+export function ProbDisjoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const wholeFill = "color-mix(in oklch, var(--accent) 4%, transparent)";
+  const fillA = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const fillB = "color-mix(in oklch, var(--accent) 28%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="全体の面積を1とする大きな角丸長方形の中に、重ならない2つの領域Aと領域Bが並んでいる。2つは同時には起こらない（排反）。それぞれの確率値・答えは書かない"
+    >
+      <rect
+        x="24"
+        y="34"
+        width="312"
+        height="128"
+        rx="12"
+        fill={wholeFill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="40" y="54" fontSize="12" fill={muted}>
+        全体の面積 ＝ 1
+      </text>
+      {/* 重ならない 2 領域 */}
+      <rect
+        x="44"
+        y="72"
+        width="104"
+        height="74"
+        rx="8"
+        fill={fillA}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="96" y="114" fontSize="14" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      <rect
+        x="176"
+        y="72"
+        width="80"
+        height="74"
+        rx="8"
+        fill={fillB}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text x="216" y="114" fontSize="14" fill={stroke} textAnchor="middle">
+        B
+      </text>
+      <text x="298" y="114" fontSize="11" fill={muted} textAnchor="middle">
+        すきま
+      </text>
+      <text x="180" y="184" fontSize="12" fill={accent} textAnchor="middle">
+        2 つが同時に起こらないとき、「A か B が起こる」の面積はどう作れる？
       </text>
     </svg>
   );

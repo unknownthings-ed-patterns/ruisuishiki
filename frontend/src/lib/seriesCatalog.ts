@@ -49,7 +49,11 @@ import {
   COUNT_SAMEKIND_SERIES,
   COUNT_BIJECTION_SERIES,
 } from "./seriesCounting";
-import { PROB_DEF_SERIES, PROB_COUNT_SERIES } from "./seriesProbability";
+import {
+  PROB_DEF_SERIES,
+  PROB_COUNT_SERIES,
+  PROB_ADDSUB_SERIES,
+} from "./seriesProbability";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -597,6 +601,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "確率",
     shortDescription:
       "場合の数との合流（分母と分子は同じ基準）— 順列・組合せがそのまま確率の分母に。内訳の積・区別する／しないの交差検算・どの2つも隣り合わないまで",
+  },
+  {
+    series: PROB_ADDSUB_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "足し算と引き算（排反と余事象）— 排反なら足す・全体は1。余事象と「少なくとも1つ」を1から引く近道・場合の数と確率の2つの道の交差検算まで",
   },
   /* 数Ⅰ: 集合と命題 */
   {
