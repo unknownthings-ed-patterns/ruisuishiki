@@ -38,6 +38,7 @@ import {
   XEL_LOG_EQUATION_SERIES,
   XEL_COMMON_LOG_SERIES,
 } from "./seriesExpLog";
+import { COUNT_BASIC_SERIES } from "./seriesCounting";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -486,6 +487,24 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "三角比",
     shortDescription: "正弦定理と外接円 — 辺と対角を円で結ぶ",
   },
+  /* 数A: 場合の数（池田『入門問題精講』第4章＝三角比の直後。
+   * 背骨 docs/counting_series_design_fable.md・2026-08-01 裁定でここへ移動）。
+   * 旧 algebra_perm_01 は系5（順列）実装時に吸収・SERIES_REDIRECTS 予定。 */
+  {
+    series: COUNT_BASIC_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription:
+      "数え上げの基本 — 規則を決めて書き並べる。辞書式・樹形図・後もどりしない規則で「もれなく、重複なく」へ",
+  },
+  {
+    series: ALGEBRA_PERMUTATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "場合の数",
+    shortDescription: "順列 P(n, 2)",
+  },
   /* 数Ⅰ: 集合と命題 */
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
@@ -511,14 +530,6 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "データの分析",
     shortDescription: "分散の入り口",
-  },
-  /* 数A: 場合の数 */
-  {
-    series: ALGEBRA_PERMUTATION_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "場合の数",
-    shortDescription: "順列 P(n, 2)",
   },
   /* 数A: 整数の性質 */
   {

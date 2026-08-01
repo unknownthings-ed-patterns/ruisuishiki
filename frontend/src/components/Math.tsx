@@ -12260,6 +12260,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<COUNT_TREE_LEX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeLex />
+            </div>
+          );
+        }
+        if (trimmed === "<<COUNT_TREE_NORETURN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CountTreeNoReturn />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -12306,5 +12320,160 @@ export function MathBody({ text }: { text: string }) {
         );
       })}
     </>
+  );
+}
+
+/* ============================================================================
+ * 場合の数（seriesCounting.ts）用の図
+ * 「フェードアウトする足場」：step1 と質的変化 step のみ。答え（総数）は描かない。
+ * ========================================================================== */
+
+/** 系1 step1: 辞書式（五十音順）の樹形図。3枚から2枚を並べる。総数は描かない。 */
+export function CountTreeLex() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const firsts = [
+    { label: "こ", y: 62, children: ["た", "ね"] },
+    { label: "た", y: 122, children: ["こ", "ね"] },
+    { label: "ね", y: 182, children: ["こ", "た"] },
+  ];
+  const node = (x: number, y: number, label: string, key: string) => (
+    <g key={key}>
+      <rect
+        x={x - 14}
+        y={y - 14}
+        width="28"
+        height="28"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x={x} y={y + 5} fontSize="14" fill={stroke} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="五十音順の樹形図。先頭の文字こ・た・ねのそれぞれから2文字目の枝が伸びる。総数は書かない"
+    >
+      <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        先頭（五十音順）
+      </text>
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        2文字目
+      </text>
+      {firsts.map((f, i) => (
+        <g key={`f${i}`}>
+          {node(60, f.y, f.label, `n${i}`)}
+          {f.children.map((c, j) => {
+            const cy = f.y - 16 + j * 32;
+            return (
+              <g key={`c${i}${j}`}>
+                <path
+                  d={`M 76 ${f.y} L 184 ${cy}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1.2"
+                />
+                {node(200, cy, c, `cn${i}${j}`)}
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      <path
+        d="M 250 46 L 250 198"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="4 4"
+      />
+      <text x="262" y="118" fontSize="12" fill={accent}>
+        枝の先は
+      </text>
+      <text x="262" y="136" fontSize="12" fill={accent}>
+        全部で何本？
+      </text>
+    </svg>
+  );
+}
+
+/** 系1 step5: 後もどりしない規則の樹形図。4人から順番のない2人組。総数は描かない。 */
+export function CountTreeNoReturn() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  /** 五十音順: つ→な,は,る／な→は,る／は→る（後もどりしない） */
+  const rows = [
+    { label: "つ", y: 58, children: ["な", "は", "る"] },
+    { label: "な", y: 120, children: ["は", "る"] },
+    { label: "は", y: 166, children: ["る"] },
+  ];
+  const node = (x: number, y: number, label: string, key: string) => (
+    <g key={key}>
+      <rect
+        x={x - 14}
+        y={y - 14}
+        width="28"
+        height="28"
+        rx="6"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x={x} y={y + 5} fontSize="14" fill={stroke} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="後もどりしない規則の樹形図。つ・な・はのそれぞれから、五十音であとの文字だけへ枝が伸びる。る・は のような後もどりの枝はない。総数は書かない"
+    >
+      <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        前の文字
+      </text>
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        あとの文字（後もどりしない）
+      </text>
+      {rows.map((f, i) => (
+        <g key={`f${i}`}>
+          {node(60, f.y, f.label, `n${i}`)}
+          {f.children.map((c, j) => {
+            const cy = f.y - 16 * (f.children.length - 1) + j * 32;
+            return (
+              <g key={`c${i}${j}`}>
+                <path
+                  d={`M 76 ${f.y} L 184 ${cy}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1.2"
+                />
+                {node(200, cy, c, `cn${i}${j}`)}
+              </g>
+            );
+          })}
+        </g>
+      ))}
+      <text x="252" y="200" fontSize="12" fill={accent}>
+        「る・は」は
+      </text>
+      <text x="252" y="218" fontSize="12" fill={accent}>
+        どこへ消えた？
+      </text>
+    </svg>
   );
 }
