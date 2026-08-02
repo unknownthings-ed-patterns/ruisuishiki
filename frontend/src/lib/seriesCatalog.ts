@@ -12,7 +12,6 @@ import {
   ALGEBRA_1_SERIES_LIST,
   ALGEBRA_DIVISOR_COUNT_SERIES,
   ALGEBRA_MEAN_SERIES,
-  ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
   ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
@@ -65,6 +64,7 @@ import {
   SET_COMPLEMENT_SERIES,
   LOGIC_PROPOSITION_SERIES,
   LOGIC_CONTRAPOSITIVE_SERIES,
+  LOGIC_NECSUF_SERIES,
 } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
@@ -706,11 +706,12 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "逆・裏・対偶（否定してひっくり返す）— 境界を取りこぼさない条件の否定、かつ・またはのド・モルガン、逆と裏は互いに対偶、包含の逆転で対偶だけが真偽を保つ、対偶で判定しやすい方を選ぶまで",
   },
   {
-    series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
+    series: LOGIC_NECSUF_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "集合と論理",
-    shortDescription: "必要条件・十分条件",
+    shortDescription:
+      "必要条件・十分条件（矢印の向きが名前を決める）— 内側＝十分（そうであれば OK）・外側＝必要（そうでなければダメ）、2 乗の必要条件、対偶で読む偶奇、必要十分は同じ集合、3 条件の連鎖まで",
   },
   /* 旧 topicGroup「2 次関数」は「関数と関数のグラフ」へ吸収。
    * graph/vertex → 系列3、min → 系列4（SERIES_REDIRECTS）。
@@ -1113,6 +1114,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra2_log_01: "algebra2_log_def_01",
   /* 場合の数（背骨 D3・§6）：旧「順列 P(n,2)」プロトタイプ → 系5「順列」へ吸収 */
   algebra_perm_01: "algebra1_count_perm_01",
+  /* 集合と論理（背骨 D3・§7）：旧「必要条件・十分条件」5 問 → 系6 へ吸収 */
+  algebra_necsuf_01: "algebra1_logic_necsuf_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */

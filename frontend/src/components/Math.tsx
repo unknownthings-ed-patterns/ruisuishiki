@@ -12442,6 +12442,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<SET_NECSUF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetNecSuf />
+            </div>
+          );
+        }
+        if (trimmed === "<<SET_NECSUF_BREAK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetNecSufBreak />
+            </div>
+          );
+        }
         if (trimmed === "<<LOGIC_NUMLINE_NEG>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15492,6 +15506,98 @@ export function LogicChart() {
 
       <text x="180" y="238" fontSize="11.5" fill={accent} textAnchor="middle">
         この 4 つのうち、もとと真偽が必ず一致するのはどれ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SET_NECSUF（系6 step1・辞書 十分条件／必要条件）：内側の小さな輪と外側の
+ * 大きな輪。内側に立つ／外側にいない、という立ち位置で条件の名前が変わることを
+ * 問いで気づかせる。「十分」「必要」のラベル（＝答え）は書かない。
+ */
+export function SetNecSuf() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillInner = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const fillOuter = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="内側の小さな輪が、外側の大きな輪にすっぽり含まれている図。内側の輪に立つと外側は確定するか、外側の輪にいないと内側の可能性は残るか、という立ち位置を問う。『十分』『必要』のラベルは書かない"
+    >
+      {/* 外側の大きな輪 */}
+      <circle cx="150" cy="108" r="86" fill={fillOuter} stroke={stroke} strokeWidth="1.3" />
+      <text x="150" y="46" fontSize="12" fill={muted} textAnchor="middle">
+        外側の条件
+      </text>
+      {/* 内側の小さな輪 */}
+      <circle cx="132" cy="122" r="42" fill={fillInner} stroke={stroke} strokeWidth="1.3" />
+      <text x="132" y="127" fontSize="12" fill={muted} textAnchor="middle">
+        内側の条件
+      </text>
+
+      {/* 立ち位置を示す小さな人（点）。答えは書かない */}
+      <circle cx="132" cy="150" r="3.5" fill={accent} />
+      <text x="248" y="96" fontSize="10.5" fill={accent} textAnchor="start">
+        内側に立つと
+      </text>
+      <text x="248" y="110" fontSize="10.5" fill={accent} textAnchor="start">
+        外側は確定？
+      </text>
+      <text x="248" y="140" fontSize="10.5" fill={muted} textAnchor="start">
+        外側にいないと
+      </text>
+      <text x="248" y="154" fontSize="10.5" fill={muted} textAnchor="start">
+        内側の望みは？
+      </text>
+
+      <text x="180" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        立つ側が変わると、条件の名前はどう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SET_NECSUF_BREAK（系6 step5）：$1$ 点だけの集合と $2$ 点の集合。方程式の解集合が
+ * 複数要素になり、包含が片側だけ生きる場面。どちらがどちらに含まれるか（包含の向き）は
+ * 書かず、問いで終える。
+ */
+export function SetNecSufBreak() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左に点が 1 つだけ入った集合、右に点が 2 つ入った集合を並べた図。1 点の集合は 2 点の集合にすっぽり入るか、包含はどちら向きに立つかを問う。包含の向きは書かない"
+    >
+      {/* 1 点だけの集合（左） */}
+      <text x="96" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        1 点だけの集合
+      </text>
+      <ellipse cx="96" cy="108" rx="56" ry="46" fill={fill} stroke={stroke} strokeWidth="1.3" />
+      <circle cx="96" cy="108" r="5" fill={accent} />
+
+      {/* 2 点の集合（右） */}
+      <text x="264" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        2 点の集合
+      </text>
+      <ellipse cx="264" cy="108" rx="62" ry="50" fill={fill} stroke={stroke} strokeWidth="1.3" />
+      <circle cx="240" cy="108" r="5" fill={accent} />
+      <circle cx="288" cy="108" r="5" fill={accent} />
+
+      <text x="180" y="188" fontSize="11.5" fill={accent} textAnchor="middle">
+        小さい方は大きい方にすっぽり入る？ 向きはどちら？
       </text>
     </svg>
   );
