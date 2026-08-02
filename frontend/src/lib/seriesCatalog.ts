@@ -63,6 +63,7 @@ import {
   SET_ELEMENT_SERIES,
   SET_OPERATION_SERIES,
   SET_COMPLEMENT_SERIES,
+  LOGIC_PROPOSITION_SERIES,
 } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
@@ -686,6 +687,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と論理",
     shortDescription:
       "補集合とド・モルガンの法則（「でない」は世界を裏返す）— 全体 U を決めて『でない』を数え、否定が ∩ と ∪ を入れ替える対称性を 2 つの道の一致から発見する",
+  },
+  {
+    series: LOGIC_PROPOSITION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "命題と反例（「ならば」は一方通行）— たった 1 つの反例が命題を倒す真偽の非対称性、逆は必ずしも真ならず、2 乗に隠れる負の反例、2 変数の反例まで",
   },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,

@@ -12421,6 +12421,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<LOGIC_NUMLINE_GAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogicNumlineGap />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOGIC_ARROW_ONEWAY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogicArrowOneway />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15278,6 +15292,115 @@ export function SetDeMorgan() {
       </text>
       <text x="180" y="202" fontSize="10.5" fill={muted} textAnchor="middle">
         自分で塗り重ねて、確かめてみよう。
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * LOGIC_NUMLINE_GAP（系4 step1）：数直線上に、p を満たす範囲と q を満たす範囲を
+ * ずらして重ねて描く。2 つの範囲の「ずれ」＝約束破り（反例）の住むすき間を「?」で示す。
+ * 反例そのものの値は書かない（自得を裏切らない）。問いで終える。
+ */
+export function LogicNumlineGap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillP = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  const fillGap = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線図。上の帯は『p を満たす範囲』、下の帯は『q を満たす範囲』で、q のほうが右にずれて始まる。p にはいるのに q からこぼれるすき間に「?」を置き、約束を破るものがそこにいるかを問う。反例の値は書かない"
+    >
+      {/* 数直線本体 */}
+      <line x1="24" y1="150" x2="340" y2="150" stroke={stroke} strokeWidth="1.4" />
+      <polygon points="340,150 332,146 332,154" fill={stroke} />
+      <line x1="150" y1="146" x2="150" y2="154" stroke={stroke} strokeWidth="1.2" />
+      <line x1="238" y1="146" x2="238" y2="154" stroke={stroke} strokeWidth="1.2" />
+      <text x="150" y="170" fontSize="10.5" fill={muted} textAnchor="middle">
+        p の左はし
+      </text>
+      <text x="238" y="170" fontSize="10.5" fill={muted} textAnchor="middle">
+        q の左はし
+      </text>
+
+      {/* p を満たす範囲（上の帯・p の左はしから右へ） */}
+      <text x="30" y="46" fontSize="11" fill={muted} textAnchor="start">
+        p を満たす範囲
+      </text>
+      <rect x="150" y="54" width="182" height="14" rx="4" fill={fillP} stroke={accent} strokeWidth="1.2" />
+      <polygon points="332,61 322,55 322,67" fill={accent} />
+
+      {/* q を満たす範囲（下の帯・q の左はしから右へ） */}
+      <text x="30" y="100" fontSize="11" fill={muted} textAnchor="start">
+        q を満たす範囲
+      </text>
+      <rect x="238" y="108" width="94" height="14" rx="4" fill={fillP} stroke={accent} strokeWidth="1.2" />
+      <polygon points="332,115 322,109 322,121" fill={accent} />
+
+      {/* すき間（p にはいるが q からこぼれる帯） */}
+      <rect x="150" y="82" width="88" height="12" rx="3" fill={fillGap} stroke={accent} strokeWidth="1" strokeDasharray="3 2" />
+      <text x="194" y="91" fontSize="10" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="180" y="16" fontSize="12" fill={accent} textAnchor="middle">
+        約束を破るものは、このすき間にいる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * LOGIC_ARROW_ONEWAY（系4 step5）：内側の輪 p から外側の輪 q への一方通行の矢印。
+ * 逆向き（q → p）には進入禁止マークを置いて、行きは歩けても帰りは歩けるとは限らない
+ * ことを示す。各命題の真偽は書かない。問いで終える。
+ */
+export function LogicArrowOneway() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--background)";
+  const fillInner = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const fillOuter = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const noEntry = "color-mix(in oklch, var(--accent) 55%, var(--foreground))";
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="内側の小さな輪 p が、外側の大きな輪 q に含まれている図。p から q へは一方通行の矢印が通り、q から p へ戻る向きには進入禁止マークが置かれている。行きは歩けても帰り道も歩けるかを問う。命題の真偽は書かない"
+    >
+      {/* 外側の輪 q */}
+      <circle cx="130" cy="108" r="82" fill={fillOuter} stroke={stroke} strokeWidth="1.3" />
+      <text x="130" y="52" fontSize="13" fill={stroke} textAnchor="middle">q</text>
+      {/* 内側の輪 p */}
+      <circle cx="112" cy="120" r="40" fill={fillInner} stroke={stroke} strokeWidth="1.3" />
+      <text x="112" y="125" fontSize="13" fill={stroke} textAnchor="middle">p</text>
+
+      {/* 行き：p ならば q（一方通行の矢印） */}
+      <line x1="172" y1="96" x2="252" y2="80" stroke={accent} strokeWidth="2" />
+      <polygon points="252,80 242,78 245,88" fill={accent} />
+      <text x="214" y="66" fontSize="11" fill={accent} textAnchor="middle">
+        p ならば q
+      </text>
+
+      {/* 帰り：進入禁止（q → p は保証されない） */}
+      <line x1="252" y1="132" x2="176" y2="146" stroke={muted} strokeWidth="1.6" strokeDasharray="4 3" />
+      <text x="214" y="128" fontSize="11" fill={muted} textAnchor="middle">
+        q ならば p ？
+      </text>
+      {/* 進入禁止マーク */}
+      <circle cx="300" cy="112" r="18" fill={bg} stroke={noEntry} strokeWidth="2.4" />
+      <line x1="288" y1="112" x2="312" y2="112" stroke={noEntry} strokeWidth="2.4" />
+
+      <text x="180" y="186" fontSize="12" fill={accent} textAnchor="middle">
+        行きは歩けても、帰り道も同じように歩ける？
       </text>
     </svg>
   );
