@@ -65,6 +65,7 @@ import {
   LOGIC_PROPOSITION_SERIES,
   LOGIC_CONTRAPOSITIVE_SERIES,
   LOGIC_NECSUF_SERIES,
+  LOGIC_PROOF_SERIES,
 } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
@@ -712,6 +713,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と論理",
     shortDescription:
       "必要条件・十分条件（矢印の向きが名前を決める）— 内側＝十分（そうであれば OK）・外側＝必要（そうでなければダメ）、2 乗の必要条件、対偶で読む偶奇、必要十分は同じ集合、3 条件の連鎖まで",
+  },
+  {
+    series: LOGIC_PROOF_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "背理法（矛盾で倒す間接証明）— 偶奇や余りを式で組み、対偶で『2 乗が倍数ならもとも倍数』を示し、√3 の無理数性・四角形の内角・所持金の平均・有理数＋無理数まで、証明の関節を数値で採点する",
   },
   /* 旧 topicGroup「2 次関数」は「関数と関数のグラフ」へ吸収。
    * graph/vertex → 系列3、min → 系列4（SERIES_REDIRECTS）。

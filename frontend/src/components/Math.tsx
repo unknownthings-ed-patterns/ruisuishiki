@@ -12456,6 +12456,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROOF_PARITY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProofParity />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROOF_LADDER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProofLadder />
+            </div>
+          );
+        }
         if (trimmed === "<<LOGIC_NUMLINE_NEG>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15598,6 +15612,131 @@ export function SetNecSufBreak() {
 
       <text x="180" y="188" fontSize="11.5" fill={accent} textAnchor="middle">
         小さい方は大きい方にすっぽり入る？ 向きはどちら？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * PROOF_PARITY（系7 step1・辞書 背理法）：偶数 $2k$ の箱と奇数 $2k+1$ の箱。
+ * 偶数・奇数を「式の形」で見る絵。$2$ で割った余りの値（＝答え）は書かず、
+ * 「自分自身とかけ合わせると、どちらの仲間になる？」と問いで終える。
+ */
+export function ProofParity() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillEven = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const fillOdd = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左に偶数を式で表した箱（2k）、右に奇数を式で表した箱（2k+1）を並べた図。奇数を自分自身とかけ合わせると偶数と奇数のどちらの仲間になるかを問う。2 で割った余りの値は書かない"
+    >
+      {/* 偶数の箱 */}
+      <text x="96" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        偶数の箱
+      </text>
+      <rect x="36" y="52" width="120" height="70" rx="8" fill={fillEven} stroke={stroke} strokeWidth="1.3" />
+      <text x="96" y="95" fontSize="22" fill={stroke} textAnchor="middle">
+        2k
+      </text>
+      <text x="96" y="140" fontSize="10.5" fill={muted} textAnchor="middle">
+        2 でちょうど分けられる
+      </text>
+
+      {/* 奇数の箱 */}
+      <text x="264" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        奇数の箱
+      </text>
+      <rect x="204" y="52" width="120" height="70" rx="8" fill={fillOdd} stroke={stroke} strokeWidth="1.3" />
+      <text x="264" y="95" fontSize="22" fill={stroke} textAnchor="middle">
+        2k + 1
+      </text>
+      <text x="264" y="140" fontSize="10.5" fill={muted} textAnchor="middle">
+        2 で分けると 1 だけあまる
+      </text>
+
+      <text x="180" y="172" fontSize="11.5" fill={accent} textAnchor="middle">
+        自分自身とかけ合わせると、どちらの仲間になる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * PROOF_LADDER（系7 step5・辞書 背理法）：「仮定 → … → 矛盾」の梯子。
+ * 各段の中身（＝証明の関節の答え）は書かず、いちばん上に矛盾の亀裂の印だけを置く。
+ * 「仮定から出発して、どんな段をのぼると矛盾に着く？」と問いで終える。
+ */
+export function ProofLadder() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rail = "color-mix(in oklch, var(--foreground) 45%, transparent)";
+  const fill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const danger = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  // 段（下＝仮定、上＝矛盾）。中の関節は空欄。
+  const rungs = [
+    { y: 150, label: "仮定：書けたとする", accentLabel: true },
+    { y: 116, label: "？" },
+    { y: 82, label: "？" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="下から『仮定：書けたとする』、途中は空欄の段、いちばん上に矛盾の亀裂、という梯子の図。仮定から出発してどんな段をのぼると矛盾に着くかを問う。各段の中身（証明の関節の答え）は書かない"
+    >
+      {/* 梯子の柱 */}
+      <line x1="96" y1="44" x2="96" y2="168" stroke={rail} strokeWidth="2.4" />
+      <line x1="224" y1="44" x2="224" y2="168" stroke={rail} strokeWidth="2.4" />
+
+      {/* 段（下＝仮定、上＝空欄の関節） */}
+      {rungs.map((r, k) => (
+        <g key={k}>
+          <rect
+            x="104"
+            y={r.y - 13}
+            width="112"
+            height="26"
+            rx="5"
+            fill={fill}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text
+            x="160"
+            y={r.y + 4}
+            fontSize={r.accentLabel ? 10.5 : 15}
+            fill={r.accentLabel ? accent : muted}
+            textAnchor="middle"
+          >
+            {r.label}
+          </text>
+        </g>
+      ))}
+
+      {/* いちばん上＝矛盾の亀裂 */}
+      <rect x="104" y="31" width="112" height="26" rx="5" fill={danger} stroke={accent} strokeWidth="1.4" />
+      <polyline
+        points="150,33 156,42 148,46 156,55"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <text x="176" y="48" fontSize="11" fill={accent} textAnchor="start">
+        矛盾
+      </text>
+
+      <text x="160" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        仮定から、どんな段をのぼると矛盾に着く？
       </text>
     </svg>
   );
