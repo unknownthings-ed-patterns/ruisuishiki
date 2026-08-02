@@ -64,6 +64,7 @@ import {
   SET_OPERATION_SERIES,
   SET_COMPLEMENT_SERIES,
   LOGIC_PROPOSITION_SERIES,
+  LOGIC_CONTRAPOSITIVE_SERIES,
 } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
@@ -695,6 +696,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と論理",
     shortDescription:
       "命題と反例（「ならば」は一方通行）— たった 1 つの反例が命題を倒す真偽の非対称性、逆は必ずしも真ならず、2 乗に隠れる負の反例、2 変数の反例まで",
+  },
+  {
+    series: LOGIC_CONTRAPOSITIVE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "逆・裏・対偶（否定してひっくり返す）— 境界を取りこぼさない条件の否定、かつ・またはのド・モルガン、逆と裏は互いに対偶、包含の逆転で対偶だけが真偽を保つ、対偶で判定しやすい方を選ぶまで",
   },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,

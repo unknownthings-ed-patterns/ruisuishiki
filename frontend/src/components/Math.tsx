@@ -12435,6 +12435,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<LOGIC_CHART>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogicChart />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOGIC_NUMLINE_NEG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogicNumlineNeg />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15401,6 +15415,137 @@ export function LogicArrowOneway() {
 
       <text x="180" y="186" fontSize="12" fill={accent} textAnchor="middle">
         行きは歩けても、帰り道も同じように歩ける？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * LOGIC_CHART（系5 step5・辞書 対偶）：もとの命題 p ⇒ q を左上に置き、
+ * 逆（ひっくり返す）・裏（否定する）・対偶（否定してひっくり返す）を
+ * 四つ角に配してラベル付きの矢印でつなぐチャート。
+ * 真偽の一致関係（＝答え）は書かない。問いで終える。
+ */
+export function LogicChart() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--background)";
+  // すべてのボックスを同じ見た目にする（真偽の一致ペア＝答えを色で漏らさない）。
+  const box = (x: number, y: number, tag: string, formula: string) => (
+    <>
+      <rect
+        x={x}
+        y={y}
+        width="132"
+        height="46"
+        rx="7"
+        fill={bg}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x={x + 66} y={y + 19} fontSize="11.5" fill={muted} textAnchor="middle">
+        {tag}
+      </text>
+      <text x={x + 66} y={y + 37} fontSize="11" fill={stroke} textAnchor="middle">
+        {formula}
+      </text>
+    </>
+  );
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="四つ角のチャート。左上にもとの命題『p ならば q』、右上に逆『q ならば p』（横向きの矢印にラベル『ひっくり返す＝逆』）、左下に裏『p でないならば q でない』（縦向きの矢印にラベル『否定する＝裏』）、右下に対偶『q でないならば p でない』（ななめの矢印にラベル『否定してひっくり返す＝対偶』）。この 4 つのうちもとと真偽が必ず一致するのはどれかを問う。真偽の一致関係は書かない"
+    >
+      {/* 4 つのボックス（見た目は同じ・答えを漏らさない） */}
+      {box(24, 30, "もと", "p ならば q")}
+      {box(204, 30, "逆", "q ならば p")}
+      {box(24, 150, "裏", "p でない → q でない")}
+      {box(204, 150, "対偶", "q でない → p でない")}
+
+      {/* 逆：もと → 右（ひっくり返す・横） */}
+      <line x1="156" y1="53" x2="204" y2="53" stroke={muted} strokeWidth="1.5" />
+      <polygon points="204,53 194,49 194,57" fill={muted} />
+      <text x="180" y="45" fontSize="9.5" fill={muted} textAnchor="middle">
+        ひっくり返す
+      </text>
+
+      {/* 裏：もと → 下（否定する・縦） */}
+      <line x1="90" y1="76" x2="90" y2="150" stroke={muted} strokeWidth="1.5" />
+      <polygon points="90,150 86,140 94,140" fill={muted} />
+      <text x="62" y="116" fontSize="9.5" fill={muted} textAnchor="middle">
+        否定する
+      </text>
+
+      {/* 対偶：もと → 右下（否定してひっくり返す・ななめ） */}
+      <line x1="150" y1="72" x2="214" y2="150" stroke={muted} strokeWidth="1.5" strokeDasharray="5 3" />
+      <polygon points="214,150 204,146 210,138" fill={muted} />
+      <text x="205" y="104" fontSize="9.5" fill={muted} textAnchor="middle">
+        否定して
+      </text>
+      <text x="205" y="116" fontSize="9.5" fill={muted} textAnchor="middle">
+        ひっくり返す
+      </text>
+
+      <text x="180" y="238" fontSize="11.5" fill={accent} textAnchor="middle">
+        この 4 つのうち、もとと真偽が必ず一致するのはどれ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * LOGIC_NUMLINE_NEG（系5 step1・辞書 否定）：不等式条件の否定の塗り分け。
+ * 上の帯は「もとの条件」（境界は白丸＝入らない）、下の帯は「否定した条件」で、
+ * 反対側を塗り、境界が黒丸（＝入る）に変わる。境界の 1 点の帰属が
+ * 否定でどちらに移るかを問う。境界の値は書かない（自得を裏切らない）。
+ */
+export function LogicNumlineNeg() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const bg = "var(--background)";
+  const bx = 186; // 境界の x 座標
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="2 本の数直線図。上は『もとの条件』で境界より左側を塗り、境界は白丸（入らない）。下は『否定した条件』で境界より右側を塗り、境界は黒丸（入る）。境界の 1 点が否定するとどちら側に入るのかを問う。境界の値は書かない"
+    >
+      {/* もとの条件（上・境界より左を塗り、境界は白丸＝入らない） */}
+      <text x="30" y="34" fontSize="11" fill={muted} textAnchor="start">
+        もとの条件
+      </text>
+      <line x1="24" y1="60" x2="336" y2="60" stroke={stroke} strokeWidth="1.3" />
+      <polygon points="336,60 328,56 328,64" fill={stroke} />
+      <rect x="24" y="53" width={bx - 24} height="14" rx="3" fill={fill} />
+      <line x1="24" y1="60" x2={bx} y2="60" stroke={accent} strokeWidth="3" />
+      <circle cx={bx} cy="60" r="6" fill={bg} stroke={accent} strokeWidth="1.8" />
+      <text x={bx} y="86" fontSize="10" fill={muted} textAnchor="middle">
+        境界（白丸＝入らない）
+      </text>
+
+      {/* 否定した条件（下・境界より右を塗り、境界は黒丸＝入る） */}
+      <text x="30" y="128" fontSize="11" fill={muted} textAnchor="start">
+        否定した条件
+      </text>
+      <line x1="24" y1="150" x2="336" y2="150" stroke={stroke} strokeWidth="1.3" />
+      <polygon points="336,150 328,146 328,154" fill={stroke} />
+      <rect x={bx} y="143" width={336 - bx} height="14" rx="3" fill={fill} />
+      <line x1={bx} y1="150" x2="336" y2="150" stroke={accent} strokeWidth="3" />
+      <circle cx={bx} cy="150" r="6" fill={accent} stroke={accent} strokeWidth="1.8" />
+      <text x={bx} y="176" fontSize="10" fill={muted} textAnchor="middle">
+        境界（黒丸＝入る？）
+      </text>
+
+      <text x="180" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        境界の 1 点は、否定するとどちら側に入る？
       </text>
     </svg>
   );
