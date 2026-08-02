@@ -59,7 +59,7 @@ import {
   PROB_POSTERIOR_SERIES,
   PROB_EXPECT_SERIES,
 } from "./seriesProbability";
-import { SET_ELEMENT_SERIES } from "./seriesSetLogic";
+import { SET_ELEMENT_SERIES, SET_OPERATION_SERIES } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -666,6 +666,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と論理",
     shortDescription:
       "集合と部分集合（∈ と ⊂）— 判定基準の明確な『集まり』を列挙でつかみ、モノと集まりの階層のことば、○×対応で数える部分集合の個数まで",
+  },
+  {
+    series: SET_OPERATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "共通部分と和集合（∩ と ∪）— 『かつ』を重なり・『または』を合わせに翻訳し、両方込みの数え方、3 集合の組み替え、約数の共通部分＝最大公約数の約数まで",
   },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,

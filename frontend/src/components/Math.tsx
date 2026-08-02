@@ -12407,6 +12407,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<SET_VENN_THREE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetVennThree />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15134,6 +15141,59 @@ export function SetSubsetBits() {
       </text>
       <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
         ○×の列と部分集合は、過不足なく対応している？
+      </text>
+    </svg>
+  );
+}
+
+/** 集合と論理 系2 step5: 3 つの輪。答えの塗り（結果の領域）は書かない。 */
+export function SetVennThree() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const fillA = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="3つの輪A・B・Cが互いに重なり合う図。かっこの順序で先に作る領域が変わることを問う。どの領域が答えか（塗りの結果）は書かない"
+    >
+      <circle
+        cx="132"
+        cy="92"
+        r="60"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <circle
+        cx="208"
+        cy="92"
+        r="60"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <circle
+        cx="170"
+        cy="150"
+        r="60"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="96" y="72" fontSize="14" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      <text x="244" y="72" fontSize="14" fill={stroke} textAnchor="middle">
+        B
+      </text>
+      <text x="170" y="192" fontSize="14" fill={stroke} textAnchor="middle">
+        C
+      </text>
+      <text x="170" y="16" fontSize="11" fill={accent} textAnchor="middle">
+        先に合わせる？ 先に重ねる？——かっこはどちらを命じている？
       </text>
     </svg>
   );
