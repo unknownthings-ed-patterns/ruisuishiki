@@ -12414,6 +12414,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<SET_DEMORGAN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetDeMorgan />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -15194,6 +15201,83 @@ export function SetVennThree() {
       </text>
       <text x="170" y="16" fontSize="11" fill={accent} textAnchor="middle">
         先に合わせる？ 先に重ねる？——かっこはどちらを命じている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 集合 系3 step5・辞書: ド・モルガンの「塗り比べ」2 枚。
+ * 左＝「合わせてから外を見る」道、右＝「それぞれの外の重なり」道。
+ * 「一致する」という宣言は書かず、キャプションは問いで終える
+ * （2 つの道が同じ場所に着くかどうかは学習者が塗って発見する）。
+ */
+export function SetDeMorgan() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--background)";
+  const fillUnion = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const fillOutside = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="2 枚の塗り比べ図。左は A と B を合わせた領域を塗り『その外を見ると？』と問い、右は A の外と B の外の重なりを塗る。2 つの道が同じ場所に着くかどうか（＝答え）は書かない"
+    >
+      {/* 左パネル：A ∪ B を作って、その外を見る道 */}
+      <text x="90" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        合わせてから、外を見る道
+      </text>
+      <rect
+        x="14"
+        y="34"
+        width="152"
+        height="120"
+        rx="8"
+        fill={bg}
+        stroke={stroke}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <circle cx="74" cy="92" r="34" fill={fillUnion} stroke={stroke} strokeWidth="1.3" />
+      <circle cx="108" cy="92" r="34" fill={fillUnion} stroke={stroke} strokeWidth="1.3" />
+      <text x="54" y="70" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="128" y="70" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x="90" y="148" fontSize="10.5" fill={accent} textAnchor="middle">
+        塗ったのは「A または B」——その外は？
+      </text>
+
+      {/* 右パネル：A の外・B の外の重なり（外側を塗り、輪の中は背景でくり抜く） */}
+      <text x="270" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        それぞれの外の、重なりの道
+      </text>
+      <rect
+        x="194"
+        y="34"
+        width="152"
+        height="120"
+        rx="8"
+        fill={fillOutside}
+        stroke={stroke}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <circle cx="254" cy="92" r="34" fill={bg} stroke={stroke} strokeWidth="1.3" />
+      <circle cx="288" cy="92" r="34" fill={bg} stroke={stroke} strokeWidth="1.3" />
+      <text x="234" y="70" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="308" y="70" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x="270" y="148" fontSize="10.5" fill={accent} textAnchor="middle">
+        塗ったのは「A でなく B でもない」
+      </text>
+
+      <text x="180" y="182" fontSize="12" fill={accent} textAnchor="middle">
+        2 つの道は、同じ場所を塗っている？
+      </text>
+      <text x="180" y="202" fontSize="10.5" fill={muted} textAnchor="middle">
+        自分で塗り重ねて、確かめてみよう。
       </text>
     </svg>
   );

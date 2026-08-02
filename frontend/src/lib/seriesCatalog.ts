@@ -59,7 +59,11 @@ import {
   PROB_POSTERIOR_SERIES,
   PROB_EXPECT_SERIES,
 } from "./seriesProbability";
-import { SET_ELEMENT_SERIES, SET_OPERATION_SERIES } from "./seriesSetLogic";
+import {
+  SET_ELEMENT_SERIES,
+  SET_OPERATION_SERIES,
+  SET_COMPLEMENT_SERIES,
+} from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -674,6 +678,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "集合と論理",
     shortDescription:
       "共通部分と和集合（∩ と ∪）— 『かつ』を重なり・『または』を合わせに翻訳し、両方込みの数え方、3 集合の組み替え、約数の共通部分＝最大公約数の約数まで",
+  },
+  {
+    series: SET_COMPLEMENT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "補集合とド・モルガンの法則（「でない」は世界を裏返す）— 全体 U を決めて『でない』を数え、否定が ∩ と ∪ を入れ替える対称性を 2 つの道の一致から発見する",
   },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
