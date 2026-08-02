@@ -140,6 +140,9 @@ grep -nE '\{(entry|series|step)\.[a-zA-Z]+\}' src/app/learn/ src/components/  # 
 
 # 4) 5 オペレータが全部入っているか
 grep -nE 'variationFromPrevious: "(inverse|plus_alpha)"' src/lib/seriesAdvanced.ts  # 逆と＋αが含まれているか
+
+# 5) 下付き・特殊記法は既存系列の実績記法に揃える（nCr は $_n\mathrm{C}_r$。$__ の二重下線は KaTeX 二重下付きエラー）
+grep -n '\$__' src/lib/series*.ts src/lib/glossary.ts  # ヒット 0 であること
 ```
 
 これらを通してから commit / push する。
