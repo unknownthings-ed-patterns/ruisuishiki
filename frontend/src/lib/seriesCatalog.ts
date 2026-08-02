@@ -57,7 +57,9 @@ import {
   PROB_REPEAT_SERIES,
   PROB_COND_SERIES,
   PROB_POSTERIOR_SERIES,
+  PROB_EXPECT_SERIES,
 } from "./seriesProbability";
+import { SET_ELEMENT_SERIES } from "./seriesSetLogic";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -646,12 +648,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "事後の確率（結果から、原因を問う）— 結果を新しい全体にして原因の道の割合を測る。時系列の逆転・機会が続く紛失・まれな原因の落とし穴・条件の向きの取り違えまで（ベイズの芽）",
   },
-  /* 数Ⅰ: 集合と命題 */
+  {
+    series: PROB_EXPECT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "確率",
+    shortDescription:
+      "期待値（確率を重みにした、未来の平均）— 1回ごとはバラバラでも、確率を重みに値を足せば「ならすと1回あたり」が1つの数に。組合せ・反復試行で作る確率・参加費と比べる判断・公平な賞金の逆算・負の得失点・ゲーム設計まで",
+  },
+  /* 数Ⅰ: 集合と論理（池田本 第6章・確率の直後。背骨 docs/set_logic_series_design_fable.md）
+   * 旧 topicGroup「集合と命題」を本の章名「集合と論理」へ改名（C10）。
+   * 旧 algebra_necsuf_01 は系6 実装時に吸収・リダイレクト。 */
+  {
+    series: SET_ELEMENT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "集合と論理",
+    shortDescription:
+      "集合と部分集合（∈ と ⊂）— 判定基準の明確な『集まり』を列挙でつかみ、モノと集まりの階層のことば、○×対応で数える部分集合の個数まで",
+  },
   {
     series: ALGEBRA_NECESSARY_SUFFICIENT_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "集合と命題",
+    topicGroup: "集合と論理",
     shortDescription: "必要条件・十分条件",
   },
   /* 旧 topicGroup「2 次関数」は「関数と関数のグラフ」へ吸収。

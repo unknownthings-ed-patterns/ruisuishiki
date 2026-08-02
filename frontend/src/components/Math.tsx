@@ -12379,6 +12379,34 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROB_EXPECT_BALANCE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProbExpectBalance />
+            </div>
+          );
+        }
+        if (trimmed === "<<SET_MEMBERS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetMembers />
+            </div>
+          );
+        }
+        if (trimmed === "<<SET_SUBSET>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetSubset />
+            </div>
+          );
+        }
+        if (trimmed === "<<SET_SUBSET_BITS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SetSubsetBits />
+            </div>
+          );
+        }
         if (trimmed === "<<COUNT_VENN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -13872,6 +13900,97 @@ export function ProbPosterior() {
   );
 }
 
+/**
+ * 確率 系8 step1・step9・辞書「期待値」: 数直線の上に、大きさのちがう重り（＝確率の重み）が
+ * いくつかの値の位置に乗った図。重い重り＝起こりやすい値。期待値は全体がつり合う位置だが、
+ * その支点（つり合いの位置）は「？」のまま描かない（答えを見せない）。負の側にも重りを置ける。
+ */
+export function ProbExpectBalance() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const weightFill = "color-mix(in oklch, var(--accent) 26%, transparent)";
+  const weightFillNeg = "color-mix(in oklch, var(--muted) 22%, transparent)";
+  // 数直線 y=124, x 24..336。原点 0 は x=108（左に負の側を少し残す）
+  const axisY = 124;
+  const x0 = 24;
+  const x1 = 336;
+  const zeroX = 108;
+  // 重り（円）：中心x・半径（半径＝確率の重み。値そのものは描かない）
+  const weights = [
+    { cx: 72, r: 9, neg: true }, // 負の側の軽い重り
+    { cx: 156, r: 21, neg: false }, // よく起こる（重い）
+    { cx: 228, r: 14, neg: false },
+    { cx: 300, r: 8, neg: false }, // めったに起きない（軽い）
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線の上に、大きさのちがう重りがいくつかの値の位置に乗っている。重りの大きさはその値の起こりやすさ（確率の重み）を表し、大きい重りほどよく起こる値。数直線の左（0 より小さい負の側）にも小さな重りが1つ乗っている。下にある三角形の支点には「？」がついていて、これらの重りが全体としてつり合う位置（＝期待値）はまだ分からないことを示す。値や、つり合いの位置の数は書かない"
+    >
+      {/* 数直線 */}
+      <path d={`M ${x0} ${axisY} L ${x1} ${axisY}`} stroke={stroke} strokeWidth="1.6" />
+      <path
+        d={`M ${x1} ${axisY} L ${x1 - 7} ${axisY - 4} M ${x1} ${axisY} L ${x1 - 7} ${axisY + 4}`}
+        stroke={stroke}
+        strokeWidth="1.6"
+        fill="none"
+      />
+      {/* 原点 0 の目盛り */}
+      <path d={`M ${zeroX} ${axisY - 5} L ${zeroX} ${axisY + 5}`} stroke={muted} strokeWidth="1.2" />
+      <text x={zeroX} y={axisY + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        0
+      </text>
+      <text x={x1 - 10} y={axisY + 20} fontSize="10" fill={muted} textAnchor="end">
+        値（大きいほど右）
+      </text>
+      {/* 重り（円）。中心を数直線の上に接して置く */}
+      {weights.map((w, k) => (
+        <g key={k}>
+          {/* 重りが乗る点の小さな目盛り */}
+          <path d={`M ${w.cx} ${axisY - 3} L ${w.cx} ${axisY + 3}`} stroke={stroke} strokeWidth="1.1" />
+          <circle
+            cx={w.cx}
+            cy={axisY - w.r}
+            r={w.r}
+            fill={w.neg ? weightFillNeg : weightFill}
+            stroke={w.neg ? muted : accent}
+            strokeWidth="1.3"
+          />
+        </g>
+      ))}
+      {/* 重さの大小の注記 */}
+      <text x={156} y={72} fontSize="9.5" fill={accent} textAnchor="middle">
+        重い＝よく起こる
+      </text>
+      <text x={300} y={96} fontSize="9" fill={muted} textAnchor="middle">
+        軽い
+      </text>
+      <text x={72} y={100} fontSize="9" fill={muted} textAnchor="middle">
+        負の側
+      </text>
+      {/* 支点（つり合いの位置）＝？。位置は答えを見せないよう中立に置き、？ でぼかす */}
+      <path
+        d={`M 176 ${axisY + 6} L 168 ${axisY + 22} L 184 ${axisY + 22} Z`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="3 2"
+      />
+      <text x={176} y={axisY + 38} fontSize="13" fill={accent} textAnchor="middle">
+        ？
+      </text>
+      {/* キャプション（問いの形） */}
+      <text x={180} y={192} fontSize="12" fill={accent} textAnchor="middle">
+        重さがちがう重りたち——ぜんぶが 1 点でつり合う場所はどこ？
+      </text>
+    </svg>
+  );
+}
+
 /** 系3 step8: 重なる2つの輪（包除原理）。重なりを二重に数えていないか。個数は描かない。 */
 export function CountVenn() {
   const stroke = "var(--foreground)";
@@ -14820,6 +14939,201 @@ export function CountStarsBars() {
       ))}
       <text x="170" y="152" fontSize="11" fill={accent} textAnchor="middle">
         ○と棒の列ひとつで、詰め合わせはちょうどひとつ決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 集合と論理 系1 step1: 判定基準が明確な集まり。要素の列挙（答え）は書かない。 */
+export function SetMembers() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillA = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="条件の札がついた集まりの輪。輪の外に数がいくつか並び、輪の入口で『入る？入らない？』と判定される図。どの数が入るか（答え）は書かない"
+    >
+      <ellipse
+        cx="220"
+        cy="95"
+        rx="86"
+        ry="62"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="220" y="46" fontSize="13" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      {/* 条件の札 */}
+      <rect
+        x="158"
+        y="78"
+        width="124"
+        height="34"
+        rx="6"
+        fill="var(--background)"
+        stroke={accent}
+        strokeWidth="1.2"
+      />
+      <text x="220" y="93" fontSize="10" fill={stroke} textAnchor="middle">
+        条件：〜以上〜以下の
+      </text>
+      <text x="220" y="106" fontSize="10" fill={stroke} textAnchor="middle">
+        奇数（判定基準つき）
+      </text>
+      {/* 外に並ぶ候補たち */}
+      <text x="26" y="60" fontSize="13" fill={stroke} textAnchor="middle">
+        ?
+      </text>
+      <text x="44" y="100" fontSize="13" fill={stroke} textAnchor="middle">
+        ?
+      </text>
+      <text x="28" y="140" fontSize="13" fill={stroke} textAnchor="middle">
+        ?
+      </text>
+      <path
+        d="M 60 98 L 122 96"
+        stroke={muted}
+        strokeWidth="1.2"
+        markerEnd="none"
+        strokeDasharray="4 3"
+      />
+      <text x="91" y="88" fontSize="10" fill={accent} textAnchor="middle">
+        入る？入らない？
+      </text>
+      <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        「誰が調べても同じ」に決めているものは、何？
+      </text>
+    </svg>
+  );
+}
+
+/** 集合と論理 系1 step5: 部分集合——内側に収まる輪。部分集合の個数（答え）は書かない。 */
+export function SetSubset() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const fillA = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const fillB = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="大きい輪Aの内側にすっぽり収まる輪Bと、縁からはみ出す輪Cが並ぶ図。どちらが部分集合か（答え）は書かない"
+    >
+      <ellipse
+        cx="150"
+        cy="95"
+        rx="110"
+        ry="70"
+        fill={fillA}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="150" y="42" fontSize="13" fill={stroke} textAnchor="middle">
+        A
+      </text>
+      <circle
+        cx="112"
+        cy="105"
+        r="34"
+        fill={fillB}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x="112" y="109" fontSize="12" fill={stroke} textAnchor="middle">
+        B
+      </text>
+      <circle
+        cx="238"
+        cy="120"
+        r="34"
+        fill="transparent"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="246" y="124" fontSize="12" fill={stroke} textAnchor="middle">
+        C
+      </text>
+      <text x="170" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        メンバー全員が A の中——それはどちらの輪？
+      </text>
+    </svg>
+  );
+}
+
+/** 集合と論理 系1 step8: 部分集合と○×列の1対1対応。総数（答え）は書かない。 */
+export function SetSubsetBits() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="要素の列に○か×を割り当てると部分集合が1つ決まる対応の図。部分集合の総数（答え）は書かない"
+    >
+      <text x="60" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        要素
+      </text>
+      {["a", "b", "c", "…"].map((label, idx) => (
+        <text
+          key={label}
+          x={120 + idx * 52}
+          y={34}
+          fontSize="12"
+          fill={stroke}
+          textAnchor="middle"
+        >
+          {label}
+        </text>
+      ))}
+      {/* 1行目の○×列 */}
+      <text x="60" y="78" fontSize="11" fill={muted} textAnchor="middle">
+        選び方
+      </text>
+      {["○", "×", "○", "…"].map((mark, idx) => (
+        <text
+          key={`r1-${idx}`}
+          x={120 + idx * 52}
+          y={78}
+          fontSize="14"
+          fill={mark === "○" ? accent : stroke}
+          textAnchor="middle"
+        >
+          {mark}
+        </text>
+      ))}
+      <path d="M 92 96 L 248 96" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="270" y="100" fontSize="11" fill={stroke} textAnchor="middle">
+        ↕ 1対1
+      </text>
+      {/* 対応する部分集合（中身は伏せる） */}
+      <rect
+        x="96"
+        y="112"
+        width="148"
+        height="36"
+        rx="8"
+        fill="color-mix(in oklch, var(--accent) 8%, transparent)"
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x="170" y="134" fontSize="12" fill={stroke} textAnchor="middle">
+        部分集合がひとつ決まる
+      </text>
+      <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        ○×の列と部分集合は、過不足なく対応している？
       </text>
     </svg>
   );
