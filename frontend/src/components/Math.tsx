@@ -12596,6 +12596,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<DATA_TALLY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataTally />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_HIST_WIDTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataHistWidth />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_HIST_READ>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataHistRead />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -15791,6 +15812,186 @@ export function LogicNumlineNeg() {
 
       <text x="180" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
         境界の 1 点は、否定するとどちら側に入る？
+      </text>
+    </svg>
+  );
+}
+
+/* ============================================================================
+ * データの分析ユニット（数Ⅰ・A 第7章）の図
+ * 背骨：docs/data_analysis_series_design.md §12
+ * 共通の作法：答えは描かない・キャプションは問いの形で終える
+ * ========================================================================== */
+
+/** データの分析 系1 step1: 生の数の列と、階級の枠。度数（答え）は書かない。 */
+export function DataTally() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const marks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  return (
+    <svg
+      viewBox="0 0 340 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="ばらばらに並んだ数の列と、「◯以上△未満」と書かれた階級の枠。枠に入る個数（答え）は書かない"
+    >
+      {/* 散らばった生データ（値は伏せる） */}
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        ばらばらに並んだ記録
+      </text>
+      {marks.map((m) => (
+        <text
+          key={m}
+          x={22 + (m % 6) * 52}
+          y={44 + Math.floor(m / 6) * 20}
+          fontSize="13"
+          fill={stroke}
+          textAnchor="middle"
+        >
+          ?
+        </text>
+      ))}
+      {/* 枠 */}
+      <rect
+        x="70"
+        y="96"
+        width="200"
+        height="40"
+        rx="6"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="170" y="121" fontSize="12" fill={stroke} textAnchor="middle">
+        ◯ 以上 △ 未満
+      </text>
+      <path
+        d="M 60 78 L 120 94"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <path
+        d="M 280 78 L 224 94"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x="170" y="166" fontSize="11" fill={accent} textAnchor="middle">
+        端とぴったり同じ記録は、枠の内と外、どちら？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系1 step5: 同じデータ・ちがう区切りの幅。柱の高さ（答え）は描かない。 */
+export function DataHistWidth() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="同じデータの帯に、粗い区切りと細かい区切りを当てた図。どちらの柱が高くなるか（答え）は描かない"
+    >
+      {/* 上：粗い区切り */}
+      <text x="14" y="22" fontSize="10" fill={muted}>
+        広い幅で区切ると
+      </text>
+      <rect x="30" y="30" width="280" height="30" fill={band} stroke={stroke} strokeWidth="1.2" />
+      {[100, 170, 240].map((x) => (
+        <line key={x} x1={x} y1="30" x2={x} y2="60" stroke={stroke} strokeWidth="1.2" />
+      ))}
+      {[65, 135, 205, 275].map((x) => (
+        <text key={x} x={x} y="52" fontSize="13" fill={accent} textAnchor="middle">
+          ?
+        </text>
+      ))}
+      {/* 下：細かい区切り */}
+      <text x="14" y="102" fontSize="10" fill={muted}>
+        同じデータを、せまい幅で区切ると
+      </text>
+      <rect x="30" y="110" width="280" height="30" fill={band} stroke={stroke} strokeWidth="1.2" />
+      {[65, 100, 135, 170, 205, 240, 275].map((x) => (
+        <line key={x} x1={x} y1="110" x2={x} y2="140" stroke={stroke} strokeWidth="1" strokeDasharray="3 2" />
+      ))}
+      {[47, 82, 117, 152, 187, 222, 257, 292].map((x) => (
+        <text key={x} x={x} y="132" fontSize="11" fill={accent} textAnchor="middle">
+          ?
+        </text>
+      ))}
+      <text x="170" y="172" fontSize="11" fill={accent} textAnchor="middle">
+        同じ人たちなのに、いちばん混み合う場所は
+      </text>
+      <text x="170" y="188" fontSize="11" fill={accent} textAnchor="middle">
+        上と下で同じところにできる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系1 step9: 度数だけが残ったヒストグラム。元の値は描かない。 */
+export function DataHistRead() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const freq = [2, 5, 8, 6, 4];
+  const baseY = 140;
+  const unit = 13;
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="度数だけが残ったヒストグラム。いちばん右の柱の中で、一人ひとりがどこにいるかは描かない"
+    >
+      <line x1="40" y1={baseY} x2="310" y2={baseY} stroke={stroke} strokeWidth="1.2" />
+      <line x1="40" y1="24" x2="40" y2={baseY} stroke={muted} strokeWidth="1" />
+      {freq.map((f, i) => (
+        <rect
+          key={i}
+          x={45 + i * 52}
+          y={baseY - f * unit}
+          width="52"
+          height={f * unit}
+          fill={fill}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <text
+          key={i}
+          x={45 + i * 52}
+          y={baseY + 15}
+          fontSize="10"
+          fill={muted}
+          textAnchor="middle"
+        >
+          {i * 20}
+        </text>
+      ))}
+      <text x="24" y="30" fontSize="10" fill={muted}>
+        人
+      </text>
+      <text x="316" y={baseY + 15} fontSize="10" fill={muted} textAnchor="middle">
+        分
+      </text>
+      {/* いちばん右の柱の中の「どこか」 */}
+      <text x="297" y={baseY - 4 * unit - 8} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="170" y="176" fontSize="11" fill={accent} textAnchor="middle">
+        いちばん長い人は、この柱のどこにいてもいい——どこまで小さくなれる？
       </text>
     </svg>
   );

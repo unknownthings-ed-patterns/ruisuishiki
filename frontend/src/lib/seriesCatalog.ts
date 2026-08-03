@@ -67,6 +67,7 @@ import {
   LOGIC_NECSUF_SERIES,
   LOGIC_PROOF_SERIES,
 } from "./seriesSetLogic";
+import { DATA_HISTOGRAM_SERIES } from "./seriesDataAnalysis";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -725,7 +726,16 @@ export const STATIC_CATALOG: CatalogEntry[] = [
   /* 旧 topicGroup「2 次関数」は「関数と関数のグラフ」へ吸収。
    * graph/vertex → 系列3、min → 系列4（SERIES_REDIRECTS）。
    * sum/prod は第2章に節がないためカタログから外すのみ（リダイレクトなし）。 */
-  /* 数Ⅰ: データの分析 */
+  /* 数Ⅰ: データの分析（池田本 第7章・集合と論理の直後。背骨 docs/data_analysis_series_design.md）
+   * 旧 algebra_mean_01 / stats_median_01 は系2、algebra_variance_01 は系6 実装時に吸収・リダイレクト。 */
+  {
+    series: DATA_HISTOGRAM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "度数分布表とヒストグラム（区切ると分布の形が現れる）— 以上・未満の決めごと、階級の幅で山が動く、度数の合計＝総数の逆算、図から言えること・言えないこと、2 集団の合併まで",
+  },
   {
     series: ALGEBRA_MEAN_SERIES,
     subject: "secondary",
