@@ -12617,6 +12617,132 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<DATA_SHIFT_SPREAD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataShiftSpread />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_SCALE_SPREAD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataScaleSpread />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_LEVELING>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataLeveling />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_MEDIAN_POSITION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataMedianPosition />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_OUTLIER_PULL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataOutlierPull />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_ASSUMED_MEAN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataAssumedMean />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_CLASS_VALUE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataClassValue />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_QUARTILE_SPLIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataQuartileSplit />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_BOXPLOT_READ>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataBoxplotRead />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_BOXPLOT_COMPARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataBoxplotCompare />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_IQR_BAND>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataIqrBand />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_OUTLIER_FENCE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataOutlierFence />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_TEST_TAIL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataTestTail />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_DEVIATION_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataDeviationSquare />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_SD_UNIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataSdUnit />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_SCATTER_QUADRANT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataScatterQuadrant />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_COV_SCALE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataCovScale />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_R_NONLINEAR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataRNonlinear />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -15992,6 +16118,1586 @@ export function DataHistRead() {
       </text>
       <text x="170" y="176" fontSize="11" fill={accent} textAnchor="middle">
         いちばん長い人は、この柱のどこにいてもいい——どこまで小さくなれる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系8 step1: 分布全体がそろって横へずれる。散らばりの結論は描かない。 */
+export function DataShiftSpread() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  /** もとの並び（値は伏せる。たがいの間隔だけが意味を持つ）。 */
+  const xs = [70, 96, 112, 148, 166];
+  /** そろって動く量（同じ矢印の長さ＝全員に同じだけ）。 */
+  const shift = 78;
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上下 2 本の数直線図。上はもとの記録の並び、下は同じ並びが全体としてそろって右へ移った状態。移動の量は全員同じで、矢印の長さもすべて等しい。点どうしのへだたりがどうなるか、平均や散らばりの値は描かない"
+    >
+      {/* 上：もとの並び */}
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        もとの記録
+      </text>
+      <line x1="24" y1="52" x2="326" y2="52" stroke={stroke} strokeWidth="1.2" />
+      <polygon points="326,52 318,48 318,56" fill={stroke} />
+      {xs.map((x) => (
+        <circle key={x} cx={x} cy="52" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+      ))}
+
+      {/* そろって動く矢印（全員同じ長さ） */}
+      {xs.map((x) => (
+        <g key={`arrow-${x}`}>
+          <line
+            x1={x}
+            y1="66"
+            x2={x + shift - 8}
+            y2="66"
+            stroke={muted}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <polygon
+            points={`${x + shift},66 ${x + shift - 8},62.5 ${x + shift - 8},69.5`}
+            fill={muted}
+          />
+        </g>
+      ))}
+      <text x="170" y="88" fontSize="10" fill={muted} textAnchor="middle">
+        全員に、同じだけ
+      </text>
+
+      {/* 下：そろって移ったあと */}
+      <text x="14" y="120" fontSize="10" fill={muted}>
+        そろって動かしたあと
+      </text>
+      <line x1="24" y1="148" x2="326" y2="148" stroke={stroke} strokeWidth="1.2" />
+      <polygon points="326,148 318,144 318,152" fill={stroke} />
+      {xs.map((x) => (
+        <circle
+          key={`moved-${x}`}
+          cx={x + shift}
+          cy="148"
+          r="5"
+          fill={dot}
+          stroke={accent}
+          strokeWidth="1.2"
+        />
+      ))}
+
+      <text x="170" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        居場所はそろって動いた——点どうしのへだたりは、どうなった？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系8 step5: 同じ割合で伸ばすと位置も幅も広がる。何倍になるかの結論は描かない。 */
+export function DataScaleSpread() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  /** まん中の位置（この線からのへだたりが伸びる）。 */
+  const center = 120;
+  /** もとのへだたり（値は伏せる）。 */
+  const devs = [-46, -18, 0, 26, 44];
+  /** 伸ばす割合（数は書かない——「同じ割合で」だけを見せる）。 */
+  const k = 1.7;
+  return (
+    <svg
+      viewBox="0 0 340 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上下 2 本の数直線図。上はもとの記録の並びとまん中の線、下は同じ並びを、まん中から見て同じ割合で外へ伸ばした状態。まん中からのへだたりが伸びる様子だけを描き、平均や分散が何倍になるかは描かない"
+    >
+      {/* 上：もとの並び */}
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        もとの記録
+      </text>
+      <line x1="24" y1="56" x2="326" y2="56" stroke={stroke} strokeWidth="1.2" />
+      <polygon points="326,56 318,52 318,60" fill={stroke} />
+      <line x1={center} y1="40" x2={center} y2="72" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={center} y="36" fontSize="9.5" fill={muted} textAnchor="middle">
+        まん中
+      </text>
+      {devs.map((d) => (
+        <circle key={d} cx={center + d} cy="56" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+      ))}
+
+      <text x="170" y="98" fontSize="10" fill={muted} textAnchor="middle">
+        ものさしを取り替えて、みんなを同じ割合で伸ばすと
+      </text>
+
+      {/* 下：同じ割合で伸ばしたあと */}
+      <text x="14" y="128" fontSize="10" fill={muted}>
+        伸ばしたあと
+      </text>
+      <line x1="24" y1="160" x2="326" y2="160" stroke={stroke} strokeWidth="1.2" />
+      <polygon points="326,160 318,156 318,164" fill={stroke} />
+      <line x1={center * k} y1="144" x2={center * k} y2="176" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={center * k} y="140" fontSize="9.5" fill={muted} textAnchor="middle">
+        まん中
+      </text>
+      {devs.map((d) => (
+        <circle
+          key={`scaled-${d}`}
+          cx={center * k + d * k}
+          cy="160"
+          r="5"
+          fill={dot}
+          stroke={accent}
+          strokeWidth="1.2"
+        />
+      ))}
+
+      <text x="170" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        まん中からのへだたりは、どれだけ伸びた？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系2 step1: でこぼこをならす。ならした高さ（平均の値）は描かない。 */
+export function DataLeveling() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const baseY = 140;
+  /** 高さはわざと不ぞろい。平均の位置が読めないよう、目盛も数値も置かない。 */
+  const bars = [34, 72, 18, 52, 26, 60];
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="高さのふぞろいな柱が並び、高い柱から低い柱へ向かう矢印がついた図。ならしたあとの高さ（平均の値）は描かない"
+    >
+      <text x="14" y="22" fontSize="10" fill={muted}>
+        ひとりずつの記録は、でこぼこ
+      </text>
+      <line x1="24" y1={baseY} x2="286" y2={baseY} stroke={stroke} strokeWidth="1.2" />
+
+      {bars.map((h, i) => (
+        <rect
+          key={i}
+          x={32 + i * 42}
+          y={baseY - h}
+          width="30"
+          height={h}
+          rx="2"
+          fill={fill}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+
+      {/* 高いところから低いところへ配り直す（値は書かない） */}
+      <path
+        d="M 92 62 C 116 42, 140 42, 160 112"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="5 3"
+      />
+      <polygon points="160,120 155,109 165,109" fill={accent} />
+      <path
+        d="M 260 76 C 240 56, 216 56, 202 108"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+        strokeDasharray="5 3"
+      />
+      <polygon points="202,116 197,105 207,105" fill={accent} />
+      <text x="155" y="36" fontSize="10" fill={accent} textAnchor="middle">
+        多いぶんを、少ないほうへ配り直す
+      </text>
+
+      {/* そろえたあとの高さは「?」のまま（答えを描かない） */}
+      <line
+        x1="300"
+        y1="52"
+        x2="300"
+        y2={baseY}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <polygon points="300,48 296,58 304,58" fill={muted} />
+      <polygon points={`300,${baseY + 4} 296,${baseY - 6} 304,${baseY - 6}`} fill={muted} />
+      <text x="316" y="100" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="170" y="170" fontSize="11.5" fill={accent} textAnchor="middle">
+        でこぼこを平らにならしたら、高さはどこでそろう？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系2 step4: 並べた列と、まん中の席。中央値の値は描かない。 */
+export function DataMedianPosition() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const n = 9;
+  const x0 = 42;
+  const dx = 32;
+  const y = 76;
+  const mid = (n - 1) / 2;
+  return (
+    <svg
+      viewBox="0 0 340 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="小さい順に並んだ 9 個の席と、両はしから同じ数ずつ数えて出会うまん中の席。そこに入る値（中央値）は描かない"
+    >
+      <text x="14" y="26" fontSize="10" fill={muted}>
+        小さい順に並べる
+      </text>
+      <text x="30" y="46" fontSize="10" fill={muted} textAnchor="middle">
+        小
+      </text>
+      <text x="312" y="46" fontSize="10" fill={muted} textAnchor="middle">
+        大
+      </text>
+      <line x1="30" y1={y} x2="312" y2={y} stroke={muted} strokeWidth="1" />
+
+      {Array.from({ length: n }, (_, i) => (
+        <circle
+          key={i}
+          cx={x0 + i * dx}
+          cy={y}
+          r={i === mid ? 12 : 8}
+          fill={i === mid ? fill : "transparent"}
+          stroke={i === mid ? accent : stroke}
+          strokeWidth={i === mid ? 2 : 1.2}
+        />
+      ))}
+      <text x={x0 + mid * dx} y={y + 5} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 両はしから同じ数だけ数える */}
+      <line
+        x1={x0}
+        y1={y + 28}
+        x2={x0 + (mid - 1) * dx}
+        y2={y + 28}
+        stroke={muted}
+        strokeWidth="1"
+      />
+      <line
+        x1={x0 + (mid + 1) * dx}
+        y1={y + 28}
+        x2={x0 + (n - 1) * dx}
+        y2={y + 28}
+        stroke={muted}
+        strokeWidth="1"
+      />
+      <text x={x0 + 1.5 * dx} y={y + 44} fontSize="10" fill={muted} textAnchor="middle">
+        左から 4 つ
+      </text>
+      <text x={x0 + 6.5 * dx} y={y + 44} fontSize="10" fill={muted} textAnchor="middle">
+        右から 4 つ
+      </text>
+      <text x={x0 + mid * dx} y={y - 22} fontSize="10" fill={accent} textAnchor="middle">
+        出会う席
+      </text>
+
+      <text x="170" y="162" fontSize="11.5" fill={accent} textAnchor="middle">
+        両はしから同じ数だけ数えて出会う席は、値の大きさと関係ある？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系2 step7: 遠くの 1 点が支点を引っぱるてんびん。平均・中央値の値は描かない。 */
+export function DataOutlierPull() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const beamY = 92;
+  /** かたまっている 10 点と、遠くの 1 点。目盛も値も置かない。 */
+  const cluster = [46, 58, 68, 76, 88, 98, 110, 122, 136, 152];
+  const far = 292;
+  const rankMid = cluster[4] + 5;
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="細長い板の上に、左側にかたまった点の群れと、右のほうに離れた 1 点が乗っている図。板をささえる支点の位置と、順位のまん中の席はどちらも記号のままで、値は描かない"
+    >
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        小さい順にならべた記録（左ほど小さい）
+      </text>
+
+      {/* 板 */}
+      <line x1="28" y1={beamY} x2="316" y2={beamY} stroke={stroke} strokeWidth="2" />
+
+      {/* かたまっている点 */}
+      {cluster.map((x) => (
+        <circle key={x} cx={x} cy={beamY - 9} r="6" fill={fill} stroke={stroke} strokeWidth="1.1" />
+      ))}
+      {/* 遠くの 1 点 */}
+      <circle cx={far} cy={beamY - 9} r="9" fill={fill} stroke={accent} strokeWidth="2" />
+      <text x={far} y={beamY - 26} fontSize="10" fill={accent} textAnchor="middle">
+        遠くの 1 点
+      </text>
+
+      {/* 順位のまん中の席（値は書かない） */}
+      <line
+        x1={rankMid}
+        y1={beamY - 34}
+        x2={rankMid}
+        y2={beamY - 18}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 2"
+      />
+      <text x={rankMid} y={beamY - 40} fontSize="10" fill={muted} textAnchor="middle">
+        順位のまん中の席
+      </text>
+
+      {/* 支点は「?」のまま・左右に動きうることだけを示す */}
+      <polygon
+        points={`${rankMid},${beamY + 4} ${rankMid - 11},${beamY + 26} ${rankMid + 11},${beamY + 26}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="4 3"
+      />
+      <text x={rankMid} y={beamY + 46} fontSize="12" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <line
+        x1={rankMid - 34}
+        y1={beamY + 40}
+        x2={rankMid + 60}
+        y2={beamY + 40}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <polygon points={`${rankMid - 38},${beamY + 40} ${rankMid - 28},${beamY + 36} ${rankMid - 28},${beamY + 44}`} fill={muted} />
+      <polygon points={`${rankMid + 64},${beamY + 40} ${rankMid + 54},${beamY + 36} ${rankMid + 54},${beamY + 44}`} fill={muted} />
+      <text x={rankMid + 96} y={beamY + 44} fontSize="10" fill={muted} textAnchor="middle">
+        つりあう場所は？
+      </text>
+
+      <text x="170" y="182" fontSize="11.5" fill={accent} textAnchor="middle">
+        遠くの 1 点は、板がつりあう場所を引っぱる？ 順位のまん中の席も動く？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系3 step1: 基準線と、そこから上下に出た ± のずれ。平均の位置・値は描かない。 */
+export function DataAssumedMean() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const baseY = 92;
+  /** 基準線からの見た目のずれ（上が＋・下が−）。値は伏せる。 */
+  const gaps = [-16, 10, -26, 0, 30, -34, -6, 22];
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="自分で決めた基準の線と、そこから上下にのびた 8 本のずれ。平均の位置も平均の値も描かない"
+    >
+      {/* 基準の帯 */}
+      <rect x="30" y={baseY - 3} width="280" height="6" fill={band} />
+      <line
+        x1="30"
+        y1={baseY}
+        x2="310"
+        y2={baseY}
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="6 3"
+      />
+      <text x="30" y={baseY - 10} fontSize="10" fill={muted}>
+        自分で決めた基準
+      </text>
+
+      {/* 各データのずれ（棒＋点）。数値は書かない */}
+      {gaps.map((g, i) => {
+        const x = 52 + i * 34;
+        const y = baseY - g;
+        return (
+          <g key={i}>
+            <line
+              x1={x}
+              y1={baseY}
+              x2={x}
+              y2={y}
+              stroke={g >= 0 ? accent : stroke}
+              strokeWidth="1.4"
+            />
+            <circle cx={x} cy={y} r="3.4" fill={g >= 0 ? accent : stroke} />
+          </g>
+        );
+      })}
+
+      {/* ± のラベル */}
+      <text x="318" y={baseY - 26} fontSize="12" fill={accent} textAnchor="middle">
+        ＋
+      </text>
+      <text x="318" y={baseY + 30} fontSize="12" fill={stroke} textAnchor="middle">
+        −
+      </text>
+      <text x="30" y="30" fontSize="10" fill={muted}>
+        もとの数は 4 けた・基準から見たずれは 1 けた
+      </text>
+
+      {/* 「返す」矢印（値は書かない） */}
+      <path
+        d="M 150 168 C 175 156, 195 156, 215 166"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+        fill="none"
+      />
+      <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        ずれの平均が出たら、基準にはどう返す？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系3 step5: 階級の幅と、まん中の代表点へ集める矢印。平均の値は描かない。 */
+export function DataClassValue() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const baseY = 118;
+  const classes = [40, 130, 220];
+  const width = 80;
+  /** 階級の中での、実際のデータの居場所（値は伏せる）。まん中に揃っていないことが見える。 */
+  const inside = [
+    [14, 26, 34, 58],
+    [10, 18, 44, 52, 68],
+    [22, 30, 62],
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="階級の幅と、その真ん中の代表点へ矢印で集める図。平均の値は描かない"
+    >
+      <text x="14" y="22" fontSize="10" fill={muted}>
+        1 つ 1 つの値は失われ、階級の枠だけが残っている
+      </text>
+
+      {classes.map((x0, c) => (
+        <g key={c}>
+          {/* 階級の枠 */}
+          <rect
+            x={x0}
+            y="34"
+            width={width}
+            height="52"
+            fill={band}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          {/* 階級の中の「どこか」（まん中に揃ってはいない） */}
+          {inside[c].map((dx, k) => (
+            <text
+              key={k}
+              x={x0 + dx}
+              y="66"
+              fontSize="11"
+              fill={muted}
+              textAnchor="middle"
+            >
+              ?
+            </text>
+          ))}
+          {/* まん中へ集める矢印 */}
+          <path
+            d={`M ${x0 + 12} 90 L ${x0 + width / 2} 106`}
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="3 2"
+          />
+          <path
+            d={`M ${x0 + width - 12} 90 L ${x0 + width / 2} 106`}
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="3 2"
+          />
+          {/* 代表点（階級値） */}
+          <circle cx={x0 + width / 2} cy={baseY} r="4.2" fill={accent} />
+          <line
+            x1={x0 + width / 2}
+            y1="106"
+            x2={x0 + width / 2}
+            y2={baseY - 5}
+            stroke={accent}
+            strokeWidth="1.2"
+          />
+          {/* 階級の幅 */}
+          <line x1={x0} y1="146" x2={x0 + width} y2="146" stroke={muted} strokeWidth="1" />
+          <line x1={x0} y1="142" x2={x0} y2="150" stroke={muted} strokeWidth="1" />
+          <line
+            x1={x0 + width}
+            y1="142"
+            x2={x0 + width}
+            y2="150"
+            stroke={muted}
+            strokeWidth="1"
+          />
+          <text
+            x={x0 + width / 2}
+            y="162"
+            fontSize="10"
+            fill={muted}
+            textAnchor="middle"
+          >
+            階級の幅
+          </text>
+        </g>
+      ))}
+
+      <text x="170" y="180" fontSize="10" fill={muted} textAnchor="middle">
+        どの階級も、まん中の 1 点で代表させる
+      </text>
+
+      <text x="170" y="198" fontSize="11" fill={accent} textAnchor="middle">
+        枠の中の点がまん中に寄っていないとき、代表はどちらへ外れる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系4 step1: 並んだ点の列と、前半・後半・切れ目の位置。Q1・Q3 の値は描かない。 */
+export function DataQuartileSplit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--surface)";
+  const dots = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const x = (i: number) => 30 + i * 28;
+  const mid = 5;
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="小さい順に並んだ 11 個の点と、まん中の 1 個。前半・後半それぞれのまん中に立つ切れ目の値（答え）は書かない"
+    >
+      <text x="14" y="20" fontSize="10" fill={muted}>
+        小さい順に並べた記録（値は伏せてある）
+      </text>
+
+      {/* 前半・後半の「？」（どこに切れ目が立つかは示さない） */}
+      <text x="86" y="48" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="254" y="48" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 点の列 */}
+      <line x1="20" y1="72" x2="320" y2="72" stroke={muted} strokeWidth="1" />
+      {dots.map((i) => (
+        <circle
+          key={i}
+          cx={x(i)}
+          cy="72"
+          r="6"
+          fill={i === mid ? accent : bg}
+          stroke={i === mid ? accent : stroke}
+          strokeWidth="1.4"
+        />
+      ))}
+
+      {/* まん中の 1 つ */}
+      <line
+        x1={x(mid)}
+        y1="52"
+        x2={x(mid)}
+        y2="92"
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="4 3"
+      />
+
+      {/* 前半・後半のくくり */}
+      <path
+        d="M 22 92 L 22 102 L 158 102 L 158 92"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <path
+        d="M 182 92 L 182 102 L 318 102 L 318 92"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      <text x="90" y="118" fontSize="11" fill={stroke} textAnchor="middle">
+        前半（下の半分）
+      </text>
+      <text x="250" y="118" fontSize="11" fill={stroke} textAnchor="middle">
+        後半（上の半分）
+      </text>
+      <text x="170" y="140" fontSize="10" fill={muted} textAnchor="middle">
+        まん中の 1 つ（どちらの半分に数える？）
+      </text>
+
+      <text x="170" y="168" fontSize="11.5" fill={accent} textAnchor="middle">
+        まん中で 2 つに割った——その半分をもう一度割ると、
+      </text>
+      <text x="170" y="183" fontSize="11.5" fill={accent} textAnchor="middle">
+        切れ目はどこに立つ？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系4 step5: 目盛つきの箱ひげ図 1 本。読ませる値のラベルは描かない（目盛の数字だけ）。 */
+export function DataBoxplotRead() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  /** 目盛 0〜20 を x=30〜310 に写す（1 目盛 = 14px）。 */
+  const px = (v: number) => 30 + v * 14;
+  const axisY = 128;
+  const ticks = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  ];
+  const labeled = [0, 5, 10, 15, 20];
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="目盛のついた箱ひげ図が 1 本。ひげの端・箱の端・箱の中の線が指す値のラベル（答え）は書かず、目盛の数字だけを描く"
+    >
+      <text x="14" y="20" fontSize="10" fill={muted}>
+        5 つの数だけを残した図
+      </text>
+
+      {/* ひげ */}
+      <line x1={px(2)} y1="72" x2={px(5)} y2="72" stroke={stroke} strokeWidth="1.3" />
+      <line x1={px(14)} y1="72" x2={px(19)} y2="72" stroke={stroke} strokeWidth="1.3" />
+      <line x1={px(2)} y1="58" x2={px(2)} y2="86" stroke={stroke} strokeWidth="1.6" />
+      <line x1={px(19)} y1="58" x2={px(19)} y2="86" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 箱 */}
+      <rect
+        x={px(5)}
+        y="52"
+        width={px(14) - px(5)}
+        height="40"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      {/* 箱の中の線 */}
+      <line x1={px(9)} y1="52" x2={px(9)} y2="92" stroke={accent} strokeWidth="2.2" />
+
+      {/* 箱の各部から目盛へ下ろす補助線 */}
+      {[2, 5, 9, 14, 19].map((v) => (
+        <line
+          key={v}
+          x1={px(v)}
+          y1="96"
+          x2={px(v)}
+          y2={axisY - 10}
+          stroke={muted}
+          strokeWidth="0.9"
+          strokeDasharray="3 3"
+        />
+      ))}
+
+      {/* 目盛 */}
+      <line x1="24" y1={axisY} x2="316" y2={axisY} stroke={stroke} strokeWidth="1.2" />
+      {ticks.map((v) => (
+        <line
+          key={v}
+          x1={px(v)}
+          y1={axisY}
+          x2={px(v)}
+          y2={axisY + (labeled.includes(v) ? 9 : 5)}
+          stroke={stroke}
+          strokeWidth={labeled.includes(v) ? 1.3 : 0.9}
+        />
+      ))}
+      {labeled.map((v) => (
+        <text
+          key={v}
+          x={px(v)}
+          y={axisY + 24}
+          fontSize="10"
+          fill={muted}
+          textAnchor="middle"
+        >
+          {v}
+        </text>
+      ))}
+      <text x="326" y={axisY + 24} fontSize="10" fill={muted} textAnchor="middle">
+        分
+      </text>
+
+      <text x="170" y="178" fontSize="11.5" fill={accent} textAnchor="middle">
+        ひげの端も箱の端も、目盛のどこに立っている？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系4 step9: 2 本の箱ひげ図。どちらが散らばっているかの結論は描かない。 */
+export function DataBoxplotCompare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const faint = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  const minX = 50;
+  const maxX = 300;
+  const medX = 175;
+  /** 箱の端は「まだ立てていない切れ目」なので、両群とも同じ位置に破線で置く。 */
+  const boxL = 120;
+  const boxR = 232;
+  const rows = [
+    { label: "A 店", cy: 58 },
+    { label: "B 店", cy: 118 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 205"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="最小値・中央値・最大値がそろった 2 本の箱ひげ図。箱の端はどちらも破線と疑問符で示し、どちらが散らばっているかは描かない"
+    >
+      <text x="14" y="20" fontSize="10" fill={muted}>
+        最小・まん中・最大がそろった 2 つのデータ
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.label}>
+          <text x="16" y={r.cy + 4} fontSize="11" fill={stroke}>
+            {r.label}
+          </text>
+          {/* ひげ（最小・最大はそろっている） */}
+          <line x1={minX} y1={r.cy} x2={maxX} y2={r.cy} stroke={stroke} strokeWidth="1.3" />
+          <line x1={minX} y1={r.cy - 14} x2={minX} y2={r.cy + 14} stroke={stroke} strokeWidth="1.6" />
+          <line x1={maxX} y1={r.cy - 14} x2={maxX} y2={r.cy + 14} stroke={stroke} strokeWidth="1.6" />
+          {/* 箱（端はまだ決まっていない＝破線と ?） */}
+          <rect
+            x={boxL}
+            y={r.cy - 20}
+            width={boxR - boxL}
+            height="40"
+            fill={faint}
+            stroke={muted}
+            strokeWidth="1.1"
+            strokeDasharray="5 4"
+          />
+          <text x={boxL} y={r.cy - 26} fontSize="12" fill={accent} textAnchor="middle">
+            ?
+          </text>
+          <text x={boxR} y={r.cy - 26} fontSize="12" fill={accent} textAnchor="middle">
+            ?
+          </text>
+          {/* まん中の線（そろっている） */}
+          <line x1={medX} y1={r.cy - 20} x2={medX} y2={r.cy + 20} stroke={accent} strokeWidth="2.2" />
+        </g>
+      ))}
+
+      <text x="175" y="152" fontSize="10" fill={muted} textAnchor="middle">
+        ひげの両端も、まん中の線も、上と下でそろっている
+      </text>
+
+      <text x="170" y="178" fontSize="11.5" fill={accent} textAnchor="middle">
+        切れ目をあと 2 本ずつ入れても、
+      </text>
+      <text x="170" y="194" fontSize="11.5" fill={accent} textAnchor="middle">
+        この 2 つは同じ形のままでいられる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系5 step1: まん中の半分がおさまる帯＝物差し。幅（四分位範囲）の値は描かない。 */
+export function DataIqrBand() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const baseY = 88;
+  /** 小さい順に並べた 11 個の記録（値は伏せる）。 */
+  const dots = [42, 58, 76, 96, 118, 140, 162, 186, 214, 248, 292];
+  const lowCut = dots[2]; // 下から 3 番目＝前半の中央値の位置（値は描かない）
+  const highCut = dots[8]; // 下から 9 番目＝後半の中央値の位置（値は描かない）
+  return (
+    <svg
+      viewBox="0 0 340 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="小さい順に並んだ記録の上に、まん中の半分がおさまる帯をかぶせた図。帯の幅の値は描かない"
+    >
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        小さい順に並べた記録
+      </text>
+
+      {/* 数直線 */}
+      <line x1="24" y1={baseY} x2="316" y2={baseY} stroke={stroke} strokeWidth="1.3" />
+      <polygon points={`316,${baseY} 308,${baseY - 4} 308,${baseY + 4}`} fill={stroke} />
+
+      {/* まん中の半分がおさまる帯 */}
+      <rect
+        x={lowCut}
+        y={baseY - 24}
+        width={highCut - lowCut}
+        height="48"
+        rx="5"
+        fill={band}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text
+        x={(lowCut + highCut) / 2}
+        y={baseY - 32}
+        fontSize="10.5"
+        fill={accent}
+        textAnchor="middle"
+      >
+        およそ半分が、この中
+      </text>
+
+      {/* 記録の点（内と外の印はつけない） */}
+      {dots.map((x) => (
+        <circle key={x} cx={x} cy={baseY} r="4.2" fill={stroke} opacity="0.75" />
+      ))}
+
+      {/* 2 本の切れ目（値は描かない） */}
+      {[lowCut, highCut].map((x) => (
+        <line
+          key={x}
+          x1={x}
+          y1={baseY - 28}
+          x2={x}
+          y2={baseY + 28}
+          stroke={accent}
+          strokeWidth="1.6"
+        />
+      ))}
+      <text x={lowCut} y={baseY + 42} fontSize="10" fill={muted} textAnchor="middle">
+        下側の切れ目
+      </text>
+      <text x={highCut} y={baseY + 42} fontSize="10" fill={muted} textAnchor="middle">
+        上側の切れ目
+      </text>
+
+      {/* 帯の幅を測る両矢印（値は「?」のまま） */}
+      <line
+        x1={lowCut}
+        y1={baseY + 62}
+        x2={highCut}
+        y2={baseY + 62}
+        stroke={accent}
+        strokeWidth="1.2"
+      />
+      <polygon
+        points={`${lowCut},${baseY + 62} ${lowCut + 9},${baseY + 58} ${lowCut + 9},${baseY + 66}`}
+        fill={accent}
+      />
+      <polygon
+        points={`${highCut},${baseY + 62} ${highCut - 9},${baseY + 58} ${highCut - 9},${baseY + 66}`}
+        fill={accent}
+      />
+      <text
+        x={(lowCut + highCut) / 2}
+        y={baseY + 58}
+        fontSize="13"
+        fill={accent}
+        textAnchor="middle"
+      >
+        ?
+      </text>
+
+      <text x="170" y="184" fontSize="11" fill={accent} textAnchor="middle">
+        まん中の半分は、どれだけの幅におさまっている？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系5 step5: 基準の柵と点の並び。どの点が外れ値かは名指ししない。 */
+export function DataOutlierFence() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const baseY = 92;
+  /** 記録の点。柵の外にも点があるが、印もラベルもつけない（数えるのは学習者の仕事）。 */
+  const dots = [30, 122, 132, 146, 154, 162, 172, 180, 188, 194, 198, 292, 306];
+  const lowCut = 139; // 前半の中央値の位置（値は描かない）
+  const highCut = 196; // 後半の中央値の位置（値は描かない）
+  const lowFence = 54; // 箱の下のふちから、帯の幅の 1.5 倍だけ外
+  const highFence = 282; // 箱の上のふちから、帯の幅の 1.5 倍だけ外
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="まん中の半分の箱と、その外側に立てた上下 2 本の柵、そして並んだ記録の点。どの点が外れ値かは示さない"
+    >
+      <text x="14" y="22" fontSize="10" fill={muted}>
+        並べた記録と、データ自身から作った柵
+      </text>
+
+      {/* 数直線 */}
+      <line x1="20" y1={baseY} x2="320" y2={baseY} stroke={stroke} strokeWidth="1.3" />
+
+      {/* まん中の半分の箱 */}
+      <rect
+        x={lowCut}
+        y={baseY - 18}
+        width={highCut - lowCut}
+        height="36"
+        rx="4"
+        fill={band}
+        stroke={accent}
+        strokeWidth="1.3"
+      />
+      <text
+        x={(lowCut + highCut) / 2}
+        y={baseY - 26}
+        fontSize="10"
+        fill={muted}
+        textAnchor="middle"
+      >
+        まん中の半分
+      </text>
+
+      {/* 箱のふちから柵までの、同じ長さのへだたり */}
+      <line x1={lowFence} y1={baseY + 32} x2={lowCut} y2={baseY + 32} stroke={muted} strokeWidth="1" />
+      <line x1={highCut} y1={baseY + 32} x2={highFence} y2={baseY + 32} stroke={muted} strokeWidth="1" />
+      <text
+        x={(lowFence + lowCut) / 2}
+        y={baseY + 46}
+        fontSize="9.5"
+        fill={muted}
+        textAnchor="middle"
+      >
+        帯の幅の 1.5 倍
+      </text>
+      <text
+        x={(highCut + highFence) / 2}
+        y={baseY + 46}
+        fontSize="9.5"
+        fill={muted}
+        textAnchor="middle"
+      >
+        帯の幅の 1.5 倍
+      </text>
+
+      {/* 上下 2 本の柵 */}
+      {[lowFence, highFence].map((x) => (
+        <line
+          key={x}
+          x1={x}
+          y1={baseY - 38}
+          x2={x}
+          y2={baseY + 24}
+          stroke={accent}
+          strokeWidth="1.6"
+          strokeDasharray="5 3"
+        />
+      ))}
+      <text x={lowFence} y={baseY - 44} fontSize="10" fill={accent} textAnchor="middle">
+        下の柵
+      </text>
+      <text x={highFence} y={baseY - 44} fontSize="10" fill={accent} textAnchor="middle">
+        上の柵
+      </text>
+
+      {/* 記録の点（全部おなじ描き方。外に出ている点にも印をつけない） */}
+      {dots.map((x) => (
+        <circle key={x} cx={x} cy={baseY} r="4.2" fill={stroke} opacity="0.75" />
+      ))}
+
+      <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        柵の外に出た記録は、どうやって見つける？
+      </text>
+      <text x="170" y="193" fontSize="11" fill={accent} textAnchor="middle">
+        そして、外に出た記録は消してよいもの？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * データの分析 系9 step1・辞書（仮説検定）: 起こりにくさの帯と、基準の線。
+ * 左端ほど「めったに起こらない」側で、そこに裾の帯を敷く。基準の線は破線で立てるが、
+ * **この出来事がその線のどちら側に落ちるか（＝棄却できるかの判定）は描かない**——
+ * 観測の位置は宙に浮いた「?」のままにして、矢印は軸に触れる前で止める。
+ */
+export function DataTestTail() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const band = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const axisY = 118;
+  const x0 = 40; // 確率 0
+  const x1 = 310; // 確率 1
+  const xLine = 110; // 基準の線
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="起こりにくさ（確率）の帯。左端ほどめったに起こらない側で、そこに裾の帯が敷かれ、基準の線が破線で立っている。この出来事がどこに落ちるかは宙に浮いた疑問符のままで、線のどちら側かという判定は描かない"
+    >
+      {/* 帯（確率 0 から 1 まで） */}
+      <rect
+        x={x0}
+        y={axisY - 14}
+        width={x1 - x0}
+        height="28"
+        fill={band}
+        stroke={stroke}
+        strokeWidth="1.2"
+      />
+      {/* 裾（めったに起こらない側） */}
+      <rect x={x0} y={axisY - 14} width={xLine - x0} height="28" fill={fill} />
+
+      {/* 基準の線（破線）。ラベルは帯の下に置いて、上の「?」の行き先とぶつけない */}
+      <line
+        x1={xLine}
+        y1={axisY - 22}
+        x2={xLine}
+        y2={axisY + 34}
+        stroke={accent}
+        strokeWidth="1.8"
+        strokeDasharray="5 3"
+      />
+      <text x={xLine} y={axisY + 50} fontSize="10.5" fill={accent} textAnchor="middle">
+        基準の線（どこに引く？）
+      </text>
+
+      {/* 目盛（両端だけ） */}
+      <text x={x0} y={axisY + 30} fontSize="10" fill={muted} textAnchor="middle">
+        0
+      </text>
+      <text x={x1} y={axisY + 30} fontSize="10" fill={muted} textAnchor="middle">
+        1
+      </text>
+      <text x="14" y={axisY - 18} fontSize="10" fill={muted}>
+        確率
+      </text>
+
+      {/* 帯の左右の性格 */}
+      <text x={(x0 + xLine) / 2} y={axisY + 4} fontSize="9.5" fill={muted} textAnchor="middle">
+        めったにない
+      </text>
+      <text x={(xLine + x1) / 2} y={axisY + 4} fontSize="9.5" fill={muted} textAnchor="middle">
+        よくあること
+      </text>
+
+      {/* 観測した出来事は「?」のまま。行き先を左右 2 本の破線に割って、
+          どちら側に落ちるか（＝棄却できるかの判定）を描かないようにする。 */}
+      <text x="175" y="26" fontSize="10.5" fill={muted} textAnchor="middle">
+        否定した世界での、この出来事
+      </text>
+      <text x="175" y="50" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <path
+        d="M 172 58 L 80 92"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <path
+        d="M 178 58 L 250 92"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+
+      <text x="170" y="192" fontSize="11.5" fill={accent} textAnchor="middle">
+        この出来事は、線のどちら側に落ちる？
+      </text>
+    </svg>
+  );
+}
+
+/* ── dispatch 用スニペット（Math.tsx の <<DATA_HIST_READ>> 分岐の直後に貼る）──
+
+        if (trimmed === "<<DATA_DEVIATION_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataDeviationSquare />
+            </div>
+          );
+        }
+        if (trimmed === "<<DATA_SD_UNIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataSdUnit />
+            </div>
+          );
+        }
+
+   ──────────────────────────────────────────────────────────────────────── */
+
+/** データの分析 系6 step1: 平均線からの ± のずれと、そのずれを 1 辺とする正方形。分散の値は描かない。 */
+export function DataDeviationSquare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const meanY = 66;
+  // 平均線からのずれ（マイナスが上＝平均より多い側）。値は伏せる
+  const points = [
+    { x: 60, dy: -26 },
+    { x: 110, dy: 16 },
+    { x: 160, dy: 5 },
+    { x: 210, dy: -16 },
+    { x: 260, dy: 22 },
+  ];
+  // 上のずれ 3 本ぶんを、辺の長さにして正方形にする
+  const squares = [
+    { x: 78, side: 26 },
+    { x: 128, side: 16 },
+    { x: 178, side: 22 },
+  ];
+  const baseY = 200;
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="平均の線から上下に伸びる ± のずれと、そのずれを 1 辺にした正方形。分散の値は描かない"
+    >
+      {/* 上段：平均線と ± のずれ */}
+      <text x="14" y="20" fontSize="10" fill={muted}>
+        平均からのずれ（＋と −）
+      </text>
+      <line
+        x1="26"
+        y1={meanY}
+        x2="314"
+        y2={meanY}
+        stroke={stroke}
+        strokeWidth="1.3"
+      />
+      <text x="292" y={meanY - 6} fontSize="10" fill={muted} textAnchor="middle">
+        平均
+      </text>
+      {points.map((p) => (
+        <g key={p.x}>
+          <line
+            x1={p.x}
+            y1={meanY}
+            x2={p.x}
+            y2={meanY + p.dy}
+            stroke={accent}
+            strokeWidth="2"
+          />
+          <circle cx={p.x} cy={meanY + p.dy} r="3.4" fill={accent} />
+          <text
+            x={p.x + 11}
+            y={meanY + p.dy / 2 + 4}
+            fontSize="12"
+            fill={accent}
+            textAnchor="middle"
+          >
+            {p.dy < 0 ? "＋" : "−"}
+          </text>
+        </g>
+      ))}
+
+      {/* 下段：ずれを 1 辺にした正方形 */}
+      <text x="14" y="118" fontSize="10" fill={muted}>
+        同じずれを 1 辺にして、正方形をつくると
+      </text>
+      <line
+        x1="26"
+        y1={baseY}
+        x2="314"
+        y2={baseY}
+        stroke={muted}
+        strokeWidth="1"
+      />
+      {squares.map((s) => (
+        <g key={s.x}>
+          <rect
+            x={s.x}
+            y={baseY - s.side}
+            width={s.side}
+            height={s.side}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <line
+            x1={s.x}
+            y1={baseY + 6}
+            x2={s.x + s.side}
+            y2={baseY + 6}
+            stroke={accent}
+            strokeWidth="1.6"
+          />
+        </g>
+      ))}
+      <text x="248" y={baseY - 8} fontSize="11" fill={muted} textAnchor="middle">
+        1 辺 ＝ ずれ
+      </text>
+
+      <text x="170" y="224" fontSize="11.5" fill={accent} textAnchor="middle">
+        ＋と − は足すと消えてしまうのに、正方形の面積はどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系6 step5: 面積（もとの単位の 2 乗）から辺（もとの単位）へ戻す＝単位の払い戻し。標準偏差の値は描かない。 */
+export function DataSdUnit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="面積（もとの単位の 2 乗）で表された正方形から、矢印で 1 辺の長さ（もとの単位）へ戻す図。標準偏差の値は描かない"
+    >
+      {/* 左：面積＝分散 */}
+      <text x="76" y="30" fontSize="10" fill={muted} textAnchor="middle">
+        分散
+      </text>
+      <rect
+        x="36"
+        y="40"
+        width="80"
+        height="80"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      <text x="76" y="76" fontSize="12" fill={stroke} textAnchor="middle">
+        面積
+      </text>
+      <text x="76" y="94" fontSize="10" fill={muted} textAnchor="middle">
+        もとの単位の
+      </text>
+      <text x="76" y="107" fontSize="10" fill={muted} textAnchor="middle">
+        2 乗
+      </text>
+      <line x1="36" y1="130" x2="116" y2="130" stroke={muted} strokeWidth="1.2" />
+      <text x="76" y="144" fontSize="10" fill={muted} textAnchor="middle">
+        1 辺 ＝ ?
+      </text>
+
+      {/* 中央：払い戻しの矢印 */}
+      <line x1="132" y1="80" x2="196" y2="80" stroke={accent} strokeWidth="1.6" />
+      <polygon points="196,80 187,75 187,85" fill={accent} />
+      <text x="164" y="68" fontSize="13" fill={accent} textAnchor="middle">
+        √
+      </text>
+
+      {/* 右：辺の長さ＝標準偏差 */}
+      <text x="256" y="30" fontSize="10" fill={muted} textAnchor="middle">
+        標準偏差
+      </text>
+      <line x1="216" y1="80" x2="296" y2="80" stroke={accent} strokeWidth="3" />
+      <line x1="216" y1="72" x2="216" y2="88" stroke={accent} strokeWidth="1.4" />
+      <line x1="296" y1="72" x2="296" y2="88" stroke={accent} strokeWidth="1.4" />
+      <text x="256" y="102" fontSize="11" fill={stroke} textAnchor="middle">
+        辺の長さ
+      </text>
+      <text x="256" y="118" fontSize="10" fill={muted} textAnchor="middle">
+        もとの単位
+      </text>
+      <text x="256" y="144" fontSize="10" fill={muted} textAnchor="middle">
+        （記録と同じ物差し）
+      </text>
+
+      <text x="170" y="172" fontSize="11.5" fill={accent} textAnchor="middle">
+        面積のままでは、もとの記録と同じ物差しでは比べられない——
+      </text>
+      <text x="170" y="188" fontSize="11.5" fill={accent} textAnchor="middle">
+        辺の長さにもどすには、何をすればいい？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系7 step1: 平均の十字で 4 つに分けた散布図。相関の結論・r の値は描かない。 */
+export function DataScatterQuadrant() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  // 系7 step1 のデータ（肥料 2,5,9,11,13 kg／収穫 21,15,32,23,29 kg）と整合させた位置。
+  // 値のラベルは書かないので、いくつあるかは数え直す必要がある。
+  const pts = [
+    [80, 106],
+    [132, 139],
+    [201, 46],
+    [236, 95],
+    [270, 63],
+  ];
+  const mx = 184;
+  const my = 90;
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="点を打った散布図に、x の平均を通る縦線と y の平均を通る横線を引いて 4 つの区画に分けた図。どの区画に何個の点があるか（答え）は書かない"
+    >
+      {/* 軸 */}
+      <line x1="45" y1="160" x2="312" y2="160" stroke={stroke} strokeWidth="1.2" />
+      <line x1="45" y1="24" x2="45" y2="160" stroke={stroke} strokeWidth="1.2" />
+      <text x="318" y="164" fontSize="10" fill={muted} textAnchor="middle">
+        x
+      </text>
+      <text x="38" y="22" fontSize="10" fill={muted} textAnchor="middle">
+        y
+      </text>
+
+      {/* 平均の十字 */}
+      <line
+        x1={mx}
+        y1="24"
+        x2={mx}
+        y2="160"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <line
+        x1="45"
+        y1={my}
+        x2="312"
+        y2={my}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x={mx} y="20" fontSize="9.5" fill={muted} textAnchor="middle">
+        x の平均
+      </text>
+      <text x="316" y={my - 5} fontSize="9.5" fill={muted} textAnchor="end">
+        y の平均
+      </text>
+
+      {/* 点（値のラベルは付けない） */}
+      {pts.map(([px, py], k) => (
+        <circle
+          key={k}
+          cx={px}
+          cy={py}
+          r="5"
+          fill={fill}
+          stroke={accent}
+          strokeWidth="1.6"
+        />
+      ))}
+
+      {/* 区画の呼び名だけ（符号や正負の判定は書かない） */}
+      <text x="112" y="42" fontSize="9" fill={muted} textAnchor="middle">
+        左上
+      </text>
+      <text x="258" y="42" fontSize="9" fill={muted} textAnchor="middle">
+        右上
+      </text>
+      <text x="112" y="152" fontSize="9" fill={muted} textAnchor="middle">
+        左下
+      </text>
+      <text x="258" y="152" fontSize="9" fill={muted} textAnchor="middle">
+        右下
+      </text>
+
+      <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        4 つの区画のうち、2 つのずれの向きがそろうのはどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系7 step5: 形は同じで目盛だけがちがう散布図 2 枚。共分散・r の値は描かない。 */
+export function DataCovScale() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  // 同じ形（同じ相対位置）の点を、左は kg の目盛、右は g の目盛で描く。
+  const shape = [
+    [15, -39],
+    [37, -13],
+    [66, -87],
+    [81, -48],
+    [95, -74],
+  ];
+  const panel = (x0: number, baseY: number) =>
+    shape.map(([dx, dy]) => [x0 + dx, baseY + dy]);
+  const left = panel(40, 150);
+  const right = panel(200, 150);
+  return (
+    <svg
+      viewBox="0 0 340 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="同じ形に散らばる散布図を 2 枚並べ、片方は kg の目盛、もう片方は g の目盛で描いた図。共分散や相関係数の値は書かない"
+    >
+      {/* 左：kg の目盛 */}
+      <text x="30" y="20" fontSize="10" fill={muted}>
+        収穫量を kg で書くと
+      </text>
+      <line x1="40" y1="150" x2="150" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <line x1="40" y1="34" x2="40" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <text x="35" y="56" fontSize="8" fill={muted} textAnchor="end">
+        30
+      </text>
+      <text x="35" y="132" fontSize="8" fill={muted} textAnchor="end">
+        15
+      </text>
+      {left.map(([px, py], k) => (
+        <circle key={k} cx={px} cy={py} r="4.2" fill={fill} stroke={accent} strokeWidth="1.5" />
+      ))}
+
+      {/* 右：g の目盛（形はまったく同じ） */}
+      <text x="190" y="20" fontSize="10" fill={muted}>
+        同じ収穫を g で書くと
+      </text>
+      <line x1="200" y1="150" x2="310" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <line x1="200" y1="34" x2="200" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="56" fontSize="8" fill={muted} textAnchor="end">
+        30000
+      </text>
+      <text x="195" y="132" fontSize="8" fill={muted} textAnchor="end">
+        15000
+      </text>
+      {right.map(([px, py], k) => (
+        <circle key={k} cx={px} cy={py} r="4.2" fill={fill} stroke={accent} strokeWidth="1.5" />
+      ))}
+
+      {/* 2 枚が同じ形であることの目印 */}
+      <path
+        d="M 158 92 L 192 92"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x="175" y="86" fontSize="9" fill={muted} textAnchor="middle">
+        同じ形
+      </text>
+
+      <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        散らばりの形は 1 ミリも変わっていないのに、
+      </text>
+      <text x="170" y="194" fontSize="11" fill={accent} textAnchor="middle">
+        ずれの積の平均まで同じ数でいられる？
+      </text>
+    </svg>
+  );
+}
+
+/** データの分析 系7 step9: 山形に並ぶ点。r がほぼ 0 という結論は描かない。 */
+export function DataRNonlinear() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  // 系7 step9 のデータ（明るさ 100〜500 lx／ページ数 9,21,25,21,9）と整合させた位置。
+  const pts = [
+    [50, 131],
+    [110, 74],
+    [170, 54],
+    [230, 74],
+    [290, 131],
+  ];
+  const mx = 170;
+  const my = 96;
+  return (
+    <svg
+      viewBox="0 0 340 205"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="山のかたちに並ぶ 5 つの点と、平均を通る縦線・横線。相関係数の値や、相関があるかどうかの結論は書かない"
+    >
+      {/* 軸 */}
+      <line x1="40" y1="150" x2="312" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <line x1="40" y1="26" x2="40" y2="150" stroke={stroke} strokeWidth="1.2" />
+      <text x="318" y="154" fontSize="10" fill={muted} textAnchor="middle">
+        x
+      </text>
+      <text x="33" y="24" fontSize="10" fill={muted} textAnchor="middle">
+        y
+      </text>
+
+      {/* 平均の十字 */}
+      <line x1={mx} y1="26" x2={mx} y2="150" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <line x1="40" y1={my} x2="312" y2={my} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x={mx} y="22" fontSize="9.5" fill={muted} textAnchor="middle">
+        x の平均
+      </text>
+      <text x="316" y={my - 5} fontSize="9.5" fill={muted} textAnchor="end">
+        y の平均
+      </text>
+
+      {/* 点 */}
+      {pts.map(([px, py], k) => (
+        <circle key={k} cx={px} cy={py} r="5" fill={fill} stroke={accent} strokeWidth="1.6" />
+      ))}
+
+      <text x="105" y="168" fontSize="9" fill={muted} textAnchor="middle">
+        左半分
+      </text>
+      <text x="235" y="168" fontSize="9" fill={muted} textAnchor="middle">
+        右半分
+      </text>
+
+      <text x="170" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        これほどきれいに並んでいても、
+      </text>
+      <text x="170" y="195" fontSize="11" fill={accent} textAnchor="middle">
+        「右上がり」「右下がり」のどちらかに言える？
       </text>
     </svg>
   );

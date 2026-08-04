@@ -11,8 +11,6 @@
 import {
   ALGEBRA_1_SERIES_LIST,
   ALGEBRA_DIVISOR_COUNT_SERIES,
-  ALGEBRA_MEAN_SERIES,
-  ALGEBRA_VARIANCE_SERIES,
 } from "./seriesAlgebra";
 import {
   ALGEBRA_2_SERIES_LIST,
@@ -67,7 +65,17 @@ import {
   LOGIC_NECSUF_SERIES,
   LOGIC_PROOF_SERIES,
 } from "./seriesSetLogic";
-import { DATA_HISTOGRAM_SERIES } from "./seriesDataAnalysis";
+import {
+  DATA_HISTOGRAM_SERIES,
+  DATA_TRANSFORM_SERIES,
+  DATA_CENTER_SERIES,
+  DATA_ASSUMED_MEAN_SERIES,
+  DATA_QUARTILE_SERIES,
+  DATA_OUTLIER_SERIES,
+  DATA_HYPOTHESIS_SERIES,
+  DATA_VARIANCE_SERIES,
+  DATA_CORRELATION_SERIES,
+} from "./seriesDataAnalysis";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -161,10 +169,7 @@ import {
   MIDDLE_SCHOOL_SERIES_LIST,
   MIDDLE_SIMUL_SERIES,
 } from "./seriesMiddle";
-import {
-  STATISTICS_SERIES_LIST,
-  STATS_MEDIAN_SERIES,
-} from "./seriesStats";
+import { STATISTICS_SERIES_LIST } from "./seriesStats";
 import type { LearnerSeries, VariationOp } from "./types";
 
 export type SeriesSubject =
@@ -727,7 +732,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
    * graph/vertex → 系列3、min → 系列4（SERIES_REDIRECTS）。
    * sum/prod は第2章に節がないためカタログから外すのみ（リダイレクトなし）。 */
   /* 数Ⅰ: データの分析（池田本 第7章・集合と論理の直後。背骨 docs/data_analysis_series_design.md）
-   * 旧 algebra_mean_01 / stats_median_01 は系2、algebra_variance_01 は系6 実装時に吸収・リダイレクト。 */
+   * 旧 algebra_mean_01 / stats_median_01 は系2、algebra_variance_01 は系6 に吸収・リダイレクト済み。 */
   {
     series: DATA_HISTOGRAM_SERIES,
     subject: "secondary",
@@ -737,18 +742,68 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "度数分布表とヒストグラム（区切ると分布の形が現れる）— 以上・未満の決めごと、階級の幅で山が動く、度数の合計＝総数の逆算、図から言えること・言えないこと、2 集団の合併まで",
   },
   {
-    series: ALGEBRA_MEAN_SERIES,
+    series: DATA_CENTER_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "データの分析",
-    shortDescription: "5つの数の平均",
+    shortDescription:
+      "代表値（平均・中央値・最頻値）— 「真ん中」が 3 つあるのはなぜか。ならす平均・順位で切る中央値・個数で決まる最頻値、極端な 1 つで平均だけが動く落とし穴、偶奇で変わる取り方、2 集団の合併まで",
   },
   {
-    series: ALGEBRA_VARIANCE_SERIES,
+    series: DATA_ASSUMED_MEAN_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "データの分析",
-    shortDescription: "分散の入り口",
+    shortDescription:
+      "仮平均と階級値（ずらして計算する・代表で代用する）— 基準をずらしても平均は戻ってくる。ずれの合計が 0 になる理由、度数分布表からの代表値、代用がもたらす近似のずれ、表と仮平均の重ね技まで",
+  },
+  {
+    series: DATA_QUARTILE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "四分位数と箱ひげ図（位置で切ると、広がりと偏りが見える）— 中央値をもう一度で切れ目を増やし、5 つの数に捨てても残る形。箱ひげ図の読み取り・逆算・読めないものの見きわめ・中央値が同じ 2 群の区別まで",
+  },
+  {
+    series: DATA_OUTLIER_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "四分位範囲と外れ値（データ自身をものさしにする）— 真ん中半分の幅を物差しにして「飛び抜けている」を基準で言う。外れ値の判定と境界の設計、外れ値を除いても動かない中央値、範囲では見えない差まで",
+  },
+  {
+    series: DATA_VARIANCE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "分散と標準偏差（消える散らばりを 2 乗で救い出す）— 平均からのずれは足すと必ず 0 になる。2 乗して救い、平方根で単位を戻す。欠測の逆算・平均が同じ 2 群の比較・四分位範囲では見えない差まで",
+  },
+  {
+    series: DATA_CORRELATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "相関係数（測り方によらない関係の強さ）— ずれの積で向きを見て、標準偏差で割って単位を消す。共分散が単位で変わる落とし穴、r がちょうど 0 でも関係はある、外れ値 1 つで r が変わるまで",
+  },
+  {
+    series: DATA_TRANSFORM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "データの値の変化（要約の数は、それぞれ違う変わり方をする）— 全員に同じだけ加えても散らばりは動かず、単位を取り替えると分散だけが 2 乗で応える。逆算・複合変換・相関係数の不変性・標準化（偏差値の芽）まで",
+  },
+  {
+    series: DATA_HYPOTHESIS_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "データの分析",
+    shortDescription:
+      "仮説検定の考え方（背理法の確率版）— 主張を否定した世界で、この出来事がどれくらいあり得ないかを測る。基準を下回る回数の設計、組合せで作る確率、裾の確率、否定できない ≠ 正しいまで",
   },
   /* 数A: 整数の性質 */
   {
@@ -1093,13 +1148,6 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "ベクトル（数B 旧／数C 新）",
     shortDescription: "ベクトルの内積",
   },
-  /* 統計 */
-  {
-    series: STATS_MEDIAN_SERIES,
-    subject: "tertiary",
-    subjectLabel: "統計・データ分析",
-    shortDescription: "中央値 — 並び替えて真ん中",
-  },
 ];
 
 /**
@@ -1135,6 +1183,11 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra_perm_01: "algebra1_count_perm_01",
   /* 集合と論理（背骨 D3・§7）：旧「必要条件・十分条件」5 問 → 系6 へ吸収 */
   algebra_necsuf_01: "algebra1_logic_necsuf_01",
+  /* データの分析（背骨 D3）：旧プロトタイプ 3 本 → 系2「代表値」・系6「分散と標準偏差」へ吸収。
+   * あわせて subject "tertiary"（統計・データ分析）グループはカタログから廃止した。 */
+  algebra_mean_01: "algebra1_data_center_01",
+  stats_median_01: "algebra1_data_center_01",
+  algebra_variance_01: "algebra1_data_variance_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
