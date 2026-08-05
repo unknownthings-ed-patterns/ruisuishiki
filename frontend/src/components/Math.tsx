@@ -7506,6 +7506,123 @@ export function GeoAngleBisectorExt() {
 }
 
 /**
+ * 図形の性質・系列2 step1 の図。
+ * 頂点 A を共有する 2 三角形 ABD・ADC と、共通の高さ（A からの垂線）。
+ * 面積の比＝底辺 BD:DC の比。比の値は書かない（問いのまま）。
+ */
+export function GeoAreaRatio() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="頂点 A を共有する三角形 ABD と ADC。共通の高さを持つとき、面積の比は底辺 BD:DC とどんな関係？"
+    >
+      <polygon
+        points="160,40 50,200 270,200"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* A から D への線（BC を BD と DC に分ける） */}
+      <line x1="160" y1="40" x2="150" y2="200" stroke={accent} strokeWidth="1.8" />
+      {/* 共通の高さ（A から BC への垂線・点線） */}
+      <line x1="160" y1="40" x2="160" y2="200" stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      {/* 直角の小マーク */}
+      <path d="M 160 192 L 168 192 L 168 200" fill="none" stroke={muted} strokeWidth="1.1" />
+      {/* 頂点・分点ラベル */}
+      <text x="160" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="38" y="212" fontSize="13" fill={stroke}>B</text>
+      <text x="274" y="212" fontSize="13" fill={stroke}>C</text>
+      <circle cx="150" cy="200" r="3" fill={accent} />
+      <text x="146" y="216" fontSize="13" fill={accent}>D</text>
+      {/* 高さの注記 */}
+      <text x="166" y="120" fontSize="11" fill={muted} fontStyle="italic">高さは共通</text>
+      <text
+        x="160"
+        y="238"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        高さが同じ 2 三角形——面積の比は、底辺 BD:DC の比とどうつながる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 図形の性質・系列2 step2 の図。
+ * 三角形 ABC の内部の 1 点 O で 3 本の線 AD・BE・CF が交わる。
+ * 「A → F → B → D → C → E → A」の寄り道一周を薄い矢印で示す。比の値は書かない。
+ */
+export function GeoCeva() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC の内部の 1 点 O で 3 本の線 AD・BE・CF が交わる。3 辺の切られ方 AF:FB・BD:DC・CE:EA には、どんな縛りがある？"
+    >
+      <polygon
+        points="160,40 50,205 280,205"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 3 本のチェバ線（O で交わる） */}
+      <line x1="160" y1="40" x2="150" y2="205" stroke={accent} strokeWidth="1.5" />
+      <line x1="50" y1="205" x2="229.6" y2="135.7" stroke={accent} strokeWidth="1.5" />
+      <line x1="280" y1="205" x2="89.3" y2="146" stroke={accent} strokeWidth="1.5" />
+      {/* 交点 O */}
+      <circle cx="152.4" cy="165.5" r="3.2" fill={accent} />
+      <text x="158" y="178" fontSize="12" fill={accent}>O</text>
+      {/* 寄り道一周のガイド矢印（A→F→B→D→C→E→A）を薄く */}
+      <path
+        d="M 160 40 L 89.3 146 L 50 205 L 150 205 L 280 205 L 229.6 135.7 Z"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3,3"
+        opacity="0.6"
+      />
+      {/* 頂点ラベル */}
+      <text x="160" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="38" y="217" fontSize="13" fill={stroke}>B</text>
+      <text x="284" y="217" fontSize="13" fill={stroke}>C</text>
+      {/* 分点 */}
+      <circle cx="150" cy="205" r="2.6" fill={stroke} />
+      <text x="146" y="220" fontSize="12" fill={stroke}>D</text>
+      <circle cx="229.6" cy="135.7" r="2.6" fill={stroke} />
+      <text x="235" y="134" fontSize="12" fill={stroke}>E</text>
+      <circle cx="89.3" cy="146" r="2.6" fill={stroke} />
+      <text x="72" y="145" fontSize="12" fill={stroke}>F</text>
+      <text
+        x="160"
+        y="240"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        A から寄り道して一周すると、3 つの切られ方の積はどこへ戻る？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11382,6 +11499,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoAngleBisectorExt />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_AREA_RATIO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoAreaRatio />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_CEVA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoCeva />
             </div>
           );
         }

@@ -366,5 +366,362 @@ $BP : PC = 4 : 3$ と分かっても、$BP$ が $4$ cm とは限りません。�
 角の二等分線が向かいの辺を $AB : AC$ に切るのは、**自分で描き足した平行線が「角の等しさ」を「二等辺三角形の $2$ 辺の等しさ」に変え、その等しさが比の式に乗り移る**から。図形の情報（角・長さ・比）は、定理という道を通って離れた場所へ形を変えながら伝わる——補助線とは、その道を自分の手で敷く行為です。この「翻訳の鎖」が、チェバ・メネラウス、五心、円の定理へと続いていきます。`,
 };
 
-/** 図形の性質ユニットの全系列（系列2〜7 は委譲実装後に追加）。 */
-export const GEOMETRY_SERIES_LIST: LearnerSeries[] = [GEO_BISECTOR_SERIES];
+/** GEO2: チェバの定理（一周の不変量）。 */
+export const GEO_CEVA_SERIES: LearnerSeries = {
+  id: "geo_ceva_01",
+  title: "チェバの定理",
+  subtitle:
+    "数Ⅰ・A 図形の性質より — 三角形の中の $1$ 点が $3$ 辺の切られ方を『積 $= 1$』で縛る。面積比の入口からチェバの定理・内心の存在まで $10$ 問。",
+  patternId: "GEO2",
+  unit: "algebra_1",
+  revelationLabel:
+    "三角形の中の $1$ 点から辺へ引いた $3$ 本の線——$3$ つの切られ方を寄り道して一周ぶんかけ合わせると、必ず $1$ に戻る（一周の不変量）",
+  drivingQuestion:
+    "三角形の中に点を $1$ つ打つだけで、なぜ $3$ つの辺の切られ方が『比の積 $= 1$』という **$1$ 本の式**で縛られてしまう？ 頂点から寄り道して一周すると、比の積はどこへ戻る？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "三角形 $ABC$ の辺 $BC$ 上に点 $D$ をとり、頂点 $A$ と結びます。$BD : DC = 3 : 5$ のとき、三角形 $ABD$ の面積は三角形 $ADC$ の面積の何倍でしょう？（分数で）",
+      answer: 3 / 5,
+      answerDisplay: "3/5",
+      unit: "倍",
+      unknownLabel: "面積の比（分数で）",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "この $2$ つの三角形——$ABD$ と $ADC$ を、頂点 $A$ から見下ろしてみよう。底辺 $BD$ と $DC$ は同じ直線 $BC$ の上に並んでいる。$2$ つの三角形の高さはどうなっている？ 高さが同じなら、面積の大小を決めているのは何だろう？",
+        },
+        {
+          layer: 2,
+          text: "着目するのは底辺だけ。頂点 $A$ が共通で底辺が同じ直線上にあるので、$2$ つの三角形の高さは共通。だから面積の比は底辺の比 $BD : DC$ にそのまま等しい。あとは与えられた比を読むだけ。",
+        },
+        {
+          layer: 3,
+          text: "頂点 $A$ が共通で、底辺 $BD$・$DC$ が同じ直線 $BC$ 上にあるので、$2$ つの三角形の高さは等しい。高さが同じ三角形どうしの面積の比は底辺の比そのもの：$\\dfrac{\\triangle ABD}{\\triangle ADC} = \\dfrac{BD}{DC} = \\dfrac{3}{5}$。つまり $\\dfrac{3}{5}$ 倍。『高さが共通なら面積の比 ＝ 底辺の比』——この $1$ 枚の部品が、これから三角形の中を一周する式の土台になる。",
+        },
+      ],
+      formulaPreview: "高さ共通 → S(ABD):S(ADC) = BD:DC = 3:5",
+      figureMarker: "<<GEO_AREA_RATIO>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "三角形 $ABC$ の内部の $1$ 点で、$3$ 本の線 $AD$・$BE$・$CF$ が交わっています（$D$ は辺 $BC$ 上、$E$ は辺 $CA$ 上、$F$ は辺 $AB$ 上）。$AF : FB = 2 : 3$、$BD : DC = 5 : 6$ のとき、残りの $CE : EA$ を分数 $\\dfrac{CE}{EA}$ の値で答えましょう。",
+      answer: 9 / 5,
+      answerDisplay: "9/5",
+      unit: "",
+      unknownLabel: "CE:EA（分数 CE/EA で）",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題で『高さが共通な $2$ 三角形の面積の比 ＝ 底辺の比』を手に入れた。今度は三角形の中で $3$ 本の線が $1$ 点に集まり、$3$ つの辺がそれぞれ切られている。$2$ つの辺の切られ方は分かっていて、残り $1$ つを知りたい。$3$ つの比はてんでばらばらなのか、それとも互いに縛り合っているのか——前題の面積の見方で、$3$ つをつなげられないだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、辺が $1$ 本から $3$ 本ぶん切られていること。実は $3$ つの比は自由ではない。頂点 $A$ から出発して $F・B・D・C・E$ と辺づたいに寄り道して一周すると、$3$ つの比の積がちょうど $1$ に戻る。$AF : FB$ と $BD : DC$ の積に、残りの $CE : EA$ を掛けると $1$ になる。",
+        },
+        {
+          layer: 3,
+          text: "三角形の中で $3$ 本の線が $1$ 点で交わるとき、$3$ つの辺の分けられ方は『一周すると比の積が $1$』という $1$ 本の式で縛られる（チェバの定理）。頂点 $A$ から辺づたいに寄り道して一周する：$A \\to F \\to B \\to D \\to C \\to E \\to A$。通る順に『手前 : 奥』の比を並べて $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$。ここに $\\dfrac{2}{3} \\cdot \\dfrac{5}{6} \\cdot \\dfrac{CE}{EA} = 1$ を入れる。$\\dfrac{2}{3} \\cdot \\dfrac{5}{6} = \\dfrac{10}{18}$ だから $\\dfrac{CE}{EA} = \\dfrac{18}{10} = \\dfrac{9}{5}$。$2$ 辺の切られ方さえ決まれば $3$ 本目は自動で決まる——これが『$1$ 点で交わる』ことの正体で、この系列の核心の転換点。",
+        },
+      ],
+      formulaPreview: "AF/FB · BD/DC · CE/EA = 1 → 2/3 · 5/6 · CE/EA = 1 → CE/EA = 9/5",
+      figureMarker: "<<GEO_CEVA>>",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "三角形 $ABC$ の内部の $1$ 点で $3$ 本の線 $AD$・$BE$・$CF$ が交わっています（$D$ は辺 $BC$ 上、$E$ は辺 $CA$ 上、$F$ は辺 $AB$ 上）。$AF : FB = 3 : 5$、$BD : DC = 4 : 7$ のとき、$CE : EA$ を分数 $\\dfrac{CE}{EA}$ の値で答えましょう。",
+      answer: 35 / 12,
+      answerDisplay: "35/12",
+      unit: "",
+      unknownLabel: "CE:EA（分数 CE/EA で）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。やることは同じ『一周すると比の積は $1$』。変わったのは与えられた $2$ つの比の数だけ。同じ一周の式に、新しい数をあてはめれば残りが出せそうだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは辺の切られ方の数値だけ。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ はそのまま。$\\dfrac{3}{5}$ と $\\dfrac{4}{7}$ を入れて、残りを求めると？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じ一周の式：$\\dfrac{3}{5} \\cdot \\dfrac{4}{7} \\cdot \\dfrac{CE}{EA} = 1$。$\\dfrac{3}{5} \\cdot \\dfrac{4}{7} = \\dfrac{12}{35}$ だから $\\dfrac{CE}{EA} = \\dfrac{35}{12}$。数が変わっても、一周の型が同じなら手は $1$ つ——比の積が $1$ に戻る縛りは、辺の長さの具体値に左右されない。",
+        },
+      ],
+      formulaPreview: "3/5 · 4/7 · CE/EA = 1 → CE/EA = 35/12",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "三角形 $ABC$ の内部の $1$ 点で $3$ 本の線 $AD$・$BE$・$CF$ が交わっています（$D$ は辺 $BC$ 上、$E$ は辺 $CA$ 上、$F$ は辺 $AB$ 上）。$AF : FB = 5 : 8$、$CE : EA = 2 : 3$ のとき、残りの $BD : DC$ を分数 $\\dfrac{BD}{DC}$ の値で答えましょう。",
+      answer: 12 / 5,
+      answerDisplay: "12/5",
+      unit: "",
+      unknownLabel: "BD:DC（分数 BD/DC で）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。一周の式は同じ。ただし今度は、分かっている $2$ つと知りたい $1$ つの場所が入れ替わっている——真ん中の $BD : DC$ が空いている。式のどこが空欄でも、同じ縛りで埋められるだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、未知が真ん中の $BD : DC$ に移ったこと。$\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ の $\\dfrac{BD}{DC}$ 以外を入れて、残りを解くと？",
+        },
+        {
+          layer: 3,
+          text: "一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ に $\\dfrac{5}{8} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{2}{3} = 1$。$\\dfrac{5}{8} \\cdot \\dfrac{2}{3} = \\dfrac{10}{24} = \\dfrac{5}{12}$ なので $\\dfrac{BD}{DC} = \\dfrac{12}{5}$。$3$ つの比のうちどれが空いていても、残り $2$ つから一意に決まる——$1$ 本の式が $3$ つの比を互いに縛り合っている証拠。",
+        },
+      ],
+      formulaPreview: "5/8 · BD/DC · 2/3 = 1 → BD/DC = 12/5",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "三角形 $ABC$ で、$D$ は辺 $BC$ 上、$E$ は辺 $CA$ 上、$F$ は辺 $AB$ 上にあります。$BD : DC = 3 : 1$、$CE : EA = 5 : 6$ です。$3$ 本の線 $AD$・$BE$・$CF$ が $1$ 点で交わるためには、$AF : FB$ をいくつにすればよいでしょう？ 分数 $\\dfrac{AF}{FB}$ で答えましょう。",
+      answer: 2 / 5,
+      answerDisplay: "2/5",
+      unit: "",
+      unknownLabel: "AF:FB（分数 AF/FB で）",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは『$1$ 点で交わっている』ことが最初から分かっていて、切られ方を読んだ。今度は逆——切られ方を先に決めて『交わるように $F$ を置ける？』と問われている。一周すると積が $1$ になるという同じ縛りを、$F$ の位置を決める側から読めないだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、未知が『交わるための条件』になったこと。$3$ 本が $1$ 点で交わるのは、ちょうど一周の積が $1$ のとき。$\\dfrac{AF}{FB} \\cdot \\dfrac{3}{1} \\cdot \\dfrac{5}{6} = 1$ を $\\dfrac{AF}{FB}$ について解くと？",
+        },
+        {
+          layer: 3,
+          text: "$3$ 本が $1$ 点で交わる条件そのものが『一周の積 $= 1$』（チェバの定理は逆向きにも成り立つ）。$\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ に $\\dfrac{AF}{FB} \\cdot \\dfrac{3}{1} \\cdot \\dfrac{5}{6} = 1$。$\\dfrac{3}{1} \\cdot \\dfrac{5}{6} = \\dfrac{15}{6} = \\dfrac{5}{2}$ だから $\\dfrac{AF}{FB} = \\dfrac{2}{5}$。同じ式が、切られ方を読む道具にも、$1$ 点で交わらせる設計図にもなる——縛りは前向きにも後ろ向きにも使える。",
+        },
+      ],
+      formulaPreview: "AF/FB · 3/1 · 5/6 = 1 → AF/FB = 2/5",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "三角形 $ABC$ で、点 $F$ は辺 $AB$ の**中点**です。辺 $BC$ 上の点 $D$ は $BD = 4$、$DC = 7$ を満たします。$3$ 本の線 $AD$・$BE$・$CF$（$E$ は辺 $CA$ 上）が $1$ 点で交わるとき、$CE : EA$ を分数 $\\dfrac{CE}{EA}$ で答えましょう。",
+      answer: 7 / 4,
+      answerDisplay: "7/4",
+      unit: "",
+      unknownLabel: "CE:EA（分数 CE/EA で）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは $3$ つの辺の比が最初から比の形で与えられていた。今度は $1$ つが『中点』という言葉で、もう $1$ つが長さ $BD$・$DC$ で与えられている——比の顔をしていない手がかりを、まず一周の式に乗る形に直せないだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題に加わったのは『言葉と長さを比に読み替える』ひと手間だけ。中点は $AF : FB = 1 : 1$、長さ $BD = 4$・$DC = 7$ は $BD : DC = 4 : 7$。あとはいつもの一周の式に入れるだけ。",
+        },
+        {
+          layer: 3,
+          text: "中点だから $AF : FB = 1 : 1$、長さから $BD : DC = 4 : 7$。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ に $\\dfrac{1}{1} \\cdot \\dfrac{4}{7} \\cdot \\dfrac{CE}{EA} = 1$ を入れて $\\dfrac{CE}{EA} = \\dfrac{7}{4}$。手がかりが比の顔をしていなくても、$1 : 1$ や長さの比に読み替えれば同じ式に乗る——一周の縛りは、情報の見た目を選ばない。",
+        },
+      ],
+      formulaPreview: "中点 → AF/FB = 1/1・BD/DC = 4/7 → CE/EA = 7/4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "三角形 $ABC$ で、$D$・$E$・$F$ はそれぞれ辺 $BC$・$CA$・$AB$ の**中点**です（$AD$・$BE$・$CF$ は $3$ 本の中線）。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA}$ の値はいくつでしょう？",
+      answer: 1,
+      answerDisplay: "1",
+      unit: "",
+      unknownLabel: "3 つの比の積",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "前題では $1$ 本だけ中点だった。今度は $3$ 辺すべてが中点で切られている。中点は辺を $1 : 1$ に分ける——$3$ つの比がぜんぶ $1 : 1$ のとき、一周の積はどうなるだろう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$3$ つの比がすべて $1 : 1$ になったこと。$\\dfrac{1}{1} \\cdot \\dfrac{1}{1} \\cdot \\dfrac{1}{1}$ を読むだけ。",
+        },
+        {
+          layer: 3,
+          text: "中点は各辺を $1 : 1$ に分けるので $AF : FB = BD : DC = CE : EA = 1 : 1$。一周の積は $\\dfrac{1}{1} \\cdot \\dfrac{1}{1} \\cdot \\dfrac{1}{1} = 1$。積が $1$ になる ＝ $3$ 本の中線は必ず $1$ 点で交わる（この点が重心）。特別な数値を選んだわけでもないのに一周が $1$ に戻る——中線がいつでも $1$ 点に集まることが、式 $1$ 本で保証される。",
+        },
+      ],
+      formulaPreview: "1/1 · 1/1 · 1/1 = 1（中線は 1 点で交わる＝重心）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "三角形 $ABC$ の辺 $AB$ 上に点 $F$ があり、三角形 $AFC$ の面積は三角形 $FBC$ の面積の $\\dfrac{2}{7}$ 倍です。辺 $BC$ 上の点 $D$ は $BD : DC = 5 : 6$。$3$ 本の線 $AD$・$BE$・$CF$（$E$ は辺 $CA$ 上）が $1$ 点で交わるとき、$CE : EA$ を分数 $\\dfrac{CE}{EA}$ で答えましょう。",
+      answer: 21 / 5,
+      answerDisplay: "21/5",
+      unit: "",
+      unknownLabel: "CE:EA（分数 CE/EA で）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "$F$ の切られ方が、比ではなく『面積の何倍』で隠されている。$CE : EA$ を面積の追いかけっこだけで直接つかもうとすると、$1$ 点で交わる点の位置まで持ち出すことになって手に負えない。前題までの一周の式に乗せるために、まず step1 の『面積の比 ＝ 底辺の比』で $F$ の比を取り出せないだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題までと変わったのは、$AF : FB$ が面積で与えられている $1$ 点だけ。三角形 $AFC$ と $FBC$ は頂点 $C$ が共通で、底辺 $AF$・$FB$ が同じ直線上——高さが共通だから面積の比 ＝ $AF : FB$。$AF : FB = 2 : 7$ に直せば、あとはいつもの一周。",
+        },
+        {
+          layer: 3,
+          text: "まず step1 の部品：三角形 $AFC$ と $FBC$ は頂点 $C$ を共有し、底辺 $AF$・$FB$ が直線 $AB$ 上にあるので高さが共通。だから $\\dfrac{\\triangle AFC}{\\triangle FBC} = \\dfrac{AF}{FB} = \\dfrac{2}{7}$。これで比が取り出せた。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ に $\\dfrac{2}{7} \\cdot \\dfrac{5}{6} \\cdot \\dfrac{CE}{EA} = 1$、$\\dfrac{2}{7} \\cdot \\dfrac{5}{6} = \\dfrac{10}{42} = \\dfrac{5}{21}$ なので $\\dfrac{CE}{EA} = \\dfrac{21}{5}$。面積の直接追跡では届かないところに、面積比 → 辺比 → 一周の縛りという $2$ 段の乗り換えだけが道を作る——ここでこそ一周の式が本当に働く。",
+        },
+      ],
+      formulaPreview: "面積比 → AF/FB = 2/7 → 2/7 · 5/6 · CE/EA = 1 → CE/EA = 21/5",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "三角形 $ABC$ で、辺 $AB$ 上の点 $F$ は $AF : FB = 5 : 8$、辺 $BC$ 上の点 $D$ は $BD = 2$、$DC = 8$ です。$3$ 本の線 $AD$・$BE$・$CF$（$E$ は辺 $CA$ 上）が $1$ 点で交わるとき、$EA : EC$ を分数 $\\dfrac{EA}{EC}$ で答えましょう。",
+      answer: 5 / 32,
+      answerDisplay: "5/32",
+      unit: "",
+      unknownLabel: "EA:EC（分数 EA/EC で）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までと同じで、一周の式で残りの切られ方が出せる。ただし今度、聞かれているのは $EA : EC$——一周の式にそのまま現れる $CE : EA$ とは、分子と分母が逆さまだ。式で出したものを、そのまま答えにしてよいだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題に加わったのは『一周で出した比を、聞かれた向きにひっくり返す』ひと手間。まず長さ $BD = 2$・$DC = 8$ を $BD : DC = 1 : 4$ に直し、一周の式で $CE : EA$ を出してから、$EA : EC$ の向きにそろえる。",
+        },
+        {
+          layer: 3,
+          text: "長さから $BD : DC = 1 : 4$。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$ に $\\dfrac{5}{8} \\cdot \\dfrac{1}{4} \\cdot \\dfrac{CE}{EA} = 1$、$\\dfrac{5}{8} \\cdot \\dfrac{1}{4} = \\dfrac{5}{32}$ だから $\\dfrac{CE}{EA} = \\dfrac{32}{5}$。ここで止めると誤答になる——聞かれたのは $\\dfrac{EA}{EC}$ だから、上下をそろえて $\\dfrac{EA}{EC} = \\dfrac{5}{32}$。一周を機械的に唱えて $\\dfrac{CE}{EA}$ と $\\dfrac{EA}{EC}$ を取り違えるのが、この定理の定番のつまずき。『$A$ から寄り道して一周し、通る順に手前 : 奥』に立ち返れば、どちらの向きか毎回その場で決められる。",
+        },
+      ],
+      formulaPreview: "5/8 · 1/4 · CE/EA = 1 → CE/EA = 32/5 → EA/EC = 5/32",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "三角形 $ABC$ で $AB = 3$、$BC = 5$、$CA = 4$ です。$3$ つの角 $A$・$B$・$C$ の [角の二等分線] が、それぞれ向かいの辺 $BC$・$CA$・$AB$ と交わる点を $D$・$E$・$F$ とします。一周の式 $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA}$ の値はいくつでしょう？",
+      answer: 1,
+      answerDisplay: "1",
+      unit: "",
+      unknownLabel: "3 つの比の積",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "step7 では中線 $3$ 本で一周が $1$ になった。今度は、系列 $1$ で学んだ [角の二等分線] を $3$ 本引く。$1$ 本ずつは向かいの辺を『となりの $2$ 辺の比』に切る——$3$ 本ぶんの比を一周ぶんかけ合わせたら、今度も $1$ に戻るだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$3$ つの比が [角の二等分線] の性質で決まること。頂点 $A$ の二等分線は $BD : DC = AB : AC$、頂点 $B$ は $CE : EA = BC : BA$、頂点 $C$ は $AF : FB = CA : CB$。$3$ 辺 $3$・$5$・$4$ から $3$ つの比を書いて、一周の式に入れると？",
+        },
+        {
+          layer: 3,
+          text: "系列 $1$ の角の二等分線の性質で各辺の比を書く：頂点 $A$ の二等分線 → $BD : DC = AB : AC = 3 : 4$、頂点 $B$ → $CE : EA = BC : BA = 5 : 3$、頂点 $C$ → $AF : FB = CA : CB = 4 : 5$。一周の積は $\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = \\dfrac{4}{5} \\cdot \\dfrac{3}{4} \\cdot \\dfrac{5}{3} = 1$。辺の長さがどんな三角形でも、この積は約分でぴたりと $1$ になる——だから角の二等分線 $3$ 本も必ず $1$ 点で交わる（その点が内心 ＝ 内接円の中心）。角の情報が辺の比になり（系列 $1$）、辺の比が一周で $1$ に戻る（この系列）——$2$ つの定理が組み合わさって、新しい『点の存在』を証明した。",
+        },
+      ],
+      formulaPreview: "4/5 · 3/4 · 5/3 = 1（角の二等分線 3 本は 1 点で交わる＝内心）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 三角形の中に点を $1$ つ打つだけで、なぜ $3$ つの辺の切られ方が『比の積 $= 1$』という $1$ 本の式で縛られてしまう？ 頂点から寄り道して一周すると、比の積はどこへ戻る？
+
+────────
+
+**定理そのものは $1$ 行で書ける。**
+
+三角形 $ABC$ の内部の $1$ 点で $3$ 本の線 $AD$・$BE$・$CF$ が交わるとき（$D$ は $BC$ 上、$E$ は $CA$ 上、$F$ は $AB$ 上）：
+
+$$\\dfrac{AF}{FB} \\cdot \\dfrac{BD}{DC} \\cdot \\dfrac{CE}{EA} = 1$$
+
+バラバラに見えた $3$ つの切られ方が、かけ合わせるとぴたりと $1$。この「一周して $1$ に戻る」不変量がどこから来るのかが、この系列の核心です。
+
+<<GEO_CEVA>>
+
+**巡り方は、覚えるものではなく再建するもの。**
+
+式の形が思い出せなくても、$1$ つの規則で毎回組み立て直せます。頂点 $A$ から出発し、辺づたいに**寄り道しながら一周**する：
+
+$$A \\to F \\to B \\to D \\to C \\to E \\to A$$
+
+通る順に、各辺で「**手前 : 奥**」の比を並べるだけ——$\\dfrac{AF}{FB}$、$\\dfrac{BD}{DC}$、$\\dfrac{CE}{EA}$。これを掛ければ式が完成します。だから $\\dfrac{CE}{EA}$ なのか $\\dfrac{EA}{EC}$ なのかで迷ったら、巡り方に立ち返れば毎回その場で決まります（この上下の取り違えが、この定理の一番のつまずき。step9 で正面から扱いました）。
+
+**なぜ積が $1$ になるのか——面積比が保証する。**
+
+Step 1 で見た「高さが共通なら面積の比 ＝ 底辺の比」を、交点 $O$ のまわりで $3$ 回使います。まず $\\dfrac{BD}{DC}$ を面積で書き直す：
+
+- 頂点 $A$ から見て $\\dfrac{BD}{DC} = \\dfrac{\\triangle ABD}{\\triangle ACD}$（高さ共通）
+- 頂点 $O$ から見ても $\\dfrac{BD}{DC} = \\dfrac{\\triangle OBD}{\\triangle OCD}$（同じ底辺・高さ共通）
+- $O$ は線分 $AD$ 上にあるので $\\triangle ABD = \\triangle ABO + \\triangle OBD$、$\\triangle ACD = \\triangle ACO + \\triangle OCD$。分子どうし・分母どうしの差をとると $\\dfrac{BD}{DC} = \\dfrac{\\triangle ABO}{\\triangle ACO}$
+
+まったく同じ手で、残り $2$ 辺も $O$ まわりの三角形の面積比になります：
+
+$$\\dfrac{BD}{DC} = \\dfrac{\\triangle ABO}{\\triangle ACO}, \\quad \\dfrac{CE}{EA} = \\dfrac{\\triangle BCO}{\\triangle ABO}, \\quad \\dfrac{AF}{FB} = \\dfrac{\\triangle ACO}{\\triangle BCO}$$
+
+これを一周ぶんかけ合わせると、$\\triangle ABO$・$\\triangle BCO$・$\\triangle ACO$ が分子と分母できれいに打ち消し合って：
+
+$$\\dfrac{\\triangle ACO}{\\triangle BCO} \\cdot \\dfrac{\\triangle ABO}{\\triangle ACO} \\cdot \\dfrac{\\triangle BCO}{\\triangle ABO} = 1$$
+
+一周して同じ三角形に戻ってくるから、途中の量がすべて相殺される——これが「積 $= 1$」の正体です。忘れても、この面積比 $3$ 枚から再建できます。
+
+**逆向きにも成り立つ（Step 5）。**
+
+「一周の積が $1$ なら、$3$ 本は必ず $1$ 点で交わる」も真です。だからこの式は、交点があるときに切られ方を読む道具にも、$3$ 本を $1$ 点に集める設計図にもなります。中線 $3$ 本（Step 7）や角の二等分線 $3$ 本（Step 10）が必ず $1$ 点で交わることは、比の積がいつでも $1$ になることから即座に出ます——重心や内心の「存在」が、計算 $1$ 本で保証されるのです。
+
+**比は、長さそのものを捨てている。**
+
+一周の式に残っているのは $3$ つの「比」だけで、辺の実際の長さも、内部の点 $O$ が三角形のどこにあるかも、式には現れません。$AF : FB = 2 : 3$ と分かっても $AF$ が何 cm かは言えない——一周の縛りは「切られ方の釣り合い」だけを掬い取り、絶対の大きさと位置は捨てています。だからこそ、どんな大きさ・どんな形の三角形でも同じ $1$ 本の式で語れるのです。
+
+────────
+
+**もっと深く**
+
+**点でなく直線が横切ると？** 三角形の中の $1$ 点ではなく、$1$ 本の直線が三角形を横切るときも、まったく同じ「一周して比の積」が作れて、長さの比で数えれば積はやはり $1$ に戻ります（進む向きを符号まで込めて数える流儀では $-1$ と書きます）。これがメネラウスの定理（次の系列）。ただし分点は辺の外へはみ出す——内（点・チェバ）と外（直線・メネラウス）を、同じ寄り道の型が統べています。
+
+**一周の型は保存量の考え方そのもの。** 「どんな寄り道をしても一周すれば元に戻る」という不変量の見方は、図形を超えて物理や解析にも現れます。途中の経路の詳細を捨てて、$1$ 周の総和・総積だけが意味を持つ——チェバの定理は、その最初の出会いのひとつです。
+
+**出典**
+
+- 池田洋介（2023）『数学Ⅰ・A 入門問題精講 改訂版』旺文社
+  — 第8章 図形の性質（チェバの定理）の構成を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+三角形の中の $1$ 点が $3$ 辺の切られ方を『積 $= 1$』で縛るのは、**$3$ つの比を交点まわりの面積比に書き直すと、一周ぶんかけ合わせたときに途中の面積がすべて打ち消し合う**から。図形の量は、面積比という道を通って離れた辺どうしを結び、寄り道して一周すれば必ず元に戻る——この「一周の不変量」が、メネラウス、そして五心（内心・重心の存在）へと続いていきます。`,
+};
+
+/** 図形の性質ユニットの全系列（系列3〜7 は委譲実装後に追加）。 */
+export const GEOMETRY_SERIES_LIST: LearnerSeries[] = [
+  GEO_BISECTOR_SERIES,
+  GEO_CEVA_SERIES,
+];

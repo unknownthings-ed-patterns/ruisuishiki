@@ -80,7 +80,7 @@ import {
   DATA_CORRELATION_SERIES,
   DATA_ANALYSIS_SERIES_LIST,
 } from "./seriesDataAnalysis";
-import { GEO_BISECTOR_SERIES } from "./seriesGeometry";
+import { GEO_BISECTOR_SERIES, GEO_CEVA_SERIES } from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -818,6 +818,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "図形の性質",
     shortDescription:
       "角の二等分線と比（角の情報が辺の比に翻訳される）— 平行線が比を運ぶ入口から、内角・外角の二等分線、内分と外分の組み合わせ、面積比への乗り換えまで",
+  },
+  {
+    series: GEO_CEVA_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "チェバの定理（一周の不変量）— 面積比＝底辺の比の部品から、寄り道して一周すると比の積が 1 に戻る縛りへ。交わるための条件の逆算、面積で隠された比、中線と角の二等分線が必ず 1 点で交わる証明まで",
   },
   /* 数A: 整数の性質 */
   {
