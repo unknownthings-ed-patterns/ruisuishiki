@@ -7352,6 +7352,160 @@ export function TrigCircumTriangle() {
 }
 
 /**
+ * 図形の性質・系列1（角の二等分線と比）step1 の図。
+ * DE ∥ BC の三角形。平行線が比を運ぶことを問いの形で示す（値・答えは書かない）。
+ */
+export function GeoParallelRatio() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC と、BC に平行な線分 DE。AD:DB と AE:EC はどんな関係？"
+    >
+      <polygon
+        points="160,40 60,200 260,200"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* DE（BC と平行） */}
+      <line x1="115" y1="112" x2="205" y2="112" stroke={accent} strokeWidth="1.8" />
+      {/* 平行マーク（DE と BC に同じ向きの矢羽） */}
+      <path d="M 156 108 L 164 112 L 156 116" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 156 196 L 164 200 L 156 204" fill="none" stroke={muted} strokeWidth="1.4" />
+      {/* 頂点・分点ラベル */}
+      <text x="160" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="48" y="212" fontSize="13" fill={stroke}>B</text>
+      <text x="264" y="212" fontSize="13" fill={stroke}>C</text>
+      <circle cx="115" cy="112" r="3" fill={accent} />
+      <circle cx="205" cy="112" r="3" fill={accent} />
+      <text x="98" y="112" fontSize="13" fill={accent}>D</text>
+      <text x="212" y="112" fontSize="13" fill={accent}>E</text>
+      <text
+        x="160"
+        y="238"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        DE ∥ BC のとき、AD:DB と AE:EC はどんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 図形の性質・系列1 step3 の図。
+ * ∠A の二等分線が BC を切る。比は書かない（問いのまま）。
+ */
+export function GeoAngleBisector() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC と ∠A の二等分線 AP。BP:PC はどんな比？"
+    >
+      <polygon
+        points="150,40 50,200 270,200"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 二等分線 AP */}
+      <line x1="150" y1="40" x2="157" y2="200" stroke={accent} strokeWidth="1.8" />
+      {/* 等しい半角のマーク（同じ印＝等しい角） */}
+      <path d="M 139.9 61.7 A 24 24 0 0 1 147.9 63.9" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 154.2 63.6 A 24 24 0 0 1 162 60.8" fill="none" stroke={accent} strokeWidth="1.3" />
+      <circle cx="142.2" cy="69" r="2" fill={accent} />
+      <circle cx="160.3" cy="68.2" r="2" fill={accent} />
+      {/* ラベル */}
+      <text x="150" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="38" y="212" fontSize="13" fill={stroke}>B</text>
+      <text x="274" y="212" fontSize="13" fill={stroke}>C</text>
+      <circle cx="157" cy="200" r="3" fill={accent} />
+      <text x="153" y="216" fontSize="13" fill={accent}>P</text>
+      <text
+        x="160"
+        y="238"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        ∠A をちょうど半分に切る線は、BC をどんな比で切る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 図形の性質・系列1 step7 の図。
+ * ∠A の外角の二等分線が BC の延長と交わる（外分）。値・比は書かない。
+ */
+export function GeoAngleBisectorExt() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 380 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="三角形 ABC の ∠A の外角の二等分線が、BC の延長と点 Q で交わる。BQ:QC は？"
+    >
+      <polygon
+        points="150,80 30,190 170,190"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* BA の延長（外角を作る側） */}
+      <line x1="150" y1="80" x2="215" y2="21" stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      {/* BC の延長 */}
+      <line x1="170" y1="190" x2="320" y2="190" stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      {/* 外角の二等分線 A→Q */}
+      <line x1="150" y1="80" x2="320" y2="190" stroke={accent} strokeWidth="1.8" />
+      {/* 外角の半分ずつのマーク */}
+      <path d="M 166 62 A 24 24 0 0 1 174 87" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 172 95 A 24 24 0 0 1 158 103" fill="none" stroke={accent} strokeWidth="1.3" />
+      <circle cx="173" cy="74" r="2" fill={accent} />
+      <circle cx="167" cy="100" r="2" fill={accent} />
+      {/* ラベル */}
+      <text x="146" y="70" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="18" y="202" fontSize="13" fill={stroke}>B</text>
+      <text x="162" y="206" fontSize="13" fill={stroke}>C</text>
+      <circle cx="320" cy="190" r="3" fill={accent} />
+      <text x="324" y="202" fontSize="13" fill={accent}>Q</text>
+      <text
+        x="190"
+        y="230"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        外側の角を半分に切ると、分ける点 Q は辺の外へ——BQ:QC は？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11207,6 +11361,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <TrigCircumTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_PARA_RATIO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoParallelRatio />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_BISECTOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoAngleBisector />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_BISECTOR_EXT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoAngleBisectorExt />
             </div>
           );
         }

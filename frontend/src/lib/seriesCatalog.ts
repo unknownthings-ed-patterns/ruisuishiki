@@ -45,6 +45,7 @@ import {
   COUNT_CIRCULAR_SERIES,
   COUNT_SAMEKIND_SERIES,
   COUNT_BIJECTION_SERIES,
+  COUNTING_SERIES_LIST,
 } from "./seriesCounting";
 import {
   PROB_DEF_SERIES,
@@ -55,6 +56,7 @@ import {
   PROB_COND_SERIES,
   PROB_POSTERIOR_SERIES,
   PROB_EXPECT_SERIES,
+  PROBABILITY_SERIES_LIST,
 } from "./seriesProbability";
 import {
   SET_ELEMENT_SERIES,
@@ -64,6 +66,7 @@ import {
   LOGIC_CONTRAPOSITIVE_SERIES,
   LOGIC_NECSUF_SERIES,
   LOGIC_PROOF_SERIES,
+  SET_LOGIC_SERIES_LIST,
 } from "./seriesSetLogic";
 import {
   DATA_HISTOGRAM_SERIES,
@@ -75,7 +78,9 @@ import {
   DATA_HYPOTHESIS_SERIES,
   DATA_VARIANCE_SERIES,
   DATA_CORRELATION_SERIES,
+  DATA_ANALYSIS_SERIES_LIST,
 } from "./seriesDataAnalysis";
+import { GEO_BISECTOR_SERIES } from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -805,6 +810,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "仮説検定の考え方（背理法の確率版）— 主張を否定した世界で、この出来事がどれくらいあり得ないかを測る。基準を下回る回数の設計、組合せで作る確率、裾の確率、否定できない ≠ 正しいまで",
   },
+  /* 数A: 図形の性質（池田本 第8章・データの分析の直後。背骨 docs/geometry_series_design_fable.md） */
+  {
+    series: GEO_BISECTOR_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "角の二等分線と比（角の情報が辺の比に翻訳される）— 平行線が比を運ぶ入口から、内角・外角の二等分線、内分と外分の組み合わせ、面積比への乗り換えまで",
+  },
   /* 数A: 整数の性質 */
   {
     series: ALGEBRA_DIVISOR_COUNT_SERIES,
@@ -1212,6 +1226,10 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_2_SERIES_LIST,
   ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
+  ...COUNTING_SERIES_LIST,
+  ...PROBABILITY_SERIES_LIST,
+  ...SET_LOGIC_SERIES_LIST,
+  ...DATA_ANALYSIS_SERIES_LIST,
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,
 ];
