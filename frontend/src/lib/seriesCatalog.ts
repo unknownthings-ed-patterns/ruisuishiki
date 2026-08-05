@@ -80,7 +80,11 @@ import {
   DATA_CORRELATION_SERIES,
   DATA_ANALYSIS_SERIES_LIST,
 } from "./seriesDataAnalysis";
-import { GEO_BISECTOR_SERIES, GEO_CEVA_SERIES } from "./seriesGeometry";
+import {
+  GEO_BISECTOR_SERIES,
+  GEO_CEVA_SERIES,
+  GEO_MENELAUS_SERIES,
+} from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
@@ -826,6 +830,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "図形の性質",
     shortDescription:
       "チェバの定理（一周の不変量）— 面積比＝底辺の比の部品から、寄り道して一周すると比の積が 1 に戻る縛りへ。交わるための条件の逆算、面積で隠された比、中線と角の二等分線が必ず 1 点で交わる証明まで",
+  },
+  {
+    series: GEO_MENELAUS_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "メネラウスの定理（横切る直線も同じ一周）— 分点が辺の外へはみ出しても式は変わらない。一直線に並ぶ条件の逆算、三角形と直線の選び方、チェバとの二段構え、重心 2:1 の導出、面積比への総合まで",
   },
   /* 数A: 整数の性質 */
   {

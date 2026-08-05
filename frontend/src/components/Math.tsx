@@ -7623,6 +7623,119 @@ export function GeoCeva() {
 }
 
 /**
+ * 系列3 step1 の図。三角形 ABC を1本の直線が横切り、辺 AB を D、辺 AC を E で切り、
+ * 辺 BC の C 側の延長上（外分点）で F と交わる。外分点 F を強調する。
+ */
+export function GeoMenelaus() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三角形 ABC を1本の直線が横切り、辺 AB を D、辺 AC を E で切り、辺 BC の延長上の点 F で交わる。BF:FC はどんな比？"
+    >
+      {/* 三角形 ABC */}
+      <polygon
+        points="120,40 40,190 230,190"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 辺 BC の C 側への延長（外分点まで） */}
+      <line x1="230" y1="190" x2="330" y2="190" stroke={muted} strokeWidth="1.2" strokeDasharray="4,3" />
+      {/* 三角形を横切る1本の直線 D–E–F */}
+      <line x1="80" y1="115" x2="320" y2="190" stroke={accent} strokeWidth="1.8" />
+      {/* 分点 D（辺 AB 上・内分） */}
+      <circle cx="80" cy="115" r="3" fill={accent} />
+      {/* 分点 E（辺 AC 上・内分） */}
+      <circle cx="203" cy="154" r="3" fill={accent} />
+      {/* 外分点 F（辺 BC の外・二重丸で強調） */}
+      <circle cx="320" cy="190" r="5" fill="none" stroke={accent} strokeWidth="1.6" />
+      <circle cx="320" cy="190" r="2.4" fill={accent} />
+      {/* 頂点・分点ラベル */}
+      <text x="120" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="28" y="202" fontSize="13" fill={stroke}>B</text>
+      <text x="226" y="205" fontSize="13" fill={stroke}>C</text>
+      <text x="64" y="113" fontSize="13" fill={accent} textAnchor="middle">D</text>
+      <text x="212" y="150" fontSize="13" fill={accent}>E</text>
+      <text x="325" y="205" fontSize="13" fill={accent}>F</text>
+      <text
+        x="180"
+        y="238"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        横切る直線は、辺 BC の外（延長上）で F と交わる——BF:FC は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列3 step5 の図。三角形 ABC の中で2本の線 AD（A→辺 BC 上の D）と
+ * BE（B→辺 AC 上の E）が交点 P で交わる。線分の比を出すとき「どの三角形と
+ * どの直線を選ぶか」が問われる——候補の三角形 ADC を薄く示す（答え・比は書かない）。
+ */
+export function GeoMenelausPick() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const pick = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC の中で線分 AD と線分 BE が点 P で交わる。AP:PD を出すには、どの三角形とどの直線を選べばよい？"
+    >
+      {/* 候補の舞台となる三角形 ADC を薄く塗る（選び方の候補を示すだけ） */}
+      <polygon points="150,40 103,200 260,200" fill={pick} stroke="none" />
+      {/* 三角形 ABC */}
+      <polygon
+        points="150,40 50,200 260,200"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 2本の線（チェバ線）AD と BE */}
+      <line x1="150" y1="40" x2="103" y2="200" stroke={accent} strokeWidth="1.7" />
+      <line x1="50" y1="200" x2="181" y2="86" stroke={accent} strokeWidth="1.7" />
+      {/* 交点 P */}
+      <circle cx="121" cy="138" r="3.4" fill={accent} />
+      {/* 分点 D（辺 BC 上）・E（辺 AC 上） */}
+      <circle cx="103" cy="200" r="2.6" fill={accent} />
+      <circle cx="181" cy="86" r="2.6" fill={accent} />
+      {/* ラベル */}
+      <text x="150" y="30" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="38" y="212" fontSize="13" fill={stroke}>B</text>
+      <text x="264" y="212" fontSize="13" fill={stroke}>C</text>
+      <text x="96" y="214" fontSize="13" fill={accent}>D</text>
+      <text x="188" y="84" fontSize="13" fill={accent}>E</text>
+      <text x="128" y="140" fontSize="13" fill={accent}>P</text>
+      <text
+        x="160"
+        y="238"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        P が線分 AD を分ける比——どの三角形と、どの直線を選ぶ？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11513,6 +11626,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoCeva />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_MENELAUS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoMenelaus />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_MENELAUS_PICK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoMenelausPick />
             </div>
           );
         }
