@@ -17766,10 +17766,10 @@ export function DataCovScale() {
       <line x1="40" y1="150" x2="150" y2="150" stroke={stroke} strokeWidth="1.2" />
       <line x1="40" y1="34" x2="40" y2="150" stroke={stroke} strokeWidth="1.2" />
       <text x="35" y="56" fontSize="8" fill={muted} textAnchor="end">
-        30
+        20
       </text>
       <text x="35" y="132" fontSize="8" fill={muted} textAnchor="end">
-        15
+        10
       </text>
       {left.map(([px, py], k) => (
         <circle key={k} cx={px} cy={py} r="4.2" fill={fill} stroke={accent} strokeWidth="1.5" />
@@ -17782,10 +17782,10 @@ export function DataCovScale() {
       <line x1="200" y1="150" x2="310" y2="150" stroke={stroke} strokeWidth="1.2" />
       <line x1="200" y1="34" x2="200" y2="150" stroke={stroke} strokeWidth="1.2" />
       <text x="195" y="56" fontSize="8" fill={muted} textAnchor="end">
-        30000
+        20000
       </text>
       <text x="195" y="132" fontSize="8" fill={muted} textAnchor="end">
-        15000
+        10000
       </text>
       {right.map(([px, py], k) => (
         <circle key={k} cx={px} cy={py} r="4.2" fill={fill} stroke={accent} strokeWidth="1.5" />
