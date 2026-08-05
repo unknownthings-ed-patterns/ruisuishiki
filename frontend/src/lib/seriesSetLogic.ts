@@ -2409,3 +2409,13 @@ export const LOGIC_PROOF_SERIES: LearnerSeries = {
 
 「『書けない』ことは、どうやったら示せる？」——答えは、**書けた世界をわざと仮定して、その世界が自分の中で崩れるのを見届ける**。非存在や否定形の結論は正面からたどれないから、結論を否定した世界を立て、そこに矛盾を追い込む。$\\sqrt{3}$ を既約分数と仮定すれば分子も分母も $3$ の倍数になって約分の仮定が崩れ、$7 + \\sqrt{5}$ を有理数と仮定すれば無理数と有理数が等しくなって崩れる。反例で偽を、対偶で真を、矛盾で非存在を——裏側から回る $3$ つの道がそろって、この単元『集合と論理』は、ことばを厳密に扱う土台をひととおり渡し終えます。`,
 };
+
+export const SET_LOGIC_SERIES_LIST: LearnerSeries[] = [
+  SET_ELEMENT_SERIES,
+  SET_OPERATION_SERIES,
+  SET_COMPLEMENT_SERIES,
+  LOGIC_PROPOSITION_SERIES,
+  LOGIC_CONTRAPOSITIVE_SERIES,
+  LOGIC_NECSUF_SERIES,
+  LOGIC_PROOF_SERIES,
+];
