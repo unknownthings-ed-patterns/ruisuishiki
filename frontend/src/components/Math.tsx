@@ -7863,6 +7863,170 @@ export function GeoCentroid() {
 }
 
 /**
+ * 系列5 step1 の図（GEO_INSCRIBED）。
+ * 同じ弧 AB を見込む中心角 ∠AOB と円周角 ∠APB。弧 AB を強調。値は書かない。
+ */
+export function GeoInscribed() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 円: 中心 O=(160,140), r=95。A,B は下側の弦、P は上側（優弧）。
+  return (
+    <svg
+      viewBox="0 0 320 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円の中心 O から見込む中心角 ∠AOB と、円周の点 P から見込む円周角 ∠APB。同じ弧 AB を見ると、大きさはどんな関係？"
+    >
+      <circle cx="160" cy="140" r="95" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 見込んでいる弧 AB（下側・P を含まない方）を強調 */}
+      <path d="M 71 172 Q 160 297 249 172" fill="none" stroke={accent} strokeWidth="3" />
+      {/* 半径 OA, OB（中心角） */}
+      <line x1="160" y1="140" x2="71" y2="172" stroke={accent} strokeWidth="1.3" />
+      <line x1="160" y1="140" x2="249" y2="172" stroke={accent} strokeWidth="1.3" />
+      {/* 弦 PA, PB（円周角） */}
+      <line x1="160" y1="45" x2="71" y2="172" stroke={stroke} strokeWidth="1.6" />
+      <line x1="160" y1="45" x2="249" y2="172" stroke={stroke} strokeWidth="1.6" />
+      {/* 中心角のマーク（O のところ・下向き） */}
+      <path d="M 145 156 A 20 20 0 0 0 175 156" fill="none" stroke={accent} strokeWidth="1.3" />
+      {/* 円周角のマーク（P のところ） */}
+      <path d="M 148 63 A 20 20 0 0 0 172 63" fill="none" stroke={stroke} strokeWidth="1.3" />
+      {/* 点と label */}
+      <circle cx="160" cy="140" r="2.5" fill={accent} />
+      <circle cx="160" cy="45" r="3" fill={stroke} />
+      <circle cx="71" cy="172" r="2.5" fill={stroke} />
+      <circle cx="249" cy="172" r="2.5" fill={stroke} />
+      <text x="167" y="150" fontSize="13" fill={accent} fontWeight="600">O</text>
+      <text x="156" y="38" fontSize="13" fill={stroke} textAnchor="middle">P</text>
+      <text x="56" y="178" fontSize="13" fill={stroke}>A</text>
+      <text x="254" y="178" fontSize="13" fill={stroke}>B</text>
+      <text
+        x="160"
+        y="258"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        同じ弧 AB を、中心 O と円周の P から見込む——大きさはどんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列5 step5 の図（GEO_THALES）。
+ * 直径 AB と円周上の点 P。∠APB は？（直角マークは置かない＝答えを先取りしない）
+ */
+export function GeoThales() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 円: 中心 O=(160,120), r=90。直径 AB は水平、P=(115,42) は円周上。
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円の直径 AB と円周上の点 P。直径を見込む円周角 ∠APB は何度になる？"
+    >
+      <circle cx="160" cy="120" r="90" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 直径 AB（中心 O を通る） */}
+      <line x1="70" y1="120" x2="250" y2="120" stroke={accent} strokeWidth="1.8" />
+      {/* 弦 PA, PB（円周角） */}
+      <line x1="115" y1="42" x2="70" y2="120" stroke={stroke} strokeWidth="1.6" />
+      <line x1="115" y1="42" x2="250" y2="120" stroke={stroke} strokeWidth="1.6" />
+      {/* 円周角のマーク（P・普通の弧。square は置かない） */}
+      <path d="M 108 61 A 20 20 0 0 0 133 55" fill="none" stroke={stroke} strokeWidth="1.3" />
+      {/* 点と label */}
+      <circle cx="160" cy="120" r="2.5" fill={accent} />
+      <circle cx="70" cy="120" r="2.5" fill={stroke} />
+      <circle cx="250" cy="120" r="2.5" fill={stroke} />
+      <circle cx="115" cy="42" r="3" fill={stroke} />
+      <text x="164" y="136" fontSize="12" fill={accent} fontWeight="600">O</text>
+      <text x="55" y="126" fontSize="13" fill={stroke}>A</text>
+      <text x="255" y="126" fontSize="13" fill={stroke}>B</text>
+      <text x="104" y="36" fontSize="13" fill={stroke} textAnchor="middle">P</text>
+      <text
+        x="160"
+        y="220"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        AB が直径のとき、P を動かしても ∠APB はいつも何度？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列5 step9 の図（GEO_CONVERSE）。
+ * 弦 AB を同じ側から見込む 2 点 C, D。角が等しいと 4 点は同じ円に乗る？（円は破線）
+ */
+export function GeoConverse() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 340 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="線分 AB を同じ側から見込む 2 点 C と D。∠ACB と ∠ADB が等しいと、4 点は同一円周上にある？"
+    >
+      {/* まだ確定していない円（破線） */}
+      <ellipse
+        cx="170"
+        cy="120"
+        rx="118"
+        ry="92"
+        fill="none"
+        stroke="var(--border)"
+        strokeWidth="1.3"
+        strokeDasharray="5,4"
+      />
+      {/* 弦 AB */}
+      <line x1="80" y1="182" x2="262" y2="176" stroke={accent} strokeWidth="1.8" />
+      {/* C からの 2 本 */}
+      <line x1="138" y1="46" x2="80" y2="182" stroke={stroke} strokeWidth="1.5" />
+      <line x1="138" y1="46" x2="262" y2="176" stroke={stroke} strokeWidth="1.5" />
+      {/* D からの 2 本 */}
+      <line x1="234" y1="66" x2="80" y2="182" stroke={stroke} strokeWidth="1.5" />
+      <line x1="234" y1="66" x2="262" y2="176" stroke={stroke} strokeWidth="1.5" />
+      {/* 角マーク（C, D とも同じ印＝等しいことを問う） */}
+      <path d="M 129 64 A 18 18 0 0 0 152 60" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 224 83 A 18 18 0 0 0 247 79" fill="none" stroke={accent} strokeWidth="1.3" />
+      {/* 点と label */}
+      <circle cx="80" cy="182" r="2.6" fill={stroke} />
+      <circle cx="262" cy="176" r="2.6" fill={stroke} />
+      <circle cx="138" cy="46" r="3" fill={stroke} />
+      <circle cx="234" cy="66" r="3" fill={stroke} />
+      <text x="64" y="192" fontSize="13" fill={stroke}>A</text>
+      <text x="268" y="184" fontSize="13" fill={stroke}>B</text>
+      <text x="130" y="40" fontSize="13" fill={stroke}>C</text>
+      <text x="240" y="62" fontSize="13" fill={stroke}>D</text>
+      <text
+        x="170"
+        y="228"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        C と D から AB を見込む角が等しいと、4 点は同じ円に乗る？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11788,6 +11952,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoCentroid />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_INSCRIBED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoInscribed />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_THALES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoThales />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_CONVERSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoConverse />
             </div>
           );
         }

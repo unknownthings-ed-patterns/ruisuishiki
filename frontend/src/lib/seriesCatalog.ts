@@ -85,6 +85,7 @@ import {
   GEO_CEVA_SERIES,
   GEO_MENELAUS_SERIES,
   GEO_CENTERS_SERIES,
+  GEO_INSCRIBED_SERIES,
 } from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
@@ -847,6 +848,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "図形の性質",
     shortDescription:
       "三角形の五心（『等しい距離』の言い換えが心を生む）— 外心の等距離と中心角 2 倍、内心の角、二等分線の性質を 2 回乗り換える AI:ID、重心 2:1 と実長、外心と内心の角の見比べまで",
+  },
+  {
+    series: GEO_INSCRIBED_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "円周角と中心角（角を決めるのは点ではなく弧）— 中心角の半分・2 倍の往復、角の引っ越し、直径の直角、優弧と劣弧の取り違え、弧を一周たどる角追跡、共円判定と外心との再会まで",
   },
   /* 数A: 整数の性質 */
   {
