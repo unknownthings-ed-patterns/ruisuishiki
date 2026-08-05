@@ -87,6 +87,7 @@ import {
   GEO_CENTERS_SERIES,
   GEO_INSCRIBED_SERIES,
   GEO_CYCLIC_TANGENT_SERIES,
+  GEO_POWER_SERIES,
 } from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
@@ -865,6 +866,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "図形の性質",
     shortDescription:
       "内接四角形と接弦定理（対角は弧を分担して一周する）— 対角の和 180°・外角＝内対角・内接の逆条件、頂点を接点まで滑らせた極限としての接弦定理、直径との重ね技、2 円を渡す共通接線まで",
+  },
+  {
+    series: GEO_POWER_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "方べきの定理（点と円の間に潜む積の不変量）— 2 弦の積の保存、逆算の 2 次方程式、外部の点と「かけるのは P からの距離」、接線の平方、2 円の等しい接線、相似との交差検算、二等分線＋方べき＋メネラウスの章の総決算まで",
   },
   /* 数A: 整数の性質 */
   {

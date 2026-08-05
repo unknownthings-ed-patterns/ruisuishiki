@@ -8196,6 +8196,128 @@ export function GeoTwoCircles() {
 }
 
 /**
+ * 系列7 step1 の図（GEO_POWER_IN）。
+ * 円の内部の点 P で 2 弦 AB・CD が交わる。距離の積が向きによらないか？を問う。
+ */
+export function GeoPowerIn() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円の内部の点 P で 2 本の弦 AB と CD が交わる。P からの距離の積は、向きが違っても同じ？"
+    >
+      <circle cx="160" cy="120" r="80" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 弦 AB */}
+      <line x1="95" y1="75" x2="226" y2="165" stroke={stroke} strokeWidth="1.6" />
+      {/* 弦 CD */}
+      <line x1="228" y1="77" x2="117" y2="188" stroke={stroke} strokeWidth="1.6" />
+      {/* 交点 P */}
+      <circle cx="175" cy="130" r="3.2" fill={accent} />
+      <text x="181" y="126" fontSize="13" fill={accent} fontWeight="600">P</text>
+      {/* 端点 */}
+      <circle cx="95" cy="75" r="2.6" fill={stroke} />
+      <circle cx="226" cy="165" r="2.6" fill={stroke} />
+      <circle cx="228" cy="77" r="2.6" fill={stroke} />
+      <circle cx="117" cy="188" r="2.6" fill={stroke} />
+      <text x="80" y="72" fontSize="13" fill={stroke}>A</text>
+      <text x="231" y="176" fontSize="13" fill={stroke}>B</text>
+      <text x="233" y="74" fontSize="13" fill={stroke}>C</text>
+      <text x="100" y="199" fontSize="13" fill={stroke}>D</text>
+      <text x="160" y="246" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        向きの違う 2 弦——P からの距離の積は同じになる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列7 step4 の図（GEO_POWER_OUT）。
+ * 円の外部の点 P からの 2 割線。かけるのは弦か、P からの距離か（C14）を問う。
+ */
+export function GeoPowerOut() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="円の外部の点 P から 2 本の割線。かけ合わせるのは弦の長さ？ それとも P からの距離？"
+    >
+      <circle cx="200" cy="125" r="70" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 割線 1: P→A→B */}
+      <line x1="40" y1="150" x2="263" y2="94" stroke={stroke} strokeWidth="1.6" />
+      {/* 割線 2: P→C→D */}
+      <line x1="40" y1="150" x2="258" y2="164" stroke={stroke} strokeWidth="1.6" />
+      {/* 外部点 P */}
+      <circle cx="40" cy="150" r="3.2" fill={accent} />
+      <text x="24" y="147" fontSize="13" fill={accent} fontWeight="600">P</text>
+      {/* 交点 */}
+      <circle cx="130" cy="127" r="2.6" fill={stroke} />
+      <circle cx="263" cy="94" r="2.6" fill={stroke} />
+      <circle cx="137" cy="156" r="2.6" fill={stroke} />
+      <circle cx="258" cy="164" r="2.6" fill={stroke} />
+      <text x="120" y="118" fontSize="13" fill={stroke}>A</text>
+      <text x="268" y="90" fontSize="13" fill={stroke}>B</text>
+      <text x="128" y="170" fontSize="13" fill={stroke}>C</text>
+      <text x="263" y="177" fontSize="13" fill={stroke}>D</text>
+      <text x="170" y="238" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        P から 2 直線——かけるのは弦？ それとも P からの 2 つの距離？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列7 step6 の図（GEO_POWER_TANGENT）。
+ * 円の外部の点 P からの接線 PT と割線 PAB。接線の長さは何と結びつく？を問う。
+ */
+export function GeoPowerTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="円の外部の点 P からの接線 PT と、円を 2 回つらぬく割線 PAB。接線の長さは何と結びつく？"
+    >
+      <circle cx="200" cy="130" r="70" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 接線 P→T */}
+      <line x1="45" y1="150" x2="161" y2="72" stroke={accent} strokeWidth="1.8" />
+      {/* 割線 P→A→B */}
+      <line x1="45" y1="150" x2="269" y2="143" stroke={stroke} strokeWidth="1.6" />
+      {/* 外部点 P */}
+      <circle cx="45" cy="150" r="3.2" fill={accent} />
+      <text x="29" y="147" fontSize="13" fill={accent} fontWeight="600">P</text>
+      {/* 接点 T */}
+      <circle cx="161" cy="72" r="2.8" fill={accent} />
+      <text x="150" y="66" fontSize="13" fill={accent} fontWeight="600">T</text>
+      {/* 割線の交点 */}
+      <circle cx="132" cy="147" r="2.6" fill={stroke} />
+      <circle cx="269" cy="143" r="2.6" fill={stroke} />
+      <text x="122" y="161" fontSize="13" fill={stroke}>A</text>
+      <text x="274" y="140" fontSize="13" fill={stroke}>B</text>
+      <text x="170" y="238" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        接する線と、つらぬく線——接線の長さは何と結びつく？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -12163,6 +12285,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoTwoCircles />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_POWER_IN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoPowerIn />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_POWER_OUT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoPowerOut />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_POWER_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoPowerTangent />
             </div>
           );
         }
