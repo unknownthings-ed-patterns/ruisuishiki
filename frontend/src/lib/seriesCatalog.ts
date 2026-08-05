@@ -84,6 +84,7 @@ import {
   GEO_BISECTOR_SERIES,
   GEO_CEVA_SERIES,
   GEO_MENELAUS_SERIES,
+  GEO_CENTERS_SERIES,
 } from "./seriesGeometry";
 import {
   TRIG_ADDITION_SERIES,
@@ -838,6 +839,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "図形の性質",
     shortDescription:
       "メネラウスの定理（横切る直線も同じ一周）— 分点が辺の外へはみ出しても式は変わらない。一直線に並ぶ条件の逆算、三角形と直線の選び方、チェバとの二段構え、重心 2:1 の導出、面積比への総合まで",
+  },
+  {
+    series: GEO_CENTERS_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "図形の性質",
+    shortDescription:
+      "三角形の五心（『等しい距離』の言い換えが心を生む）— 外心の等距離と中心角 2 倍、内心の角、二等分線の性質を 2 回乗り換える AI:ID、重心 2:1 と実長、外心と内心の角の見比べまで",
   },
   /* 数A: 整数の性質 */
   {

@@ -7736,6 +7736,133 @@ export function GeoMenelausPick() {
 }
 
 /**
+ * 系列4 step1 の図：外心。3 辺の垂直二等分線が 1 点 O で交わり、
+ * O を中心に 3 頂点を通る外接円が描ける。角・比の値は書かない。
+ */
+export function GeoCircumcenter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC と、3 辺の垂直二等分線の交点 O、O を中心とする外接円。O は 3 頂点から等距離。"
+    >
+      {/* 外接円（3 頂点を通る） */}
+      <circle cx="156.5" cy="154.5" r="104.7" fill="none" stroke="var(--border)" strokeWidth="1.3" />
+      {/* 三角形 */}
+      <polygon points="150,50 60,195 258,180" fill={fill} stroke={stroke} strokeWidth="1.6" />
+      {/* 垂直二等分線（各辺の中点 → O） */}
+      <line x1="105" y1="122.5" x2="156.5" y2="154.5" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      <line x1="159" y1="187.5" x2="156.5" y2="154.5" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      <line x1="204" y1="115" x2="156.5" y2="154.5" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      {/* 各辺の中点の直角マーク（小さな点で代用） */}
+      <circle cx="105" cy="122.5" r="1.6" fill={muted} />
+      <circle cx="159" cy="187.5" r="1.6" fill={muted} />
+      <circle cx="204" cy="115" r="1.6" fill={muted} />
+      {/* 外心 O */}
+      <circle cx="156.5" cy="154.5" r="3" fill={accent} />
+      <text x="162" y="152" fontSize="12" fill={accent} fontWeight="600">O</text>
+      {/* 頂点ラベル */}
+      <text x="146" y="42" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="46" y="203" fontSize="13" fill={stroke}>B</text>
+      <text x="262" y="190" fontSize="13" fill={stroke}>C</text>
+      <text x="160" y="240" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        3 頂点から等しい距離の点は、どこで出会う？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列4 step4 の図：内心。3 角の二等分線が 1 点 I で交わり、
+ * I を中心に 3 辺に接する内接円が描ける。角・比の値は書かない。
+ */
+export function GeoIncenter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC と、3 角の二等分線の交点 I、I を中心とする内接円。I は 3 辺から等距離。"
+    >
+      {/* 三角形 */}
+      <polygon points="150,48 55,200 262,200" fill={fill} stroke={stroke} strokeWidth="1.6" />
+      {/* 内接円（3 辺に接する） */}
+      <circle cx="153.7" cy="145.3" r="54.7" fill="none" stroke="var(--border)" strokeWidth="1.3" />
+      {/* 角の二等分線（各頂点 → I） */}
+      <line x1="150" y1="48" x2="153.7" y2="145.3" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      <line x1="55" y1="200" x2="153.7" y2="145.3" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      <line x1="262" y1="200" x2="153.7" y2="145.3" stroke={accent} strokeWidth="1.2" strokeDasharray="3,3" />
+      {/* 接点（内接円が辺に触れる点） */}
+      <circle cx="153.7" cy="200" r="1.6" fill={muted} />
+      <circle cx="197.8" cy="112.8" r="1.6" fill={muted} />
+      <circle cx="107.3" cy="116.3" r="1.6" fill={muted} />
+      {/* 内心 I */}
+      <circle cx="153.7" cy="145.3" r="3" fill={accent} />
+      <text x="159" y="143" fontSize="12" fill={accent} fontWeight="600">I</text>
+      {/* 頂点ラベル */}
+      <text x="150" y="40" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="43" y="208" fontSize="13" fill={stroke}>B</text>
+      <text x="266" y="208" fontSize="13" fill={stroke}>C</text>
+      <text x="160" y="240" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        3 辺から等しい距離の点＝角の二等分線の交点はどこ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列4 step8 の図：重心。3 本の中線（頂点と向かいの辺の中点を結ぶ）が
+ * 1 点 G で交わる。分ける比の値は書かない（2:1 は問いのまま）。
+ */
+export function GeoCentroid() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="三角形 ABC と、3 本の中線の交点である重心 G。中線は各辺の中点と向かいの頂点を結ぶ。"
+    >
+      {/* 三角形 */}
+      <polygon points="150,50 55,200 265,190" fill={fill} stroke={stroke} strokeWidth="1.6" />
+      {/* 中線（各頂点 → 向かいの辺の中点） */}
+      <line x1="150" y1="50" x2="160" y2="195" stroke={accent} strokeWidth="1.4" />
+      <line x1="55" y1="200" x2="207.5" y2="120" stroke={accent} strokeWidth="1.4" />
+      <line x1="265" y1="190" x2="102.5" y2="125" stroke={accent} strokeWidth="1.4" />
+      {/* 各辺の中点マーク（等分の刻み） */}
+      <circle cx="160" cy="195" r="2" fill={muted} />
+      <circle cx="207.5" cy="120" r="2" fill={muted} />
+      <circle cx="102.5" cy="125" r="2" fill={muted} />
+      {/* 重心 G */}
+      <circle cx="156.7" cy="146.7" r="3" fill={accent} />
+      <text x="162" y="145" fontSize="12" fill={accent} fontWeight="600">G</text>
+      {/* 頂点ラベル */}
+      <text x="150" y="42" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <text x="43" y="208" fontSize="13" fill={stroke}>B</text>
+      <text x="269" y="198" fontSize="13" fill={stroke}>C</text>
+      <text x="160" y="240" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
+        中線 3 本が出会う点は、中線をどんな比で分ける？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11640,6 +11767,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoMenelausPick />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_CIRCUMCENTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoCircumcenter />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_INCENTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoIncenter />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_CENTROID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoCentroid />
             </div>
           );
         }
