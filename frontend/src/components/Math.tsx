@@ -8027,6 +8027,175 @@ export function GeoConverse() {
 }
 
 /**
+ * 系列6 step1 の図（GEO_CYCLIC_QUAD）。
+ * 円に内接する四角形 ABCD。向かい合う ∠A・∠C に同じ印。値は書かない。
+ */
+export function GeoCyclicQuad() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 円 中心(160,120) 半径90、頂点は円周上（角 200/340/60/140）。
+  const A = { x: 75, y: 89 };
+  const B = { x: 245, y: 89 };
+  const C = { x: 205, y: 198 };
+  const D = { x: 91, y: 178 };
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="円に内接する四角形 ABCD。向かい合う角 ∠A と ∠C は、合わせて円をどれだけ見込む？"
+    >
+      <circle cx="160" cy="120" r="90" fill="none" stroke="var(--border)" strokeWidth="1.4" />
+      <polygon
+        points={`${A.x},${A.y} ${B.x},${B.y} ${C.x},${C.y} ${D.x},${D.y}`}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      {/* 向かい合う ∠A・∠C に同じ印（対角のペアであることを示す） */}
+      <path d="M 92 92 A 20 20 0 0 1 82 106" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 188 195 A 20 20 0 0 1 198 181" fill="none" stroke={accent} strokeWidth="1.4" />
+      <circle cx={A.x} cy={A.y} r="2.5" fill={accent} />
+      <circle cx={C.x} cy={C.y} r="2.5" fill={accent} />
+      {/* 頂点ラベル */}
+      <text x="62" y="86" fontSize="13" fill={stroke}>A</text>
+      <text x="252" y="86" fontSize="13" fill={stroke}>B</text>
+      <text x="212" y="205" fontSize="13" fill={stroke}>C</text>
+      <text x="74" y="192" fontSize="13" fill={stroke}>D</text>
+      <text
+        x="160"
+        y="240"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        向かい合う ∠A と ∠C——2 つで円を何周分、見込んでいる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列6 step5 の図（GEO_TANGENT_CHORD）。
+ * 円・点 A での接線・弦 AB のなす角と、反対側の弧の円周角 ∠APB。値は書かない。
+ */
+export function GeoTangentChord() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 円 中心(150,130) 半径85。A=底(150,215)、B=右上、P=左上(反対側の弧)。
+  const A = { x: 150, y: 215 };
+  const B = { x: 230, y: 101 };
+  const Pp = { x: 70, y: 101 };
+  return (
+    <svg
+      viewBox="0 0 320 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="点 A での接線と弦 AB のなす角は、反対側の弧から弦を見込む円周角 ∠APB とどうつながる？"
+    >
+      <circle cx="150" cy="130" r="85" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      {/* 接線 t（A で円に接する水平線） */}
+      <line x1="55" y1="215" x2="285" y2="215" stroke={muted} strokeWidth="1.3" strokeDasharray="4,3" />
+      <text x="288" y="219" fontSize="12" fill={muted} fontStyle="italic">t</text>
+      {/* 弦 AB */}
+      <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={accent} strokeWidth="1.8" />
+      {/* 反対側の弧の点 P から弦を見込む */}
+      <line x1={Pp.x} y1={Pp.y} x2={A.x} y2={A.y} stroke={stroke} strokeWidth="1.3" />
+      <line x1={Pp.x} y1={Pp.y} x2={B.x} y2={B.y} stroke={stroke} strokeWidth="1.3" />
+      {/* 接線と弦のなす角の印（A） */}
+      <path d="M 173 215 A 23 23 0 0 0 166 200" fill="none" stroke={accent} strokeWidth="1.4" />
+      {/* 反対側の円周角の印（P）——同じ色で「等しい？」を示唆 */}
+      <path d="M 89 108 A 22 22 0 0 1 90 116" fill="none" stroke={accent} strokeWidth="1.4" />
+      {/* 点・ラベル */}
+      <circle cx={A.x} cy={A.y} r="3" fill={accent} />
+      <circle cx={B.x} cy={B.y} r="3" fill={stroke} />
+      <circle cx={Pp.x} cy={Pp.y} r="3" fill={stroke} />
+      <text x="150" y="233" fontSize="13" fill={accent} textAnchor="middle">A</text>
+      <text x="236" y="98" fontSize="13" fill={stroke}>B</text>
+      <text x="52" y="98" fontSize="13" fill={stroke}>P</text>
+      <text
+        x="160"
+        y="252"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        接線と弦のなす角は、反対側の弧の円周角 ∠APB とどんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列6 step10 の図（GEO_TWO_CIRCLES）。
+ * 点 T で接する 2 円と共通接線 t、A-T-C の直線。値・答えは書かない。
+ */
+export function GeoTwoCircles() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  // 円1 中心(150,80) r55（上）、円2 中心(150,190) r55（下）、接点 T=(150,135)。
+  const T = { x: 150, y: 135 };
+  const A = { x: 102, y: 107 }; // 円1
+  const B = { x: 102, y: 52 }; // 円1
+  const C = { x: 198, y: 163 }; // 円2（A,T,C 一直線）
+  const D = { x: 198, y: 217 }; // 円2
+  return (
+    <svg
+      viewBox="0 0 320 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="点 T で接する 2 つの円と共通接線 t。同じ接線を 2 つの円で何度使える？"
+    >
+      <circle cx="150" cy="80" r="55" fill={fill} stroke="var(--border)" strokeWidth="1.4" />
+      <circle cx="150" cy="190" r="55" fill="none" stroke="var(--border)" strokeWidth="1.4" />
+      {/* 共通接線 t */}
+      <line x1="40" y1="135" x2="270" y2="135" stroke={muted} strokeWidth="1.3" strokeDasharray="4,3" />
+      <text x="273" y="139" fontSize="12" fill={muted} fontStyle="italic">t</text>
+      {/* 直線 A-T-C */}
+      <line x1={A.x} y1={A.y} x2={C.x} y2={C.y} stroke={accent} strokeWidth="1.6" />
+      {/* 円1 の弦 A-B, B-T */}
+      <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={stroke} strokeWidth="1.3" />
+      <line x1={B.x} y1={B.y} x2={T.x} y2={T.y} stroke={stroke} strokeWidth="1.3" />
+      {/* 円2 の弦 C-D, D-T */}
+      <line x1={C.x} y1={C.y} x2={D.x} y2={D.y} stroke={stroke} strokeWidth="1.3" />
+      <line x1={D.x} y1={D.y} x2={T.x} y2={T.y} stroke={stroke} strokeWidth="1.3" />
+      {/* 点・ラベル */}
+      <circle cx={T.x} cy={T.y} r="3.2" fill={accent} />
+      <circle cx={A.x} cy={A.y} r="2.6" fill={stroke} />
+      <circle cx={B.x} cy={B.y} r="2.6" fill={stroke} />
+      <circle cx={C.x} cy={C.y} r="2.6" fill={stroke} />
+      <circle cx={D.x} cy={D.y} r="2.6" fill={stroke} />
+      <text x="156" y="131" fontSize="13" fill={accent}>T</text>
+      <text x="86" y="110" fontSize="13" fill={stroke}>A</text>
+      <text x="88" y="49" fontSize="13" fill={stroke}>B</text>
+      <text x="204" y="163" fontSize="13" fill={stroke}>C</text>
+      <text x="204" y="223" fontSize="13" fill={stroke}>D</text>
+      <text
+        x="160"
+        y="270"
+        fontSize="11"
+        fill={muted}
+        textAnchor="middle"
+        fontStyle="italic"
+      >
+        T で接する 2 円——共通接線 t は、2 つの円で何度はたらく？
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 上向きの放物線（お椀の形）を描く SVG。
  * 「公式の景色」で2次関数の最小値を視覚的に支える。
  *
@@ -11973,6 +12142,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <GeoConverse />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_CYCLIC_QUAD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoCyclicQuad />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_TANGENT_CHORD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoTangentChord />
+            </div>
+          );
+        }
+        if (trimmed === "<<GEO_TWO_CIRCLES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <GeoTwoCircles />
             </div>
           );
         }
