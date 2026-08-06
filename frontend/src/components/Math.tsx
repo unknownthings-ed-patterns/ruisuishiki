@@ -13863,6 +13863,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_BUNDLE_BASE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntBundleBase />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_BASE_DIVSTAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntBaseDivstairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_BASE_REGROUP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntBaseRegroup />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -18998,6 +19019,266 @@ export function IntMultipleRuler() {
 
       <text x="190" y="140" fontSize="11.5" fill={accent} textAnchor="middle">
         このはばは、何を表している？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。マーカーは背骨 §3 の #19〜#21 に対応：
+//   <<INT_BUNDLE_BASE>>    → IntBundleBase   （10-1）
+//   <<INT_BASE_DIVSTAIRS>> → IntBaseDivstairs（10-3）
+//   <<INT_BASE_REGROUP>>   → IntBaseRegroup  （10-7）
+// いずれも「答えになる並び・変換後の数字」を書いていない（figure-does-not-reveal-answer）。
+// キャプションはすべて問いで終える（Q5）。
+
+/**
+ * INT_BUNDLE_BASE（整数 系10 step1・辞書 n進法／位取り記数法）：
+ * ばらのかたまり → 束 → 束の束、と束ね方を決めると位が生まれる図。
+ * 具体の底や変換後の並びは書かず、「位が上がるとかたまりが何倍になるか」の
+ * 関係だけを見せる。
+ */
+export function IntBundleBase() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillDot = "color-mix(in oklch, var(--accent) 55%, transparent)";
+  const fillBox = "color-mix(in oklch, var(--foreground) 7%, transparent)";
+  const fillBoxOuter = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="左からばらのかたまり、それを決めた個数だけ集めた束、束をさらに同じ個数だけ集めた束の束、と 3 段階に並べた図。位が 1 つ上がるごとにかたまりが何倍になるかを問う。具体の底や変換後の数字は書かない"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        いくつずつ束ねるかを、はじめに 1 つ決めておく
+      </text>
+
+      {/* ばら */}
+      <g>
+        {[0, 1, 2].map((i) => (
+          <circle key={i} cx={40 + i * 16} cy={78} r="6" fill={fillDot} />
+        ))}
+        <text x="56" y="112" fontSize="11.5" fill={stroke} textAnchor="middle">
+          ばら
+        </text>
+        <text x="56" y="128" fontSize="10" fill={muted} textAnchor="middle">
+          いちばん右の位
+        </text>
+      </g>
+
+      <text x="112" y="84" fontSize="14" fill={muted} textAnchor="middle">
+        ›
+      </text>
+
+      {/* 束 */}
+      <g>
+        <rect x="134" y="58" width="76" height="42" rx="6" fill={fillBox} stroke={stroke} strokeWidth="1.2" />
+        {[0, 1, 2, 3].map((i) => (
+          <circle key={i} cx={148 + i * 16} cy={79} r="5.5" fill={fillDot} />
+        ))}
+        <text x="172" y="112" fontSize="11.5" fill={stroke} textAnchor="middle">
+          束
+        </text>
+        <text x="172" y="128" fontSize="10" fill={muted} textAnchor="middle">
+          その 1 つ上の位
+        </text>
+      </g>
+
+      <text x="228" y="84" fontSize="14" fill={muted} textAnchor="middle">
+        ›
+      </text>
+
+      {/* 束の束 */}
+      <g>
+        <rect x="248" y="48" width="112" height="62" rx="7" fill={fillBoxOuter} stroke={accent} strokeWidth="1.3" />
+        {[0, 1, 2, 3].map((i) => (
+          <rect
+            key={i}
+            x={256 + i * 26}
+            y={62}
+            width="20"
+            height="34"
+            rx="4"
+            fill={fillBox}
+            stroke={stroke}
+            strokeWidth="1"
+          />
+        ))}
+        <text x="304" y="122" fontSize="11.5" fill={stroke} textAnchor="middle">
+          束の束
+        </text>
+        <text x="304" y="138" fontSize="10" fill={muted} textAnchor="middle">
+          さらに 1 つ上の位
+        </text>
+      </g>
+
+      <text x="195" y="172" fontSize="11.5" fill={accent} textAnchor="middle">
+        位が 1 つ上がると、かたまりの大きさは何倍になっている？
+      </text>
+      <text x="195" y="190" fontSize="10.5" fill={muted} textAnchor="middle">
+        束ね方を変えると、同じ量の書き表し方はどう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_BASE_DIVSTAIRS（整数 系10 step3・辞書 n進法）：
+ * 割り算をくり返して余りを右に落としていく階段。
+ * どの位から順に拾うのかを問うだけで、具体の数・余り・完成した並びは書かない。
+ */
+export function IntBaseDivstairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillQ = "color-mix(in oklch, var(--foreground) 7%, transparent)";
+  const fillR = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  const rows = [
+    { y: 46, label: "もとの数" },
+    { y: 80, label: "商" },
+    { y: 114, label: "その商" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="もとの数を割って商とあまりに分け、商をまた割る、をくり返す階段の図。右側にあまりの箱が縦に並び、下から上へ向かう矢印が添えられている。具体の数やあまりの値、できあがる並びは書かない"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        束にできなかった「はした」を、そのつど右に落としていく
+      </text>
+
+      {rows.map((r, i) => (
+        <g key={r.label}>
+          <rect x="34" y={r.y} width="120" height="26" rx="5" fill={fillQ} stroke={stroke} strokeWidth="1.2" />
+          <text x="94" y={r.y + 18} fontSize="11.5" fill={stroke} textAnchor="middle">
+            {r.label}
+          </text>
+          <path d={`M 154 ${r.y + 13} L 246 ${r.y + 13}`} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+          <text x="200" y={r.y + 8} fontSize="9.5" fill={muted} textAnchor="middle">
+            割る
+          </text>
+          <rect x="248" y={r.y} width="52" height="26" rx="5" fill={fillR} stroke={stroke} strokeWidth="1.2" />
+          <text x="274" y={r.y + 18} fontSize="11.5" fill={stroke} textAnchor="middle">
+            あまり
+          </text>
+          {i < rows.length - 1 && (
+            <path
+              d={`M 94 ${r.y + 26} L 94 ${r.y + 34}`}
+              stroke={muted}
+              strokeWidth="1.1"
+            />
+          )}
+        </g>
+      ))}
+
+      <text x="94" y="158" fontSize="12" fill={muted} textAnchor="middle">
+        ⋮（商が 0 になるまで）
+      </text>
+
+      {/* 下から上へ拾う矢印 */}
+      <path d="M 322 138 L 322 52" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 322 46 l -4 8 l 8 0 z" fill={accent} />
+      <text x="352" y="98" fontSize="10.5" fill={accent} textAnchor="middle">
+        拾う
+      </text>
+
+      <text x="195" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
+        いちばん先に出たあまりは、どの位の数字になる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_BASE_REGROUP（整数 系10 step7・辞書 n進法）：
+ * 2 進法の桁を、まとめて区切ると別の底の 1 桁に対応することを示す図。
+ * 中身の 0・1 は問題の値と無関係な見本にし、対応先の数字は「？」のまま伏せる。
+ */
+export function IntBaseRegroup() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillBit = "color-mix(in oklch, var(--foreground) 7%, transparent)";
+  const fillCell = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const bits = ["1", "0", "1", "0", "1", "1", "0", "0", "1"];
+  const bw = 30;
+  const x0 = 48;
+  return (
+    <svg
+      viewBox="0 0 390 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="0 と 1 が並んだ桁の列を、右から 3 桁ずつ 3 つの組に区切り、それぞれの組が別の底の 1 桁に対応することを示した図。対応先の数字は？のまま伏せてある"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        並んだ桁を、右から同じ数ずつまとめて区切ってみる
+      </text>
+
+      {bits.map((b, i) => (
+        <g key={i}>
+          <rect
+            x={x0 + i * bw}
+            y={46}
+            width={bw - 4}
+            height={30}
+            rx="4"
+            fill={fillBit}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x={x0 + i * bw + (bw - 4) / 2} y={66} fontSize="12" fill={stroke} textAnchor="middle">
+            {b}
+          </text>
+        </g>
+      ))}
+
+      {/* 区切り */}
+      {[3, 6].map((k) => (
+        <path
+          key={k}
+          d={`M ${x0 + k * bw - 6} 38 L ${x0 + k * bw - 6} 84`}
+          stroke={accent}
+          strokeWidth="1.6"
+          strokeDasharray="4 3"
+        />
+      ))}
+
+      {/* 各組から下の 1 桁へ */}
+      {[0, 1, 2].map((g) => {
+        const cx = x0 + g * 3 * bw + (3 * bw - 4) / 2 - bw / 2 + 13;
+        return (
+          <g key={g}>
+            <path d={`M ${cx} 88 L ${cx} 112`} stroke={muted} strokeWidth="1.1" />
+            <path d={`M ${cx} 118 l -4 -8 l 8 0 z`} fill={muted} />
+            <rect
+              x={cx - 17}
+              y={120}
+              width="34"
+              height="30"
+              rx="5"
+              fill={fillCell}
+              stroke={accent}
+              strokeWidth="1.2"
+            />
+            <text x={cx} y={140} fontSize="13" fill={accent} textAnchor="middle">
+              ？
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="195" y="172" fontSize="10.5" fill={muted} textAnchor="middle">
+        まとめた 1 組が、下の位のちょうど 1 桁ぶんにあたっている
+      </text>
+      <text x="195" y="192" fontSize="11.5" fill={accent} textAnchor="middle">
+        1 組で表せる数の種類と、下の位の底には、どんな関係がある？
       </text>
     </svg>
   );

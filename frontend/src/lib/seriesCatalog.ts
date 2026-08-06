@@ -91,6 +91,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_BASE_N_SERIES,
   INT_DIVISIBLE_SERIES,
   INTEGER_SERIES_LIST,
 } from "./seriesInteger";
@@ -890,6 +891,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "倍数の判定条件（割り切れる分を切り離す）— 下の位を見る型と各位の数の和を見る型が 1 つの切り分けから生まれる。逆に数字を作る、条件を重ねる、9 桁の数を暗算で判定するまで",
+  },
+  {
+    series: INT_BASE_N_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "n 進法（束ね方を決めて、余りを並べる）— 数そのものと書き表し方は別のもの。重みで読む・割って余りを下から並べる・n でくり上がるたし算・桁数・底の逆算・2 進から 8 進へ区切って移る・分銅と 2 進法まで",
   },
   {
     series: ALGEBRA_DIVISOR_COUNT_SERIES,
