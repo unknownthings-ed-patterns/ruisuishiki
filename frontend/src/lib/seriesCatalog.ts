@@ -91,6 +91,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_PRIME_SERIES,
   INT_BASE_N_SERIES,
   INT_DIVISIBLE_SERIES,
   INTEGER_SERIES_LIST,
@@ -891,6 +892,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "倍数の判定条件（割り切れる分を切り離す）— 下の位を見る型と各位の数の和を見る型が 1 つの切り分けから生まれる。逆に数字を作る、条件を重ねる、9 桁の数を暗算で判定するまで",
+  },
+  {
+    series: INT_PRIME_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "素数（それ以上分けられない数）— 分けるたびに数は小さくなるから分解は必ず止まる。最小の素因数、判定を打ち切れる折り返し点、ふるい、素数を作る式が外れる瞬間、素数が尽きないことまで",
   },
   {
     series: INT_BASE_N_SERIES,

@@ -13884,6 +13884,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_FACTOR_TREE_STOP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntFactorTreeStop />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_SQRT_FOLD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntSqrtFold />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -19279,6 +19293,169 @@ export function IntBaseRegroup() {
       </text>
       <text x="195" y="192" fontSize="11.5" fill={accent} textAnchor="middle">
         1 組で表せる数の種類と、下の位の底には、どんな関係がある？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。マーカー名は背骨 §3 の #3・#4 に対応。
+// （マーカー分岐 <<INT_FACTOR_TREE_STOP>> / <<INT_SQRT_FOLD>> の追加は統合担当が行う）
+
+/**
+ * INT_FACTOR_TREE_STOP（整数 系2 step1・辞書 合成数）：
+ * 数を 2 つのかけ算に分け、分けられる部品はもう一度分ける——という木が、
+ * 下へ行くほど数が小さくなるので必ず止まる、という関係だけを示す図。
+ * 具体の数・最小の素因数・素数か合成数かの結論は書かない
+ * （figure-does-not-reveal-answer）。
+ */
+export function IntFactorTreeStop() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillNode = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillLeaf = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 380 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="ある数が 2 つの部品のかけ算に分かれ、分けられる部品はさらに 2 つに分かれる木の図。下へ行くほど部品は小さくなり、分けられなくなった部品で枝が止まる。具体の数や答えは書かない"
+    >
+      <text x="190" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        分けられたら、その部品をもう一度分ける
+      </text>
+
+      {/* 枝 */}
+      <path d="M 190 56 L 118 96 M 190 56 L 262 96" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 262 108 L 214 150 M 262 108 L 310 150" fill="none" stroke={muted} strokeWidth="1.2" />
+
+      {/* 根 */}
+      <rect x="150" y="34" width="80" height="26" rx="6" fill={fillNode} stroke={stroke} strokeWidth="1.3" />
+      <text x="190" y="52" fontSize="12" fill={stroke} textAnchor="middle">
+        もとの数
+      </text>
+
+      {/* 第 2 層 */}
+      <rect x="78" y="92" width="80" height="26" rx="6" fill={fillLeaf} stroke={stroke} strokeWidth="1.3" />
+      <text x="118" y="110" fontSize="12" fill={stroke} textAnchor="middle">
+        部品
+      </text>
+      <rect x="222" y="92" width="80" height="26" rx="6" fill={fillNode} stroke={stroke} strokeWidth="1.3" />
+      <text x="262" y="110" fontSize="12" fill={stroke} textAnchor="middle">
+        部品
+      </text>
+
+      {/* 第 3 層（葉） */}
+      <rect x="174" y="146" width="80" height="26" rx="6" fill={fillLeaf} stroke={stroke} strokeWidth="1.3" />
+      <text x="214" y="164" fontSize="12" fill={stroke} textAnchor="middle">
+        部品
+      </text>
+      <rect x="270" y="146" width="80" height="26" rx="6" fill={fillLeaf} stroke={stroke} strokeWidth="1.3" />
+      <text x="310" y="164" fontSize="12" fill={stroke} textAnchor="middle">
+        部品
+      </text>
+
+      {/* 葉の注記 */}
+      <text x="118" y="134" fontSize="10" fill={accent} textAnchor="middle">
+        もう分けられない
+      </text>
+      <text x="214" y="188" fontSize="10" fill={accent} textAnchor="middle">
+        もう分けられない
+      </text>
+      <text x="310" y="188" fontSize="10" fill={accent} textAnchor="middle">
+        もう分けられない
+      </text>
+
+      {/* 左の「小さくなる」矢印 */}
+      <path d="M 34 40 L 34 172" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 34 172 l -4 -8 l 8 0 z" fill={muted} />
+      <text x="46" y="86" fontSize="10.5" fill={muted}>
+        下へ行くほど
+      </text>
+      <text x="46" y="100" fontSize="10.5" fill={muted}>
+        部品は小さくなる
+      </text>
+
+      <text x="190" y="218" fontSize="11.5" fill={accent} textAnchor="middle">
+        この枝分かれは、いつまでも続けられる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_SQRT_FOLD（整数 系2 step4・辞書 素数）：
+ * N = a × b の部品が、大小の対になって折り返し点の両側に並ぶ数直線。
+ * 小さい方の部品が折り返し点より右へは行けないことだけを示し、
+ * 試すべき素数の個数・答えは書かない。
+ */
+export function IntSqrtFold() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 132;
+  const fold = 176;
+  return (
+    <svg
+      viewBox="0 0 380 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="1 から N までの数直線の上で、積が N になる 2 つの部品 a と b が、折り返し点をはさんで対になって並ぶ図。折り返し点は同じ数どうしのかけ算がちょうど N になる場所。試すべき素数の個数は書かない"
+    >
+      <text x="190" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        N = a × b のとき、a と b は必ず対で現れる
+      </text>
+
+      {/* 対をつなぐ弧 */}
+      <path d="M 62 122 Q 150 56 312 122" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="4 3" />
+      <path d="M 122 124 Q 168 84 246 124" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="4 3" />
+
+      {/* 数直線 */}
+      <path d={`M 40 ${y} L 350 ${y}`} fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d={`M 350 ${y} l -8 -4 l 0 8 z`} fill={stroke} />
+
+      {/* 折り返し点 */}
+      <path d={`M ${fold} ${y - 34} L ${fold} ${y + 14}`} stroke={accent} strokeWidth="1.6" strokeDasharray="4 3" />
+      <circle cx={fold} cy={y} r="4.5" fill={accent} />
+
+      {/* 対の点 */}
+      <circle cx="62" cy={y} r="4.5" fill={stroke} />
+      <text x="62" y={y + 20} fontSize="11.5" fill={stroke} textAnchor="middle">
+        a
+      </text>
+      <circle cx="312" cy={y} r="4.5" fill={stroke} />
+      <text x="312" y={y + 20} fontSize="11.5" fill={stroke} textAnchor="middle">
+        b
+      </text>
+      <circle cx="122" cy={y} r="3.5" fill={muted} />
+      <circle cx="246" cy={y} r="3.5" fill={muted} />
+
+      <text x="40" y={y + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        1
+      </text>
+      <text x="350" y={y + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        N
+      </text>
+
+      {/* 折り返し点の説明 */}
+      <text x={fold} y={y - 42} fontSize="10.5" fill={accent} textAnchor="middle">
+        同じ数どうしのかけ算が
+      </text>
+      <text x={fold} y={y - 30} fontSize="10.5" fill={accent} textAnchor="middle">
+        ちょうど N になる場所
+      </text>
+
+      {/* 左右の帯 */}
+      <path d={`M 40 ${y + 32} L ${fold} ${y + 32}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 40 ${y + 28} L 40 ${y + 36} M ${fold} ${y + 28} L ${fold} ${y + 36}`} stroke={muted} strokeWidth="1" />
+      <text x={(40 + fold) / 2} y={y + 48} fontSize="10.5" fill={muted} textAnchor="middle">
+        小さい方の部品はこちら側
+      </text>
+
+      <text x="190" y="198" fontSize="11.5" fill={accent} textAnchor="middle">
+        小さい方の部品は、この折り返しより右へ行ける？
       </text>
     </svg>
   );
