@@ -91,6 +91,10 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_DIVISIBLE_SERIES,
+  INTEGER_SERIES_LIST,
+} from "./seriesInteger";
+import {
   TRIG_ADDITION_SERIES,
   TRIG_COMPOSITION_SERIES,
   TRIG_DOUBLE_HALF_SERIES,
@@ -876,7 +880,17 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "方べきの定理（点と円の間に潜む積の不変量）— 2 弦の積の保存、逆算の 2 次方程式、外部の点と「かけるのは P からの距離」、接線の平方、2 円の等しい接線、相似との交差検算、二等分線＋方べき＋メネラウスの章の総決算まで",
   },
-  /* 数A: 整数の性質 */
+  /* 数A: 整数の性質（池田本 第9章・図形の性質の直後。背骨 docs/integer_series_design.md）
+   * 系列1 実装済。旧 algebra_divisor_01 は系列3（素因数分解と約数の設計図）へ吸収予定
+   * （行き先を実装したときに SERIES_REDIRECTS へ移す）。 */
+  {
+    series: INT_DIVISIBLE_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "倍数の判定条件（割り切れる分を切り離す）— 下の位を見る型と各位の数の和を見る型が 1 つの切り分けから生まれる。逆に数字を作る、条件を重ねる、9 桁の数を暗算で判定するまで",
+  },
   {
     series: ALGEBRA_DIVISOR_COUNT_SERIES,
     subject: "secondary",
@@ -1288,6 +1302,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...SET_LOGIC_SERIES_LIST,
   ...DATA_ANALYSIS_SERIES_LIST,
   ...GEOMETRY_SERIES_LIST,
+  ...INTEGER_SERIES_LIST,
   ...STATISTICS_SERIES_LIST,
   ...ADVANCED_SERIES_LIST,
 ];

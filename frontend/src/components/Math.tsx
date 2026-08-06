@@ -13842,6 +13842,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_PLACE_SPLIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntPlaceSplit />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_MULTIPLE_RULER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntMultipleRuler />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_DIGIT_WEIGHT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntDigitWeight />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -18797,6 +18818,186 @@ export function DataRNonlinear() {
       </text>
       <text x="170" y="195" fontSize="11" fill={accent} textAnchor="middle">
         「右上がり」「右下がり」のどちらかに言える？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_PLACE_SPLIT（整数 系1 step1・辞書 倍数の判定条件）：
+ * 数を「まとまった束の分」と「はした」に切り分ける帯。
+ * 束の側は最初から割り切れていて勝負に参加しない、はしたの側だけが余りを決める——
+ * という関係だけを示し、具体の数・余りの値は書かない（figure-does-not-reveal-answer）。
+ */
+export function IntPlaceSplit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillBundle = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillRest = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 380 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="1 本の帯が 2 つに切り分けられた図。左の大きい部分は「まとまった束の分」で最初から割り切れている、右の小さい部分は「はした」。どちらが余りを決めるかを問う。具体の数や余りの値は書かない"
+    >
+      <text x="190" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        1 つの数を、2 つの部分に切り分ける
+      </text>
+
+      {/* 帯全体 */}
+      <rect x="30" y="46" width="240" height="46" rx="6" fill={fillBundle} stroke={stroke} strokeWidth="1.3" />
+      <rect x="270" y="46" width="80" height="46" rx="6" fill={fillRest} stroke={stroke} strokeWidth="1.3" />
+
+      {/* 切れ目 */}
+      <path d="M 270 38 L 270 100" fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="4 3" />
+
+      <text x="150" y="74" fontSize="12.5" fill={stroke} textAnchor="middle">
+        まとまった束の分
+      </text>
+      <text x="310" y="74" fontSize="12.5" fill={stroke} textAnchor="middle">
+        はした
+      </text>
+
+      {/* 下のラベル */}
+      <path d="M 30 108 L 270 108" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 30 104 L 30 112 M 270 104 L 270 112" stroke={muted} strokeWidth="1" />
+      <text x="150" y="126" fontSize="10.5" fill={muted} textAnchor="middle">
+        いくつ集まっても、はじめから割り切れている
+      </text>
+
+      <path d="M 270 108 L 350 108" fill="none" stroke={accent} strokeWidth="1" />
+      <path d="M 350 104 L 350 112" stroke={accent} strokeWidth="1" />
+      <text x="310" y="126" fontSize="10.5" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      <text x="190" y="158" fontSize="11.5" fill={accent} textAnchor="middle">
+        割り切れるかどうかを決めているのは、どちらの部分？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_DIGIT_WEIGHT（整数 系1 step4・辞書 倍数の判定条件）：
+ * 位の重み 10・100・1000 を「9 が並ぶ数」と「1」に分解する図。
+ * 切り離す場所が位の途中に見つからないとき、重みそのものをほどくと
+ * 各位の数だけが残る——という仕組みだけを示し、各位の和や余りの値は書かない。
+ */
+export function IntDigitWeight() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillNine = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillOne = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  const rows = [
+    { y: 52, weight: "1000", nine: "999", label: "千の位の重み" },
+    { y: 88, weight: "100", nine: "99", label: "百の位の重み" },
+    { y: 124, weight: "10", nine: "9", label: "十の位の重み" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="位の重み 1000・100・10 を、それぞれ 999・99・9 と 1 に分解して並べた図。9 が並ぶ側はひとまとめに割り切れ、残る 1 の側に各位の数がかかる。各位の数の和や余りの値は書かない"
+    >
+      <text x="195" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        切り離す場所が見つからないときは、位の重みそのものをほどく
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.weight}>
+          <text x="66" y={r.y + 18} fontSize="12.5" fill={stroke} textAnchor="end">
+            {r.weight}
+          </text>
+          <text x="80" y={r.y + 18} fontSize="12.5" fill={muted}>
+            =
+          </text>
+          <rect x="100" y={r.y} width="96" height="26" rx="5" fill={fillNine} stroke={stroke} strokeWidth="1.2" />
+          <text x="148" y={r.y + 18} fontSize="12.5" fill={stroke} textAnchor="middle">
+            {r.nine}
+          </text>
+          <text x="204" y={r.y + 18} fontSize="12.5" fill={muted} textAnchor="middle">
+            +
+          </text>
+          <rect x="216" y={r.y} width="34" height="26" rx="5" fill={fillOne} stroke={stroke} strokeWidth="1.2" />
+          <text x="233" y={r.y + 18} fontSize="12.5" fill={stroke} textAnchor="middle">
+            1
+          </text>
+        </g>
+      ))}
+
+      {/* 右の中かっこ的な注記 */}
+      <path d="M 262 46 L 270 46 L 270 150 L 262 150" fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x="278" y="88" fontSize="10.5" fill={muted}>
+        9 が並ぶ側は
+      </text>
+      <text x="278" y="102" fontSize="10.5" fill={muted}>
+        ひとまとめに
+      </text>
+      <text x="278" y="116" fontSize="10.5" fill={muted}>
+        割り切れる
+      </text>
+
+      <text x="195" y="178" fontSize="11.5" fill={accent} textAnchor="middle">
+        では、残った「1」の側には、何がかかっている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_MULTIPLE_RULER（辞書 倍数）：ある数の倍数が数直線上に同じはばで並ぶ図。
+ * 目もりの数値は入れず、「同じはばで規則正しく並ぶ」という関係だけを見せる。
+ */
+export function IntMultipleRuler() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 86;
+  const x0 = 40;
+  const gap = 48;
+  const marks = [0, 1, 2, 3, 4, 5, 6];
+  return (
+    <svg
+      viewBox="0 0 380 152"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="数直線の上に、ある数の倍数が同じはばで規則正しく並んでいる図。目もりの数値は書かず、はばが一定であることと、そのはばが何を表すかを問う"
+    >
+      <text x="190" y="34" fontSize="11" fill={muted} textAnchor="middle">
+        ある数の倍数を、数直線の上に並べてみると
+      </text>
+
+      <path d={`M 20 ${y} L 360 ${y}`} fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d={`M 360 ${y} l -8 -4 l 0 8 z`} fill={stroke} />
+
+      {marks.map((k) => (
+        <g key={k}>
+          <circle cx={x0 + k * gap} cy={y} r="5.5" fill={accent} />
+          <path
+            d={`M ${x0 + k * gap} ${y - 5.5} L ${x0 + k * gap} ${y - 16}`}
+            stroke={muted}
+            strokeWidth="1"
+          />
+        </g>
+      ))}
+
+      <path d={`M ${x0} ${y + 22} L ${x0 + gap} ${y + 22}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${x0} ${y + 18} L ${x0} ${y + 26}`} stroke={muted} strokeWidth="1" />
+      <path d={`M ${x0 + gap} ${y + 18} L ${x0 + gap} ${y + 26}`} stroke={muted} strokeWidth="1" />
+      <text x={x0 + gap / 2} y={y + 40} fontSize="10.5" fill={muted} textAnchor="middle">
+        同じはば
+      </text>
+
+      <text x="190" y="140" fontSize="11.5" fill={accent} textAnchor="middle">
+        このはばは、何を表している？
       </text>
     </svg>
   );
