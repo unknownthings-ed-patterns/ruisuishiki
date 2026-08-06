@@ -13898,6 +13898,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_PRIME_SHELF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntPrimeShelf />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_DIVISOR_GRID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntDivisorGrid />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -19456,6 +19470,181 @@ export function IntSqrtFold() {
 
       <text x="190" y="198" fontSize="11.5" fill={accent} textAnchor="middle">
         小さい方の部品は、この折り返しより右へ行ける？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。マーカー分岐（<<INT_PRIME_SHELF>> /
+// <<INT_DIVISOR_GRID>>）の追加はメインが行う。
+
+/**
+ * INT_PRIME_SHELF（整数 系3 step1・辞書 素因数分解／約数の個数／平方数）：
+ * 素因数の「在庫棚」。段ごとに同じ素数が積まれている様子だけを示す。
+ * 具体の数・指数の値・約数の個数は書かない（figure-does-not-reveal-answer）。
+ */
+export function IntPrimeShelf() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillToken = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  const shelves = [
+    { y: 56, label: "素数 p の段", n: 4 },
+    { y: 96, label: "素数 q の段", n: 3 },
+    { y: 136, label: "素数 r の段", n: 1 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 380 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="素因数の在庫棚の図。段ごとに 1 つの素数が積まれ、段によって積まれている個数が違う。具体の数や指数の値、約数の個数は書かない"
+    >
+      <text x="190" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        1 つの数を分け切ると、素数が段ごとに積み上がる
+      </text>
+
+      {shelves.map((s) => (
+        <g key={s.label}>
+          {/* 棚板 */}
+          <path
+            d={`M 96 ${s.y + 16} L 340 ${s.y + 16}`}
+            stroke={stroke}
+            strokeWidth="1.3"
+          />
+          <text x="88" y={s.y + 12} fontSize="11.5" fill={stroke} textAnchor="end">
+            {s.label}
+          </text>
+          {/* 積まれた素数のこま */}
+          {Array.from({ length: s.n }).map((_, k) => (
+            <rect
+              key={k}
+              x={106 + k * 30}
+              y={s.y - 6}
+              width="22"
+              height="22"
+              rx="4"
+              fill={fillToken}
+              stroke={stroke}
+              strokeWidth="1.1"
+            />
+          ))}
+        </g>
+      ))}
+
+      {/* 右端の注記 */}
+      <path d="M 348 42 L 356 42 L 356 156 L 348 156" fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x="360" y="94" fontSize="10.5" fill={muted}>
+        在
+      </text>
+      <text x="360" y="108" fontSize="10.5" fill={muted}>
+        庫
+      </text>
+
+      <text x="190" y="178" fontSize="11.5" fill={accent} textAnchor="middle">
+        分ける順番を変えたら、段の「何個ずつ」は変わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_DIVISOR_GRID（整数 系3 step5・辞書 約数の個数）：
+ * 「p を何個・q を何個」の格子表。かっこの積を開くと、ますの中に約数が
+ * ちょうど 1 回ずつ現れる関係だけを示す。総和の値・個数の値は書かない。
+ */
+export function IntDivisorGrid() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const grid = "color-mix(in oklch, var(--foreground) 12%, transparent)";
+  const cellFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const cols = ["1", "q", "q²"];
+  const rows = ["1", "p", "p²"];
+  const x0 = 118;
+  const y0 = 66;
+  const w = 62;
+  const h = 34;
+  return (
+    <svg
+      viewBox="0 0 380 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="よこに 1・q・q の 2 乗、たてに 1・p・p の 2 乗を並べた格子表。ますの中には、たてとよこをかけ合わせた約数が入る。総和の値や約数の個数は書かない"
+    >
+      <text x="190" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        段ごとに「取り出せる分」を並べて、かけ合わせてみると
+      </text>
+
+      {/* 列見出し */}
+      {cols.map((c, j) => (
+        <text
+          key={`c${c}`}
+          x={x0 + j * w + w / 2}
+          y={y0 - 10}
+          fontSize="12.5"
+          fill={stroke}
+          textAnchor="middle"
+        >
+          {c}
+        </text>
+      ))}
+      {/* 行見出し */}
+      {rows.map((r, i) => (
+        <text
+          key={`r${r}`}
+          x={x0 - 14}
+          y={y0 + i * h + h / 2 + 4}
+          fontSize="12.5"
+          fill={stroke}
+          textAnchor="end"
+        >
+          {r}
+        </text>
+      ))}
+
+      {/* ます */}
+      {rows.map((r, i) =>
+        cols.map((c, j) => {
+          const label =
+            r === "1" && c === "1" ? "1" : r === "1" ? c : c === "1" ? r : `${r}${c}`;
+          return (
+            <g key={`${i}-${j}`}>
+              <rect
+                x={x0 + j * w}
+                y={y0 + i * h}
+                width={w}
+                height={h}
+                fill={cellFill}
+                stroke={grid}
+                strokeWidth="1"
+              />
+              <text
+                x={x0 + j * w + w / 2}
+                y={y0 + i * h + h / 2 + 4}
+                fontSize="12"
+                fill={stroke}
+                textAnchor="middle"
+              >
+                {label}
+              </text>
+            </g>
+          );
+        }),
+      )}
+
+      {/* 左と上のかっこ的な帯 */}
+      <text x="60" y={y0 + 1.5 * h + 4} fontSize="10.5" fill={muted} textAnchor="middle">
+        p の段
+      </text>
+      <text x={x0 + 1.5 * w} y={y0 - 30} fontSize="10.5" fill={muted} textAnchor="middle">
+        q の段
+      </text>
+
+      <text x="190" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        ますに入る数は、この数の約数をちょうど 1 回ずつ並べている？
       </text>
     </svg>
   );

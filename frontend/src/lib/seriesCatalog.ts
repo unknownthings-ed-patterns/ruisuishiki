@@ -8,10 +8,7 @@
  * 学習者ビューで歩ける（同一エンジン・複数領域）。
  */
 
-import {
-  ALGEBRA_1_SERIES_LIST,
-  ALGEBRA_DIVISOR_COUNT_SERIES,
-} from "./seriesAlgebra";
+import { ALGEBRA_1_SERIES_LIST } from "./seriesAlgebra";
 import {
   ALGEBRA_2_SERIES_LIST,
   ALGEBRA2_ARITH_NTH_SERIES,
@@ -91,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_FACTORIZATION_SERIES,
   INT_PRIME_SERIES,
   INT_BASE_N_SERIES,
   INT_DIVISIBLE_SERIES,
@@ -883,8 +881,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "方べきの定理（点と円の間に潜む積の不変量）— 2 弦の積の保存、逆算の 2 次方程式、外部の点と「かけるのは P からの距離」、接線の平方、2 円の等しい接線、相似との交差検算、二等分線＋方べき＋メネラウスの章の総決算まで",
   },
   /* 数A: 整数の性質（池田本 第9章・図形の性質の直後。背骨 docs/integer_series_design.md）
-   * 系列1 実装済。旧 algebra_divisor_01 は系列3（素因数分解と約数の設計図）へ吸収予定
-   * （行き先を実装したときに SERIES_REDIRECTS へ移す）。 */
+   * 旧 algebra_divisor_01 は系列3（素因数分解と約数の設計図）へ吸収済（SERIES_REDIRECTS）。 */
   {
     series: INT_DIVISIBLE_SERIES,
     subject: "secondary",
@@ -902,19 +899,20 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "素数（それ以上分けられない数）— 分けるたびに数は小さくなるから分解は必ず止まる。最小の素因数、判定を打ち切れる折り返し点、ふるい、素数を作る式が外れる瞬間、素数が尽きないことまで",
   },
   {
+    series: INT_FACTORIZATION_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "素因数分解と約数の設計図（約数＝在庫棚から段ごとに何個ずつ取り出すかの選び方）— 指数を読む、約数の個数と総和、個数から数を逆に設計する、平方数・立方数への作りかえ、条件つきの約数の数え上げまで",
+  },
+  {
     series: INT_BASE_N_SERIES,
     subject: "secondary",
     subjectLabel: "高校数学Ⅰ・A",
     topicGroup: "整数の性質",
     shortDescription:
       "n 進法（束ね方を決めて、余りを並べる）— 数そのものと書き表し方は別のもの。重みで読む・割って余りを下から並べる・n でくり上がるたし算・桁数・底の逆算・2 進から 8 進へ区切って移る・分銅と 2 進法まで",
-  },
-  {
-    series: ALGEBRA_DIVISOR_COUNT_SERIES,
-    subject: "secondary",
-    subjectLabel: "高校数学Ⅰ・A",
-    topicGroup: "整数の性質",
-    shortDescription: "約数の個数",
   },
   /* 中学校数学 */
   {
@@ -1291,6 +1289,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra_mean_01: "algebra1_data_center_01",
   stats_median_01: "algebra1_data_center_01",
   algebra_variance_01: "algebra1_data_variance_01",
+  /* 整数の性質（背骨 D4）：旧「約数の個数」5 問プロトタイプ → 系列3 へ吸収 */
+  algebra_divisor_01: "algebra1_int_factorization_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
