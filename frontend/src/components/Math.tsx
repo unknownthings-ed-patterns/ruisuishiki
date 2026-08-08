@@ -13947,6 +13947,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_EUCLID_SEGMENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntEuclidSegment />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_EUCLID_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntEuclidStairs />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -20036,6 +20050,135 @@ export function IntRemainderBoxes() {
 
       <text x="190" y="184" fontSize="11.5" fill={accent} textAnchor="middle">
         自分自身とかけ合わせると、3 つの箱はそれぞれどこへ行く？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。マーカーは背骨 §3 の
+//   #12 INT_EUCLID_SEGMENT（6-1）・#13 INT_EUCLID_STAIRS（6-4）に対応。
+
+/**
+ * INT_EUCLID_SEGMENT（整数 系6 step1・辞書 ユークリッドの互除法）：
+ * 長い方の線分に短い方を重ならないようにあてていき、はんぱが残る図。
+ * 下に「共通の物さし」の目もりを置き、それが長い方・短い方・はんぱの
+ * どれもはかりきれるかを問う。最大公約数の値・具体の数値は書かない
+ * （figure-does-not-reveal-answer）。
+ */
+export function IntEuclidSegment() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillLong = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillShort = "color-mix(in oklch, var(--foreground) 14%, transparent)";
+  const fillRest = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="上に長い方の線分、下にその上へ短い方を 2 本ぶんあてた図。右端にあてきれずに残った「はんぱ」がある。さらに下には細かい目もりの物さしが並び、それが長い方・短い方・はんぱのどれをはかりきれるかを問う。具体の長さや最大公約数の値は書かない"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        長い方に、短い方を重ならないようにあてていくと
+      </text>
+
+      {/* 長い方 */}
+      <rect x="30" y="40" width="320" height="26" rx="5" fill={fillLong} stroke={stroke} strokeWidth="1.3" />
+      <text x="190" y="58" fontSize="12" fill={stroke} textAnchor="middle">
+        長い方
+      </text>
+
+      {/* あてた短い方 2 本 ＋ はんぱ */}
+      <rect x="30" y="80" width="120" height="26" rx="5" fill={fillShort} stroke={stroke} strokeWidth="1.2" />
+      <rect x="150" y="80" width="120" height="26" rx="5" fill={fillShort} stroke={stroke} strokeWidth="1.2" />
+      <rect x="270" y="80" width="80" height="26" rx="5" fill={fillRest} stroke={stroke} strokeWidth="1.3" />
+      <text x="90" y="98" fontSize="11.5" fill={stroke} textAnchor="middle">
+        短い方
+      </text>
+      <text x="210" y="98" fontSize="11.5" fill={stroke} textAnchor="middle">
+        短い方
+      </text>
+      <text x="310" y="98" fontSize="11.5" fill={accent} textAnchor="middle">
+        はんぱ
+      </text>
+
+      {/* 切れ目 */}
+      <path d="M 270 34 L 270 112" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+
+      {/* 共通の物さし（目もりだけ・値は書かない） */}
+      <text x="30" y="140" fontSize="10.5" fill={muted}>
+        共通の物さし？
+      </text>
+      <path d="M 30 152 L 350 152" fill="none" stroke={muted} strokeWidth="1.1" />
+      {Array.from({ length: 17 }, (_, i) => 30 + i * 20).map((x) => (
+        <path key={x} d={`M ${x} 146 L ${x} 158`} stroke={muted} strokeWidth="1" />
+      ))}
+
+      <text x="195" y="184" fontSize="11.5" fill={accent} textAnchor="middle">
+        長い方も短い方もはかりきれる物さしは、
+      </text>
+      <text x="195" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        残った「はんぱ」もはかりきれる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_EUCLID_STAIRS（整数 系6 step4・辞書 アルゴリズム）：
+ * 置きかえのたびに余りが小さくなり続け、必ず 0 に着く階段。
+ * 各段の余りの値・最大公約数の値は書かず、「小さくなり続ける」という
+ * 関係と、$0$ 以上の整数列がいつまでも下がり続けられるかという問いだけを示す。
+ */
+export function IntEuclidStairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--foreground) 10%, transparent)";
+  const rows = [
+    { y: 46, w: 250, label: "1 回目の余り" },
+    { y: 76, w: 158, label: "2 回目の余り" },
+    { y: 106, w: 92, label: "3 回目の余り" },
+    { y: 136, w: 44, label: "4 回目の余り" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="上から下へ、余りをあらわす帯がだんだん短くなっていく階段の図。いちばん下は 0 で、そこで止まる。各段の余りの具体的な値や最大公約数の値は書かず、小さくなり続けることだけを示す"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        置きかえるたびに、余りはどうなっている？
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.label}>
+          <rect x="40" y={r.y} width={r.w} height="20" rx="4" fill={fill} stroke={stroke} strokeWidth="1.2" />
+          <text x={40 + r.w + 10} y={r.y + 15} fontSize="10.5" fill={muted}>
+            {r.label}
+          </text>
+        </g>
+      ))}
+
+      {/* 0 に着く */}
+      <path d="M 40 166 L 46 166" stroke={accent} strokeWidth="2" />
+      <text x="56" y="171" fontSize="11.5" fill={accent}>
+        0（ここで止まる）
+      </text>
+
+      {/* 下向きの矢印 */}
+      <path d="M 26 46 L 26 160" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 26 166 l -4 -8 l 8 0 z" fill={muted} />
+
+      <text x="195" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        0 以上の整数が小さくなり続けるとき、
+      </text>
+      <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        この階段はいつまでも下り続けられる？
       </text>
     </svg>
   );
