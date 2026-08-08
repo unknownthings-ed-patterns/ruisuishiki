@@ -13912,6 +13912,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_GCD_SHELF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntGcdShelf />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_MINMAX_SUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntMinmaxSum />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -19645,6 +19659,160 @@ export function IntDivisorGrid() {
 
       <text x="190" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
         ますに入る数は、この数の約数をちょうど 1 回ずつ並べている？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。
+// 併せて MathBody のマーカー分岐に
+//   <<INT_GCD_SHELF>>  → <IntGcdShelf />
+//   <<INT_MINMAX_SUM>> → <IntMinmaxSum />
+// を追加する（既存 INT_PLACE_SPLIT の分岐の隣）。
+
+/**
+ * INT_GCD_SHELF（整数 系4 step1・辞書 最大公約数／最小公倍数／公約数）：
+ * 2 つの数の素因数の在庫棚を上下に並べ、同じ素数の在庫がどれだけ重なっているかを見る図。
+ * 具体の数・最大公約数・最小公倍数の値は一切書かず、素数は記号（●・▲）で表す。
+ */
+export function IntGcdShelf() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--foreground) 5%, transparent)";
+  const tokenA = "color-mix(in oklch, var(--foreground) 22%, transparent)";
+  const tokenB = "color-mix(in oklch, var(--accent) 30%, transparent)";
+  const tri = (cx: number, cy: number) =>
+    `M ${cx} ${cy - 9} L ${cx + 8.5} ${cy + 6} L ${cx - 8.5} ${cy + 6} z`;
+  return (
+    <svg
+      viewBox="0 0 400 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="2 つの数の素因数の在庫棚を上下に並べた図。左の帯には同じ素数（丸印）、右の帯には別の素数（三角印）が、棚ごとに違う個数だけ置かれている。両方の棚から同時に取り出せる個数と、どちらの棚もまかなえる個数を問う。具体の数や最大公約数・最小公倍数の値は書かない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの数の在庫棚を、上下に並べてみる
+      </text>
+
+      {/* 素数ごとの帯 */}
+      <rect x="70" y="34" width="106" height="124" rx="8" fill={band} />
+      <rect x="192" y="34" width="106" height="124" rx="8" fill={band} />
+      <text x="123" y="50" fontSize="10.5" fill={muted} textAnchor="middle">
+        素数 ●
+      </text>
+      <text x="245" y="50" fontSize="10.5" fill={muted} textAnchor="middle">
+        素数 ▲
+      </text>
+
+      {/* 上の棚（a） */}
+      <text x="62" y="80" fontSize="11.5" fill={stroke} textAnchor="end">
+        a の棚
+      </text>
+      <circle cx="90" cy="76" r="9" fill={tokenA} stroke={stroke} strokeWidth="1.1" />
+      <circle cx="116" cy="76" r="9" fill={tokenA} stroke={stroke} strokeWidth="1.1" />
+      <circle cx="142" cy="76" r="9" fill={tokenA} stroke={stroke} strokeWidth="1.1" />
+      <path d={tri(212, 76)} fill={tokenA} stroke={stroke} strokeWidth="1.1" />
+      <path d={tri(238, 76)} fill={tokenA} stroke={stroke} strokeWidth="1.1" />
+      <path d="M 64 90 L 306 90" fill="none" stroke={stroke} strokeWidth="1.2" />
+
+      {/* 下の棚（b） */}
+      <text x="62" y="132" fontSize="11.5" fill={stroke} textAnchor="end">
+        b の棚
+      </text>
+      <circle cx="90" cy="128" r="9" fill={tokenB} stroke={stroke} strokeWidth="1.1" />
+      <circle cx="116" cy="128" r="9" fill={tokenB} stroke={stroke} strokeWidth="1.1" />
+      <path d={tri(212, 128)} fill={tokenB} stroke={stroke} strokeWidth="1.1" />
+      <path d={tri(238, 128)} fill={tokenB} stroke={stroke} strokeWidth="1.1" />
+      <path d={tri(264, 128)} fill={tokenB} stroke={stroke} strokeWidth="1.1" />
+      <path d="M 64 142 L 306 142" fill="none" stroke={stroke} strokeWidth="1.2" />
+
+      {/* 重なりを目で追う縦の点線 */}
+      <path d="M 90 60 L 90 150 M 116 60 L 116 150" fill="none" stroke={accent} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 212 60 L 212 150 M 238 60 L 238 150" fill="none" stroke={accent} strokeWidth="1" strokeDasharray="3 3" />
+
+      <text x="318" y="80" fontSize="10.5" fill={muted}>
+        3 個
+      </text>
+      <text x="318" y="132" fontSize="10.5" fill={muted}>
+        2 個
+      </text>
+
+      <text x="200" y="182" fontSize="11.5" fill={accent} textAnchor="middle">
+        両方の棚から同時に取り出せるのは、素数ごとに何個まで？
+      </text>
+      <text x="200" y="202" fontSize="11.5" fill={accent} textAnchor="middle">
+        どちらの棚もまかなうには、素数ごとに何個要る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_MINMAX_SUM（整数 系4 step4・辞書 最小公倍数）：
+ * ある 1 つの素数について、2 つの棚の在庫を棒の長さで並べ、
+ * 「少ないほう」と「多いほう」を合わせるともとの 2 本の合計に戻ることを見る図。
+ * 積の値・最大公約数・最小公倍数の値は書かない。
+ */
+export function IntMinmaxSum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillTop = "color-mix(in oklch, var(--foreground) 12%, transparent)";
+  const fillBottom = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  const cell = 26;
+  const x0 = 118;
+  const bar = (y: number, n: number, fill: string) =>
+    Array.from({ length: n }, (_, i) => (
+      <rect
+        key={`${y}-${i}`}
+        x={x0 + i * cell}
+        y={y}
+        width={cell - 3}
+        height="22"
+        rx="4"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="1.1"
+      />
+    ));
+  return (
+    <svg
+      viewBox="0 0 400 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="ある 1 つの素数について、2 つの棚の在庫の個数を棒の長さで表した図。上の 2 本がもとの 2 つの棚、下の 2 本が少ないほうと多いほう。合計の長さが等しくなるかを問う。数値や最大公約数・最小公倍数の値は書かない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        ある 1 つの素数について、両方の棚の在庫を並べる
+      </text>
+
+      <text x="110" y="58" fontSize="11.5" fill={stroke} textAnchor="end">
+        a の棚
+      </text>
+      {bar(42, 3, fillTop)}
+
+      <text x="110" y="92" fontSize="11.5" fill={stroke} textAnchor="end">
+        b の棚
+      </text>
+      {bar(76, 2, fillTop)}
+
+      <path d="M 30 112 L 370 112" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+
+      <text x="110" y="146" fontSize="11.5" fill={stroke} textAnchor="end">
+        少ないほう
+      </text>
+      {bar(130, 2, fillBottom)}
+
+      <text x="110" y="180" fontSize="11.5" fill={stroke} textAnchor="end">
+        多いほう
+      </text>
+      {bar(164, 3, fillBottom)}
+
+      <text x="200" y="210" fontSize="11.5" fill={accent} textAnchor="middle">
+        上の 2 本の合計と、下の 2 本の合計は、いつも同じ長さ？
       </text>
     </svg>
   );

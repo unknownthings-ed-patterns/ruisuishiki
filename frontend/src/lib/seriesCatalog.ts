@@ -88,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_GCD_LCM_SERIES,
   INT_FACTORIZATION_SERIES,
   INT_PRIME_SERIES,
   INT_BASE_N_SERIES,
@@ -905,6 +906,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "素因数分解と約数の設計図（約数＝在庫棚から段ごとに何個ずつ取り出すかの選び方）— 指数を読む、約数の個数と総和、個数から数を逆に設計する、平方数・立方数への作りかえ、条件つきの約数の数え上げまで",
+  },
+  {
+    series: INT_GCD_LCM_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "最大公約数・最小公倍数と互いに素（1 枚の在庫表を、少ないほうで読むか多いほうで読むか）— 重なりが最大公約数・合わせた全体が最小公倍数、積との関係、重なりから逆に絞る、互いに素、タイルの敷きつめまで",
   },
   {
     series: INT_BASE_N_SERIES,
