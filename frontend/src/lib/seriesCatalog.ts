@@ -88,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_LINEAR_DIO_SERIES,
   INT_EUCLID_SERIES,
   INT_REMAINDER_SERIES,
   INT_GCD_LCM_SERIES,
@@ -932,6 +933,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "ユークリッドの互除法（答えを変えない置きかえをくり返すと必ず止まる）— はんぱを次のものさしにする、余りが小さくなり続けるから必ず終わる、素因数分解が歯が立たない 2 数、なぜ答えが変わらないか、式を下から逆にたどるまで",
+  },
+  {
+    series: INT_LINEAR_DIO_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "一次不定方程式（解の存在も全体も、2 つの係数の最大公約数が決める）— 格子点を探す、右辺を倍にする、互除法を逆にたどって特殊解を作る、跳ぶ幅は相手側の係数、解が 1 つもない直線、範囲つきの個数と文章題まで",
   },
   {
     series: INT_BASE_N_SERIES,

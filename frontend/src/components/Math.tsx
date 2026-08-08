@@ -13961,6 +13961,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_LATTICE_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntLatticeLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_EUCLID_BACK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntEuclidBack />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -20179,6 +20193,157 @@ export function IntEuclidStairs() {
       </text>
       <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
         この階段はいつまでも下り続けられる？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。マーカーは背骨 §3 の #14・#15 に対応。
+
+/**
+ * INT_LATTICE_LINE（整数 系7 step1・辞書 格子点／不定方程式）：
+ * 格子（たて・よこの目もりがそろう点の並び）の上に、同じ傾きの直線を 2 本引いた図。
+ * 一方は格子の点を通り、もう一方は点と点のすき間をぬける。
+ * どちらがどちらか・なぜ分かれるかは書かず、問いのまま残す
+ * （figure-does-not-reveal-answer）。
+ */
+export function IntLatticeLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cols = [0, 1, 2, 3, 4, 5, 6, 7];
+  const rows = [0, 1, 2, 3, 4];
+  const X0 = 40;
+  const Y0 = 36;
+  const DX = 40;
+  const DY = 32;
+  // 直線ア：y = 196 − 0.8x（格子の点をちょうど通る）
+  // 直線イ：y = 212 − 0.8x（点と点のまん中を通る）
+  return (
+    <svg
+      viewBox="0 0 380 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="たて・よこに等間隔で並んだ点の格子の上に、傾きの等しい直線が 2 本引かれている図。一方は格子の点の上を通り、もう一方は点と点のすき間をぬけていく。座標の数値や解の値は書かない"
+    >
+      <text x="190" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        たてもよこも整数になる点（格子の点）の上に、同じ傾きの直線を 2 本
+      </text>
+
+      {/* 格子の点 */}
+      {rows.map((i) =>
+        cols.map((j) => (
+          <circle
+            key={`${i}-${j}`}
+            cx={X0 + j * DX}
+            cy={Y0 + i * DY}
+            r="3"
+            fill={muted}
+          />
+        )),
+      )}
+
+      {/* 直線ア（格子の点を通る） */}
+      <path d="M 28 173.6 L 212 26.4" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="218" y="26" fontSize="11.5" fill={accent}>
+        ア
+      </text>
+
+      {/* 直線イ（点と点のあいだをぬける） */}
+      <path
+        d="M 40 180 L 244 16.8"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.6"
+        strokeDasharray="5 4"
+      />
+      <text x="250" y="18" fontSize="11.5" fill={stroke}>
+        イ
+      </text>
+
+      <text x="190" y="212" fontSize="11.5" fill={accent} textAnchor="middle">
+        格子の点をつかまえているのはどちら？ その違いを決めているのは何？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_EUCLID_BACK（整数 系7 step4・辞書 特殊解と一般解）：
+ * 互除法のわり算の行を上から下へ並べ、そこを下から上へ読み返す矢印を添えた図。
+ * 具体の数・商・余り・特殊解の値はいっさい書かず、
+ * 「降りるときに書いたものを、昇りながら書きかえていく」という向きだけを見せる。
+ */
+export function IntEuclidBack() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillRow = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const rows = [
+    { y: 44, left: "大きい数", right: "□ × 小さい数 ＋ あまり ①" },
+    { y: 84, left: "小さい数", right: "□ × あまり ① ＋ あまり ②" },
+    { y: 124, left: "あまり ①", right: "□ × あまり ② ＋ 1" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 400 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="互除法のわり算の行が上から下へ 3 段並び、左に下向きの矢印（わって、あまりを取る）、右に上向きの矢印（下でできた 1 を、上の数の組み合わせに書きかえていく）が添えられた図。具体の数や商・あまりの値、できあがる組の値は書かない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        降りるときに書いた行を、こんどは昇りながら読み返す
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.left}>
+          <rect
+            x="52"
+            y={r.y}
+            width="278"
+            height="28"
+            rx="5"
+            fill={fillRow}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x="62" y={r.y + 19} fontSize="11.5" fill={stroke}>
+            {r.left}
+          </text>
+          <text x="122" y={r.y + 19} fontSize="11.5" fill={muted}>
+            =
+          </text>
+          <text x="136" y={r.y + 19} fontSize="11.5" fill={stroke}>
+            {r.right}
+          </text>
+        </g>
+      ))}
+
+      {/* 左：降りる矢印 */}
+      <path d="M 38 44 L 38 148" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 38 152 l -4 -8 l 8 0 z" fill={muted} />
+      <text x="18" y="96" fontSize="10" fill={muted} textAnchor="middle" transform="rotate(-90 18 96)">
+        わって、あまりを取る
+      </text>
+
+      {/* 右：昇る矢印 */}
+      <path d="M 348 148 L 348 44" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 348 40 l -4 8 l 8 0 z" fill={accent} />
+      <text
+        x="370"
+        y="96"
+        fontSize="10"
+        fill={accent}
+        textAnchor="middle"
+        transform="rotate(90 370 96)"
+      >
+        1 を書きかえながら戻る
+      </text>
+
+      <text x="200" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
+        いちばん下でできた 1 を上へ戻していくと、最後は何の何倍どうしの和になる？
       </text>
     </svg>
   );
