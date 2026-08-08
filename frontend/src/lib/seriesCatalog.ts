@@ -88,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_GENERAL_DIO_SERIES,
   INT_CRT_SERIES,
   INT_LINEAR_DIO_SERIES,
   INT_EUCLID_SERIES,
@@ -950,6 +951,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "余りの条件から数を決める（2 つの箱の重なりが、また 1 つの箱になる）— 書き出しで重なりを探す、遠すぎるときは不定方程式へ翻訳、間かくは最小公倍数、条件が 3 本、重なりが存在しない場合、余りが揃った特別な近道まで",
+  },
+  {
+    series: INT_GENERAL_DIO_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "一般の不定方程式（無限の候補を有限に絞って、1 つずつ確かめる）— 積の形は約数が候補を閉じ込める、因数分解で積の形を作る、積が作れないときは大小で絞る、負の約数の数え落とし、絞り込みは必要条件にすぎないこと、単位分数の分け前まで",
   },
   {
     series: INT_BASE_N_SERIES,

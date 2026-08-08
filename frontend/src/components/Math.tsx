@@ -13989,6 +13989,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_DIVISOR_PAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntDivisorPairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_NARROW_CANDIDATES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntNarrowCandidates />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -20510,6 +20524,189 @@ export function IntPeriodTranslate() {
 
       <text x="200" y="210" fontSize="11.5" fill={accent} textAnchor="middle">
         遠くの重なりを、1 つの式に言いかえられる？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。あわせて renderer の分岐に
+//   <<INT_DIVISOR_PAIRS>> → <IntDivisorPairs />
+//   <<INT_NARROW_CANDIDATES>> → <IntNarrowCandidates />
+// を追加する（統合担当が既存の <<INT_PLACE_SPLIT>> の分岐の隣に置く）。
+
+/**
+ * INT_DIVISOR_PAIRS（整数 系9 step1）：
+ * 「かっこ × かっこ ＝ 決まった数」のとき、かっこの中身として来られる整数の組を
+ * 並べた表。正の側と負の側が対になって現れることだけを示し、
+ * 具体の解の組・個数は書かない（figure-does-not-reveal-answer）。
+ */
+export function IntDivisorPairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillPos = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillNeg = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  const rows = [
+    { y: 60, a: "1", b: "その数", neg: false },
+    { y: 88, a: "その数", b: "1", neg: false },
+    { y: 116, a: "−1", b: "−（その数）", neg: true },
+    { y: 144, a: "−（その数）", b: "−1", neg: true },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="かっことかっこのかけ算が決まった数になるとき、左のかっこの中身と右のかっこの中身として来られる整数の組を並べた表。正の側の組と負の側の組が対になって並ぶ。具体の解の組や個数は書かない"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        （　　）×（　　）＝ 決まった数
+      </text>
+
+      {/* 見出し行 */}
+      <text x="118" y="46" fontSize="10.5" fill={muted} textAnchor="middle">
+        左のかっこの中身
+      </text>
+      <text x="272" y="46" fontSize="10.5" fill={muted} textAnchor="middle">
+        右のかっこの中身
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.a + r.b}>
+          <rect
+            x="48"
+            y={r.y - 15}
+            width="140"
+            height="24"
+            rx="5"
+            fill={r.neg ? fillNeg : fillPos}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x="118" y={r.y + 2} fontSize="12" fill={stroke} textAnchor="middle">
+            {r.a}
+          </text>
+          <text x="196" y={r.y + 2} fontSize="11" fill={muted} textAnchor="middle">
+            ×
+          </text>
+          <rect
+            x="204"
+            y={r.y - 15}
+            width="140"
+            height="24"
+            rx="5"
+            fill={r.neg ? fillNeg : fillPos}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x="274" y={r.y + 2} fontSize="12" fill={stroke} textAnchor="middle">
+            {r.b}
+          </text>
+        </g>
+      ))}
+
+      {/* 正・負の側のしるし */}
+      <path d="M 38 45 L 30 45 L 30 101 L 38 101" fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x="24" y="76" fontSize="9.5" fill={muted} textAnchor="end">
+        正
+      </text>
+      <path d="M 38 103 L 30 103 L 30 159 L 38 159" fill="none" stroke={accent} strokeWidth="1.1" />
+      <text x="24" y="134" fontSize="9.5" fill={accent} textAnchor="end">
+        負
+      </text>
+
+      <text x="195" y="180" fontSize="10.5" fill={muted} textAnchor="middle">
+        右の数が素数でなければ、行はもっと増える
+      </text>
+
+      <text x="195" y="202" fontSize="11.5" fill={accent} textAnchor="middle">
+        並べられる行は、いくつまで？ 負の側を忘れていない？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_NARROW_CANDIDATES（整数 系9 step4）：
+ * 無限の候補 → 条件で絞る → $1$ つずつ確かめる、の $3$ 段。
+ * 絞ったところが終点ではないこと（必要条件どまり）を問いで示し、
+ * 残る解・個数は書かない。
+ */
+export function IntNarrowCandidates() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillWide = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const fillNarrow = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const boxes = [0, 1, 2, 3, 4];
+  return (
+    <svg
+      viewBox="0 0 390 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="3 段の図。1 段目は両側に矢印がのびる無限の候補、2 段目は条件によって挟まれた有限の範囲、3 段目は残った候補を 1 つずつ確かめる箱の列。どれが解として残るかは書かない"
+    >
+      {/* 1 段目：無限の候補 */}
+      <text x="24" y="30" fontSize="10.5" fill={muted}>
+        ① 整数ならどこまでも
+      </text>
+      <rect x="24" y="38" width="342" height="26" rx="6" fill={fillWide} stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d="M 40 51 L 24 51" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 24 51 l 8 -4 l 0 8 z" fill={muted} />
+      <path d="M 350 51 L 366 51" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 366 51 l -8 -4 l 0 8 z" fill={muted} />
+      <text x="195" y="55" fontSize="11" fill={muted} textAnchor="middle">
+        候補は数え切れない
+      </text>
+
+      <path d="M 195 70 L 195 84" stroke={accent} strokeWidth="1.4" />
+      <path d="M 195 88 l -4 -8 l 8 0 z" fill={accent} />
+      <text x="205" y="82" fontSize="10" fill={accent}>
+        条件で挟む
+      </text>
+
+      {/* 2 段目：絞られた範囲 */}
+      <text x="24" y="110" fontSize="10.5" fill={muted}>
+        ② 範囲が決まる
+      </text>
+      <rect x="130" y="118" width="130" height="26" rx="6" fill={fillNarrow} stroke={stroke} strokeWidth="1.2" />
+      <path d="M 130 112 L 130 150 M 260 112 L 260 150" stroke={accent} strokeWidth="1.4" />
+      <text x="195" y="135" fontSize="11" fill={stroke} textAnchor="middle">
+        候補は有限個
+      </text>
+
+      <path d="M 195 156 L 195 170" stroke={accent} strokeWidth="1.4" />
+      <path d="M 195 174 l -4 -8 l 8 0 z" fill={accent} />
+      <text x="205" y="168" fontSize="10" fill={accent}>
+        1 つずつ
+      </text>
+
+      {/* 3 段目：個別に確かめる */}
+      <text x="24" y="196" fontSize="10.5" fill={muted}>
+        ③ 当てはめて確かめる
+      </text>
+      {boxes.map((k) => (
+        <g key={k}>
+          <rect
+            x={130 + k * 26}
+            y="186"
+            width="22"
+            height="22"
+            rx="4"
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x={141 + k * 26} y="202" fontSize="11" fill={muted} textAnchor="middle">
+            ?
+          </text>
+        </g>
+      ))}
+
+      <text x="195" y="228" fontSize="11.5" fill={accent} textAnchor="middle">
+        ② まで来たら、そこで答えを言い切ってよい？
       </text>
     </svg>
   );
