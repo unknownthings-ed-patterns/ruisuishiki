@@ -20,10 +20,8 @@ import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
-import {
-  KOKUGO_HAIKU_SERIES_LIST,
-  getKokugoSeries,
-} from "@/lib/seriesKokugoHaiku";
+import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
+import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
 import { getViewpointList } from "@/lib/viewpointLists";
 import type { KokugoSeries, ViewpointItem } from "@/lib/types";
 import {
@@ -32,6 +30,20 @@ import {
   loadSeriesHistory,
   saveStepRecord,
 } from "@/lib/storage";
+
+/**
+ * このプレイヤーが歩ける国語系列の全部（俳句3＋自由詩1）。
+ * 解禁順（revealedInSeries）・作品集の収集・?seriesId の解決は、すべてこの順が正。
+ */
+const KOKUGO_ALL_SERIES: KokugoSeries[] = [
+  ...KOKUGO_HAIKU_SERIES_LIST,
+  ...KOKUGO_SHI_SERIES_LIST,
+];
+
+/** id から国語系列を引く（俳句・自由詩の両方。未登録は undefined）。 */
+function resolveKokugoSeries(id: string): KokugoSeries | undefined {
+  return KOKUGO_ALL_SERIES.find((s) => s.id === id);
+}
 
 type HaikuAnthologyItem = {
   seriesId: string;
@@ -42,20 +54,86 @@ type HaikuAnthologyItem = {
 };
 
 /**
+ * ジャンルごとの作品の呼び名（俳句＝句集、自由詩＝詩集）。
+ * ジャンルが増えても既存の呼び名を変えずに済むよう、ここで切り替える。
+ */
+function worksLabels(series: KokugoSeries): {
+  collection: string;
+  counter: string;
+  empty: string;
+} {
+  if (series.genreId === "shi") {
+    return {
+      collection: "わたしの詩集",
+      counter: "編",
+      empty: "まだ詩がありません。系列を歩くと、ここにたまっていくよ",
+    };
+  }
+  return {
+    collection: "わたしの句集",
+    counter: "句",
+    empty: "まだ句がありません。系列を歩くと、ここにたまっていくよ",
+  };
+}
+
+/**
  * 現在の系列で見せる観点（revealedInSeries で系列の核を先出ししない・G1）。
  * その系列とそれ以前で解禁された項目のみ返す。
+ * 未知の系列 id を指す項目は非表示に倒す（安全側・handoff T-7）。
  */
 function visibleViewpointItems(series: KokugoSeries): ViewpointItem[] {
   const vl = getViewpointList(series.genreId);
   if (!vl) return [];
-  const order = KOKUGO_HAIKU_SERIES_LIST.findIndex((s) => s.id === series.id);
+  const order = KOKUGO_ALL_SERIES.findIndex((s) => s.id === series.id);
   return vl.items.filter((it) => {
     if (!it.revealedInSeries) return true;
-    const revealedAt = KOKUGO_HAIKU_SERIES_LIST.findIndex(
+    const revealedAt = KOKUGO_ALL_SERIES.findIndex(
       (s) => s.id === it.revealedInSeries,
     );
     return revealedAt !== -1 && revealedAt <= order;
   });
+}
+
+/**
+ * 行分けを保った縦書き表示（行＝列）。
+ *
+ * 俳句の「縦書き1列 nowrap」原則の複数行版：1 行を 1 つのブロックにすると、
+ * 縦書き（vertical-rl）ではブロックが右から左へ積まれる＝日本語の詩の組み方に
+ * そのままなる。空行（連のあいだ）は全角空白で 1 列ぶんの間として残す。
+ *
+ * 折り返しは殺さない（pre-wrap）——詩の行は短いので実質 1 行＝1 列になり、
+ * 比較用に置く「ふつうの文」（長い一続き）だけが自然に複数列へ流れる。
+ */
+function PoemLines({
+  text,
+  fontSize = "clamp(14px, 2.2vh, 18px)",
+  maxHeight = "50vh",
+}: {
+  text: string;
+  fontSize?: string;
+  maxHeight?: string;
+}) {
+  const lines = text.split("\n");
+  return (
+    <div
+      className="font-serif text-foreground"
+      style={{
+        writingMode: "vertical-rl",
+        maxHeight,
+        maxWidth: "100%",
+        overflowX: "auto",
+        fontSize,
+        letterSpacing: "0.12em",
+        lineHeight: 1.9,
+      }}
+    >
+      {lines.map((line, i) => (
+        <span key={i} style={{ display: "block", whiteSpace: "pre-wrap" }}>
+          {line === "" ? "　" : line}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 /** 音数メーター：かな文字列の拍を可視化する（正誤ではない）。 */
@@ -148,31 +226,37 @@ function MoraMeter({
   );
 }
 
-/** 模範句カード（縦書き）。viewpointTags は出さない（G1）。 */
+/** 模範文カード（縦書き）。viewpointTags は出さない（G1）。 */
 function MentorCard({ id }: { id: string }) {
   const m = getMentorText(id);
   if (!m) return null;
+  // 自由詩は音数の器を持たないので、行分けを保った複数列表示・音数は出さない。
+  const isFreeVerse = m.form === "free_verse";
   return (
     <article
       className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"
       style={{ background: "var(--surface)" }}
     >
-      <p
-        className="font-serif text-foreground"
-        style={{
-          writingMode: "vertical-rl",
-          // 俳句は縦書き1行（1列）。折り返して複数列にしない。
-          whiteSpace: "nowrap",
-          fontSize: "clamp(15px, 2.4vh, 20px)",
-          letterSpacing: "0.12em",
-          maxHeight: "60vh",
-        }}
-      >
-        {m.text}
-      </p>
+      {isFreeVerse ? (
+        <PoemLines text={m.text} />
+      ) : (
+        <p
+          className="font-serif text-foreground"
+          style={{
+            writingMode: "vertical-rl",
+            // 俳句は縦書き1行（1列）。折り返して複数列にしない。
+            whiteSpace: "nowrap",
+            fontSize: "clamp(15px, 2.4vh, 20px)",
+            letterSpacing: "0.12em",
+            maxHeight: "60vh",
+          }}
+        >
+          {m.text}
+        </p>
+      )}
       {m.reading && (
         <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.05em" }}>
-          {m.reading}（{countMora(m.reading)}音）
+          {isFreeVerse ? m.reading : `${m.reading}（${countMora(m.reading)}音）`}
         </span>
       )}
       <span className="text-muted" style={{ fontSize: "12px" }}>
@@ -183,7 +267,7 @@ function MentorCard({ id }: { id: string }) {
 }
 
 export default function HaikuPlay() {
-  const [series, setSeries] = useState<KokugoSeries>(KOKUGO_HAIKU_SERIES_LIST[0]);
+  const [series, setSeries] = useState<KokugoSeries>(KOKUGO_ALL_SERIES[0]);
   const [stepIndex, setStepIndex] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [view, setView] = useState<"play" | "anthology">("play");
@@ -209,6 +293,7 @@ export default function HaikuPlay() {
   const [showName, setShowName] = useState(false); // 既定は匿名（選のあと作者を明かす運用）
 
   const step = series.steps[stepIndex];
+  const labels = worksLabels(series);
   const total = series.steps.length;
   const isLast = stepIndex === total - 1;
   const input = step.input;
@@ -217,7 +302,7 @@ export default function HaikuPlay() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sid = params.get("seriesId");
-    const resolved = (sid && getKokugoSeries(sid)) || KOKUGO_HAIKU_SERIES_LIST[0];
+    const resolved = (sid && resolveKokugoSeries(sid)) || KOKUGO_ALL_SERIES[0];
     setSeries(resolved);
     if (params.get("fresh") === "1") {
       clearSeriesHistory(resolved.id);
@@ -246,7 +331,9 @@ export default function HaikuPlay() {
     setChoice(null);
     setOrder([]);
     const savedHaiku =
-      step.input?.type === "haikuText" ? loadHaiku(series.id, step.id) : null;
+      step.input?.type === "haikuText" || step.input?.type === "poemText"
+        ? loadHaiku(series.id, step.id)
+        : null;
     setWork(savedHaiku?.work ?? "");
     setReading(savedHaiku?.reading ?? "");
     if (input?.type === "fillIn") {
@@ -344,7 +431,7 @@ export default function HaikuPlay() {
               ← もどる
             </button>
             <span className="text-muted truncate" style={{ fontSize: "12px", letterSpacing: "0.08em" }}>
-              わたしの句集
+              {labels.collection}
             </span>
           </div>
         </nav>
@@ -354,19 +441,20 @@ export default function HaikuPlay() {
               className="font-serif text-foreground"
               style={{ fontSize: "clamp(28px, 4vw, 40px)", letterSpacing: "0.12em" }}
             >
-              わたしの句集
+              {labels.collection}
             </h1>
             <span className="text-muted tnum" style={{ fontSize: "13px", letterSpacing: "0.1em" }}>
-              {haikuWorks.length}句
+              {haikuWorks.length}
+              {labels.counter}
             </span>
           </header>
 
           {haikuWorks.length === 0 ? (
             <p className="text-muted text-center py-16" style={{ fontSize: "15px", lineHeight: 2 }}>
-              まだ句がありません。系列を歩くと、ここにたまっていくよ
+              {labels.empty}
             </p>
           ) : (
-            <section className="flex flex-col gap-5" aria-label="保存した句">
+            <section className="flex flex-col gap-5" aria-label="保存した作品">
               {haikuWorks.map((item) => (
                 <article
                   key={`${item.seriesId}:${item.stepId}`}
@@ -374,18 +462,26 @@ export default function HaikuPlay() {
                   style={{ background: "var(--surface)" }}
                 >
                   <div className="flex min-w-0 flex-1 items-center gap-5">
-                    <p
-                      className="font-serif text-foreground"
-                      style={{
-                        writingMode: "vertical-rl",
-                        whiteSpace: "nowrap",
-                        fontSize: "clamp(16px, 3vh, 24px)",
-                        letterSpacing: "0.14em",
-                        maxHeight: "42vh",
-                      }}
-                    >
-                      {item.work}
-                    </p>
+                    {item.work.includes("\n") ? (
+                      <PoemLines
+                        text={item.work}
+                        fontSize="clamp(13px, 2vh, 18px)"
+                        maxHeight="42vh"
+                      />
+                    ) : (
+                      <p
+                        className="font-serif text-foreground"
+                        style={{
+                          writingMode: "vertical-rl",
+                          whiteSpace: "nowrap",
+                          fontSize: "clamp(16px, 3vh, 24px)",
+                          letterSpacing: "0.14em",
+                          maxHeight: "42vh",
+                        }}
+                      >
+                        {item.work}
+                      </p>
+                    )}
                     <span className="text-muted" style={{ fontSize: "12px", lineHeight: 1.7 }}>
                       {item.seriesTitle}
                     </span>
@@ -436,7 +532,9 @@ export default function HaikuPlay() {
           <p className="text-muted text-center" style={{ fontSize: "16px", lineHeight: 2 }}>
             {total} の問いを歩きました。
             <br />
-            できた句を、だれかと読み合ってみよう（句会）。
+            {series.genreId === "shi"
+              ? "できた詩を、だれかと読み合ってみよう。"
+              : "できた句を、だれかと読み合ってみよう（句会）。"}
           </p>
 
           {/* あしあと（履歴の国語軸・G8）。正答率は出さない。
@@ -500,6 +598,9 @@ export default function HaikuPlay() {
             );
           })()}
 
+          {/* 出口「本物に会う」（自由詩系列①）。訳と外部リンクだけ——原文は載せない。 */}
+          {series.id === "kokugo_shi_5byo_01" && <MeetTheRealThing />}
+
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               type="button"
@@ -507,7 +608,7 @@ export default function HaikuPlay() {
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
               style={{ letterSpacing: "0.2em" }}
             >
-              わたしの句集
+              {labels.collection}
             </button>
             {/* アプリ内でリセット（画面遷移しないので basePath 非依存で確実）。 */}
             <button
@@ -564,7 +665,7 @@ export default function HaikuPlay() {
             className="shrink-0 text-accent hover:text-foreground transition-colors whitespace-nowrap"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
           >
-            わたしの句集
+            {labels.collection}
           </button>
         </div>
       </nav>
@@ -889,6 +990,57 @@ export default function HaikuPlay() {
           </section>
         )}
 
+        {/* 自由詩の複数行入力（作品欄のみ・よみがな欄なし・音数メーターなし）。
+            改行がそのまま行分け＝作品の一部なので、入力の改行を保って保存・表示する。 */}
+        {input?.type === "poemText" && (
+          <section className="flex flex-col gap-3" aria-label="詩をかく">
+            <label className="flex flex-col gap-1">
+              <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+                作品（漢字かなまじりでOK。行をかえたいところで改行してね）
+              </span>
+              <textarea
+                value={work}
+                onChange={(e) => {
+                  setWork(e.target.value);
+                  saveHaiku(series.id, step.id, e.target.value, "");
+                }}
+                rows={6}
+                placeholder={"いちぎょうずつ\nかいてみよう"}
+                className="rounded-md border px-3 py-2"
+                style={{
+                  borderColor: "var(--accent-soft)",
+                  background: "var(--background)",
+                  fontSize: "16px",
+                  lineHeight: 1.9,
+                  resize: "vertical",
+                }}
+              />
+            </label>
+            {work.trim() && (
+              <div className="flex flex-col gap-1">
+                <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+                  たてに読むと
+                </span>
+                <div className="flex justify-center rounded-lg border border-border px-4 py-4" style={{ background: "var(--surface)" }}>
+                  <PoemLines text={work} maxHeight="40vh" />
+                </div>
+              </div>
+            )}
+            <p className="text-muted" style={{ fontSize: "12px" }}>
+              ※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowCard(true)}
+              disabled={!work.trim()}
+              className="self-start px-6 py-2 rounded-lg border border-accent text-accent disabled:opacity-30"
+              style={{ fontSize: "14px", letterSpacing: "0.1em" }}
+            >
+              清書カードにする →
+            </button>
+          </section>
+        )}
+
         {/* 観点セルフチェック（creation step のみ・読み比べの後） */}
         {step.creationCheck && step.creationCheck.selfChecklist.length > 0 && (
           <section
@@ -1026,6 +1178,86 @@ export default function HaikuPlay() {
   );
 }
 
+/**
+ * 出口「本物に会う」（自由詩系列① Step10 の完了画面）。
+ *
+ * G4「アンソロジーを厚く」。比較教材ではなく読み物として、同じ詩人の長い詩を
+ * 訳で置く（「見たままから空想へ広げてもいい」という幅の見本）。
+ *
+ * 権利：外国作品は**自前訳のみ掲載・原文は外部リンク**（2026-08-09 先生裁定）。
+ * 原文はこのリポジトリのどこにも置かない。リンクは複製ではないので自由。
+ * 外部リンクは basePath の影響を受けない（絶対URL）。
+ */
+function MeetTheRealThing() {
+  const turtle = getMentorText("shi_turtle_wcw");
+  const links = [
+    {
+      href: "https://poets.org/poem/red-wheelbarrow",
+      label: "The Red Wheelbarrow（赤い手押し車）",
+      note: "16語だけの、いちばん有名な「見たままを置く」詩",
+    },
+    {
+      href: "https://poets.org/poem/just-say",
+      label: "This Is Just To Say（ちょっとひとこと）",
+      note: "冷蔵庫のすももを食べてしまった、という置き手紙の詩",
+    },
+    {
+      href: "https://www.aozora.gr.jp/cards/000136/card45048.html",
+      label: "山村暮鳥「燕」（青空文庫）",
+      note: "step4 で読んだ詩。日本語の本物はここで読める",
+    },
+  ];
+  return (
+    <section
+      className="w-full rounded-lg border border-border p-6 flex flex-col gap-5"
+      style={{ background: "var(--surface)" }}
+      aria-label="本物に会う"
+    >
+      <h2 className="text-foreground" style={{ fontSize: "13px", letterSpacing: "0.3em" }}>
+        本物に会う
+      </h2>
+      {turtle && (
+        <>
+          <p className="text-muted" style={{ fontSize: "14px", lineHeight: 1.9 }}>
+            step7 で読んだウィリアムズは、こんな詩も書いている（まごのために書いた「かめ」の詩）。
+            見たままから、どこまでも空想がのびていく——5秒の詩は、こんなふうに広げてもいいんだよ。
+          </p>
+          <div className="flex justify-center">
+            <PoemLines text={turtle.text} fontSize="clamp(13px, 2vh, 17px)" maxHeight="60vh" />
+          </div>
+          <span className="text-muted self-center" style={{ fontSize: "12px" }}>
+            — {turtle.author}
+          </span>
+        </>
+      )}
+      <div className="flex flex-col gap-2">
+        <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+          原文を読みにいく（そとのサイト）
+        </span>
+        {links.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:text-foreground transition-colors"
+            style={{ fontSize: "14px", lineHeight: 1.8 }}
+          >
+            {l.label}
+            <span className="text-muted" style={{ fontSize: "12px" }}>
+              {" "}
+              — {l.note} ↗
+            </span>
+          </a>
+        ))}
+        <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+          ※このページにあるのは日本語の訳だけ。英語の原文は、上のリンク先で読んでね。
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function HaikuCardOverlay({
   work,
   authorName,
@@ -1048,18 +1280,27 @@ function HaikuCardOverlay({
       role="dialog"
       aria-label="清書カード"
     >
-      <p
-        className="font-serif text-foreground text-center"
-        style={{
-          writingMode: "vertical-rl",
-          // 俳句は縦書き1行（1列）。折り返さず、高さは画面に収まるよう文字サイズを決める。
-          whiteSpace: "nowrap",
-          fontSize: "clamp(20px, 4vh, 44px)",
-          letterSpacing: "0.18em",
-        }}
-      >
-        {work}
-      </p>
+      {work.includes("\n") ? (
+        // 自由詩は行＝列。俳句の「縦書き1列 nowrap」原則の複数行版。
+        <PoemLines
+          text={work}
+          fontSize="clamp(16px, 3.2vh, 32px)"
+          maxHeight="66vh"
+        />
+      ) : (
+        <p
+          className="font-serif text-foreground text-center"
+          style={{
+            writingMode: "vertical-rl",
+            // 俳句は縦書き1行（1列）。折り返さず、高さは画面に収まるよう文字サイズを決める。
+            whiteSpace: "nowrap",
+            fontSize: "clamp(20px, 4vh, 44px)",
+            letterSpacing: "0.18em",
+          }}
+        >
+          {work}
+        </p>
+      )}
       <p className="text-muted" style={{ fontSize: "15px", letterSpacing: "0.1em" }}>
         {showName && authorName.trim() ? authorName : "よみ人しらず"}
       </p>
@@ -1153,12 +1394,12 @@ function loadHaiku(seriesId: string, stepId: string): { work: string; reading: s
   }
 }
 
-/** 全俳句系列の haikuText step から、自作句だけを集める。 */
+/** 全国語系列の産出 step（俳句・自由詩）から、自作の作品だけを集める。 */
 function collectHaikuAnthology(): HaikuAnthologyItem[] {
   const items: HaikuAnthologyItem[] = [];
-  for (const s of KOKUGO_HAIKU_SERIES_LIST) {
+  for (const s of KOKUGO_ALL_SERIES) {
     for (const st of s.steps) {
-      if (st.input?.type !== "haikuText") continue;
+      if (st.input?.type !== "haikuText" && st.input?.type !== "poemText") continue;
       const saved = loadHaiku(s.id, st.id);
       if (!saved?.work.trim()) continue;
       items.push({

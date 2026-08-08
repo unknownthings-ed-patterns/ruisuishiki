@@ -12,8 +12,10 @@
   1. L1/L2 の禁止パターン：技法名の先出し（季語・切れ字・オノマトペ・字余り・自由律・本歌取 等が
      L1/L2 のヒント本文に出る）／指示調（「〜と書きましょう」「〜を使いましょう」）。
      ※問題文（questionText）には技法名が出てよい。検査対象はヒント本文のみ（§12.4-4 偽陽性回避）。
-  2. L3 の代筆検出：creation step の L3 に「完成句形式（長いかな連続＝5-7-5 のモーラ列）」が
-     含まれていないか（moraCount 相当を Python 実装して機械検出）。
+  2. L3 の代筆検出：creation step の L3 に「完成作品の提示形（かぎかっこ引用の中の長いかな連続／
+     ／で行を区切ったかな列）」が含まれていないか（moraCount 相当を Python 実装して機械検出）。
+     mentorTexts.ts に登録済みの模範文（reading／十分に長い text 由来のかな列）はホワイトリストで
+     除外する——模範文側の行を引いて作り方を指さすのは適法だから（handoff §3-1・T-3）。
   3. データモデル検査：creation step に模範解答フィールド（answer/answerIndex/answerOrder）が無いか／
      観点セルフチェック（selfChecklist）が最初の読み比べ（comparison）step より前に出ていないか（G1）。
   4. オペレータ網羅：5オペレータ（同・逆・＋α・質的変化・複合）最低1 step（数学版の検査を流用）。
@@ -39,7 +41,13 @@ COMPARE = re.compile(
 QUESTION = re.compile(r"(だろう|どうな|かな|？|\?|どこ|どっち|何を|どんな|いくつ|見えて)")
 
 # L1/L2 に出してはいけない技法名（先出し禁止・G1/§8.2-1）
-GIHOU = re.compile(r"(季語|切れ字|切れ(?!い)|オノマトペ|字余り|字足らず|自由律|本歌取|押韻|体言止め)")
+# 後半は自由詩ジャンルの技法名（docs/自由詩背骨_kokugo.md の言い換え語彙表。
+# 改行→「切るところ」「行のかわり目」／感想語→「気持ちのことば」／描写→「見たままを置く」／
+# スローモーション→「ゆっくり見せる」／散文→「ふつうの文」）。
+GIHOU = re.compile(
+    r"(季語|切れ字|切れ(?!い)|オノマトペ|字余り|字足らず|自由律|本歌取|押韻|体言止め"
+    r"|行分け|改行|散文|自由詩|描写|感想語|スローモーション)"
+)
 # 指示調（代筆・お手本を押しつける言い方）
 SHIJI = re.compile(r"(と書きましょう|を使いましょう|と書こう|にしましょう|しなさい)")
 # 計算・数式（数学版流用。国語では基本出ないが念のため）
@@ -50,6 +58,8 @@ REQUIRED_OPS = {"same", "inverse", "plus_alpha", "qualitative", "composite"}
 OP_JP = {"same": "同", "inverse": "逆", "plus_alpha": "＋α", "qualitative": "質的変化", "composite": "複合"}
 
 KANA = re.compile(r"[ぁ-ゖァ-ヺー]+")
+# 作品の提示形（かぎかっこ引用）。代筆検出はこの中のかな連続だけを見る。
+QUOTED = re.compile(r"[「『]([^」』]*)[」』]")
 KANA_PHRASE = re.compile(r"[ぁ-ゖァ-ヺー][ぁ-ゖァ-ヺー\s　／/・、。,.，．「」『』（）()$0-9０-９\\-]*[ぁ-ゖァ-ヺー]")
 SMALL = set("ぁぃぅぇぉゃゅょゎゕゖァィゥェォャュョヮヵヶ")
 SERIES = re.compile(r"export\s+const\s+\w+\s*:\s*KokugoSeries\s*=\s*{")
@@ -144,11 +154,40 @@ def normalize_kana_text(text):
     return "".join(KANA.findall(unicodedata.normalize("NFKC", text)))
 
 
-def is_whitelisted_kana_phrase(phrase, mentor_readings):
+def is_whitelisted_kana_phrase(phrase, mentor_kana):
+    """L3 のかな連続が模範文（mentorTexts 登録済み）の引用なら代筆でない。
+
+    G10 が禁じるのは「学習者の作品を AI が書いてしまう」こと。模範文側の行を
+    引いて作り方を指さすのは適法（handoff §3-1・T-3 の reading ホワイトリスト）。
+    自由詩の模範文はかな書きの複数行なので、reading だけでなく text 由来の
+    かな列も照合対象にする（十分に長いものだけ＝短い断片で誤って免罪しない）。
+    """
     kana = normalize_kana_text(phrase)
     if not kana:
         return False
-    return any(kana in reading or reading in kana for reading in mentor_readings)
+    return any(kana in known or known in kana for known in mentor_kana)
+
+
+# text 由来のかな列をホワイトリストに載せる下限（代筆検出の閾値と同じ 12 拍）。
+# これ未満の断片（漢字まじり俳句から拾えるかな片など）で免罪しないための柵。
+TEXT_WHITELIST_MIN_MORA = 12
+
+
+def mentor_kana_pool(mentor_entries):
+    """代筆検出のホワイトリスト（reading 全件＋十分に長い text 由来のかな列）。"""
+    pool = []
+    for entry in mentor_entries.values():
+        reading = entry.get("reading")
+        if reading:
+            kana = normalize_kana_text(reading)
+            if kana:
+                pool.append(kana)
+        text = entry.get("text")
+        if text:
+            kana = normalize_kana_text(text)
+            if kana and count_mora(kana) >= TEXT_WHITELIST_MIN_MORA:
+                pool.append(kana)
+    return pool
 
 
 def load_mentor_entries():
@@ -165,6 +204,8 @@ def load_mentor_entries():
             "block": block,
             "text": extract_string_field(block, "text"),
             "reading": extract_string_field(block, "reading"),
+            # 韻文の器の種別。省略＝俳句（音数検算あり）。"free_verse"＝自由詩。
+            "form": extract_string_field(block, "form"),
         }
     return entries
 
@@ -180,11 +221,7 @@ def audit_series_file(path, mentor_entries):
         "mentor_refs": 0,
         "compare_refs": 0,
     }
-    mentor_readings = [
-        normalize_kana_text(v["reading"])
-        for v in mentor_entries.values()
-        if v.get("reading")
-    ]
+    mentor_kana = mentor_kana_pool(mentor_entries)
 
     for series_id, series_block in split_series(src):
         stats["series"] += 1
@@ -235,17 +272,25 @@ def audit_series_file(path, mentor_entries):
                 if re.search(r'\b(answer|answerIndex|answerOrder)\s*:', block):
                     problems.append(f"❌ {label}: creation step に模範解答フィールドが存在（代筆禁止違反）")
                 # L3 の代筆検出（長いかな連続／区切り付き完成句形式）
+                #
+                # 自由詩向けの再較正（docs/自由詩背骨_kokugo.md 技術ゲート3）：
+                # 「かな連続12拍以上」を L3 本文の全域に当てると、ひらがな主体で書く
+                # 低学年向けの地の文（説明・呼びかけ）に必ず誤爆する。代筆＝「完成した
+                # 作品を提示すること」なので、作品の提示形（かぎかっこで引用する／
+                # ／で行を区切って並べる）に絞って検出する。地の文に紛れた代筆は
+                # G10 の目視検収で守る（handoff §3 の人力リスト）。
                 l3 = by_layer.get(3, "")
-                for run in KANA.findall(l3):
-                    if count_mora(run) >= 12 and not is_whitelisted_kana_phrase(run, mentor_readings):
-                        problems.append(
-                            f"❌ {label}: L3 に完成句らしい長いかな連続（{run}＝{count_mora(run)}音）＝代筆の疑い"
-                        )
+                for quoted in QUOTED.findall(l3):
+                    for run in KANA.findall(quoted):
+                        if count_mora(run) >= 12 and not is_whitelisted_kana_phrase(run, mentor_kana):
+                            problems.append(
+                                f"❌ {label}: L3 に完成句らしい長いかな連続（{run}＝{count_mora(run)}音）＝代筆の疑い"
+                            )
                 for phrase in KANA_PHRASE.findall(l3):
                     if "／" not in phrase and "/" not in phrase:
                         continue
                     mora = count_mora(phrase)
-                    if mora >= 12 and not is_whitelisted_kana_phrase(phrase, mentor_readings):
+                    if mora >= 12 and not is_whitelisted_kana_phrase(phrase, mentor_kana):
                         problems.append(
                             f"❌ {label}: L3 に完成句らしい長いかな連続（{phrase}＝{mora}音）＝代筆の疑い"
                         )
@@ -294,10 +339,15 @@ def audit_mentor(used_mentor_ids):
             problems.append(f"❌ {mid}: sourceNote が無い（G12）")
         if not re.search(r'rights:\s*"(PD|original|licensed)"', block):
             problems.append(f"❌ {mid}: rights（PD/original/licensed）が無い（G12）")
+        # 自由詩（form: "free_verse"）は音数の器を持たない＝moraCount 非適用
+        # （docs/自由詩背骨_kokugo.md 技術ゲート1）。reading は読みの補助として
+        # 任意で持てるが、音数検算の対象からは外す。
+        free_verse = entry.get("form") == "free_verse"
         reading = entry.get("reading")
         if not reading:
-            problems.append(f"❌ {mid}: reading が無い（音数検算不可）")
-        else:
+            if not free_verse:
+                problems.append(f"❌ {mid}: reading が無い（音数検算不可）")
+        elif not free_verse:
             mora = count_mora(reading)
             reading_mora[mid] = mora
             if mora <= 0:
@@ -390,7 +440,7 @@ export const BROKEN_SERIES: KokugoSeries = {
       hints: [
         { layer: 1, text: "季語を使いましょう" },
         { layer: 2, text: "季語を使いましょう" },
-        { layer: 3, text: "あさひさす／まどべにひかる／ゆめのあと" },
+        { layer: 3, text: "「きょうもまたあさのひかりがまどにさした」あさひさす／まどべにひかる／ゆめのあと" },
       ],
       variationFromPrevious: "same",
       compareWithStepId: "missing_step",

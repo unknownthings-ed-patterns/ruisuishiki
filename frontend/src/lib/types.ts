@@ -168,7 +168,13 @@ export type KokugoInput =
   | { type: "choice"; options: string[]; answerIndex: number } // 決定的判定（音数・季語識別）
   | { type: "reorder"; segments: string[]; answerOrder: number[] } // 並べ替え（語順の比較）
   | { type: "fillIn"; template: string; slotConstraints: SlotConstraint[] } // 本歌取（穴埋め産出）
-  | { type: "haikuText" }; // 自由律の1行入力＋よみがな欄（§6.2）
+  | { type: "haikuText" } // 自由律の1行入力＋よみがな欄（§6.2）
+  /**
+   * 自由詩の複数行入力（docs/自由詩背骨_kokugo.md 技術ゲート1・加法的追加）。
+   * 作品欄のみ（よみがな欄なし）。行分けを保つのが本体なので改行をそのまま保存し、
+   * 音数の器を持たないジャンルなので moraCount は適用しない（メーターを出さない）。
+   */
+  | { type: "poemText" };
 
 /**
  * 産出 step の充足チェック（第3弾§5.3）。
@@ -194,10 +200,17 @@ export type CreationCheck = {
  */
 export type MentorText = {
   id: string;
-  /** 句の本文（漢字かな交じり可）。 */
+  /** 句の本文（漢字かな交じり可）。自由詩は改行 `\n` で行を保つ。 */
   text: string;
   /** よみがな（音数表示用。moraCount の入力）。 */
   reading?: string;
+  /**
+   * 韻文の器の種別。省略＝"haiku"（既存の模範句と完全後方互換）。
+   * "free_verse"＝自由詩。音数の器を持たないので moraCount 非適用——
+   * 表示は音数メーターなしの行分け（縦書きで行＝列）、audit の音数検算からも外れる
+   * （docs/自由詩背骨_kokugo.md 技術ゲート1・2）。
+   */
+  form?: "haiku" | "free_verse";
   author: string;
   /** 出典（memory ruisuishiki-citation-format の書式）。 */
   sourceNote: string;

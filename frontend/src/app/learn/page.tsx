@@ -340,6 +340,35 @@ export default function LearnIndex() {
           </Link>
         </section>
 
+        {/* 国語（自由詩）ユニット。俳句と同じ学習者ビュー（/learn/haiku）を歩く。 */}
+        <section className="flex flex-col gap-4">
+          <h2
+            className="text-foreground"
+            style={{ fontSize: "13px", letterSpacing: "0.3em" }}
+          >
+            国語（詩）
+          </h2>
+          <p className="text-muted -mt-2" style={{ fontSize: "13px", lineHeight: 1.8 }}>
+            俳句の五・七・五という「器」を外すと、こんどは自分で行を切ることになります。
+          </p>
+          <Link
+            href="/learn/haiku/?seriesId=kokugo_shi_5byo_01"
+            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
+            style={{ background: "var(--surface)" }}
+          >
+            <span
+              className="text-foreground font-serif"
+              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+            >
+              1. 5秒の詩（見たままを置く）
+            </span>
+            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
+              気持ちのことばを消して、見えたものを見えた順に置くと、たった5秒がゆっくり・濃く見えてくる。
+              読みくらべ → 行のかわり目の発見 → 自分の5秒まで、全 10 問。
+            </span>
+          </Link>
+        </section>
+
         {/* 静的カタログ：subject（学年領域）でグループ化、topicGroup で折りたたみ可能 */}
         {!hasHydrated ? (
           <p className="text-muted" style={{ fontSize: "13px" }}>

@@ -41,8 +41,39 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
   ],
 };
 
+/**
+ * 自由詩の観点リスト。俳句と同じく**薄く生まれる**（G1）。
+ *
+ * 3項目とも系列①「5秒の詩」の**発見の核**なので、initial（最初から見える）には
+ * 置かず revealedInSeries でこの系列から解禁する。系列①の中では、読み比べ
+ * （step1〜step7）を歩いたあとの観点抽出 step（step8・pickViewpoints）で
+ * はじめて目に入る＝発見が先（俳句の「季語」を系列②で解禁するのと同じ手）。
+ */
+export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
+  genreId: "shi",
+  version: 1,
+  items: [
+    {
+      text: "5秒のことを書いている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_5byo_01",
+    },
+    {
+      text: "気持ちのことばを使わずに、気持ちまで伝えている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_5byo_01",
+    },
+    {
+      text: "行のかわり目で止まると、ゆっくり見える",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_5byo_01",
+    },
+  ],
+};
+
 const LISTS: Record<string, ViewpointList> = {
   haiku: HAIKU_VIEWPOINT_LIST_V1,
+  shi: SHI_VIEWPOINT_LIST_V1,
 };
 
 /** ジャンルの現在の観点リストを返す（未登録は undefined）。 */

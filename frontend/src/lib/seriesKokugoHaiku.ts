@@ -990,7 +990,14 @@ export const KOKUGO_HAIKU_SERIES_LIST: KokugoSeries[] = [
   KOKUGO_HAIKU_KIRE_SERIES,
 ];
 
-/** id から国語系列を引く（未登録は undefined）。 */
+/**
+ * id から**俳句**系列を引く（未登録は undefined）。
+ *
+ * ※自由詩など他ジャンルは引けない。国語ユニット全体（俳句＋自由詩）の解決は
+ * 学習者ビュー `app/learn/haiku/page.tsx` の `resolveKokugoSeries` が正
+ * （KOKUGO_HAIKU_SERIES_LIST ＋ KOKUGO_SHI_SERIES_LIST を合成している）。
+ * ジャンルが3つ目に増えるときは、この合成をライブラリ側へ引き上げること。
+ */
 export function getKokugoSeries(id: string): KokugoSeries | undefined {
   return KOKUGO_HAIKU_SERIES_LIST.find((s) => s.id === id);
 }
