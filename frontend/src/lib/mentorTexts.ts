@@ -374,7 +374,7 @@ export const SHI_MENTOR_TEXTS: MentorText[] = [
   {
     id: "shi_jersey_wcw",
     title: "ジャージーの歌（Jersey Lyric）",
-    text: "ふゆの 木々の ながめ\nその てまえに\n一本の 木\n\nいちばん てまえ\nそこには\nふったばかりの\n\nゆきの わきに\nまきが 6本 ころがって\n火を まっている",
+    text: "ふゆの 木々の ながめ\nその てまえに\n一本の 木\n\nいちばん てまえ\nそこには\nふったばかりの\n\nゆきの わきに\nまきが 六本 ころがって\n火を まっている",
     author: "ウィリアム・カルロス・ウィリアムズ（訳: ruisuishiki）",
     sourceNote:
       "William Carlos Williams「Jersey Lyric（ジャージーの歌）」。Pictures from Brueghel and Other Poems (New Directions, 1962) の新作セクション（1958–62年執筆分）所収。著者1963年没・初出1952年以降＝戦時加算なし・日本では死後50年が2013年末に満了・2018年の延長でも復活せず＝日本ではパブリックドメイン。訳は原文から自前（既存訳は参照していない）。原文は本リポジトリに置かず外部リンクのみ（2026-08-09 先生裁定）。初出年の一次確認済み（2026-08-09）：本書1963年英国版（MacGibbon & Kee・Distributed Proofreaders Canada 電子化 FadedPage #20191144）の著作権ページで、The Desert Music=©1949–1954・Journey to Love=©1954–1955 と明記され、巻全体©年の残余 1956/1957/1959/1960/1961/1962 が新作セクションの初出年に対応。本詩は目次・本文位置から新作セクション所収を確認→初出は早くても1956年＝1952-04-28以降が確定。",
