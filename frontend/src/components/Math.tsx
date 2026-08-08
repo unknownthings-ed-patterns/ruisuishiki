@@ -13975,6 +13975,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_PERIOD_OVERLAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntPeriodOverlap />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_PERIOD_TRANSLATE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntPeriodTranslate />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -20344,6 +20358,158 @@ export function IntEuclidBack() {
 
       <text x="200" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
         いちばん下でできた 1 を上へ戻していくと、最後は何の何倍どうしの和になる？
+      </text>
+    </svg>
+  );
+}
+
+// マーカー対応：<<INT_PERIOD_OVERLAP>> → IntPeriodOverlap（step1）
+//               <<INT_PERIOD_TRANSLATE>> → IntPeriodTranslate（step3・質的変化）
+// どちらも新規。系列7 の <<INT_LATTICE_LINE>> は流用しない（並列委譲の衝突回避）。
+
+/**
+ * INT_PERIOD_OVERLAP（整数 系8 step1・辞書 周期）：
+ * 「◯で割ると△余る数」の並びを 2 本の数直線に印し、はばの違う 2 つの並びが
+ * どこかで出会うことだけを示す。最小の解・周期の値は書かない
+ * （figure-does-not-reveal-answer）。
+ */
+export function IntPeriodOverlap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const yA = 66;
+  const yB = 124;
+  const x0 = 34;
+  const gapA = 40;
+  const gapB = 58;
+  const marksA = [0, 1, 2, 3, 4, 5, 6, 7];
+  const marksB = [0, 1, 2, 3, 4];
+  return (
+    <svg
+      viewBox="0 0 400 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="2 本の数直線。上の線には一定のはばで印が並び、下の線には別のはばで印が並ぶ。右方向に伸びる矢印の先にはてなマークがあり、2 つの印が初めて重なる場所と、その後の重なりの間かくを問う。具体の数値は書かない"
+    >
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        それぞれの条件を満たす数を、数直線に印してみると
+      </text>
+
+      {/* 上の並び */}
+      <text x="12" y={yA - 18} fontSize="10.5" fill={muted}>
+        一方の条件を満たす数（同じはばで並ぶ）
+      </text>
+      <path d={`M ${x0 - 14} ${yA} L 372 ${yA}`} fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 372 ${yA} l -8 -4 l 0 8 z`} fill={stroke} />
+      {marksA.map((k) => (
+        <circle key={`a${k}`} cx={x0 + k * gapA} cy={yA} r="5" fill={accent} />
+      ))}
+      <path
+        d={`M ${x0} ${yA - 16} L ${x0 + gapA} ${yA - 16}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+      />
+      <text x={x0 + gapA / 2} y={yA - 21} fontSize="10" fill={muted} textAnchor="middle">
+        はば
+      </text>
+
+      {/* 下の並び */}
+      <text x="12" y={yB - 18} fontSize="10.5" fill={muted}>
+        もう一方の条件を満たす数（別のはばで並ぶ）
+      </text>
+      <path d={`M ${x0 - 14} ${yB} L 372 ${yB}`} fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 372 ${yB} l -8 -4 l 0 8 z`} fill={stroke} />
+      {marksB.map((k) => (
+        <circle key={`b${k}`} cx={x0 + 12 + k * gapB} cy={yB} r="5" fill={stroke} />
+      ))}
+      <path
+        d={`M ${x0 + 12} ${yB + 16} L ${x0 + 12 + gapB} ${yB + 16}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+      />
+      <text x={x0 + 12 + gapB / 2} y={yB + 27} fontSize="10" fill={muted} textAnchor="middle">
+        別のはば
+      </text>
+
+      {/* 重なりを問う縦の帯 */}
+      <path d="M 352 48 L 352 142" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+      <text x="352" y="42" fontSize="12" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      <text x="200" y="178" fontSize="11.5" fill={accent} textAnchor="middle">
+        2 つの印が初めて重なるのはどこ？ そのあとの重なりはどんな間かく？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_PERIOD_TRANSLATE（整数 系8 step3・質的変化）：
+ * 重なりが遠すぎて書き出せないとき、「2 つの言い方が同じ数を指している」という
+ * 関係を 1 つの式に翻訳する、という道の存在だけを示す図。
+ * 具体の割る数・余り・解の値は書かない。
+ */
+export function IntPeriodTranslate() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillBox = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 400 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="上半分は 2 本の数直線で、印が遠くまで並び、重なりの場所は画面の外にあってはてなマークで示される。下半分は「割る数かける何個ぶんたす余り」という 2 つの言い方を等号で結んだ枠。具体の数値は書かない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        重なりが遠すぎて、書き出しでは届かないとき
+      </text>
+
+      {/* 2 本の並び（重なりは画面の外） */}
+      <path d="M 20 54 L 330 54" fill="none" stroke={stroke} strokeWidth="1.2" />
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((k) => (
+        <circle key={`p${k}`} cx={30 + k * 38} cy="54" r="4.4" fill={accent} />
+      ))}
+      <text x="340" y="58" fontSize="12" fill={muted}>
+        …
+      </text>
+
+      <path d="M 20 88 L 330 88" fill="none" stroke={stroke} strokeWidth="1.2" />
+      {[0, 1, 2, 3, 4, 5].map((k) => (
+        <circle key={`q${k}`} cx="38" cy="88" r="4.4" fill={stroke} transform={`translate(${k * 52} 0)`} />
+      ))}
+      <text x="340" y="92" fontSize="12" fill={muted}>
+        …
+      </text>
+
+      <path d="M 356 46 L 372 71 L 356 96" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="382" y="76" fontSize="13" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      {/* 翻訳の矢印 */}
+      <path d="M 200 106 L 200 130" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 200 134 l -4 -8 l 8 0 z" fill={muted} />
+      <text x="212" y="126" fontSize="10.5" fill={muted}>
+        探すのをやめて、言いかえる
+      </text>
+
+      {/* 翻訳先の枠 */}
+      <rect x="34" y="142" width="332" height="46" rx="8" fill={fillBox} stroke={stroke} strokeWidth="1.2" />
+      <text x="200" y="163" fontSize="11.5" fill={stroke} textAnchor="middle">
+        （割る数）×（何個ぶん）＋（余り）
+      </text>
+      <text x="200" y="181" fontSize="11.5" fill={stroke} textAnchor="middle">
+        ＝（もう一方の割る数）×（何個ぶん）＋（もう一方の余り）
+      </text>
+
+      <text x="200" y="210" fontSize="11.5" fill={accent} textAnchor="middle">
+        遠くの重なりを、1 つの式に言いかえられる？
       </text>
     </svg>
   );

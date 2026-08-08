@@ -88,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_CRT_SERIES,
   INT_LINEAR_DIO_SERIES,
   INT_EUCLID_SERIES,
   INT_REMAINDER_SERIES,
@@ -941,6 +942,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "一次不定方程式（解の存在も全体も、2 つの係数の最大公約数が決める）— 格子点を探す、右辺を倍にする、互除法を逆にたどって特殊解を作る、跳ぶ幅は相手側の係数、解が 1 つもない直線、範囲つきの個数と文章題まで",
+  },
+  {
+    series: INT_CRT_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "余りの条件から数を決める（2 つの箱の重なりが、また 1 つの箱になる）— 書き出しで重なりを探す、遠すぎるときは不定方程式へ翻訳、間かくは最小公倍数、条件が 3 本、重なりが存在しない場合、余りが揃った特別な近道まで",
   },
   {
     series: INT_BASE_N_SERIES,
