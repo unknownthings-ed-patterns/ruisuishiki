@@ -720,8 +720,10 @@ export default function HaikuPlay() {
         </section>
 
         {/* 模範句（読み比べの素材）。読み比べ(comparison)ではここが主役。
-            作る(creation)では上部に出さず、ヒント横に「くらべる句」として添える。 */}
-        {step.kind === "comparison" && step.mentorTextRefs && step.mentorTextRefs.length > 0 && (
+            作る(creation)では上部に出さず、ヒント横に「くらべる句」として添える。
+            例外＝showMentorUpfront（本歌取など「読んでから型を借りる」step は元の作品が
+            最初から見えている必要がある）。 */}
+        {(step.kind === "comparison" || step.showMentorUpfront) && step.mentorTextRefs && step.mentorTextRefs.length > 0 && (
           <section
             className="grid gap-4"
             style={{ gridTemplateColumns: `repeat(${Math.min(step.mentorTextRefs.length, 2)}, minmax(0, 1fr))` }}

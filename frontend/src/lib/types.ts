@@ -262,6 +262,13 @@ export type KokugoStep = {
    * 選択は「発見の記録」であり採点ではない。
    */
   pickViewpoints?: boolean;
+  /**
+   * creation step でも模範文カードを問題文の下（入力の上）に常時表示する。
+   * 通常の creation は「ヒントを開いたら横に添える」だが、本歌取のように
+   * 「読んでから型を借りる」step は元の作品が最初から見えている必要がある
+   * （俳句の本歌取は穴埋めに本歌が埋まっていたので不要だった。自由詩 Step7 が初出）。
+   */
+  showMentorUpfront?: boolean;
 };
 
 /** 国語系列（第3弾§5・KokugoSeries）。 */

@@ -228,6 +228,9 @@ export const KOKUGO_SHI_5BYO_SERIES: KokugoSeries = {
       questionText:
         "アメリカの詩人ウィリアムズの[詩]です。声に出して読んでから、この「かたち」を借りて、あなたの5秒を書いてみよう（[本歌取]）。においでも、音でも、光でもいい。行のかわり目は、あなたが決めてね。",
       mentorTextRefs: ["shi_iris_wcw"],
+      // 本歌取＝「読んでから型を借りる」ので、本歌は最初から見えている必要がある
+      // （通常の creation はヒント横添えだが、この step は白紙の詩入力で本歌が他に出ない）。
+      showMentorUpfront: true,
       input: { type: "poemText" },
       creationCheck: {
         meterTarget: [],
