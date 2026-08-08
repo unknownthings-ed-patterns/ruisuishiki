@@ -3495,7 +3495,7 @@ $$3086 = 3 \\times 1000 + 0 \\times 100 + 8 \\times 10 + 6 \\times 1$$
     relatedSeriesId: "algebra1_int_base_n_01",
   },
 
-素数: {
+  素数: {
     reading: "そすう",
     short:
       "$1$ と自分自身しか正の約数を持たない $2$ 以上の整数。それ以上分けられない、整数の原子。",
