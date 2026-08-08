@@ -88,6 +88,7 @@ import {
   GEOMETRY_SERIES_LIST,
 } from "./seriesGeometry";
 import {
+  INT_REMAINDER_SERIES,
   INT_GCD_LCM_SERIES,
   INT_FACTORIZATION_SERIES,
   INT_PRIME_SERIES,
@@ -914,6 +915,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "整数の性質",
     shortDescription:
       "最大公約数・最小公倍数と互いに素（1 枚の在庫表を、少ないほうで読むか多いほうで読むか）— 重なりが最大公約数・合わせた全体が最小公倍数、積との関係、重なりから逆に絞る、互いに素、タイルの敷きつめまで",
+  },
+  {
+    series: INT_REMAINDER_SERIES,
+    subject: "secondary",
+    subjectLabel: "高校数学Ⅰ・A",
+    topicGroup: "整数の性質",
+    shortDescription:
+      "割り算の基本式と、余りによる分類（無限の整数が有限個の箱に入る）— 商と余りが 1 通りに決まる約束、負の数の余り、余りから割る数を逆算、余りで場合分けする証明、対偶との合流、大きな累乗の余りと周期まで",
   },
   {
     series: INT_BASE_N_SERIES,

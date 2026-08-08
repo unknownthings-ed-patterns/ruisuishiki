@@ -13926,6 +13926,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INT_REMAINDER_RULER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntRemainderRuler />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_REMAINDER_NEG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntRemainderNeg />
+            </div>
+          );
+        }
+        if (trimmed === "<<INT_REMAINDER_BOXES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IntRemainderBoxes />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -19813,6 +19834,208 @@ export function IntMinmaxSum() {
 
       <text x="200" y="210" fontSize="11.5" fill={accent} textAnchor="middle">
         上の 2 本の合計と、下の 2 本の合計は、いつも同じ長さ？
+      </text>
+    </svg>
+  );
+}
+
+// Math.tsx の末尾にそのまま貼れる形。ディスパッチは
+//   <<INT_REMAINDER_RULER>> → <IntRemainderRuler />
+//   <<INT_REMAINDER_NEG>>   → <IntRemainderNeg />
+//   <<INT_REMAINDER_BOXES>> → <IntRemainderBoxes />
+// を既存の分岐と同じ形で追加（統合担当が行う）。
+
+/**
+ * INT_REMAINDER_RULER（整数 系5 step1・辞書 商と余り）：
+ * 数直線を割る数 b ごとに区切り、a が目もりとどの目もりの間にいるかを示す。
+ * 目もりは b, 2b, 3b と文字のまま置き、はしたの矢印には r とだけラベルする。
+ * 具体の数・商・余りの値は書かない（figure-does-not-reveal-answer）。
+ */
+export function IntRemainderRuler() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 92;
+  const x0 = 36;
+  const gap = 72;
+  const marks = ["0", "b", "2b", "3b", "4b"];
+  const ax = x0 + 3 * gap + 40; // 3b と 4b の間に a
+  return (
+    <svg
+      viewBox="0 0 380 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="数直線に 0・b・2b・3b・4b の目もりを等間隔で打ち、3b と 4b の間に点 a を置いた図。3b から a までのへだたりに r とだけラベルを付け、はしたがどこまで大きくなれるかを問う。商や余りの具体の値は書かない"
+    >
+      <text x="190" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        数直線を、割る数 b ごとに区切ってみると
+      </text>
+
+      {/* 数直線 */}
+      <path d={`M 20 ${y} L 360 ${y}`} fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d={`M 360 ${y} l -8 -4 l 0 8 z`} fill={stroke} />
+
+      {/* 目もり */}
+      {marks.map((m, k) => (
+        <g key={m}>
+          <path
+            d={`M ${x0 + k * gap} ${y - 8} L ${x0 + k * gap} ${y + 8}`}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text x={x0 + k * gap} y={y + 26} fontSize="11.5" fill={muted} textAnchor="middle">
+            {m}
+          </text>
+        </g>
+      ))}
+
+      {/* a の位置 */}
+      <circle cx={ax} cy={y} r="5.5" fill={accent} />
+      <text x={ax} y={y - 18} fontSize="13" fill={accent} textAnchor="middle">
+        a
+      </text>
+
+      {/* はしたの矢印 */}
+      <path d={`M ${x0 + 3 * gap} ${y + 44} L ${ax} ${y + 44}`} fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d={`M ${x0 + 3 * gap} ${y + 40} L ${x0 + 3 * gap} ${y + 48}`} stroke={accent} strokeWidth="1.2" />
+      <path d={`M ${ax} ${y + 40} L ${ax} ${y + 48}`} stroke={accent} strokeWidth="1.2" />
+      <text x={(x0 + 3 * gap + ax) / 2} y={y + 62} fontSize="11.5" fill={accent} textAnchor="middle">
+        r
+      </text>
+
+      <text x="190" y="166" fontSize="11.5" fill={accent} textAnchor="middle">
+        このはした r は、どこまで大きくなれる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_REMAINDER_NEG（整数 系5 step3・辞書 商と余り）：
+ * 0 より左でも目もりが同じはばで続き、はしたは「左の目もりから右向き」に
+ * 測ることを示す。商・余りの値は書かない。
+ */
+export function IntRemainderNeg() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 92;
+  const x0 = 40;
+  const gap = 62;
+  const marks = ["−3b", "−2b", "−b", "0", "b"];
+  const ax = x0 + 1 * gap + 34; // −2b と −b の間に a
+  return (
+    <svg
+      viewBox="0 0 380 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="0 をはさんで左右に同じはばの目もり（マイナス 3b、マイナス 2b、マイナス b、0、b）を打った数直線の図。0 より左にある点 a と、その左どなりの目もりから a までのへだたりを示し、はしたをどちら向きに測るかを問う。商や余りの値は書かない"
+    >
+      <text x="190" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        目もりは、0 より左にも同じはばで続いている
+      </text>
+
+      <path d="M 20 92 L 360 92" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d="M 360 92 l -8 -4 l 0 8 z" fill={stroke} />
+
+      {marks.map((m, k) => (
+        <g key={m}>
+          <path
+            d={`M ${x0 + k * gap} ${y - 8} L ${x0 + k * gap} ${y + 8}`}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text x={x0 + k * gap} y={y + 26} fontSize="11.5" fill={muted} textAnchor="middle">
+            {m}
+          </text>
+        </g>
+      ))}
+
+      {/* a（0 より左） */}
+      <circle cx={ax} cy={y} r="5.5" fill={accent} />
+      <text x={ax} y={y - 18} fontSize="13" fill={accent} textAnchor="middle">
+        a
+      </text>
+
+      {/* 左どなりの目もりから a へ、右向きの矢印 */}
+      <path d={`M ${x0 + gap} ${y + 46} L ${ax - 6} ${y + 46}`} fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d={`M ${ax} ${y + 46} l -7 -4 l 0 8 z`} fill={accent} />
+      <path d={`M ${x0 + gap} ${y + 42} L ${x0 + gap} ${y + 50}`} stroke={accent} strokeWidth="1.2" />
+      <text x={(x0 + gap + ax) / 2} y={y + 64} fontSize="11.5" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      <text x="190" y="166" fontSize="11.5" fill={accent} textAnchor="middle">
+        0 より左でも、はしたはどちらの目もりから、どちら向きに測る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INT_REMAINDER_BOXES（整数 系5 step6・辞書 剰余）：
+ * 整数全体が「3 で割った余り」で 3 つの箱に分かれる図。
+ * 箱の中は 3k・3k+1・3k+2 の形だけを書き、
+ * 2 乗したときの行き先（＝答え）は矢印の先の「？」に留める。
+ */
+export function IntRemainderBoxes() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fills = [
+    "color-mix(in oklch, var(--accent) 18%, transparent)",
+    "color-mix(in oklch, var(--accent) 11%, transparent)",
+    "color-mix(in oklch, var(--accent) 5%, transparent)",
+  ];
+  const boxes = [
+    { x: 22, label: "3k", note: "余り 0" },
+    { x: 138, label: "3k + 1", note: "余り 1" },
+    { x: 254, label: "3k + 2", note: "余り 2" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 380 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="整数全体を 3 で割った余りで 3 つの箱（3k、3k+1、3k+2）に分けた図。それぞれの箱から下向きの矢印が出て、行き先はクエスチョンマークのまま。2 乗したとき各箱がどの余りへ行くかは書かない"
+    >
+      <text x="190" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        整数はすべて、3 で割った余りでこの 3 つの箱のどれかに入る
+      </text>
+
+      {boxes.map((b, k) => (
+        <g key={b.label}>
+          <rect
+            x={b.x}
+            y="46"
+            width="104"
+            height="56"
+            rx="8"
+            fill={fills[k]}
+            stroke={stroke}
+            strokeWidth="1.3"
+          />
+          <text x={b.x + 52} y="72" fontSize="17" fill={stroke} textAnchor="middle">
+            {b.label}
+          </text>
+          <text x={b.x + 52} y="92" fontSize="10.5" fill={muted} textAnchor="middle">
+            {b.note}
+          </text>
+
+          {/* 行き先は ？ のまま */}
+          <path d={`M ${b.x + 52} 108 L ${b.x + 52} 132`} stroke={accent} strokeWidth="1.2" />
+          <path d={`M ${b.x + 52} 138 l -4 -7 l 8 0 z`} fill={accent} />
+          <text x={b.x + 52} y="156" fontSize="14" fill={accent} textAnchor="middle">
+            ？
+          </text>
+        </g>
+      ))}
+
+      <text x="190" y="184" fontSize="11.5" fill={accent} textAnchor="middle">
+        自分自身とかけ合わせると、3 つの箱はそれぞれどこへ行く？
       </text>
     </svg>
   );
