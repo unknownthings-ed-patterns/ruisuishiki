@@ -128,3 +128,19 @@
 - 表示方向（縦書きで実装済み・実walkで再判断）
 - 訳2篇・自作ミニマルペアの磨き（先生が歩きながら）
 - 短歌（T-9）との着手順は先生の判断（audit glob 化は短歌にもそのまま効く）
+
+---
+
+## 増築：作家の風景（2026-08-09・先生発案・名称は先生裁定）
+
+数学版 **derivation ＝「公式の景色」の国語版**。系列を歩ききった完了画面で、「この装置を使った人はだれで、なぜそう書いたか」を読む（歩き終えてから開く＝発見を先に渡す順・G1 を崩さない）。骨格は数学版を mirror：**見出し → 中心の問いの再掲 → 本文 → もっと読む → 出典**。
+
+**フィールド駆動（加法追加）**：`KokugoSeries` に `authorLandscape?: string`（本文。空行で段落・MathBody で描画・`[用語]` リンク可）と `furtherReadingRefs?: string[]`（「もっと読む」に並べる MentorText id 列）を足した。完了画面は **`series.authorLandscape` があるときだけ**このセクションを出す（系列 id のハードコードを廃止。俳句3系列は不変）。`MentorText` には `title?: string`（作品の題）を加法追加——読み物として出す場面でだけ表示し、比較教材として並べる場面では出さない（題が観点の先出しになりうる・G1）。`audit_hints_kokugo.py` は `furtherReadingRefs` も参照整合（未登録 id を弾く）＋使用済み判定の対象にした。
+
+**「もっと読む」の権利プール（Pictures from Brueghel and Other Poems, 1962）**：
+
+- **新作セクション全体**＝初出 1956 年以降が確定（1963年英国版著作権ページで一次確認）→ **日本 PD**。プールとして使ってよい。
+- **Journey to Love セクション**＝ ©1954–55 のみ → 1952-04-28 以降＝戦時加算なし → **日本 PD**。
+- **The Desert Music セクション**＝ ©1949/1951 を含む（例：巻頭 "The Descent" の初出は Paterson 第2巻 1948）→ **セクション単位では使えない**。使う場合は **1篇ごとに初出確認**してから。
+
+実装（2026-08-09）：本文はウィリアムズの詩法（"no ideas but in things"）と町医者としての日常を1画面ぶんで置き、「もっと読む」に自前訳4篇（The Turtle／Jersey Lyric／The Loving Dexterity／Heel & Toe to the End）を縦書きカードで並べた。原文は掲載せず外部リンクのみ（権利規律4）。出典は memory `ruisuishiki-citation-format` の3点セット書式。

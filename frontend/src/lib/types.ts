@@ -200,6 +200,12 @@ export type CreationCheck = {
  */
 export type MentorText = {
   id: string;
+  /**
+   * 作品の題（あれば）。省略＝無題（俳句は原則こちら）。
+   * 「もっと読む」のように**作品として読ませる**場面でだけ表示する
+   * （比較教材として並べるときは題を出さない＝観点の先出しになりうるため・G1）。
+   */
+  title?: string;
   /** 句の本文（漢字かな交じり可）。自由詩は改行 `\n` で行を保つ。 */
   text: string;
   /** よみがな（音数表示用。moraCount の入力）。 */
@@ -282,6 +288,21 @@ export type KokugoSeries = {
   steps: KokugoStep[];
   /** 中心の問い（胚細胞モデル。全 step 上部に常駐帯で表示）。 */
   drivingQuestion?: string;
+  /**
+   * 系列を歩ききった「完了画面」に表示する**作家の風景**（数学版 derivation
+   * ＝「公式の景色」の国語版。名称は先生裁定 2026-08-09）。
+   * 「答のみで自得」したあとに「この装置を使った人はだれで、なぜそう書いたか」を読む順。
+   *
+   * 形式：プレーンテキスト＋$...$（インライン数式）＋`[用語]`（辞書リンク）。
+   * 段落は空行で区切る（MathBody で描画する＝authored 文字列の直書きをしない）。
+   */
+  authorLandscape?: string;
+  /**
+   * 「作家の風景」の末尾に並べる読み物（MentorText id 列）。
+   * 比較教材ではなくアンソロジー（G4「アンソロジーを厚く」）＝読むだけの詩。
+   * 全件が mentorTexts.ts に登録済み＝出典・権利判定つきであること。
+   */
+  furtherReadingRefs?: string[];
 };
 
 /**

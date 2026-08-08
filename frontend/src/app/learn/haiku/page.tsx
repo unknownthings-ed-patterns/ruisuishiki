@@ -16,14 +16,14 @@
  */
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { MathText } from "@/components/Math";
+import { useEffect, useState, type ReactNode } from "react";
+import { MathBody, MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
 import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
 import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
 import { getViewpointList } from "@/lib/viewpointLists";
-import type { KokugoSeries, ViewpointItem } from "@/lib/types";
+import type { KokugoSeries, MentorText, ViewpointItem } from "@/lib/types";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -598,8 +598,9 @@ export default function HaikuPlay() {
             );
           })()}
 
-          {/* 出口「本物に会う」（自由詩系列①）。訳と外部リンクだけ——原文は載せない。 */}
-          {series.id === "kokugo_shi_5byo_01" && <MeetTheRealThing />}
+          {/* 出口「作家の風景」（数学版「公式の景色」の国語版）。
+              系列が authorLandscape を持つときだけ出す（フィールド駆動・俳句3系列は不変）。 */}
+          {series.authorLandscape && <AuthorLandscape series={series} />}
 
           <div className="flex flex-col sm:flex-row gap-4">
             <button
@@ -1180,82 +1181,181 @@ export default function HaikuPlay() {
   );
 }
 
+type ExternalRead = { href: string; label: string; note: string };
+
 /**
- * 出口「本物に会う」（自由詩系列① Step10 の完了画面）。
- *
- * G4「アンソロジーを厚く」。比較教材ではなく読み物として、同じ詩人の長い詩を
- * 訳で置く（「見たままから空想へ広げてもいい」という幅の見本）。
+ * 「作家の風景」の付属（外部リンクと出典）。系列ごとに持つ。
  *
  * 権利：外国作品は**自前訳のみ掲載・原文は外部リンク**（2026-08-09 先生裁定）。
  * 原文はこのリポジトリのどこにも置かない。リンクは複製ではないので自由。
  * 外部リンクは basePath の影響を受けない（絶対URL）。
+ * 出典は memory ruisuishiki-citation-format の3点セット（見出し／APA 風／「— 」注記）。
  */
-function MeetTheRealThing() {
-  const turtle = getMentorText("shi_turtle_wcw");
-  const links = [
-    {
-      href: "https://poets.org/poem/red-wheelbarrow",
-      label: "The Red Wheelbarrow（赤い手押し車）",
-      note: "16語だけの、いちばん有名な「見たままを置く」詩",
+const AUTHOR_LANDSCAPE_EXTRAS: Record<
+  string,
+  {
+    english: ExternalRead[];
+    japanese: ExternalRead[];
+    citation: { apa: ReactNode; note: string };
+  }
+> = {
+  kokugo_shi_5byo_01: {
+    english: [
+      {
+        href: "https://poets.org/poem/red-wheelbarrow",
+        label: "The Red Wheelbarrow（赤い手押し車）",
+        note: "16語だけの、いちばん有名な「見たままを置く」詩",
+      },
+      {
+        href: "https://poets.org/poem/just-say",
+        label: "This Is Just To Say（ちょっとひとこと）",
+        note: "冷蔵庫のすももを食べてしまった、という置き手紙の詩",
+      },
+    ],
+    japanese: [
+      {
+        href: "https://www.aozora.gr.jp/cards/000136/card45048.html",
+        label: "山村暮鳥「燕」（青空文庫）",
+        note: "step4 で読んだ詩。日本語の本物はここで読める",
+      },
+    ],
+    citation: {
+      apa: (
+        <>
+          Williams, W. C. (1962). <i>Pictures from Brueghel and Other Poems</i>. New Directions.（訳は
+          ruisuishiki による自前訳）
+        </>
+      ),
+      note: "— 日本では新作セクションの初出が1956年以降（1963年英国版著作権ページで確認）のため保護期間満了。",
     },
-    {
-      href: "https://poets.org/poem/just-say",
-      label: "This Is Just To Say（ちょっとひとこと）",
-      note: "冷蔵庫のすももを食べてしまった、という置き手紙の詩",
-    },
-    {
-      href: "https://www.aozora.gr.jp/cards/000136/card45048.html",
-      label: "山村暮鳥「燕」（青空文庫）",
-      note: "step4 で読んだ詩。日本語の本物はここで読める",
-    },
-  ];
+  },
+};
+
+/**
+ * 出口「作家の風景」（完了画面）。数学版 derivation ＝「公式の景色」の国語版で、
+ * 骨格を mirror する：中心の問いの再掲 → 本文 → もっと読む → 出典。
+ *
+ * フィールド駆動：series.authorLandscape / series.furtherReadingRefs だけを見る
+ * （系列 id のハードコードをしない＝新しい系列は型に値を入れるだけで出る）。
+ * 歩き終えてから開く順は崩さない（発見が先・G1）。
+ *
+ * 「もっと読む」は比較教材ではなくアンソロジー（G4 の厚み）＝読むだけの詩。
+ * 長い詩は PoemLines の maxHeight 内で横スクロール（縦書きは行＝列なので、
+ * 行数が増えるほど横に伸びる）。
+ */
+function AuthorLandscape({ series }: { series: KokugoSeries }) {
+  const reads = (series.furtherReadingRefs ?? [])
+    .map((id) => getMentorText(id))
+    .filter((m): m is MentorText => Boolean(m));
+  const extras = AUTHOR_LANDSCAPE_EXTRAS[series.id];
   return (
     <section
       className="w-full rounded-lg border border-border p-6 flex flex-col gap-5"
       style={{ background: "var(--surface)" }}
-      aria-label="本物に会う"
+      aria-label="作家の風景"
     >
       <h2 className="text-foreground" style={{ fontSize: "13px", letterSpacing: "0.3em" }}>
-        本物に会う
+        作家の風景
       </h2>
-      {turtle && (
-        <>
-          <p className="text-muted" style={{ fontSize: "14px", lineHeight: 1.9 }}>
-            step7 で読んだウィリアムズは、こんな詩も書いている（まごのために書いた「かめ」の詩）。
-            見たままから、どこまでも空想がのびていく——5秒の詩は、こんなふうに広げてもいいんだよ。
-          </p>
-          <div className="flex justify-center">
-            <PoemLines text={turtle.text} fontSize="clamp(13px, 2vh, 17px)" maxHeight="60vh" />
-          </div>
-          <span className="text-muted self-center" style={{ fontSize: "12px" }}>
-            — {turtle.author}
-          </span>
-        </>
-      )}
-      <div className="flex flex-col gap-2">
-        <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
-          原文を読みにいく（そとのサイト）
-        </span>
-        {links.map((l) => (
-          <a
-            key={l.href}
-            href={l.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:text-foreground transition-colors"
-            style={{ fontSize: "14px", lineHeight: 1.8 }}
-          >
-            {l.label}
-            <span className="text-muted" style={{ fontSize: "12px" }}>
-              {" "}
-              — {l.note} ↗
-            </span>
-          </a>
-        ))}
-        <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
-          ※このページにあるのは日本語の訳だけ。英語の原文は、上のリンク先で読んでね。
+
+      {/* 中心の問いの再掲（この風景は、どの問いの背景か） */}
+      {series.drivingQuestion && (
+        <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.9 }}>
+          <MathText text={series.drivingQuestion} />
         </p>
+      )}
+
+      {/* 本文（authored 文字列は MathBody で描画・空行で段落） */}
+      <div className="text-foreground/85" style={{ fontSize: "15px", lineHeight: 2 }}>
+        <MathBody text={series.authorLandscape ?? ""} />
       </div>
+
+      {/* もっと読む（アンソロジー・G4）。比較でなく、ただ読む。 */}
+      {reads.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+            もっと読む
+          </span>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {reads.map((m) => (
+              <article
+                key={m.id}
+                className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"
+                style={{ background: "var(--background)" }}
+              >
+                {m.title && (
+                  <h3 className="font-serif text-foreground text-center" style={{ fontSize: "14px", letterSpacing: "0.08em" }}>
+                    {m.title}
+                  </h3>
+                )}
+                <PoemLines text={m.text} fontSize="clamp(14px, 2.1vh, 17px)" maxHeight="46vh" />
+                <span className="text-muted text-center" style={{ fontSize: "12px" }}>
+                  — {m.author}
+                </span>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 原文・本文はよそのサイトで（このページにあるのは日本語の訳だけ） */}
+      {extras && (
+        <div className="flex flex-col gap-2">
+          <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+            えいごで 読みたい人へ
+          </span>
+          {extras.english.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:text-foreground transition-colors"
+              style={{ fontSize: "14px", lineHeight: 1.8 }}
+            >
+              {l.label}
+              <span className="text-muted" style={{ fontSize: "12px" }}>
+                {" "}
+                — {l.note} ↗
+              </span>
+            </a>
+          ))}
+          <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+            ※このページにあるのは日本語の訳だけ。英語の原文は、上のリンク先で読んでね。
+          </p>
+          {extras.japanese.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:text-foreground transition-colors"
+              style={{ fontSize: "14px", lineHeight: 1.8 }}
+            >
+              {l.label}
+              <span className="text-muted" style={{ fontSize: "12px" }}>
+                {" "}
+                — {l.note} ↗
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* 出典（memory ruisuishiki-citation-format の3点セット書式） */}
+      {extras && (
+        <div className="flex flex-col gap-1 border-t border-border pt-4">
+          <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+            出典
+          </span>
+          <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+            {extras.citation.apa}
+          </p>
+          <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+            {extras.citation.note}
+          </p>
+        </div>
+      )}
     </section>
   );
 }

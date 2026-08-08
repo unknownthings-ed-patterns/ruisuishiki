@@ -229,6 +229,12 @@ def audit_series_file(path, mentor_entries):
         stats["steps"] += len(steps)
         step_ids = {sid for sid, _ in steps}
 
+        # 完了画面「作家の風景」の「もっと読む」の参照整合（系列直下のフィールド）。
+        # 出典・権利判定つきの MentorText からしか読み物を出さないための柵。
+        for mid in extract_string_array(series_block, "furtherReadingRefs"):
+            if mid not in mentor_entries:
+                problems.append(f"❌ {series_id}: furtherReadingRefs に未登録ID（{mid}）")
+
         # 最初の comparison step の位置（G1 セルフチェック順序の基準）
         first_comparison_pos = None
         for i, (sid, block) in enumerate(steps):
@@ -366,8 +372,12 @@ def main():
     used_mentor_ids = set()
     for path in files:
         src = open(path, encoding="utf-8").read()
-        for refs in re.finditer(r"\bmentorTextRefs\s*:\s*\[([^\]]*)\]", src, re.S):
-            used_mentor_ids.update(re.findall(r'"((?:[^"\\]|\\.)*)"', refs.group(1)))
+        # step の模範文参照に加え、完了画面「作家の風景」の「もっと読む」
+        # （series.furtherReadingRefs）も使用扱いにする——読み物として出るので
+        # 未使用報告に出さない（未使用の意味＝どこにも出ていない、を保つ）。
+        for field in ("mentorTextRefs", "furtherReadingRefs"):
+            for refs in re.finditer(rf"\b{field}\s*:\s*\[([^\]]*)\]", src, re.S):
+                used_mentor_ids.update(re.findall(r'"((?:[^"\\]|\\.)*)"', refs.group(1)))
     mentor_entries, reading_mora, unused, mprob = audit_mentor(used_mentor_ids)
     print(f"## 系列 {os.path.relpath(SERIES_GLOB, os.getcwd())}")
     print(f"  対象ファイル = {stats['files']}  系列数 = {stats['series']}  step数 = {stats['steps']}")
