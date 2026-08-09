@@ -5,6 +5,15 @@ import { useEffect, useState } from "react";
 import { MathText } from "@/components/Math";
 import { OperatorFootprintView } from "@/components/OperatorFootprintView";
 import {
+  groupKokugoByGenre,
+  KOKUGO_GENRE_INTRO,
+  KOKUGO_GENRE_LABEL,
+  kokugoGenreGroupKey,
+  kokugoSeriesHref,
+  STATIC_KOKUGO_CATALOG,
+  type KokugoCatalogEntry,
+} from "@/lib/kokugoCatalog";
+import {
   buildStepOpIndex,
   type CatalogEntry,
   resolveSeriesId,
@@ -38,6 +47,12 @@ type CatalogWithProgress = {
   total: number;
 };
 
+type KokugoCatalogWithProgress = {
+  entry: KokugoCatalogEntry;
+  resumeIndex: number;
+  total: number;
+};
+
 const COLLAPSED_GROUPS_KEY = "ruisuishiki:catalog_collapsed";
 
 /** topicGroup ごとにまとめる（順序は入力順を維持）。 */
@@ -58,12 +73,15 @@ function groupByTopic(
 
 export default function LearnIndex() {
   const [catalog, setCatalog] = useState<CatalogWithProgress[]>([]);
+  const [kokugoCatalog, setKokugoCatalog] = useState<
+    KokugoCatalogWithProgress[]
+  >([]);
   const [teacherSeries, setTeacherSeries] = useState<TeacherSeriesSummary[]>([]);
   const [stats, setStats] = useState<LearningStats | null>(null);
   const [operatorView, setOperatorView] = useState<OperatorViewData | null>(null);
   const [revisit, setRevisit] = useState<RevisitCandidate | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
-  // 折りたたまれた topicGroup（key は `${subject}|${topicGroup}`）。
+  // 折りたたまれたグループ（key は `${subject}|${topicGroup}` または `kokugo|${genreId}`）。
   // デフォルトは「全グループ畳む。ただし進行中の系列を含むグループだけ自動展開」。
   // 手動でトグルした履歴がある（localStorage 保存済み）なら、その状態を尊重。
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
@@ -85,6 +103,21 @@ export default function LearnIndex() {
       };
     });
     setCatalog(withProgress);
+
+    const kokugoWithProgress = STATIC_KOKUGO_CATALOG.map((entry) => {
+      const history = loadSeriesHistory(entry.series.id);
+      const resume = getResumeIndex(
+        history,
+        entry.series.steps.map((s) => s.id),
+      );
+      return {
+        entry,
+        resumeIndex: resume,
+        total: entry.series.steps.length,
+      };
+    });
+    setKokugoCatalog(kokugoWithProgress);
+
     const revisitCandidate = selectRevisitCandidate(
       withProgress.map((item) => {
         const seriesId = item.entry.series.id;
@@ -147,6 +180,13 @@ export default function LearnIndex() {
         const tg = item.entry.topicGroup;
         if (!tg) continue;
         const key = `${item.entry.subject}|${tg}`;
+        allGroupKeys.add(key);
+        const inProgress =
+          item.resumeIndex > 0 && item.resumeIndex < item.total;
+        if (inProgress) groupsWithInProgress.add(key);
+      }
+      for (const item of kokugoWithProgress) {
+        const key = kokugoGenreGroupKey(item.entry.genreId);
         allGroupKeys.add(key);
         const inProgress =
           item.resumeIndex > 0 && item.resumeIndex < item.total;
@@ -270,104 +310,104 @@ export default function LearnIndex() {
           </section>
         )}
 
-        {/* 国語（俳句）ユニット。数学カタログ（LearnerSeries 型）とは別型なので
-            独立セクション＋独立ルート（/learn/haiku）で提供する。 */}
-        <section className="flex flex-col gap-4">
-          <h2
-            className="text-foreground"
-            style={{ fontSize: "13px", letterSpacing: "0.3em" }}
-          >
-            国語（俳句）
-          </h2>
-          <p className="text-muted -mt-2" style={{ fontSize: "13px", lineHeight: 1.8 }}>
-            はじめてなら、まず「五七五のかたち」から。声に出して数えるところから始まります。
-          </p>
-          <Link
-            href="/learn/haiku/?seriesId=kokugo_haiku_form_01"
-            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
-            style={{ background: "var(--surface)" }}
-          >
-            <span className="flex flex-wrap items-center gap-2">
-              <span
-                className="text-foreground font-serif"
-                style={{ fontSize: "17px", letterSpacing: "0.04em" }}
-              >
-                1. 五七五のかたち（音数とリズム）
-              </span>
-              <span
-                className="rounded border border-accent/40 px-2 py-0.5 text-accent"
-                style={{ fontSize: "11px", letterSpacing: "0.08em" }}
-              >
-                はじめてはこちら
-              </span>
-            </span>
-            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
-              声に出して音を数え、五・七・五という「器」が何をしてくれるかを歩く。読みくらべ →
-              まねっこ → 一句づくりまで、全 10 問。
-            </span>
-          </Link>
-          <Link
-            href="/learn/haiku/?seriesId=kokugo_haiku_kigo_01"
-            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
-            style={{ background: "var(--surface)" }}
-          >
-            <span
-              className="text-foreground font-serif"
-              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
+        {/* 国語：トップ「国語」→ ジャンル（俳句／詩／物語…）で折りたたみ。
+            数学カタログ（LearnerSeries）とは別型なので独立セクション＋/learn/haiku。 */}
+        {hasHydrated && kokugoCatalog.length > 0 && (
+          <section className="flex flex-col gap-4" aria-label="国語">
+            <h2
+              className="text-foreground"
+              style={{ fontSize: "13px", letterSpacing: "0.3em" }}
             >
-              2. 季語——季節のことばが景色をはこぶ
-            </span>
-            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
-              たった一語の季語で句の世界ぜんぶの季節が決まる。季語さがし → 季語交換で世界が変わる →
-              季語で一句まで、全 10 問。
-            </span>
-          </Link>
-          <Link
-            href="/learn/haiku/?seriesId=kokugo_haiku_kire_01"
-            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
-            style={{ background: "var(--surface)" }}
-          >
-            <span
-              className="text-foreground font-serif"
-              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
-            >
-              3. 切れ——「や・かな・けり」が向かい合わせるもの
-            </span>
-            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
-              句を「切れ」で二つに割ると、間と対比が生まれる。切れさがし → 二つのものの対比 →
-              切れで一句まで、全 10 問。
-            </span>
-          </Link>
-        </section>
-
-        {/* 国語（自由詩）ユニット。俳句と同じ学習者ビュー（/learn/haiku）を歩く。 */}
-        <section className="flex flex-col gap-4">
-          <h2
-            className="text-foreground"
-            style={{ fontSize: "13px", letterSpacing: "0.3em" }}
-          >
-            国語（詩）
-          </h2>
-          <p className="text-muted -mt-2" style={{ fontSize: "13px", lineHeight: 1.8 }}>
-            俳句の五・七・五という「器」を外すと、こんどは自分で行を切ることになります。
-          </p>
-          <Link
-            href="/learn/haiku/?seriesId=kokugo_shi_5byo_01"
-            className="rounded-lg border border-border p-5 sm:p-6 flex flex-col gap-2 hover:border-accent/50 transition-colors"
-            style={{ background: "var(--surface)" }}
-          >
-            <span
-              className="text-foreground font-serif"
-              style={{ fontSize: "17px", letterSpacing: "0.04em" }}
-            >
-              1. 5秒の詩（見たままを置く）
-            </span>
-            <span className="text-muted" style={{ fontSize: "13px", lineHeight: 1.7 }}>
-              気持ちのことばを消して、見えたものを見えた順に置くと、たった5秒がゆっくり・濃く見えてくる。
-              読みくらべ → 行のかわり目の発見 → 自分の5秒まで、全 10 問。
-            </span>
-          </Link>
-        </section>
+              国語
+            </h2>
+            <div className="flex flex-col gap-3">
+              {groupKokugoByGenre(
+                kokugoCatalog.map((item) => ({
+                  ...item,
+                  genreId: item.entry.genreId,
+                })),
+              ).map(({ genreId, items }) => {
+                const groupKey = kokugoGenreGroupKey(genreId);
+                const collapsed = collapsedGroups.has(groupKey);
+                const totalSteps = items.reduce(
+                  (acc, it) => acc + it.total,
+                  0,
+                );
+                const doneSteps = items.reduce(
+                  (acc, it) => acc + Math.min(it.resumeIndex, it.total),
+                  0,
+                );
+                const intro = KOKUGO_GENRE_INTRO[genreId];
+                return (
+                  <div key={groupKey} className="flex flex-col gap-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleGroup(groupKey)}
+                      className="flex items-center justify-between gap-3 text-left py-2 -mx-2 px-2 rounded-md hover:bg-surface/60 transition-colors"
+                      aria-expanded={!collapsed}
+                      aria-controls={`group-kokugo-${genreId}`}
+                    >
+                      <span className="flex items-baseline gap-3 min-w-0">
+                        <span
+                          aria-hidden
+                          className="text-muted"
+                          style={{
+                            fontSize: "10px",
+                            display: "inline-block",
+                            transform: collapsed
+                              ? "rotate(-90deg)"
+                              : "rotate(0deg)",
+                            transition: "transform 150ms ease",
+                          }}
+                        >
+                          ▼
+                        </span>
+                        <span
+                          className="text-muted"
+                          style={{
+                            fontSize: "11px",
+                            letterSpacing: "0.25em",
+                          }}
+                        >
+                          {KOKUGO_GENRE_LABEL[genreId]}
+                        </span>
+                      </span>
+                      <span
+                        className="text-muted tnum shrink-0"
+                        style={{ fontSize: "11px" }}
+                      >
+                        {items.length} 系列・{doneSteps}/{totalSteps} 問
+                      </span>
+                    </button>
+                    {!collapsed && (
+                      <div
+                        id={`group-kokugo-${genreId}`}
+                        className="flex flex-col gap-3"
+                      >
+                        {intro && (
+                          <p
+                            className="text-muted -mt-1"
+                            style={{ fontSize: "13px", lineHeight: 1.8 }}
+                          >
+                            {intro}
+                          </p>
+                        )}
+                        <ol className="flex flex-col gap-3">
+                          {items.map((item) => (
+                            <KokugoCatalogCard
+                              key={item.entry.series.id}
+                              item={item}
+                            />
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* 静的カタログ：subject（学年領域）でグループ化、topicGroup で折りたたみ可能 */}
         {!hasHydrated ? (
@@ -555,6 +595,100 @@ export default function LearnIndex() {
         </Link>
       </div>
     </main>
+  );
+}
+
+/**
+ * 国語カタログのカード 1 枚。数学の CatalogCard と同型の進度表示。
+ * ルートだけ /learn/haiku（KokugoSeries 専用プレイヤー）。
+ */
+function KokugoCatalogCard({ item }: { item: KokugoCatalogWithProgress }) {
+  const { entry, resumeIndex, total } = item;
+  const isCompleted = resumeIndex >= total;
+  const inProgress = resumeIndex > 0 && !isCompleted;
+  const href = inProgress
+    ? kokugoSeriesHref(entry.series.id)
+    : kokugoSeriesHref(entry.series.id, { fresh: true });
+  return (
+    <li>
+      <Link
+        href={href}
+        className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
+        style={{ background: "var(--surface)" }}
+      >
+        <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
+          <p className="flex flex-wrap items-center gap-2 min-w-0">
+            <span
+              className="font-serif text-foreground"
+              style={{
+                fontSize: "clamp(17px, 1.25rem, 20px)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              {entry.series.title}
+            </span>
+            {entry.badge && (
+              <span
+                className="rounded border border-accent/40 px-2 py-0.5 text-accent shrink-0"
+                style={{ fontSize: "11px", letterSpacing: "0.08em" }}
+              >
+                {entry.badge}
+              </span>
+            )}
+          </p>
+          {isCompleted && (
+            <span className="text-success tnum" style={{ fontSize: "12px" }}>
+              ✓ {total}/{total}
+            </span>
+          )}
+          {inProgress && (
+            <span className="text-muted tnum" style={{ fontSize: "12px" }}>
+              {resumeIndex}/{total} 解いた
+            </span>
+          )}
+          {!isCompleted && !inProgress && (
+            <span className="text-muted tnum" style={{ fontSize: "12px" }}>
+              全 {total} 問
+            </span>
+          )}
+        </div>
+        {entry.series.drivingQuestion && (
+          <p
+            className="text-foreground/85 mb-2"
+            style={{
+              fontSize: "13px",
+              lineHeight: 1.7,
+              fontStyle: "italic",
+            }}
+          >
+            「<MathText text={entry.series.drivingQuestion} />」
+          </p>
+        )}
+        <p
+          className="text-muted"
+          style={{
+            fontSize: "12px",
+            letterSpacing: "0.1em",
+            lineHeight: 1.6,
+          }}
+        >
+          {entry.shortDescription}
+        </p>
+        {inProgress && (
+          <div className="mt-3">
+            <span
+              className="text-accent"
+              style={{
+                fontSize: "12px",
+                letterSpacing: "0.15em",
+              }}
+            >
+              続きから →
+            </span>
+          </div>
+        )}
+      </Link>
+    </li>
   );
 }
 
