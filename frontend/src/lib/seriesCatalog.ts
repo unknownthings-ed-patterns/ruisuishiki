@@ -193,6 +193,7 @@ import {
   MIDDLE_SCHOOL_SERIES_LIST,
   MIDDLE_SIMUL_SERIES,
 } from "./seriesMiddle";
+import { PROOF_CUBIC_SERIES, PROOF_SERIES_LIST } from "./seriesProof";
 import { STATISTICS_SERIES_LIST } from "./seriesStats";
 import type { LearnerSeries, VariationOp } from "./types";
 
@@ -988,7 +989,16 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription: "組合せ C(n, 2) — 確率の基礎",
   },
   /* === 高校数学Ⅱ・B（数Ⅱ の章順 → 数B の章順）=== */
-  /* 数Ⅱ: 複素数と方程式（図形と方程式の前） */
+  /* 数Ⅱ: 式と証明（池田本 第1章・数Ⅱ の先頭。背骨 docs/proof_series_design.md） */
+  {
+    series: PROOF_CUBIC_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "3次式の展開と因数分解（公式は分配のあと）— 2 乗の結果にもう 1 段ぶん分配すると 3 乗が出る。符号を反転して差の公式、中間が対で消えて 3 乗の和・差、共通因数を外す 2 段構え、因数定理との交差検算まで",
+  },
+  /* 数Ⅱ: 複素数と方程式（式と証明の後・図形と方程式の前） */
   {
     series: ADV_COMPLEX_NEW_NUMBER_SERIES,
     subject: "secondary2",
@@ -1367,6 +1377,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
+  ...PROOF_SERIES_LIST,
   ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
   ...COUNTING_SERIES_LIST,

@@ -13842,6 +13842,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<POLY_CUBE_LAYERS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyCubeLayers />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_CANCEL_PAIR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyCancelPair />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_TWO_STAGE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyTwoStage />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -20707,6 +20728,232 @@ export function IntNarrowCandidates() {
 
       <text x="195" y="228" fontSize="11.5" fill={accent} textAnchor="middle">
         ② まで来たら、そこで答えを言い切ってよい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_CUBE_LAYERS（式と証明 系1 step1・derivation・辞書 展開）：
+ * すでに知っている「2 乗の展開＝面積の 4 区画」に、もう 1 段ぶんかけ合わせる構造の図。
+ * 何段ぶん重なるかという関係だけを示し、展開後の係数（1・3・3・1 など）は書かない。
+ */
+export function PolyCubeLayers() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillA = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const fillB = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="左に 2 乗の展開を表す 4 区画の正方形、右にもう 1 段ぶん重ねた層。同じ顔つきの項が何本集まるかを問う図。展開後の係数は書かない"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        すでに知っている形に、もう 1 段ぶん
+      </text>
+
+      {/* 左：2 乗の展開＝4 区画 */}
+      <rect x="34" y="46" width="64" height="64" fill={fillA} stroke={stroke} strokeWidth="1.2" />
+      <rect x="98" y="46" width="30" height="64" fill={fillB} stroke={stroke} strokeWidth="1.2" />
+      <path d="M 34 96 L 128 96" stroke={stroke} strokeWidth="1.2" />
+      <text x="66" y="40" fontSize="11.5" fill={stroke} textAnchor="middle">a</text>
+      <text x="113" y="40" fontSize="11.5" fill={stroke} textAnchor="middle">b</text>
+      <text x="24" y="76" fontSize="11.5" fill={stroke} textAnchor="middle">a</text>
+      <text x="24" y="107" fontSize="11.5" fill={stroke} textAnchor="middle">b</text>
+      <text x="81" y="128" fontSize="10.5" fill={muted} textAnchor="middle">
+        2 乗の展開（既知）
+      </text>
+
+      {/* 矢印 */}
+      <path d="M 146 78 L 196 78" stroke={accent} strokeWidth="1.4" />
+      <path d="M 196 78 l -7 -4 l 0 8 z" fill={accent} />
+      <text x="171" y="68" fontSize="10.5" fill={accent} textAnchor="middle">
+        もう 1 段
+      </text>
+
+      {/* 右：重なった層 */}
+      {[0, 1].map((k) => (
+        <g key={k}>
+          <rect
+            x={222 + k * 16}
+            y={92 - k * 22}
+            width="94"
+            height="46"
+            rx="4"
+            fill={k === 0 ? fillA : fillB}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+        </g>
+      ))}
+      <text x="285" y="60" fontSize="11" fill={stroke} textAnchor="middle">
+        a の分
+      </text>
+      <text x="269" y="122" fontSize="11" fill={stroke} textAnchor="middle">
+        b の分
+      </text>
+      <text x="285" y="152" fontSize="10.5" fill={muted} textAnchor="middle">
+        それぞれが枝分かれする
+      </text>
+
+      <text x="195" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
+        同じ顔つきの項は、何本ずつ集まってくる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_CANCEL_PAIR（式と証明 系1 step5・derivation・辞書 因数分解）：
+ * 2 項のかっこと 3 項のかっこの積で、6 本の項が上下 2 段にできる図。
+ * 同じ顔つきの項が上下で出会う関係だけを示し、
+ * 打ち消しあうという結論も、残る式も書かない（figure-does-not-reveal-answer）。
+ */
+export function PolyCancelPair() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cell = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const rows = [
+    { y: 54, label: "前の部分をかけた分", ids: ["①", "②", "③"] },
+    { y: 112, label: "うしろの部分をかけた分", ids: ["④", "⑤", "⑥"] },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="6 本の項が上下 2 段に並び、同じ顔つきの項どうしが上下で出会うことを示す図。出会った 2 つがどうなるかは書かない"
+    >
+      <text x="195" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        すべての組み合わせで 6 本の項ができる
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.label}>
+          <text x="14" y={r.y + 24} fontSize="10" fill={muted}>
+            {r.label}
+          </text>
+          {r.ids.map((id, k) => (
+            <g key={id}>
+              <rect
+                x={150 + k * 68}
+                y={r.y}
+                width="56"
+                height="34"
+                rx="5"
+                fill={cell}
+                stroke={stroke}
+                strokeWidth="1.1"
+              />
+              <text
+                x={178 + k * 68}
+                y={r.y + 22}
+                fontSize="12"
+                fill={stroke}
+                textAnchor="middle"
+              >
+                {id}
+              </text>
+            </g>
+          ))}
+        </g>
+      ))}
+
+      {/* 同じ顔つきの出会い */}
+      {[1, 2].map((k) => (
+        <g key={k}>
+          <path
+            d={`M ${178 + k * 68} 88 L ${178 + (k - 1) * 68} 112`}
+            stroke={accent}
+            strokeWidth="1.3"
+            strokeDasharray="4 3"
+            fill="none"
+          />
+          <text
+            x={178 + (k - 0.5) * 68}
+            y={105}
+            fontSize="10"
+            fill={accent}
+            textAnchor="middle"
+          >
+            同じ顔つき
+          </text>
+        </g>
+      ))}
+
+      <text x="195" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
+        上下で出会った 2 つは、たがいに何をする？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_TWO_STAGE（式と証明 系1 step9・辞書 共通因数）：
+ * 因数分解の 2 段構え（① 共通のものを外す → ② 公式の形をさがす）を、
+ * 中身が空のかっこだけで示す図。外す因数も、分解後の式も書かない。
+ */
+export function PolyTwoStage() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const rows = [
+    { y: 40, label: "もとの式（どの公式にも当てはまらない）", body: "" },
+    { y: 104, label: "1 段目のあと", body: "（　　）（　　）" },
+    { y: 168, label: "2 段目のあと", body: "（　　）（　　）（　　）" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 228"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="因数分解の 2 段構えを示す図。1 段目で共通のものを外し、2 段目で公式の形をさがす。外す因数も分解後の式も書かない"
+    >
+      {rows.map((r, i) => (
+        <g key={r.label}>
+          <rect
+            x="76"
+            y={r.y}
+            width="238"
+            height="38"
+            rx="6"
+            fill={i === 0 ? "none" : box}
+            stroke={stroke}
+            strokeWidth="1.2"
+            strokeDasharray={i === 0 ? "5 3" : undefined}
+          />
+          <text x="195" y={r.y + 24} fontSize="12" fill={stroke} textAnchor="middle">
+            {r.body || "？"}
+          </text>
+          <text x="195" y={r.y - 6} fontSize="10" fill={muted} textAnchor="middle">
+            {r.label}
+          </text>
+        </g>
+      ))}
+
+      {[
+        { y: 78, text: "① 共通のものを外す" },
+        { y: 142, text: "② 公式の形をさがす" },
+      ].map((a) => (
+        <g key={a.text}>
+          <path d={`M 195 ${a.y} L 195 ${a.y + 20}`} stroke={accent} strokeWidth="1.4" />
+          <path d={`M 195 ${a.y + 20} l -4 -7 l 8 0 z`} fill={accent} />
+          <text x="205" y={a.y + 16} fontSize="10.5" fill={accent}>
+            {a.text}
+          </text>
+        </g>
+      ))}
+
+      <text x="195" y="220" fontSize="11.5" fill={accent} textAnchor="middle">
+        1 段目で何を外すと、2 段目の形が見えてくる？
       </text>
     </svg>
   );
