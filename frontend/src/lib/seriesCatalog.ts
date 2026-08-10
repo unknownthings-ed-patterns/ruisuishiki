@@ -194,6 +194,7 @@ import {
   MIDDLE_SIMUL_SERIES,
 } from "./seriesMiddle";
 import {
+  PROOF_BINOMIAL_SERIES,
   PROOF_CUBIC_SERIES,
   PROOF_DIVISION_SERIES,
   PROOF_RATIONAL_SERIES,
@@ -1002,6 +1003,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "3次式の展開と因数分解（公式は分配のあと）— 2 乗の結果にもう 1 段ぶん分配すると 3 乗が出る。符号を反転して差の公式、中間が対で消えて 3 乗の和・差、共通因数を外す 2 段構え、因数定理との交差検算まで",
+  },
+  {
+    series: PROOF_BINOMIAL_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "二項定理（係数は、選び方の数）— 展開の係数は「どのかっこからうしろを取り出すか」の選び方の数。書き出す道から数える道へ、符号と係数の 2 部品、ほしい 1 項だけの取り出し、定数項さがし、パスカルの三角形まで",
   },
   {
     series: PROOF_DIVISION_SERIES,

@@ -13898,6 +13898,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<POLY_BOX_PICK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyBoxPick />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_EXPONENT_BALANCE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyExponentBalance />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_PASCAL_SHIFT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyPascalShift />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -21465,6 +21486,295 @@ export function PolyRemainderDegree() {
       </text>
       <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
         帯の高さが決まると、余りの形は先に見積もれる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_BOX_PICK（式と証明 系2 step1・derivation・辞書 二項定理）：
+ * 同じかっこを 3 つ並べたとき、それぞれから一方だけを取り出して
+ * かけ合わせるという「取り出しの構造」を示す図。
+ * 取り出し方が何通りあるか（＝係数）は書かない。
+ */
+export function PolyBoxPick() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const chipA = "color-mix(in oklch, var(--foreground) 10%, transparent)";
+  const chipB = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const boxes = [
+    { x: 30, label: "1 つ目" },
+    { x: 145, label: "2 つ目" },
+    { x: 260, label: "3 つ目" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="同じかっこが 3 つ並び、それぞれの中に前の部分とうしろの部分が入っている図。各かっこから一方だけを取り出してかけ合わせる構造を示し、取り出し方が何通りあるかは書かない"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        どのかっこからも、取り出せるのは一方だけ
+      </text>
+
+      {boxes.map((b) => (
+        <g key={b.label}>
+          <rect
+            x={b.x}
+            y="38"
+            width="100"
+            height="72"
+            rx="8"
+            fill={box}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text x={b.x + 50} y="33" fontSize="10" fill={muted} textAnchor="middle">
+            {b.label}
+          </text>
+          <rect
+            x={b.x + 12}
+            y="50"
+            width="34"
+            height="24"
+            rx="5"
+            fill={chipA}
+            stroke={stroke}
+            strokeWidth="1"
+          />
+          <text x={b.x + 29} y="67" fontSize="12" fill={stroke} textAnchor="middle">
+            x
+          </text>
+          <rect
+            x={b.x + 54}
+            y="50"
+            width="34"
+            height="24"
+            rx="5"
+            fill={chipB}
+            stroke={stroke}
+            strokeWidth="1"
+          />
+          <text x={b.x + 71} y="67" fontSize="12" fill={stroke} textAnchor="middle">
+            y
+          </text>
+          <text x={b.x + 50} y="98" fontSize="10" fill={muted} textAnchor="middle">
+            どちらか一方
+          </text>
+          <path
+            d={`M ${b.x + 50} 112 L ${b.x + 50} 132`}
+            stroke={accent}
+            strokeWidth="1.3"
+          />
+          <path d={`M ${b.x + 50} 132 l -4 -7 l 8 0 z`} fill={accent} />
+        </g>
+      ))}
+
+      {/* 取り出したものを並べてかけ合わせる */}
+      <rect
+        x="76"
+        y="138"
+        width="238"
+        height="34"
+        rx="6"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="195" y="160" fontSize="13" fill={stroke} textAnchor="middle">
+        （　）×（　）×（　）
+      </text>
+
+      <text x="195" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        うしろを 1 回だけ取るのは、どのかっこから？ 何通りある？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_EXPONENT_BALANCE（式と証明 系2 step9・辞書 二項定理）：
+ * 前の部分を取ると文字の勢いが増え、うしろの部分を取ると勢いが減る——
+ * その釣り合い位置をさがす構造だけを示す図。
+ * 増減の数値も、釣り合う回数も、定数項の値も書かない。
+ */
+export function PolyExponentBalance() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panA = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const panB = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="前の部分を取ると文字の勢いが増え、うしろの部分を取ると減ることを天秤で示す図。釣り合う取り出し回数は空欄のまま"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        取り出すたびに、文字の勢いは増えたり減ったりする
+      </text>
+
+      {/* 左の皿：前を取る */}
+      <rect x="26" y="44" width="120" height="46" rx="7" fill={panA} stroke={stroke} strokeWidth="1.2" />
+      <text x="86" y="64" fontSize="11" fill={stroke} textAnchor="middle">
+        前の部分を取る
+      </text>
+      <text x="86" y="80" fontSize="10.5" fill={muted} textAnchor="middle">
+        文字の勢いが増える
+      </text>
+      <path d="M 86 96 L 86 76" stroke={accent} strokeWidth="1.4" />
+      <path d="M 86 76 l -4 7 l 8 0 z" fill={accent} />
+
+      {/* 右の皿：うしろを取る */}
+      <rect x="244" y="44" width="120" height="46" rx="7" fill={panB} stroke={stroke} strokeWidth="1.2" />
+      <text x="304" y="64" fontSize="11" fill={stroke} textAnchor="middle">
+        うしろの部分を取る
+      </text>
+      <text x="304" y="80" fontSize="10.5" fill={muted} textAnchor="middle">
+        文字の勢いが減る
+      </text>
+      <path d="M 304 76 L 304 96" stroke={accent} strokeWidth="1.4" />
+      <path d="M 304 96 l -4 -7 l 8 0 z" fill={accent} />
+
+      {/* 天秤 */}
+      <path d="M 60 128 L 330 128" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 60 128 L 60 112" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 330 128 L 330 112" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 195 128 L 181 152 L 209 152 z" fill="none" stroke={stroke} strokeWidth="1.3" />
+
+      {/* 釣り合う位置は空欄 */}
+      <rect
+        x="150"
+        y="160"
+        width="90"
+        height="30"
+        rx="6"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 3"
+      />
+      <text x="195" y="181" fontSize="14" fill={accent} textAnchor="middle">
+        ？
+      </text>
+      <text x="264" y="181" fontSize="10" fill={muted}>
+        取り出す回数
+      </text>
+
+      <text x="195" y="210" fontSize="11.5" fill={accent} textAnchor="middle">
+        増える分と減る分が打ち消しあうのは、何回取ったとき？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_PASCAL_SHIFT（式と証明 系2 step10・derivation・辞書 パスカルの三角形）：
+ * 上の段を半分ずらして重ねると、隣り合う 2 つが下の段の 1 か所に集まる配置の図。
+ * 集まった先の値は空欄のまま（足した結果を書かない）。
+ */
+export function PolyPascalShift() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cell = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const hot = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const top = [0, 1, 2, 3];
+  const bottom = [0, 1, 2];
+  return (
+    <svg
+      viewBox="0 0 390 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="上の段を半分ずらして重ねると、隣り合う 2 つのますが下の段のひとつのますに集まる配置の図。集まった先の値は空欄"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        上の段を半分ずらして、下の段に重ねる
+      </text>
+
+      <text x="18" y="60" fontSize="10" fill={muted}>
+        上の段
+      </text>
+      {top.map((k) => {
+        const isHot = k === 1 || k === 2;
+        return (
+          <g key={"t" + k}>
+            <rect
+              x={80 + k * 62}
+              y="40"
+              width="52"
+              height="32"
+              rx="5"
+              fill={isHot ? hot : cell}
+              stroke={isHot ? accent : stroke}
+              strokeWidth={isHot ? 1.5 : 1.1}
+            />
+            <text
+              x={106 + k * 62}
+              y="61"
+              fontSize="12"
+              fill={isHot ? accent : muted}
+              textAnchor="middle"
+            >
+              {isHot ? "◯" : "…"}
+            </text>
+          </g>
+        );
+      })}
+
+      {/* 半分ずらした矢印 */}
+      {[1, 2].map((k) => (
+        <path
+          key={"a" + k}
+          d={`M ${106 + k * 62} 76 L ${199} 116`}
+          stroke={accent}
+          strokeWidth="1.3"
+          strokeDasharray="4 3"
+          fill="none"
+        />
+      ))}
+
+      <text x="18" y="142" fontSize="10" fill={muted}>
+        下の段
+      </text>
+      {bottom.map((k) => {
+        const isHot = k === 1;
+        return (
+          <g key={"b" + k}>
+            <rect
+              x={111 + k * 62}
+              y="122"
+              width="52"
+              height="32"
+              rx="5"
+              fill={isHot ? "none" : cell}
+              stroke={isHot ? accent : stroke}
+              strokeWidth={isHot ? 1.5 : 1.1}
+              strokeDasharray={isHot ? "5 3" : undefined}
+            />
+            <text
+              x={137 + k * 62}
+              y="143"
+              fontSize={isHot ? 14 : 12}
+              fill={isHot ? accent : muted}
+              textAnchor="middle"
+            >
+              {isHot ? "？" : "…"}
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="195" y="184" fontSize="11.5" fill={accent} textAnchor="middle">
+        上の段の隣り合う 2 つは、下の段のどこに集まる？
       </text>
     </svg>
   );
