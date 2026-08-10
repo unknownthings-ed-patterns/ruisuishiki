@@ -199,6 +199,7 @@ import {
   PROOF_DIVISION_SERIES,
   PROOF_EQUALITY_SERIES,
   PROOF_IDENTITY_SERIES,
+  PROOF_INEQUALITY_SERIES,
   PROOF_RATIONAL_SERIES,
   PROOF_SERIES_LIST,
 } from "./seriesProof";
@@ -1045,6 +1046,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "等式の証明（道は 3 つ、向きは 1 つ）— 片方だけを変形する道・両方を第 3 の形へ運ぶ道・へだたりを 0 にする道。条件 1 本で文字が 1 つ減ること、比は共通の値に k と名前をつけること、そして「結論から出発してはいけない」理由まで",
+  },
+  {
+    series: PROOF_INEQUALITY_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "不等式の証明（大小を、へだたりの符号に持ち替える）— 条件が符号を決める型、平方が床をつくる型、判別式との交差検算、両辺 0 以上なら 2 乗して比べる型、近似では決まらない大小、そして反例で倒す型まで",
   },
   /* 数Ⅱ: 複素数と方程式（式と証明の後・図形と方程式の前） */
   {

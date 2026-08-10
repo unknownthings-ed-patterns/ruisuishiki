@@ -13961,6 +13961,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<INEQ_DIFF_SIGN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqDiffSign />
+            </div>
+          );
+        }
+        if (trimmed === "<<INEQ_SQUARE_FLOOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqSquareFloor />
+            </div>
+          );
+        }
+        if (trimmed === "<<INEQ_SQUARE_BOTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IneqSquareBoth />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -22352,6 +22373,196 @@ export function ProofRatioK() {
 
       <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
         名前をひとつつけると、文字はいくつに減る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INEQ_DIFF_SIGN（式と証明 系7 step1・derivation・辞書 不等式／等号成立条件）：
+ * 大小をくらべる問いが、へだたり 1 つの符号を読む問いに置きかわることを数直線で示す図。
+ * へだたりがどちら側にいるかも、その値も書かない（どちら側かを決めるのは条件・形だ、
+ * という発見を先取りしない）。
+ */
+export function IneqDiffSign() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const barA = "color-mix(in oklch, var(--foreground) 10%, transparent)";
+  const barB = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 218"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="左に 2 つの量 A と B の棒、右に 0 を中心とした数直線。A から B を取り去ったへだたりが数直線のどちら側にいるかは書かず、位置は破線の枠のままにしてある"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        くらべる問いを、へだたり 1 つの問いに置きかえる
+      </text>
+
+      {/* 左：2 つの量 */}
+      <rect x="24" y="44" width="86" height="20" rx="4" fill={barA} stroke={stroke} strokeWidth="1.1" />
+      <text x="16" y="59" fontSize="11.5" fill={stroke} textAnchor="end">A</text>
+      <rect x="24" y="76" width="58" height="20" rx="4" fill={barB} stroke={stroke} strokeWidth="1.1" />
+      <text x="16" y="91" fontSize="11.5" fill={stroke} textAnchor="end">B</text>
+      <text x="67" y="116" fontSize="10.5" fill={muted} textAnchor="middle">
+        どちらが大きい？
+      </text>
+
+      {/* 矢印 */}
+      <path d="M 128 70 L 176 70" stroke={accent} strokeWidth="1.4" />
+      <path d="M 176 70 l -7 -4 l 0 8 z" fill={accent} />
+      <text x="152" y="60" fontSize="10.5" fill={accent} textAnchor="middle">
+        へだたり
+      </text>
+
+      {/* 右：数直線 */}
+      <path d="M 196 150 L 372 150" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 372 150 l -7 -4 l 0 8 z" fill={stroke} />
+      <path d="M 284 142 L 284 158" stroke={stroke} strokeWidth="1.4" />
+      <text x="284" y="174" fontSize="11.5" fill={stroke} textAnchor="middle">0</text>
+      <text x="232" y="174" fontSize="10" fill={muted} textAnchor="middle">
+        こちら側？
+      </text>
+      <text x="334" y="174" fontSize="10" fill={muted} textAnchor="middle">
+        こちら側？
+      </text>
+
+      {/* 位置未定のチップ */}
+      <rect
+        x="252"
+        y="108"
+        width="64"
+        height="24"
+        rx="5"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="4 3"
+      />
+      <text x="284" y="125" fontSize="11.5" fill={accent} textAnchor="middle">
+        A − B
+      </text>
+      <path d="M 284 132 L 284 142" stroke={accent} strokeWidth="1.1" strokeDasharray="3 3" />
+
+      <text x="195" y="206" fontSize="11.5" fill={accent} textAnchor="middle">
+        へだたりは 0 のどちら側にいる？ それを決めているのは何だろう？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INEQ_SQUARE_FLOOR（式と証明 系7 step3・derivation・辞書 等号成立条件／平方完成）：
+ * 平方はどんな中身でも床（0）より下へ行けず、床に触れるのはただ 1 点であることを示す図。
+ * 触れる位置の値は書かない（step3・step4 の答えそのものなので）。
+ */
+export function IneqSquareFloor() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const under = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="下に凸の曲線が水平な床の線にちょうど 1 点で触れている図。床より下の帯には入れないことを示し、触れる点の位置の値は書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        中身が何であっても、平方は床より下へ行けない
+      </text>
+
+      {/* 床より下の帯（立ち入れない側） */}
+      <rect x="40" y="148" width="310" height="30" fill={under} />
+      <text x="195" y="168" fontSize="10" fill={muted} textAnchor="middle">
+        この帯には入れない
+      </text>
+
+      {/* 床 */}
+      <path d="M 40 148 L 358 148" stroke={stroke} strokeWidth="1.4" />
+      <text x="30" y="152" fontSize="11.5" fill={stroke} textAnchor="end">0</text>
+
+      {/* 平方の曲線 */}
+      <path
+        d="M 92 44 Q 195 216 298 44"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+        transform="translate(0,-1)"
+      />
+
+      {/* 触れる 1 点 */}
+      <circle cx="195" cy="148" r="3.4" fill={accent} />
+      <path d="M 195 148 L 195 108" stroke={accent} strokeWidth="1.1" strokeDasharray="3 3" />
+      <text x="195" y="100" fontSize="12" fill={accent} textAnchor="middle">？</text>
+      <text x="286" y="128" fontSize="10.5" fill={muted} textAnchor="middle">
+        触れるのは 1 点だけ
+      </text>
+
+      <text x="195" y="202" fontSize="11.5" fill={accent} textAnchor="middle">
+        床にぴったり触れるのは、平方の中身がどんな値のとき？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * INEQ_SQUARE_BOTH（式と証明 系7 step8・derivation・辞書 不等式）：
+ * 根号があって大小が読めない 2 つの量を、2 乗の世界へ移して読む道すじの図。
+ * どちらが大きいかの結論は上段でも下段でも書かず、移してよい前提を問いにして終える。
+ */
+export function IneqSquareBoth() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cell = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const cell2 = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 228"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="上段は根号のある世界の 2 つの量、下段は 2 乗した世界の 2 つの量。どちらの段でも大小の向きは書かず、移してよい前提だけを示す"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        根号のある世界（へだたりの符号が読めない）
+      </text>
+
+      {/* 上段 */}
+      <rect x="62" y="32" width="94" height="34" rx="6" fill={cell} stroke={stroke} strokeWidth="1.2" />
+      <text x="109" y="54" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <rect x="234" y="32" width="94" height="34" rx="6" fill={cell} stroke={stroke} strokeWidth="1.2" />
+      <text x="281" y="54" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x="195" y="54" fontSize="13" fill={accent} textAnchor="middle">？</text>
+
+      {/* 移す矢印 */}
+      <path d="M 195 82 L 195 122" stroke={accent} strokeWidth="1.4" />
+      <path d="M 195 122 l -4 -7 l 8 0 z" fill={accent} />
+      <text x="205" y="106" fontSize="10.5" fill={accent}>
+        どちらも 0 以上のときだけ移してよい
+      </text>
+
+      {/* 下段 */}
+      <text x="195" y="146" fontSize="11" fill={muted} textAnchor="middle">
+        2 乗の世界（根号が消える）
+      </text>
+      <rect x="62" y="156" width="94" height="34" rx="6" fill={cell2} stroke={stroke} strokeWidth="1.2" />
+      <text x="109" y="178" fontSize="12" fill={stroke} textAnchor="middle">
+        A の 2 乗
+      </text>
+      <rect x="234" y="156" width="94" height="34" rx="6" fill={cell2} stroke={stroke} strokeWidth="1.2" />
+      <text x="281" y="178" fontSize="12" fill={stroke} textAnchor="middle">
+        B の 2 乗
+      </text>
+      <text x="195" y="178" fontSize="13" fill={accent} textAnchor="middle">？</text>
+
+      <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        下の世界で読めた向きは、そのまま上へ戻せる？ 戻せるのはどんなとき？
       </text>
     </svg>
   );
