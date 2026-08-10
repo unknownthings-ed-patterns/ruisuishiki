@@ -13940,6 +13940,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<PROOF_EQ_THREE_WAYS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProofEqThreeWays />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROOF_ELIMINATE_LETTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProofEliminateLetter />
+            </div>
+          );
+        }
+        if (trimmed === "<<PROOF_RATIO_K>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <ProofRatioK />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -22076,6 +22097,261 @@ export function IdentPartialFraction() {
 
       <text x="195" y="212" fontSize="11.5" fill={accent} textAnchor="middle">
         2 つの □ は、どんな条件を満たせばもとの分数に戻る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列6「等式の証明」（algebra2_equality_proof_01）の新規図 3 枚。
+ *
+ * 統合時は Math.tsx 末尾（PolyTwoStage のあと）へこの 3 関数を移し、
+ * MathText / MathBody のマーカー分岐に
+ *   <<PROOF_EQ_THREE_WAYS>> / <<PROOF_ELIMINATE_LETTER>> / <<PROOF_RATIO_K>>
+ * を追加する（分岐の追加は統合担当 1 体だけが行う・C15）。
+ *
+ * 3 枚とも「答えを書かない・最後の行を問いで終える」を守っている。
+ */
+
+/**
+ * PROOF_EQ_THREE_WAYS（式と証明 系6 step1・derivation・辞書 同値）：
+ * 「同じ」を示す 3 つの道——① 片方だけ動かす ② 両方動かす ③ へだたりを見る——が、
+ * それぞれどこで出会うかを示す図。待ち合わせ場所は空欄のままにし、
+ * どの道を選ぶべきかという結論も書かない。
+ */
+export function ProofEqThreeWays() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const slot = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="等式を示す 3 つの道を並べた図。片方だけ動かす道・両方動かす道・へだたりを見る道が、それぞれどこで出会うかを示す。待ち合わせ場所は空欄で、どの道を選ぶべきかは書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの式を、同じ形の上で出会わせる
+      </text>
+
+      {/* ① 片方だけ動かす */}
+      <text x="14" y="44" fontSize="10.5" fill={accent}>
+        ① 片方だけ動かす
+      </text>
+      <rect x="34" y="52" width="52" height="30" rx="5" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="60" y="72" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <path d="M 96 67 L 288 67" stroke={accent} strokeWidth="1.4" />
+      <path d="M 288 67 l -8 -4 l 0 8 z" fill={accent} />
+      <rect x="298" y="52" width="52" height="30" rx="5" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="324" y="72" fontSize="13" fill={stroke} textAnchor="middle">B</text>
+
+      {/* ② 両方動かす */}
+      <text x="14" y="112" fontSize="10.5" fill={accent}>
+        ② 両方動かす
+      </text>
+      <rect x="34" y="120" width="52" height="30" rx="5" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="60" y="140" fontSize="13" fill={stroke} textAnchor="middle">A</text>
+      <rect x="298" y="120" width="52" height="30" rx="5" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="324" y="140" fontSize="13" fill={stroke} textAnchor="middle">B</text>
+      <rect
+        x="158"
+        y="120"
+        width="68"
+        height="30"
+        rx="5"
+        fill={slot}
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="192" y="140" fontSize="13" fill={accent} textAnchor="middle">　</text>
+      <path d="M 96 135 L 150 135" stroke={accent} strokeWidth="1.4" />
+      <path d="M 150 135 l -8 -4 l 0 8 z" fill={accent} />
+      <path d="M 288 135 L 234 135" stroke={accent} strokeWidth="1.4" />
+      <path d="M 234 135 l 8 -4 l 0 8 z" fill={accent} />
+
+      {/* ③ へだたりを見る */}
+      <text x="14" y="180" fontSize="10.5" fill={accent}>
+        ③ へだたりを見る
+      </text>
+      <rect x="34" y="188" width="140" height="30" rx="5" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="104" y="208" fontSize="12" fill={stroke} textAnchor="middle">
+        A と B のへだたり
+      </text>
+      <path d="M 184 203 L 288 203" stroke={accent} strokeWidth="1.4" />
+      <path d="M 288 203 l -8 -4 l 0 8 z" fill={accent} />
+      <rect
+        x="298"
+        y="188"
+        width="52"
+        height="30"
+        rx="5"
+        fill={slot}
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="324" y="208" fontSize="13" fill={accent} textAnchor="middle">　</text>
+
+      <text x="195" y="240" fontSize="11.5" fill={accent} textAnchor="middle">
+        3 つの道は、それぞれどこで出会っている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * PROOF_ELIMINATE_LETTER（式と証明 系6 step5・derivation・辞書 条件つきの等式）：
+ * 文字が 3 つ並んでいても、そのあいだに関係が 1 本あると、
+ * 自由に決められる文字はそれより少ない、という関係だけを示す図。
+ * 消去したあとの式も、いくつ残るかの答えも書かない。
+ */
+export function ProofEliminateLetter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const slot = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const letters = [
+    { x: 110, label: "a" },
+    { x: 195, label: "b" },
+    { x: 280, label: "c" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="3 つの文字のあいだに関係が 1 本ついている図。条件を使ったあとに残るものは空欄のままで、いくつ残るかも消去後の式も書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        文字は 3 つ、でも、たがいの関係が 1 本ある
+      </text>
+
+      {letters.map((l) => (
+        <g key={l.label}>
+          <circle cx={l.x} cy="52" r="18" fill={fill} stroke={stroke} strokeWidth="1.2" />
+          <text x={l.x} y="57" fontSize="14" fill={stroke} textAnchor="middle">
+            {l.label}
+          </text>
+        </g>
+      ))}
+
+      {/* 条件 1 本＝3 つを結ぶ 1 本の線 */}
+      <path d="M 92 82 L 92 90 L 298 90 L 298 82" stroke={accent} strokeWidth="1.4" fill="none" />
+      <path d="M 195 70 L 195 90" stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+      <text x="195" y="106" fontSize="10.5" fill={accent} textAnchor="middle">
+        条件 1 本（3 つのあいだの関係）
+      </text>
+
+      <path d="M 195 114 L 195 136" stroke={accent} strokeWidth="1.4" />
+      <path d="M 195 136 l -4 -7 l 8 0 z" fill={accent} />
+      <text x="205" y="132" fontSize="10.5" fill={accent}>
+        条件を使うと
+      </text>
+
+      <rect
+        x="92"
+        y="144"
+        width="206"
+        height="36"
+        rx="6"
+        fill={slot}
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="195" y="168" fontSize="13" fill={accent} textAnchor="middle">
+        〔　　〕〔　　〕〔　　〕
+      </text>
+
+      <text x="195" y="204" fontSize="11.5" fill={accent} textAnchor="middle">
+        条件が 1 本あるとき、自由に決められる文字はいくつ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * PROOF_RATIO_K（式と証明 系6 step8・辞書 条件つきの等式）：
+ * 2 つの比が同じ 1 つの値を指していることと、その値に名前をつける、
+ * という手つきだけを示す図。名前をつけたあとに各文字がどう書けるかは空欄のまま。
+ */
+export function ProofRatioK() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const slot = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="2 つの比が同じ 1 つの値を指し、その値に名前をつける手つきを示す図。名前をつけたあとに各文字がどう書けるかは空欄のまま"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの比が、同じ 1 つの値を指している
+      </text>
+
+      <rect x="30" y="36" width="120" height="34" rx="6" fill={fill} stroke={stroke} strokeWidth="1.2" />
+      <text x="90" y="58" fontSize="12" fill={stroke} textAnchor="middle">
+        x と 3 の比
+      </text>
+      <rect x="240" y="36" width="120" height="34" rx="6" fill={fill} stroke={stroke} strokeWidth="1.2" />
+      <text x="300" y="58" fontSize="12" fill={stroke} textAnchor="middle">
+        y と 4 の比
+      </text>
+
+      <path d="M 90 74 L 172 104" stroke={accent} strokeWidth="1.4" />
+      <path d="M 172 104 l -9 -1 l 3 -7 z" fill={accent} />
+      <path d="M 300 74 L 218 104" stroke={accent} strokeWidth="1.4" />
+      <path d="M 218 104 l 9 -1 l -3 -7 z" fill={accent} />
+
+      <circle cx="195" cy="126" r="22" fill={slot} stroke={accent} strokeWidth="1.4" />
+      <text x="195" y="132" fontSize="15" fill={accent} textAnchor="middle">
+        k
+      </text>
+      <text x="195" y="164" fontSize="10.5" fill={muted} textAnchor="middle">
+        同じ値のほうに、名前をつける
+      </text>
+
+      <rect
+        x="46"
+        y="172"
+        width="130"
+        height="30"
+        rx="5"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="111" y="192" fontSize="12" fill={accent} textAnchor="middle">
+        x ＝
+      </text>
+      <rect
+        x="214"
+        y="172"
+        width="130"
+        height="30"
+        rx="5"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="279" y="192" fontSize="12" fill={accent} textAnchor="middle">
+        y ＝
+      </text>
+
+      <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        名前をひとつつけると、文字はいくつに減る？
       </text>
     </svg>
   );

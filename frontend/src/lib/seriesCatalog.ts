@@ -197,6 +197,7 @@ import {
   PROOF_BINOMIAL_SERIES,
   PROOF_CUBIC_SERIES,
   PROOF_DIVISION_SERIES,
+  PROOF_EQUALITY_SERIES,
   PROOF_IDENTITY_SERIES,
   PROOF_RATIONAL_SERIES,
   PROOF_SERIES_LIST,
@@ -1036,6 +1037,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "分数式（約分・通分は、式になっても通じる）— 上下をかけ算の形に直せば小学校の作法がそのまま通じる。乗除・通分・引くと簡単になる場面・約分の逆読み・部分分数・となりが消える和まで",
+  },
+  {
+    series: PROOF_EQUALITY_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "等式の証明（道は 3 つ、向きは 1 つ）— 片方だけを変形する道・両方を第 3 の形へ運ぶ道・へだたりを 0 にする道。条件 1 本で文字が 1 つ減ること、比は共通の値に k と名前をつけること、そして「結論から出発してはいけない」理由まで",
   },
   /* 数Ⅱ: 複素数と方程式（式と証明の後・図形と方程式の前） */
   {
