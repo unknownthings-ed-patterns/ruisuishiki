@@ -13919,6 +13919,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<IDENT_ALL_VS_SOME>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IdentAllVsSome />
+            </div>
+          );
+        }
+        if (trimmed === "<<IDENT_SUBSTITUTE_CHECK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IdentSubstituteCheck />
+            </div>
+          );
+        }
+        if (trimmed === "<<IDENT_PARTIAL_FRACTION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <IdentPartialFraction />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -21775,6 +21796,286 @@ export function PolyPascalShift() {
 
       <text x="195" y="184" fontSize="11.5" fill={accent} textAnchor="middle">
         上の段の隣り合う 2 つは、下の段のどこに集まる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 「式と証明」系列4（恒等式と係数比較・algebra2_identity_01）の新規図 3 枚。
+ *
+ * Math.tsx 末尾の PolyCubeLayers / PolyCancelPair / PolyTwoStage を mirror。
+ * 統合担当が Math.tsx へ移し、マーカー分岐（<<IDENT_ALL_VS_SOME>> 等）を追加する。
+ *
+ * 3 枚とも「答えを書かない・最後の行を問いで終える」（figure-does-not-reveal-answer / Q5）。
+ * 値を具体的に描かないので、辞書エントリ（恒等式・係数比較法・部分分数分解）にも転用できる。
+ */
+
+/**
+ * IDENT_ALL_VS_SOME（式と証明 系4 step1・derivation・辞書 恒等式）：
+ * 同じ「＝」でも、成り立つ場所が「ぽつんと 1 点」なのか「数直線ぜんぶ」なのかが
+ * 違うことを対比する図。どの等式がどちらなのかという結論は書かない。
+ */
+export function IdentAllVsSome() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ticks = [0, 1, 2, 3, 4, 5, 6];
+  const xOf = (i: number) => 92 + i * 42;
+  return (
+    <svg
+      viewBox="0 0 390 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="上の数直線では 1 点だけが光り、下の数直線では全体が光っている対比の図。目の前の等号がどちらなのかという結論は書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じ「＝」でも、成り立つ場所の広さが違う
+      </text>
+
+      {/* 上：1 点だけ成り立つ */}
+      <text x="14" y="56" fontSize="10" fill={muted}>
+        ある等号
+      </text>
+      <path d="M 78 68 L 350 68" stroke={stroke} strokeWidth="1.2" />
+      {ticks.map((i) => (
+        <path
+          key={`a${i}`}
+          d={`M ${xOf(i)} 63 L ${xOf(i)} 73`}
+          stroke={stroke}
+          strokeWidth="1"
+        />
+      ))}
+      {ticks.map((i) => (
+        <circle
+          key={`ac${i}`}
+          cx={xOf(i)}
+          cy={68}
+          r={i === 3 ? 6 : 2.4}
+          fill={i === 3 ? accent : "none"}
+          stroke={i === 3 ? accent : muted}
+          strokeWidth="1.1"
+        />
+      ))}
+      <text x={xOf(3)} y="48" fontSize="10.5" fill={accent} textAnchor="middle">
+        ここだけ
+      </text>
+      <text x="214" y="90" fontSize="10" fill={muted} textAnchor="middle">
+        入れてみると、ほとんどの場所で外れる
+      </text>
+
+      {/* 下：どこでも成り立つ */}
+      <text x="14" y="132" fontSize="10" fill={muted}>
+        別の等号
+      </text>
+      <path
+        d="M 78 144 L 350 144"
+        stroke={accent}
+        strokeWidth="7"
+        strokeLinecap="round"
+        opacity="0.28"
+      />
+      <path d="M 78 144 L 350 144" stroke={stroke} strokeWidth="1.2" />
+      {ticks.map((i) => (
+        <path
+          key={`b${i}`}
+          d={`M ${xOf(i)} 139 L ${xOf(i)} 149`}
+          stroke={stroke}
+          strokeWidth="1"
+        />
+      ))}
+      {ticks.map((i) => (
+        <circle key={`bc${i}`} cx={xOf(i)} cy={144} r={4.6} fill={accent} />
+      ))}
+      <text x="214" y="120" fontSize="10.5" fill={accent} textAnchor="middle">
+        どこを試しても外れない
+      </text>
+      <text x="214" y="166" fontSize="10" fill={muted} textAnchor="middle">
+        点は数直線のすきまにも無限にある
+      </text>
+
+      <text x="195" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        目の前の等号は、どちらの約束をしている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * IDENT_SUBSTITUTE_CHECK（式と証明 系4 step7・derivation・辞書 係数比較法）：
+ * いくつかの点で合わせたあと、「では、ほかのすべての点でも合っているのか」を問う図。
+ * 十分性の結論（合っている／いない）は書かない。
+ */
+export function IdentSubstituteCheck() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warn = "color-mix(in oklch, var(--foreground) 45%, transparent)";
+  const chosen = [1, 3, 5];
+  const slots = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const xOf = (i: number) => 64 + i * 33;
+  return (
+    <svg
+      viewBox="0 0 390 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="いくつかの点では両辺が合ったことを示し、残りの点は未確認のままにした図。すべての点で合うかどうかの結論は書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        選んだ点だけ、両辺の値をくらべてみた
+      </text>
+
+      {/* 上段：左辺の値 */}
+      <text x="10" y="52" fontSize="10" fill={muted}>
+        左辺
+      </text>
+      {/* 下段：右辺の値 */}
+      <text x="10" y="106" fontSize="10" fill={muted}>
+        右辺
+      </text>
+
+      {slots.map((i) => {
+        const hit = chosen.includes(i);
+        return (
+          <g key={i}>
+            <circle
+              cx={xOf(i)}
+              cy={46}
+              r="7"
+              fill={hit ? "color-mix(in oklch, var(--accent) 22%, transparent)" : "none"}
+              stroke={hit ? accent : warn}
+              strokeWidth="1.1"
+              strokeDasharray={hit ? undefined : "3 3"}
+            />
+            <circle
+              cx={xOf(i)}
+              cy={100}
+              r="7"
+              fill={hit ? "color-mix(in oklch, var(--accent) 22%, transparent)" : "none"}
+              stroke={hit ? accent : warn}
+              strokeWidth="1.1"
+              strokeDasharray={hit ? undefined : "3 3"}
+            />
+            {hit ? (
+              <>
+                <path
+                  d={`M ${xOf(i)} 55 L ${xOf(i)} 91`}
+                  stroke={accent}
+                  strokeWidth="1.4"
+                />
+                <text x={xOf(i)} y="78" fontSize="11" fill={accent} textAnchor="middle">
+                  ＝
+                </text>
+              </>
+            ) : (
+              <text x={xOf(i)} y="78" fontSize="11" fill={warn} textAnchor="middle">
+                ？
+              </text>
+            )}
+          </g>
+        );
+      })}
+
+      <path d="M 52 126 L 350 126" stroke={stroke} strokeWidth="1.2" />
+      {slots.map((i) => (
+        <path
+          key={`t${i}`}
+          d={`M ${xOf(i)} 121 L ${xOf(i)} 131`}
+          stroke={stroke}
+          strokeWidth="1"
+        />
+      ))}
+      <text x="195" y="148" fontSize="10" fill={muted} textAnchor="middle">
+        入れられる値は、この目盛りのあいだにも無限にある
+      </text>
+      <text x="195" y="168" fontSize="10.5" fill={accent} textAnchor="middle">
+        確かめたのは、まるを付けた数か所だけ
+      </text>
+
+      <text x="195" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        いくつかの点で合ったことは、すべての点で合うことを保証する？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * IDENT_PARTIAL_FRACTION（式と証明 系4 step10・辞書 部分分数分解）：
+ * 分母が 2 つの因数の積になっている 1 つの分数を、2 つの分数に割り振る図。
+ * 分子に入る係数は空欄のまま（分解後の係数は書かない）。
+ */
+export function IdentPartialFraction() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="分母が 2 つの因数の積になっている 1 つの分数を、2 つの分数の和に割り振る図。分子に入る係数は空欄のままにする"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        分母が 2 つの因数でできている、1 つの分数
+      </text>
+
+      {/* もとの分数 */}
+      <rect x="118" y="32" width="154" height="52" rx="6" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="52" fontSize="12" fill={stroke} textAnchor="middle">
+        もとの分子
+      </text>
+      <path d="M 134 60 L 256 60" stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="76" fontSize="12" fill={stroke} textAnchor="middle">
+        （　あ　）（　い　）
+      </text>
+
+      {/* 分岐 */}
+      <path d="M 195 84 L 195 100" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 100 L 290 100" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 100 L 100 124" stroke={accent} strokeWidth="1.4" />
+      <path d="M 290 100 L 290 124" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 124 l -4 -7 l 8 0 z" fill={accent} />
+      <path d="M 290 124 l -4 -7 l 8 0 z" fill={accent} />
+      <text x="195" y="94" fontSize="10.5" fill={accent} textAnchor="middle">
+        ばらして割り振る
+      </text>
+
+      {/* 分けたあとの 2 つ */}
+      {[
+        { cx: 100, den: "（　あ　）" },
+        { cx: 290, den: "（　い　）" },
+      ].map((f) => (
+        <g key={f.den}>
+          <rect
+            x={f.cx - 62}
+            y="126"
+            width="124"
+            height="52"
+            rx="6"
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.2"
+            strokeDasharray="5 3"
+          />
+          <text x={f.cx} y="146" fontSize="13" fill={accent} textAnchor="middle">
+            □
+          </text>
+          <path d={`M ${f.cx - 48} 154 L ${f.cx + 48} 154`} stroke={stroke} strokeWidth="1.2" />
+          <text x={f.cx} y="170" fontSize="12" fill={stroke} textAnchor="middle">
+            {f.den}
+          </text>
+        </g>
+      ))}
+      <text x="195" y="156" fontSize="13" fill={muted} textAnchor="middle">
+        ＋
+      </text>
+
+      <text x="195" y="212" fontSize="11.5" fill={accent} textAnchor="middle">
+        2 つの □ は、どんな条件を満たせばもとの分数に戻る？
       </text>
     </svg>
   );

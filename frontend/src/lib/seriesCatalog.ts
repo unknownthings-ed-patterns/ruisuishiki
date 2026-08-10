@@ -197,6 +197,7 @@ import {
   PROOF_BINOMIAL_SERIES,
   PROOF_CUBIC_SERIES,
   PROOF_DIVISION_SERIES,
+  PROOF_IDENTITY_SERIES,
   PROOF_RATIONAL_SERIES,
   PROOF_SERIES_LIST,
 } from "./seriesProof";
@@ -1019,6 +1020,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "整式の割り算と除法の基本式（終わりの合図をさがす）— 整数の「余りは割る数より小さい」が、式では「次数が低い」に引っ越す。筆算・欠けた次数・割られる式と割る式の逆算・割り切れる条件・余りの次数の上限・1 点で覗く道まで",
+  },
+  {
+    series: PROOF_IDENTITY_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "恒等式と係数比較（すべての値の約束を、有限で確かめる）— 1 点だけの約束と、すべての点の約束は住所が違う。係数をくらべる道、値を入れる速い道とその落とし穴、割り算を恒等式として立てる、部分分数分解まで",
   },
   {
     series: PROOF_RATIONAL_SERIES,
