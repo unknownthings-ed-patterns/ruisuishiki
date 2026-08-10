@@ -147,6 +147,13 @@ grep -n '\$__' src/lib/series*.ts src/lib/glossary.ts  # ヒット 0 である�
 
 # 6) 丸めた小数を答えさせていないか（判定は TOL=1e-6 厳密。「約」「四捨五入」で答えを作らない）
 grep -nE '四捨五入|およそ.*答え|約 ?[0-9]+\.[0-9]+ ?(と答|で答)' src/lib/series*.ts
+
+# 7) 辞書のキーに「・」を含むなら引用符で囲む（JS 識別子に使えない文字）
+#    npx tsc --noEmit は通ってしまい、npm run build ではじめて落ちる——build まで必ず走らせる
+grep -nE '^  [^"'"'"' ][^:]*・[^:]*: \{' src/lib/glossary.ts   # ヒット 0 であること
+
+# 8) 設計用語が学習者に露出していないか（derivation の定型見出し「ここが胚細胞」だけは例外）
+grep -nE '必然性の1問|合流 ?step|材料置換|オペレータ|C1[0-9]|Q[1-8]' src/lib/series*.ts
 ```
 
 これらを通してから commit / push する。
