@@ -13863,6 +13863,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<FRAC_CANCEL_FACTOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FracCancelFactor />
+            </div>
+          );
+        }
+        if (trimmed === "<<FRAC_TELESCOPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <FracTelescope />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -20954,6 +20968,173 @@ export function PolyTwoStage() {
 
       <text x="195" y="220" fontSize="11.5" fill={accent} textAnchor="middle">
         1 段目で何を外すと、2 段目の形が見えてくる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * FRAC_CANCEL_FACTOR（式と証明 系5 step1・derivation・辞書 約分／分数式）：
+ * 数の分数で「共通の数がかけ算の部品として入っていた」ことを左に置き、
+ * 右に同じ配置を空のかっこで並べて、上下に同じかたまりがいる関係だけを示す図。
+ * 約分後の式も、取り除くかたまりの中身（(x+3) など）も書かない。
+ */
+export function FracCancelFactor() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const chip = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const hit = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="左は数の分数を共通の数のかけ算として書いた形、右は同じ配置を空のかっこで並べた形。上と下に同じかたまりがいる関係だけを示し、取り除いたあとの式は書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        上も下も「かたまりのかけ算」に直すと、同じ顔がそろう
+      </text>
+
+      {/* 左：数の分数（既知） */}
+      <text x="96" y="40" fontSize="10.5" fill={muted} textAnchor="middle">
+        数の分数（知っている形）
+      </text>
+      <rect x="34" y="50" width="34" height="28" rx="5" fill={hit} stroke={accent} strokeWidth="1.3" />
+      <text x="51" y="69" fontSize="12.5" fill={stroke} textAnchor="middle">6</text>
+      <text x="76" y="69" fontSize="12" fill={muted} textAnchor="middle">×</text>
+      <rect x="88" y="50" width="34" height="28" rx="5" fill={chip} stroke={stroke} strokeWidth="1.1" />
+      <text x="105" y="69" fontSize="12.5" fill={stroke} textAnchor="middle">3</text>
+      <path d="M 30 88 L 126 88" stroke={stroke} strokeWidth="1.4" />
+      <rect x="34" y="98" width="34" height="28" rx="5" fill={hit} stroke={accent} strokeWidth="1.3" />
+      <text x="51" y="117" fontSize="12.5" fill={stroke} textAnchor="middle">6</text>
+      <text x="76" y="117" fontSize="12" fill={muted} textAnchor="middle">×</text>
+      <rect x="88" y="98" width="34" height="28" rx="5" fill={chip} stroke={stroke} strokeWidth="1.1" />
+      <text x="105" y="117" fontSize="12.5" fill={stroke} textAnchor="middle">4</text>
+      <path d="M 51 78 L 51 98" stroke={accent} strokeWidth="1.3" strokeDasharray="4 3" />
+      <text x="96" y="142" fontSize="10" fill={muted} textAnchor="middle">
+        （もとは 18 と 24）
+      </text>
+
+      {/* 仕切り */}
+      <path d="M 160 46 L 160 130" stroke={muted} strokeWidth="1" strokeDasharray="3 4" />
+
+      {/* 右：式の分数（未知） */}
+      <text x="290" y="40" fontSize="10.5" fill={muted} textAnchor="middle">
+        分子と分母が式のとき
+      </text>
+      <rect x="200" y="50" width="60" height="28" rx="5" fill={hit} stroke={accent} strokeWidth="1.3" />
+      <text x="230" y="69" fontSize="12" fill={stroke} textAnchor="middle">（　　）</text>
+      <text x="268" y="69" fontSize="12" fill={muted} textAnchor="middle">×</text>
+      <rect x="278" y="50" width="60" height="28" rx="5" fill={chip} stroke={stroke} strokeWidth="1.1" />
+      <text x="308" y="69" fontSize="12" fill={stroke} textAnchor="middle">（　　）</text>
+      <path d="M 196 88 L 342 88" stroke={stroke} strokeWidth="1.4" />
+      <rect x="200" y="98" width="60" height="28" rx="5" fill={hit} stroke={accent} strokeWidth="1.3" />
+      <text x="230" y="117" fontSize="12" fill={stroke} textAnchor="middle">（　　）</text>
+      <text x="268" y="117" fontSize="12" fill={muted} textAnchor="middle">×</text>
+      <rect x="278" y="98" width="60" height="28" rx="5" fill={chip} stroke={stroke} strokeWidth="1.1" />
+      <text x="308" y="117" fontSize="12" fill={stroke} textAnchor="middle">（　　）</text>
+      <path d="M 230 78 L 230 98" stroke={accent} strokeWidth="1.3" strokeDasharray="4 3" />
+      <text x="290" y="142" fontSize="10" fill={accent} textAnchor="middle">
+        同じ顔がそろう場所
+      </text>
+
+      <text x="195" y="172" fontSize="11" fill={muted} textAnchor="middle">
+        たし算で並んでいるままの式では、この形にならない
+      </text>
+      <text x="195" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        上と下でそろった 2 つは、たがいに何をする？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * FRAC_TELESCOPE（式と証明 系5 step6・step10 の下敷き・derivation・辞書 通分）：
+ * 同じ部分を持つ 2 つの量の差をとると、重なった分が消えて両端だけが残る関係を、
+ * 帯の重なりと、となりどうしが向かいあう小片の列で示す図。
+ * 差をとったあとに残る式（結果の分母・和の値）は書かない。
+ */
+export function FracTelescope() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const barA = "color-mix(in oklch, var(--foreground) 10%, transparent)";
+  const barB = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 248"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="同じ部分を持つ 2 つの帯の差をとると、重なった分が消えて両端だけが残ることを示す図。残った量がいくつになるかは書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じところを持っている 2 つを、引いてみると
+      </text>
+
+      {/* 上の帯 */}
+      <rect x="46" y="34" width="230" height="26" rx="4" fill={barA} stroke={stroke} strokeWidth="1.2" />
+      <text x="26" y="52" fontSize="10.5" fill={muted} textAnchor="middle">前</text>
+      {/* 下の帯 */}
+      <rect x="116" y="72" width="230" height="26" rx="4" fill={barB} stroke={stroke} strokeWidth="1.2" />
+      <text x="366" y="90" fontSize="10.5" fill={muted} textAnchor="middle">後</text>
+
+      {/* 重なりの帯 */}
+      <rect
+        x="116"
+        y="34"
+        width="160"
+        height="64"
+        rx="4"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 3"
+      />
+      <text x="196" y="116" fontSize="10.5" fill={accent} textAnchor="middle">
+        ここが同じ分
+      </text>
+
+      <path d="M 195 126 L 195 146" stroke={accent} strokeWidth="1.4" />
+      <path d="M 195 146 l -4 -7 l 8 0 z" fill={accent} />
+      <text x="205" y="142" fontSize="10.5" fill={accent}>
+        差をとる
+      </text>
+
+      {/* 残るのは両端 */}
+      <rect x="46" y="156" width="70" height="26" rx="4" fill={barA} stroke={stroke} strokeWidth="1.2" />
+      <rect x="276" y="156" width="70" height="26" rx="4" fill={barB} stroke={stroke} strokeWidth="1.2" />
+      <path d="M 122 169 L 270 169" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+      <text x="196" y="165" fontSize="10" fill={muted} textAnchor="middle">
+        空いた
+      </text>
+
+      {/* となりどうしが向かいあう小片（たくさん並べたとき） */}
+      {[0, 1, 2].map((k) => (
+        <g key={k}>
+          <text x={126 + k * 62} y="206" fontSize="11" fill={muted} textAnchor="middle">
+            −
+          </text>
+          <text x={158 + k * 62} y="206" fontSize="11" fill={muted} textAnchor="middle">
+            ＋
+          </text>
+          <path
+            d={`M 132 ${210} q 10 8 20 0`}
+            stroke={accent}
+            strokeWidth="1.2"
+            fill="none"
+            transform={`translate(${k * 62} 0)`}
+          />
+        </g>
+      ))}
+      <text x="60" y="206" fontSize="10" fill={muted} textAnchor="middle">
+        並べると
+      </text>
+
+      <text x="195" y="236" fontSize="11.5" fill={accent} textAnchor="middle">
+        引いたのに短くなるのは、どこが重なっていたから？
       </text>
     </svg>
   );

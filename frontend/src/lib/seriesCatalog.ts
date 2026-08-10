@@ -193,7 +193,11 @@ import {
   MIDDLE_SCHOOL_SERIES_LIST,
   MIDDLE_SIMUL_SERIES,
 } from "./seriesMiddle";
-import { PROOF_CUBIC_SERIES, PROOF_SERIES_LIST } from "./seriesProof";
+import {
+  PROOF_CUBIC_SERIES,
+  PROOF_RATIONAL_SERIES,
+  PROOF_SERIES_LIST,
+} from "./seriesProof";
 import { STATISTICS_SERIES_LIST } from "./seriesStats";
 import type { LearnerSeries, VariationOp } from "./types";
 
@@ -997,6 +1001,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "3次式の展開と因数分解（公式は分配のあと）— 2 乗の結果にもう 1 段ぶん分配すると 3 乗が出る。符号を反転して差の公式、中間が対で消えて 3 乗の和・差、共通因数を外す 2 段構え、因数定理との交差検算まで",
+  },
+  {
+    series: PROOF_RATIONAL_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "分数式（約分・通分は、式になっても通じる）— 上下をかけ算の形に直せば小学校の作法がそのまま通じる。乗除・通分・引くと簡単になる場面・約分の逆読み・部分分数・となりが消える和まで",
   },
   /* 数Ⅱ: 複素数と方程式（式と証明の後・図形と方程式の前） */
   {
