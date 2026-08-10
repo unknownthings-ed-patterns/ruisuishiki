@@ -194,6 +194,7 @@ import {
   MIDDLE_SIMUL_SERIES,
 } from "./seriesMiddle";
 import {
+  PROOF_AM_GM_SERIES,
   PROOF_BINOMIAL_SERIES,
   PROOF_CUBIC_SERIES,
   PROOF_DIVISION_SERIES,
@@ -1054,6 +1055,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "式と証明",
     shortDescription:
       "不等式の証明（大小を、へだたりの符号に持ち替える）— 条件が符号を決める型、平方が床をつくる型、判別式との交差検算、両辺 0 以上なら 2 乗して比べる型、近似では決まらない大小、そして反例で倒す型まで",
+  },
+  {
+    series: PROOF_AM_GM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "式と証明",
+    shortDescription:
+      "相加平均・相乗平均（等号が成立する場所が、いちばんを指す）— 和を保つならし方と積を保つならし方の大小。差が平方になる理由、積が定数なら和の最小、切り分け方を自分で決める、等号が変域の外に落ちる山場、周が一定なら正方形まで",
   },
   /* 数Ⅱ: 複素数と方程式（式と証明の後・図形と方程式の前） */
   {

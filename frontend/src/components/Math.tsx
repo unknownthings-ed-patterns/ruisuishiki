@@ -13982,6 +13982,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<AMGM_BALANCE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <AmgmBalance />
+            </div>
+          );
+        }
+        if (trimmed === "<<AMGM_PAIRING>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <AmgmPairing />
+            </div>
+          );
+        }
+        if (trimmed === "<<AMGM_EQUALITY_FAIL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <AmgmEqualityFail />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -22563,6 +22584,233 @@ export function IneqSquareBoth() {
 
       <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
         下の世界で読めた向きは、そのまま上へ戻せる？ 戻せるのはどんなとき？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 系列8「相加平均・相乗平均」の新規図 3 枚（ドラフト）。
+ *
+ * 統合時に frontend/src/components/Math.tsx の末尾へ移し、
+ * MathText のマーカー分岐（<<AMGM_BALANCE>> / <<AMGM_PAIRING>> /
+ * <<AMGM_EQUALITY_FAIL>>）を追加する。ここでは関数だけを並べる。
+ *
+ * 3 枚とも「答えを書かない・最後の行を問いで終える」を守っている。
+ */
+
+/**
+ * AMGM_BALANCE（式と証明 系8 step1・derivation・辞書 相加平均・相乗平均の関係）：
+ * 同じ長さのひもを 1 回切って長方形をつくる図。切る場所を 3 通り示し、
+ * 囲える広さは「？」のままにする。**面積がいちばん大きくなる切り方（正方形）は描かない**。
+ */
+export function AmgmBalance() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillA = "color-mix(in oklch, var(--foreground) 7%, transparent)";
+  const rope = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  // 半周は 3 つとも同じ（12 めもり）。切る場所だけを変える。
+  const cuts = [
+    { cx: 68, p: 2, mark: "①" },
+    { cx: 195, p: 4, mark: "②" },
+    { cx: 322, p: 5, mark: "③" },
+  ];
+  const SCALE = 5; // 1 めもり = 5px
+  const HALF = 12; // 半周のめもり数
+  const BAR = 72; // ひも（半周ぶん）の描画幅
+  const BASE = 158; // 長方形の底辺の y
+
+  return (
+    <svg
+      viewBox="0 0 390 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="同じ長さのひもを 1 回切って長方形をつくる図。切る場所を 3 通り示し、囲える広さはすべて疑問符のままにしてある。いちばん広くなる切り方は描かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じ長さのひもを 1 回切って、長方形をつくる
+      </text>
+
+      {cuts.map(({ cx, p, mark }) => {
+        const left = cx - BAR / 2;
+        const cut = left + (BAR * p) / HALF;
+        const w = p * SCALE;
+        const h = (HALF - p) * SCALE;
+        return (
+          <g key={mark}>
+            {/* ひも（半周ぶん）と切る場所 */}
+            <rect x={left} y={40} width={BAR} height="9" rx="4" fill={rope} stroke={stroke} strokeWidth="1" />
+            <path d={`M ${cut} 34 L ${cut} 55`} stroke={accent} strokeWidth="1.6" />
+            <text x={cut} y={30} fontSize="9.5" fill={accent} textAnchor="middle">
+              ここで切る
+            </text>
+
+            {/* 切ってできた 2 つの長さを、たてと横にした長方形 */}
+            <rect
+              x={cx - w / 2}
+              y={BASE - h}
+              width={w}
+              height={h}
+              fill={fillA}
+              stroke={stroke}
+              strokeWidth="1.2"
+            />
+            <text x={cx} y={BASE - h / 2 + 4} fontSize="12" fill={stroke} textAnchor="middle">
+              ？
+            </text>
+            <text x={cx} y={BASE + 15} fontSize="10" fill={muted} textAnchor="middle">
+              切り方 {mark}
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="195" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        切る場所を動かすと、囲える広さはどこでいちばん大きくなる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * AMGM_PAIRING（式と証明 系8 step8・derivation・辞書 相加平均・相乗平均の関係）：
+ * 1 つの式を「2 つのかたまり」に切り分ける切り方が何通りかあることだけを示す図。
+ * どちらの切り方が正しいかも、かけ合わせた結果も、最小値も書かない。
+ */
+export function AmgmPairing() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const chip = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const rows = [
+    { y: 58, label: "切り方 ①" },
+    { y: 122, label: "切り方 ②" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="1 つの式を 2 つのかたまりに切り分ける切り方が何通りかあることを示す図。かけ合わせた結果も、どちらの切り方がよいかも書かない"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ式でも、2 つのかたまりへの切り分け方は 1 通りではない
+      </text>
+
+      {rows.map((r) => (
+        <g key={r.label}>
+          <text x="14" y={r.y + 24} fontSize="10" fill={muted}>
+            {r.label}
+          </text>
+          <rect x="84" y={r.y} width="86" height="38" rx="6" fill={chip} stroke={stroke} strokeWidth="1.2" />
+          <text x="127" y={r.y + 24} fontSize="13" fill={stroke} textAnchor="middle">
+            （　　）
+          </text>
+          <text x="182" y={r.y + 25} fontSize="13" fill={accent} textAnchor="middle">
+            ×
+          </text>
+          <rect x="194" y={r.y} width="86" height="38" rx="6" fill={chip} stroke={stroke} strokeWidth="1.2" />
+          <text x="237" y={r.y + 24} fontSize="13" fill={stroke} textAnchor="middle">
+            （　　）
+          </text>
+          <text x="296" y={r.y + 25} fontSize="13" fill={stroke}>
+            ＝
+          </text>
+          <rect
+            x="318"
+            y={r.y}
+            width="54"
+            height="38"
+            rx="6"
+            fill="none"
+            stroke={accent}
+            strokeWidth="1.2"
+            strokeDasharray="5 3"
+          />
+          <text x="345" y={r.y + 25} fontSize="13" fill={accent} textAnchor="middle">
+            ？
+          </text>
+        </g>
+      ))}
+
+      <text x="195" y="186" fontSize="11.5" fill={accent} textAnchor="middle">
+        かけ合わせたときに文字が消えるのは、どちらの切り方？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * AMGM_EQUALITY_FAIL（式と証明 系8 step9・derivation・辞書 等号成立条件）：
+ * 「これより下には行けない床」に実際にさわれる点が、動ける範囲の外にある図。
+ * 床の高さも、範囲の中での本当のいちばん低い値も書かない（どちらも「？」のまま）。
+ */
+export function AmgmEqualityFail() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const FLOOR = 159; // 床（下限）の y
+  const TOUCH = 92.8; // 床にさわれる点の x
+  const LEFT = 141.4; // 動ける範囲の左端の x
+  const curve =
+    "60,125 63.6,137.2 68.5,146.9 74.6,153.5 80.7,156.9 92.8,159 105,157.7 " +
+    "117.1,154.9 141.4,146.9 165.7,137.2 202.1,121.3 238.5,104.5 287.1,81.5 360,46.4";
+  return (
+    <svg
+      viewBox="0 0 390 224"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="下に行けない床の線と、その床にさわれる点、そして動ける範囲を示す図。さわれる点は範囲の外にある。床の高さも範囲の中での最小の値も書かない"
+    >
+      <text x="195" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        下に行けない床と、動ける範囲
+      </text>
+
+      {/* 動ける範囲の帯 */}
+      <rect x={LEFT} y="28" width={370 - LEFT} height={175 - 28} fill={band} />
+      <path d={`M ${LEFT} 28 L ${LEFT} 175`} stroke={accent} strokeWidth="1.4" />
+      <text x={(LEFT + 370) / 2} y="42" fontSize="10.5" fill={accent} textAnchor="middle">
+        動ける範囲
+      </text>
+
+      {/* 軸 */}
+      <path d="M 50 175 L 372 175" stroke={stroke} strokeWidth="1.1" />
+      <path d="M 50 28 L 50 175" stroke={stroke} strokeWidth="1.1" />
+
+      {/* 床（下限） */}
+      <path
+        d={`M 50 ${FLOOR} L 372 ${FLOOR}`}
+        stroke={muted}
+        strokeWidth="1.2"
+        strokeDasharray="6 4"
+      />
+      <text x="54" y={FLOOR - 6} fontSize="9.5" fill={muted}>
+        これより下には行けない床
+      </text>
+
+      {/* 式の値のようす */}
+      <polyline points={curve} fill="none" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 床にさわれる点（範囲の外） */}
+      <circle cx={TOUCH} cy={FLOOR} r="3.6" fill={accent} />
+      <path d={`M ${TOUCH} ${FLOOR} L ${TOUCH} 184`} stroke={accent} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={TOUCH - 4} y="196" fontSize="9.5" fill={accent} textAnchor="middle">
+        床にさわれる点
+      </text>
+
+      {/* 範囲の左端の上にある点 */}
+      <circle cx={LEFT} cy="146.9" r="3.6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x={LEFT + 10} y="140" fontSize="12" fill={accent}>
+        ？
+      </text>
+
+      <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        床にさわれる点が範囲の外にあるとき、範囲の中でいちばん低いのはどこ？
       </text>
     </svg>
   );
