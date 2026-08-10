@@ -13877,6 +13877,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<POLY_DEGREE_RULER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyDegreeRuler />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_DIVISION_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyDivisionStairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<POLY_REMAINDER_DEGREE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <PolyRemainderDegree />
+            </div>
+          );
+        }
         if (trimmed === "<<INT_PLACE_SPLIT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -21135,6 +21156,315 @@ export function FracTelescope() {
 
       <text x="195" y="236" fontSize="11.5" fill={accent} textAnchor="middle">
         引いたのに短くなるのは、どこが重なっていたから？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 「式と証明」系列3（整式の割り算と除法の基本式）の新規図 3 枚。
+ * 統合時に frontend/src/components/Math.tsx の末尾へ移し、
+ * 同ファイルのマーカー分岐（<<...>>）にも 3 件を足す（統合担当が行う）。
+ *
+ * すべて「答えを書かない・最後の行を問いで終える」を守っている。
+ */
+
+/**
+ * POLY_DEGREE_RULER（式と証明 系3 step1・derivation・辞書 整式/次数）：
+ * 項ごとの背の高さ（次数）を目もりの上にならべ、いちばん高いものを見るという
+ * 関係だけを示す図。目もりに乗せられる式かどうかの線引きも問いとして添える。
+ * 問題の式の次数も、どの式が整式かも書かない。
+ */
+export function PolyDegreeRuler() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const chip = "color-mix(in oklch, var(--foreground) 7%, transparent)";
+  const warm = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const ticks = [0, 1, 2, 3, 4, 5];
+  // 一般の説明用の配置（問題の式とは無関係）。項が乗る目もりだけを示す。
+  const terms = [
+    { label: "項ア", at: 1 },
+    { label: "項イ", at: 3 },
+    { label: "項ウ", at: 0 },
+  ];
+  const xOf = (t: number) => 52 + t * 56;
+  return (
+    <svg
+      viewBox="0 0 390 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="項ごとの次数を目もりの上にならべ、いちばん高いものを見ることを示すものさしの図。式全体の次数の欄は空のまま。下段は、文字がどこにいる式ならこの目もりに乗せられるかを問う"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        項ごとの背の高さをならべてみる
+      </text>
+
+      {/* ものさし */}
+      <path d={`M ${xOf(0) - 22} 104 L ${xOf(5) + 22} 104`} stroke={stroke} strokeWidth="1.3" />
+      {ticks.map((t) => (
+        <g key={t}>
+          <path d={`M ${xOf(t)} 104 L ${xOf(t)} 112`} stroke={stroke} strokeWidth="1.1" />
+          <text x={xOf(t)} y={126} fontSize="10.5" fill={muted} textAnchor="middle">
+            {t}
+          </text>
+        </g>
+      ))}
+      <text x={xOf(5) + 26} y={126} fontSize="10" fill={muted}>
+        次数
+      </text>
+
+      {/* 項のチップ */}
+      {terms.map((tm, i) => (
+        <g key={tm.label}>
+          <rect
+            x={xOf(tm.at) - 24}
+            y={52 + i * 0}
+            width="48"
+            height="26"
+            rx="5"
+            fill={chip}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x={xOf(tm.at)} y={70} fontSize="11" fill={stroke} textAnchor="middle">
+            {tm.label}
+          </text>
+          <path
+            d={`M ${xOf(tm.at)} 78 L ${xOf(tm.at)} 102`}
+            stroke={muted}
+            strokeWidth="1"
+            strokeDasharray="3 3"
+          />
+        </g>
+      ))}
+
+      {/* 式全体の次数（空欄） */}
+      <rect x="126" y="140" width="138" height="30" rx="6" fill={warm} stroke={accent} strokeWidth="1.2" />
+      <text x="195" y="160" fontSize="11.5" fill={stroke} textAnchor="middle">
+        式全体の次数 ＝ ？
+      </text>
+
+      {/* 線引きの問い */}
+      <rect
+        x="24"
+        y="182"
+        width="342"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="5 3"
+      />
+      <text x="195" y="200" fontSize="10.5" fill={muted} textAnchor="middle">
+        文字が「下」「中」「肩」「関数のなか」にいる式も、この目もりに乗る？
+      </text>
+
+      <text x="195" y="228" fontSize="11.5" fill={accent} textAnchor="middle">
+        いちばん高い目もりにいるのは、どの項？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_DIVISION_STAIRS（式と証明 系3 step2・derivation・辞書 除法の基本式）：
+ * いちばん高い項をそろえて引く、という筆算の階段のかたちだけを示す図。
+ * 商・余り・各段の式は書かない（空欄のまま）。
+ */
+export function PolyDivisionStairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cell = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const cols = ["高い", "", "", "低い"];
+  const colX = (k: number) => 150 + k * 52;
+  return (
+    <svg
+      viewBox="0 0 390 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="整式の筆算を階段として示す図。いちばん高い項をそろえて引くことを 2 段ぶん描き、商・余り・各段の式はすべて空欄のまま"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        いちばん高いところをそろえて、引く
+      </text>
+
+      {/* 商の段（空欄） */}
+      <text x="30" y="48" fontSize="10" fill={muted}>
+        上に立つもの
+      </text>
+      {[0, 1].map((k) => (
+        <rect
+          key={`q${k}`}
+          x={colX(k)}
+          y={34}
+          width="44"
+          height="22"
+          rx="4"
+          fill="none"
+          stroke={accent}
+          strokeWidth="1.1"
+          strokeDasharray="4 3"
+        />
+      ))}
+
+      {/* 割る式 */}
+      <rect x="24" y="66" width="104" height="30" rx="5" fill={cell} stroke={stroke} strokeWidth="1.2" />
+      <text x="76" y="86" fontSize="11" fill={stroke} textAnchor="middle">
+        割る式（　　）
+      </text>
+      <path d="M 134 62 L 134 100" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 134 62 L 350 62" stroke={stroke} strokeWidth="1.2" />
+
+      {/* 割られる式の桁 */}
+      {cols.map((c, k) => (
+        <g key={`a${k}`}>
+          <rect x={colX(k)} y={68} width="44" height="26" rx="4" fill={cell} stroke={stroke} strokeWidth="1.1" />
+          <text x={colX(k) + 22} y={58} fontSize="9.5" fill={muted} textAnchor="middle">
+            {c}
+          </text>
+        </g>
+      ))}
+
+      {/* 1 段目 */}
+      {[0, 1].map((k) => (
+        <rect
+          key={`s1${k}`}
+          x={colX(k)}
+          y={104}
+          width="44"
+          height="24"
+          rx="4"
+          fill="none"
+          stroke={muted}
+          strokeWidth="1.1"
+          strokeDasharray="4 3"
+        />
+      ))}
+      <path d={`M ${colX(0) - 12} 134 L ${colX(3) + 44} 134`} stroke={stroke} strokeWidth="1" />
+      <text x="30" y="122" fontSize="10" fill={accent}>
+        ① そろえて引く
+      </text>
+
+      {/* 1 段目のあとの残り */}
+      {[1, 2, 3].map((k) => (
+        <rect
+          key={`r1${k}`}
+          x={colX(k)}
+          y={142}
+          width="44"
+          height="24"
+          rx="4"
+          fill={cell}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+      <text x="30" y="158" fontSize="10" fill={muted}>
+        残り
+      </text>
+
+      {/* 2 段目 */}
+      {[1, 2].map((k) => (
+        <rect
+          key={`s2${k}`}
+          x={colX(k)}
+          y={174}
+          width="44"
+          height="24"
+          rx="4"
+          fill="none"
+          stroke={muted}
+          strokeWidth="1.1"
+          strokeDasharray="4 3"
+        />
+      ))}
+      <path d={`M ${colX(1) - 12} 204 L ${colX(3) + 44} 204`} stroke={stroke} strokeWidth="1" />
+      <text x="30" y="192" fontSize="10" fill={accent}>
+        ② もう一度？
+      </text>
+
+      <text x="195" y="230" fontSize="11.5" fill={accent} textAnchor="middle">
+        残ったものは、どこまで低くなれば、もう引けない？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * POLY_REMAINDER_DEGREE（式と証明 系3 step9・derivation・辞書 除法の基本式）：
+ * 次数を段に見立て、割る式の次数より下の帯に余りが落ちることだけを示す図。
+ * 余りの式も、その係数も書かない。
+ */
+export function PolyRemainderDegree() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const upper = "color-mix(in oklch, var(--foreground) 5%, transparent)";
+  const lower = "color-mix(in oklch, var(--accent) 13%, transparent)";
+  const levels = [
+    { y: 44, label: "3 次" },
+    { y: 74, label: "2 次" },
+    { y: 104, label: "1 次" },
+    { y: 134, label: "定数（0 次）" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 390 224"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="次数を段に見立て、割る式の次数より下の帯に余りが落ちることを示す図。余りの式も係数も書かない"
+    >
+      <text x="195" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        次数を段に見立てると
+      </text>
+
+      {/* 上の帯（まだ取り出せる） */}
+      <rect x="96" y="34" width="222" height="56" rx="6" fill={upper} stroke={muted} strokeWidth="1" />
+      {/* 下の帯（余りが落ちる） */}
+      <rect x="96" y="94" width="222" height="56" rx="6" fill={lower} stroke={accent} strokeWidth="1.2" />
+
+      {levels.map((l) => (
+        <g key={l.label}>
+          <text x="86" y={l.y + 4} fontSize="10.5" fill={muted} textAnchor="end">
+            {l.label}
+          </text>
+          <path d={`M 96 ${l.y} L 318 ${l.y}`} stroke={muted} strokeWidth="0.8" strokeDasharray="3 4" />
+        </g>
+      ))}
+
+      {/* 割る式の高さ */}
+      <path d="M 88 90 L 330 90" stroke={stroke} strokeWidth="1.6" />
+      <text x="334" y="86" fontSize="10" fill={stroke}>
+        割る式
+      </text>
+      <text x="208" y="60" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここにいる間は、まだ取り出せる
+      </text>
+
+      {/* 余りの空欄 */}
+      <rect x="150" y="106" width="116" height="30" rx="6" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="5 3" />
+      <text x="208" y="126" fontSize="11.5" fill={stroke} textAnchor="middle">
+        余り ＝ ？
+      </text>
+
+      {/* 落ちる矢印 */}
+      <path d="M 122 60 L 122 112" stroke={accent} strokeWidth="1.4" />
+      <path d="M 122 112 l -4 -8 l 8 0 z" fill={accent} />
+      <text x="118" y="168" fontSize="10" fill={accent} textAnchor="middle">
+        押し下げる
+      </text>
+
+      <text x="195" y="196" fontSize="11" fill={muted} textAnchor="middle">
+        下の帯に置ける式には、文字がいくつまで残れる？
+      </text>
+      <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        帯の高さが決まると、余りの形は先に見積もれる？
       </text>
     </svg>
   );
