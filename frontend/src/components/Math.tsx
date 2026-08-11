@@ -14164,6 +14164,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CALC_SECANT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSecant />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_SECANT_TO_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSecantToTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_AVG_VS_INSTANT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcAvgVsInstant />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -22811,6 +22832,218 @@ export function AmgmEqualityFail() {
 
       <text x="195" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
         床にさわれる点が範囲の外にあるとき、範囲の中でいちばん低いのはどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系1 step1: 曲線上の 2 点を結ぶ直線（割線）。傾きの値は描かない。 */
+export function CalcSecant() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // y = t² + 2t を x = 50 + 45t, y = 210 − 2.6f で描く（値は伏せる）
+  const curve = [
+    [50, 210],
+    [95, 202.2],
+    [140, 189.2],
+    [185, 171],
+    [230, 147.6],
+    [275, 119],
+    [320, 85.2],
+    [365, 46],
+  ]
+    .map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x} ${y}`)
+    .join(" ");
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="増えていく曲線の上の 2 点を結んだ直線。よこに進んだ量とたてに増えた量が破線で示されている"
+    >
+      {/* 軸 */}
+      <line x1="50" y1="210" x2="392" y2="210" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="210" x2="50" y2="34" stroke={border} strokeWidth="1.2" />
+      <text x="396" y="215" fontSize="10.5" fill={muted}>
+        時間
+      </text>
+      <text x="34" y="30" fontSize="10.5" fill={muted}>
+        深さ
+      </text>
+
+      {/* 曲線 */}
+      <path d={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 割線（両端を少し延ばす） */}
+      <line x1="158" y1="188.2" x2="350" y2="66" stroke={accent} strokeWidth="1.7" />
+
+      {/* よこ・たての破線 */}
+      <line x1="185" y1="171" x2="320" y2="171" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <line x1="320" y1="171" x2="320" y2="85.2" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="252" y="186" fontSize="10.5" fill={muted} textAnchor="middle">
+        よこに進んだ量
+      </text>
+      <text x="328" y="132" fontSize="10.5" fill={muted}>
+        たてに
+      </text>
+      <text x="328" y="146" fontSize="10.5" fill={muted}>
+        増えた量
+      </text>
+
+      {/* 2 点 */}
+      <circle cx="185" cy="171" r="4" fill={accent} />
+      <circle cx="320" cy="85.2" r="4" fill={accent} />
+
+      <text x="221" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        2 点を結んだこの直線のかたむきは、何を表している？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系1 step6: 左端を固定して右端を近づけると、割線のかたむきが動く。行き先は描かない。 */
+export function CalcSecantToTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const curve = [
+    [50, 210],
+    [95, 202.2],
+    [140, 189.2],
+    [185, 171],
+    [230, 147.6],
+    [275, 119],
+    [320, 85.2],
+    [365, 46],
+  ]
+    .map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x} ${y}`)
+    .join(" ");
+  // 固定した左端 P（t=2）と、近づいてくる右端 3 つ
+  const P: [number, number] = [140, 189.2];
+  const Qs: Array<[number, number, string]> = [
+    [275, 119, "0.35"],
+    [207.5, 159.95, "0.6"],
+    [162.5, 180.75, "1"],
+  ];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="固定した左の点から、近づいてくる 3 つの右の点へ引いた 3 本の直線"
+    >
+      <line x1="50" y1="210" x2="392" y2="210" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="210" x2="50" y2="34" stroke={border} strokeWidth="1.2" />
+      <path d={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 3 本の割線（右端が近いほど濃く） */}
+      {Qs.map(([qx, qy, op], i) => {
+        const dx = qx - P[0];
+        const dy = qy - P[1];
+        const k = 150 / Math.hypot(dx, dy);
+        return (
+          <line
+            key={i}
+            x1={P[0] - dx * k * 0.25}
+            y1={P[1] - dy * k * 0.25}
+            x2={P[0] + dx * k}
+            y2={P[1] + dy * k}
+            stroke={accent}
+            strokeWidth="1.6"
+            opacity={op}
+          />
+        );
+      })}
+
+      {/* 右端の点（近づいてくる）と矢印 */}
+      {Qs.map(([qx, qy], i) => (
+        <circle key={i} cx={qx} cy={qy} r="3.6" fill={accent} opacity={i === 2 ? 1 : 0.45} />
+      ))}
+      <line x1="272" y1="132" x2="172" y2="132" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <polyline points="180,128 172,132 180,136" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="228" y="126" fontSize="10.5" fill={muted} textAnchor="middle">
+        右の点を近づけていく
+      </text>
+
+      {/* 固定した左端 */}
+      <circle cx={P[0]} cy={P[1]} r="4.4" fill={accent} />
+      <text x={P[0] - 6} y={P[1] + 18} fontSize="10.5" fill={muted} textAnchor="end">
+        ここは動かさない
+      </text>
+
+      <text x="221" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        近づけていくと、直線のかたむきはどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系1 step9: 区間の 2 点を結ぶと下向き。左端ちょうどの向きは伏せる（答えを描かない）。 */
+export function CalcAvgVsInstant() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const A: [number, number] = [134, 115];
+  const B: [number, number] = [358, 201];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="区間の左端と右端を結ぶ下向きの直線。2 点の間の曲線の形は伏せられている"
+    >
+      <line x1="50" y1="228" x2="392" y2="228" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="228" x2="50" y2="40" stroke={border} strokeWidth="1.2" />
+
+      {/* 2 点を結ぶ直線（下向き） */}
+      <line
+        x1={A[0] - 30}
+        y1={A[1] - 11.5}
+        x2={B[0] + 26}
+        y2={B[1] + 10}
+        stroke={accent}
+        strokeWidth="1.7"
+      />
+      <polyline
+        points={`${B[0] + 14},${B[1] + 1} ${B[0] + 26},${B[1] + 10} ${B[0] + 11},${B[1] + 12}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+      />
+      <text x="250" y="150" fontSize="10.5" fill={accent} textAnchor="middle">
+        ならすと下がっている
+      </text>
+
+      {/* 2 点の間は伏せる */}
+      <path
+        d={`M ${A[0]} ${A[1]} C 180 78, 250 92, 300 150 S ${B[0] - 14} 196, ${B[0]} ${B[1]}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+        strokeDasharray="2 6"
+        opacity="0.5"
+      />
+      <text x="238" y="88" fontSize="10.5" fill={muted} textAnchor="middle">
+        この間の道すじは？
+      </text>
+
+      <circle cx={A[0]} cy={A[1]} r="4.4" fill={accent} />
+      <text x={A[0] - 8} y={A[1] - 12} fontSize="10.5" fill={muted} textAnchor="end">
+        左端
+      </text>
+      <circle cx={B[0]} cy={B[1]} r="4" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x={B[0] + 6} y={B[1] + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        右端
+      </text>
+
+      <text x="221" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        区間ぜんたいは下向き。では左端ちょうどでは、どちらを向いている？
       </text>
     </svg>
   );

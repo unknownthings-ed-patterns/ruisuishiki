@@ -187,6 +187,7 @@ import {
   E5_VOLUME_SERIES,
   ELEMENTARY_5_SERIES_LIST,
 } from "./seriesElementary5";
+import { CALC_RATE_SERIES, CALCULUS_SERIES_LIST } from "./seriesCalculus";
 import {
   MIDDLE_COMBINATION_SERIES,
   MIDDLE_PYTHAGOREAN_SERIES,
@@ -1326,7 +1327,17 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "常用対数と桁数 — 累乗を肩の上の世界へ。桁数・最高位・仮数の規則",
   },
-  /* 数Ⅱ: 微分・積分 */
+  /* 数Ⅱ: 微分・積分（背骨 docs/calculus_series_design.md・池田本第6章の節順）
+   * 旧 algebra2_diff_01「微分の入り口」は系列2（導関数）へ吸収予定。
+   * 系列2 を実装したタイミングで SERIES_REDIRECTS に登録する。 */
+  {
+    series: CALC_RATE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "平均から瞬間へ — 2 点を比べる量だった変わり方が、幅を 0 に縮めると 1 点の性質になる",
+  },
   {
     series: ALGEBRA2_DIFF_SERIES,
     subject: "secondary2",
@@ -1444,6 +1455,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
   ...PROOF_SERIES_LIST,
+  ...CALCULUS_SERIES_LIST,
   ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
   ...COUNTING_SERIES_LIST,
