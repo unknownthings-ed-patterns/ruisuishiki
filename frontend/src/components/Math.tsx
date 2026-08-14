@@ -14191,6 +14191,97 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CALC_DEFINITE_DIFF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcDefiniteDiff />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_CONCAT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcConcat />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_TRAPEZOID_CHECK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcTrapezoidCheck />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSlice />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_AREA_BELOW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcAreaBelow />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_CONE_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcConeSlice />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_SIGN_CANCEL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSignCancel />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_ABS_FOLD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcAbsFold />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_SWAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSwap />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_TANGENTS_AREA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcTangentsArea />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_UPPER_X>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcUpperX />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_SELF_REF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcSelfRef />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_VESSEL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcVessel />
+            </div>
+          );
+        }
         if (trimmed === "<<CALC_DOMAIN_EXTREMUM>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -24153,6 +24244,1088 @@ export function CalcAntiderivFamily() {
 
       <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
         かたむきが同じ曲線はいくらでもある。1 本に決めるには何が要る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系8 step1: 同じ形の 2 本の曲線で、2 点の高さの差が等しいこと。差の値は描かない。 */
+export function CalcDefiniteDiff() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 増えていく曲線（値は伏せる）。上にずらした写しを破線で重ねる。
+  const pts: Array<[number, number]> = [
+    [62, 200],
+    [102, 196],
+    [142, 189],
+    [182, 178],
+    [222, 163],
+    [262, 144],
+    [302, 120],
+    [342, 92],
+    [378, 62],
+  ];
+  const path = (dy: number) =>
+    pts.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x} ${y - dy}`).join(" ");
+  const SHIFT = 40;
+  const A: [number, number] = [142, 189];
+  const B: [number, number] = [302, 120];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="同じ形の 2 本の曲線が上下にずれて描かれ、それぞれで 2 つの点の高さの差が示されている"
+    >
+      {/* 軸 */}
+      <line x1="50" y1="222" x2="392" y2="222" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="222" x2="50" y2="26" stroke={border} strokeWidth="1.2" />
+
+      {/* 上にずらした写し（破線） */}
+      <path d={path(SHIFT)} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <text x="384" y={62 - SHIFT + 4} fontSize="10.5" fill={muted} textAnchor="end">
+        ずらした写し
+      </text>
+
+      {/* もとの曲線 */}
+      <path d={path(0)} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 2 点と、そこから軸へ下ろした破線 */}
+      {[A, B].map(([x, y], i) => (
+        <g key={i}>
+          <line x1={x} y1={y} x2={x} y2="222" stroke={border} strokeWidth="1" strokeDasharray="3 3" />
+          <circle cx={x} cy={y} r="4" fill={accent} />
+          <circle cx={x} cy={y - SHIFT} r="3.4" fill={muted} />
+        </g>
+      ))}
+      <text x={A[0]} y="238" fontSize="11" fill={muted} textAnchor="middle">
+        a
+      </text>
+      <text x={B[0]} y="238" fontSize="11" fill={muted} textAnchor="middle">
+        b
+      </text>
+
+      {/* もとの曲線での「差」 */}
+      <line x1={A[0]} y1={A[1]} x2="338" y2={A[1]} stroke={border} strokeWidth="1" strokeDasharray="3 3" />
+      <line x1={B[0]} y1={B[1]} x2="338" y2={B[1]} stroke={border} strokeWidth="1" strokeDasharray="3 3" />
+      <line x1="338" y1={A[1]} x2="338" y2={B[1]} stroke={accent} strokeWidth="1.7" />
+      <line x1="333" y1={A[1]} x2="343" y2={A[1]} stroke={accent} strokeWidth="1.4" />
+      <line x1="333" y1={B[1]} x2="343" y2={B[1]} stroke={accent} strokeWidth="1.4" />
+      <text x="348" y={(A[1] + B[1]) / 2 + 4} fontSize="10.5" fill={accent}>
+        差
+      </text>
+
+      {/* ずらした写しでの「差」 */}
+      <line
+        x1={A[0]}
+        y1={A[1] - SHIFT}
+        x2="318"
+        y2={A[1] - SHIFT}
+        stroke={border}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <line
+        x1={B[0]}
+        y1={B[1] - SHIFT}
+        x2="318"
+        y2={B[1] - SHIFT}
+        stroke={border}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <line x1="318" y1={A[1] - SHIFT} x2="318" y2={B[1] - SHIFT} stroke={muted} strokeWidth="1.6" />
+      <line x1="313" y1={A[1] - SHIFT} x2="323" y2={A[1] - SHIFT} stroke={muted} strokeWidth="1.3" />
+      <line x1="313" y1={B[1] - SHIFT} x2="323" y2={B[1] - SHIFT} stroke={muted} strokeWidth="1.3" />
+      <text x="308" y={(A[1] + B[1]) / 2 - SHIFT + 4} fontSize="10.5" fill={muted} textAnchor="end">
+        差
+      </text>
+
+      <text x="221" y="256" fontSize="11.5" fill={accent} textAnchor="middle">
+        上下にずらしても、2 点の高さの差は変わらない？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系8 step6: となりあう積分範囲の連結。各区間の値は描かない。 */
+export function CalcConcat() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const AXIS = 132;
+  const marks: Array<[number, string]> = [
+    [66, "a"],
+    [152, "b"],
+    [252, "c"],
+    [366, "d"],
+  ];
+  const arc = (x1: number, x2: number, h: number) =>
+    `M ${x1} ${AXIS} C ${x1 + (x2 - x1) * 0.25} ${AXIS - h}, ${x1 + (x2 - x1) * 0.75} ${AXIS - h}, ${x2} ${AXIS}`;
+  const arcDown = (x1: number, x2: number, h: number) =>
+    `M ${x1} ${AXIS} C ${x1 + (x2 - x1) * 0.25} ${AXIS + h}, ${x1 + (x2 - x1) * 0.75} ${AXIS + h}, ${x2} ${AXIS}`;
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="数直線の上にとなりあう 3 つの範囲が弧で示され、その下に全体を 1 本にまとめた弧が描かれている"
+    >
+      {/* 数直線 */}
+      <line x1="40" y1={AXIS} x2="396" y2={AXIS} stroke={border} strokeWidth="1.4" />
+      {marks.map(([x, label], i) => (
+        <g key={i}>
+          <line x1={x} y1={AXIS - 5} x2={x} y2={AXIS + 5} stroke={border} strokeWidth="1.4" />
+          <text x={x} y={AXIS + 20} fontSize="11" fill={muted} textAnchor="middle">
+            {label}
+          </text>
+        </g>
+      ))}
+
+      {/* 上：3 本の範囲 */}
+      <path d={arc(66, 152, 46)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <path d={arc(152, 252, 46)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <path d={arc(252, 366, 46)} fill="none" stroke={accent} strokeWidth="1.7" />
+      <text x="109" y={AXIS - 52} fontSize="10.5" fill={muted} textAnchor="middle">
+        1 本め
+      </text>
+      <text x="202" y={AXIS - 52} fontSize="10.5" fill={muted} textAnchor="middle">
+        2 本め
+      </text>
+      <text x="309" y={AXIS - 52} fontSize="10.5" fill={muted} textAnchor="middle">
+        3 本め
+      </text>
+
+      {/* つなぎ目 */}
+      <circle cx="152" cy={AXIS} r="4.2" fill={accent} />
+      <circle cx="252" cy={AXIS} r="4.2" fill={accent} />
+      <text x="202" y={AXIS - 12} fontSize="10.5" fill={muted} textAnchor="middle">
+        つなぎ目は 2 度ずつ通る
+      </text>
+
+      {/* 下：畳んだ 1 本 */}
+      <path d={arcDown(66, 366, 52)} fill="none" stroke={muted} strokeWidth="1.6" strokeDasharray="5 4" />
+      <text x="216" y={AXIS + 74} fontSize="10.5" fill={muted} textAnchor="middle">
+        畳むと 1 本
+      </text>
+
+      <text x="210" y="252" fontSize="11.5" fill={accent} textAnchor="middle">
+        となりどうしをつなぐと、途中のつなぎ目はどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系9 step1: 同じ台形を「公式」と「たての切り口を足していく」の 2 つの道で見る。面積の値は描かない。 */
+export function CalcTrapezoidCheck() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // y = 2x + 1 を x: 0→4（画面 60→340）、y: 0→9（画面 210→66）で描く。値は伏せる。
+  const x0 = 60;
+  const x1 = 340;
+  const base = 210;
+  const yLeft = 194; // f(0)
+  const yRight = 66; // f(4)
+  const slices = [0.5, 1, 1.5, 2, 2.5, 3, 3.5].map((t) => ({
+    sx: x0 + (x1 - x0) * (t / 4),
+    sy: yLeft + (yRight - yLeft) * (t / 4),
+  }));
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="ななめの直線と x 軸ではさまれた台形。中に細いたてのしきりが何本も引かれている"
+    >
+      {/* 軸 */}
+      <line x1="40" y1={base} x2="392" y2={base} stroke={border} strokeWidth="1.2" />
+      <line x1="40" y1={base} x2="40" y2="34" stroke={border} strokeWidth="1.2" />
+      <text x="396" y={base + 5} fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* 台形の中身 */}
+      <path
+        d={`M ${x0} ${base} L ${x0} ${yLeft} L ${x1} ${yRight} L ${x1} ${base} Z`}
+        fill={accent}
+        opacity="0.1"
+      />
+
+      {/* たてのしきり（切り口） */}
+      {slices.map((s, i) => (
+        <line
+          key={i}
+          x1={s.sx}
+          y1={base}
+          x2={s.sx}
+          y2={s.sy}
+          stroke={muted}
+          strokeWidth="1"
+          strokeDasharray="3 3"
+        />
+      ))}
+
+      {/* 上のふち（直線） */}
+      <line x1={x0 - 14} y1={yLeft + 6.4} x2={x1 + 20} y2={yRight - 9.1} stroke={stroke} strokeWidth="1.8" />
+
+      {/* 台形のわく */}
+      <path
+        d={`M ${x0} ${base} L ${x0} ${yLeft} L ${x1} ${yRight} L ${x1} ${base} Z`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.7"
+      />
+
+      {/* ラベル */}
+      <text x={x0 - 8} y={(base + yLeft) / 2} fontSize="10.5" fill={muted} textAnchor="end">
+        左のたて
+      </text>
+      <text x={x1 + 8} y={(base + yRight) / 2} fontSize="10.5" fill={muted}>
+        右のたて
+      </text>
+      <text x={(x0 + x1) / 2} y={base + 16} fontSize="10.5" fill={muted} textAnchor="middle">
+        よこ
+      </text>
+      <text x={(x0 + x1) / 2} y="52" fontSize="10.5" fill={accent} textAnchor="middle">
+        しきりのたての長さは、右へ行くほど長くなる
+      </text>
+
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        公式で出す道と、たての長さを左から右へ足していく道は、同じ答えに着く？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系9 step5: 2 曲線にはさまれた切り口の長さ l(x)。面積の値は描かない。 */
+export function CalcSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 下＝放物線、上＝直線。交点は画面上の (108, 206.8) と (348, 85.2)。
+  const curve = [
+    [78, 187.8],
+    [108, 206.8],
+    [138, 218.2],
+    [168, 222],
+    [198, 218.2],
+    [228, 206.8],
+    [258, 187.8],
+    [288, 161.2],
+    [318, 127],
+    [348, 85.2],
+    [378, 36.8],
+  ]
+    .map(([px, py], i) => `${i === 0 ? "M" : "L"} ${px} ${py}`)
+    .join(" ");
+  // はさまれた部分（交点から交点まで）
+  const region = [
+    "M 108 206.8",
+    "L 348 85.2",
+    "L 318 127",
+    "L 288 161.2",
+    "L 258 187.8",
+    "L 228 206.8",
+    "L 198 218.2",
+    "L 168 222",
+    "L 138 218.2",
+    "Z",
+  ].join(" ");
+  const faint: Array<[number, number, number]> = [
+    [138, 218.2, 191.6],
+    [168, 222, 176.4],
+    [198, 218.2, 161.2],
+    [258, 187.8, 130.8],
+    [288, 161.2, 115.6],
+    [318, 127, 100.4],
+  ];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="放物線と直線にはさまれた部分。上下をつなぐたての線分が何本も引かれ、そのうち 1 本が濃く描かれている"
+    >
+      {/* 軸 */}
+      <line x1="40" y1="222" x2="392" y2="222" stroke={border} strokeWidth="1.2" />
+      <line x1="168" y1="238" x2="168" y2="30" stroke={border} strokeWidth="1.2" />
+
+      <path d={region} fill={accent} opacity="0.1" />
+
+      {/* 直線（上）と放物線（下） */}
+      <line x1="78" y1="222" x2="378" y2="70" stroke={stroke} strokeWidth="1.7" />
+      <path d={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* うすい切り口たち */}
+      {faint.map(([px, pyLow, pyHigh], i) => (
+        <line key={i} x1={px} y1={pyLow} x2={px} y2={pyHigh} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      ))}
+
+      {/* 濃い切り口 1 本 */}
+      <line x1="228" y1="206.8" x2="228" y2="146" stroke={accent} strokeWidth="2.6" />
+      <circle cx="228" cy="206.8" r="2.6" fill={accent} />
+      <circle cx="228" cy="146" r="2.6" fill={accent} />
+
+      {/* 引き出し線とラベル */}
+      <line x1="150" y1="120" x2="224" y2="172" stroke={muted} strokeWidth="1" />
+      <text x="146" y="116" fontSize="11" fill={accent} textAnchor="end">
+        切り口の長さ
+      </text>
+
+      {/* 左から右へ */}
+      <line x1="120" y1="238" x2="330" y2="238" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <polyline points="322,234 330,238 322,242" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="225" y="234" fontSize="10.5" fill={muted} textAnchor="middle">
+        左から右へ
+      </text>
+
+      <text x="210" y="254" fontSize="11.5" fill={accent} textAnchor="middle">
+        この長さを左から右へ足していったら、何が出る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系9 step9: 囲まれた部分が x 軸の下にある（符号つき）。定積分の値は描かない。 */
+export function CalcAreaBelow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 下に凸の放物線。x 軸は画面 y = 100、谷は y = 188 あたり。
+  const curve = [
+    [70, 100],
+    [105, 138.5],
+    [140, 166],
+    [175, 182.5],
+    [210, 188],
+    [245, 182.5],
+    [280, 166],
+    [315, 138.5],
+    [350, 100],
+    [371, 71.6],
+  ]
+    .map(([px, py], i) => `${i === 0 ? "M" : "L"} ${px} ${py}`)
+    .join(" ");
+  const region = [
+    "M 140 100",
+    "L 280 100",
+    "L 280 166",
+    "L 245 182.5",
+    "L 210 188",
+    "L 175 182.5",
+    "L 140 166",
+    "Z",
+  ].join(" ");
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="x 軸より下にへこんだ放物線と x 軸ではさまれた部分。両わきを 2 本のたて線で切ってある"
+    >
+      {/* 軸 */}
+      <line x1="40" y1="100" x2="392" y2="100" stroke={border} strokeWidth="1.2" />
+      <line x1="70" y1="220" x2="70" y2="40" stroke={border} strokeWidth="1.2" />
+      <text x="396" y="96" fontSize="10.5" fill={muted}>
+        x 軸
+      </text>
+
+      <path d={region} fill={accent} opacity="0.1" />
+      <path d={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 両わきのたて線 */}
+      <line x1="140" y1="100" x2="140" y2="166" stroke={accent} strokeWidth="1.6" />
+      <line x1="280" y1="100" x2="280" y2="166" stroke={accent} strokeWidth="1.6" />
+      <text x="140" y="92" fontSize="10.5" fill={muted} textAnchor="middle">
+        左のはし
+      </text>
+      <text x="280" y="92" fontSize="10.5" fill={muted} textAnchor="middle">
+        右のはし
+      </text>
+
+      {/* 切り口（下向き） */}
+      <line x1="210" y1="100" x2="210" y2="188" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <polyline points="206,180 210,188 214,180" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="218" y="146" fontSize="10.5" fill={muted}>
+        切り口は x 軸から
+      </text>
+      <text x="218" y="160" fontSize="10.5" fill={muted}>
+        下へのびている
+      </text>
+
+      <text x="210" y="242" fontSize="11.5" fill={accent} textAnchor="middle">
+        x 軸より下にある図形では、足し集めた値と面積は
+      </text>
+      <text x="210" y="256" fontSize="11.5" fill={accent} textAnchor="middle">
+        同じ数になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系9 step10: 円すいと、水平に切った切り口の円。体積は描かない。 */
+export function CalcConeSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const apex: [number, number] = [200, 42];
+  const baseY = 200;
+  const baseRx = 92;
+  const baseRy = 22;
+  const cutY = 130;
+  const ratio = (cutY - apex[1]) / (baseY - apex[1]); // 相似比
+  const cutRx = baseRx * ratio;
+  const cutRy = baseRy * ratio;
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="円すいを水平に切った図。切り口の円が破線でえがかれ、頂点からのきょりが示されている"
+    >
+      {/* 底面 */}
+      <ellipse
+        cx={apex[0]}
+        cy={baseY}
+        rx={baseRx}
+        ry={baseRy}
+        fill={accent}
+        opacity="0.08"
+        stroke={border}
+        strokeWidth="1.2"
+      />
+      {/* 母線 */}
+      <line x1={apex[0]} y1={apex[1]} x2={apex[0] - baseRx} y2={baseY} stroke={stroke} strokeWidth="1.8" />
+      <line x1={apex[0]} y1={apex[1]} x2={apex[0] + baseRx} y2={baseY} stroke={stroke} strokeWidth="1.8" />
+
+      {/* 切り口の円 */}
+      <ellipse
+        cx={apex[0]}
+        cy={cutY}
+        rx={cutRx}
+        ry={cutRy}
+        fill={accent}
+        opacity="0.16"
+        stroke={accent}
+        strokeWidth="1.7"
+        strokeDasharray="5 3"
+      />
+
+      {/* 頂点からのきょり */}
+      <line
+        x1={apex[0]}
+        y1={apex[1]}
+        x2={apex[0]}
+        y2={cutY}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <text x={apex[0] - 6} y={(apex[1] + cutY) / 2} fontSize="10.5" fill={muted} textAnchor="end">
+        頂点からのきょり
+      </text>
+
+      {/* 切り口の円のラベル */}
+      <line x1={apex[0] + cutRx + 4} y1={cutY} x2="330" y2="112" stroke={muted} strokeWidth="1" />
+      <text x="334" y="109" fontSize="11" fill={accent}>
+        切り口の円
+      </text>
+
+      {/* 底面の半径 */}
+      <line x1={apex[0]} y1={baseY} x2={apex[0] + baseRx} y2={baseY} stroke={muted} strokeWidth="1" />
+      <text x={apex[0] + baseRx / 2} y={baseY + 16} fontSize="10.5" fill={muted} textAnchor="middle">
+        底面の半径
+      </text>
+
+      <text x="210" y="242" fontSize="11.5" fill={accent} textAnchor="middle">
+        切り口が線分でなく円になったら、
+      </text>
+      <text x="210" y="256" fontSize="11.5" fill={accent} textAnchor="middle">
+        足し集めた先には何が出る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系10 step1: x 軸をまたぐ区間。上と下で符号が打ち消しあう。面積の値は描かない。 */
+export function CalcSignCancel() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // y = x² − 1 を X = 60 + 140x、Y = 150 − 30y で描く（値は伏せる）
+  const pt = (x: number): [number, number] => [60 + 140 * x, 150 - 30 * (x * x - 1)];
+  const curve: Array<[number, number]> = [];
+  for (let i = 0; i <= 22; i++) curve.push(pt(i / 10));
+  const path = curve.map(([X, Y], i) => `${i === 0 ? "M" : "L"} ${X.toFixed(1)} ${Y.toFixed(1)}`).join(" ");
+  const below = curve.filter(([X]) => X <= 200);
+  const above = curve.filter(([X]) => X >= 200 && X <= 340);
+  const belowFill =
+    `M 60 150 L 200 150 ` +
+    below
+      .slice()
+      .reverse()
+      .map(([X, Y]) => `L ${X.toFixed(1)} ${Y.toFixed(1)}`)
+      .join(" ") +
+    " Z";
+  const aboveFill =
+    `M 200 150 L 340 150 ` +
+    above
+      .slice()
+      .reverse()
+      .map(([X, Y]) => `L ${X.toFixed(1)} ${Y.toFixed(1)}`)
+      .join(" ") +
+    " Z";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="放物線が範囲の途中で x 軸を横切り、x 軸より下の部分と上の部分がどちらも色づけされている図"
+    >
+      {/* 軸 */}
+      <line x1="34" y1="150" x2="396" y2="150" stroke={border} strokeWidth="1.2" />
+      <line x1="60" y1="34" x2="60" y2="206" stroke={border} strokeWidth="1.2" />
+      <text x="400" y="146" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* 2 つの部分 */}
+      <path d={belowFill} fill={accent} opacity="0.14" />
+      <path d={aboveFill} fill={accent} opacity="0.14" />
+
+      {/* 曲線 */}
+      <path d={path} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 範囲の両端 */}
+      <line x1="340" y1="60" x2="340" y2="150" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="60" y="222" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここから
+      </text>
+      <text x="340" y="222" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここまで
+      </text>
+
+      {/* 符号のしるし（値は書かない） */}
+      <text x="126" y="168" fontSize="16" fill={accent} textAnchor="middle">
+        −
+      </text>
+      <text x="288" y="118" fontSize="16" fill={accent} textAnchor="middle">
+        ＋
+      </text>
+      <text x="126" y="192" fontSize="10.5" fill={muted} textAnchor="middle">
+        x 軸より下
+      </text>
+      <text x="292" y="136" fontSize="10.5" fill={muted} textAnchor="middle">
+        x 軸より上
+      </text>
+
+      {/* 横切る点 */}
+      <circle cx="200" cy="150" r="3.8" fill={accent} />
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        打ち消しあうこの 2 つを、1 本の積分はどう数えている？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系10 step3: y = |f(x)| は、x 軸より下を折り返した形。積分の値は描かない。 */
+export function CalcAbsFold() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const AXIS = 140;
+  // 谷が x 軸より下にある放物線（値は伏せる）
+  const orig: Array<[number, number]> = [];
+  for (let i = 0; i <= 26; i++) {
+    const X = 60 + i * 10;
+    orig.push([X, 195 - 0.00694 * (X - 180) * (X - 180)]);
+  }
+  const folded = orig.map(([X, Y]): [number, number] => [X, Y > AXIS ? 2 * AXIS - Y : Y]);
+  const toPath = (pts: Array<[number, number]>) =>
+    pts.map(([X, Y], i) => `${i === 0 ? "M" : "L"} ${X.toFixed(1)} ${Y.toFixed(1)}`).join(" ");
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="x 軸より下にへこんだ曲線が破線で、その部分を x 軸で折り返して上に出した曲線が実線で描かれている図"
+    >
+      <line x1="40" y1={AXIS} x2="396" y2={AXIS} stroke={border} strokeWidth="1.2" />
+      <text x="400" y={AXIS - 4} fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* もとの形（破線） */}
+      <path d={toPath(orig)} fill="none" stroke={muted} strokeWidth="1.4" strokeDasharray="4 4" />
+      {/* 折り返した形（実線） */}
+      <path d={toPath(folded)} fill="none" stroke={stroke} strokeWidth="1.9" />
+
+      {/* 折り返しの矢印 */}
+      <path
+        d="M 168 190 C 140 168, 140 112, 168 92"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="3 3"
+      />
+      <polyline points="160,98 168,92 170,102" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="112" y="140" fontSize="10.5" fill={accent} textAnchor="middle">
+        折り返す
+      </text>
+
+      <text x="228" y="212" fontSize="10.5" fill={muted} textAnchor="middle">
+        もとの形（x 軸より下にある）
+      </text>
+      <text x="256" y="88" fontSize="10.5" fill={muted} textAnchor="middle">
+        しるしをつけた後の形
+      </text>
+
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        折り返してから足すのと、足してから折り返すのは、同じ答えになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系10 step5: 交点で上下の役が乗り移る 2 曲線。面積の値は描かない。 */
+export function CalcSwap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 放物線 y = x²（X = 60 + 50x, Y = 200 − 4y）と直線 y = 2x + 8
+  const px = (x: number) => 60 + 50 * x;
+  const py = (y: number) => 200 - 4 * y;
+  const para: Array<[number, number]> = [];
+  for (let i = 0; i <= 24; i++) {
+    const x = i / 4;
+    para.push([px(x), py(x * x)]);
+  }
+  const line: Array<[number, number]> = [
+    [px(0), py(8)],
+    [px(6), py(20)],
+  ];
+  const toPath = (pts: Array<[number, number]>) =>
+    pts.map(([X, Y], i) => `${i === 0 ? "M" : "L"} ${X.toFixed(1)} ${Y.toFixed(1)}`).join(" ");
+  const leftPara = para.filter(([X]) => X <= px(4));
+  const rightPara = para.filter(([X]) => X >= px(4));
+  const leftFill =
+    `M ${px(0)} ${py(8)} L ${px(4)} ${py(16)} ` +
+    leftPara
+      .slice()
+      .reverse()
+      .map(([X, Y]) => `L ${X.toFixed(1)} ${Y.toFixed(1)}`)
+      .join(" ") +
+    " Z";
+  const rightFill =
+    `M ${px(4)} ${py(16)} L ${px(6)} ${py(20)} ` +
+    rightPara
+      .slice()
+      .reverse()
+      .map(([X, Y]) => `L ${X.toFixed(1)} ${Y.toFixed(1)}`)
+      .join(" ") +
+    " Z";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="放物線と直線が 1 点で交わり、その点より左では直線が上、右では放物線が上になっている図"
+    >
+      <line x1="40" y1="200" x2="396" y2="200" stroke={border} strokeWidth="1.2" />
+      <line x1="60" y1="30" x2="60" y2="214" stroke={border} strokeWidth="1.2" />
+      <text x="400" y="196" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      <path d={leftFill} fill={accent} opacity="0.14" />
+      <path d={rightFill} fill={accent} opacity="0.14" />
+
+      <path d={toPath(para)} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={toPath(line)} fill="none" stroke={accent} strokeWidth="1.7" />
+
+      {/* 交点と、そこから下ろした境目 */}
+      <circle cx={px(4)} cy={py(16)} r="4" fill={accent} />
+      <line
+        x1={px(4)}
+        y1={py(16)}
+        x2={px(4)}
+        y2="200"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x={px(4)} y="216" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここで役が入れかわる
+      </text>
+
+      <text x="150" y="176" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここは直線が上
+      </text>
+      <text x="316" y="112" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここは曲線が上
+      </text>
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        役が入れかわる点をまたいで、同じ引き算のまま進んでいい？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系10 step8: 放物線と 2 本の接線。接点・交点の座標は描かない。 */
+export function CalcTangentsArea() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // C: y = x² − 4x + 1（X = 55 + 52(x + 0.6), Y = 130 − 9y）
+  const px = (x: number) => 55 + 52 * (x + 0.6);
+  const py = (y: number) => 130 - 9 * y;
+  const f = (x: number) => x * x - 4 * x + 1;
+  const para: Array<[number, number]> = [];
+  for (let i = 0; i <= 31; i++) {
+    const x = -0.6 + i * 0.2;
+    para.push([px(x), py(f(x))]);
+  }
+  const toPath = (pts: Array<[number, number]>) =>
+    pts.map(([X, Y], i) => `${i === 0 ? "M" : "L"} ${X.toFixed(1)} ${Y.toFixed(1)}`).join(" ");
+  const l1 = (x: number) => -4 * x + 1;
+  const l2 = (x: number) => 6 * x - 24;
+  const inner = para.filter(([X]) => X >= px(0) - 0.01 && X <= px(5) + 0.01);
+  const region =
+    `M ${px(0).toFixed(1)} ${py(f(0)).toFixed(1)} ` +
+    inner.map(([X, Y]) => `L ${X.toFixed(1)} ${Y.toFixed(1)}`).join(" ") +
+    ` L ${px(2.5).toFixed(1)} ${py(l1(2.5)).toFixed(1)} Z`;
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="放物線に 2 本の接線が引かれ、2 本が下で出会って、放物線とではさまれた部分が色づけされている図"
+    >
+      <line x1="40" y1={py(0)} x2="396" y2={py(0)} stroke={border} strokeWidth="1.2" />
+
+      {/* 囲まれた部分 */}
+      <path d={region} fill={accent} opacity="0.13" />
+
+      {/* 接線 2 本 */}
+      <line
+        x1={px(-0.6)}
+        y1={py(l1(-0.6))}
+        x2={px(2.9)}
+        y2={py(l1(2.9))}
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <line
+        x1={px(2.1)}
+        y1={py(l2(2.1))}
+        x2={px(5.6)}
+        y2={py(l2(5.6))}
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+
+      {/* 放物線 */}
+      <path d={toPath(para)} fill="none" stroke={stroke} strokeWidth="1.9" />
+
+      {/* 接点 2 つ・2 本が出会う点 */}
+      <circle cx={px(0)} cy={py(f(0))} r="4" fill={stroke} />
+      <circle cx={px(5)} cy={py(f(5))} r="4" fill={stroke} />
+      <circle cx={px(2.5)} cy={py(l1(2.5))} r="4" fill={accent} />
+      <line
+        x1={px(2.5)}
+        y1={py(f(2.5))}
+        x2={px(2.5)}
+        y2={py(l1(2.5))}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+
+      <text x={px(0) - 8} y={py(f(0)) - 8} fontSize="10.5" fill={muted} textAnchor="end">
+        さわる点
+      </text>
+      <text x={px(5) + 8} y={py(f(5)) - 6} fontSize="10.5" fill={muted}>
+        さわる点
+      </text>
+      <text x={px(1.1)} y={py(l1(1.1)) + 15} fontSize="10.5" fill={muted} textAnchor="middle">
+        下はこの直線
+      </text>
+      <text x={px(4.1)} y={py(l2(4.1)) + 16} fontSize="10.5" fill={muted} textAnchor="middle">
+        下はこの直線
+      </text>
+      <text x={px(2.5) - 12} y={py(l1(2.5)) + 14} fontSize="10.5" fill={accent} textAnchor="end">
+        2 本が出会う点
+      </text>
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        下がわの境目は、どこで別の直線に乗り移る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系11 step1: 下のはしは固定、上のはしが動く定積分。F(x) の式は描かない。 */
+export function CalcUpperX() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 増えていく曲線（値は伏せる）
+  const pts: Array<[number, number]> = [
+    [50, 180],
+    [90, 172],
+    [130, 161],
+    [170, 147],
+    [210, 131],
+    [250, 113],
+    [290, 93],
+    [330, 72],
+    [370, 50],
+  ];
+  const curve = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x} ${y}`).join(" ");
+  // ぬった部分（下のはし 130 から 上のはし 290 まで）
+  const area = "M 130 205 L 130 161 L 170 147 L 210 131 L 250 113 L 290 93 L 290 205 Z";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="曲線の下の部分が、左のはしを固定したまま、右のはしまでぬりつぶされている。右のはしには動くことを示す矢印がついている"
+    >
+      {/* 軸 */}
+      <line x1="50" y1="205" x2="392" y2="205" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="205" x2="50" y2="34" stroke={border} strokeWidth="1.2" />
+      <text x="396" y="210" fontSize="10.5" fill={muted}>
+        t
+      </text>
+
+      {/* ぬった部分 */}
+      <path d={area} fill={accent} opacity="0.14" />
+      <text x="205" y="180" fontSize="10.5" fill={muted} textAnchor="middle">
+        ぬった量
+      </text>
+
+      {/* 曲線 */}
+      <path d={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 下のはし（固定） */}
+      <line x1="130" y1="205" x2="130" y2="161" stroke={muted} strokeWidth="1.4" strokeDasharray="4 3" />
+      <circle cx="130" cy="205" r="3.4" fill={muted} />
+      <text x="128" y="223" fontSize="10.5" fill={muted} textAnchor="middle">
+        下のはし
+      </text>
+      <text x="128" y="237" fontSize="10.5" fill={muted} textAnchor="middle">
+        （動かさない）
+      </text>
+
+      {/* 上のはし（動く） */}
+      <line x1="290" y1="205" x2="290" y2="93" stroke={accent} strokeWidth="2.4" />
+      <circle cx="290" cy="205" r="4" fill={accent} />
+      <text x="290" y="223" fontSize="10.5" fill={accent} textAnchor="middle">
+        上のはし
+      </text>
+      <line x1="298" y1="70" x2="344" y2="70" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <polyline points="336,66 344,70 336,74" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="304" y="60" fontSize="10.5" fill={muted}>
+        ここを動かすと
+      </text>
+
+      <text x="210" y="252" fontSize="11.5" fill={accent} textAnchor="middle">
+        上のはしを動かすと、ぬった量はどう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系11 step8: 中身の式が、自分自身の定積分を参照している循環。k の値は描かない。 */
+export function CalcSelfRef() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="関数の式を表す大きな枠の中に、その関数自身の定積分を表す小さな枠が入っていて、小さな枠から大きな枠へ矢印が回っている"
+    >
+      {/* 外の枠＝f(x) の式 */}
+      <rect
+        x="52"
+        y="58"
+        width="316"
+        height="112"
+        rx="10"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <text x="68" y="80" fontSize="11" fill={muted}>
+        f(x) の式
+      </text>
+      <text x="92" y="124" fontSize="12.5" fill={stroke}>
+        （x の式）
+      </text>
+      <text x="150" y="124" fontSize="14" fill={stroke}>
+        ＋
+      </text>
+
+      {/* 中の枠＝まだ値の分からない定積分 */}
+      <rect
+        x="182"
+        y="98"
+        width="166"
+        height="52"
+        rx="8"
+        fill={accent}
+        opacity="0.12"
+      />
+      <rect
+        x="182"
+        y="98"
+        width="166"
+        height="52"
+        rx="8"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <text x="265" y="122" fontSize="11.5" fill={accent} textAnchor="middle">
+        この定積分の値
+      </text>
+      <text x="265" y="139" fontSize="10.5" fill={muted} textAnchor="middle">
+        （はしはどちらも数）
+      </text>
+
+      {/* 中 → 外 へ回る矢印 */}
+      <path
+        d="M 262 156 C 236 202, 118 208, 62 150"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeDasharray="5 4"
+      />
+      <polyline points="72.5,153.4 62,150 65.5,160.6" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="196" y="216" fontSize="10.5" fill={muted} textAnchor="middle">
+        この値を出すには、式ぜんたいが要る
+      </text>
+
+      <text x="210" y="246" fontSize="11.5" fill={accent} textAnchor="middle">
+        ぐるぐる回ってしまう。どこから決めればいい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 微分・積分 系11 step10: 容器にたまっていく量と、いまの切り口の長さ。
+ * 左は容器に水を注ぐ場面、右は同じ仕組みを横向きにした図形。S(x) の式は描かない。
+ */
+export function CalcVessel() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="左は水を注いだ容器で、水面の長さとたまった水が示されている。右は同じ仕組みを横向きにした図形で、左からぬった面積と、いまの切り口の長さが示されている"
+    >
+      <text x="205" y="30" fontSize="10.5" fill={muted} textAnchor="middle">
+        どちらも同じ仕組み
+      </text>
+
+      {/* ============ 左：容器に水を注ぐ ============ */}
+      <line x1="120" y1="34" x2="120" y2="52" stroke={muted} strokeWidth="1.2" />
+      <polyline points="115,46 120,53 125,46" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="130" y="46" fontSize="10.5" fill={muted}>
+        そそぐ
+      </text>
+
+      {/* たまった水 */}
+      <path
+        d="M 76 122 L 164 122 Q 172 158 138 178 L 102 178 Q 68 158 76 122 Z"
+        fill={accent}
+        opacity="0.14"
+      />
+      {/* 容器の壁 */}
+      <path
+        d="M 55 62 Q 64 168 102 178 L 138 178 Q 176 168 185 62"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.8"
+      />
+      {/* 水面＝切り口 */}
+      <line x1="76" y1="122" x2="164" y2="122" stroke={accent} strokeWidth="2.6" />
+      <text x="120" y="114" fontSize="10.5" fill={accent} textAnchor="middle">
+        水面の長さ
+      </text>
+      <text x="120" y="152" fontSize="10.5" fill={muted} textAnchor="middle">
+        たまった水
+      </text>
+      {/* 水位 */}
+      <line x1="40" y1="122" x2="74" y2="122" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="38" y="118" fontSize="10" fill={muted} textAnchor="end">
+        水位
+      </text>
+      <text x="120" y="200" fontSize="10.5" fill={muted} textAnchor="middle">
+        注ぐほど水位が上がる
+      </text>
+
+      {/* ============ 仕切り ============ */}
+      <line x1="205" y1="44" x2="205" y2="190" stroke={border} strokeWidth="1" strokeDasharray="4 4" />
+
+      {/* ============ 右：左から右へぬる ============ */}
+      {/* ぬった部分 */}
+      <path d="M 228 74 L 315 74 L 315 140 Q 271.5 140 228 74 Z" fill={accent} opacity="0.14" />
+      {/* 上の境界と下の境界 */}
+      <line x1="228" y1="74" x2="402" y2="74" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 228 74 Q 315 206 402 74" fill="none" stroke={stroke} strokeWidth="1.8" />
+      {/* いまの切り口 */}
+      <line x1="315" y1="74" x2="315" y2="140" stroke={accent} strokeWidth="2.8" />
+      <text x="322" y="112" fontSize="10.5" fill={accent}>
+        切り口の長さ
+      </text>
+      <text x="266" y="102" fontSize="10.5" fill={muted} textAnchor="middle">
+        ぬった面積
+      </text>
+      {/* ためていく向き */}
+      <line x1="240" y1="178" x2="330" y2="178" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <polyline points="322,174 330,178 322,182" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="285" y="196" fontSize="10.5" fill={muted} textAnchor="middle">
+        左から右へぬっていく
+      </text>
+
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        たまった量がふえる速さは、いまの切り口の長さで決まる？
       </text>
     </svg>
   );

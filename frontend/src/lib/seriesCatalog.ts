@@ -189,9 +189,13 @@ import {
 } from "./seriesElementary5";
 import {
   CALCULUS_SERIES_LIST,
+  CALC_AREA_APP_SERIES,
+  CALC_AREA_SERIES,
+  CALC_DEFINITE_SERIES,
   CALC_DERIVATIVE_SERIES,
   CALC_EQUATION_SERIES,
   CALC_EXTREMUM_SERIES,
+  CALC_FUND_SERIES,
   CALC_INCREASE_SERIES,
   CALC_INDEFINITE_SERIES,
   CALC_RATE_SERIES,
@@ -1394,6 +1398,38 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分・積分",
     shortDescription:
       "不定積分 — 微分を巻き戻す。逆演算は定数を 1 つだけ取り戻せない",
+  },
+  {
+    series: CALC_DEFINITE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "定積分 — 差を取ると、分からなかった定数が打ち消える。連結・入れかえ・対称",
+  },
+  {
+    series: CALC_AREA_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "定積分と面積 — 面積の変化率は切り口の長さ。傾きの道具が面積を計算する",
+  },
+  {
+    series: CALC_AREA_APP_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "面積の応用 — 上下が入れかわるとき。定積分は符号つき、面積は符号なし",
+  },
+  {
+    series: CALC_FUND_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "定積分で表された関数 — 積分してから微分すると元に戻る。単元の要石",
   },
   /* 数B: 数列（等差 → 等比、各 n 項目 → 和の順） */
   {
