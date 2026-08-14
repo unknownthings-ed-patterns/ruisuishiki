@@ -154,9 +154,38 @@ grep -nE '^  [^"'"'"' ][^:]*・[^:]*: \{' src/lib/glossary.ts   # ヒット 0 �
 
 # 8) 設計用語が学習者に露出していないか（derivation の定型見出し「ここが胚細胞」だけは例外）
 grep -nE '必然性の1問|合流 ?step|材料置換|オペレータ|C1[0-9]|Q[1-8]' src/lib/series*.ts
+
+# 9) 数式の外に素の角括弧 [ ] を書いていないか（用語リンクに食われて角括弧が消える）
+#    評価の角括弧 [F(x)]_a^b を書きたいときは、必ず $...$ / $$...$$ の中に入れる。
+#    formulaPreview は素のテキストなので、角括弧を使わない書き方にする
+python3 -c "
+import re,sys
+s=open('src/lib/seriesCalculus.ts',encoding='utf-8').read()   # ← 対象ファイル
+g=set(re.findall(r'^  \"?([^\s\":]+)\"?: \{', open('src/lib/glossary.ts',encoding='utf-8').read(), re.M))
+bad=set()
+for f in re.findall(r'(?:formulaPreview|questionText|text):\s*\n?\s*\"((?:[^\"\\\\]|\\\\.)*)\"', s):
+    t=re.sub(r'\\\$\\\$[^\\\$\n]*\\\$\\\$','',f.replace('\\\\n','\n')); t=re.sub(r'\\\$[^\\\$\n]*\\\$','',t)
+    bad|={m for m in re.findall(r'\[([^\[\]\n]{1,20})\]',t) if m not in g}
+print('数式の外にある、辞書に無い [ ]:', sorted(bad) or 'なし')"
+
+# 10) 辞書のキーが数字で始まるなら引用符で囲む（「6分の1公式」等。JS 識別子に使えない）
+grep -nE '^  [0-9][^:]*: \{' src/lib/glossary.ts   # ヒット 0 であること
+
+# 11) 背骨の辞書節で「既存」と書いた語が本当に実在するか（新規／更新の振り分け確認）
+for t in 用語1 用語2; do printf "%s:%s " "$t" "$(grep -cE "^  ${t}: \{" src/lib/glossary.ts)"; done
 ```
 
 これらを通してから commit / push する。
+
+**authored 文字列がどの経路で描画されるか**（2026-08-15 に 2 件の漏れを修正して確定）：
+
+| フィールド | 経路 | 数式の書き方 |
+|---|---|---|
+| `questionText`・`hints[].text`・`formulaPreview`・`unknownLabel`・`drivingQuestion`・`title`・`subtitle` | **MathText** | `$...$`。`$$...$$` も描画されるがインラインになる（ディスプレイにはならない） |
+| `derivation`・辞書の `meaning`／`scenes`／`relatedTerms` | **MathBody** | 段落まるごとの `$$...$$` がディスプレイ数式になる |
+| `aria-label` 等の HTML 属性 | 素の文字列 | **数式を書かない**（読み上げ用のプレーンな日本語にする） |
+
+`$$...$$` と `unknownLabel` はどちらも「MathText を通っていない／扱えない」ために **裸の `$` が学習者に見えていた**（実測 135 + 44 箇所）。いずれもエンジン側を直したので authored 側は不変でよいが、**新しい表示箇所を足すときは MathText を通すこと**。
 
 ## 国語ユニット（俳句）——国語版の正典とお手本条件
 
