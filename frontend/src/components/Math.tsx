@@ -14191,6 +14191,48 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CALC_DOMAIN_EXTREMUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcDomainExtremum />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_EXTREMUM_OUTSIDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcExtremumOutside />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_ROOT_COUNT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcRootCount />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_CONST_SEPARATION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcConstSeparation />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_INDEF_INVERSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcIndefInverse />
+            </div>
+          );
+        }
+        if (trimmed === "<<CALC_ANTIDERIV_FAMILY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CalcAntiderivFamily />
+            </div>
+          );
+        }
         if (trimmed === "<<CALC_DERIV_MACHINE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -23668,6 +23710,449 @@ export function CalcNoExtremum() {
 
       <text x="207" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
         かたむきがちょうど 0 になった。それでも、上りは終わっている？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系5 step1: 変域という窓の中に、てっぺんと両はしが並ぶ。どれが答えかは描かない。 */
+export function CalcDomainExtremum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const band = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  // 3 次関数の形（値は伏せる）。窓の左端 X=84・右端 X=324、てっぺん X=244。
+  const curve =
+    "60,200.2 73.3,178.2 86.7,158.7 100,141.5 113.3,126.5 126.7,113.6 140,102.6 " +
+    "153.3,93.4 166.7,85.8 180,79.8 193.3,75.2 206.7,71.9 220,69.8 233.3,68.7 " +
+    "246.7,68.4 260,68.9 273.3,70.1 286.7,71.7 300,73.7 313.3,75.9 326.7,78.3 " +
+    "340,80.6 353.3,82.7 366.7,84.6 380,86.1";
+  const LEFT = 84;
+  const RIGHT = 324;
+  const TOP = 46;
+  const BASE = 214;
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="山のあるグラフに、変域を表す帯が重ねてある図。帯の中に、山のてっぺんと、帯の左はし・右はしの 3 つの点が示されている。どれがいちばん高いかは書かれていない"
+    >
+      <text x="210" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        変域という窓
+      </text>
+
+      {/* 変域の帯 */}
+      <rect x={LEFT} y={TOP} width={RIGHT - LEFT} height={BASE - TOP} fill={band} />
+      <line x1={LEFT} y1={TOP} x2={LEFT} y2={BASE} stroke={accent} strokeWidth="1.3" />
+      <line x1={RIGHT} y1={TOP} x2={RIGHT} y2={BASE} stroke={accent} strokeWidth="1.3" />
+
+      {/* 軸 */}
+      <line x1="46" y1={BASE} x2="396" y2={BASE} stroke={border} strokeWidth="1.2" />
+      <line x1="46" y1={BASE} x2="46" y2="36" stroke={border} strokeWidth="1.2" />
+
+      {/* グラフ（窓の外にも続いている） */}
+      <polyline points={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* てっぺん */}
+      <circle cx="244" cy="68.4" r="4.2" fill={accent} />
+      <text x="244" y="58" fontSize="10.5" fill={accent} textAnchor="middle">
+        てっぺん
+      </text>
+      <text x="244" y="46" fontSize="9.5" fill={muted} textAnchor="middle">
+        この近所でいちばん高い
+      </text>
+
+      {/* 両はし */}
+      <circle cx={LEFT} cy="162.4" r="4.2" fill={accent} />
+      <text x={LEFT - 6} y="176" fontSize="10.5" fill={muted} textAnchor="end">
+        左はし
+      </text>
+      <circle cx={RIGHT} cy="77.8" r="4.2" fill={accent} />
+      <text x={RIGHT + 8} y="74" fontSize="10.5" fill={muted}>
+        右はし
+      </text>
+
+      {/* どれが答えかは伏せる */}
+      <text x="180" y="126" fontSize="13" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        くらべる場所は、てっぺんと両はし。この窓の中でいちばん高いのは、どれ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系5 step5: てっぺんが窓の外にある配置。窓の中でいちばん高い所は描かない。 */
+export function CalcExtremumOutside() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const band = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  // てっぺん X=118（窓の外）、窓の左端 X=168・右端 X=368、谷 X=318。
+  const curve =
+    "58,110.9 68,98.8 78,89.3 88,82.2 98,77.3 108,74.5 118,73.6 128,74.4 138,76.8 " +
+    "148,80.6 158,85.6 168,91.6 178,98.5 188,106.1 198,114.2 208,122.6 218,131.2 " +
+    "228,139.8 238,148.2 248,156.3 258,163.9 268,170.8 278,176.8 288,181.8 " +
+    "298,185.6 308,188 318,188.8 328,187.9 338,185.1 348,180.2 358,173.1 " +
+    "368,163.6 378,151.5 388,136.6";
+  const LEFT = 168;
+  const RIGHT = 368;
+  const TOP = 52;
+  const BASE = 208;
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="山のてっぺんが、変域を表す帯の左の外側にある図。帯の中には谷と両はしだけがある。帯の中でいちばん高い場所は書かれていない"
+    >
+      <text x="210" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        てっぺんは、窓の外
+      </text>
+
+      {/* 変域の帯 */}
+      <rect x={LEFT} y={TOP} width={RIGHT - LEFT} height={BASE - TOP} fill={band} />
+      <line x1={LEFT} y1={TOP} x2={LEFT} y2={BASE} stroke={accent} strokeWidth="1.3" />
+      <line x1={RIGHT} y1={TOP} x2={RIGHT} y2={BASE} stroke={accent} strokeWidth="1.3" />
+      <text x={(LEFT + RIGHT) / 2} y={TOP + 14} fontSize="10.5" fill={accent} textAnchor="middle">
+        見ている窓
+      </text>
+
+      {/* 軸 */}
+      <line x1="46" y1={BASE} x2="396" y2={BASE} stroke={border} strokeWidth="1.2" />
+      <line x1="46" y1={BASE} x2="46" y2="42" stroke={border} strokeWidth="1.2" />
+
+      {/* グラフ */}
+      <polyline points={curve} fill="none" stroke={stroke} strokeWidth="1.8" />
+
+      {/* 窓の外のてっぺん */}
+      <circle cx="118" cy="73.6" r="4.2" fill="none" stroke={accent} strokeWidth="1.6" />
+      <line x1="118" y1="73.6" x2="118" y2={BASE} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="118" y="64" fontSize="10.5" fill={muted} textAnchor="middle">
+        てっぺん
+      </text>
+      <text x="118" y={BASE + 14} fontSize="9.5" fill={muted} textAnchor="middle">
+        窓の外
+      </text>
+
+      {/* 窓の中の候補 */}
+      <circle cx={LEFT} cy="91.6" r="4.2" fill={accent} />
+      <text x={LEFT + 8} y="88" fontSize="10.5" fill={muted}>
+        左はし
+      </text>
+      <circle cx="318" cy="188.8" r="4.2" fill={accent} />
+      <text x="318" y={188.8 + 15} fontSize="10.5" fill={muted} textAnchor="middle">
+        谷
+      </text>
+      <circle cx={RIGHT} cy="163.6" r="4.2" fill={accent} />
+      <text x={RIGHT + 8} y="160" fontSize="10.5" fill={muted}>
+        右はし
+      </text>
+
+      {/* 窓の中の答えは伏せる */}
+      <text x="250" y="80" fontSize="13" fill={accent} textAnchor="middle">
+        ？
+      </text>
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        てっぺんに手がとどかない窓では、いちばん高いのはどこになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系6 step1: 山の高さと谷そこの高さ、そして横の線。またぐ回数は描かない。 */
+export function CalcRootCount() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+
+  // 山と谷を 1 つずつ持つ曲線の「形だけ」を描く（目盛りも値も置かない）。
+  // 横の線（高さ 0）より上に山も谷そこもある配置。またぐ場所は窓の外に置く。
+  const f = (t: number) => t ** 3 - 15 * t ** 2 + 72 * t - 100;
+  const px = (t: number) => 46 + (t - 2.7) * 68.75;
+  const py = (v: number) => 206 - v * 7.6;
+  const path = Array.from({ length: 49 }, (_, i) => {
+    const t = 2.7 + (4.8 * i) / 48;
+    return `${i === 0 ? "M" : "L"} ${px(t).toFixed(1)} ${py(f(t)).toFixed(1)}`;
+  }).join(" ");
+
+  const peak: [number, number] = [px(4), py(f(4))];
+  const valley: [number, number] = [px(6), py(f(6))];
+
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="山と谷を 1 つずつ持つ曲線。山のてっぺんも谷そこも、横の線より上にある"
+    >
+      {/* 横の線（高さ 0 の線）と、たての軸 */}
+      <line x1="30" y1="206" x2="400" y2="206" stroke={border} strokeWidth="1.4" />
+      <text x="404" y="211" fontSize="10.5" fill={muted}>
+        横の線
+      </text>
+
+      {/* 曲線（窓の中だけ。両はしは点線で「まだ続く」ことだけ示す） */}
+      <path d={path} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path
+        d={`M ${px(2.7).toFixed(1)} ${py(f(2.7)).toFixed(1)} L 28 189`}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.4"
+        strokeDasharray="3 4"
+        opacity="0.55"
+      />
+      <path
+        d={`M ${px(7.5).toFixed(1)} ${py(f(7.5)).toFixed(1)} L 394 50`}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.4"
+        strokeDasharray="3 4"
+        opacity="0.55"
+      />
+
+      {/* 山と谷そこ（高さの値は書かない） */}
+      <line
+        x1={peak[0]}
+        y1={peak[1]}
+        x2={peak[0]}
+        y2="206"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <line
+        x1={valley[0]}
+        y1={valley[1]}
+        x2={valley[0]}
+        y2="206"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <circle cx={peak[0]} cy={peak[1]} r="4.2" fill={accent} />
+      <circle cx={valley[0]} cy={valley[1]} r="4.2" fill={accent} />
+      <text x={peak[0]} y={peak[1] - 12} fontSize="10.5" fill={accent} textAnchor="middle">
+        山のてっぺん
+      </text>
+      <text x={valley[0] + 10} y={valley[1] + 16} fontSize="10.5" fill={accent}>
+        谷そこ
+      </text>
+      <text x={(peak[0] + valley[0]) / 2} y="199" fontSize="10.5" fill={muted} textAnchor="middle">
+        どちらも線より上
+      </text>
+
+      <text x="210" y="246" fontSize="11.5" fill={accent} textAnchor="middle">
+        山も谷そこも横の線より上。この曲線が横の線とまじわるのは何回？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系6 step6: 曲線は固定、動くのは高さ a の水平な線だけ。a の範囲は描かない。 */
+export function CalcConstSeparation() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+
+  // 左辺の曲線（文字を含まないので動かない）。値・目盛りは置かない。
+  const g = (t: number) => t ** 3 - 15 * t ** 2 + 72 * t - 100;
+  const px = (t: number) => 46 + (t - 2.7) * 68.75;
+  const py = (v: number) => 206 - v * 7.6;
+  const path = Array.from({ length: 49 }, (_, i) => {
+    const t = 2.7 + (4.8 * i) / 48;
+    return `${i === 0 ? "M" : "L"} ${px(t).toFixed(1)} ${py(g(t)).toFixed(1)}`;
+  }).join(" ");
+
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="動かない曲線と、上下に動く水平な直線。直線には上下の矢印がついている"
+    >
+      {/* 軸 */}
+      <line x1="30" y1="216" x2="400" y2="216" stroke={border} strokeWidth="1.2" />
+      <line x1="30" y1="216" x2="30" y2="34" stroke={border} strokeWidth="1.2" />
+
+      {/* 曲線（固定） */}
+      <path d={path} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <text x={px(5.1)} y={py(g(5.1)) + 24} fontSize="10.5" fill={muted} textAnchor="middle">
+        この曲線は動かない
+      </text>
+
+      {/* 高さ a の水平な線（上下に動く） */}
+      <line x1="40" y1="70" x2="392" y2="70" stroke={accent} strokeWidth="1.7" strokeDasharray="7 4" />
+      <text x="396" y="74" fontSize="10.5" fill={accent}>
+        線
+      </text>
+      <line x1="112" y1="40" x2="112" y2="100" stroke={accent} strokeWidth="1.2" />
+      <polyline points="106,46 112,38 118,46" fill="none" stroke={accent} strokeWidth="1.3" />
+      <polyline points="106,94 112,102 118,94" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="124" y="56" fontSize="10.5" fill={accent}>
+        この線だけが上下する
+      </text>
+
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        動くのは線だけ。まじわる回数が変わるのは、線がどこを通るとき？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系7 step1: 微分と巻き戻しの往復。原始関数の式は描かない。 */
+export function CalcIndefInverse() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="「もとの関数」と「微分した結果」の 2 つの箱。上の矢印が左から右へ、下の矢印が右から左へ回っている"
+    >
+      {/* 左の箱：もとの関数 */}
+      <rect
+        x="40"
+        y="100"
+        width="130"
+        height="64"
+        rx="10"
+        fill="none"
+        stroke={border}
+        strokeWidth="1.4"
+      />
+      <text x="105" y="137" fontSize="12.5" fill={stroke} textAnchor="middle">
+        もとの関数
+      </text>
+
+      {/* 右の箱：微分した結果 */}
+      <rect
+        x="250"
+        y="100"
+        width="130"
+        height="64"
+        rx="10"
+        fill="none"
+        stroke={border}
+        strokeWidth="1.4"
+      />
+      <text x="315" y="137" fontSize="12.5" fill={stroke} textAnchor="middle">
+        微分した結果
+      </text>
+
+      {/* 上：行き（微分） */}
+      <path
+        d="M 105 100 C 105 52, 315 52, 315 100"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.7"
+      />
+      <polyline points="310,90 315,100 320,90" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="210" y="42" fontSize="11.5" fill={accent} textAnchor="middle">
+        微分
+      </text>
+      <text x="210" y="58" fontSize="10.5" fill={muted} textAnchor="middle">
+        肩の数が前に下りて、肩が 1 つ減る
+      </text>
+
+      {/* 下：帰り（巻き戻し） */}
+      <path
+        d="M 315 164 C 315 212, 105 212, 105 164"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.7"
+        strokeDasharray="6 4"
+      />
+      <polyline points="100,174 105,164 110,174" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="210" y="224" fontSize="11.5" fill={accent} textAnchor="middle">
+        巻き戻すと？
+      </text>
+
+      <text x="210" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        行きの道で消えたものは、帰り道で取り戻せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分・積分 系7 step4: 微分すると同じ式になる曲線の族。C の値は描かない。 */
+export function CalcAntiderivFamily() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  // 同じ形の曲線を、たてにずらして 4 本。値の目もりは描かない。
+  const shape =
+    "M 66 190 C 96 168, 116 158, 142 160 C 168 162, 182 176, 206 172 C 236 167, 272 140, 320 104";
+  const shifts = [0, -26, -52, -78];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="まったく同じ形の曲線が、たてにずらして 4 本ならんでいる。目もりの数は書かれていない"
+    >
+      {/* 軸（目もりなし） */}
+      <line x1="50" y1="200" x2="392" y2="200" stroke={border} strokeWidth="1.2" />
+      <line x1="50" y1="200" x2="50" y2="20" stroke={border} strokeWidth="1.2" />
+
+      {/* 同じ形の曲線を、たてにずらして */}
+      {shifts.map((dy, i) => (
+        <path
+          key={i}
+          d={shape}
+          transform={`translate(0 ${dy})`}
+          fill="none"
+          stroke={i === 0 ? accent : muted}
+          strokeWidth={i === 0 ? 1.8 : 1.4}
+          opacity={i === 0 ? 1 : 0.55}
+        />
+      ))}
+
+      {/* 同じ x での「かたむき」を短い線分で示す（どれも平行） */}
+      {shifts.map((dy, i) => (
+        <line
+          key={`s${i}`}
+          x1="124"
+          y1={161 + dy}
+          x2="162"
+          y2={158 + dy}
+          stroke={accent}
+          strokeWidth="1.5"
+          opacity={i === 0 ? 1 : 0.5}
+        />
+      ))}
+      <line x1="143" y1="200" x2="143" y2="76" stroke={muted} strokeWidth="1" strokeDasharray="3 4" />
+      <text x="120" y="216" fontSize="10.5" fill={muted}>
+        同じ場所では、どの曲線もかたむきが同じ
+      </text>
+
+      {/* たてのずれ */}
+      <line x1="352" y1="104" x2="352" y2="26" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <polyline points="348,32 352,26 356,32" fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points="348,98 352,104 356,98" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="390" y="70" fontSize="10.5" fill={muted} textAnchor="end">
+        たてに動かしただけ
+      </text>
+
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        かたむきが同じ曲線はいくらでもある。1 本に決めるには何が要る？
       </text>
     </svg>
   );

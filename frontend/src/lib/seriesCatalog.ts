@@ -190,7 +190,10 @@ import {
 import {
   CALCULUS_SERIES_LIST,
   CALC_DERIVATIVE_SERIES,
+  CALC_EQUATION_SERIES,
+  CALC_EXTREMUM_SERIES,
   CALC_INCREASE_SERIES,
+  CALC_INDEFINITE_SERIES,
   CALC_RATE_SERIES,
   CALC_TANGENT_SERIES,
 } from "./seriesCalculus";
@@ -1367,6 +1370,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分・積分",
     shortDescription:
       "増減とグラフ — 値を捨てて符号だけ残すと形が見える。傾き 0 は折り返しの候補",
+  },
+  {
+    series: CALC_EXTREMUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "変域つき最大最小 — 山のてっぺんは一番高い場所とは限らない。候補は極値と端点",
+  },
+  {
+    series: CALC_EQUATION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "方程式と不等式 — 解かずに解の個数を読む。定数分離で動く水平線に翻訳する",
+  },
+  {
+    series: CALC_INDEFINITE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "不定積分 — 微分を巻き戻す。逆演算は定数を 1 つだけ取り戻せない",
   },
   /* 数B: 数列（等差 → 等比、各 n 項目 → 和の順） */
   {
