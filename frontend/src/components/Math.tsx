@@ -273,7 +273,10 @@ function renderMathAndTerms(
   keyPrefix: string,
 ): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  const regex = /\$([^$\n]+)\$/g;
+  // `$$...$$` を先に拾う。拾わないと `/\$([^$\n]+)\$/` が 2 文字目の `$` から
+  // マッチしてしまい、前後に裸の `$` が 1 個ずつ学習者に見える。
+  // ここは <p> の中なので BlockMath（div）は使えず、インラインで描画する。
+  const regex = /\$\$([^$\n]+)\$\$|\$([^$\n]+)\$/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let keyCounter = 0;
@@ -283,7 +286,10 @@ function renderMathAndTerms(
       parts.push(...renderTermLinks(before, `${keyPrefix}m${keyCounter}`));
     }
     parts.push(
-      <InlineMath key={`${keyPrefix}m${keyCounter++}`} math={match[1]} />
+      <InlineMath
+        key={`${keyPrefix}m${keyCounter++}`}
+        math={match[1] ?? match[2]}
+      />
     );
     lastIndex = match.index + match[0].length;
   }
