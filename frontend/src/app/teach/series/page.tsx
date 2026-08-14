@@ -464,7 +464,8 @@ export default function SeriesPreview() {
                   className="mt-2 text-muted tnum print-hide-answer"
                   style={{ fontSize: "13px" }}
                 >
-                  → {step.unknownLabel}: {step.answerDisplay ?? `${step.answer}${step.unit}`}
+                  → <MathText text={step.unknownLabel} />:{" "}
+                  {step.answerDisplay ?? `${step.answer}${step.unit}`}
                 </p>
                 {/* 印刷時のみ：答え欄の枠 */}
                 <div
@@ -477,7 +478,7 @@ export default function SeriesPreview() {
                   aria-hidden
                 >
                   <span style={{ fontSize: "11pt", color: "#666" }}>
-                    答え（{step.unknownLabel}）：
+                    答え（<MathText text={step.unknownLabel} />）：
                   </span>
                 </div>
               </li>

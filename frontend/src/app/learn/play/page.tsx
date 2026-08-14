@@ -1178,7 +1178,7 @@ export default function Play() {
                         className="mt-2 text-muted tnum"
                         style={{ fontSize: "13px", letterSpacing: "0.05em" }}
                       >
-                        → {comparedStep.unknownLabel}は{" "}
+                        → <MathText text={comparedStep.unknownLabel} />は{" "}
                         <span className="text-foreground">
                           {displayAnswer(comparedStep)}
                         </span>
@@ -1279,7 +1279,7 @@ export default function Play() {
                   className="text-muted shrink-0"
                   style={{ fontSize: "13px", letterSpacing: "0.1em" }}
                 >
-                  {step.unknownLabel}
+                  <MathText text={step.unknownLabel} />
                 </span>
                 <input
                   ref={inputRef}
@@ -1428,7 +1428,8 @@ export default function Play() {
                   className="text-muted"
                   style={{ fontSize: "14px", letterSpacing: "0.05em" }}
                 >
-                  → スキップ。{step.unknownLabel} は {displayAnswer(step)}。
+                  → スキップ。<MathText text={step.unknownLabel} /> は{" "}
+                  {displayAnswer(step)}。
                 </p>
                 {step.formulaPreview && (
                   <p
@@ -1471,7 +1472,8 @@ export default function Play() {
                   className="text-success font-medium"
                   style={{ fontSize: "14px", letterSpacing: "0.1em" }}
                 >
-                  ✓ 正解。{step.unknownLabel}は {displayAnswer(step)}。
+                  ✓ 正解。<MathText text={step.unknownLabel} />は{" "}
+                  {displayAnswer(step)}。
                 </p>
                 {attempts > 1 && (
                   <p
