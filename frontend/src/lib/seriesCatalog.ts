@@ -187,7 +187,13 @@ import {
   E5_VOLUME_SERIES,
   ELEMENTARY_5_SERIES_LIST,
 } from "./seriesElementary5";
-import { CALC_RATE_SERIES, CALCULUS_SERIES_LIST } from "./seriesCalculus";
+import {
+  CALCULUS_SERIES_LIST,
+  CALC_DERIVATIVE_SERIES,
+  CALC_INCREASE_SERIES,
+  CALC_RATE_SERIES,
+  CALC_TANGENT_SERIES,
+} from "./seriesCalculus";
 import {
   MIDDLE_COMBINATION_SERIES,
   MIDDLE_PYTHAGOREAN_SERIES,
@@ -1339,11 +1345,28 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "平均から瞬間へ — 2 点を比べる量だった変わり方が、幅を 0 に縮めると 1 点の性質になる",
   },
   {
-    series: ALGEBRA2_DIFF_SERIES,
+    series: CALC_DERIVATIVE_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "微分・積分",
-    shortDescription: "微分の入り口",
+    shortDescription:
+      "導関数 — 点ごとの答えを 1 本の式に昇格させる。公式は分配とくり返しの記録",
+  },
+  {
+    series: CALC_TANGENT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "接線 — 接点は「通る点」と「傾き」を同時に決める。曲線外からは接点を文字で置く",
+  },
+  {
+    series: CALC_INCREASE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "微分・積分",
+    shortDescription:
+      "増減とグラフ — 値を捨てて符号だけ残すと形が見える。傾き 0 は折り返しの候補",
   },
   /* 数B: 数列（等差 → 等比、各 n 項目 → 和の順） */
   {
@@ -1432,6 +1455,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra_variance_01: "algebra1_data_variance_01",
   /* 整数の性質（背骨 D4）：旧「約数の個数」5 問プロトタイプ → 系列3 へ吸収 */
   algebra_divisor_01: "algebra1_int_factorization_01",
+  /* 微分・積分（背骨 D4）：旧「微分の入り口」5 問プロトタイプ → 系列2「導関数」へ吸収 */
+  algebra2_diff_01: "algebra2_calc_derivative_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
