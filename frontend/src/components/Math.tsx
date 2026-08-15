@@ -13813,6 +13813,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<DATA_TEST_LINES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <DataTestLines />
+            </div>
+          );
+        }
         if (trimmed === "<<DATA_DEVIATION_SQUARE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -17741,7 +17748,11 @@ export function LogicNumlineNeg() {
  * 共通の作法：答えは描かない・キャプションは問いの形で終える
  * ========================================================================== */
 
-/** データの分析 系1 step1: 生の数の列と、階級の枠。度数（答え）は書かない。 */
+/**
+ * データの分析 系1 step1・辞書（階級／度数／最頻値）: 生の数の列と、階級の枠。度数（答え）は書かない。
+ * **模式図**——値を伏せるだけでなく、粒の個数も記録の人数に合わせない（系1 step1 は 24 人、
+ * 辞書側はそもそもデータが別）。使い回す先ごとに個数が食い違わないよう、図の中に一言そえてある。
+ */
 export function DataTally() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -17754,7 +17765,7 @@ export function DataTally() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="ばらばらに並んだ数の列と、「◯以上△未満」と書かれた階級の枠。枠に入る個数（答え）は書かない"
+      aria-label="ばらばらに並んだ数の列と、「◯以上△未満」と書かれた階級の枠。仕組みを見るための模式図で、粒の個数は記録の個数とはちがう。枠に入る個数（答え）は書かない"
     >
       {/* 散らばった生データ（値は伏せる） */}
       <text x="14" y="24" fontSize="10" fill={muted}>
@@ -17798,6 +17809,9 @@ export function DataTally() {
         strokeWidth="1"
         strokeDasharray="4 3"
       />
+      <text x="170" y="150" fontSize="9.5" fill={muted} textAnchor="middle">
+        ※ 仕組みを見るための絵。記録の個数はこの通りではありません
+      </text>
       <text x="170" y="166" fontSize="11" fill={accent} textAnchor="middle">
         端とぴったり同じ記録は、枠の内と外、どちら？
       </text>
@@ -18845,15 +18859,23 @@ export function DataIqrBand() {
   );
 }
 
-/** データの分析 系5 step5: 基準の柵と点の並び。どの点が外れ値かは名指ししない。 */
+/**
+ * データの分析 系5 step5・辞書（外れ値）: 基準の柵と点の並び。どの点が外れ値かは名指ししない。
+ * **模式図**——点の個数は問題のデータの個数とわざと変えてある（図の点を数えても答えは出ない）。
+ * 数えて答えが出てしまうと自得を裏切り、実データに合わせると使い回した先で食い違うため、
+ * 「柵の外に出た点がある」という仕組みだけを見せる絵にしてある。
+ */
 export function DataOutlierFence() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const band = "color-mix(in oklch, var(--accent) 14%, transparent)";
   const baseY = 92;
-  /** 記録の点。柵の外にも点があるが、印もラベルもつけない（数えるのは学習者の仕事）。 */
-  const dots = [30, 122, 132, 146, 154, 162, 172, 180, 188, 194, 198, 292, 306];
+  /**
+   * 記録の点。柵の外にも点があるが、印もラベルもつけない。
+   * 個数は模式（問題のデータの個数とは合わせない）。
+   */
+  const dots = [34, 130, 142, 152, 164, 178, 190, 296, 310];
   const lowCut = 139; // 前半の中央値の位置（値は描かない）
   const highCut = 196; // 後半の中央値の位置（値は描かない）
   const lowFence = 54; // 箱の下のふちから、帯の幅の 1.5 倍だけ外
@@ -18864,7 +18886,7 @@ export function DataOutlierFence() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="まん中の半分の箱と、その外側に立てた上下 2 本の柵、そして並んだ記録の点。どの点が外れ値かは示さない"
+      aria-label="まん中の半分の箱と、その外側に立てた上下 2 本の柵、そして並んだ記録の点。仕組みを見るための模式図で、点の個数は問題のデータの個数とはちがう。どの点が外れ値かも、その個数も示さない"
     >
       <text x="14" y="22" fontSize="10" fill={muted}>
         並べた記録と、データ自身から作った柵
@@ -18940,6 +18962,10 @@ export function DataOutlierFence() {
       {dots.map((x) => (
         <circle key={x} cx={x} cy={baseY} r="4.2" fill={stroke} opacity="0.75" />
       ))}
+
+      <text x="170" y="158" fontSize="9.5" fill={muted} textAnchor="middle">
+        ※ 仕組みを見るための絵。問題のデータの通りではありません
+      </text>
 
       <text x="170" y="178" fontSize="11" fill={accent} textAnchor="middle">
         柵の外に出た記録は、どうやって見つける？
@@ -19049,24 +19075,116 @@ export function DataTestTail() {
   );
 }
 
-/* ── dispatch 用スニペット（Math.tsx の <<DATA_HIST_READ>> 分岐の直後に貼る）──
+/**
+ * DATA_TEST_LINES（系9 step10）: 仮説検定の「めったに起きない線」を 2 本ならべた図。
+ * 縦の軸は確率で、下へ行くほど起こりにくい（軸の値は書かない）。5 % の線と 1 % の線を
+ * 水平に引くだけで、**観測された確率がどこに来るかは描かない**——「?」は軸の外に置き、
+ * 行き先を 3 本の破線に等しく割ることで、どちらの線より下かという判定を漏らさないようにする。
+ * 系7 の [背理法] の図（ProofLadder）を流用すると「仮定 → 矛盾」の語彙が上書きしてしまい、
+ * この step が教えたい「背理法との違い」を潰すため、この単元専用に起こした図。
+ */
+export function DataTestLines() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const axisX = 150; // 確率の縦軸
+  const fieldRight = 300;
+  const top = 40;
+  const bottom = 176;
+  const y5 = 96; // 5 % の線（値の目盛は描かない）
+  const y1 = 140; // 1 % の線
+  return (
+    <svg
+      viewBox="0 0 340 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="確率の縦の軸に、5 % の線と 1 % の線を水平に引いた図。軸に値は書かず、下へ行くほど起こりにくい。観測された確率は軸の外に置いた疑問符のままで、行き先を 3 本の破線に等しく割ってあるので、どちらの線より下に来るか（判定）は描かない"
+    >
+      {/* 確率の場（左端が軸、右へ広がる帯） */}
+      <rect
+        x={axisX}
+        y={top}
+        width={fieldRight - axisX}
+        height={bottom - top}
+        fill={band}
+      />
 
-        if (trimmed === "<<DATA_DEVIATION_SQUARE>>") {
-          return (
-            <div key={i} className="my-6 flex justify-center">
-              <DataDeviationSquare />
-            </div>
-          );
-        }
-        if (trimmed === "<<DATA_SD_UNIT>>") {
-          return (
-            <div key={i} className="my-6 flex justify-center">
-              <DataSdUnit />
-            </div>
-          );
-        }
+      {/* 縦軸（下へ行くほど起こりにくい）。目盛の値は書かない */}
+      <line x1={axisX} y1={top} x2={axisX} y2={bottom} stroke={stroke} strokeWidth="1.3" />
+      <polyline
+        points={`${axisX - 5},${bottom - 8} ${axisX},${bottom} ${axisX + 5},${bottom - 8}`}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <text x={axisX} y={top - 10} fontSize="10" fill={muted} textAnchor="middle">
+        確率
+      </text>
 
-   ──────────────────────────────────────────────────────────────────────── */
+      {/* 上ほどよくあり、下ほどめったにない */}
+      <text x={fieldRight} y={top + 22} fontSize="9.5" fill={muted} textAnchor="end">
+        よくあること
+      </text>
+      <text x={fieldRight} y={bottom - 6} fontSize="9.5" fill={muted} textAnchor="end">
+        めったに起きない
+      </text>
+
+      {/* 2 本の基準の線（値の位置は目盛で示さない） */}
+      <line
+        x1={axisX}
+        y1={y5}
+        x2={fieldRight}
+        y2={y5}
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="5 3"
+      />
+      <text x={axisX + 6} y={y5 - 6} fontSize="10.5" fill={accent} textAnchor="start">
+        5 % の線
+      </text>
+      <line
+        x1={axisX}
+        y1={y1}
+        x2={fieldRight}
+        y2={y1}
+        stroke={accent}
+        strokeWidth="1.6"
+        strokeDasharray="5 3"
+      />
+      <text x={axisX + 6} y={y1 - 6} fontSize="10.5" fill={accent} textAnchor="start">
+        1 % の線
+      </text>
+
+      {/* 観測された確率は軸の外に「?」のまま。行き先は 3 本の破線に等しく割る
+          （軸の中に置くと、位置そのものが判定のヒントになってしまう） */}
+      <text x="64" y="84" fontSize="10.5" fill={muted} textAnchor="middle">
+        観測された確率
+      </text>
+      <text x="64" y="110" fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      {[68, 118, 164].map((ey) => (
+        <path
+          key={ey}
+          d={`M 80 108 L 142 ${ey}`}
+          stroke={muted}
+          strokeWidth="1"
+          strokeDasharray="4 3"
+        />
+      ))}
+      <text x="64" y="148" fontSize="9.5" fill={muted} textAnchor="middle">
+        ここに来るのは、どのあたり？
+      </text>
+
+      <text x="170" y="198" fontSize="11.5" fill={accent} textAnchor="middle">
+        観測された確率は、どちらの線より下に来る？
+      </text>
+    </svg>
+  );
+}
 
 /** データの分析 系6 step1: 平均線からの ± のずれと、そのずれを 1 辺とする正方形。分散の値は描かない。 */
 export function DataDeviationSquare() {
