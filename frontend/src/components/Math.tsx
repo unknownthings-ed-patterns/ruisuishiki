@@ -3341,7 +3341,7 @@ export function LPStep10() {
       <text x={Px(5)} y={Py(5.5)} fontSize="11" fill={accent} fontStyle="italic">→ k 大</text>
 
       <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
-        利益等高線 3x + 2y = k——$2$ 制約が同時に効く頂点で最大化
+        利益等高線 3x + 2y = k——2 制約が同時に効く頂点で最大化
       </text>
     </svg>
   );
@@ -10394,7 +10394,7 @@ export function SciNotationDigits() {
     >
       <rect x="32" y={tableTop - 28} width="296" height="24" rx="4" fill={headerFill} stroke={muted} strokeWidth="0.8" />
       <text x="180" y={tableTop - 12} fontSize="11" fill={stroke} textAnchor="middle" fontWeight="600">
-        $1 \\le A &lt; 10$ のとき $A \\times 10^n$ の [桁数]
+        1 ≦ A &lt; 10 のとき A × 10ⁿ の桁数
       </text>
       {rows.map((row, i) => {
         const y = tableTop + i * rowH;
@@ -10416,10 +10416,10 @@ export function SciNotationDigits() {
         );
       })}
       <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
-        肩の上 $n$ と [桁数] の関係——$n$ か $n+1$ か？
+        肩の上の n と桁数の関係——n か n+1 か？
       </text>
       <text x="180" y="214" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        具体の $A \\times 10^n$ で確かめてみよう
+        具体の A × 10ⁿ で確かめてみよう
       </text>
     </svg>
   );
@@ -10491,7 +10491,7 @@ export function Log10Shoulder() {
 
       <rect x="48" y="172" width="264" height="56" rx="6" fill="color-mix(in oklch, var(--accent) 8%, transparent)" stroke={muted} strokeWidth="0.8" strokeDasharray="5,4" />
       <text x="180" y="194" fontSize="11" fill={stroke} textAnchor="middle">
-        仮数を $0 \\le$ 仮数 $&lt; 1$ に揃えると…
+        仮数を 0 ≦ 仮数 &lt; 1 に揃えると…
       </text>
       <text x="180" y="214" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
         [桁数] と最高位が同時に読める？
@@ -10633,7 +10633,7 @@ export function ExpIneqFlip() {
         </marker>
       </defs>
       <text x="180" y="232" fontSize="11" fill={muted} textAnchor="middle">
-        底が 1 より小さいと、不等号だけ裏返る
+        底が 1 より小さいとき、不等号の向きはどうなる？
       </text>
     </svg>
   );
@@ -14511,6 +14511,27 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <SeqDomino />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_ARITH_RULER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqArithRuler />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_STAIR_PAIR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqStairPair />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_PARTIAL_DIFF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqPartialDiff />
             </div>
           );
         }
@@ -27033,6 +27054,7 @@ export function SeqLevelStairs() {
 /**
  * SEQ_HANOI（数列 系12 step1・derivation）：ハノイの塔。3 本の棒と円盤、
  * 上の n−1 枚を別の棒へ「避難」させる矢印。手数は ? のまま（答えを書かない）。
+ * 円盤は問題文と同じ 6 枚（数えた枚数から手数を誤って読み取らせないため）。
  */
 export function SeqHanoi() {
   const stroke = "var(--foreground)";
@@ -27040,12 +27062,14 @@ export function SeqHanoi() {
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
   const pegs = [70, 180, 290];
-  // A の上に積む円盤（下から順に幅が狭くなる）
+  // A の上に積む円盤（下から順に幅が狭くなる）。枚数は問題文の 6 枚にそろえる。
   const disks = [
     { w: 96, y: 156 },
-    { w: 76, y: 144 },
-    { w: 60, y: 132 },
-    { w: 44, y: 120 },
+    { w: 84, y: 144 },
+    { w: 72, y: 132 },
+    { w: 60, y: 120 },
+    { w: 48, y: 108 },
+    { w: 36, y: 96 },
   ];
   return (
     <svg
@@ -27053,7 +27077,7 @@ export function SeqHanoi() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="三本の棒と円盤の塔。上の何枚かを別の棒へ避難させる矢印を示した図。手数は書かない"
+      aria-label="三本の棒と、左の棒に六枚積まれた円盤の塔。上の何枚かを別の棒へ避難させる矢印を示した図。手数は書かない"
     >
       {/* 台と棒 */}
       <rect x="18" y="166" width="324" height="6" rx="3" fill="none" stroke={stroke} strokeWidth="1.4" />
@@ -27076,9 +27100,9 @@ export function SeqHanoi() {
         />
       ))}
 
-      {/* 上の n−1 枚をまとめる枠 */}
-      <rect x="30" y="117" width="80" height="38" rx="6" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 3" />
-      <text x="70" y="112" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic">
+      {/* 上の n−1 枚をまとめる枠（いちばん下の 1 枚だけ枠の外） */}
+      <rect x="24" y="93" width="92" height="60" rx="6" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 3" />
+      <text x="70" y="88" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic">
         n − 1 枚
       </text>
 
@@ -27200,6 +27224,273 @@ export function SeqDomino() {
       </text>
       <text x="180" y="216" fontSize="11" fill={accent} textAnchor="middle">
         ドミノはどこまで倒れる？
+      </text>
+    </svg>
+  );
+}
+
+/* ============================================================================
+ * 数列ユニット・追補 3 枚（流用図の文脈ずれを解消するための新規図）
+ * 既存の共有図（INT_MULTIPLE_RULER / CALC_TRAPEZOID_CHECK / IDENT_PARTIAL_FRACTION）は
+ * それぞれ元の単元と辞書が使っているため一切変更せず、数列用に別マーカーを起こす。
+ * 共通の作法：問うている値（項の値・和・組の合計・項数・係数）は描かない。
+ * キャプションは問いの形で終える。
+ * ========================================================================== */
+
+/** 数列 系1 step1: 数直線の上に同じ幅で並ぶ点列。項の値は書かず、
+ *  「毎回おなじ幅だけ進む」ことと「何回進むか」だけを見せる。問われている項は ? のまま。
+ *  （倍数の図 INT_MULTIPLE_RULER の系統を引き継ぎつつ、見出しから「倍数」を外した数列版） */
+export function SeqArithRuler() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 104;
+  const x0 = 44;
+  const gap = 48;
+  const marks = [0, 1, 2, 3, 4, 5, 6];
+  return (
+    <svg
+      viewBox="0 0 380 184"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="数直線の上に、同じはばだけはなれた点がいくつも並んでいる図。となりあう点のあいだには、どれもおなじはばだけ進むことを表す矢印がついている。点の値は書かれておらず、いちばん右の点は疑問符のままにしてある"
+    >
+      <text x="190" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        おなじはばずつ進む数を、数直線の上に並べてみると
+      </text>
+
+      {/* 数直線 */}
+      <path d={`M 20 ${y} L 360 ${y}`} fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d={`M 360 ${y} l -8 -4 l 0 8 z`} fill={stroke} />
+
+      {/* となりへ進む矢印（どれも同じはば） */}
+      {[0, 1, 2, 3, 4, 5].map((k) => {
+        const sx = x0 + k * gap + 8;
+        const ex = x0 + (k + 1) * gap - 8;
+        return (
+          <g key={`arc-${k}`}>
+            <path
+              d={`M ${sx} ${y - 10} Q ${(sx + ex) / 2} ${y - 34} ${ex} ${y - 10}`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.2"
+            />
+            <path
+              d={`M ${ex} ${y - 10} l -6.5 -4.5 M ${ex} ${y - 10} l -1.5 -7.5`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.2"
+            />
+            <text x={(sx + ex) / 2} y={y - 28} fontSize="10.5" fill={accent} textAnchor="middle">
+              ＋ <tspan fontStyle="italic">d</tspan>
+            </text>
+          </g>
+        );
+      })}
+
+      {/* 点（値は書かない） */}
+      {marks.map((k) => (
+        <circle key={k} cx={x0 + k * gap} cy={y} r="5.5" fill={accent} />
+      ))}
+
+      <text x={x0} y={y + 24} fontSize="10.5" fill={muted} textAnchor="middle">
+        はじめの項
+      </text>
+      <text x={x0 + 6 * gap} y={y + 25} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="190" y={y + 44} fontSize="10" fill={muted} textAnchor="middle">
+        <tspan fontStyle="italic">d</tspan> ＝ 毎回おなじだけ進むはば
+      </text>
+
+      <text x="190" y="172" fontSize="11.5" fill={accent} textAnchor="middle">
+        おなじはばで何回進めば、その点にたどり着く？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系2 step1: 幅 1 の棒の階段（等差数列）。同じ階段をひっくり返して重ねると
+ *  長方形になる——ガウスの手を目で見せる図。重ねた側は破線・うすい色。
+ *  和の値・組の合計・項数はいっさい書かず、長方形のたては ? のままにする。
+ *  （系2 step2 の SEQ_STAIR_ODD と同じ系統の見た目にそろえてある） */
+export function SeqStairPair() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const fill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const fillFlip = "color-mix(in oklch, var(--accent) 5%, transparent)";
+  const baseY = 190;
+  /** 高さは一定の割合で増える（等差であることが目で見えるように）。 */
+  const bars = [26, 46, 66, 86, 106, 126];
+  /** もとの棒とひっくり返した棒を重ねた高さ（26 + 126）。どの組も同じになる。 */
+  const total = 152;
+  const cx = (i: number) => 52 + i * 46;
+  const left = cx(0) - 20;
+  const right = cx(bars.length - 1) + 20;
+  return (
+    <svg
+      viewBox="0 0 360 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="はばのそろった棒が左から右へ一定の割合で高くなる階段の図。同じ階段をひっくり返したものを、うすい色と破線で上に重ねてあり、重ねた全体が長方形の形になっている。棒の高さも、重ねた長方形のたても、合計も、本数も数値は書かれていない"
+    >
+      <text x="180" y="16" fontSize="10.5" fill={muted} textAnchor="middle">
+        同じ階段をもう 1 つ、ひっくり返して上に重ねると……（うすい方）
+      </text>
+
+      {/* ひっくり返して重ねた階段（うすい色・破線） */}
+      {bars.map((h, i) => (
+        <rect
+          key={`flip-${i}`}
+          x={cx(i) - 20}
+          y={baseY - total}
+          width="40"
+          height={total - h}
+          rx="1.5"
+          fill={fillFlip}
+          stroke={accent}
+          strokeWidth="1"
+          strokeDasharray="4 3"
+          opacity="0.75"
+        />
+      ))}
+
+      {/* もとの階段 */}
+      {bars.map((h, i) => (
+        <rect
+          key={`bar-${i}`}
+          x={cx(i) - 20}
+          y={baseY - h}
+          width="40"
+          height={h}
+          rx="1.5"
+          fill={fill}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+
+      {/* 重ねてできた長方形のわく */}
+      <rect
+        x={left}
+        y={baseY - total}
+        width={right - left}
+        height={total}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.7"
+      />
+
+      {/* 長方形のたて（値は伏せる） */}
+      <line
+        x1={right + 12}
+        y1={baseY - total}
+        x2={right + 12}
+        y2={baseY}
+        stroke={muted}
+        strokeWidth="1"
+      />
+      <line x1={right + 8} y1={baseY - total} x2={right + 16} y2={baseY - total} stroke={muted} strokeWidth="1" />
+      <line x1={right + 8} y1={baseY} x2={right + 16} y2={baseY} stroke={muted} strokeWidth="1" />
+      <text x={right + 24} y={baseY - total / 2 + 4} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <line x1={left - 16} y1={baseY} x2={right + 24} y2={baseY} stroke={border} strokeWidth="1.2" />
+
+      <text x="180" y={baseY + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+        はしとはしが、どの組でも上下で出会っている
+      </text>
+
+      <text x="180" y="232" fontSize="11.5" fill={accent} textAnchor="middle">
+        ひっくり返して重ねると、どの組も同じ高さになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系7 step1: 分母が 2 つの因数の積になっている 1 つの分数を、
+ *  2 つの分数の「差」へ割り振る図。分子に入る係数は空欄（□）のままで、
+ *  答えにあたる値は描かない。
+ *  （式と証明の IDENT_PARTIAL_FRACTION と同じレイアウトの、引き算版） */
+export function SeqPartialDiff() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 390 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="分母が 2 つの因数の積になっている 1 つの分数を、2 つの分数の差に割り振る図。和ではなく差であることを、まん中の引き算の記号で示している。分子に入る係数は空欄のままにしてある"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        分母が 2 つの因数でできている、1 つの分数
+      </text>
+
+      {/* もとの分数 */}
+      <rect x="118" y="32" width="154" height="52" rx="6" fill={box} stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="52" fontSize="12" fill={stroke} textAnchor="middle">
+        もとの分子
+      </text>
+      <path d="M 134 60 L 256 60" stroke={stroke} strokeWidth="1.2" />
+      <text x="195" y="76" fontSize="12" fill={stroke} textAnchor="middle">
+        （　あ　）（　い　）
+      </text>
+
+      {/* 分岐 */}
+      <path d="M 195 84 L 195 100" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 100 L 290 100" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 100 L 100 124" stroke={accent} strokeWidth="1.4" />
+      <path d="M 290 100 L 290 124" stroke={accent} strokeWidth="1.4" />
+      <path d="M 100 124 l -4 -7 l 8 0 z" fill={accent} />
+      <path d="M 290 124 l -4 -7 l 8 0 z" fill={accent} />
+      <text x="195" y="94" fontSize="10.5" fill={accent} textAnchor="middle">
+        ばらして、差の形に割り振る
+      </text>
+
+      {/* 分けたあとの 2 つ（あいだは引き算） */}
+      {[
+        { cx: 100, den: "（　あ　）" },
+        { cx: 290, den: "（　い　）" },
+      ].map((f) => (
+        <g key={f.den}>
+          <rect
+            x={f.cx - 62}
+            y="126"
+            width="124"
+            height="52"
+            rx="6"
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.2"
+            strokeDasharray="5 3"
+          />
+          <text x={f.cx} y="146" fontSize="13" fill={accent} textAnchor="middle">
+            □
+          </text>
+          <path d={`M ${f.cx - 48} 154 L ${f.cx + 48} 154`} stroke={stroke} strokeWidth="1.2" />
+          <text x={f.cx} y="170" fontSize="12" fill={stroke} textAnchor="middle">
+            {f.den}
+          </text>
+        </g>
+      ))}
+      <text x="195" y="158" fontSize="16" fill={accent} textAnchor="middle">
+        −
+      </text>
+      <text x="195" y="190" fontSize="10" fill={muted} textAnchor="middle">
+        足すのではなく、ひく
+      </text>
+
+      <text x="195" y="212" fontSize="11.5" fill={accent} textAnchor="middle">
+        2 つの □ は、どんな数ならもとの分数に戻る？
       </text>
     </svg>
   );
