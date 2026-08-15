@@ -302,13 +302,42 @@ def check_dup(files, threshold=0.6, verbose=False):
 
 # ────────────────────── 3. 図の中の生の $ と [用語] ──────────────────────
 
-def check_svg(paths=None, verbose=False):
-    """SVG の <text> は MathText を通らない。$...$ も [用語] もそのまま見える。"""
+def markers_of(files):
+    """対象の series ファイルが実際に使っている図マーカー名の集合。"""
+    got = set()
+    for path in files:
+        got |= set(re.findall(r"<<([A-Z_0-9]+)>>", open(path, encoding="utf-8").read()))
+    return got
+
+
+def _owner_map(src):
+    """<text> の位置 → それを含むコンポーネント名 → 図マーカー名。"""
+    funcs = [(m.start(), m.group(1))
+             for m in re.finditer(r"^(?:export )?function (\w+)\s*\(", src, re.M)]
+    disp = dict(re.findall(r'trimmed === "<<([A-Z_0-9]+)>>"[^;]*?<(\w+)\s*/?>', src, re.S))
+    comp2mark = {c: m for m, c in disp.items()}
+    def owner(at):
+        name = None
+        for pos, fn in funcs:
+            if pos <= at:
+                name = fn
+            else:
+                break
+        return comp2mark.get(name), name
+    return owner
+
+
+def check_svg(paths=None, verbose=False, only=None):
+    """SVG の <text> は MathText を通らない。$...$ も [用語] もそのまま見える。
+
+    only を渡すと、そのマーカー集合に属する図だけを報告する（単元ごとに走らせる用）。
+    """
     paths = paths or [os.path.join(COMPONENTS, f)
                       for f in sorted(os.listdir(COMPONENTS)) if f.endswith(".tsx")]
     rows = []
     for path in paths:
         src = open(path, encoding="utf-8").read()
+        owner = _owner_map(src)
         offs = [0]
         for ch in src.split("\n"):
             offs.append(offs[-1] + len(ch) + 1)
@@ -322,9 +351,12 @@ def check_svg(paths=None, verbose=False):
             if re.search(r"\[[^\[\]\n]{1,20}\]", inner_wo):
                 bad.append("[用語]")
             if bad:
+                mark, fn = owner(m.start())
+                if only is not None and mark not in only:
+                    continue
                 line = next(i for i, o in enumerate(offs) if o > m.start())
                 rows.append({"file": os.path.basename(path), "line": line,
-                             "kind": "・".join(bad),
+                             "kind": "・".join(bad), "mark": mark or fn or "?",
                              "text": " ".join(inner.split())[:90]})
     print("\n## 3. 図（SVG の <text>）に、生の $ や [用語] が入っていないか")
     if not rows:
@@ -332,7 +364,7 @@ def check_svg(paths=None, verbose=False):
         return rows
     shown = rows if verbose else rows[:30]
     for r in shown:
-        print(f"  ★ {r['file']}:{r['line']}  ({r['kind']})")
+        print(f"  ★ {r['file']}:{r['line']}  {r['mark']}  ({r['kind']})")
         print(f"     {r['text']}")
     if len(rows) > len(shown):
         print(f"  … 他 {len(rows) - len(shown)} 件（--verbose で全部）")
@@ -564,7 +596,8 @@ def main():
     if args.check in (None, "dup"):
         check_dup(files, verbose=args.verbose)
     if args.check in (None, "svg"):
-        check_svg(verbose=args.verbose)
+        check_svg(verbose=args.verbose,
+                  only=markers_of(files) if args.files else None)
     if args.check in (None, "ref"):
         check_ref(files, args.verbose)
     if args.check in (None, "claim"):
