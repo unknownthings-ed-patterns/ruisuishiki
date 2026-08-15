@@ -10622,7 +10622,7 @@ export function ExpIneqFlip() {
         0 &lt; a &lt; 1
       </text>
       <text x="118" y="146" fontSize="10" fill={dec}>
-        p &lt; q ⇒ x &gt; ?（反転）
+        p &lt; q のとき x は ?
       </text>
       <defs>
         <marker id="expIneqInc" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
