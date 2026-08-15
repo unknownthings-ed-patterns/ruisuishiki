@@ -14373,6 +14373,147 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        // ── 数列ユニット（seriesSequence.ts）の図 ──
+        if (trimmed === "<<SEQ_STAIR_ODD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqStairOdd />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_GEO_BARS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqGeoBars />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_ALT_SIGN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqAltSign />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_SHIFT_SUBTRACT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqShiftSubtract />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_PARTIAL_OSC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqPartialOsc />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_SIGMA_ANATOMY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqSigmaAnatomy />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_SIGMA_SPLIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqSigmaSplit />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_DIFF_ZIGZAG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqDiffZigzag />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_SIGN_TURN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqSignTurn />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_TELESCOPE_BLOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqTelescopeBlock />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_RUNNING_TOTAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqRunningTotal />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_FIRST_EXCEPTION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqFirstException />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_GROUP_BEADS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqGroupBeads />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_GROUP_DOUBLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqGroupDouble />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_RECUR_ARROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqRecurArrow />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_TYPE_FORK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqTypeFork />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_SHIFT_GEO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqShiftGeo />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_LEVEL_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqLevelStairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_HANOI>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqHanoi />
+            </div>
+          );
+        }
+        if (trimmed === "<<SEQ_DOMINO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <SeqDomino />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -25326,6 +25467,1739 @@ export function CalcVessel() {
 
       <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
         たまった量がふえる速さは、いまの切り口の長さで決まる？
+      </text>
+    </svg>
+  );
+}
+
+/* ============================================================================
+ * 数列ユニット（seriesSequence.ts）の図
+ * 「フェードアウトする足場」：step1 と質的変化 step のみ。
+ * 共通の作法：問うている値（項の値・和・項数・手数・群番号）は描かない。
+ * キャプションは問いの形で終える。
+ * ========================================================================== */
+
+/** 数列 系2 step2: 幅 1 の棒の階段。項数が奇数だと、両はしから組にしたとき
+ *  まんなかの 1 本だけが相手なしで残る。棒の高さ・和の値は書かない。 */
+export function SeqStairOdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const fill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const fillMid = "color-mix(in oklch, var(--accent) 30%, transparent)";
+  const baseY = 168;
+  /** 7 本＝奇数。高さは一定の割合で増える（等差であることが目で見えるように）。 */
+  const bars = [22, 36, 50, 64, 78, 92, 106];
+  const cx = (i: number) => 57 + i * 40;
+  return (
+    <svg
+      viewBox="0 0 360 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="幅のそろった棒が左から右へ一定の割合で高くなる階段の図。棒は奇数本で、両はしから順に組にしていくと、まんなかの一本だけが相手なしで残る。棒の高さや合計の数値は書かれていない"
+    >
+      <text x="16" y="16" fontSize="10.5" fill={muted}>
+        はしから順に、2 本ずつ組にしていくと……
+      </text>
+
+      {/* 組にする弧（外側から内側へ・値は書かない） */}
+      <path
+        d={`M ${cx(0)} ${baseY - bars[0]} Q 177 26 ${cx(6)} ${baseY - bars[6]}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 3"
+      />
+      <path
+        d={`M ${cx(1)} ${baseY - bars[1]} Q 177 46 ${cx(5)} ${baseY - bars[5]}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 3"
+      />
+      <path
+        d={`M ${cx(2)} ${baseY - bars[2]} Q 177 66 ${cx(4)} ${baseY - bars[4]}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 3"
+      />
+
+      {/* 棒（幅をそろえる＝幅 1 の棒） */}
+      {bars.map((h, i) => (
+        <rect
+          key={i}
+          x={cx(i) - 17}
+          y={baseY - h}
+          width="34"
+          height={h}
+          rx="1.5"
+          fill={i === 3 ? fillMid : fill}
+          stroke={i === 3 ? accent : stroke}
+          strokeWidth={i === 3 ? 1.6 : 1.1}
+        />
+      ))}
+
+      {/* まんなかの 1 本（高さは伏せる） */}
+      <text x="177" y="140" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="177" y="184" fontSize="10" fill={accent} textAnchor="middle">
+        相手なし
+      </text>
+
+      <line x1="24" y1={baseY} x2="336" y2={baseY} stroke={border} strokeWidth="1.2" />
+
+      <text x="180" y="206" fontSize="11.5" fill={accent} textAnchor="middle">
+        まんなかに残った 1 本の高さは、組の合計とどんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系3 step1: 倍々に伸びる棒。第 5 項は紙からはみ出し、第 7 項は ? のまま。
+ *  値は問題文に出ている第 1〜4 項だけを書き、あいだの弧で「× 2 が何回か」を問う。 */
+export function SeqGeoBars() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const fillColor = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  const BASE = 196;
+  const TOP = 34;
+  /** 第 1〜4 項は値どおりの高さ（5→13px, 10→26, 20→52, 40→104）。第 5 項は枠を突き抜ける。 */
+  const bars = [
+    { x: 46, h: 13, label: "5" },
+    { x: 92, h: 26, label: "10" },
+    { x: 138, h: 52, label: "20" },
+    { x: 184, h: 104, label: "40" },
+  ];
+  const W = 26;
+  return (
+    <svg
+      viewBox="0 0 340 244"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左から右へ、棒が倍の高さになりながら並ぶ図。はじめの 4 本には値が書いてあり、5 本目は上の枠をはみ出している。第 7 項のところは疑問符のままで、値は書かれていない"
+    >
+      <text x="170" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        となりへ行くたびに、同じ数をかける
+      </text>
+
+      {/* 第 1〜4 項 */}
+      {bars.map((b) => (
+        <g key={b.label}>
+          <rect
+            x={b.x - W / 2}
+            y={BASE - b.h}
+            width={W}
+            height={b.h}
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text x={b.x} y={BASE - b.h - 7} fontSize="11" fill={stroke} textAnchor="middle">
+            {b.label}
+          </text>
+        </g>
+      ))}
+
+      {/* 第 5 項：枠を突き抜ける（値は書かない） */}
+      <line
+        x1={230 - W / 2}
+        y1={BASE}
+        x2={230 - W / 2}
+        y2={TOP}
+        stroke={stroke}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <line
+        x1={230 + W / 2}
+        y1={BASE}
+        x2={230 + W / 2}
+        y2={TOP}
+        stroke={stroke}
+        strokeWidth="1.2"
+        strokeDasharray="5 3"
+      />
+      <text x="230" y={TOP - 6} fontSize="12" fill={muted} textAnchor="middle">
+        ↑
+      </text>
+
+      {/* 第 7 項：? のまま */}
+      <line x1="300" y1={BASE} x2="300" y2={TOP + 20} stroke={accent} strokeWidth="1.1" strokeDasharray="3 4" />
+      <text x="300" y={TOP + 14} fontSize="20" fill={accent} textAnchor="middle" fontWeight="600">
+        ?
+      </text>
+      <text x="266" y="120" fontSize="12" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* 台の線 */}
+      <line x1="24" y1={BASE} x2="320" y2={BASE} stroke={border} strokeWidth="1.2" />
+
+      {/* 番号 */}
+      {[
+        { x: 46, t: "1" },
+        { x: 92, t: "2" },
+        { x: 138, t: "3" },
+        { x: 184, t: "4" },
+        { x: 230, t: "5" },
+        { x: 266, t: "…" },
+        { x: 300, t: "7" },
+      ].map((n) => (
+        <text key={n.t} x={n.x} y={BASE + 15} fontSize="10" fill={muted} textAnchor="middle">
+          {n.t}
+        </text>
+      ))}
+      <text x="24" y={BASE + 30} fontSize="9" fill={muted} textAnchor="start">
+        番号
+      </text>
+
+      {/* あいだの弧（ひと足）。ラベルは最初の 1 つだけ */}
+      {[
+        [46, 92],
+        [92, 138],
+        [138, 184],
+        [184, 230],
+      ].map(([a, b]) => (
+        <path
+          key={`${a}-${b}`}
+          d={`M ${a + 6} ${BASE + 22} Q ${(a + b) / 2} ${BASE + 38} ${b - 6} ${BASE + 22}`}
+          fill="none"
+          stroke={accent}
+          strokeWidth="1.2"
+          strokeDasharray="4 3"
+        />
+      ))}
+      <text x="69" y={BASE + 50} fontSize="10" fill={accent} textAnchor="middle">
+        × 2
+      </text>
+
+      <text x="180" y="240" fontSize="11" fill={accent} textAnchor="middle">
+        第 7 項まで、この「× 2」は何回ふみ出す？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系3 step6: 公比が負のとき、点が軸の上と下へ交互に振れる。
+ *  第 1〜4 項は値つき、第 5・6 項は符号だけ、第 9 項は「上？ 下？」のまま。 */
+export function SeqAltSign() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const AX = 115;
+  /** 模式的な高さ（値どおりではない）。上下に交互、振れ幅はだんだん大きく。 */
+  const pts = [
+    { x: 50, dy: -22, label: "3" },
+    { x: 88, dy: 34, label: "−9" },
+    { x: 126, dy: -46, label: "27" },
+    { x: 164, dy: 58, label: "−81" },
+    { x: 202, dy: -70, label: "＋" },
+    { x: 240, dy: 82, label: "−" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 244"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横線をはさんで、点が上・下・上・下と交互に並び、振れ幅がだんだん大きくなる図。はじめの 4 点には値が書いてあり、次の 2 点は符号だけ。第 9 項のところは上か下かを問う疑問のまま残してある"
+    >
+      <text x="170" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        番号が 1 つ進むたびに、上と下がひっくり返る
+      </text>
+
+      {/* 軸 */}
+      <line x1="24" y1={AX} x2="316" y2={AX} stroke={border} strokeWidth="1.2" />
+      <text x="30" y={AX - 6} fontSize="9" fill={muted}>
+        ＋
+      </text>
+      <text x="30" y={AX + 14} fontSize="9" fill={muted}>
+        −
+      </text>
+
+      {/* 点と支柱 */}
+      {pts.map((p, i) => (
+        <g key={p.x}>
+          <line x1={p.x} y1={AX} x2={p.x} y2={AX + p.dy} stroke={muted} strokeWidth="1" />
+          <circle cx={p.x} cy={AX + p.dy} r="4" fill={i < 4 ? stroke : muted} />
+          <text
+            x={p.x}
+            y={p.dy < 0 ? AX + p.dy - 8 : AX + p.dy + 15}
+            fontSize={i < 4 ? 11 : 12}
+            fill={i < 4 ? stroke : muted}
+            textAnchor="middle"
+          >
+            {p.label}
+          </text>
+        </g>
+      ))}
+
+      <text x="268" y={AX + 5} fontSize="12" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* 第 9 項：上か下かを問う */}
+      <text x="296" y="46" fontSize="11" fill={accent} textAnchor="middle">
+        上？
+      </text>
+      <line x1="296" y1="54" x2="296" y2="176" stroke={accent} strokeWidth="1.1" strokeDasharray="3 4" />
+      <text x="296" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        下？
+      </text>
+      <text x="296" y="208" fontSize="10" fill={muted} textAnchor="middle">
+        第 9 項
+      </text>
+
+      <text x="170" y="232" fontSize="11" fill={accent} textAnchor="middle">
+        この行ったり来たりは、式のどこから出てくる？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系4 step1: もとの和と、公比倍した和を 1 つずらして 2 行に並べる図。
+ *  重なる部分は帯で示し、はみ出す両端は「?」のまま残す（答えを書かない）。 */
+export function SeqShiftSubtract() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const boxFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const bandFill = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  /** 5 つの位置。上の行は位置 0〜3、下の行（公比倍）は位置 1〜4 を占める。 */
+  const xs = [70, 122, 174, 226, 278];
+  const w = 44;
+  const yTop = 62;
+  const yBot = 116;
+  const h = 30;
+  const box = (x: number, y: number, key: string) => (
+    <rect
+      key={key}
+      x={x - w / 2}
+      y={y - h / 2}
+      width={w}
+      height={h}
+      rx="5"
+      fill={boxFill}
+      stroke={stroke}
+      strokeWidth="1.2"
+    />
+  );
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="もとの和の項を横一列の箱で並べた上の行と、それを公比倍して一つ右へずらした下の行。まん中の三か所は上下が重なっていて帯で示され、左端と右端のはみ出した箱にはクエスチョンマークが置かれている。引いたあとに何が残るかを問う図"
+    >
+      {/* 重なっている帯（まん中の 3 か所） */}
+      <rect
+        x={xs[1] - w / 2 - 6}
+        y={yTop - h / 2 - 8}
+        width={xs[3] - xs[1] + w + 12}
+        height={yBot - yTop + h + 16}
+        rx="8"
+        fill={bandFill}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="5 4"
+      />
+      <text x="180" y="28" fontSize="11" fill={muted} textAnchor="middle">
+        上：もとの和　　下：公比倍した和（1 つ先へずれる）
+      </text>
+
+      {/* 上の行 */}
+      <text x="34" y={yTop + 4} fontSize="12" fill={stroke} textAnchor="middle">
+        S
+      </text>
+      {xs.slice(0, 4).map((x, i) => box(x, yTop, `t${i}`))}
+      <text x={xs[0]} y={yTop + 4} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 下の行（1 つ右へずらす） */}
+      <text x="34" y={yBot + 4} fontSize="12" fill={stroke} textAnchor="middle">
+        ×r
+      </text>
+      {xs.slice(1).map((x, i) => box(x, yBot, `b${i}`))}
+      <text x={xs[4]} y={yBot + 4} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 重なりの縦線 */}
+      {xs.slice(1, 4).map((x, i) => (
+        <line
+          key={`v${i}`}
+          x1={x}
+          y1={yTop + h / 2}
+          x2={x}
+          y2={yBot - h / 2}
+          stroke={accent}
+          strokeWidth="1"
+          strokeDasharray="3 3"
+        />
+      ))}
+      <text x="180" y={yBot + 34} fontSize="11" fill={accent} textAnchor="middle">
+        帯の中は上下がそっくり同じ
+      </text>
+      <text x="180" y={yBot + 56} fontSize="12" fill={accent} textAnchor="middle">
+        重なった部分を消すと、残るのはどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系4 step6: 公比が負のとき、部分和が 0 の上下へ交互に振れるようす。
+ *  大きさの目盛りは書かず、問われている項数の部分和は「?」の箱のまま残す。 */
+export function SeqPartialOsc() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 見せるのは最初の 3 つの部分和だけ。以降は「?」。 */
+  const axis = 104;
+  const pts = [
+    { x: 70, y: axis - 26, label: "1 項まで" },
+    { x: 128, y: axis + 34, label: "2 項まで" },
+    { x: 186, y: axis - 50, label: "3 項まで" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="横線をゼロとして、部分和の点が上、下、上と交互に振れながら、振れはばを大きくしていくようす。四つ目から先は点を書かず、クエスチョンマークの箱が横線をまたいで置かれている。項数が偶数のときと奇数のときで部分和がゼロのどちら側になるかを問う図"
+    >
+      <text x="180" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        足していくたびに、和はどちら側へ？
+      </text>
+      <line x1="40" y1={axis} x2="330" y2={axis} stroke={muted} strokeWidth="1.2" />
+      <text x="30" y={axis + 4} fontSize="12" fill={muted} textAnchor="middle">
+        0
+      </text>
+
+      {/* 折れ線（0 から順に振れる） */}
+      <path
+        d={`M 40 ${axis} L ${pts[0].x} ${pts[0].y} L ${pts[1].x} ${pts[1].y} L ${pts[2].x} ${pts[2].y}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.4"
+      />
+      <path
+        d={`M ${pts[2].x} ${pts[2].y} L 250 ${axis + 60}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        strokeDasharray="4 4"
+      />
+      {pts.map((p, i) => (
+        <g key={`p${i}`}>
+          <circle cx={p.x} cy={p.y} r="5" fill={accent} />
+          <text
+            x={p.x}
+            y={p.y < axis ? p.y - 12 : p.y + 20}
+            fontSize="10"
+            fill={muted}
+            textAnchor="middle"
+          >
+            {p.label}
+          </text>
+        </g>
+      ))}
+
+      {/* 問われている部分和は「?」の箱で、0 の上下どちらにも寄せない */}
+      <rect
+        x="270"
+        y={axis - 26}
+        width="52"
+        height="52"
+        rx="8"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.2"
+        strokeDasharray="5 4"
+      />
+      <text x="296" y={axis + 6} fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="296" y={axis + 44} fontSize="10" fill={muted} textAnchor="middle">
+        8 項まで
+      </text>
+
+      <text x="180" y="188" fontSize="12" fill={accent} textAnchor="middle">
+        項数が偶数のとき・奇数のとき、和は 0 のどちら側？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系5 step1: シグマ記号の解剖。3 つの部品が「何を指すか」だけを示し、値は入れない。 */
+export function SeqSigmaAnatomy() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="大きなシグマ記号の上・下・右に、それぞれ空の枠が置かれた図。上の枠は終わりの番号、下の枠は始まりの番号、右の枠は足すものの式を指すことが、矢印と言葉で示されている。具体的な数は書かれていない"
+    >
+      <text x="210" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        シグマ記号のつくり
+      </text>
+
+      {/* 上端 */}
+      <text x="150" y="42" fontSize="11" fill={accent} textAnchor="middle">
+        どこまで足すか（上端）
+      </text>
+      <line x1="150" y1="47" x2="150" y2="57" stroke={muted} strokeWidth="1" />
+      <rect
+        x="128"
+        y="58"
+        width="44"
+        height="24"
+        rx="4"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="4 3"
+      />
+      <text x="150" y="75" fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* シグマ本体 */}
+      <text
+        x="150"
+        y="170"
+        fontSize="76"
+        fill={stroke}
+        textAnchor="middle"
+        fontFamily="Georgia, 'Times New Roman', serif"
+      >
+        Σ
+      </text>
+
+      {/* 下端 */}
+      <text x="124" y="201" fontSize="12" fill={stroke} textAnchor="end">
+        k =
+      </text>
+      <rect
+        x="128"
+        y="184"
+        width="44"
+        height="24"
+        rx="4"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="4 3"
+      />
+      <text x="150" y="201" fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+      <line x1="150" y1="214" x2="150" y2="209" stroke={muted} strokeWidth="1" />
+      <text x="150" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        どこから足すか（下端）
+      </text>
+
+      {/* 一般項 */}
+      <text x="288" y="110" fontSize="11" fill={accent} textAnchor="middle">
+        何を足すか（一般項）
+      </text>
+      <line x1="288" y1="115" x2="288" y2="124" stroke={muted} strokeWidth="1" />
+      <rect
+        x="212"
+        y="124"
+        width="152"
+        height="38"
+        rx="5"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="4 3"
+      />
+      <text x="288" y="149" fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* 境界の目安（薄い床） */}
+      <line x1="40" y1="236" x2="380" y2="236" stroke={border} strokeWidth="0.8" />
+
+      <text x="210" y="252" fontSize="11" fill={accent} textAnchor="middle">
+        この記号をもとのたし算に書きもどすと、何項ならぶ？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系5 step6: 縦にならべたたし算を、たての列ごとにくくる。値は書かない。 */
+export function SeqSigmaSplit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const rows: Array<[string, string, number]> = [
+    ["a₁", "b₁", 54],
+    ["a₂", "b₂", 82],
+    ["a₃", "b₃", 110],
+    ["⋮", "⋮", 138],
+    ["aₙ", "bₙ", 166],
+  ];
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="ふたつの記号のたし算が縦に何行もならべてあり、左の列と右の列に、それぞれ下から中かっこが当てられている図。全体をまとめる大かっこが左側にある。数は書かれていない"
+    >
+      <text x="210" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        たての列ごとにまとめる
+      </text>
+
+      {/* 全体をくくる大かっこ */}
+      <path
+        d="M 126 40 L 118 40 L 118 178 L 126 178"
+        fill="none"
+        stroke={border}
+        strokeWidth="1.3"
+      />
+      <text x="112" y="113" fontSize="10" fill={muted} textAnchor="end">
+        ぜんぶの和
+      </text>
+
+      {/* 行 */}
+      {rows.map(([left, right, y], i) => (
+        <g key={i}>
+          <text x="150" y={y} fontSize="15" fill={stroke} textAnchor="middle">
+            {left}
+          </text>
+          <text x="190" y={y} fontSize="13" fill={muted} textAnchor="middle">
+            ＋
+          </text>
+          <text x="230" y={y} fontSize="15" fill={stroke} textAnchor="middle">
+            {right}
+          </text>
+        </g>
+      ))}
+
+      {/* たての列ごとの中かっこ */}
+      <path d="M 128 188 Q 150 199 172 188" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 208 188 Q 230 199 252 188" fill="none" stroke={accent} strokeWidth="1.5" />
+
+      <text x="150" y="216" fontSize="9.5" fill={accent} textAnchor="middle">
+        左の列だけの和
+      </text>
+      <text x="190" y="216" fontSize="11" fill={muted} textAnchor="middle">
+        ＋
+      </text>
+      <text x="230" y="216" fontSize="9.5" fill={accent} textAnchor="middle">
+        右の列だけの和
+      </text>
+
+      <text x="210" y="244" fontSize="11" fill={accent} textAnchor="middle">
+        先にたての列ごとに集めても、答えは変わらない？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系6 step1・辞書 階差数列: もとの列の下に、となりどうしの差をジグザグの弧で
+ *  書き込む図。差の列は b1, b2, … と名前だけを見せ、もとの列の一般項は ? のまま
+ *  残す（具体的な項の値・答えは 1 つも書かない）。 */
+export function SeqDiffZigzag() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const fill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const top = 56;
+  const xs = [52, 122, 192, 262, 332];
+  const labels = ["a₁", "a₂", "a₃", "a₄", "a₅"];
+  const gaps = ["b₁", "b₂", "b₃", "b₄"];
+  return (
+    <svg
+      viewBox="0 0 420 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="上の段に数列の項が横一列に並び、その下にとなりどうしを結ぶ弧がジグザグに描かれている図。弧には差の列の名前だけが付いていて、項の値や一般項は書かれていない"
+    >
+      <text x="20" y="24" fontSize="10.5" fill={muted}>
+        上の段が読めないときは、下の段を見る
+      </text>
+
+      {/* 上の段：もとの列 */}
+      {xs.map((x, i) => (
+        <g key={labels[i]}>
+          <rect
+            x={x - 22}
+            y={top - 17}
+            width="44"
+            height="30"
+            rx="5"
+            fill={fill}
+            stroke={stroke}
+            strokeWidth="1.2"
+          />
+          <text x={x} y={top + 3} fontSize="13" fill={stroke} textAnchor="middle">
+            {labels[i]}
+          </text>
+        </g>
+      ))}
+      <text x={xs[4] + 42} y={top + 3} fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* 下の段：ジグザグの弧＝となりどうしの差 */}
+      {gaps.map((g, i) => {
+        const x1 = xs[i];
+        const x2 = xs[i + 1];
+        const mid = (x1 + x2) / 2;
+        const dip = i % 2 === 0 ? 124 : 138;
+        return (
+          <g key={g}>
+            <path
+              d={`M ${x1} ${top + 15} Q ${mid} ${dip} ${x2} ${top + 15}`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.4"
+            />
+            <text x={mid} y={dip - 12} fontSize="12" fill={accent} textAnchor="middle">
+              {g}
+            </text>
+          </g>
+        );
+      })}
+
+      <line x1="20" y1="158" x2="400" y2="158" stroke={border} strokeWidth="1" strokeDasharray="4 4" />
+
+      {/* 問うているもの＝もとの列の一般項は ? のまま */}
+      <text x="20" y="178" fontSize="11.5" fill={muted}>
+        aₙ = ?
+      </text>
+      <text x="210" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
+        下の段の規則が読めたら、上の段はどこまで言い当てられる？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系6 step6: もとの列の増減を表す折れ線と、その下に並ぶ階差の符号の帯。
+ *  縦の目もり・項の値・折り返しが第何項かは書かず、折り返しの点は ? のまま残す。 */
+export function SeqSignTurn() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const border = "var(--border)";
+  const minus = "color-mix(in oklch, var(--foreground) 8%, transparent)";
+  const plus = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  /** 下がってから上がる折れ線（縦の値は目もりを付けないので読めない）。 */
+  const pts = [
+    [46, 42],
+    [92, 66],
+    [138, 84],
+    [184, 96],
+    [230, 102],
+    [276, 88],
+    [322, 62],
+    [368, 26],
+  ];
+  const signs = ["−", "−", "−", "−", "+", "+", "+"];
+  const bandY = 132;
+  return (
+    <svg
+      viewBox="0 0 420 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="点が左から右へ下がっていき、途中から上がりに変わる折れ線の図。その下に、となりどうしのあいだの符号がマイナスからプラスへ切り替わる帯が並んでいる。縦の目もりや項の値、折り返しが何番目かは書かれていない"
+    >
+      <text x="20" y="20" fontSize="10.5" fill={muted}>
+        値そのものではなく、となりとの差の符号を見ると
+      </text>
+
+      {/* 折れ線 */}
+      <polyline
+        points={pts.map((p) => p.join(",")).join(" ")}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.4"
+      />
+      {pts.map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r={i === 4 ? 5 : 3.2} fill={i === 4 ? accent : stroke} />
+      ))}
+      <text x={pts[4][0]} y={pts[4][1] - 12} fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 番号の向き */}
+      <line x1="30" y1="116" x2="392" y2="116" stroke={border} strokeWidth="1.2" />
+      <path d="M 392 116 l -7 -4 l 0 8 z" fill={border} />
+      <text x="398" y="112" fontSize="10" fill={muted} textAnchor="end">
+        番号
+      </text>
+
+      {/* 符号の帯（となりどうしのあいだに 1 つずつ） */}
+      {signs.map((s, i) => {
+        const x1 = pts[i][0];
+        const x2 = pts[i + 1][0];
+        return (
+          <g key={i}>
+            <rect
+              x={x1}
+              y={bandY}
+              width={x2 - x1}
+              height="26"
+              rx="3"
+              fill={s === "+" ? plus : minus}
+              stroke={border}
+              strokeWidth="1"
+            />
+            <text
+              x={(x1 + x2) / 2}
+              y={bandY + 18}
+              fontSize="13"
+              fill={s === "+" ? accent : muted}
+              textAnchor="middle"
+            >
+              {s}
+            </text>
+          </g>
+        );
+      })}
+      <text x="20" y={bandY + 18} fontSize="10.5" fill={muted}>
+        差
+      </text>
+
+      <text x="210" y="204" fontSize="11.5" fill={accent} textAnchor="middle">
+        符号が切りかわるところに立っている項は、並び全体の中でどんな項？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_TELESCOPE_BLOCK（数列 系7 step6・derivation）：
+ * f(k+1) − f(k) の積み木を段違いに積み、上の段の「＋」と下の段の「−」が
+ * 同じ高さでぶつかって消え、いちばん外側の 2 つだけが残ることを示す図。
+ * 残る両端は名前だけを置き、その値も和の値も f の正体も書かない。
+ */
+export function SeqTelescopeBlock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const plus = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const minus = "color-mix(in oklch, var(--foreground) 9%, transparent)";
+  // 段違いに 62px ずつ右へずらして積む。上の段の「＋」の真下に、下の段の「−」が来る。
+  const rows = [
+    { base: 34, y: 44, minus: "− f(1)", plus: "＋ f(2)" },
+    { base: 96, y: 76, minus: "− f(2)", plus: "＋ f(3)" },
+    { base: 158, y: 108, minus: "− f(3)", plus: "＋ f(4)" },
+  ];
+  const lastBase = 244;
+  const lastY = 160;
+  return (
+    <svg
+      viewBox="0 0 390 268"
+      className="w-full h-auto"
+      style={{ maxWidth: 390 }}
+      role="img"
+      aria-label="となりどうしの差を段違いに積み上げた図。上の段のプラスと下の段のマイナスが同じ高さでぶつかって消え、いちばん外側の 2 つだけが残ることを示す。残るものの値も、和の値も書かない"
+    >
+      <text x="195" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        となりどうしの差を、上から順に積んでみる
+      </text>
+
+      {/* 段違いに積んだ 3 段 */}
+      {rows.map((r, k) => (
+        <g key={r.minus}>
+          <rect x={r.base} y={r.y} width="58" height="24" rx="4" fill={minus} stroke={stroke} strokeWidth="1.1" />
+          <text x={r.base + 29} y={r.y + 16} fontSize="10.5" fill={stroke} textAnchor="middle">
+            {r.minus}
+          </text>
+          <rect x={r.base + 62} y={r.y} width="58" height="24" rx="4" fill={plus} stroke={stroke} strokeWidth="1.1" />
+          <text x={r.base + 91} y={r.y + 16} fontSize="10.5" fill={stroke} textAnchor="middle">
+            {r.plus}
+          </text>
+          {/* 上の段の「＋」と、下の段の「−」がぶつかる印 */}
+          {k < rows.length - 1 && (
+            <g>
+              <path
+                d={`M ${r.base + 91} ${r.y + 24} L ${r.base + 91} ${r.y + 32}`}
+                stroke={accent}
+                strokeWidth="1.2"
+              />
+              <path
+                d={`M ${r.base + 70} ${r.y + 36} L ${r.base + 112} ${r.y + 20}`}
+                stroke={accent}
+                strokeWidth="1.4"
+              />
+            </g>
+          )}
+        </g>
+      ))}
+
+      {/* 続きの段（省略） */}
+      <text x={222} y={146} fontSize="12" fill={muted} textAnchor="middle">
+        ︙
+      </text>
+
+      {/* いちばん下の段 */}
+      <rect x={lastBase} y={lastY} width="58" height="24" rx="4" fill={minus} stroke={stroke} strokeWidth="1.1" />
+      <text x={lastBase + 29} y={lastY + 16} fontSize="10.5" fill={stroke} textAnchor="middle">
+        − f(n)
+      </text>
+      <rect x={lastBase + 62} y={lastY} width="58" height="24" rx="4" fill={plus} stroke={stroke} strokeWidth="1.1" />
+      <text x={lastBase + 91} y={lastY + 16} fontSize="10.5" fill={stroke} textAnchor="middle">
+        ＋ f(n+1)
+      </text>
+
+      <text x="195" y="204" fontSize="10.5" fill={accent} textAnchor="middle">
+        ぶつかった段は、たがいに消えていく
+      </text>
+
+      {/* 生き残る両端（値は ? のまま） */}
+      <rect x="20" y="216" width="70" height="26" rx="4" fill={minus} stroke={accent} strokeWidth="1.4" />
+      <text x="55" y="233" fontSize="10.5" fill={stroke} textAnchor="middle">
+        − f(1) = ?
+      </text>
+      <rect x="300" y="216" width="70" height="26" rx="4" fill={plus} stroke={accent} strokeWidth="1.4" />
+      <text x="335" y="233" fontSize="10.5" fill={stroke} textAnchor="middle">
+        ＋ f(n+1) = ?
+      </text>
+      <path d="M 96 229 L 294 229" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+      <text x="195" y="225" fontSize="10" fill={muted} textAnchor="middle">
+        空いた
+      </text>
+
+      <text x="195" y="260" fontSize="11.5" fill={accent} textAnchor="middle">
+        こんなに積んだのに、生き残るのが 2 つだけなのはどうして？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系8 step1: 累計の列と増分の列を並べた 2 列表。増分の列はすべて ? のまま。
+ *  となり合う 2 つの累計を束ねる線は「関係がありそうだ」という気配だけを渡す。 */
+export function SeqRunningTotal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const rows = [
+    { label: "1 回目", total: "S₁" },
+    { label: "2 回目", total: "S₂" },
+    { label: "3 回目", total: "S₃" },
+    { label: "4 回目", total: "S₄" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="累計の列と、その回ぶんの増分の列を並べた表。増分の列はすべてはてなマークで、値は書かれていない"
+    >
+      {/* 見出し */}
+      <text x="46" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        回
+      </text>
+      <text x="150" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        そこまでの累計
+      </text>
+      <text x="268" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        その回ぶん
+      </text>
+      <path d="M 16 32 L 324 32" stroke={muted} strokeWidth="1" />
+
+      {rows.map((r, k) => {
+        const y = 56 + k * 38;
+        return (
+          <g key={r.label}>
+            <text x="46" y={y} fontSize="12" fill={muted} textAnchor="middle">
+              {r.label}
+            </text>
+            <rect
+              x="106"
+              y={y - 17}
+              width="88"
+              height="26"
+              rx="5"
+              fill={fill}
+              stroke={stroke}
+              strokeWidth="1.2"
+            />
+            <text x="150" y={y} fontSize="13" fill={stroke} textAnchor="middle">
+              {r.total}
+            </text>
+            <rect
+              x="230"
+              y={y - 17}
+              width="76"
+              height="26"
+              rx="5"
+              fill="none"
+              stroke={muted}
+              strokeWidth="1.2"
+              strokeDasharray="4 3"
+            />
+            <text x="268" y={y} fontSize="13" fill={accent} textAnchor="middle">
+              ?
+            </text>
+          </g>
+        );
+      })}
+
+      {/* となり合う 2 つの累計（2 回目・3 回目）を束ねて、その回ぶんへ向ける */}
+      <path d="M 200 77 L 210 77 L 210 115 L 200 115" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 210 96 L 228 132" fill="none" stroke={accent} strokeWidth="1.3" strokeDasharray="4 3" />
+
+      <text x="170" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        となり合う 2 つの累計のあいだに、その回ぶんは隠れている？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列 系8 step5: 「2 番目から先の箱」と「いちばん最初の箱」が別々であることを見せる図。
+ *  1 つ前の累計が存在しないことだけを示し、初項の値は書かない。 */
+export function SeqFirstException() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 340 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="二番目から先の項の箱と、いちばん最初の項の箱が、仕切りをはさんで別々に置かれている図。最初の項の値は書かれていない"
+    >
+      {/* 左：2 番目から先 */}
+      <rect x="14" y="34" width="150" height="96" rx="8" fill={fill} stroke={stroke} strokeWidth="1.4" />
+      <text x="89" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        2 番目から先
+      </text>
+      <text x="89" y="70" fontSize="13" fill={stroke} textAnchor="middle">
+        1 つ前の累計が
+      </text>
+      <text x="89" y="90" fontSize="13" fill={stroke} textAnchor="middle">
+        となりにある
+      </text>
+      <text x="89" y="114" fontSize="12" fill={accent} textAnchor="middle">
+        Sₙ と Sₙ₋₁
+      </text>
+
+      {/* 仕切り */}
+      <path d="M 174 30 L 174 134" stroke={muted} strokeWidth="1.2" strokeDasharray="5 4" />
+
+      {/* 右：いちばん最初 */}
+      <rect x="186" y="34" width="140" height="96" rx="8" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="256" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        いちばん最初
+      </text>
+      <text x="256" y="70" fontSize="13" fill={stroke} textAnchor="middle">
+        となりにあるはずの
+      </text>
+      {/* 存在しない S₀ */}
+      <text x="256" y="94" fontSize="14" fill={muted} textAnchor="middle">
+        S₀
+      </text>
+      <path d="M 238 88 L 274 88" stroke={muted} strokeWidth="1.4" />
+      <text x="256" y="118" fontSize="12" fill={accent} textAnchor="middle">
+        a₁ = ?
+      </text>
+
+      <text x="170" y="164" fontSize="11" fill={muted} textAnchor="middle">
+        0 番目までの累計という日は、この数列にはない
+      </text>
+      <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        最初の 1 つだけが別の箱に入るのは、なぜ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_GROUP_BEADS（数列 系9 step1・辞書 群数列）：
+ * 仕切り線と、値を消した同じ形の粒。「個数を数えるときは、すべての項を
+ * おまんじゅう（○）に置きかえる」という工夫の視覚化。
+ * 総個数は「？」のまま残す。
+ */
+export function SeqGroupBeads() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const yBead = 78;
+  const r = 7;
+  // 第1群=1個・第2群=2個・第3群=3個・第4群=4個（合計10個）を等間隔に置く
+  const xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((k) => 40 + k * 26);
+  // 群の切れ目（何個目の粒の後ろに仕切りを入れるか）
+  const cuts = [1, 3, 6, 10];
+  const cutX = (n: number) => 40 + (n - 1) * 26 + 13;
+  const labels = [
+    { text: "第 1 群", cx: 40 },
+    { text: "第 2 群", cx: 40 + 1.5 * 26 },
+    { text: "第 3 群", cx: 40 + 4 * 26 },
+    { text: "第 4 群", cx: 40 + 7.5 * 26 },
+  ];
+  const counts = [
+    { text: "1 個", cx: 40 },
+    { text: "2 個", cx: 40 + 1.5 * 26 },
+    { text: "3 個", cx: 40 + 4 * 26 },
+    { text: "4 個", cx: 40 + 7.5 * 26 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 400 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="数の値を消して、同じ形の粒を一列に並べた図。仕切り線で、左から 1 個・2 個・3 個・4 個と区切られ、そのあとは点々で続く。下に横向きのかっこがあり、そこまでの粒の合計ははてなマークのまま。粒の中身の数は書かれていない"
+    >
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        数の値を消して、同じ形の粒に置きかえてみると
+      </text>
+
+      {/* 粒 */}
+      {xs.map((x, k) => (
+        <circle key={`bead${k}`} cx={x} cy={yBead} r={r} fill="none" stroke={stroke} strokeWidth="1.3" />
+      ))}
+      <text x={40 + 10 * 26} y={yBead + 5} fontSize="13" fill={muted}>
+        …
+      </text>
+
+      {/* 仕切り線 */}
+      {cuts.map((n) => (
+        <path
+          key={`cut${n}`}
+          d={`M ${cutX(n)} ${yBead - 22} L ${cutX(n)} ${yBead + 22}`}
+          fill="none"
+          stroke={accent}
+          strokeWidth="1.6"
+        />
+      ))}
+
+      {/* 群の名前と個数 */}
+      {labels.map((l) => (
+        <text key={l.text} x={l.cx} y={yBead + 42} fontSize="10.5" fill={muted} textAnchor="middle">
+          {l.text}
+        </text>
+      ))}
+      {counts.map((c) => (
+        <text key={c.text} x={c.cx} y={yBead + 58} fontSize="10.5" fill={stroke} textAnchor="middle">
+          {c.text}
+        </text>
+      ))}
+
+      {/* 総数を問うかっこ */}
+      <path
+        d={`M 30 ${yBead + 74} L 30 ${yBead + 82} L 300 ${yBead + 82} L 300 ${yBead + 74}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+      />
+      <text x="165" y={yBead + 100} fontSize="11.5" fill={accent} textAnchor="middle">
+        ここまでで、粒は全部で ？ 個
+      </text>
+
+      <text x="200" y="208" fontSize="11.5" fill={accent} textAnchor="middle">
+        個数を数えるのに、粒の中身（数の値）は要る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_GROUP_DOUBLE（数列 系9 step8・質的変化）：
+ * 同じ粒の列を、2 通りの切り方（1・2・3・4… と 1・2・4・8…）で区切って並べ、
+ * 「手前までの粒の数」がどちらも「？」のまま残る図。
+ * 通し番号の値・合計は書かない。
+ */
+export function SeqGroupDouble() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 26;
+  const gap = 15;
+  const r = 4.6;
+  const bx = (k: number) => x0 + k * gap;
+  const cutX = (n: number) => bx(n - 1) + gap / 2;
+  const rowA = { y: 74, beads: 10, cuts: [1, 3, 6] };
+  const rowB = { y: 152, beads: 15, cuts: [1, 3, 7] };
+  return (
+    <svg
+      viewBox="0 0 400 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="同じ粒の列を 2 段に並べた図。上の段は左から 1 個・2 個・3 個・4 個で仕切られ、下の段は 1 個・2 個・4 個・8 個で仕切られている。どちらの段も、手前までの粒の合計ははてなマークのまま書かれていない"
+    >
+      <text x="200" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じ粒の列を、2 通りの切り方で区切ってみると
+      </text>
+
+      {/* 上段：1・2・3・4 … */}
+      <text x={x0} y={rowA.y - 22} fontSize="10.5" fill={muted}>
+        前の切り方：1 個・2 個・3 個・4 個 …
+      </text>
+      {Array.from({ length: rowA.beads }, (_, k) => (
+        <circle key={`a${k}`} cx={bx(k)} cy={rowA.y} r={r} fill="none" stroke={stroke} strokeWidth="1.2" />
+      ))}
+      <text x={bx(rowA.beads)} y={rowA.y + 4} fontSize="12" fill={muted}>
+        …
+      </text>
+      {rowA.cuts.map((n) => (
+        <path
+          key={`ca${n}`}
+          d={`M ${cutX(n)} ${rowA.y - 13} L ${cutX(n)} ${rowA.y + 13}`}
+          fill="none"
+          stroke={muted}
+          strokeWidth="1.4"
+        />
+      ))}
+      <text x="300" y={rowA.y + 4} fontSize="11" fill={muted}>
+        手前までで ？ 個
+      </text>
+
+      {/* 下段：1・2・4・8 … */}
+      <text x={x0} y={rowB.y - 22} fontSize="10.5" fill={accent}>
+        この問題の切り方：1 個・2 個・4 個・8 個 …
+      </text>
+      {Array.from({ length: rowB.beads }, (_, k) => (
+        <circle key={`b${k}`} cx={bx(k)} cy={rowB.y} r={r} fill="none" stroke={stroke} strokeWidth="1.2" />
+      ))}
+      <text x={bx(rowB.beads)} y={rowB.y + 4} fontSize="12" fill={muted}>
+        …
+      </text>
+      {rowB.cuts.map((n) => (
+        <path
+          key={`cb${n}`}
+          d={`M ${cutX(n)} ${rowB.y - 13} L ${cutX(n)} ${rowB.y + 13}`}
+          fill="none"
+          stroke={accent}
+          strokeWidth="1.7"
+        />
+      ))}
+      <text x="300" y={rowB.y + 4} fontSize="11" fill={accent}>
+        手前までで ？ 個
+      </text>
+
+      <text x="200" y="196" fontSize="11.5" fill={accent} textAnchor="middle">
+        切り方が変わると、通しで数えた番号はどう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_RECUR_ARROW（数列 系10 step1・辞書 漸化式）：項が左から右へ矢印でつながる鎖。
+ * 各矢印には「同じ規則」のラベルだけを乗せ、項の値は 1 つも書かない。
+ * 先頭には「はじまり」の印を、遠い項には ? を置いて、
+ * 「となりどうしの関係だけで、ずっと先まで決まるのか」を問いの形で残す。
+ */
+export function SeqRecurArrow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--background)";
+  const fillNode = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const nodes = [
+    { cx: 34, label: "a₁" },
+    { cx: 104, label: "a₂" },
+    { cx: 174, label: "a₃" },
+    { cx: 244, label: "a₄" },
+  ];
+  const arrow = (x1: number, x2: number, label: string, dashed: boolean) => (
+    <g key={x1}>
+      <line
+        x1={x1}
+        y1="72"
+        x2={x2 - 7}
+        y2="72"
+        stroke={dashed ? muted : accent}
+        strokeWidth={dashed ? 1.2 : 1.6}
+        strokeDasharray={dashed ? "4 3" : undefined}
+      />
+      <polygon points={`${x2},72 ${x2 - 8},68 ${x2 - 8},76`} fill={dashed ? muted : accent} />
+      <text x={(x1 + x2) / 2} y="60" fontSize="10.5" fill={dashed ? muted : accent} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 360 168"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数列の項が左から右へ矢印でつながる鎖の図。先頭の項に「はじまり」の印があり、項と項のあいだの矢印にはすべて同じ「となりへ移る規則」のラベルが乗っている。右端の遠い項は疑問符のままで、項の値はひとつも書かれていない"
+    >
+      <text x="180" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        わたされたのは、この 2 つだけ
+      </text>
+
+      {/* 項の鎖 */}
+      {nodes.map((n) => (
+        <g key={n.cx}>
+          <circle cx={n.cx} cy="72" r="17" fill={fillNode} stroke={stroke} strokeWidth="1.2" />
+          <text x={n.cx} y="77" fontSize="12" fill={stroke} textAnchor="middle">
+            {n.label}
+          </text>
+        </g>
+      ))}
+
+      {/* 同じ規則が、となりどうしのあいだで何度もはたらく */}
+      {arrow(51, 87, "きまり", false)}
+      {arrow(121, 157, "きまり", false)}
+      {arrow(191, 227, "きまり", false)}
+      {arrow(261, 297, "……", true)}
+
+      {/* 遠い項は ? のまま（答えを図に書かない） */}
+      <circle cx="322" cy="72" r="17" fill={bg} stroke={muted} strokeWidth="1.2" strokeDasharray="3 3" />
+      <text x="322" y="78" fontSize="14" fill={muted} textAnchor="middle">
+        ?
+      </text>
+      <text x="322" y="106" fontSize="10.5" fill={muted} textAnchor="middle">
+        ずっと先の項
+      </text>
+
+      {/* はじまりの印 */}
+      <line x1="34" y1="42" x2="34" y2="53" stroke={accent} strokeWidth="1.2" />
+      <text x="34" y="36" fontSize="10.5" fill={accent} textAnchor="middle">
+        はじまり
+      </text>
+      <text x="34" y="106" fontSize="10.5" fill={muted} textAnchor="middle">
+        先頭の 1 つ
+      </text>
+
+      <text x="180" y="146" fontSize="11.5" fill={accent} textAnchor="middle">
+        となりどうしを結ぶ矢印だけで、ずっと先の項まで決まる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_TYPE_FORK（数列 系10 step6・質的変化）：となりへ移るときに何が起きているかで
+ * 分かれる 3 つの道。分かれ道の「見分けの手がかり」だけを書き、
+ * どの道の先に何が出るか（帰着先の公式・答え）は ? のまま残す。
+ */
+export function SeqTypeFork() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bg = "var(--background)";
+  const fillTop = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const lanes = [
+    { cx: 60, l1: "同じ数だけ", l2: "増える" },
+    { cx: 180, l1: "同じ数の", l2: "倍になる" },
+    { cx: 300, l1: "増える幅が", l2: "番号で変わる" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 246"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="ひとつの分かれ道から三つの道へ枝分かれする図。上の箱にはとなりへ移るときに何が起きているかという問いがあり、三つの枝にはそれぞれ「同じ数だけ増える」「同じ数の倍になる」「増える幅が番号で変わる」という見分けの手がかりだけが書かれている。それぞれの道の行き先は疑問符のままで、公式も答えも書かれていない"
+    >
+      {/* 分かれ道の手前 */}
+      <rect x="98" y="14" width="164" height="42" rx="9" fill={fillTop} stroke={accent} strokeWidth="1.4" />
+      <text x="180" y="32" fontSize="11.5" fill={accent} textAnchor="middle">
+        となりへ移るとき、
+      </text>
+      <text x="180" y="48" fontSize="11.5" fill={accent} textAnchor="middle">
+        項に何が起きている？
+      </text>
+
+      {/* 3 本の枝 */}
+      {lanes.map((ln) => (
+        <g key={ln.cx}>
+          <path
+            d={`M 180 56 C 180 76, ${ln.cx} 76, ${ln.cx} 96`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.3"
+          />
+          <polygon points={`${ln.cx},102 ${ln.cx - 4.5},93 ${ln.cx + 4.5},93`} fill={muted} />
+
+          {/* 見分けの手がかり（ここまでは書いてよい） */}
+          <rect x={ln.cx - 54} y="104" width="108" height="46" rx="8" fill={bg} stroke={stroke} strokeWidth="1.2" />
+          <text x={ln.cx} y="122" fontSize="11" fill={stroke} textAnchor="middle">
+            {ln.l1}
+          </text>
+          <text x={ln.cx} y="139" fontSize="11" fill={stroke} textAnchor="middle">
+            {ln.l2}
+          </text>
+
+          {/* 行き先は書かない */}
+          <line x1={ln.cx} y1="150" x2={ln.cx} y2="168" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+          <polygon points={`${ln.cx},174 ${ln.cx - 4.5},165 ${ln.cx + 4.5},165`} fill={muted} />
+          <rect
+            x={ln.cx - 30}
+            y="176"
+            width="60"
+            height="34"
+            rx="8"
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="3 3"
+          />
+          <text x={ln.cx} y="199" fontSize="14" fill={muted} textAnchor="middle">
+            ?
+          </text>
+        </g>
+      ))}
+
+      <text x="180" y="232" fontSize="11.5" fill={accent} textAnchor="middle">
+        どの道かは見分けられた。その先には、何が待っている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_SHIFT_GEO（数列 系11 step1・derivation）：もとの列と「ある数 c を引いた列」を
+ * 2 段に並べる。下段だけが同じ数倍でつながることを示すが、その倍率（＝問うている公比）は
+ * ×? のまま残す。c の値も文字のままにして、derivation の別の例でも使えるようにする。
+ */
+export function SeqShiftGeo() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const xs = [30, 105, 180, 255];
+  const labelsTop = ["a₁", "a₂", "a₃", "a₄"];
+  const labelsBottom = ["a₁ − c", "a₂ − c", "a₃ − c", "a₄ − c"];
+  return (
+    <svg
+      viewBox="0 0 360 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="もとの列と、ある数を引いた列を 2 段に並べた図。下の段だけが同じ数倍でつながることを示し、倍率は疑問符のままにしてある"
+    >
+      <text x="14" y="16" fontSize="11" fill={muted}>
+        もとの列
+      </text>
+      {xs.map((x, idx) => (
+        <g key={`t${idx}`}>
+          <rect x={x} y="22" width="60" height="34" rx="8" fill="none" stroke={stroke} strokeWidth="1.2" />
+          <text x={x + 30} y="44" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+            {labelsTop[idx]}
+          </text>
+        </g>
+      ))}
+      <text x="330" y="44" fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {xs.map((x, idx) => (
+        <g key={`d${idx}`}>
+          <path d={`M ${x + 30} 58 L ${x + 30} 92`} fill="none" stroke={muted} strokeWidth="1.2" />
+          <path d={`M ${x + 24} 86 L ${x + 30} 94 L ${x + 36} 86`} fill="none" stroke={muted} strokeWidth="1.2" />
+          <text x={x + 40} y="80" fontSize="10" fill={muted}>
+            − c
+          </text>
+        </g>
+      ))}
+
+      <text x="14" y="112" fontSize="11" fill={accent}>
+        c を引いた列
+      </text>
+      {xs.map((x, idx) => (
+        <g key={`b${idx}`}>
+          <rect x={x} y="118" width="60" height="34" rx="8" fill={fillColor} stroke={accent} strokeWidth="1.5" />
+          <text x={x + 30} y="140" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">
+            {labelsBottom[idx]}
+          </text>
+        </g>
+      ))}
+      <text x="330" y="140" fontSize="13" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {[0, 1, 2].map((k) => {
+        const x1 = xs[k] + 30;
+        const x2 = xs[k + 1] + 30;
+        const mid = (x1 + x2) / 2;
+        return (
+          <g key={`a${k}`}>
+            <path d={`M ${x1} 154 Q ${mid} 188 ${x2} 154`} fill="none" stroke={accent} strokeWidth="1.2" />
+            <path d={`M ${x2 - 9} 156 L ${x2} 154 L ${x2 - 3} 164`} fill="none" stroke={accent} strokeWidth="1.2" />
+            <text x={mid} y="203" fontSize="11" fill={accent} textAnchor="middle">
+              ×?
+            </text>
+          </g>
+        );
+      })}
+
+      <text x="180" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        下の段だけが同じ数倍でつながる。その c は、どこから見つかる？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_LEVEL_STAIRS（数列 系11 step8・derivation）：解法の階層構造。
+ * レベル3 → レベル2 → レベル1 の階段と「1 つ下へ」の帰着の矢印。
+ * 降り方そのもの（差をとる・割る）は書かない。
+ */
+export function SeqLevelStairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const steps = [
+    { x: 150, y: 16, level: "レベル 3", body: "足されるものが番号で変わる" },
+    { x: 80, y: 86, level: "レベル 2", body: "定数が足される" },
+    { x: 10, y: 156, level: "レベル 1", body: "等差・等比・階差" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="解法の階層構造の階段図。レベル 3 からレベル 2、レベル 1 へ降りる矢印を示し、降り方そのものは書かない"
+    >
+      {steps.map((s, idx) => {
+        const last = idx === steps.length - 1;
+        return (
+          <g key={idx}>
+            <rect
+              x={s.x}
+              y={s.y}
+              width="200"
+              height="44"
+              rx="8"
+              fill={last ? fillColor : "none"}
+              stroke={last ? accent : stroke}
+              strokeWidth={last ? 1.5 : 1.2}
+            />
+            <text x={s.x + 100} y={s.y + 19} fontSize="12" fill={last ? accent : stroke} textAnchor="middle">
+              {s.level}
+            </text>
+            <text x={s.x + 100} y={s.y + 35} fontSize="11" fill={muted} textAnchor="middle">
+              {s.body}
+            </text>
+            {!last && (
+              <>
+                <path
+                  d={`M ${s.x + 40} ${s.y + 44} L ${s.x + 10} ${s.y + 68}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1.2"
+                />
+                <path
+                  d={`M ${s.x + 20} ${s.y + 64} L ${s.x + 8} ${s.y + 70} L ${s.x + 20} ${s.y + 74}`}
+                  fill="none"
+                  stroke={muted}
+                  strokeWidth="1.2"
+                />
+                <text x={s.x + 62} y={s.y + 64} fontSize="11" fill={muted}>
+                  ひと手間？
+                </text>
+              </>
+            )}
+          </g>
+        );
+      })}
+
+      <text x="180" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        下の階はもう歩いてある。いまの型から 1 つ下へ降りる一手は？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_HANOI（数列 系12 step1・derivation）：ハノイの塔。3 本の棒と円盤、
+ * 上の n−1 枚を別の棒へ「避難」させる矢印。手数は ? のまま（答えを書かない）。
+ */
+export function SeqHanoi() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const pegs = [70, 180, 290];
+  // A の上に積む円盤（下から順に幅が狭くなる）
+  const disks = [
+    { w: 96, y: 156 },
+    { w: 76, y: 144 },
+    { w: 60, y: 132 },
+    { w: 44, y: 120 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三本の棒と円盤の塔。上の何枚かを別の棒へ避難させる矢印を示した図。手数は書かない"
+    >
+      {/* 台と棒 */}
+      <rect x="18" y="166" width="324" height="6" rx="3" fill="none" stroke={stroke} strokeWidth="1.4" />
+      {pegs.map((x, idx) => (
+        <rect key={idx} x={x - 2} y="62" width="4" height="104" rx="2" fill="none" stroke={stroke} strokeWidth="1.2" />
+      ))}
+
+      {/* A の円盤（いちばん下だけ強調） */}
+      {disks.map((d, idx) => (
+        <rect
+          key={idx}
+          x={70 - d.w / 2}
+          y={d.y}
+          width={d.w}
+          height="11"
+          rx="4"
+          fill={idx === 0 ? fillColor : "none"}
+          stroke={idx === 0 ? accent : stroke}
+          strokeWidth={idx === 0 ? 1.6 : 1.2}
+        />
+      ))}
+
+      {/* 上の n−1 枚をまとめる枠 */}
+      <rect x="30" y="117" width="80" height="38" rx="6" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 3" />
+      <text x="70" y="112" fontSize="11" fill={accent} textAnchor="middle" fontStyle="italic">
+        n − 1 枚
+      </text>
+
+      {/* 避難と戻しの矢印 */}
+      <path d="M 70 58 Q 125 22 180 58" fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="5 3" />
+      <path d="M 172 50 L 180 59 L 170 61" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="125" y="16" fontSize="10" fill={muted} textAnchor="middle">
+        n − 1 枚を避難
+      </text>
+
+      <path d="M 180 58 Q 235 22 290 58" fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="5 3" />
+      <path d="M 282 50 L 290 59 L 280 61" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="235" y="16" fontSize="10" fill={muted} textAnchor="middle">
+        n − 1 枚を戻す
+      </text>
+
+      {/* 棒の名前 */}
+      {["A", "B", "C"].map((s, idx) => (
+        <text key={idx} x={pegs[idx]} y="186" fontSize="10" fill={muted} textAnchor="middle">
+          {s}
+        </text>
+      ))}
+
+      <text x="24" y="204" fontSize="10" fill={accent} textAnchor="start">
+        ↑ いちばん下のこの 1 枚を動かすのが 1 手
+      </text>
+      <text x="330" y="80" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="330" y="96" fontSize="10" fill={muted} textAnchor="middle">
+        手
+      </text>
+
+      <text x="180" y="222" fontSize="11" fill={accent} textAnchor="middle">
+        n 枚を移す手順の中に、n − 1 枚ぶんの手順はいくつ入っている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * SEQ_DOMINO（数列 系12 step5・質的変化）：ドミノが 1 枚ずつ倒れていく図。
+ * 上の帯は「となり合うすべての組について、前が倒れれば後ろも倒れる」ことを示す。
+ * どこまで倒れるかは書かない（キャプションで問う）。
+ */
+export function SeqDomino() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const xs = [40, 78, 116, 154, 192, 230, 268, 306];
+  const angles = [78, 55, 28, 0, 0, 0, 0, 0]; // 手前の 3 枚はもう倒れている
+  const labels = ["1", "2", "3", "4", "…", "k", "k+1", "…"];
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="並んだドミノのうち手前の数枚が倒れ、残りは立っている図。となり合う組すべてに同じ保証があることを帯で示す。どこまで倒れるかは書かない"
+    >
+      {/* となり合う組すべてを覆う帯 */}
+      <rect x="28" y="82" width="292" height="22" rx="8" fill="none" stroke={accent} strokeWidth="1.3" strokeDasharray="5 3" />
+      {xs.slice(0, -1).map((x, idx) => (
+        <g key={idx}>
+          <path
+            d={`M ${x + 9} 95 L ${x + 27} 95`}
+            fill="none"
+            stroke={idx === 5 ? accent : muted}
+            strokeWidth={idx === 5 ? 1.6 : 1.1}
+          />
+          <path
+            d={`M ${x + 22} 91 L ${x + 28} 95 L ${x + 22} 99`}
+            fill="none"
+            stroke={idx === 5 ? accent : muted}
+            strokeWidth={idx === 5 ? 1.6 : 1.1}
+          />
+        </g>
+      ))}
+      <text x="174" y="76" fontSize="10" fill={accent} textAnchor="middle">
+        「前が倒れれば、後ろも倒れる」は、となり合うどの組についても言えている
+      </text>
+
+      {/* 地面 */}
+      <path d="M 15 152 L 348 152" fill="none" stroke={stroke} strokeWidth="1.2" />
+
+      {/* ドミノ */}
+      {xs.map((x, idx) => (
+        <rect
+          key={idx}
+          x={x - 5}
+          y="106"
+          width="10"
+          height="46"
+          rx="2"
+          fill={idx === 0 ? fillColor : "none"}
+          stroke={idx === 0 ? accent : stroke}
+          strokeWidth={idx === 0 ? 1.6 : 1.2}
+          transform={angles[idx] ? `rotate(${angles[idx]} ${x - 5} 152)` : undefined}
+        />
+      ))}
+
+      {/* 最初の 1 枚を倒す指 */}
+      <path d="M 12 118 L 28 126" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 22 120 L 29 127 L 20 128" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="10" y="112" fontSize="10" fill={accent} textAnchor="start">
+        最初の 1 枚は、自分の手で倒す
+      </text>
+
+      {/* 番号 */}
+      {xs.map((x, idx) => (
+        <text key={idx} x={x} y="170" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
+          {labels[idx]}
+        </text>
+      ))}
+
+      <text x="180" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        1 枚目が倒れて、となりへの保証がすべての組にあるとき、
+      </text>
+      <text x="180" y="216" fontSize="11" fill={accent} textAnchor="middle">
+        ドミノはどこまで倒れる？
       </text>
     </svg>
   );

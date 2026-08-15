@@ -9,14 +9,25 @@
  */
 
 import { ALGEBRA_1_SERIES_LIST } from "./seriesAlgebra";
-import { SEQUENCE_SERIES_LIST, SEQ_ARITH_SERIES } from "./seriesSequence";
+import {
+  SEQUENCE_SERIES_LIST,
+  SEQ_ARITH_SERIES,
+  SEQ_ARITH_SUM_SERIES,
+  SEQ_GEO_SERIES,
+  SEQ_GEO_SUM_SERIES,
+  SEQ_SIGMA_SERIES,
+  SEQ_DIFF_SERIES,
+  SEQ_TELESCOPE_SERIES,
+  SEQ_SN_AN_SERIES,
+  SEQ_GROUP_SERIES,
+  SEQ_RECUR_SERIES,
+  SEQ_RECUR_LINEAR_SERIES,
+  SEQ_INDUCTION_SERIES,
+} from "./seriesSequence";
 import {
   ALGEBRA_2_SERIES_LIST,
-  ALGEBRA2_ARITH_SUM_SERIES,
   ALGEBRA2_DIFF_SERIES,
   ALGEBRA2_DOT_SERIES,
-  ALGEBRA2_GEO_NTH_SERIES,
-  ALGEBRA2_GEO_SUM_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
@@ -1443,25 +1454,92 @@ export const STATIC_CATALOG: CatalogEntry[] = [
       "等差数列と一般項（遠くへ跳ぶ式をつくる）— 足す回数は番号より 1 つ少ない、逆読みで「第何項か」、離れた 2 項から公差、初めて符号が変わる場所まで",
   },
   {
-    series: ALGEBRA2_ARITH_SUM_SERIES,
+    series: SEQ_ARITH_SUM_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "数列",
-    shortDescription: "等差数列の和",
+    shortDescription:
+      "等差数列の和（ひっくり返して重ねる）— 両端から寄せるとどの組も同じ和になる理由、項数の数え違い、和が最大になる場所、倍数の総和まで",
   },
   {
-    series: ALGEBRA2_GEO_NTH_SERIES,
+    series: SEQ_GEO_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "数列",
-    shortDescription: "等比数列の n 項目",
+    shortDescription:
+      "等比数列と一般項（足す回数を、かける回数に張り替える）— 公比が負のときの符号、条件から公比を決める、指数の増え方の速さまで",
   },
   {
-    series: ALGEBRA2_GEO_SUM_SERIES,
+    series: SEQ_GEO_SUM_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "数列",
-    shortDescription: "等比数列の和",
+    shortDescription:
+      "等比数列の和（ずらして引く）— 公比倍すると 1 つ先の自分になる、公比 1 では公式が使えない、(等差)×(等比) の和まで",
+  },
+  {
+    series: SEQ_SIGMA_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "シグマ記号と和の公式（長い足し算を畳む）— 解凍すれば既知の和、分けられる・定数は前へ、積には分配できない、格子点の数え上げまで",
+  },
+  {
+    series: SEQ_DIFF_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "階差数列（となりとの差から、もとの列へ戻る）— 足し戻す個数は 1 つ少ない、最初の項での確認、階差の符号が増減を決める、微分との対応まで",
+  },
+  {
+    series: SEQ_TELESCOPE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "いろいろな数列の和（差の形に書き直す）— となりの差にできれば両端だけが残る、部分分数分解、2 乗の和を自分で導く、書けない列もあることまで",
+  },
+  {
+    series: SEQ_SN_AN_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "和と一般項の関係（累計から増分を復元する）— 差をとるには 1 つ前が要る、だから最初の 1 つだけが例外になる。1 つの式か、無数の式か",
+  },
+  {
+    series: SEQ_GROUP_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "群数列（住所・通し番号・中身を分ける）— 数えるときは値を忘れ、値を出すときは番号だけを使う。仕切り方が変わると勘定も変わる",
+  },
+  {
+    series: SEQ_RECUR_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "漸化式（となりとの関係だけで列が決まる）— 解けなくても項は順に決まる、等差型・等比型・階差型の 3 つに帰着する",
+  },
+  {
+    series: SEQ_RECUR_LINEAR_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "1 次の漸化式（1 つ下の型へ降りる）— ある数を引くと等比になる、その数は方程式が教える。覚えるのは降り方だけ",
+  },
+  {
+    series: SEQ_INDUCTION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "数列",
+    shortDescription:
+      "数学的帰納法（1 歩ぶんの保証で、無限を覆う）— ハノイの塔から、無数の主張をドミノで倒す。土台と保証の両方が要る理由まで",
   },
   /* ベクトル（旧課程 数B、新課程では数C に移行。読者の参考書世代を問わず
      使えるよう、注記つきで 数Ⅱ・B に置く） */
@@ -1510,8 +1588,11 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra2_exp_01: "algebra2_exp_extend_01",
   /* 指数関数・対数関数（背骨 D3）：系列5 へ吸収 */
   algebra2_log_01: "algebra2_log_def_01",
-  /* 数列（背骨 D5）：旧プロトタイプ「等差数列の n 項目」→ 系列1 へ吸収 */
+  /* 数列（背骨 D5）：旧プロトタイプ 4 本を 1:1 で吸収 */
   algebra2_arith_nth_01: "algebra2_seq_arith_01",
+  algebra2_arith_sum_01: "algebra2_seq_arith_sum_01",
+  algebra2_geo_nth_01: "algebra2_seq_geo_01",
+  algebra2_geo_sum_01: "algebra2_seq_geo_sum_01",
   /* 場合の数（背骨 D3・§6）：旧「順列 P(n,2)」プロトタイプ → 系5「順列」へ吸収 */
   algebra_perm_01: "algebra1_count_perm_01",
   /* 集合と論理（背骨 D3・§7）：旧「必要条件・十分条件」5 問 → 系6 へ吸収 */
