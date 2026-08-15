@@ -9,9 +9,9 @@
  */
 
 import { ALGEBRA_1_SERIES_LIST } from "./seriesAlgebra";
+import { SEQUENCE_SERIES_LIST, SEQ_ARITH_SERIES } from "./seriesSequence";
 import {
   ALGEBRA_2_SERIES_LIST,
-  ALGEBRA2_ARITH_NTH_SERIES,
   ALGEBRA2_ARITH_SUM_SERIES,
   ALGEBRA2_DIFF_SERIES,
   ALGEBRA2_DOT_SERIES,
@@ -1431,13 +1431,16 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "定積分で表された関数 — 積分してから微分すると元に戻る。単元の要石",
   },
-  /* 数B: 数列（等差 → 等比、各 n 項目 → 和の順） */
+  /* 数B: 数列（池田本 第7章・背骨 docs/sequence_series_design.md・全12系列）
+   * 旧プロトタイプ4本（等差/等比の n 項目・和）は 1:1 で吸収し、
+   * 吸収先の系列を実装したタイミングで SERIES_REDIRECTS に登録する（D5）。 */
   {
-    series: ALGEBRA2_ARITH_NTH_SERIES,
+    series: SEQ_ARITH_SERIES,
     subject: "secondary2",
     subjectLabel: "高校数学Ⅱ・B",
     topicGroup: "数列",
-    shortDescription: "等差数列の n 項目",
+    shortDescription:
+      "等差数列と一般項（遠くへ跳ぶ式をつくる）— 足す回数は番号より 1 つ少ない、逆読みで「第何項か」、離れた 2 項から公差、初めて符号が変わる場所まで",
   },
   {
     series: ALGEBRA2_ARITH_SUM_SERIES,
@@ -1507,6 +1510,8 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra2_exp_01: "algebra2_exp_extend_01",
   /* 指数関数・対数関数（背骨 D3）：系列5 へ吸収 */
   algebra2_log_01: "algebra2_log_def_01",
+  /* 数列（背骨 D5）：旧プロトタイプ「等差数列の n 項目」→ 系列1 へ吸収 */
+  algebra2_arith_nth_01: "algebra2_seq_arith_01",
   /* 場合の数（背骨 D3・§6）：旧「順列 P(n,2)」プロトタイプ → 系5「順列」へ吸収 */
   algebra_perm_01: "algebra1_count_perm_01",
   /* 集合と論理（背骨 D3・§7）：旧「必要条件・十分条件」5 問 → 系6 へ吸収 */
@@ -1544,6 +1549,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_2_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
+  ...SEQUENCE_SERIES_LIST,
   ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
   ...COUNTING_SERIES_LIST,
