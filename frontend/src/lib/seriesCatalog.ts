@@ -9,6 +9,7 @@
  */
 
 import { ALGEBRA_1_SERIES_LIST } from "./seriesAlgebra";
+import { STAT_INFERENCE_SERIES_LIST, STAT_RV_SERIES } from "./seriesStatInference";
 import {
   SEQUENCE_SERIES_LIST,
   SEQ_ARITH_SERIES,
@@ -1541,6 +1542,17 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "数学的帰納法（1 歩ぶんの保証で、無限を覆う）— ハノイの塔から、無数の主張をドミノで倒す。土台と保証の両方が要る理由まで",
   },
+  /* 数B: 統計的な推測（池田本 第8章・背骨 docs/statistical_inference_series_design.md・全14系列）
+   * 数Ⅰ・A「データの分析」の続き。要約が捨てたものの先で、それでも言えることを
+   * 確率で保証する——数Ⅱ・B の閉じ石。 */
+  {
+    series: STAT_RV_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "確率変数と確率分布（起こりやすさで重みをつける）— 分布表を作る、確率の和は $1$、データの平均と同じ場所へ着く $2$ 本の道、そして「値の単純平均」が大きく外れる場面まで",
+  },
   /* ベクトル（旧課程 数B、新課程では数C に移行。読者の参考書世代を問わず
      使えるよう、注記つきで 数Ⅱ・B に置く） */
   {
@@ -1631,6 +1643,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,
+  ...STAT_INFERENCE_SERIES_LIST,
   ...EXP_LOG_SERIES_LIST,
   ...TRIG_SERIES_LIST,
   ...COUNTING_SERIES_LIST,

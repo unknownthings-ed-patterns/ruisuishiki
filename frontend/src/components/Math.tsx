@@ -14542,6 +14542,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<STAT_DIST_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatDistTable />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_DATA_VS_DIST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatDataVsDist />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_EXPECT_WEIGHT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatExpectWeight />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -27609,6 +27630,258 @@ export function SeqPartialDiff() {
 
       <text x="195" y="212" fontSize="11.5" fill={accent} textAnchor="middle">
         2 つの □ は、どんな数ならもとの分数に戻る？
+      </text>
+    </svg>
+  );
+}
+
+/* ===== 統計的な推測（数Ⅱ・B 第8章・背骨 docs/statistical_inference_series_design.md） ===== */
+
+/** 統計 系1 step1・derivation: 確率分布表の骨格。
+ *  値が 4 種類の場合の形（系1 step1 の問題文も値は 4 種類）。
+ *  上の行に値、下の行に確率。問われているマスは ? のままにし、
+ *  「和が 1 になるか」を検算の習慣として下に添える。答えは書かない。 */
+export function StatDistTable() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 96;
+  const w = 62;
+  const yTop = 62;
+  const h = 34;
+  const cols = [0, 1, 2, 3];
+  return (
+    <svg
+      viewBox="0 0 400 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="確率分布表の形をした図。値が四種類の場合の模式図で、上の行に四つの値のらん、下の行に四つの確率のらんがならんでいる。問われている確率のらんだけが疑問符のままで、右下に確率をぜんぶ足すといくつになるかをたずねる行がついている"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        値と、その起こりやすさを、上下にならべてみると
+      </text>
+
+      {/* 行ラベル */}
+      <text x={x0 - 12} y={yTop + 22} fontSize="12" fill={stroke} textAnchor="end">
+        値
+      </text>
+      <text x={x0 - 12} y={yTop + h + 22} fontSize="12" fill={stroke} textAnchor="end">
+        確率
+      </text>
+
+      {/* 表の枠 */}
+      {cols.map((k) => (
+        <g key={`c-${k}`}>
+          <rect
+            x={x0 + k * w}
+            y={yTop}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <rect
+            x={x0 + k * w}
+            y={yTop + h}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text
+            x={x0 + k * w + w / 2}
+            y={yTop + 22}
+            fontSize="13"
+            fill={stroke}
+            textAnchor="middle"
+          >
+            ○
+          </text>
+          <text
+            x={x0 + k * w + w / 2}
+            y={yTop + h + 22}
+            fontSize="13"
+            fill={k === 1 ? accent : muted}
+            textAnchor="middle"
+          >
+            {k === 1 ? "?" : "○"}
+          </text>
+        </g>
+      ))}
+
+      {/* 和が 1 の検算 */}
+      <path
+        d={`M ${x0} ${yTop + 2 * h + 12} L ${x0 + 4 * w} ${yTop + 2 * h + 12}`}
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x={x0 + 2 * w} y={yTop + 2 * h + 30} fontSize="10.5" fill={muted} textAnchor="middle">
+        下の行をぜんぶ足すと？
+      </text>
+
+      <text x="200" y="188" fontSize="11.5" fill={accent} textAnchor="middle">
+        この表が作れたら、あとは上下をどう組み合わせればいい？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系1 step5: 同じ答えに着く 2 つの道。
+ *  左は 10 個の粒（系1 step5 の 10 冊と個数を一致させてある）を書きならべる道、
+ *  右は値 4 種類の確率分布表を通る道。どちらの箱も ? のままにして答えを見せない。 */
+export function StatDataVsDist() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /* 左：10 個の粒を 5 個ずつ 2 段（step5 のデータ 10 個と個数を一致） */
+  const dots = Array.from({ length: 10 }, (_, i) => ({
+    cx: 34 + (i % 5) * 22,
+    cy: 74 + Math.floor(i / 5) * 24,
+  }));
+  return (
+    <svg
+      viewBox="0 0 420 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="同じ場所へ向かう二本の道を並べた図。左は十個の粒を書きならべて平均をとる道、右は値と確率の表を通る道。どちらの道の先にある箱も疑問符のままで、二つの箱が同じ答えになるかどうかをたずねている"
+    >
+      <text x="210" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        同じ場面に、道が 2 本ある
+      </text>
+
+      {/* 左の道：書きならべる */}
+      <text x="88" y="52" fontSize="11" fill={stroke} textAnchor="middle">
+        ぜんぶ書きならべて平均
+      </text>
+      {dots.map((d, i) => (
+        <circle key={i} cx={d.cx} cy={d.cy} r="6" fill={accent} opacity="0.75" />
+      ))}
+      <text x="88" y="130" fontSize="10" fill={muted} textAnchor="middle">
+        10 個ぜんぶ
+      </text>
+
+      {/* 右の道：確率分布表 */}
+      <text x="316" y="52" fontSize="11" fill={stroke} textAnchor="middle">
+        値と確率の表で混ぜる
+      </text>
+      {[0, 1, 2, 3].map((k) => (
+        <g key={k}>
+          <rect
+            x={244 + k * 36}
+            y={62}
+            width={36}
+            height={24}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1"
+          />
+          <rect
+            x={244 + k * 36}
+            y={86}
+            width={36}
+            height={24}
+            fill="none"
+            stroke={stroke}
+            strokeWidth="1"
+          />
+          <text x={262 + k * 36} y={79} fontSize="11" fill={stroke} textAnchor="middle">
+            ○
+          </text>
+          <text x={262 + k * 36} y={103} fontSize="11" fill={muted} textAnchor="middle">
+            ○
+          </text>
+        </g>
+      ))}
+      <text x="316" y="130" fontSize="10" fill={muted} textAnchor="middle">
+        値 4 種類ぶん
+      </text>
+
+      {/* 2 本の矢印が同じ高さの箱へ */}
+      <path d="M 88 138 L 88 156" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 88 156 l -4 -6 M 88 156 l 4 -6" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 316 138 L 316 156" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 316 156 l -4 -6 M 316 156 l 4 -6" stroke={accent} strokeWidth="1.2" fill="none" />
+
+      <rect x="46" y="158" width="84" height="28" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="88" y="177" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <rect x="274" y="158" width="84" height="28" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="316" y="177" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="210" y="206" fontSize="11.5" fill={accent} textAnchor="middle">
+        2 つの箱は、同じ数になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系1 step9・derivation: 期待値＝重み付き平均のつり合い。
+ *  数直線の上に、値の位置ごとに「確率」という重さのおもりを乗せる。
+ *  おもりは 4 個（系1 step9 の賞金 4 種類と個数を一致）で、
+ *  大きさが重み（起こりやすさ）を表す。つり合う位置は ? のままにする。 */
+export function StatExpectWeight() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const y = 116;
+  /* 4 個のおもり。右へ行くほど値は大きいが、重み（＝半径）は小さくなる */
+  const weights = [
+    { cx: 74, r: 20 },
+    { cx: 146, r: 13 },
+    { cx: 214, r: 9 },
+    { cx: 336, r: 6 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 400 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="数直線の上に四つのおもりを乗せた図。左のおもりほど大きく、右へ行くほど小さくなっている。おもりの大きさはその値の起こりやすさを表す。全体がつり合う位置は疑問符のままにしてあり、どこでつり合うかをたずねている"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        値の位置に、起こりやすさの重さのおもりを乗せると
+      </text>
+
+      {/* 数直線 */}
+      <path d={`M 24 ${y} L 380 ${y}`} stroke={stroke} strokeWidth="1.3" fill="none" />
+      <path d={`M 380 ${y} l -8 -4 l 0 8 z`} fill={stroke} />
+
+      {/* おもり */}
+      {weights.map((w, i) => (
+        <g key={i}>
+          <path d={`M ${w.cx} ${y} L ${w.cx} ${y - w.r * 2 - 4}`} stroke={muted} strokeWidth="0.9" />
+          <circle cx={w.cx} cy={y - w.r - 4} r={w.r} fill={accent} opacity="0.65" />
+          <circle cx={w.cx} cy={y} r="3" fill={stroke} />
+        </g>
+      ))}
+
+      <text x="74" y={y + 20} fontSize="10" fill={muted} textAnchor="middle">
+        よく出る値
+      </text>
+      <text x="336" y={y + 20} fontSize="10" fill={muted} textAnchor="middle">
+        めったに出ない値
+      </text>
+
+      {/* つり合いの支点は ? */}
+      <path d={`M 150 ${y + 34} l -11 20 l 22 0 z`} fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="150" y={y + 74} fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="256" y={y + 60} fontSize="10" fill={muted} textAnchor="start">
+        支点はどこ？
+      </text>
+
+      <text x="200" y="206" fontSize="11.5" fill={accent} textAnchor="middle">
+        大きい値ほど遠くにあるのに、なぜ左寄りでつり合う？
       </text>
     </svg>
   );
