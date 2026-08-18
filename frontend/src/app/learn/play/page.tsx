@@ -10,7 +10,12 @@ import {
 } from "@/lib/answerEval";
 import { PolyaQuestionsPanel } from "@/components/PolyaQuestions";
 import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
-import { findStaticSeries, resolveSeriesId } from "@/lib/seriesCatalog";
+import {
+  catalogFocusHref,
+  findStaticSeries,
+  rememberCatalogFocus,
+  resolveSeriesId,
+} from "@/lib/seriesCatalog";
 import {
   clearSeriesHistory,
   getResumeIndex,
@@ -841,7 +846,9 @@ export default function Play() {
               もう一度
             </button>
             <Link
-              href="/learn/"
+              href={catalogFocusHref(series.id)}
+              scroll={false}
+              onClick={() => rememberCatalogFocus(series.id)}
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
               style={{ letterSpacing: "0.2em" }}
             >

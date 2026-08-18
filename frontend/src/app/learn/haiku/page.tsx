@@ -20,6 +20,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { MathBody, MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
+import { catalogFocusHref, rememberCatalogFocus } from "@/lib/seriesCatalog";
 import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
 import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
 import { getViewpointList } from "@/lib/viewpointLists";
@@ -625,7 +626,9 @@ export default function HaikuPlay() {
               もう一度
             </button>
             <Link
-              href="/learn/"
+              href={catalogFocusHref(series.id)}
+              scroll={false}
+              onClick={() => rememberCatalogFocus(series.id)}
               className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
               style={{ letterSpacing: "0.2em" }}
             >

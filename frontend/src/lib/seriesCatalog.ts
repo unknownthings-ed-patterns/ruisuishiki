@@ -1688,3 +1688,48 @@ export function seriesHref(seriesId: string): string {
     ? `/learn/haiku/?seriesId=${seriesId}`
     : `/learn/play/?seriesId=${seriesId}`;
 }
+
+/**
+ * 系列カタログで、指定した系列カードの近くに着地する URL。
+ * おわりのページから戻るときに使う（ページ先頭ではなく、いま歩いた系列へ）。
+ */
+export function catalogFocusHref(seriesId: string): string {
+  return `/learn/?focus=${encodeURIComponent(seriesId)}`;
+}
+
+const CATALOG_FOCUS_KEY = "ruisuishiki:catalog_focus";
+
+/** 同一タブ内のバックアップ（Strict Mode の二重マウントでも消えない）。 */
+let catalogFocusMemory: string | null = null;
+
+/** おわりのページからカタログへ戻る直前に、着地先の系列 id を残す。 */
+export function rememberCatalogFocus(seriesId: string): void {
+  catalogFocusMemory = seriesId;
+  try {
+    sessionStorage.setItem(CATALOG_FOCUS_KEY, seriesId);
+  } catch {
+    // private mode などでは無視
+  }
+}
+
+/** カタログ着地先。クエリ ?focus= を優先し、無ければ記憶。 */
+export function peekCatalogFocus(search: string): string | null {
+  const fromQuery = new URLSearchParams(search).get("focus");
+  if (fromQuery) return fromQuery;
+  if (catalogFocusMemory) return catalogFocusMemory;
+  try {
+    return sessionStorage.getItem(CATALOG_FOCUS_KEY);
+  } catch {
+    return null;
+  }
+}
+
+/** 着地できたら呼ぶ。一度きりのジャンプにするため記憶を消す。 */
+export function clearCatalogFocus(): void {
+  catalogFocusMemory = null;
+  try {
+    sessionStorage.removeItem(CATALOG_FOCUS_KEY);
+  } catch {
+    // ignore
+  }
+}

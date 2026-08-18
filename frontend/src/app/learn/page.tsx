@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { MathText } from "@/components/Math";
 import { OperatorFootprintView } from "@/components/OperatorFootprintView";
 import {
@@ -22,6 +22,8 @@ import {
   STATIC_CATALOG,
   SUBJECT_GROUP_LABEL,
   SUBJECT_ORDER,
+  peekCatalogFocus,
+  clearCatalogFocus,
 } from "@/lib/seriesCatalog";
 import {
   calculateLearningStatsFromHistory,
@@ -55,6 +57,29 @@ type KokugoCatalogWithProgress = {
 
 const COLLAPSED_GROUPS_KEY = "ruisuishiki:catalog_collapsed";
 
+function catalogCardDomId(seriesId: string): string {
+  return `catalog-${seriesId}`;
+}
+
+function catalogGroupDomId(groupKey: string): string {
+  return `catalog-group-${groupKey}`;
+}
+
+/** 折りたたみキー。topicGroup なし／教師作成は常時展開なので null。 */
+function groupKeyForSeries(
+  math: CatalogWithProgress[],
+  kokugo: KokugoCatalogWithProgress[],
+  seriesId: string,
+): string | null {
+  const mathItem = math.find((item) => item.entry.series.id === seriesId);
+  if (mathItem?.entry.topicGroup) {
+    return `${mathItem.entry.subject}|${mathItem.entry.topicGroup}`;
+  }
+  const kokugoItem = kokugo.find((item) => item.entry.series.id === seriesId);
+  if (kokugoItem) return kokugoGenreGroupKey(kokugoItem.entry.genreId);
+  return null;
+}
+
 /** topicGroup ごとにまとめる（順序は入力順を維持）。 */
 function groupByTopic(
   entries: CatalogWithProgress[],
@@ -87,6 +112,8 @@ export default function LearnIndex() {
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
     new Set(),
   );
+  // おわりのページから ?focus=seriesId で戻ったとき、その系列カードへ着地する。
+  const [focusId, setFocusId] = useState<string | null>(null);
 
   useEffect(() => {
     // 静的カタログ各系列について履歴を読み、進度を計算
@@ -196,9 +223,51 @@ export default function LearnIndex() {
         [...allGroupKeys].filter((key) => !groupsWithInProgress.has(key)),
       );
     }
+
+    const urlFocus =
+      typeof window !== "undefined"
+        ? peekCatalogFocus(window.location.search)
+        : null;
+    if (urlFocus) {
+      // 着地のために一時展開するだけ。手動トグルの履歴（localStorage）は上書きしない。
+      const focusGroup = groupKeyForSeries(
+        withProgress,
+        kokugoWithProgress,
+        urlFocus,
+      );
+      if (focusGroup) resolvedCollapsed.delete(focusGroup);
+    }
+    setFocusId(urlFocus);
     setCollapsedGroups(resolvedCollapsed);
     setHasHydrated(true);
   }, []);
+
+  useLayoutEffect(() => {
+    if (!hasHydrated || !focusId) return;
+    const cardId = catalogCardDomId(focusId);
+    const groupKey = groupKeyForSeries(catalog, kokugoCatalog, focusId);
+    const groupId = groupKey ? catalogGroupDomId(groupKey) : null;
+
+    const scrollToFocus = (): boolean => {
+      const card = document.getElementById(cardId);
+      const target = card ?? (groupId ? document.getElementById(groupId) : null);
+      if (!target) return false;
+      target.scrollIntoView({
+        block: "center",
+        behavior: "auto",
+      });
+      clearCatalogFocus();
+      return true;
+    };
+
+    // Next の「遷移後に先頭へ戻す」が後から走るので、数回追いかけて着地を守る。
+    scrollToFocus();
+    const delays = [0, 50, 150, 400];
+    const timers = delays.map((ms) => window.setTimeout(scrollToFocus, ms));
+    return () => {
+      for (const t of timers) window.clearTimeout(t);
+    };
+  }, [hasHydrated, focusId, catalog, kokugoCatalog, collapsedGroups]);
 
   function toggleGroup(key: string) {
     setCollapsedGroups((prev) => {
@@ -339,7 +408,11 @@ export default function LearnIndex() {
                 );
                 const intro = KOKUGO_GENRE_INTRO[genreId];
                 return (
-                  <div key={groupKey} className="flex flex-col gap-3">
+                  <div
+                    key={groupKey}
+                    id={catalogGroupDomId(groupKey)}
+                    className="flex flex-col gap-3"
+                  >
                     <button
                       type="button"
                       onClick={() => toggleGroup(groupKey)}
@@ -397,6 +470,7 @@ export default function LearnIndex() {
                             <KokugoCatalogCard
                               key={item.entry.series.id}
                               item={item}
+                              focused={focusId === item.entry.series.id}
                             />
                           ))}
                         </ol>
@@ -451,6 +525,7 @@ export default function LearnIndex() {
                                 <CatalogCard
                                   key={item.entry.series.id}
                                   item={item}
+                                  focused={focusId === item.entry.series.id}
                                 />
                               ))}
                             </ol>
@@ -468,7 +543,11 @@ export default function LearnIndex() {
                           0,
                         );
                         return (
-                          <div key={groupKey} className="flex flex-col gap-3">
+                          <div
+                            key={groupKey}
+                            id={catalogGroupDomId(groupKey)}
+                            className="flex flex-col gap-3"
+                          >
                             <button
                               type="button"
                               onClick={() => toggleGroup(groupKey)}
@@ -517,6 +596,7 @@ export default function LearnIndex() {
                                   <CatalogCard
                                     key={item.entry.series.id}
                                     item={item}
+                                    focused={focusId === item.entry.series.id}
                                   />
                                 ))}
                               </ol>
@@ -543,10 +623,16 @@ export default function LearnIndex() {
             </h2>
             <ol className="flex flex-col gap-3">
               {teacherSeries.map((s) => (
-                <li key={s.id}>
+                <li
+                  key={s.id}
+                  id={catalogCardDomId(s.id)}
+                  style={{ scrollMarginBlock: "24vh" }}
+                >
                   <Link
                     href={`/learn/play/?seriesId=${s.id}`}
-                    className="block rounded-lg border border-border p-5 transition-colors hover:border-accent"
+                    className={`block rounded-lg border p-5 transition-colors hover:border-accent ${
+                      focusId === s.id ? "border-accent" : "border-border"
+                    }`}
                     style={{ background: "var(--surface)" }}
                   >
                     <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
@@ -602,7 +688,13 @@ export default function LearnIndex() {
  * 国語カタログのカード 1 枚。数学の CatalogCard と同型の進度表示。
  * ルートだけ /learn/haiku（KokugoSeries 専用プレイヤー）。
  */
-function KokugoCatalogCard({ item }: { item: KokugoCatalogWithProgress }) {
+function KokugoCatalogCard({
+  item,
+  focused = false,
+}: {
+  item: KokugoCatalogWithProgress;
+  focused?: boolean;
+}) {
   const { entry, resumeIndex, total } = item;
   const isCompleted = resumeIndex >= total;
   const inProgress = resumeIndex > 0 && !isCompleted;
@@ -610,10 +702,15 @@ function KokugoCatalogCard({ item }: { item: KokugoCatalogWithProgress }) {
     ? kokugoSeriesHref(entry.series.id)
     : kokugoSeriesHref(entry.series.id, { fresh: true });
   return (
-    <li>
+    <li
+      id={catalogCardDomId(entry.series.id)}
+      style={{ scrollMarginBlock: "24vh" }}
+    >
       <Link
         href={href}
-        className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
+        className={`block rounded-lg border p-5 sm:p-6 transition-colors hover:border-accent ${
+          focused ? "border-accent" : "border-border"
+        }`}
         style={{ background: "var(--surface)" }}
       >
         <div className="flex items-baseline justify-between gap-3 mb-2 flex-wrap">
@@ -696,7 +793,13 @@ function KokugoCatalogCard({ item }: { item: KokugoCatalogWithProgress }) {
  * 静的カタログのカード 1 枚（系列）。
  * 折りたたみ可能なグループ内でも、グループ外でも同じ見た目で使う。
  */
-function CatalogCard({ item }: { item: CatalogWithProgress }) {
+function CatalogCard({
+  item,
+  focused = false,
+}: {
+  item: CatalogWithProgress;
+  focused?: boolean;
+}) {
   const { entry, resumeIndex, total } = item;
   const isCompleted = resumeIndex >= total;
   const inProgress = resumeIndex > 0 && !isCompleted;
@@ -704,10 +807,15 @@ function CatalogCard({ item }: { item: CatalogWithProgress }) {
     ? `/learn/play/?seriesId=${entry.series.id}`
     : `/learn/play/?seriesId=${entry.series.id}&fresh=1`;
   return (
-    <li>
+    <li
+      id={catalogCardDomId(entry.series.id)}
+      style={{ scrollMarginBlock: "24vh" }}
+    >
       <Link
         href={href}
-        className="block rounded-lg border border-border p-5 sm:p-6 transition-colors hover:border-accent"
+        className={`block rounded-lg border p-5 sm:p-6 transition-colors hover:border-accent ${
+          focused ? "border-accent" : "border-border"
+        }`}
         style={{ background: "var(--surface)" }}
       >
         {/* 上段：タイトル + ステータス */}
