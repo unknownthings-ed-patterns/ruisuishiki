@@ -71,9 +71,41 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   ],
 };
 
+/**
+ * お話（物語）の観点リスト。俳句・自由詩と同じく**薄く生まれる**（G1）。
+ *
+ * 3項目とも系列①「『もし』のお話」の**発見の核**なので initial には置かず、
+ * revealedInSeries でこの系列から解禁する。系列①の中では、読み比べ
+ * （step1〜step7）を歩いたあとの観点抽出 step（step8・pickViewpoints）で
+ * はじめて目に入る＝発見が先。文面は docs/ファージョン背骨_kokugo.md の
+ * 「観点リスト追加候補」で確定したもの。
+ */
+export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
+  genreId: "monogatari",
+  version: 1,
+  items: [
+    {
+      text: "「もし」は一つだけ",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_moshi_01",
+    },
+    {
+      text: "くりかえしが、同じ形になっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_moshi_01",
+    },
+    {
+      text: "さいごの一回で、形が破れている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_moshi_01",
+    },
+  ],
+};
+
 const LISTS: Record<string, ViewpointList> = {
   haiku: HAIKU_VIEWPOINT_LIST_V1,
   shi: SHI_VIEWPOINT_LIST_V1,
+  monogatari: MONOGATARI_VIEWPOINT_LIST_V1,
 };
 
 /** ジャンルの現在の観点リストを返す（未登録は undefined）。 */

@@ -44,9 +44,15 @@ QUESTION = re.compile(r"(だろう|どうな|かな|？|\?|どこ|どっち|何�
 # 後半は自由詩ジャンルの技法名（docs/自由詩背骨_kokugo.md の言い換え語彙表。
 # 改行→「切るところ」「行のかわり目」／感想語→「気持ちのことば」／描写→「見たままを置く」／
 # スローモーション→「ゆっくり見せる」／散文→「ふつうの文」）。
+# 末尾はお話（散文）ジャンルの技法名（docs/ファージョン背骨_kokugo.md の言い換え語彙表。
+# 仮説→「もし」／一貫→「筋を通す」「うそはひとつだけ」／伏線→「先に見せておく」／
+# 反転・破調→「形を破る」「さいごの一回だけ変える」／比喩→「物の名前で言う」／
+# あらすじ→「みじかく戻した話」）。既存の俳句・自由詩の L1/L2 に偽陽性が無いことを
+# 確認して追加（2026-08-19）。
 GIHOU = re.compile(
     r"(季語|切れ字|切れ(?!い)|オノマトペ|字余り|字足らず|自由律|本歌取|押韻|体言止め"
-    r"|行分け|改行|散文|自由詩|描写|感想語|スローモーション)"
+    r"|行分け|改行|散文|自由詩|描写|感想語|スローモーション"
+    r"|仮説|一貫|伏線|反転|破調|比喩|擬人|寓話|起承転結|あらすじ)"
 )
 # 指示調（代筆・お手本を押しつける言い方）
 SHIJI = re.compile(r"(と書きましょう|を使いましょう|と書こう|にしましょう|しなさい)")
@@ -343,12 +349,15 @@ def audit_mentor(used_mentor_ids):
         block = entry["block"]
         if not re.search(r"sourceNote:\s*\n?\s*\"", block):
             problems.append(f"❌ {mid}: sourceNote が無い（G12）")
-        if not re.search(r'rights:\s*"(PD|original|licensed)"', block):
-            problems.append(f"❌ {mid}: rights（PD/original/licensed）が無い（G12）")
-        # 自由詩（form: "free_verse"）は音数の器を持たない＝moraCount 非適用
-        # （docs/自由詩背骨_kokugo.md 技術ゲート1）。reading は読みの補助として
+        # quoted＝保護中の可能性がある作品の適法な引用（32条・翻訳しての引用は47条の6）。
+        # ファージョン条項（docs/ファージョン背骨_kokugo.md §権利規律）で追加した区分。
+        if not re.search(r'rights:\s*"(PD|original|licensed|quoted)"', block):
+            problems.append(f"❌ {mid}: rights（PD/original/licensed/quoted）が無い（G12）")
+        # 自由詩（form: "free_verse"）・お話（form: "prose"）は音数の器を持たない＝
+        # moraCount 非適用（docs/自由詩背骨_kokugo.md 技術ゲート1・
+        # docs/ファージョン背骨_kokugo.md 技術ゲート1）。reading は読みの補助として
         # 任意で持てるが、音数検算の対象からは外す。
-        free_verse = entry.get("form") == "free_verse"
+        free_verse = entry.get("form") in ("free_verse", "prose")
         reading = entry.get("reading")
         if not reading:
             if not free_verse:

@@ -22,6 +22,7 @@ import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
 import { catalogFocusHref, rememberCatalogFocus } from "@/lib/seriesCatalog";
 import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
+import { KOKUGO_HANASHI_SERIES_LIST } from "@/lib/seriesKokugoHanashi";
 import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
 import { getViewpointList } from "@/lib/viewpointLists";
 import type { KokugoSeries, MentorText, ViewpointItem } from "@/lib/types";
@@ -33,12 +34,13 @@ import {
 } from "@/lib/storage";
 
 /**
- * このプレイヤーが歩ける国語系列の全部（俳句3＋自由詩1）。
+ * このプレイヤーが歩ける国語系列の全部（俳句3＋自由詩1＋お話1）。
  * 解禁順（revealedInSeries）・作品集の収集・?seriesId の解決は、すべてこの順が正。
  */
 const KOKUGO_ALL_SERIES: KokugoSeries[] = [
   ...KOKUGO_HAIKU_SERIES_LIST,
   ...KOKUGO_SHI_SERIES_LIST,
+  ...KOKUGO_HANASHI_SERIES_LIST,
 ];
 
 /** id から国語系列を引く（俳句・自由詩の両方。未登録は undefined）。 */
@@ -55,25 +57,58 @@ type HaikuAnthologyItem = {
 };
 
 /**
- * ジャンルごとの作品の呼び名（俳句＝句集、自由詩＝詩集）。
+ * ジャンルごとの作品の呼び名と、作品を書く欄のことば
+ * （俳句＝句集、自由詩＝詩集、お話＝お話集）。
  * ジャンルが増えても既存の呼び名を変えずに済むよう、ここで切り替える。
  */
 function worksLabels(series: KokugoSeries): {
   collection: string;
   counter: string;
   empty: string;
+  /** 複数行入力（poemText）の見出し・注記。器は同じで、呼び名だけ変える。 */
+  compose: {
+    aria: string;
+    field: string;
+    placeholder: string;
+    note: string;
+  };
 } {
   if (series.genreId === "shi") {
     return {
       collection: "わたしの詩集",
       counter: "編",
       empty: "まだ詩がありません。系列を歩くと、ここにたまっていくよ",
+      compose: {
+        aria: "詩をかく",
+        field: "作品（漢字かなまじりでOK。行をかえたいところで改行してね）",
+        placeholder: "いちぎょうずつ\nかいてみよう",
+        note: "※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。",
+      },
+    };
+  }
+  if (series.genreId === "monogatari") {
+    return {
+      collection: "わたしのお話集",
+      counter: "話",
+      empty: "まだお話がありません。系列を歩くと、ここにたまっていくよ",
+      compose: {
+        aria: "お話をかく",
+        field: "作品（漢字かなまじりでOK。文のきれ目で改行すると、あとで読みやすいよ）",
+        placeholder: "もし、",
+        note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
+      },
     };
   }
   return {
     collection: "わたしの句集",
     counter: "句",
     empty: "まだ句がありません。系列を歩くと、ここにたまっていくよ",
+    compose: {
+      aria: "詩をかく",
+      field: "作品（漢字かなまじりでOK。行をかえたいところで改行してね）",
+      placeholder: "いちぎょうずつ\nかいてみよう",
+      note: "※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。",
+    },
   };
 }
 
@@ -231,8 +266,8 @@ function MoraMeter({
 function MentorCard({ id }: { id: string }) {
   const m = getMentorText(id);
   if (!m) return null;
-  // 自由詩は音数の器を持たないので、行分けを保った複数列表示・音数は出さない。
-  const isFreeVerse = m.form === "free_verse";
+  // 自由詩・お話（散文）は音数の器を持たないので、行を保った複数列表示・音数は出さない。
+  const isFreeVerse = m.form === "free_verse" || m.form === "prose";
   return (
     <article
       className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"
@@ -535,6 +570,8 @@ export default function HaikuPlay() {
             <br />
             {series.genreId === "shi"
               ? "できた詩を、だれかと読み合ってみよう。"
+              : series.genreId === "monogatari"
+              ? "できたお話を、だれかと読み合ってみよう。"
               : "できた句を、だれかと読み合ってみよう（句会）。"}
           </p>
 
@@ -999,10 +1036,10 @@ export default function HaikuPlay() {
         {/* 自由詩の複数行入力（作品欄のみ・よみがな欄なし・音数メーターなし）。
             改行がそのまま行分け＝作品の一部なので、入力の改行を保って保存・表示する。 */}
         {input?.type === "poemText" && (
-          <section className="flex flex-col gap-3" aria-label="詩をかく">
+          <section className="flex flex-col gap-3" aria-label={labels.compose.aria}>
             <label className="flex flex-col gap-1">
               <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
-                作品（漢字かなまじりでOK。行をかえたいところで改行してね）
+                {labels.compose.field}
               </span>
               <textarea
                 value={work}
@@ -1011,7 +1048,7 @@ export default function HaikuPlay() {
                   saveHaiku(series.id, step.id, e.target.value, "");
                 }}
                 rows={6}
-                placeholder={"いちぎょうずつ\nかいてみよう"}
+                placeholder={labels.compose.placeholder}
                 className="rounded-md border px-3 py-2"
                 style={{
                   borderColor: "var(--accent-soft)",
@@ -1033,7 +1070,7 @@ export default function HaikuPlay() {
               </div>
             )}
             <p className="text-muted" style={{ fontSize: "12px" }}>
-              ※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。
+              {labels.compose.note}
             </p>
             <button
               type="button"
@@ -1230,6 +1267,25 @@ const AUTHOR_LANDSCAPE_EXTRAS: Record<
         </>
       ),
       note: "— 日本では新作セクションの初出が1956年以降（1963年英国版著作権ページで確認）のため保護期間満了。",
+    },
+  },
+  kokugo_hanashi_moshi_01: {
+    english: [
+      {
+        href: "https://gutenberg.ca/ebooks/farjeone-littlebookroom/farjeone-littlebookroom-00-h.html",
+        label: "The Little Bookroom（『ムギと王さま』の原書・Gutenberg Canada）",
+        note: "「おくさまの部屋（The Lady's Room）」「七番めの王女（The Seventh Princess）」の英語原文",
+      },
+    ],
+    japanese: [],
+    citation: {
+      apa: (
+        <>
+          Farjeon, E. (1955). <i>The Little Bookroom</i>. Oxford University Press.（あらすじと訳は
+          ruisuishiki による自前訳）
+        </>
+      ),
+      note: "— 「おくさまの部屋」「七番めの王女」は、初出年が確定できず日本では保護中の可能性があるため、全文は載せず、あらすじと急所の場面だけを引用しています（著作権法32条の引用・翻訳しての引用は47条の6）。",
     },
   },
 };
@@ -1499,7 +1555,7 @@ function loadHaiku(seriesId: string, stepId: string): { work: string; reading: s
   }
 }
 
-/** 全国語系列の産出 step（俳句・自由詩）から、自作の作品だけを集める。 */
+/** 全国語系列の産出 step（俳句・自由詩・お話）から、自作の作品だけを集める。 */
 function collectHaikuAnthology(): HaikuAnthologyItem[] {
   const items: HaikuAnthologyItem[] = [];
   for (const s of KOKUGO_ALL_SERIES) {

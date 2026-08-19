@@ -215,16 +215,23 @@ export type MentorText = {
    * "free_verse"＝自由詩。音数の器を持たないので moraCount 非適用——
    * 表示は音数メーターなしの行分け（縦書きで行＝列）、audit の音数検算からも外れる
    * （docs/自由詩背骨_kokugo.md 技術ゲート1・2）。
+   * "prose"＝散文（お話）。韻文ではないので moraCount は当然非適用。表示は
+   * free_verse と同じ「行を保った縦書き」で開始し、横書きへの切替は表示層だけで
+   * できるようにこの値で見分ける（docs/ファージョン背骨_kokugo.md 技術ゲート1）。
    */
-  form?: "haiku" | "free_verse";
+  form?: "haiku" | "free_verse" | "prose";
   author: string;
   /** 出典（memory ruisuishiki-citation-format の書式）。 */
   sourceNote: string;
   /**
    * 権利区分（G12）。PD は「戦前没の俳人」に限定。
    * original＝設計者/先生の自作。licensed＝許諾済み（実名は載せない）。
+   * quoted＝**保護中の可能性がある作品の、適法な引用**（著作権法32条の引用・
+   * 翻訳して引用する場合は47条の6）。全文は載せず急所の部分だけ・出所明示・
+   * ワークシートが主で引用が従、を sourceNote に必ず書く
+   * （docs/ファージョン背骨_kokugo.md §権利規律・2026-08-19 全面改訂）。
    */
-  rights: "PD" | "original" | "licensed";
+  rights: "PD" | "original" | "licensed" | "quoted";
   /** 季語（あれば）。 */
   kigo?: { word: string; season: "春" | "夏" | "秋" | "冬" | "新年" };
   /**
@@ -269,10 +276,13 @@ export type KokugoStep = {
    */
   pickViewpoints?: boolean;
   /**
-   * creation step でも模範文カードを問題文の下（入力の上）に常時表示する。
+   * comparison 以外の step でも模範文カードを問題文の下（入力の上）に常時表示する。
    * 通常の creation は「ヒントを開いたら横に添える」だが、本歌取のように
    * 「読んでから型を借りる」step は元の作品が最初から見えている必要がある
    * （俳句の本歌取は穴埋めに本歌が埋まっていたので不要だった。自由詩 Step7 が初出）。
+   * お話（散文）の exercise でも使う：掌編は選択肢のボタンに収まらないので、
+   * 本文はカードで見せ、選択肢は「どちらか」を指す短い言い方にする
+   * （seriesKokugoHanashi.ts Step2・Step3・Step6）。
    */
   showMentorUpfront?: boolean;
 };

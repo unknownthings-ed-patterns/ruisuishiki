@@ -9,6 +9,7 @@
  */
 
 import { KOKUGO_HAIKU_SERIES_LIST } from "./seriesKokugoHaiku";
+import { KOKUGO_HANASHI_SERIES_LIST } from "./seriesKokugoHanashi";
 import { KOKUGO_SHI_SERIES_LIST } from "./seriesKokugoShi";
 import type { KokugoSeries } from "./types";
 
@@ -34,6 +35,8 @@ export const KOKUGO_GENRE_INTRO: Partial<Record<KokugoGenreId, string>> = {
   haiku:
     "はじめてなら、まず「五七五のかたち」から。声に出して数えるところから始まります。",
   shi: "俳句の五・七・五という「器」を外すと、こんどは自分で行を切ることになります。",
+  monogatari:
+    "ありえないことを一つだけゆるして、あとは筋のとおりにたどる——短いお話のつくり方から。",
 };
 
 export type KokugoCatalogEntry = {
@@ -85,6 +88,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     genreId: "shi",
     shortDescription:
       "気持ちのことばを消して、見えたものを見えた順に置くと、たった5秒がゆっくり・濃く見えてくる。読みくらべ → 行のかわり目の発見 → 自分の5秒まで、全 10 問。",
+  },
+  {
+    series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_moshi_01"),
+    genreId: "monogatari",
+    shortDescription:
+      "ありえない「もし」を一つだけ置いて、あとを筋のとおりにたどると、お話がほんとうらしく動きだす。読みくらべ → さいごの一回の破れの発見 → 自分の「もし」まで、全 10 問。",
   },
 ];
 
