@@ -23,6 +23,7 @@ import { getMentorText } from "@/lib/mentorTexts";
 import { catalogFocusHref, rememberCatalogFocus } from "@/lib/seriesCatalog";
 import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
 import { KOKUGO_HANASHI_SERIES_LIST } from "@/lib/seriesKokugoHanashi";
+import { KOKUGO_NIKKI_SERIES_LIST } from "@/lib/seriesKokugoNikki";
 import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
 import { getViewpointList } from "@/lib/viewpointLists";
 import type { KokugoSeries, MentorText, ViewpointItem } from "@/lib/types";
@@ -34,13 +35,14 @@ import {
 } from "@/lib/storage";
 
 /**
- * このプレイヤーが歩ける国語系列の全部（俳句3＋自由詩1＋お話1）。
+ * このプレイヤーが歩ける国語系列の全部（俳句3＋自由詩1＋お話1＋日記2）。
  * 解禁順（revealedInSeries）・作品集の収集・?seriesId の解決は、すべてこの順が正。
  */
 const KOKUGO_ALL_SERIES: KokugoSeries[] = [
   ...KOKUGO_HAIKU_SERIES_LIST,
   ...KOKUGO_SHI_SERIES_LIST,
   ...KOKUGO_HANASHI_SERIES_LIST,
+  ...KOKUGO_NIKKI_SERIES_LIST,
 ];
 
 /** id から国語系列を引く（俳句・自由詩の両方。未登録は undefined）。 */
@@ -83,6 +85,19 @@ function worksLabels(series: KokugoSeries): {
         field: "作品（漢字かなまじりでOK。行をかえたいところで改行してね）",
         placeholder: "いちぎょうずつ\nかいてみよう",
         note: "※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。",
+      },
+    };
+  }
+  if (series.genreId === "nikki") {
+    return {
+      collection: "わたしの日記帳",
+      counter: "日ぶん",
+      empty: "まだ日記がありません。系列を歩くと、ここにたまっていくよ",
+      compose: {
+        aria: "日記をかく",
+        field: "作品（漢字かなまじりでOK。文のきれ目で改行すると、あとで読みやすいよ）",
+        placeholder: "きょう、",
+        note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
       },
     };
   }
@@ -409,17 +424,24 @@ export default function HaikuPlay() {
   // exercise は正解で解錠。comparison / creation は常に進める（判定しない）。
   const choiceCorrect =
     input?.type === "choice" && choice === input.answerIndex;
-  // 並べ替えは「固定の語順」ではなく「モーラ列が 5-7-5 になる並び」で判定する。
-  // 同じ音数のかたまり（例：5音が二つ）が入れ替わった倒置の句も正解にするため。
-  // 目標のモーラ列は正典の answerOrder（5-7-5 になる並び）から導く。
+  // 並べ替えの判定は2方式（input.judge。未指定＝"mora"＝俳句の従来判定で挙動不変）。
+  //  - "mora"（既定）：「固定の語順」ではなく「モーラ列が 5-7-5 になる並び」で判定する。
+  //    同じ音数のかたまり（例：5音が二つ）が入れ替わった倒置の句も正解にするため。
+  //    目標のモーラ列は正典の answerOrder（5-7-5 になる並び）から導く。
+  //  - "exact"：answerOrder との正順一致。散文の文ならべ（日記系列①）は音数に意味がなく、
+  //    「おきたじゅん」が一意に決まるので、並びそのものを見る
+  //    （docs/日記背骨_kokugo.md 技術ゲート1）。
+  const reorderExact = input?.type === "reorder" && input.judge === "exact";
   const reorderCorrect =
     input?.type === "reorder" &&
     order.length === input.segments.length &&
-    (() => {
-      const segMora = input.segments.map((seg) => countMora(seg));
-      const targetMora = input.answerOrder.map((i) => segMora[i]);
-      return order.every((idx, pos) => segMora[idx] === targetMora[pos]);
-    })();
+    (input.judge === "exact"
+      ? order.every((idx, pos) => idx === input.answerOrder[pos])
+      : (() => {
+          const segMora = input.segments.map((seg) => countMora(seg));
+          const targetMora = input.answerOrder.map((i) => segMora[i]);
+          return order.every((idx, pos) => segMora[idx] === targetMora[pos]);
+        })());
   const canAdvance =
     step.kind !== "exercise" || choiceCorrect || reorderCorrect;
 
@@ -572,6 +594,8 @@ export default function HaikuPlay() {
               ? "できた詩を、だれかと読み合ってみよう。"
               : series.genreId === "monogatari"
               ? "できたお話を、だれかと読み合ってみよう。"
+              : series.genreId === "nikki"
+              ? "できた日記を、だれかと読み合ってみよう。"
               : "できた句を、だれかと読み合ってみよう（句会）。"}
           </p>
 
@@ -882,7 +906,9 @@ export default function HaikuPlay() {
 
         {input?.type === "reorder" && (
           <section className="flex flex-col gap-4" aria-label="ならべかえ">
-            <div className="flex flex-wrap gap-2">
+            {/* 散文の文ならべ（judge: "exact"）は 1 文が長いので縦に積み、音数は出さない
+                （音数はこのジャンルの器ではない）。俳句（既定）は従来どおり横並び＋音数。 */}
+            <div className={reorderExact ? "flex flex-col gap-2" : "flex flex-wrap gap-2"}>
               {input.segments.map((seg, i) => {
                 const used = order.includes(i);
                 return (
@@ -891,7 +917,9 @@ export default function HaikuPlay() {
                     type="button"
                     disabled={used}
                     onClick={() => setOrder((o) => [...o, i])}
-                    className="px-4 py-2 rounded-lg border font-serif transition-opacity"
+                    className={`px-4 py-2 rounded-lg border font-serif transition-opacity${
+                      reorderExact ? " text-left" : ""
+                    }`}
                     style={{
                       borderColor: "var(--border)",
                       background: "var(--surface)",
@@ -899,16 +927,25 @@ export default function HaikuPlay() {
                       fontSize: "17px",
                     }}
                   >
-                    {seg}（{countMora(seg)}音）
+                    {reorderExact ? seg : `${seg}（${countMora(seg)}音）`}
                   </button>
                 );
               })}
             </div>
-            <div className="flex items-center gap-2 flex-wrap min-h-[2.5rem]">
+            <div
+              className={
+                reorderExact
+                  ? "flex flex-col gap-1 min-h-[2.5rem]"
+                  : "flex items-center gap-2 flex-wrap min-h-[2.5rem]"
+              }
+            >
               {order.map((idx, pos) => (
                 <span key={pos} className="font-serif text-foreground" style={{ fontSize: "18px" }}>
+                  {reorderExact && <span className="text-muted mr-1 tnum">{pos + 1}.</span>}
                   {input.segments[idx]}
-                  {pos < order.length - 1 && <span className="text-muted mx-1">／</span>}
+                  {!reorderExact && pos < order.length - 1 && (
+                    <span className="text-muted mx-1">／</span>
+                  )}
                 </span>
               ))}
               {order.length > 0 && (
@@ -924,7 +961,13 @@ export default function HaikuPlay() {
             </div>
             {order.length === input.segments.length && (
               <p style={{ fontSize: "14px" }} className={reorderCorrect ? "text-accent" : "text-muted"}>
-                {reorderCorrect ? "✓ 五・七・五になったね" : "五・七・五の順になっているかな？ 音を数えてみよう"}
+                {reorderExact
+                  ? reorderCorrect
+                    ? "✓ おきたじゅんになったね"
+                    : "この じゅんばんで、ほんとうに できるかな？ 上から声に出して読んでみよう"
+                  : reorderCorrect
+                  ? "✓ 五・七・五になったね"
+                  : "五・七・五の順になっているかな？ 音を数えてみよう"}
               </p>
             )}
           </section>
@@ -1288,6 +1331,21 @@ const AUTHOR_LANDSCAPE_EXTRAS: Record<
       note: "— 「おくさまの部屋」「七番めの王女」は、初出年が確定できず日本では保護中の可能性があるため、全文は載せず、あらすじと急所の場面だけを引用しています（著作権法32条の引用・翻訳しての引用は47条の6）。",
     },
   },
+  // 日記系列②。外国語の原文は無いので english/japanese は空（見出しごと出ない）。
+  // 「5びょう日記」という考え方の出どころ（古賀）と、系列①で構成を借りた教科書の
+  // クレジットを、出典欄で正確に示す（memory ruisuishiki-citation-format の3点セット）。
+  kokugo_nikki_slow_01: {
+    english: [],
+    japanese: [],
+    citation: {
+      apa: (
+        <>
+          古賀及子（2026）『5秒日記』ホーム社.／光村図書出版（2年）「日記を書こう」
+        </>
+      ),
+      note: "— 「5びょう日記」という書き方は古賀及子さんが見つけたもので、「作家の風景」の一文は同書まえがき・紹介文からの引用です。系列①の手本（ぎょうざ日記）は、光村図書2年「日記を書こう」の構成だけを借りて、場面も文もこちらで作りました（本文は使っていません）。日記の本文と手本は、この教材のために書き下ろした自作と、岩井輝久の自筆（本人の許諾つき）です。",
+    },
+  },
 };
 
 /**
@@ -1357,12 +1415,16 @@ function AuthorLandscape({ series }: { series: KokugoSeries }) {
         </div>
       )}
 
-      {/* 原文・本文はよそのサイトで（このページにあるのは日本語の訳だけ） */}
-      {extras && (
+      {/* 原文・本文はよそのサイトで（このページにあるのは日本語の訳だけ）。
+          外国語の原文を持たない系列（日記など）では、英語の見出しと注記は出さない
+          ——リンクが 1 本も無いのに「原文は上のリンクで」と書くと嘘になるため。 */}
+      {extras && extras.english.length + extras.japanese.length > 0 && (
         <div className="flex flex-col gap-2">
-          <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
-            えいごで 読みたい人へ
-          </span>
+          {extras.english.length > 0 && (
+            <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
+              えいごで 読みたい人へ
+            </span>
+          )}
           {extras.english.map((l) => (
             <a
               key={l.href}
@@ -1379,9 +1441,11 @@ function AuthorLandscape({ series }: { series: KokugoSeries }) {
               </span>
             </a>
           ))}
-          <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
-            ※このページにあるのは日本語の訳だけ。英語の原文は、上のリンク先で読んでね。
-          </p>
+          {extras.english.length > 0 && (
+            <p className="text-muted" style={{ fontSize: "12px", lineHeight: 1.8 }}>
+              ※このページにあるのは日本語の訳だけ。英語の原文は、上のリンク先で読んでね。
+            </p>
+          )}
           {extras.japanese.map((l) => (
             <a
               key={l.href}

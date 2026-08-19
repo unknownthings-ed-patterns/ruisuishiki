@@ -102,10 +102,60 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
   ],
 };
 
+/**
+ * 日記（生活文）の観点リスト。俳句・自由詩・お話と同じく**薄く生まれる**（G1）。
+ *
+ * 2系列ぶんの6項目とも、それぞれの系列の**発見の核**なので initial には置かず、
+ * revealedInSeries でその系列から解禁する。系列①を歩く子には①の3項目だけが見え、
+ * 系列②へ進むと②の3項目が足される（KOKUGO_ALL_SERIES の並び順が解禁順の正）。
+ * 文面は docs/日記背骨_kokugo.md の「観点候補」で確定したもの。
+ *
+ * ②の「文と文が、すきまなくぴったりつながっている」は、岩井の恩師の学級文集から
+ * 教室へ受けつがれてきた指導言そのまま＝系列②の合言葉（2026-08-19 先生指示で収載。
+ * 由来は完了画面「作家の風景」に系譜として明記してある）。
+ */
+export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
+  genreId: "nikki",
+  version: 1,
+  items: [
+    {
+      text: "おきたじゅんに、ました、ましたと書いている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_mashita_01",
+    },
+    {
+      text: "言ったことが「」で書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_mashita_01",
+    },
+    {
+      text: "したこと・見たこと・言ったこと・思ったことが入っている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_mashita_01",
+    },
+    {
+      text: "5びょうくらいの、みじかい時間のことを書いている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_slow_01",
+    },
+    {
+      text: "文と文が、すきまなくぴったりつながっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_slow_01",
+    },
+    {
+      text: "音や「」や、心の中のことばで、時間がゆっくりすすむ",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_slow_01",
+    },
+  ],
+};
+
 const LISTS: Record<string, ViewpointList> = {
   haiku: HAIKU_VIEWPOINT_LIST_V1,
   shi: SHI_VIEWPOINT_LIST_V1,
   monogatari: MONOGATARI_VIEWPOINT_LIST_V1,
+  nikki: NIKKI_VIEWPOINT_LIST_V1,
 };
 
 /** ジャンルの現在の観点リストを返す（未登録は undefined）。 */

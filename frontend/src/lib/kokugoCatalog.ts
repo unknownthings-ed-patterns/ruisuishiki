@@ -10,17 +10,19 @@
 
 import { KOKUGO_HAIKU_SERIES_LIST } from "./seriesKokugoHaiku";
 import { KOKUGO_HANASHI_SERIES_LIST } from "./seriesKokugoHanashi";
+import { KOKUGO_NIKKI_SERIES_LIST } from "./seriesKokugoNikki";
 import { KOKUGO_SHI_SERIES_LIST } from "./seriesKokugoShi";
 import type { KokugoSeries } from "./types";
 
 /** ジャンル id（ViewpointList.genreId と対応）。 */
-export type KokugoGenreId = "haiku" | "shi" | "monogatari";
+export type KokugoGenreId = "haiku" | "shi" | "monogatari" | "nikki";
 
 /** 表示順。エントリが無いジャンルは UI 側で出さない。 */
 export const KOKUGO_GENRE_ORDER: KokugoGenreId[] = [
   "haiku",
   "shi",
   "monogatari",
+  "nikki",
 ];
 
 /** 折りたたみ見出し用ラベル（UI。「自由詩」ではなく「詩」でまとめる）。 */
@@ -28,6 +30,7 @@ export const KOKUGO_GENRE_LABEL: Record<KokugoGenreId, string> = {
   haiku: "俳句",
   shi: "詩",
   monogatari: "物語",
+  nikki: "日記",
 };
 
 /** ジャンル見出し直下の短い導入（任意）。 */
@@ -37,6 +40,8 @@ export const KOKUGO_GENRE_INTRO: Partial<Record<KokugoGenreId, string>> = {
   shi: "俳句の五・七・五という「器」を外すと、こんどは自分で行を切ることになります。",
   monogatari:
     "ありえないことを一つだけゆるして、あとは筋のとおりにたどる——短いお話のつくり方から。",
+  nikki:
+    "きのうのことを、おきたじゅんにならべる。それだけで、読んだ人がその時間をいっしょに歩けます。",
 };
 
 export type KokugoCatalogEntry = {
@@ -94,6 +99,18 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     genreId: "monogatari",
     shortDescription:
       "ありえない「もし」を一つだけ置いて、あとを筋のとおりにたどると、お話がほんとうらしく動きだす。読みくらべ → さいごの一回の破れの発見 → 自分の「もし」まで、全 10 問。",
+  },
+  {
+    series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_mashita_01"),
+    genreId: "nikki",
+    shortDescription:
+      "きのうを、おきたじゅんに、ました、ましたとならべると、読んだ人がその時間をいっしょに歩ける。読みくらべ → ならべかえ → 「」の発見 → じぶんのきのうまで、全 10 問。",
+  },
+  {
+    series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_slow_01"),
+    genreId: "nikki",
+    shortDescription:
+      "文と文のすきまをなくすと、たった5びょうが、いっぱいに広がる。読みくらべ → すきまさがし → 時間を刻む道具の発見 → じぶんの5びょうまで、全 10 問。",
   },
 ];
 

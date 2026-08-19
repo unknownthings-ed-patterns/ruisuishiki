@@ -166,7 +166,21 @@ export type SlotConstraint = {
  */
 export type KokugoInput =
   | { type: "choice"; options: string[]; answerIndex: number } // 決定的判定（音数・季語識別）
-  | { type: "reorder"; segments: string[]; answerOrder: number[] } // 並べ替え（語順の比較）
+  | {
+      // 並べ替え（語順の比較）
+      type: "reorder";
+      segments: string[];
+      answerOrder: number[];
+      /**
+       * 判定方式（docs/日記背骨_kokugo.md 技術ゲート1・加法的追加）。
+       * - 未指定＝"mora"：**俳句の従来判定**。並びのモーラ列が answerOrder のモーラ列に
+       *   一致すれば正（同じ音数のかたまりが入れ替わった倒置の句も正解にする）。
+       *   既存の俳句系列①step3 はこの既定のまま＝挙動不変。
+       * - "exact"：answerOrder との**正順一致**。散文の文ならべ（日記系列① step3）は
+       *   音数に意味がないので、こちらで判定する。
+       */
+      judge?: "mora" | "exact";
+    }
   | { type: "fillIn"; template: string; slotConstraints: SlotConstraint[] } // 本歌取（穴埋め産出）
   | { type: "haikuText" } // 自由律の1行入力＋よみがな欄（§6.2）
   /**
