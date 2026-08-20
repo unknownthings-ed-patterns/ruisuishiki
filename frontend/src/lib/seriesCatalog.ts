@@ -9,7 +9,23 @@
  */
 
 import { ALGEBRA_1_SERIES_LIST } from "./seriesAlgebra";
-import { STAT_INFERENCE_SERIES_LIST, STAT_RV_SERIES } from "./seriesStatInference";
+import {
+  STAT_INFERENCE_SERIES_LIST,
+  STAT_RV_SERIES,
+  STAT_VAR_SERIES,
+  STAT_BINOM_SERIES,
+  STAT_TRANSFORM_SERIES,
+  STAT_JOINT_SERIES,
+  STAT_SUM_SERIES,
+  STAT_CONT_SERIES,
+  STAT_NORMAL_SERIES,
+  STAT_STANDARDIZE_SERIES,
+  STAT_APPROX_SERIES,
+  STAT_SAMPLING_SERIES,
+  STAT_ESTIMATE_SERIES,
+  STAT_PROPORTION_SERIES,
+  STAT_TEST_SERIES,
+} from "./seriesStatInference";
 import {
   SEQUENCE_SERIES_LIST,
   SEQ_ARITH_SERIES,
@@ -1552,6 +1568,110 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "統計的な推測",
     shortDescription:
       "確率変数と確率分布（起こりやすさで重みをつける）— 分布表を作る、確率の和は $1$、データの平均と同じ場所へ着く $2$ 本の道、そして「値の単純平均」が大きく外れる場面まで",
+  },
+  {
+    series: STAT_VAR_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "分散と標準偏差（散らばりも、期待値の計算に帰着する）— 偏差の $2$ 乗の期待値、$E(X^2)-\\{E(X)\\}^2$ という $2$ つ目の道、期待値が同じで散らばりだけが違う $2$ つの分布まで",
+  },
+  {
+    series: STAT_BINOM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "二項分布（$2$ つの数だけで、分布まるごとを言い当てる）— 反復試行から $B(n,p)$ へ、$np$ と $np(1-p)$、逆に $n$ を当てる、そして「二項」の名の由来まで",
+  },
+  {
+    series: STAT_TRANSFORM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "確率変数の変換（位置は動くのに、形は動かない）— 足し算は平均だけを動かし、かけ算は散らばりを $2$ 乗で動かす。$\\sigma$ が $|k|$ 倍になる理由まで",
+  },
+  {
+    series: STAT_JOINT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "$2$ 変数の確率分布と独立（表のまわりと、表の中身）— 周辺分布が決まっても中身は決まらない、独立ならただ $1$ つに決まる。同じ試行から決まるのに独立になる場面まで",
+  },
+  {
+    series: STAT_SUM_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "期待値の和の法則（見張りをつける）— 表の中身を知らなくても和の期待値は出せる。旗を立てて足すだけで、正面突破では届かない問いが $3$ 行で片づく",
+  },
+  {
+    series: STAT_CONT_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "連続型の確率変数と確率密度関数（確率は点ではなく、幅に宿る）— 起こりうるのに確率 $0$、密度は幅を与えて初めて確率になる。定積分との合流まで",
+  },
+  {
+    series: STAT_NORMAL_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "正規分布と標準正規分布表（$2$ つの数が、曲線を $1$ 本に決める）— $m$ は位置・$\\sigma$ は形、表の読みと対称性、そして表の逆引きまで",
+  },
+  {
+    series: STAT_STANDARDIZE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "正規分布の標準化（ものさしを取り替えて、$1$ 枚の表に帰着させる）— 原点を平均に・$1$ 目盛りを標準偏差に。平均も散らばりも違う $2$ つを比べる山場まで",
+  },
+  {
+    series: STAT_APPROX_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "二項分布と正規分布（数え上げの分布が、なめらかな曲線に吸い寄せられる）— 期待値と分散をそろえれば重なる。近似が効く場面と、破れる場面の両方まで",
+  },
+  {
+    series: STAT_SAMPLING_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "標本調査と標本平均の分布（一度きりの平均を、確率変数と見る）— かたよらないこと・$n$ で縮むこと、そしてどんな母集団から始めても釣鐘に近づくことまで",
+  },
+  {
+    series: STAT_ESTIMATE_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "母平均の推定（不等式を、ひっくり返す）— 神の視点と人間の視点は同じ $1$ 本の式。確からしさを上げるほど幅が広がる、というつり合いまで",
+  },
+  {
+    series: STAT_PROPORTION_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "母比率の推定（「する／しない」を、$0$ と $1$ に翻訳する）— 比率は平均の特別な場合。$\\sigma$ の席に $\\sqrt{p'(1-p')}$ が座るだけで、前の系列がそのまま効く",
+  },
+  {
+    series: STAT_TEST_SERIES,
+    subject: "secondary2",
+    subjectLabel: "高校数学Ⅱ・B",
+    topicGroup: "統計的な推測",
+    shortDescription:
+      "仮説検定（言いたいことを、いったん否定してみる）— 帰無仮説・有意水準・棄却域、片側と両側。「棄却できない」は「正しい」ではない、という締めまで",
   },
   /* ベクトル（旧課程 数B、新課程では数C に移行。読者の参考書世代を問わず
      使えるよう、注記つきで 数Ⅱ・B に置く） */

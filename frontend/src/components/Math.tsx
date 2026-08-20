@@ -14563,6 +14563,216 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<STAT_DEVIATION_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatDeviationTable />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_VAR_TWO_ROADS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatVarTwoRoads />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_TWO_SAME_MEAN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatTwoSameMean />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_BINOM_BARS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatBinomBars />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_BINOM_NP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatBinomNp />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_SHIFT_KEEP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatShiftKeep />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_SCALE_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatScaleSquare />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_JOINT_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatJointTable />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_INDEP_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatIndepProduct />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_SAME_MARGIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatSameMargin />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_SUM_SPLIT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatSumSplit />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_FLAGS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatFlags />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_DENSITY_AREA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatDensityArea />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_CONT_POINT_ZERO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatContPointZero />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_DENSITY_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatDensityTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_NORMAL_MSIGMA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatNormalMSigma />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_TABLE_LOOKUP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatTableLookup />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_SYMMETRY_FOLD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatSymmetryFold />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_TABLE_REVERSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatTableReverse />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_STANDARDIZE_RULER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatStandardizeRuler />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_BINOM_TO_NORMAL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatBinomToNormal />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_POPULATION_SAMPLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatPopulationSample />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_XBAR_MANY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatXbarMany />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_XBAR_SHRINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatXbarShrink />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_GOD_HUMAN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatGodHuman />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_CI_WIDTH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatCiWidth />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_PROPORTION_01>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatProportion01 />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_REJECT_REGION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatRejectRegion />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_TWO_SIDED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatTwoSided />
+            </div>
+          );
+        }
+        if (trimmed === "<<STAT_NULL_LADDER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <StatNullLadder />
+            </div>
+          );
+        }
         // 水平区切り（「もっと深く」セクションへの分岐線）
         if (/^─{3,}$/.test(trimmed) || /^-{3,}$/.test(trimmed)) {
           return (
@@ -27882,6 +28092,2409 @@ export function StatExpectWeight() {
 
       <text x="200" y="206" fontSize="11.5" fill={accent} textAnchor="middle">
         大きい値ほど遠くにあるのに、なぜ左寄りでつり合う？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系2 step1・derivation: 確率分布表の下に「へだたりの行」を足した三段の表。
+ *  列は 4 つ（系2 step1 の値 1・2・4・5 と一致）。へだたりの行の左端のマスと、
+ *  まん中（期待値）の値は ? のままにする。 */
+export function StatDeviationTable() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 104;
+  const w = 58;
+  const yTop = 52;
+  const h = 32;
+  const cols = [0, 1, 2, 3];
+  /* 値の行と確率の行は問題文の与件なので数を書いてよい。へだたりの行だけを伏せる。 */
+  const values = ["1", "2", "4", "5"];
+  const probs = ["3/10", "1/5", "1/5", "3/10"];
+  return (
+    <svg
+      viewBox="0 0 400 242"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="値の行と確率の行からなる確率分布表の下に、値からまん中を引いたへだたりの行を足した三段の表。どの行もマスは四つ。へだたりの行の左端のマスと、まん中の値は伏せてある"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        分布表の下に、もう 1 行たしてみると
+      </text>
+
+      <text x={x0 - 8} y={yTop + 21} fontSize="11.5" fill={stroke} textAnchor="end">
+        値
+      </text>
+      <text x={x0 - 8} y={yTop + h + 21} fontSize="11.5" fill={stroke} textAnchor="end">
+        確率
+      </text>
+      <text x={x0 - 8} y={yTop + 2 * h + 21} fontSize="11.5" fill={accent} textAnchor="end">
+        へだたり
+      </text>
+
+      {cols.map((k) => (
+        <g key={`dev-${k}`}>
+          <rect x={x0 + k * w} y={yTop} width={w} height={h} fill="none" stroke={stroke} strokeWidth="1.1" />
+          <rect x={x0 + k * w} y={yTop + h} width={w} height={h} fill="none" stroke={stroke} strokeWidth="1.1" />
+          <rect x={x0 + k * w} y={yTop + 2 * h} width={w} height={h} fill="none" stroke={accent} strokeWidth="1.1" />
+          <text x={x0 + k * w + w / 2} y={yTop + 21} fontSize="12.5" fill={stroke} textAnchor="middle">
+            {values[k]}
+          </text>
+          <text x={x0 + k * w + w / 2} y={yTop + h + 21} fontSize="11" fill={muted} textAnchor="middle">
+            {probs[k]}
+          </text>
+          <text
+            x={x0 + k * w + w / 2}
+            y={yTop + 2 * h + 21}
+            fontSize={k === 0 ? "14" : "12.5"}
+            fill={k === 0 ? accent : muted}
+            textAnchor="middle"
+          >
+            {k === 0 ? "?" : "○"}
+          </text>
+        </g>
+      ))}
+
+      {/* まん中（期待値）の位置。数は書かない */}
+      <path d={`M 220 ${yTop + 3 * h + 26} L 220 ${yTop + 3 * h + 4}`} stroke={accent} strokeWidth="1.1" />
+      <path d={`M 220 ${yTop + 3 * h + 4} l -4 7 l 8 0 z`} fill={accent} />
+      <text x="220" y={yTop + 3 * h + 42} fontSize="11" fill={accent} textAnchor="middle">
+        まん中は？
+      </text>
+
+      <text x="200" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        値の行と確率の行はそろっている。
+      </text>
+      <text x="200" y="232" fontSize="11" fill={accent} textAnchor="middle">
+        まん中からのへだたりの行は、何を手がかりに埋まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系2 step5・step6・derivation: 分散へ向かう 2 本の道。
+ *  左は 10 個の粒（step5 の 10 試合と一致）を書きならべる道、
+ *  右は値 4 種類の分布表を通る道。合流先の箱は ? のままにする。 */
+export function StatVarTwoRoads() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /* 左：10 個の粒を 5 個ずつ 2 段（step5 の記録 10 個と一致） */
+  const dots = Array.from({ length: 10 }, (_, i) => ({
+    cx: 52 + (i % 5) * 24,
+    cy: 72 + Math.floor(i / 5) * 24,
+  }));
+  return (
+    <svg
+      viewBox="0 0 420 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="記録の列から出る道と、分布表から出る道が、同じ一つの箱に合流する図。左には記録の粒が十個、右には値の欄と確率の欄が四つずつならんでいる。合流先の箱の中身は伏せてある"
+    >
+      <text x="210" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        散らばりを測る道が、2 本ある
+      </text>
+
+      {/* 左の道：記録を書きならべる */}
+      <text x="100" y="46" fontSize="10" fill={stroke} textAnchor="middle">
+        へだたりを 2 乗して、ならす
+      </text>
+      {dots.map((d, i) => (
+        <circle key={i} cx={d.cx} cy={d.cy} r="6" fill={accent} opacity="0.7" />
+      ))}
+      <text x="100" y="122" fontSize="10" fill={muted} textAnchor="middle">
+        10 試合ぶん
+      </text>
+
+      {/* 右の道：分布表 */}
+      <text x="320" y="40" fontSize="10" fill={stroke} textAnchor="middle">
+        2 乗の期待値から、
+      </text>
+      <text x="320" y="54" fontSize="10" fill={stroke} textAnchor="middle">
+        期待値の 2 乗を引く
+      </text>
+      {[0, 1, 2, 3].map((k) => (
+        <g key={k}>
+          <rect x={252 + k * 34} y={66} width={34} height={24} fill="none" stroke={stroke} strokeWidth="1" />
+          <rect x={252 + k * 34} y={90} width={34} height={24} fill="none" stroke={stroke} strokeWidth="1" />
+          <text x={269 + k * 34} y={83} fontSize="11" fill={stroke} textAnchor="middle">
+            ○
+          </text>
+          <text x={269 + k * 34} y={107} fontSize="11" fill={muted} textAnchor="middle">
+            ○
+          </text>
+        </g>
+      ))}
+      <text x="320" y="132" fontSize="10" fill={muted} textAnchor="middle">
+        値 4 種類ぶん
+      </text>
+
+      {/* 2 本の道が同じ箱へ合流する */}
+      <path d="M 100 140 L 168 184" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 172 187 l -8 -1 l 3 -7 z" fill={accent} />
+      <path d="M 320 140 L 252 184" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 248 187 l 8 -1 l -3 -7 z" fill={accent} />
+
+      <rect x="170" y="190" width="80" height="32" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="210" y="212" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="210" y="242" fontSize="11.5" fill={accent} textAnchor="middle">
+        入口が 2 つある。出口も 2 つだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系2 step9・derivation: まん中が同じで、散らばりだけが違う 2 つの分布。
+ *  棒は上下とも 3 本（step9 の値の個数 3 と一致）。分散・期待値・幅の値は書かない。 */
+export function StatTwoSameMean() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const centers = [130, 200, 270];
+  const bw = 48;
+  const upper = [22, 74, 22];
+  const lower = [56, 50, 56];
+  return (
+    <svg
+      viewBox="0 0 400 300"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="上下に並べた二つの棒グラフ。棒はどちらも三本で、まん中の位置をそろえた縦の破線が入っている。散らばりの幅を示す両向きの矢印が上下に一本ずつあり、その長さは伏せてある"
+    >
+      <text x="200" y="18" fontSize="10.5" fill={muted} textAnchor="middle">
+        まん中をそろえた 2 つの分布を、上下にならべると
+      </text>
+
+      {/* まん中の位置（値は書かない） */}
+      <path d="M 200 34 L 200 256" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="200" y="30" fontSize="10" fill={muted} textAnchor="middle">
+        まん中は同じ
+      </text>
+
+      <text x="34" y="52" fontSize="10.5" fill={stroke}>
+        選手 A
+      </text>
+      <path d="M 70 120 L 330 120" stroke={stroke} strokeWidth="1.2" />
+      {centers.map((c, i) => (
+        <rect
+          key={`u-${c}`}
+          x={c - bw / 2}
+          y={120 - upper[i]}
+          width={bw}
+          height={upper[i]}
+          fill={face}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+      <path d="M 112 134 L 288 134" stroke={accent} strokeWidth="1" />
+      <path d="M 112 134 l 7 -3.5 l 0 7 z" fill={accent} />
+      <path d="M 288 134 l -7 -3.5 l 0 7 z" fill={accent} />
+      <text x="200" y="150" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="34" y="176" fontSize="10.5" fill={stroke}>
+        選手 B
+      </text>
+      <path d="M 70 246 L 330 246" stroke={stroke} strokeWidth="1.2" />
+      {centers.map((c, i) => (
+        <rect
+          key={`l-${c}`}
+          x={c - bw / 2}
+          y={246 - lower[i]}
+          width={bw}
+          height={lower[i]}
+          fill={face}
+          stroke={stroke}
+          strokeWidth="1.1"
+        />
+      ))}
+      <path d="M 112 260 L 288 260" stroke={accent} strokeWidth="1" />
+      <path d="M 112 260 l 7 -3.5 l 0 7 z" fill={accent} />
+      <path d="M 288 260 l -7 -3.5 l 0 7 z" fill={accent} />
+      <text x="200" y="276" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="294" fontSize="11" fill={accent} textAnchor="middle">
+        まん中は同じところにある。それでも、この二つは同じだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系3 step1・derivation・辞書『二項分布』: 芽が出た粒の数ごとの棒。
+ *  棒は 7 本（step1 の「6 粒」に対して 0 粒から 6 粒までの 7 通り）。
+ *  知りたい 4 粒の棒だけを破線にして、高さは ? のまま。数値ラベルは書かない。 */
+export function StatBinomBars() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  /* 高さの比だけが意味を持つ。数値は書かない */
+  const rel = [1, 6, 15, 20, 15, 6, 1];
+  const target = 4;
+  const baseY = 150;
+  const unit = 5.6;
+  const bw = 34;
+  const gap = 10;
+  const x0 = 56;
+  return (
+    <svg
+      viewBox="0 0 400 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="芽が出た粒の数ごとに棒をならべた図。棒は左から順に、〇粒、一粒、二粒、三粒、四粒、五粒、六粒の七本。知りたい四粒のところの棒だけが破線で、高さは疑問符のまま描かれていない"
+    >
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        芽が出た粒の数ごとに、起こりやすさをならべると
+      </text>
+      <path d={`M 44 ${baseY} L 368 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      {rel.map((h, i) => {
+        const x = x0 + i * (bw + gap);
+        const isTarget = i === target;
+        return (
+          <g key={i}>
+            <rect
+              x={x}
+              y={baseY - h * unit}
+              width={bw}
+              height={h * unit}
+              fill={isTarget ? "none" : fill}
+              stroke={isTarget ? accent : stroke}
+              strokeWidth={isTarget ? 1.4 : 1.1}
+              strokeDasharray={isTarget ? "4 3" : undefined}
+            />
+            <text x={x + bw / 2} y={baseY + 16} fontSize="10" fill={muted} textAnchor="middle">
+              {i}
+            </text>
+          </g>
+        );
+      })}
+      <text
+        x={x0 + target * (bw + gap) + bw / 2}
+        y={baseY - rel[target] * unit - 9}
+        fontSize="14"
+        fill={accent}
+        textAnchor="middle"
+      >
+        ?
+      </text>
+      <text x="378" y={baseY + 16} fontSize="10" fill={muted} textAnchor="middle">
+        粒
+      </text>
+      <text x="200" y="194" fontSize="11" fill={accent} textAnchor="middle">
+        7 本の棒の高さを全部たすと 1。いま知りたいのは、どの棒？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系3 step6・derivation: 1 粒ぶんが n 粒ぶんに積み上がる。
+ *  丸は 18 個（step6 の「18 粒」と一致）。どの丸も同じ見た目にして、
+ *  芽が出る粒と出ない粒を塗り分けない（答えの先出しになるため）。 */
+export function StatBinomNp() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const seeds = Array.from({ length: 18 }, (_, i) => i);
+  const r = 6.5;
+  const x0 = 44;
+  const step = 18;
+  const cy = 70;
+  const xEnd = x0 + 17 * step;
+  return (
+    <svg
+      viewBox="0 0 400 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="まいた種を一粒ずつ丸で表し、横に十八個ならべた図。どの丸も同じ見た目で、芽が出る粒と出ない粒は塗り分けていない。下の帯には、芽が出る粒の数をたずねる疑問符だけが置かれている"
+    >
+      <text x="200" y="30" fontSize="11" fill={muted} textAnchor="middle">
+        1 粒ごとに、芽が出るか出ないかが決まる
+      </text>
+      {seeds.map((i) => (
+        <circle key={i} cx={x0 + i * step} cy={cy} r={r} fill="none" stroke={stroke} strokeWidth="1.1" />
+      ))}
+      {/* まとめの帯。芽が出る粒がどれかは描かない */}
+      <path d={`M ${x0 - r} 96 L ${xEnd + r} 96`} stroke={muted} strokeWidth="1" />
+      <path d={`M ${x0 - r} 92 L ${x0 - r} 100`} stroke={muted} strokeWidth="1" />
+      <path d={`M ${xEnd + r} 92 L ${xEnd + r} 100`} stroke={muted} strokeWidth="1" />
+      <text x="200" y="122" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="200" y="162" fontSize="11" fill={accent} textAnchor="middle">
+        1 粒ぶんの起こりやすさは決まっている。18 粒ぜんぶでは、何粒くらい？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系4 step1・derivation: そろって同じだけ動かしても、たがいのへだたりは動かない。
+ *  点は 3 個（step1 の分布表がとる値の個数と一致）。数値はいっさい書かない。 */
+export function StatShiftKeep() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  /* X がとりうる 3 つの値の位置（間隔だけが意味を持つ。値は伏せる） */
+  const xs = [66, 126, 186];
+  const center = 105;
+  const shift = 120;
+  const arrowY = [80, 92, 104];
+  return (
+    <svg
+      viewBox="0 0 400 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="上下二本の数直線の図。上は確率変数がとりうる三つの値の位置と、つり合いの位置を示す破線。下は三つの値すべてに同じ数を足したあとの位置で、動かす矢印の長さは三本とも等しい。描いてあるのはとりうる値であって、人数ではない。期待値や分散の数値は書かない"
+    >
+      <text x="14" y="24" fontSize="10" fill={muted}>
+        もとの値
+      </text>
+      <path d="M 24 56 L 386 56" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 386 56 l -8 -4 l 0 8 z" fill={stroke} />
+      <path d={`M ${center} 42 L ${center} 70`} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={center} y="38" fontSize="9.5" fill={muted} textAnchor="middle">
+        つり合いの位置
+      </text>
+      {xs.map((x) => (
+        <circle key={x} cx={x} cy="56" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+      ))}
+
+      {xs.map((x, i) => (
+        <g key={`arrow-${x}`}>
+          <path
+            d={`M ${x} ${arrowY[i]} L ${x + shift - 8} ${arrowY[i]}`}
+            stroke={muted}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <path d={`M ${x + shift} ${arrowY[i]} l -8 -3.5 l 0 7 z`} fill={muted} />
+        </g>
+      ))}
+      <text x="200" y="122" fontSize="10" fill={muted} textAnchor="middle">
+        どの値にも、同じだけ
+      </text>
+
+      <text x="14" y="148" fontSize="10" fill={muted}>
+        そろって動かしたあと
+      </text>
+      <path d="M 24 180 L 386 180" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 386 180 l -8 -4 l 0 8 z" fill={stroke} />
+      <path d={`M ${center + shift} 166 L ${center + shift} 194`} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={center + shift} y="162" fontSize="9.5" fill={muted} textAnchor="middle">
+        つり合いの位置
+      </text>
+      {xs.map((x) => (
+        <circle key={`moved-${x}`} cx={x + shift} cy="180" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+      ))}
+
+      <text x="200" y="218" fontSize="11" fill={accent} textAnchor="middle">
+        全員がそろって同じだけ動いた——たがいのへだたりは、どうなった？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系4 step4・derivation: へだたりが伸びると、それを 1 辺にした正方形はどうなるか。
+ *  点は 3 個（step4 の分布表がとる値の個数と一致）・正方形は 2 枚。何倍かは書かない。
+ *  大きい正方形の中は格子で区切らない（区切ると倍率が数えられてしまう）。 */
+export function StatScaleSquare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  const face = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const center = 88;
+  const devs = [-32, 12, 60];
+  /* 伸ばす割合。数は書かない——「同じ割合で」だけを見せる */
+  const k = 1.8;
+  const center2 = 150;
+  return (
+    <svg
+      viewBox="0 0 340 310"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上下二本の数直線と、正方形二枚の図。数直線には確率変数がとりうる三つの値の点と、つり合いの位置からのへだたりを示す線が三本ある。下の数直線は、同じものをつり合いの位置から見て同じ割合で外へ伸ばした状態。正方形は二枚で、小さいほうはもとのへだたりを一辺とし、大きいほうは伸びたへだたりを一辺とする。大きいほうの広さは伏せてある。何倍になるかも、分散の値も書かない"
+    >
+      <text x="14" y="22" fontSize="10" fill={muted}>
+        もとの値と、つり合いの位置からのへだたり
+      </text>
+      <path d="M 24 52 L 326 52" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 326 52 l -8 -4 l 0 8 z" fill={stroke} />
+      <path d={`M ${center} 38 L ${center} 66`} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      {devs.map((d) => (
+        <g key={d}>
+          <path d={`M ${center} 52 L ${center + d} 52`} stroke={accent} strokeWidth="1" strokeDasharray="2 2" />
+          <circle cx={center + d} cy="52" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+        </g>
+      ))}
+
+      <text x="170" y="88" fontSize="10" fill={muted} textAnchor="middle">
+        どの値も、同じ割合で伸ばすと
+      </text>
+
+      <text x="14" y="112" fontSize="10" fill={muted}>
+        伸ばしたあと
+      </text>
+      <path d="M 24 142 L 326 142" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 326 142 l -8 -4 l 0 8 z" fill={stroke} />
+      <path d={`M ${center2} 128 L ${center2} 156`} stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      {devs.map((d) => (
+        <g key={`scaled-${d}`}>
+          <path
+            d={`M ${center2} 142 L ${center2 + d * k} 142`}
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="2 2"
+          />
+          <circle cx={center2 + d * k} cy="142" r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+        </g>
+      ))}
+
+      <text x="14" y="184" fontSize="10" fill={muted}>
+        へだたりを 1 辺にした正方形をつくると
+      </text>
+      <rect x="40" y="196" width="42" height="42" fill={face} stroke={accent} strokeWidth="1.2" />
+      <text x="61" y="252" fontSize="9.5" fill={muted} textAnchor="middle">
+        もとのへだたり
+      </text>
+      <rect x="150" y="196" width="76" height="76" fill={face} stroke={accent} strokeWidth="1.2" />
+      <text x="188" y="240" fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="188" y="288" fontSize="9.5" fill={muted} textAnchor="middle">
+        伸びたへだたり
+      </text>
+
+      <text x="170" y="306" fontSize="11" fill={accent} textAnchor="middle">
+        へだたりが伸びると、へだたりを 1 辺にした正方形の広さは？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系5 step1・derivation: 2 つの確率変数の同時分布表。
+ *  中身は 3 行 3 列の 9 マス（step1 の学年 3 種類と一致）。右端と下端が「まわり」。
+ *  左上のマスだけを ? にし、まわりの欄には数を書かない。 */
+export function StatJointTable() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 110;
+  const y0 = 70;
+  const w = 52;
+  const h = 34;
+  const heads = ["1 年", "2 年", "3 年"];
+  return (
+    <svg
+      viewBox="0 0 400 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="二つの確率変数の同時分布の表。中身はたて三つよこ三つの九マスで、右端の列と下端の行が「まわり」の欄になっている。左上のマスだけが疑問符で、ほかのマスにも、まわりの欄にも数は書かれていない"
+    >
+      <text x="214" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの学年を、たてとよこにとって表にすると
+      </text>
+      <text x="214" y="44" fontSize="9.5" fill={muted} textAnchor="middle">
+        よこ ＝ 2 本目の学年
+      </text>
+      <text x="12" y="60" fontSize="9.5" fill={muted}>
+        たて ＝ 1 本目
+      </text>
+
+      {/* 列の見出し */}
+      {heads.map((t, j) => (
+        <text key={`ch-${j}`} x={x0 + j * w + w / 2} y={y0 - 8} fontSize="10" fill={muted} textAnchor="middle">
+          {t}
+        </text>
+      ))}
+      <text x={x0 + 3 * w + w / 2} y={y0 - 8} fontSize="10" fill={muted} textAnchor="middle">
+        計
+      </text>
+
+      {[0, 1, 2].map((i) => (
+        <g key={`row-${i}`}>
+          <text x={x0 - 8} y={y0 + i * h + h / 2 + 4} fontSize="10" fill={muted} textAnchor="end">
+            {heads[i]}
+          </text>
+          {[0, 1, 2].map((j) => (
+            <g key={`cell-${i}-${j}`}>
+              <rect x={x0 + j * w} y={y0 + i * h} width={w} height={h} fill="none" stroke={stroke} strokeWidth="1.1" />
+              <text
+                x={x0 + j * w + w / 2}
+                y={y0 + i * h + h / 2 + 5}
+                fontSize={i === 0 && j === 0 ? "15" : "12"}
+                fill={i === 0 && j === 0 ? accent : muted}
+                textAnchor="middle"
+              >
+                {i === 0 && j === 0 ? "?" : "○"}
+              </text>
+            </g>
+          ))}
+          {/* まわり（右端の列） */}
+          <rect
+            x={x0 + 3 * w}
+            y={y0 + i * h}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + 3 * w + w / 2} y={y0 + i * h + h / 2 + 4} fontSize="10" fill={accent} textAnchor="middle">
+            計
+          </text>
+        </g>
+      ))}
+
+      {/* まわり（下端の行） */}
+      <text x={x0 - 8} y={y0 + 3 * h + h / 2 + 4} fontSize="10" fill={accent} textAnchor="end">
+        計
+      </text>
+      {[0, 1, 2, 3].map((j) => (
+        <g key={`bot-${j}`}>
+          <rect
+            x={x0 + j * w}
+            y={y0 + 3 * h}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + j * w + w / 2} y={y0 + 3 * h + h / 2 + 4} fontSize="10" fill={accent} textAnchor="middle">
+            計
+          </text>
+        </g>
+      ))}
+
+      <text x="200" y="240" fontSize="11.5" fill={accent} textAnchor="middle">
+        表のまわりと表の中身は、どちらがどちらを決める？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系5 step4・derivation: 面積 1 の正方形を、たてよこの割合で切り分ける。
+ *  分割はたて 3・よこ 3 で、長方形は 9 個（step4 の学年 3 種類と一致）。
+ *  左上の長方形の面積だけを ? にし、ほかの面積の値もたてよこの割合の数も書かない。 */
+export function StatIndepProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const band = "color-mix(in oklch, var(--foreground) 10%, transparent)";
+  const x0 = 120;
+  const y0 = 76;
+  const side = 160;
+  /* 周辺分布の比 4 : 3 : 2 */
+  const parts = [4 / 9, 3 / 9, 2 / 9];
+  const xs = [x0, x0 + side * parts[0], x0 + side * (parts[0] + parts[1]), x0 + side];
+  const ys = [y0, y0 + side * parts[0], y0 + side * (parts[0] + parts[1]), y0 + side];
+  return (
+    <svg
+      viewBox="0 0 400 270"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="面積が一の正方形を、よこに三つ、たてに三つ切り分けて九つの長方形にした図。上と左には、切り分けの割合を表す帯がそえてある。左上の長方形の面積だけが疑問符で、ほかの長方形の面積の値も、割合の数も書かれていない"
+    >
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        面積 1 の正方形を、たてよこに切ってみると
+      </text>
+
+      {/* よこの帯（X の割合） */}
+      <text x="200" y="50" fontSize="9.5" fill={muted} textAnchor="middle">
+        よこ ＝ X の割合
+      </text>
+      {[0, 1, 2].map((j) => (
+        <rect
+          key={`hb-${j}`}
+          x={xs[j]}
+          y={58}
+          width={xs[j + 1] - xs[j]}
+          height={12}
+          fill={band}
+          stroke={muted}
+          strokeWidth="0.8"
+        />
+      ))}
+
+      {/* たての帯（Y の割合） */}
+      <text x="96" y={y0 + side / 2} fontSize="9.5" fill={muted} textAnchor="middle" transform={`rotate(-90 96 ${y0 + side / 2})`}>
+        たて ＝ Y の割合
+      </text>
+      {[0, 1, 2].map((i) => (
+        <rect
+          key={`vb-${i}`}
+          x={102}
+          y={ys[i]}
+          width={12}
+          height={ys[i + 1] - ys[i]}
+          fill={band}
+          stroke={muted}
+          strokeWidth="0.8"
+        />
+      ))}
+
+      {/* 9 個の長方形 */}
+      {[0, 1, 2].map((i) =>
+        [0, 1, 2].map((j) => (
+          <rect
+            key={`r-${i}-${j}`}
+            x={xs[j]}
+            y={ys[i]}
+            width={xs[j + 1] - xs[j]}
+            height={ys[i + 1] - ys[i]}
+            fill={i === 0 && j === 0 ? face : "none"}
+            stroke={i === 0 && j === 0 ? accent : stroke}
+            strokeWidth={i === 0 && j === 0 ? 1.4 : 1}
+          />
+        )),
+      )}
+      <text x={(xs[0] + xs[1]) / 2} y={(ys[0] + ys[1]) / 2 + 6} fontSize="17" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="258" fontSize="11.5" fill={accent} textAnchor="middle">
+        たての割合と横の割合だけから、中の 9 マスは決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系5 step7・derivation: まわりの数が同じでも、中身は決まらない。
+ *  表は 2 枚。どちらも 3 行 2 列の 6 マス（step7 の天気 3 種類・持ち物 2 通りと一致）。
+ *  まわりの数は 2 枚とも同じ。左は一部だけ、右はすべて ? にしてある。 */
+export function StatSameMargin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const w = 40;
+  const h = 28;
+  const y0 = 78;
+  const rows = ["晴れ", "くもり", "雨"];
+  const rowTotals = ["25", "20", "15"];
+  const colTotals = ["36", "24"];
+  const leftBody = [
+    ["○", "3"],
+    ["○", "7"],
+    ["○", "?"],
+  ];
+  const table = (x0: number, name: string, body: string[][]) => (
+    <g>
+      <text x={x0 + w} y="48" fontSize="11" fill={stroke} textAnchor="middle">
+        {name}
+      </text>
+      <text x={x0 + w / 2} y={y0 - 8} fontSize="9" fill={muted} textAnchor="middle">
+        持たない
+      </text>
+      <text x={x0 + w + w / 2} y={y0 - 8} fontSize="9" fill={muted} textAnchor="middle">
+        持った
+      </text>
+      <text x={x0 + 2 * w + w / 2} y={y0 - 8} fontSize="9" fill={accent} textAnchor="middle">
+        計
+      </text>
+      {rows.map((r, i) => (
+        <g key={`${name}-${r}`}>
+          <text x={x0 - 6} y={y0 + i * h + h / 2 + 4} fontSize="9.5" fill={muted} textAnchor="end">
+            {r}
+          </text>
+          {[0, 1].map((j) => (
+            <g key={`${name}-${i}-${j}`}>
+              <rect x={x0 + j * w} y={y0 + i * h} width={w} height={h} fill="none" stroke={stroke} strokeWidth="1.1" />
+              <text
+                x={x0 + j * w + w / 2}
+                y={y0 + i * h + h / 2 + 4}
+                fontSize={body[i][j] === "?" ? "13" : "11"}
+                fill={body[i][j] === "?" ? accent : muted}
+                textAnchor="middle"
+              >
+                {body[i][j]}
+              </text>
+            </g>
+          ))}
+          <rect
+            x={x0 + 2 * w}
+            y={y0 + i * h}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + 2 * w + w / 2} y={y0 + i * h + h / 2 + 4} fontSize="11" fill={accent} textAnchor="middle">
+            {rowTotals[i]}
+          </text>
+        </g>
+      ))}
+      <text x={x0 - 6} y={y0 + 3 * h + h / 2 + 4} fontSize="9.5" fill={accent} textAnchor="end">
+        計
+      </text>
+      {[0, 1].map((j) => (
+        <g key={`${name}-bot-${j}`}>
+          <rect
+            x={x0 + j * w}
+            y={y0 + 3 * h}
+            width={w}
+            height={h}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + j * w + w / 2} y={y0 + 3 * h + h / 2 + 4} fontSize="11" fill={accent} textAnchor="middle">
+            {colTotals[j]}
+          </text>
+        </g>
+      ))}
+      <rect
+        x={x0 + 2 * w}
+        y={y0 + 3 * h}
+        width={w}
+        height={h}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1"
+        strokeDasharray="4 3"
+      />
+      <text x={x0 + 2 * w + w / 2} y={y0 + 3 * h + h / 2 + 4} fontSize="11" fill={accent} textAnchor="middle">
+        60
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 420 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="同じ形の表を二枚ならべた図。どちらもたて三つよこ二つの六マスで、右端の列と下端の行に書かれた「まわり」の数は二枚ともまったく同じ。左の表は中身がひとマスだけ疑問符で、右の表は中身がすべて疑問符になっている"
+    >
+      <text x="210" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        まわりの数がそろった表を、2 枚ならべると
+      </text>
+      {table(52, "P さん", leftBody)}
+      {table(252, "Q さん", [
+        ["?", "?"],
+        ["?", "?"],
+        ["?", "?"],
+      ])}
+      <text x="210" y="216" fontSize="10" fill={muted} textAnchor="middle">
+        まわりの数は、2 枚ともまったく同じ
+      </text>
+      <text x="210" y="248" fontSize="11.5" fill={accent} textAnchor="middle">
+        まわりの数がひとつも違わない 2 枚の表は、中身も同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系6 step1・derivation: 中身をたどる道と、縁だけを通る道。
+ *  中身のマスは 3 行 2 列の 6 マス（step1 の X が 3 種類・Y が 2 種類と一致）。
+ *  2 本の道の行き着く箱は 1 つで、中身は ? のままにする。 */
+export function StatSumSplit() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cw = 44;
+  const ch = 30;
+  const x0 = 134;
+  const y0 = 56;
+  return (
+    <svg
+      viewBox="0 0 400 292"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="たて三行よこ二列の六つのマスでできた表。表の右と下に合計のらんがついている。表の中身を一つずつたどる道と、合計のらんだけを通る道の二本が、それぞれ疑問符の箱に向かって伸びている。二つの道が同じ数に着くかどうかをたずねている"
+    >
+      <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        同じ表から、道が 2 本のびている
+      </text>
+      <text x="200" y="42" fontSize="9.5" fill={muted} textAnchor="middle">
+        よこ ＝ Y
+      </text>
+      <text x="112" y="42" fontSize="9.5" fill={muted} textAnchor="middle">
+        たて ＝ X
+      </text>
+
+      {[0, 1, 2].map((i) => (
+        <g key={`sr-${i}`}>
+          {[0, 1].map((j) => (
+            <g key={`sc-${i}-${j}`}>
+              <rect
+                x={x0 + j * cw}
+                y={y0 + i * ch}
+                width={cw}
+                height={ch}
+                fill="none"
+                stroke={stroke}
+                strokeWidth="1.1"
+              />
+              <text x={x0 + j * cw + cw / 2} y={y0 + i * ch + ch / 2 + 4} fontSize="11.5" fill={muted} textAnchor="middle">
+                ○
+              </text>
+            </g>
+          ))}
+          <rect
+            x={x0 + 2 * cw}
+            y={y0 + i * ch}
+            width={cw}
+            height={ch}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + 2 * cw + cw / 2} y={y0 + i * ch + ch / 2 + 4} fontSize="11.5" fill={accent} textAnchor="middle">
+            ○
+          </text>
+        </g>
+      ))}
+      {[0, 1].map((j) => (
+        <g key={`sb-${j}`}>
+          <rect
+            x={x0 + j * cw}
+            y={y0 + 3 * ch}
+            width={cw}
+            height={ch}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+            strokeDasharray="4 3"
+          />
+          <text x={x0 + j * cw + cw / 2} y={y0 + 3 * ch + ch / 2 + 4} fontSize="11.5" fill={accent} textAnchor="middle">
+            ○
+          </text>
+        </g>
+      ))}
+      <text x={x0 - 8} y={y0 + 3 * ch + ch / 2 + 4} fontSize="9.5" fill={accent} textAnchor="end">
+        計
+      </text>
+
+      {/* 2 本の道 */}
+      <text x="62" y="198" fontSize="10" fill={stroke} textAnchor="middle">
+        中身を 1 マスずつ
+      </text>
+      <path d="M 62 206 Q 62 230 164 234" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 168 234 l -8 -3 l 0 7 z" fill={accent} />
+      <text x="330" y="198" fontSize="10" fill={stroke} textAnchor="middle">
+        縁だけ
+      </text>
+      <path d="M 330 206 Q 330 230 256 234" stroke={accent} strokeWidth="1.2" fill="none" />
+      <path d="M 252 234 l 8 -3 l 0 7 z" fill={accent} />
+
+      <rect x="170" y="218" width="80" height="32" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="210" y="240" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="282" fontSize="11" fill={accent} textAnchor="middle">
+        中身を全部たどる道と、縁だけを通る道——同じところに着く？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系6 step5・derivation: 担当が 1 人ずつ決まった見張り。
+ *  見張りは 3 人（step5・step6 の A・B・C の 3 人と一致）。
+ *  となりの担当者へは矢印を引かない。旗の本数の合計は ? のまま。 */
+export function StatFlags() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 55%, transparent)";
+  const xs = [96, 176, 256];
+  const names = ["A", "B", "C"];
+  return (
+    <svg
+      viewBox="0 0 400 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="三人の見張りが横に並び、それぞれが自分の担当する一人だけを見ている図。見張りはとなりの担当者のほうを見ていない。旗が上がっているか下がっているかは一人ぶんだけ伏せてあり、右端の合計の箱は疑問符のまま。旗の本数の合計が何を表すかをたずねている"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        1 人に 1 人ずつ、見張りをつけると
+      </text>
+      <text x="14" y="112" fontSize="9.5" fill={muted}>
+        見張り
+      </text>
+      <text x="14" y="184" fontSize="9.5" fill={muted}>
+        担当
+      </text>
+
+      {xs.map((x, i) => (
+        <g key={`w-${x}`}>
+          {/* 旗ざお */}
+          <path d={`M ${x} 100 L ${x} 46`} stroke={stroke} strokeWidth="1.2" />
+          {i === 0 && <path d={`M ${x} 46 L ${x + 24} 53 L ${x} 60 z`} fill={face} stroke={accent} strokeWidth="1" />}
+          {i === 1 && <path d={`M ${x} 86 L ${x + 24} 93 L ${x} 100 z`} fill="none" stroke={muted} strokeWidth="1" />}
+          {i === 2 && (
+            <text x={x + 13} y="56" fontSize="14" fill={accent} textAnchor="middle">
+              ?
+            </text>
+          )}
+          <rect x={x - 10} y="100" width="20" height="12" fill="none" stroke={stroke} strokeWidth="1" />
+          {/* 自分の担当だけを見る矢印 */}
+          <path d={`M ${x} 118 L ${x} 152`} stroke={accent} strokeWidth="1.2" strokeDasharray="3 3" />
+          <path d={`M ${x} 158 l -4 -7 l 8 0 z`} fill={accent} />
+          {/* 担当 */}
+          <circle cx={x} cy="176" r="12" fill="none" stroke={stroke} strokeWidth="1.2" />
+          <text x={x} y="180" fontSize="11" fill={stroke} textAnchor="middle">
+            {names[i]}
+          </text>
+        </g>
+      ))}
+
+      <rect x="310" y="160" width="64" height="32" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="342" y="182" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="342" y="208" fontSize="9.5" fill={muted} textAnchor="middle">
+        旗の合計
+      </text>
+
+      <text x="200" y="230" fontSize="11" fill={accent} textAnchor="middle">
+        見張りは自分の担当しか見ていない——それでも全体の人数が言える？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系7 step1・derivation・辞書『確率密度関数』: 高さが一定の帯と、その一部の面積。
+ *  横軸の目盛りは 0 分から 12 分まで 1 分ごとに 13 本（step1 の与件と一致）。
+ *  色をつけた 3 分から 7 分までの面積は ? のままにする。 */
+export function StatDensityArea() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const x0 = 60;
+  const unit = 24;
+  const baseY = 170;
+  const topY = 90;
+  const at = (t: number) => x0 + t * unit;
+  return (
+    <svg
+      viewBox="0 0 400 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="横軸に待ち時間をとり、高さが一定の細長い帯をえがいた図。横軸には〇分から十二分まで一分ごとに十三本の目盛りがある。三分から七分までのところだけ色がついていて、その面積は疑問符のままになっている"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        どの時刻も同じくらい起こりやすいとき
+      </text>
+
+      {/* たての軸と、高さのラベル（与件なので書いてよい） */}
+      <path d={`M 52 ${topY - 8} L 52 ${baseY}`} stroke={stroke} strokeWidth="1" />
+      <text x="46" y={topY + 4} fontSize="10" fill={muted} textAnchor="end">
+        1/12
+      </text>
+
+      {/* 帯ぜんたい */}
+      <rect x={at(0)} y={topY} width={12 * unit} height={baseY - topY} fill="none" stroke={stroke} strokeWidth="1.2" />
+      {/* 色をつけたところ */}
+      <rect x={at(3)} y={topY} width={4 * unit} height={baseY - topY} fill={face} stroke={accent} strokeWidth="1.2" />
+      <text x={at(5)} y={topY + 48} fontSize="17" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 横軸と 13 本の目盛り */}
+      <path d={`M 50 ${baseY} L 372 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 372 ${baseY} l -8 -4 l 0 8 z`} fill={stroke} />
+      {Array.from({ length: 13 }, (_, t) => (
+        <path key={t} d={`M ${at(t)} ${baseY} L ${at(t)} ${baseY + 5}`} stroke={stroke} strokeWidth="1" />
+      ))}
+      {[0, 3, 7, 12].map((t) => (
+        <text key={`lb-${t}`} x={at(t)} y={baseY + 18} fontSize="10" fill={muted} textAnchor="middle">
+          {t}
+        </text>
+      ))}
+      <text x="366" y={baseY + 18} fontSize="10" fill={muted} textAnchor="middle">
+        分
+      </text>
+
+      <text x="200" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        色をつけたところの面積は、何を表している？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系7 step3・derivation: 帯の上に立てた、たった 1 本の線分。
+ *  立てる線分は 1 本だけ。横軸の目盛りは前の図と同じ 13 本。
+ *  線分の幅も、線分が持つ面積も ? のままにする（0 という数字は書かない）。 */
+export function StatContPointZero() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 60;
+  const unit = 24;
+  const baseY = 158;
+  const topY = 86;
+  const at = (t: number) => x0 + t * unit;
+  const px = at(4);
+  return (
+    <svg
+      viewBox="0 0 400 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="高さが一定の帯の上に、たての線を一本だけ立てた図。横軸には〇分から十二分まで一分ごとに十三本の目盛りがある。線の下の幅と、線が持つ面積が、どちらも疑問符のままになっている"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        帯の上に、たった 1 本の線を立ててみると
+      </text>
+
+      <rect x={at(0)} y={topY} width={12 * unit} height={baseY - topY} fill="none" stroke={stroke} strokeWidth="1.2" />
+
+      {/* 立てる線分は 1 本だけ。上端は帯の上のふちに触れている */}
+      <path d={`M ${px} ${baseY} L ${px} ${topY}`} stroke={accent} strokeWidth="2.2" />
+      <circle cx={px} cy={topY} r="2.6" fill={accent} />
+      <text x={px} y={topY - 8} fontSize="9.5" fill={muted} textAnchor="middle">
+        この 1 本
+      </text>
+      <text x={px + 16} y={topY + 44} fontSize="15" fill={accent} textAnchor="start">
+        ?
+      </text>
+
+      <path d={`M 50 ${baseY} L 372 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 372 ${baseY} l -8 -4 l 0 8 z`} fill={stroke} />
+      {Array.from({ length: 13 }, (_, t) => (
+        <path key={t} d={`M ${at(t)} ${baseY} L ${at(t)} ${baseY + 5}`} stroke={stroke} strokeWidth="1" />
+      ))}
+      {[0, 4, 12].map((t) => (
+        <text key={`lb-${t}`} x={at(t)} y={baseY + 18} fontSize="10" fill={muted} textAnchor="middle">
+          {t}
+        </text>
+      ))}
+
+      {/* 幅を測る両向き矢印。長さのラベルも ? */}
+      <path d={`M ${px - 7} ${baseY} L ${px - 7} 192`} stroke={muted} strokeWidth="0.8" strokeDasharray="3 3" />
+      <path d={`M ${px + 7} ${baseY} L ${px + 7} 192`} stroke={muted} strokeWidth="0.8" strokeDasharray="3 3" />
+      <path d={`M ${px - 7} 190 L ${px + 7} 190`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${px - 7} 190 l 6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${px + 7} 190 l -6 -3 l 0 6 z`} fill={accent} />
+      <text x={px - 14} y="210" fontSize="10" fill={muted} textAnchor="end">
+        幅は
+      </text>
+      <text x={px} y="210" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="230" fontSize="11.5" fill={accent} textAnchor="middle">
+        この 1 本の線が持っている面積は、どれだけ？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系7 step4・derivation: 上のふちが傾いた分布曲線。
+ *  横軸の目盛りは 0・2・4・6・8 の 5 本（step4 の与件と一致）。
+ *  左端から u までの面積は ? のままにし、左端の高さの値も書かない。 */
+export function StatDensityTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const x0 = 70;
+  const unit = 32.5;
+  const baseY = 170;
+  const topY = 82;
+  const at = (t: number) => x0 + t * unit;
+  const ux = at(4);
+  const uy = topY + ((baseY - topY) * 4) / 8;
+  return (
+    <svg
+      viewBox="0 0 400 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="横軸に降水量をとり、左のはしがいちばん高く、右のはしで横軸に着くまでまっすぐ下がるグラフ。横軸には〇から八まで二おきに五本の目盛りがある。左のはしから途中までの部分に色がついていて、その面積は疑問符のままになっている"
+    >
+      <text x="200" y="26" fontSize="11" fill={muted} textAnchor="middle">
+        上のふちが、まっすぐ傾いているとき
+      </text>
+
+      {/* 色をつけた 0 から u まで */}
+      <path d={`M ${at(0)} ${baseY} L ${at(0)} ${topY} L ${ux} ${uy} L ${ux} ${baseY} z`} fill={face} stroke="none" />
+      {/* 分布曲線（右下がりの直線） */}
+      <path d={`M ${at(0)} ${topY} L ${at(8)} ${baseY}`} stroke={stroke} strokeWidth="1.6" fill="none" />
+      <path d={`M ${at(0)} ${baseY} L ${at(0)} ${topY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M ${ux} ${baseY} L ${ux} ${uy}`} stroke={accent} strokeWidth="1.2" strokeDasharray="3 3" />
+
+      <text x={at(1.4)} y={baseY - 42} fontSize="10.5" fill={accent} textAnchor="middle">
+        p(u)
+      </text>
+      <text x={at(1.4)} y={baseY - 20} fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <path d={`M ${at(0) - 20} ${baseY} L 372 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 372 ${baseY} l -8 -4 l 0 8 z`} fill={stroke} />
+      {[0, 2, 4, 6, 8].map((t) => (
+        <g key={t}>
+          <path d={`M ${at(t)} ${baseY} L ${at(t)} ${baseY + 5}`} stroke={stroke} strokeWidth="1" />
+          <text x={at(t)} y={baseY + 18} fontSize="10" fill={muted} textAnchor="middle">
+            {t}
+          </text>
+        </g>
+      ))}
+      <text x={ux} y={baseY + 34} fontSize="11" fill={accent} textAnchor="middle">
+        u
+      </text>
+
+      <text x="200" y="220" fontSize="11.5" fill={accent} textAnchor="middle">
+        上のふちが傾いたとき、切り取られる形は何になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系8 step1・derivation・辞書『正規分布』: 位置 m と形 σ。
+ *  曲線は 3 本（基準・位置だけちがう・形だけちがう）。数値はいっさい書かず、
+ *  広がりを示す幅のラベルは ? のままにする。 */
+export function StatNormalMSigma() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const base = "color-mix(in oklch, var(--foreground) 55%, transparent)";
+  const yBase = 150;
+  const bell = (cx: number, s: number, h: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 60; i++) {
+      const x = cx + ((i - 30) / 30) * 3.2 * s;
+      const t = (x - cx) / s;
+      const y = yBase - h * Math.exp(-(t * t) / 2);
+      pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+    }
+    return "M " + pts.join(" L ");
+  };
+  return (
+    <svg
+      viewBox="0 0 400 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="山の形をした曲線を三本ならべた図。一本目が基準の曲線、二本目は一本目と同じ形のまま右へずれた曲線、三本目は一本目と同じ位置のまま細くとがった曲線。それぞれの対称軸には位置を表す文字だけが書かれ、山の広がりを表す幅のラベルは疑問符のままになっている。数値はどこにも書かれていない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        山の形をした分布を、いくつかならべてみると
+      </text>
+      <path d={`M 20 ${yBase} L 384 ${yBase}`} stroke={stroke} strokeWidth="1" />
+
+      {/* 曲線 A（基準） */}
+      <path d={bell(112, 26, 64)} fill="none" stroke={base} strokeWidth="1.6" />
+      <path d={`M 112 ${yBase} L 112 ${yBase - 64}`} stroke={base} strokeWidth="0.8" strokeDasharray="3 3" />
+      <text x="112" y={yBase + 16} fontSize="11" fill={base} textAnchor="middle" fontStyle="italic">
+        m
+      </text>
+      <text x="52" y="116" fontSize="10" fill={base} textAnchor="middle">
+        基準
+      </text>
+      <path d="M 52 120 L 66 137" stroke={base} strokeWidth="0.8" />
+
+      {/* 曲線 B（同じ形のまま右へ） */}
+      <path d={bell(292, 26, 64)} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={`M 292 ${yBase} L 292 ${yBase - 64}`} stroke={stroke} strokeWidth="0.8" strokeDasharray="3 3" />
+      <text x="292" y={yBase + 16} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">
+        m&apos;
+      </text>
+      <text x="292" y="74" fontSize="10" fill={stroke} textAnchor="middle">
+        形はそのまま、右へ
+      </text>
+      <path d="M 124 182 L 276 182" stroke={stroke} strokeWidth="0.9" />
+      <path d="M 282 182 l -8 -3.5 l 0 7 z" fill={stroke} />
+
+      {/* 曲線 C（同じ位置のまま尖る） */}
+      <path d={bell(112, 11, 110)} fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="112" y="32" fontSize="10" fill={accent} textAnchor="middle">
+        位置はそのまま、細く
+      </text>
+
+      {/* 広がりの幅（値は ?） */}
+      <path d="M 92 128 L 132 128" stroke={accent} strokeWidth="0.9" strokeDasharray="3 2" />
+      <path d="M 92 128 l 6 -3 l 0 6 z" fill={accent} />
+      <path d="M 132 128 l -6 -3 l 0 6 z" fill={accent} />
+      <text x="112" y="120" fontSize="12" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="200" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        山の位置を決めているのはどちらの数？ 山の幅を決めているのは？
+      </text>
+      <text x="200" y="218" fontSize="10" fill={muted} textAnchor="middle">
+        動かせる数は、2 つしかない
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系8 step3・derivation・辞書『標準正規分布表』: 表の行と列の交点。
+ *  行 4・列 10 は、辞書 §1 の表の部分長方形になっている。
+ *  マスの中身はすべて伏せ、交わるマスだけを ? にする。 */
+export function StatTableLookup() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const headerFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const cols = [".00", ".01", ".02", ".03", ".04", ".05", ".06", ".07", ".08", ".09"];
+  const rows = ["1.5", "1.6", "1.7", "1.8"];
+  const x0 = 62;
+  const y0 = 52;
+  const cw = 31;
+  const ch = 26;
+  const hitCol = 2;
+  const hitRow = 2;
+  return (
+    <svg
+      viewBox="0 0 400 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="表の一部を抜き出した模式図。左端の列に四つの見出し、上端の行に十この見出しがならんでいる。左の見出しから右へ、上の見出しから下へ矢印がのび、二つが交わるマスだけが疑問符になっている。ほかのマスの中身はすべて伏せてある"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        辞書の表の、左上のあたりだけを切り出すと
+      </text>
+      {cols.map((c, j) => (
+        <g key={`h-${c}`}>
+          <rect
+            x={x0 + j * cw}
+            y={y0 - ch}
+            width={cw}
+            height={ch}
+            fill={j === hitCol ? headerFill : "none"}
+            stroke={muted}
+            strokeWidth="0.7"
+          />
+          <text
+            x={x0 + j * cw + cw / 2}
+            y={y0 - ch / 2 + 4}
+            fontSize="9.5"
+            fill={j === hitCol ? accent : muted}
+            textAnchor="middle"
+            fontWeight={j === hitCol ? 700 : 400}
+          >
+            {c}
+          </text>
+        </g>
+      ))}
+      {rows.map((r, i) => (
+        <g key={`r-${r}`}>
+          <rect
+            x={x0 - cw - 8}
+            y={y0 + i * ch}
+            width={cw + 8}
+            height={ch}
+            fill={i === hitRow ? headerFill : "none"}
+            stroke={muted}
+            strokeWidth="0.7"
+          />
+          <text
+            x={x0 - cw / 2 - 4}
+            y={y0 + i * ch + ch / 2 + 4}
+            fontSize="10"
+            fill={i === hitRow ? accent : muted}
+            textAnchor="middle"
+            fontWeight={i === hitRow ? 700 : 400}
+          >
+            {r}
+          </text>
+          {cols.map((c, j) => (
+            <g key={`c-${r}-${c}`}>
+              <rect x={x0 + j * cw} y={y0 + i * ch} width={cw} height={ch} fill="none" stroke={muted} strokeWidth="0.7" />
+              <text
+                x={x0 + j * cw + cw / 2}
+                y={y0 + i * ch + ch / 2 + 4}
+                fontSize={i === hitRow && j === hitCol ? "13" : "10"}
+                fill={i === hitRow && j === hitCol ? accent : muted}
+                textAnchor="middle"
+                fontWeight={i === hitRow && j === hitCol ? 700 : 400}
+              >
+                {i === hitRow && j === hitCol ? "?" : "・"}
+              </text>
+            </g>
+          ))}
+        </g>
+      ))}
+      <path
+        d={`M ${x0 - 4} ${y0 + hitRow * ch + ch / 2} L ${x0 + hitCol * cw - 9} ${y0 + hitRow * ch + ch / 2}`}
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <path d={`M ${x0 + hitCol * cw - 3} ${y0 + hitRow * ch + ch / 2} l -7 -3.5 l 0 7 z`} fill={accent} />
+      <path
+        d={`M ${x0 + hitCol * cw + cw / 2} ${y0 - 4} L ${x0 + hitCol * cw + cw / 2} ${y0 + hitRow * ch - 9}`}
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <path d={`M ${x0 + hitCol * cw + cw / 2} ${y0 + hitRow * ch - 3} l -3.5 -7 l 7 0 z`} fill={accent} />
+      <text x="200" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        小数第 1 位は左の列、小数第 2 位は上の行——
+      </text>
+      <text x="200" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        2 つが交わるマスには何が書いてある？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系8 step5・derivation・辞書『標準正規分布』: 左半分を折り返して右に重ねる。
+ *  曲線 1 本・折り返しの矢印 1 本。ぬった部分の面積は ? のまま。
+ *  軸に書く 2 つの数は問題文の与件なので書いてよい。 */
+export function StatSymmetryFold() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 18%, transparent)";
+  const yBase = 150;
+  const cx = 200;
+  const s = 42;
+  const h = 92;
+  const yOf = (x: number) => yBase - h * Math.exp(-(((x - cx) / s) * ((x - cx) / s)) / 2);
+  const curve = (from: number, to: number) => {
+    const pts: string[] = [];
+    const n = 80;
+    for (let i = 0; i <= n; i++) {
+      const x = from + ((to - from) * i) / n;
+      pts.push(`${x.toFixed(1)},${yOf(x).toFixed(1)}`);
+    }
+    return pts.join(" L ");
+  };
+  const xL = cx - 1.85 * s;
+  const xR = cx + 2.35 * s;
+  const xM = cx + (cx - xL);
+  return (
+    <svg
+      viewBox="0 0 400 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="山の形をした曲線の下に、原点をまたぐ帯がぬられている図。原点より左の部分には、右へぱたんと折り返す矢印がついていて、折り返した先が原点より右のどこに重なるかを点線で示している。ぬられた部分の面積は疑問符のままになっている"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        表がもっているのは、原点より右のぶんだけ
+      </text>
+      <path d={`M ${xL} ${yBase} L ${curve(xL, xR)} L ${xR} ${yBase} Z`} fill={fill} stroke="none" />
+      <path d={`M 26 ${yBase} L ${curve(26, 374)}`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={`M 20 ${yBase} L 384 ${yBase}`} stroke={stroke} strokeWidth="1" />
+      <path d={`M ${cx} ${yBase} L ${cx} ${yBase - h - 8}`} stroke={stroke} strokeWidth="0.9" strokeDasharray="3 3" />
+      <text x={cx} y={yBase + 16} fontSize="10" fill={stroke} textAnchor="middle">
+        0
+      </text>
+      <path d={`M ${xL} ${yBase} L ${xL} ${yOf(xL)}`} stroke={accent} strokeWidth="1" />
+      <text x={xL} y={yBase + 16} fontSize="10" fill={accent} textAnchor="middle">
+        −1.85
+      </text>
+      <path d={`M ${xR} ${yBase} L ${xR} ${yOf(xR)}`} stroke={accent} strokeWidth="1" />
+      <text x={xR} y={yBase + 16} fontSize="10" fill={accent} textAnchor="middle">
+        2.35
+      </text>
+
+      {/* 折り返し（矢印は 1 本） */}
+      <path
+        d={`M ${xL} 180 Q ${cx} 204 ${xM - 6} 180`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <path d={`M ${xM} 178 l -7 -1 l 2 -7 z`} fill={accent} />
+      <path d={`M ${xM} ${yBase} L ${xM} ${yOf(xM)}`} stroke={accent} strokeWidth="0.9" strokeDasharray="2 2" />
+      <text x={cx} y="220" fontSize="10" fill={accent} textAnchor="middle">
+        ぱたんと折り返すと
+      </text>
+
+      <text x={cx + 16} y="98" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="200" y="240" fontSize="11.5" fill={accent} textAnchor="middle">
+        左半分を折り返すと、右のどこに重なる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系8 step8・derivation・辞書『標準正規分布表』: 表の逆引き。
+ *  行 4・列 10 は StatTableLookup と同じ窓（同じ 1 枚の表だと分かるように）。
+ *  縁のラベルは上も左も ?（答えの行・列が割れないようにするため）。 */
+export function StatTableReverse() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const headerFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
+  const x0 = 62;
+  const y0 = 52;
+  const cw = 31;
+  const ch = 26;
+  const nCol = 10;
+  const nRow = 4;
+  const hitCol = 6;
+  const hitRow = 2;
+  return (
+    <svg
+      viewBox="0 0 400 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="表の模式図で、いつもと逆向きの読み方を示したもの。左端の列に四つ、上端の行に十この見出しのらんがある。表の中ほどのマスが一つ強調され、そのマスから左の見出しへ、また上の見出しへ矢印がのびている。見出しに書かれるはずの数は、上も左も疑問符のままになっている"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        いつもと逆に、中から縁へ
+      </text>
+      {Array.from({ length: nCol }).map((_, j) => (
+        <g key={`h-${j}`}>
+          <rect
+            x={x0 + j * cw}
+            y={y0 - ch}
+            width={cw}
+            height={ch}
+            fill={j === hitCol ? headerFill : "none"}
+            stroke={muted}
+            strokeWidth="0.7"
+          />
+          <text
+            x={x0 + j * cw + cw / 2}
+            y={y0 - ch / 2 + 4}
+            fontSize={j === hitCol ? "13" : "10"}
+            fill={j === hitCol ? accent : muted}
+            textAnchor="middle"
+            fontWeight={j === hitCol ? 700 : 400}
+          >
+            ?
+          </text>
+        </g>
+      ))}
+      {Array.from({ length: nRow }).map((_, i) => (
+        <g key={`r-${i}`}>
+          <rect
+            x={x0 - cw - 8}
+            y={y0 + i * ch}
+            width={cw + 8}
+            height={ch}
+            fill={i === hitRow ? headerFill : "none"}
+            stroke={muted}
+            strokeWidth="0.7"
+          />
+          <text
+            x={x0 - cw / 2 - 4}
+            y={y0 + i * ch + ch / 2 + 4}
+            fontSize={i === hitRow ? "13" : "10"}
+            fill={i === hitRow ? accent : muted}
+            textAnchor="middle"
+            fontWeight={i === hitRow ? 700 : 400}
+          >
+            ?
+          </text>
+          {Array.from({ length: nCol }).map((__, j) => (
+            <g key={`c-${i}-${j}`}>
+              <rect
+                x={x0 + j * cw}
+                y={y0 + i * ch}
+                width={cw}
+                height={ch}
+                fill={i === hitRow && j === hitCol ? headerFill : "none"}
+                stroke={muted}
+                strokeWidth="0.7"
+              />
+              <text
+                x={x0 + j * cw + cw / 2}
+                y={y0 + i * ch + ch / 2 + 4}
+                fontSize={i === hitRow && j === hitCol ? "9" : "10"}
+                fill={i === hitRow && j === hitCol ? accent : muted}
+                textAnchor="middle"
+                fontWeight={i === hitRow && j === hitCol ? 700 : 400}
+              >
+                {i === hitRow && j === hitCol ? "この値" : "・"}
+              </text>
+            </g>
+          ))}
+        </g>
+      ))}
+      <path
+        d={`M ${x0 + hitCol * cw - 3} ${y0 + hitRow * ch + ch / 2} L ${x0 + 2} ${y0 + hitRow * ch + ch / 2}`}
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <path d={`M ${x0 - 4} ${y0 + hitRow * ch + ch / 2} l 7 -3.5 l 0 7 z`} fill={accent} />
+      <path
+        d={`M ${x0 + hitCol * cw + cw / 2} ${y0 + hitRow * ch - 3} L ${x0 + hitCol * cw + cw / 2} ${y0 + 2}`}
+        stroke={accent}
+        strokeWidth="1"
+      />
+      <path d={`M ${x0 + hitCol * cw + cw / 2} ${y0 - 4} l -3.5 7 l 7 0 z`} fill={accent} />
+      <text x="200" y="188" fontSize="11" fill={accent} textAnchor="middle">
+        いつもは縁の数から中のマスへ。今度は中のマスから縁へ——u はどこ？
+      </text>
+      <text x="200" y="204" fontSize="10" fill={muted} textAnchor="middle">
+        同じ 1 枚の表を、逆向きに読む
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系9 step1・derivation・辞書『標準化』: 原点とものさしを取り替える。
+ *  目盛りは上下とも 7 本（step1 の与件から作った目盛り）。
+ *  上の 38 分の点から落とした先は ? のままにする。 */
+export function StatStandardizeRuler() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  const x0 = 46;
+  const gap = 50;
+  const upperY = 76;
+  const lowerY = 182;
+  const upper = ["8", "20", "32", "44", "56", "68", "80"];
+  const lower = ["−2", "−1", "0", "1", "2", "3", "4"];
+  const tickX = upper.map((_, i) => x0 + i * gap);
+  /* 38 分は 32（3 本目）と 44（4 本目）のちょうどまん中 */
+  const px = (tickX[2] + tickX[3]) / 2;
+  return (
+    <svg
+      viewBox="0 0 400 280"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="上下に二本の数直線が並んだ図。上は通学時間の分の目盛りで、七本の目盛りに八分から八十分までの数が書かれている。下は標準化した値の目盛りで、同じ七本の位置にマイナス二から四までの数が書かれている。上の三十八分の点から下の軸へ点線が落ち、その先は疑問符になっている。下の軸の原点は平均にあたり、一目盛りの幅が標準偏差にあたることが両向きの矢印で示されている"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ 1 つの点を、2 つのものさしで読むと
+      </text>
+
+      <text x="16" y="44" fontSize="10" fill={muted}>
+        通学時間（分）
+      </text>
+      <path d={`M 26 ${upperY} L 380 ${upperY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 380 ${upperY} l -8 -4 l 0 8 z`} fill={stroke} />
+      {tickX.map((x, i) => (
+        <g key={`ut-${i}`}>
+          <path d={`M ${x} ${upperY - 5} L ${x} ${upperY + 5}`} stroke={stroke} strokeWidth="1" />
+          <text x={x} y={upperY + 20} fontSize="10" fill={muted} textAnchor="middle">
+            {upper[i]}
+          </text>
+        </g>
+      ))}
+      <circle cx={px} cy={upperY} r="5" fill={dot} stroke={accent} strokeWidth="1.2" />
+      <text x={px} y={upperY - 14} fontSize="10" fill={accent} textAnchor="middle">
+        ゆうかさん 38 分
+      </text>
+
+      <path d={`M ${px} ${upperY + 8} L ${px} ${lowerY - 14}`} stroke={accent} strokeWidth="0.9" strokeDasharray="3 3" />
+
+      <text x="16" y="150" fontSize="10" fill={muted}>
+        標準化した値
+      </text>
+      <path d={`M 26 ${lowerY} L 380 ${lowerY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 380 ${lowerY} l -8 -4 l 0 8 z`} fill={stroke} />
+      {tickX.map((x, i) => (
+        <g key={`lt-${i}`}>
+          <path d={`M ${x} ${lowerY - 5} L ${x} ${lowerY + 5}`} stroke={stroke} strokeWidth="1" />
+          <text x={x} y={lowerY + 20} fontSize="10" fill={muted} textAnchor="middle">
+            {lower[i]}
+          </text>
+        </g>
+      ))}
+      <circle cx={px} cy={lowerY} r="4" fill={accent} />
+      <text x={px} y={lowerY - 14} fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x={tickX[2]} y={lowerY + 36} fontSize="10" fill={accent} textAnchor="middle">
+        平均
+      </text>
+      <path d={`M ${tickX[2]} 228 L ${tickX[3]} 228`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${tickX[2]} 228 l 6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${tickX[3]} 228 l -6 -3 l 0 6 z`} fill={accent} />
+      <text x={(tickX[2] + tickX[3]) / 2} y="244" fontSize="10" fill={accent} textAnchor="middle">
+        1 目盛り＝標準偏差
+      </text>
+
+      <text x="200" y="268" fontSize="11" fill={accent} textAnchor="middle">
+        原点を平均に、1 目盛りを標準偏差にとりかえると、この点は何と読める？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系10 step1・derivation: 飛び飛びの棒と、なめらかな曲線の重なり。
+ *  棒は本数を数えるためのものではなく、飛び飛びの分布の形を見せるための模式
+ *  （step1 の n は 400 なので実物と本数を一致させられない）。
+ *  網かけの部分の面積は ? のままにし、「二項分布」「正規分布」の語は図に書かない。 */
+export function StatBinomToNormal() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--accent) 16%, transparent)";
+  const shade = "color-mix(in oklch, var(--accent) 26%, transparent)";
+  const baseY = 150;
+  const hMax = 84;
+  const bell = (cx: number, s: number, from: number, to: number) => {
+    const pts: string[] = [];
+    const n = 80;
+    for (let i = 0; i <= n; i++) {
+      const x = from + ((to - from) * i) / n;
+      const t = (x - cx) / s;
+      pts.push(`${x.toFixed(1)},${(baseY - hMax * Math.exp(-(t * t) / 2)).toFixed(1)}`);
+    }
+    return pts.join(" L ");
+  };
+  /* 左：太い棒 7 本（模式）。右：細い棒 21 本（模式） */
+  const coarse = Array.from({ length: 7 }, (_, i) => i);
+  const fine = Array.from({ length: 21 }, (_, i) => i);
+  const cw = 20;
+  const cPitch = 23;
+  const cX0 = 32;
+  const cCenter = cX0 + 3 * cPitch + cw / 2;
+  const fw = 6.5;
+  const fPitch = 7.5;
+  const fX0 = 228;
+  const fCenter = fX0 + 10 * fPitch + fw / 2;
+  const fSigma = 4.8 * fPitch;
+  return (
+    <svg
+      viewBox="0 0 420 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="飛び飛びの棒グラフに、なめらかな曲線を重ねた図を左右にならべたもの。左は棒が太いとき、右は棒が細かいときで、右へ行くほど棒の輪郭が曲線に近づいていく。棒は本数を数えるためのものではなく、飛び飛びの分布の形を見せるための模式である。曲線の下の網かけの面積は疑問符のままになっている"
+    >
+      <text x="210" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        棒の細かさを変えて、同じ分布を見ると
+      </text>
+
+      <text x={cCenter} y="48" fontSize="10" fill={stroke} textAnchor="middle">
+        棒が太いとき
+      </text>
+      <text x={fCenter} y="48" fontSize="10" fill={stroke} textAnchor="middle">
+        棒が細かいとき
+      </text>
+
+      {/* 左：太い棒 */}
+      {coarse.map((i) => {
+        const t = (i - 3) / 1.6;
+        const h = hMax * Math.exp(-(t * t) / 2);
+        return (
+          <rect
+            key={`c-${i}`}
+            x={cX0 + i * cPitch}
+            y={baseY - h}
+            width={cw}
+            height={h}
+            fill={face}
+            stroke={stroke}
+            strokeWidth="0.9"
+          />
+        );
+      })}
+      <path d={`M ${bell(cCenter, 1.6 * cPitch, 26, 196)}`} fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d={`M 26 ${baseY} L 196 ${baseY}`} stroke={stroke} strokeWidth="1.1" />
+
+      {/* 右：細い棒 */}
+      {fine.map((i) => {
+        const t = (i - 10) / 4.8;
+        const h = hMax * Math.exp(-(t * t) / 2);
+        return (
+          <rect
+            key={`f-${i}`}
+            x={fX0 + i * fPitch}
+            y={baseY - h}
+            width={fw}
+            height={h}
+            fill={face}
+            stroke={stroke}
+            strokeWidth="0.6"
+          />
+        );
+      })}
+      <path
+        d={`M ${fCenter} ${baseY} L ${bell(fCenter, fSigma, fCenter, fCenter + fSigma)} L ${fCenter + fSigma} ${baseY} z`}
+        fill={shade}
+        stroke="none"
+      />
+      <path d={`M ${bell(fCenter, fSigma, 222, 392)}`} fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d={`M 222 ${baseY} L 392 ${baseY}`} stroke={stroke} strokeWidth="1.1" />
+      <text x={fCenter + 16} y={baseY - 24} fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {/* 凡例（結論の語は書かない） */}
+      <rect x="120" y="172" width="14" height="10" fill={face} stroke={stroke} strokeWidth="0.9" />
+      <text x="140" y="181" fontSize="9.5" fill={muted} textAnchor="start">
+        飛び飛びの棒
+      </text>
+      <path d="M 216 177 L 232 177" stroke={accent} strokeWidth="1.5" />
+      <text x="238" y="181" fontSize="9.5" fill={muted} textAnchor="start">
+        なめらかな曲線
+      </text>
+
+      <text x="210" y="202" fontSize="9" fill={muted} textAnchor="middle">
+        ※ 棒は模式（本数は問題の世帯数とは別）
+      </text>
+
+      <text x="210" y="228" fontSize="11.5" fill={accent} textAnchor="middle">
+        棒をどこまでも細かくしていくと、この輪郭は何に近づく？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系11 step1・derivation・辞書『母集団』『標本』: 池と、すくった標本。
+ *  標本の粒はちょうど 25 個（step1 の「25 匹をすくって」と一致）。
+ *  池の中の魚は模式で、数を数えるためのものではない。標本の平均は ? のまま。 */
+export function StatPopulationSample() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const face = "color-mix(in oklch, var(--foreground) 6%, transparent)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  /* 池の中の魚は模式（数を問わない） */
+  const pond = [
+    [-50, -24],
+    [-18, -38],
+    [20, -30],
+    [52, -14],
+    [-58, 6],
+    [-24, -4],
+    [10, -10],
+    [44, 10],
+    [-44, 32],
+    [-8, 26],
+    [26, 34],
+    [56, 26],
+    [-32, -30],
+  ];
+  /* 標本は 5 行 5 列の 25 個ちょうど */
+  const sample = Array.from({ length: 25 }, (_, i) => [(i % 5) * 18 - 36, Math.floor(i / 5) * 18 - 36]);
+  return (
+    <svg
+      viewBox="0 0 420 264"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="左に大きな池、右にすくいあげた標本をならべた図。標本の中の魚はちょうど二十五匹。池の中の魚は模式で、数を数えるためのものではありません。標本の平均は疑問符のままで、池全体の平均の値も書かれていない"
+    >
+      <text x="210" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        大きな池から、ひとすくいだけ取り出すと
+      </text>
+
+      <ellipse cx="110" cy="118" rx="84" ry="62" fill={face} stroke={stroke} strokeWidth="1.3" />
+      {pond.map(([dx, dy], i) => (
+        <circle key={`p-${i}`} cx={110 + dx} cy={118 + dy} r="4" fill={muted} opacity="0.7" />
+      ))}
+      <text x="110" y="200" fontSize="10" fill={muted} textAnchor="middle">
+        体長の割合が分かっている
+      </text>
+
+      <path d="M 200 118 L 258 118" stroke={accent} strokeWidth="1.3" />
+      <path d="M 266 118 l -8 -4 l 0 8 z" fill={accent} />
+      <text x="233" y="104" fontSize="9.5" fill={accent} textAnchor="middle">
+        無作為に取り出す
+      </text>
+
+      <circle cx="330" cy="118" r="58" fill="none" stroke={accent} strokeWidth="1.3" />
+      {sample.map(([dx, dy], i) => (
+        <circle key={`s-${i}`} cx={330 + dx} cy={118 + dy} r="4.5" fill={dot} />
+      ))}
+      <text x="330" y="196" fontSize="10" fill={muted} textAnchor="middle">
+        この 25 匹の平均は
+      </text>
+      <text x="330" y="218" fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="210" y="240" fontSize="11" fill={accent} textAnchor="middle">
+        池全体の平均は 1 つに決まっている。
+      </text>
+      <text x="210" y="256" fontSize="11" fill={accent} textAnchor="middle">
+        では、すくった 25 匹の平均は、すくうたびに同じ数になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系11 step3・derivation・辞書『母平均』『標本平均』: くり返した調査の標本平均。
+ *  点は 20 個（step3 の「この調査を 20 回くり返せば」と一致）。
+ *  中心の値も、目盛りの数値も書かない。 */
+export function StatXbarMany() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const dot = "color-mix(in oklch, var(--accent) 70%, transparent)";
+  const baseY = 164;
+  /* 7 つの位置に 1・2・4・6・4・2・1 個＝合計 20 個 */
+  const bins = [128, 152, 176, 200, 224, 248, 272];
+  const counts = [1, 2, 4, 6, 4, 2, 1];
+  const hill = () => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const x = 40 + (320 * i) / 80;
+      const t = (x - 200) / 48;
+      pts.push(`${x.toFixed(1)},${(baseY - 100 * Math.exp(-(t * t) / 2)).toFixed(1)}`);
+    }
+    return "M " + pts.join(" L ");
+  };
+  return (
+    <svg
+      viewBox="0 0 400 234"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="横向きの数直線の上に、同じ調査をくり返したときの平均を点で打った図。点はぜんぶで二十個あり、中央付近に多く、外側ほどまばらになっている。背後にうっすらと山の輪郭がある。目盛りの数値は書かれておらず、中心の値は疑問符のままになっている"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ調査を、何回もくり返したとすると
+      </text>
+
+      <path d={hill()} fill="none" stroke={muted} strokeWidth="1" opacity="0.45" strokeDasharray="3 4" />
+
+      {bins.map((x, b) =>
+        Array.from({ length: counts[b] }, (_, j) => (
+          <circle key={`d-${b}-${j}`} cx={x} cy={152 - j * 13} r="5" fill={dot} stroke={accent} strokeWidth="1" />
+        )),
+      )}
+
+      <path d={`M 30 ${baseY} L 366 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 366 ${baseY} l -8 -4 l 0 8 z`} fill={stroke} />
+      <text x="358" y={baseY + 18} fontSize="10" fill={muted} textAnchor="middle">
+        体長
+      </text>
+
+      <path d={`M 200 ${baseY} L 200 ${baseY + 8}`} stroke={accent} strokeWidth="1.2" />
+      <text x="200" y={baseY + 26} fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        1 回の調査で出るのは、このうちの点 1 つだけ。
+      </text>
+      <text x="200" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        その点たちは、どこに集まっている？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系11 step6・derivation・辞書『母分散』: 標本を増やすと、平均の分布はどうなるか。
+ *  曲線は 2 本（step6 が比べる 2 つの標本の大きさと一致）。
+ *  幅の値も、分散・標準偏差の値も書かない。中心の目盛りも無名にする。 */
+export function StatXbarShrink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const baseY = 170;
+  const bell = (s: number, h: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const x = 200 + ((i - 40) / 40) * 3.2 * s;
+      const t = (x - 200) / s;
+      pts.push(`${x.toFixed(1)},${(baseY - h * Math.exp(-(t * t) / 2)).toFixed(1)}`);
+    }
+    return "M " + pts.join(" L ");
+  };
+  return (
+    <svg
+      viewBox="0 0 400 268"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="同じ中心の上に、山の形をした曲線を二本重ねた図。一本は幅が広くて低く、もう一本は幅が狭くて高い。それぞれの幅を測る両向きの矢印がついているが、幅の値も、分散や標準偏差の値も書かれていない。中心の目盛りにも数は書かれていない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        同じ中心の上に、2 つの分布を重ねると
+      </text>
+
+      <path d={`M 26 ${baseY} L 374 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={bell(54, 42)} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={bell(18, 126)} fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d={`M 200 ${baseY} L 200 44`} stroke={muted} strokeWidth="0.8" strokeDasharray="3 3" />
+
+      <path d="M 182 192 L 218 192" stroke={accent} strokeWidth="1" />
+      <path d="M 182 192 l 6 -3 l 0 6 z" fill={accent} />
+      <path d="M 218 192 l -6 -3 l 0 6 z" fill={accent} />
+      <text x="174" y="196" fontSize="10" fill={accent} textAnchor="end">
+        標本 900 匹
+      </text>
+      <text x="228" y="197" fontSize="13" fill={accent} textAnchor="start">
+        ?
+      </text>
+
+      <path d="M 146 218 L 254 218" stroke={stroke} strokeWidth="1" />
+      <path d="M 146 218 l 6 -3 l 0 6 z" fill={stroke} />
+      <path d="M 254 218 l -6 -3 l 0 6 z" fill={stroke} />
+      <text x="138" y="222" fontSize="10" fill={stroke} textAnchor="end">
+        標本 100 匹
+      </text>
+      <text x="264" y="223" fontSize="13" fill={accent} textAnchor="start">
+        ?
+      </text>
+
+      <text x="200" y="246" fontSize="11" fill={accent} textAnchor="middle">
+        すくう数を増やすと、平均はどこへ寄っていく？
+      </text>
+      <text x="200" y="262" fontSize="11" fill={accent} textAnchor="middle">
+        そのとき、幅はどれだけ縮む？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系12 step1・derivation・辞書『信頼区間』: 神の視点と、人間の視点。
+ *  数直線 2 本・両向き矢印 4 本・「?」2 個。数の目盛は書かない模式図で、
+ *  帯の半分の長さも、母平均・標本平均の値も書かない。 */
+export function StatGodHuman() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const band = "color-mix(in oklch, var(--accent) 14%, transparent)";
+  const cx = 180;
+  const half = 92;
+  const yTop = 62;
+  const yBottom = 186;
+  const dArrows = (y: number) => (
+    <g>
+      <path d={`M ${cx - half} ${y - 6} L ${cx - half} ${y + 6}`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${cx} ${y - 6} L ${cx} ${y + 6}`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${cx + half} ${y - 6} L ${cx + half} ${y + 6}`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${cx - half} ${y} L ${cx} ${y}`} stroke={accent} strokeWidth="1.1" />
+      <path d={`M ${cx - half} ${y} l 6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${cx} ${y} l -6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${cx} ${y} L ${cx + half} ${y}`} stroke={accent} strokeWidth="1.1" />
+      <path d={`M ${cx} ${y} l 6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${cx + half} ${y} l -6 -3 l 0 6 z`} fill={accent} />
+      <text x={cx - half / 2} y={y + 16} fontSize="10" fill={accent} textAnchor="middle">
+        d
+      </text>
+      <text x={cx + half / 2} y={y + 16} fontSize="10" fill={accent} textAnchor="middle">
+        d
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 360 258"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上下二本の数直線の図。上は母平均を中心に左右へ同じ長さの帯をとり、その中に標本平均を表す疑問符が置かれている。下は標本平均を中心に同じ長さの帯をとり、その中に母平均を表す疑問符が置かれている。長さの値や目盛の数は書かない模式図"
+    >
+      <text x="14" y="20" fontSize="10" fill={muted}>
+        神の視点（母平均を知っている）
+      </text>
+      <rect x={cx - half} y={yTop - 13} width={half * 2} height="26" fill={band} stroke={accent} strokeWidth="1.1" />
+      <path d={`M 22 ${yTop} L 344 ${yTop}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 344 ${yTop} l -8 -4 l 0 8 z`} fill={stroke} />
+      <path d={`M ${cx} ${yTop - 20} L ${cx} ${yTop + 20}`} stroke={accent} strokeWidth="1.6" />
+      <text x={cx} y={yTop - 26} fontSize="10.5" fill={accent} textAnchor="middle">
+        母平均
+      </text>
+      <text x="248" y={yTop - 20} fontSize="9" fill={muted} textAnchor="middle">
+        標本平均
+      </text>
+      <text x="248" y={yTop + 5} fontSize="13" fill={stroke} textAnchor="middle">
+        ?
+      </text>
+      {dArrows(92)}
+
+      <text x={cx} y="132" fontSize="10" fill={muted} textAnchor="middle">
+        同じ式を、母平均について解き直すと
+      </text>
+
+      <text x="14" y="152" fontSize="10" fill={muted}>
+        人間の視点（標本平均しか知らない）
+      </text>
+      <rect x={cx - half} y={yBottom - 13} width={half * 2} height="26" fill={band} stroke={accent} strokeWidth="1.1" />
+      <path d={`M 22 ${yBottom} L 344 ${yBottom}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M 344 ${yBottom} l -8 -4 l 0 8 z`} fill={stroke} />
+      <path d={`M ${cx} ${yBottom - 20} L ${cx} ${yBottom + 20}`} stroke={accent} strokeWidth="1.6" />
+      <text x={cx} y={yBottom - 26} fontSize="10.5" fill={accent} textAnchor="middle">
+        標本平均
+      </text>
+      <text x="120" y={yBottom - 20} fontSize="9" fill={muted} textAnchor="middle">
+        母平均
+      </text>
+      <text x="120" y={yBottom + 5} fontSize="13" fill={stroke} textAnchor="middle">
+        ?
+      </text>
+      {dArrows(216)}
+
+      <text x="180" y="250" fontSize="11.5" fill={accent} textAnchor="middle">
+        上と下は、同じ 1 つのことを言っている？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系12 step6・derivation・辞書『信頼度』: 確からしさと幅の引っぱり合い。
+ *  同じ形の曲線 2 本・帯 2 つ・両向き矢印 2 本の模式図。
+ *  幅の値も、確からしさのパーセントの数も書かない。 */
+export function StatCiWidth() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 20%, transparent)";
+  const cx = 210;
+  const s = 42;
+  const h = 72;
+  const curveAt = (baseY: number, from: number, to: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const x = from + ((to - from) * i) / 80;
+      const t = (x - cx) / s;
+      pts.push(`${x.toFixed(1)},${(baseY - h * Math.exp(-(t * t) / 2)).toFixed(1)}`);
+    }
+    return pts.join(" L ");
+  };
+  const panel = (baseY: number, halfBand: number, label: string, arrowY: number, qY: number) => (
+    <g>
+      <text x="16" y={baseY - 76} fontSize="10" fill={muted}>
+        {label}
+      </text>
+      <path
+        d={`M ${cx - halfBand} ${baseY} L ${curveAt(baseY, cx - halfBand, cx + halfBand)} L ${cx + halfBand} ${baseY} z`}
+        fill={fill}
+        stroke="none"
+      />
+      <path d={`M ${curveAt(baseY, 70, 350)}`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={`M 60 ${baseY} L 360 ${baseY}`} stroke={stroke} strokeWidth="1.1" />
+      <path d={`M ${cx - halfBand} ${arrowY} L ${cx + halfBand} ${arrowY}`} stroke={accent} strokeWidth="1.1" />
+      <path d={`M ${cx - halfBand} ${arrowY} l 6 -3 l 0 6 z`} fill={accent} />
+      <path d={`M ${cx + halfBand} ${arrowY} l -6 -3 l 0 6 z`} fill={accent} />
+      <text x={cx} y={qY} fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 400 320"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="同じ形の山型の曲線を二つ上下に並べた図。上の曲線には中央に狭い帯が、下の曲線には同じ中央に広い帯がかぶせてあり、どちらの帯にも幅を測る両向きの矢印と疑問符がついている。幅の値も確からしさの数値も書かない模式図"
+    >
+      <text x="200" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じ分布に、ちがう広さの帯をかぶせると
+      </text>
+      {panel(124, 42, "確からしさ 低め", 138, 156)}
+      {panel(254, 84, "確からしさ 高め", 268, 286)}
+      <text x="200" y="310" fontSize="11.5" fill={accent} textAnchor="middle">
+        確からしさを上げると、何を失う？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系13 step1・derivation・辞書『母比率』: 数でない答えに、数を貼る。
+ *  粒は 20 個ちょうど（step1 の「20 個取り出して検査」と一致）。
+ *  そのうち × と 1 が 4 個、○ と 0 が 16 個（問題文の「4 個が不良品」と一致）。
+ *  20 個の数の平均は ? のままにし、比率の値は書かない。 */
+export function StatProportion01() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 57;
+  const pitch = 34;
+  /* 20 個ちゅう 4 個が不良品。かたまらないよう散らしてある */
+  const badTop = [1, 6];
+  const badBottom = [0, 7];
+  const block = (symY: number, numY: number, bad: number[]) => (
+    <g>
+      {Array.from({ length: 10 }, (_, i) => {
+        const x = x0 + i * pitch;
+        const isBad = bad.includes(i);
+        return (
+          <g key={`${symY}-${i}`}>
+            <text x={x} y={symY} fontSize="15" fill={isBad ? accent : muted} textAnchor="middle">
+              {isBad ? "×" : "○"}
+            </text>
+            <path d={`M ${x} ${symY + 6} L ${x} ${numY - 12}`} stroke={muted} strokeWidth="0.8" strokeDasharray="2 3" />
+            <text x={x} y={numY} fontSize="14" fill={isBad ? accent : stroke} textAnchor="middle">
+              {isBad ? "1" : "0"}
+            </text>
+          </g>
+        );
+      })}
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 420 266"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="検査した製品二十個が横にならび、そのうち四個にばつ、十六個にまるが付いている。ばつの下には一、まるの下には〇が書かれていて、上下が点線で結ばれている。二十個の数の平均を入れるわくは空白のまま"
+    >
+      <text x="210" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        検査の結果に、1 と 0 を貼っていくと
+      </text>
+      <text x="24" y="64" fontSize="9" fill={muted}>
+        結果
+      </text>
+      <text x="24" y="94" fontSize="9" fill={muted}>
+        貼った数
+      </text>
+      {block(64, 94, badTop)}
+      {block(140, 170, badBottom)}
+
+      <text x="210" y="200" fontSize="10" fill={muted} textAnchor="middle">
+        この 20 個の数の平均
+      </text>
+      <rect x="170" y="208" width="80" height="30" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="210" y="229" fontSize="15" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="210" y="256" fontSize="11.5" fill={accent} textAnchor="middle">
+        1 と 0 を貼ってならすと、それは何を測ったことになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系14 step1・derivation・辞書『帰無仮説』『有意水準』: 裾に置く帯。
+ *  曲線 1 本・裾の帯 1 つ・境目の破線 1 本（片側検定と一致）。
+ *  裾の面積の値も、境目の位置の値も書かない。 */
+export function StatRejectRegion() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 24%, transparent)";
+  const baseY = 170;
+  const cx = 180;
+  const s = 44;
+  const h = 100;
+  const yOf = (x: number) => baseY - h * Math.exp(-(((x - cx) / s) * ((x - cx) / s)) / 2);
+  const curve = (from: number, to: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const x = from + ((to - from) * i) / 80;
+      pts.push(`${x.toFixed(1)},${yOf(x).toFixed(1)}`);
+    }
+    return pts.join(" L ");
+  };
+  const edge = cx + 1.65 * s;
+  const right = cx + 3.2 * s;
+  return (
+    <svg
+      viewBox="0 0 400 228"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="山の形をした曲線の右の裾に、めったに起きない側の帯がひとつ置かれている図。帯と山を分ける境目の破線が一本ある。帯の面積の値も、境目の位置の値も書かれていない"
+    >
+      <text x="200" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        否定した世界での、結果の散らばり
+      </text>
+
+      <path d={`M ${edge} ${baseY} L ${curve(edge, right)} L ${right} ${baseY} z`} fill={fill} stroke="none" />
+      <path d={`M ${cx - 3.2 * s} ${baseY} L ${curve(cx - 3.2 * s, right)}`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={`M 26 ${baseY} L 374 ${baseY}`} stroke={stroke} strokeWidth="1.2" />
+      <path d={`M ${edge} ${baseY} L ${edge} ${yOf(edge) - 6}`} stroke={accent} strokeWidth="1.1" strokeDasharray="4 3" />
+
+      <text x="140" y="132" fontSize="10" fill={muted} textAnchor="middle">
+        よくあること
+      </text>
+
+      <text x="310" y="112" fontSize="9.5" fill={accent} textAnchor="middle">
+        めったに起きない？
+      </text>
+      <text x="310" y="136" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 300 142 L 276 158" stroke={accent} strokeWidth="0.8" />
+
+      <path d={`M ${cx} ${baseY} L ${cx} ${baseY + 7}`} stroke={stroke} strokeWidth="1.2" />
+      <text x={cx} y={baseY + 22} fontSize="9.5" fill={muted} textAnchor="middle">
+        仮定した中心
+      </text>
+      <text x={edge} y={baseY + 24} fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="216" fontSize="11.5" fill={accent} textAnchor="middle">
+        どこから先を「めったに起きない」と呼ぶ？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系14 step8・derivation・辞書『棄却域』: 片側 1 か所と、両側 2 か所。
+ *  曲線 2 本・上の帯 1 つ・下の帯 2 つ。
+ *  それぞれの帯の面積の値も、境目の値も書かない。 */
+export function StatTwoSided() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fill = "color-mix(in oklch, var(--accent) 24%, transparent)";
+  const cx = 200;
+  const s = 40;
+  const h = 90;
+  const yAt = (baseY: number, x: number) => baseY - h * Math.exp(-(((x - cx) / s) * ((x - cx) / s)) / 2);
+  const curve = (baseY: number, from: number, to: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i++) {
+      const x = from + ((to - from) * i) / 80;
+      pts.push(`${x.toFixed(1)},${yAt(baseY, x).toFixed(1)}`);
+    }
+    return pts.join(" L ");
+  };
+  const left = cx - 3.2 * s;
+  const right = cx + 3.2 * s;
+  const tail = (baseY: number, from: number, to: number) => (
+    <path d={`M ${from} ${baseY} L ${curve(baseY, from, to)} L ${to} ${baseY} z`} fill={fill} stroke="none" />
+  );
+  return (
+    <svg
+      viewBox="0 0 400 334"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="同じ山の形をした曲線を上下に二本ならべた図。上の曲線には右の裾に帯がひとつ、下の曲線には左右の裾に帯がひとつずつ置かれている。それぞれの帯の面積の値も、境目の位置の値も書かれていない"
+    >
+      <text x="200" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        同じ大きさの基準を、1 か所に置くか 2 か所に分けるか
+      </text>
+
+      <text x="16" y="46" fontSize="10" fill={muted}>
+        片側だけに置くと
+      </text>
+      {tail(140, cx + 1.65 * s, right)}
+      <path d={`M ${left} 140 L ${curve(140, left, right)}`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 40 140 L 360 140" stroke={stroke} strokeWidth="1.1" />
+      <path
+        d={`M ${cx + 1.65 * s} 140 L ${cx + 1.65 * s} ${yAt(140, cx + 1.65 * s) - 6}`}
+        stroke={accent}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <text x="330" y="100" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 322 106 L 296 128" stroke={accent} strokeWidth="0.8" />
+      <text x={cx + 1.65 * s} y="160" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="16" y="196" fontSize="10" fill={muted}>
+        両側に分けると
+      </text>
+      {tail(290, left, cx - 1.96 * s)}
+      {tail(290, cx + 1.96 * s, right)}
+      <path d={`M ${left} 290 L ${curve(290, left, right)}`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 40 290 L 360 290" stroke={stroke} strokeWidth="1.1" />
+      <path
+        d={`M ${cx - 1.96 * s} 290 L ${cx - 1.96 * s} ${yAt(290, cx - 1.96 * s) - 6}`}
+        stroke={accent}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <path
+        d={`M ${cx + 1.96 * s} 290 L ${cx + 1.96 * s} ${yAt(290, cx + 1.96 * s) - 6}`}
+        stroke={accent}
+        strokeWidth="1.1"
+        strokeDasharray="4 3"
+      />
+      <text x="70" y="250" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 78 256 L 100 278" stroke={accent} strokeWidth="0.8" />
+      <text x="330" y="250" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 322 256 L 300 278" stroke={accent} strokeWidth="0.8" />
+      <text x={cx - 1.96 * s} y="310" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x={cx + 1.96 * s} y="310" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="200" y="326" fontSize="11.5" fill={accent} textAnchor="middle">
+        同じ基準を 2 か所で分けあうと、境目はどちらへ動く？
+      </text>
+    </svg>
+  );
+}
+
+/** 統計 系14 step10・derivation: 背理法のはしごと、仮説検定のはしご。
+ *  はしごは 2 本、段は各 3 つ、てっぺんは 1 つずつ。
+ *  てっぺんだけが違う。誤りの確率の値は書かない。 */
+export function StatNullLadder() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rungY = [252, 208, 164];
+  const ladder = (xl: number, xr: number, name: string, top: string, bottom: string, isTest: boolean) => (
+    <g>
+      <text x={(xl + xr) / 2} y="46" fontSize="11" fill={stroke} textAnchor="middle">
+        {name}
+      </text>
+      <rect
+        x={xl - 8}
+        y="62"
+        width={xr - xl + 16}
+        height="30"
+        rx="5"
+        fill="none"
+        stroke={isTest ? accent : stroke}
+        strokeWidth="1.3"
+      />
+      <text x={(xl + xr) / 2} y="82" fontSize="10.5" fill={isTest ? accent : stroke} textAnchor="middle">
+        {top}
+      </text>
+      {isTest && (
+        <text x={(xl + xr) / 2} y="110" fontSize="9.5" fill={accent} textAnchor="middle">
+          それでも起こる？
+        </text>
+      )}
+      <path d={`M ${xl} 252 L ${xl} 120`} stroke={muted} strokeWidth="1.2" />
+      <path d={`M ${xr} 252 L ${xr} 120`} stroke={muted} strokeWidth="1.2" />
+      {rungY.map((y) => (
+        <path key={`${name}-${y}`} d={`M ${xl} ${y} L ${xr} ${y}`} stroke={muted} strokeWidth="1.2" />
+      ))}
+      <text x={(xl + xr) / 2} y="272" fontSize="9" fill={muted} textAnchor="middle">
+        {bottom}
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 420 306"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="はしごを二本ならべた図。どちらも段は三つで、いちばん上に板がひとつ乗っている。左のはしごの下は、示したいことの否定を仮定するところから始まり、てっぺんは矛盾。右のはしごの下は、帰無仮説を仮定するところから始まり、てっぺんはめったに起きないこと。てっぺんだけが違っている。誤りの確率の数は書かれていない"
+    >
+      <text x="210" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        2 本のはしごを、ならべてみると
+      </text>
+      {ladder(60, 170, "背理法", "矛盾", "示したいことの否定を仮定", false)}
+      {ladder(250, 360, "仮説検定", "めったに起きない", "帰無仮説を仮定", true)}
+      <text x="210" y="296" fontSize="11.5" fill={accent} textAnchor="middle">
+        てっぺんが「矛盾」でなくなると、結論の強さは何を失う？
       </text>
     </svg>
   );
