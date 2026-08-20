@@ -57,10 +57,14 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * 系列③「見える見えるなぞなぞ詩」の3項目（v3 で追加）も同じ扱い＝③の発見の核なので
  * ③から解禁する。文面は docs/なぞなぞ詩背骨_kokugo.md の「観点リスト追加候補」で
  * 確定したもの（「さいごのたとえが、形をこえて跳んでいる」＝系列の核）。
+ *
+ * 系列④「一口お笑い（脚韻）」の3項目（v4 で追加）も同じ扱い＝④の発見の核なので
+ * ④から解禁する。文面は docs/一口お笑い背骨_kokugo.md の「観点リスト追加候補」で
+ * 確定したもの（「さいごの一行が、期待を裏切っている」＝系列の核）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 3,
+  version: 4,
   items: [
     {
       text: "5秒のことを書いている",
@@ -106,6 +110,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "さいごのたとえが、形をこえて跳んでいる",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_nazo_01",
+    },
+    {
+      text: "行のおわりの音が、そろっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_owarai_01",
+    },
+    {
+      text: "さいごの一行が、期待を裏切っている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_owarai_01",
+    },
+    {
+      text: "声に出して読むと、リズムが気持ちいい",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_owarai_01",
     },
   ],
 };

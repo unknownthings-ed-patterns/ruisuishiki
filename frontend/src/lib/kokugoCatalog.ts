@@ -107,6 +107,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "名前を一度も言わずに、にたものの名前だけをならべると、こたえがうかび上がる。読みくらべ → きめての行さがし → さいごのたとえが跳ぶ発見 → 自分のなぞなぞまで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_SHI_SERIES_LIST, "kokugo_shi_owarai_01"),
+    genreId: "shi",
+    shortDescription:
+      "行のおわりの音をそろえると期待が生まれ、さいごの一行がそれを裏切ると笑いになる。声に出して読みくらべ → そろえる音さがし → オチの発見 → 自分の一口お笑いまで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_moshi_01"),
     genreId: "monogatari",
     shortDescription:
