@@ -11860,6 +11860,166 @@ export function ParamRootFail() {
   );
 }
 
+/**
+ * 数Ⅲ・C いろいろな関数 系列1 Step 7：中身が式でない装置。
+ * 素数そのものを並べて描かない（並べると個数＝答えが読めてしまう＝層8）。
+ * 出力はどちらも「?」のままで、問いで終える。
+ */
+export function M3fNamedRule() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="中身が式で書かれた箱と、中身が日本語の規則で書かれた箱。どちらも出力は疑問符のままで、個数は描かない"
+    >
+      {/* 左：中身が式の箱 */}
+      <text x="26" y="58" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 40 52 L 66 52" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 58 47 L 66 52 L 58 57" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="70" y="30" width="92" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="116" y="50" fontSize="12" fill={stroke} textAnchor="middle">
+        中身は式
+      </text>
+      <text x="116" y="66" fontSize="11" fill={muted} textAnchor="middle">
+        x² − ⋯
+      </text>
+      <path d="M 166 52 L 192 52" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 184 47 L 192 52 L 184 57" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="208" y="57" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {/* 右：中身が規則の箱 */}
+      <text x="26" y="140" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 40 134 L 66 134" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 58 129 L 66 134 L 58 139" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="70"
+        y="108"
+        width="92"
+        height="52"
+        rx="9"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.3"
+        strokeDasharray="5,3"
+      />
+      <text x="116" y="128" fontSize="12" fill={stroke} textAnchor="middle">
+        中身はことば
+      </text>
+      <text x="116" y="144" fontSize="10" fill={muted} textAnchor="middle">
+        x 以下の素数を
+      </text>
+      <text x="116" y="156" fontSize="10" fill={muted} textAnchor="middle">
+        数える
+      </text>
+      <path d="M 166 134 L 192 134" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 184 129 L 192 134 L 184 139" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="208" y="139" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="188" fontSize="12" fill={muted} textAnchor="middle">
+        中に式が無くても、これは「関数」と言える？
+      </text>
+      <text x="180" y="204" fontSize="11" fill={muted} textAnchor="middle">
+        入れたら 1 つ返る——満たしているのはどちら？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列1 Step 10：装置の出口を、もう 1 つの装置の入口へつなぐ。
+ * 中間の値も最終の判定も伏せる。素数の個数は描かない（層5・層8）。
+ */
+export function M3fDeviceChain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="式の箱の出口を、素数かどうかを判定する箱の入口につないだ図。中間の値も判定の結果も疑問符のまま。個数は描かない"
+    >
+      <text x="22" y="72" fontSize="13" fill={stroke} textAnchor="middle">
+        n
+      </text>
+      <path d="M 34 66 L 58 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 50 61 L 58 66 L 50 71" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="62" y="44" width="76" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="100" y="64" fontSize="12" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <text x="100" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        式の箱
+      </text>
+
+      <path d="M 142 66 L 166 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="166"
+        y="52"
+        width="34"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="183" y="71" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 204 66 L 228 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 220 61 L 228 66 L 220 71" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect
+        x="232"
+        y="44"
+        width="84"
+        height="44"
+        rx="9"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.3"
+        strokeDasharray="5,3"
+      />
+      <text x="274" y="64" fontSize="11" fill={stroke} textAnchor="middle">
+        素数？
+      </text>
+      <text x="274" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        ことばの箱
+      </text>
+      <path d="M 320 66 L 340 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="350" y="71" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="122" fontSize="12" fill={muted} textAnchor="middle">
+        まん中に出てくる値は、n ごとに変わる
+      </text>
+      <text x="180" y="144" fontSize="12" fill={muted} textAnchor="middle">
+        1 つずつ通すほかに、当てる道はある？
+      </text>
+    </svg>
+  );
+}
+
 export function FuncBoxStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -13264,6 +13424,20 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <FuncBoxStep1 />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_NAMED_RULE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fNamedRule />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_DEVICE_CHAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fDeviceChain />
             </div>
           );
         }

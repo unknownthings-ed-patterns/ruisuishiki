@@ -48,6 +48,10 @@ import {
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
+  MATH3_FUNCTIONS_SERIES_LIST,
+  M3F_DEVICE_SERIES,
+} from "./seriesMath3Functions";
+import {
   EXP_LOG_SERIES_LIST,
   XEL_EXP_EQUATION_SERIES,
   XEL_EXP_EXTEND_SERIES,
@@ -254,6 +258,7 @@ export type SeriesSubject =
   | "middle"
   | "secondary"
   | "secondary2"
+  | "secondary3"
   | "tertiary"
   | "advanced";
 
@@ -263,6 +268,7 @@ export const SUBJECT_ORDER: SeriesSubject[] = [
   "middle",
   "secondary",
   "secondary2",
+  "secondary3",
   "tertiary",
   "advanced",
 ];
@@ -273,6 +279,7 @@ export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
   middle: "中学校数学",
   secondary: "高校数学Ⅰ・A",
   secondary2: "高校数学Ⅱ・B",
+  secondary3: "高校数学Ⅲ・C",
   tertiary: "統計・データ分析",
   // 将来用：高校数学を「分野別」（方程式・図形・関数 等）で
   // ハイレベル課題に取り組むコース。池田洋介『方程式・図形・関数からとらえる
@@ -1689,6 +1696,16 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "ベクトル（数B 旧／数C 新）",
     shortDescription: "ベクトルの内積",
   },
+  /* === 高校数学Ⅲ・C（池田洋介『数学Ⅲ・C 入門問題精講』の章順） === */
+  /* 第1章 いろいろな関数（背骨：docs/math3c_functions_design.md） */
+  {
+    series: M3F_DEVICE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "関数という装置（名前をつけて、1 個のものにする）— 代入・逆算・係数決めから、式では書けない関数まで。関数が「値を出す手続き」から「持ち運べるもの」に変わる入口",
+  },
 ];
 
 /**
@@ -1760,6 +1777,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_1_SERIES_LIST,
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
+  ...MATH3_FUNCTIONS_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,

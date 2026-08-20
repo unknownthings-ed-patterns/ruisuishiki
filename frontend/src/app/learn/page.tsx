@@ -769,7 +769,7 @@ function KokugoCatalogCard({
             lineHeight: 1.6,
           }}
         >
-          {entry.shortDescription}
+          <MathText text={entry.shortDescription} />
         </p>
         {inProgress && (
           <div className="mt-3">
