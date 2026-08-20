@@ -28257,17 +28257,29 @@ export function StatTwoSameMean() {
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const face = "color-mix(in oklch, var(--accent) 16%, transparent)";
-  const centers = [130, 200, 270];
-  const bw = 48;
-  const upper = [22, 74, 22];
-  const lower = [56, 50, 56];
+  /* 棒の位置は「値」を写す。上下で同じ位置に置いてはいけない——
+   *  この step が問うているのは値の散らばりであって、確率の高さではないので、
+   *  同じ位置に描くと「値の広がりは同じ」という誤ったことを図が言ってしまう。
+   *  x = 200 + 14 ×（値 − まん中）。高さは問題文が与えている確率に比例させる。 */
+  const px = (v: number) => 200 + 14 * (v - 6);
+  const upper = [
+    { v: 4, h: 40 },
+    { v: 6, h: 80 },
+    { v: 8, h: 40 },
+  ];
+  const lower = [
+    { v: 0, h: 32 },
+    { v: 5, h: 64 },
+    { v: 10, h: 64 },
+  ];
+  const bw = 22;
   return (
     <svg
       viewBox="0 0 400 300"
       className="w-full h-auto"
       style={{ maxWidth: 400 }}
       role="img"
-      aria-label="上下に並べた二つの棒グラフ。棒はどちらも三本で、まん中の位置をそろえた縦の破線が入っている。散らばりの幅を示す両向きの矢印が上下に一本ずつあり、その長さは伏せてある"
+      aria-label="上下に並べた二つの棒グラフ。棒はどちらも三本で、まん中の位置をそろえた縦の破線が通っている。上のグラフは三本がせまい範囲にかたまり、下のグラフは三本が広い範囲に散らばっている。散らばりの幅を示す両向きの矢印が上下に一本ずつあるが、その大きさを表す数はどちらも疑問符のままになっている"
     >
       <text x="200" y="18" fontSize="10.5" fill={muted} textAnchor="middle">
         まん中をそろえた 2 つの分布を、上下にならべると
@@ -28283,21 +28295,21 @@ export function StatTwoSameMean() {
         選手 A
       </text>
       <path d="M 70 120 L 330 120" stroke={stroke} strokeWidth="1.2" />
-      {centers.map((c, i) => (
+      {upper.map((b) => (
         <rect
-          key={`u-${c}`}
-          x={c - bw / 2}
-          y={120 - upper[i]}
+          key={`u-${b.v}`}
+          x={px(b.v) - bw / 2}
+          y={120 - b.h}
           width={bw}
-          height={upper[i]}
+          height={b.h}
           fill={face}
           stroke={stroke}
           strokeWidth="1.1"
         />
       ))}
-      <path d="M 112 134 L 288 134" stroke={accent} strokeWidth="1" />
-      <path d="M 112 134 l 7 -3.5 l 0 7 z" fill={accent} />
-      <path d="M 288 134 l -7 -3.5 l 0 7 z" fill={accent} />
+      <path d={`M ${px(4)} 134 L ${px(8)} 134`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${px(4)} 134 l 7 -3.5 l 0 7 z`} fill={accent} />
+      <path d={`M ${px(8)} 134 l -7 -3.5 l 0 7 z`} fill={accent} />
       <text x="200" y="150" fontSize="13" fill={accent} textAnchor="middle">
         ?
       </text>
@@ -28306,27 +28318,27 @@ export function StatTwoSameMean() {
         選手 B
       </text>
       <path d="M 70 246 L 330 246" stroke={stroke} strokeWidth="1.2" />
-      {centers.map((c, i) => (
+      {lower.map((b) => (
         <rect
-          key={`l-${c}`}
-          x={c - bw / 2}
-          y={246 - lower[i]}
+          key={`l-${b.v}`}
+          x={px(b.v) - bw / 2}
+          y={246 - b.h}
           width={bw}
-          height={lower[i]}
+          height={b.h}
           fill={face}
           stroke={stroke}
           strokeWidth="1.1"
         />
       ))}
-      <path d="M 112 260 L 288 260" stroke={accent} strokeWidth="1" />
-      <path d="M 112 260 l 7 -3.5 l 0 7 z" fill={accent} />
-      <path d="M 288 260 l -7 -3.5 l 0 7 z" fill={accent} />
+      <path d={`M ${px(0)} 260 L ${px(10)} 260`} stroke={accent} strokeWidth="1" />
+      <path d={`M ${px(0)} 260 l 7 -3.5 l 0 7 z`} fill={accent} />
+      <path d={`M ${px(10)} 260 l -7 -3.5 l 0 7 z`} fill={accent} />
       <text x="200" y="276" fontSize="13" fill={accent} textAnchor="middle">
         ?
       </text>
 
-      <text x="200" y="294" fontSize="11" fill={accent} textAnchor="middle">
-        まん中は同じところにある。それでも、この二つは同じだろうか？
+      <text x="200" y="294" fontSize="11.5" fill={accent} textAnchor="middle">
+        まん中は同じ。では、散らばりの違いはどれくらいの数になる？
       </text>
     </svg>
   );
@@ -28340,8 +28352,10 @@ export function StatBinomBars() {
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
-  /* 高さの比だけが意味を持つ。数値は書かない */
-  const rel = [1, 6, 15, 20, 15, 6, 1];
+  /* 高さは **模式**。ほんとうの確率の比（パスカルの行）を描いてはいけない——
+   *  描くと、知りたい棒を消しても「同じ高さの棒」と「全部の和」から答えが読めてしまう。
+   *  ここは「まん中ほど起こりやすい山の形になる」ことだけが伝わればよい。 */
+  const rel = [3, 7, 11, 13, 11, 7, 3];
   const target = 4;
   const baseY = 150;
   const unit = 5.6;
@@ -28354,7 +28368,7 @@ export function StatBinomBars() {
       className="w-full h-auto"
       style={{ maxWidth: 400 }}
       role="img"
-      aria-label="芽が出た粒の数ごとに棒をならべた図。棒は左から順に、〇粒、一粒、二粒、三粒、四粒、五粒、六粒の七本。知りたい四粒のところの棒だけが破線で、高さは疑問符のまま描かれていない"
+      aria-label="芽が出た粒の数ごとに棒をならべた図。棒は左から順に、〇粒、一粒、二粒、三粒、四粒、五粒、六粒の七本。まん中ほど高い山の形になっているが、棒の高さは形を見せるための模式で、起こりやすさの比を表してはいない。知りたい四粒のところだけは棒を描かず、土台に破線のわくと疑問符が置かれている"
     >
       <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
         芽が出た粒の数ごとに、起こりやすさをならべると
@@ -28363,13 +28377,16 @@ export function StatBinomBars() {
       {rel.map((h, i) => {
         const x = x0 + i * (bw + gap);
         const isTarget = i === target;
+        /* 知りたい棒は「高さを描かない」——土台に低い破線のわくだけを置く。
+         *  ほんとうの高さで破線を描くと、輪郭から答えが読めてしまう。 */
+        const drawH = isTarget ? 10 : h * unit;
         return (
           <g key={i}>
             <rect
               x={x}
-              y={baseY - h * unit}
+              y={baseY - drawH}
               width={bw}
-              height={h * unit}
+              height={drawH}
               fill={isTarget ? "none" : fill}
               stroke={isTarget ? accent : stroke}
               strokeWidth={isTarget ? 1.4 : 1.1}
@@ -28383,7 +28400,7 @@ export function StatBinomBars() {
       })}
       <text
         x={x0 + target * (bw + gap) + bw / 2}
-        y={baseY - rel[target] * unit - 9}
+        y={baseY - 22}
         fontSize="14"
         fill={accent}
         textAnchor="middle"
@@ -28393,8 +28410,11 @@ export function StatBinomBars() {
       <text x="378" y={baseY + 16} fontSize="10" fill={muted} textAnchor="middle">
         粒
       </text>
-      <text x="200" y="194" fontSize="11" fill={accent} textAnchor="middle">
-        7 本の棒の高さを全部たすと 1。いま知りたいのは、どの棒？
+      <text x="200" y="176" fontSize="9.5" fill={muted} textAnchor="middle">
+        ※ 棒の高さは山の形を見せるための模式（起こりやすさの比ではありません）
+      </text>
+      <text x="200" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        まん中のあたりほど起こりやすい。では、4 粒のところはどれくらい？
       </text>
     </svg>
   );
