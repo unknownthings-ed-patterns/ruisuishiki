@@ -53,10 +53,14 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * ②から解禁する。系列①を歩く子には①の3項目だけが見え、②へ進むと②の3項目が
  * 足される（KOKUGO_SHI_SERIES_LIST／KOKUGO_ALL_SERIES の並び順が解禁順の正）。
  * 文面は docs/視覚詩背骨_kokugo.md の「観点リスト追加候補」で確定したもの。
+ *
+ * 系列③「見える見えるなぞなぞ詩」の3項目（v3 で追加）も同じ扱い＝③の発見の核なので
+ * ③から解禁する。文面は docs/なぞなぞ詩背骨_kokugo.md の「観点リスト追加候補」で
+ * 確定したもの（「さいごのたとえが、形をこえて跳んでいる」＝系列の核）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 2,
+  version: 3,
   items: [
     {
       text: "5秒のことを書いている",
@@ -87,6 +91,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "さいごの一行が、絵とであっている",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_me_01",
+    },
+    {
+      text: "にたものの名前が、いくつもならんでいる",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_nazo_01",
+    },
+    {
+      text: "言い方がいろいろにかわる（見える・みたい・のようだ）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_nazo_01",
+    },
+    {
+      text: "さいごのたとえが、形をこえて跳んでいる",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_nazo_01",
     },
   ],
 };
