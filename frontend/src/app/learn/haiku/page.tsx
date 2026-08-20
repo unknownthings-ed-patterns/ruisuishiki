@@ -74,6 +74,15 @@ function worksLabels(series: KokugoSeries): {
     placeholder: string;
     note: string;
   };
+  /** 読み比べ・本歌カードの呼び名（俳句「元の句」を他ジャンルで出さない）。 */
+  mentor: {
+    /** 本歌・手本のラベル（例：元の句／元の詩／元の日記／元のお話） */
+    original: string;
+    /** 前 step の自作を指すラベル（例：さっきの句） */
+    prior: string;
+    /** カード群の aria 名（例：くらべる句） */
+    aria: string;
+  };
 } {
   if (series.genreId === "shi") {
     return {
@@ -86,6 +95,7 @@ function worksLabels(series: KokugoSeries): {
         placeholder: "いちぎょうずつ\nかいてみよう",
         note: "※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。",
       },
+      mentor: { original: "元の詩", prior: "さっきの詩", aria: "くらべる詩" },
     };
   }
   if (series.genreId === "nikki") {
@@ -99,6 +109,7 @@ function worksLabels(series: KokugoSeries): {
         placeholder: "きょう、",
         note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
       },
+      mentor: { original: "元の日記", prior: "さっきの日記", aria: "くらべる日記" },
     };
   }
   if (series.genreId === "monogatari") {
@@ -112,6 +123,7 @@ function worksLabels(series: KokugoSeries): {
         placeholder: "もし、",
         note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
       },
+      mentor: { original: "元のお話", prior: "さっきのお話", aria: "くらべるお話" },
     };
   }
   return {
@@ -124,6 +136,7 @@ function worksLabels(series: KokugoSeries): {
       placeholder: "いちぎょうずつ\nかいてみよう",
       note: "※音の数はかぞえないよ。行の長さも、行の数も、あなたが決めていい。",
     },
+    mentor: { original: "元の句", prior: "さっきの句", aria: "くらべる句" },
   };
 }
 
@@ -792,7 +805,7 @@ export default function HaikuPlay() {
           <section
             className="grid gap-4"
             style={{ gridTemplateColumns: `repeat(${Math.min(step.mentorTextRefs.length, 2)}, minmax(0, 1fr))` }}
-            aria-label="読みくらべる句"
+            aria-label={`読み${labels.mentor.aria}`}
           >
             {step.mentorTextRefs.map((id) => (
               <MentorCard key={id} id={id} />
@@ -1174,10 +1187,10 @@ export default function HaikuPlay() {
                 <article
                   className="rounded-lg border border-border p-4 flex flex-col gap-2 animate-fade-in"
                   style={{ background: "var(--surface)" }}
-                  aria-label="くらべる句"
+                  aria-label={labels.mentor.aria}
                 >
                   <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
-                    {refs.length ? "元の句" : "さっきの句"}
+                    {refs.length ? labels.mentor.original : labels.mentor.prior}
                   </span>
                   <div className="flex flex-wrap gap-4 justify-center">
                     {refs.length ? (
