@@ -95,6 +95,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "気持ちのことばを消して、見えたものを見えた順に置くと、たった5秒がゆっくり・濃く見えてくる。読みくらべ → 行のかわり目の発見 → 自分の5秒まで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_SHI_SERIES_LIST, "kokugo_shi_me_01"),
+    genreId: "shi",
+    shortDescription:
+      "文字のすがたとならべ方が絵になり、さいごの一行と出会って詩になる。読みくらべ → 一字だけちがう字 → さいごの一行の発見 → 自分の一編まで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_moshi_01"),
     genreId: "monogatari",
     shortDescription:

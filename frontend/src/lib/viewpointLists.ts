@@ -48,10 +48,15 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * 置かず revealedInSeries でこの系列から解禁する。系列①の中では、読み比べ
  * （step1〜step7）を歩いたあとの観点抽出 step（step8・pickViewpoints）で
  * はじめて目に入る＝発見が先（俳句の「季語」を系列②で解禁するのと同じ手）。
+ *
+ * 系列②「目で見て楽しむ詩」の3項目（v2 で追加）も同じ扱い＝②の発見の核なので
+ * ②から解禁する。系列①を歩く子には①の3項目だけが見え、②へ進むと②の3項目が
+ * 足される（KOKUGO_SHI_SERIES_LIST／KOKUGO_ALL_SERIES の並び順が解禁順の正）。
+ * 文面は docs/視覚詩背骨_kokugo.md の「観点リスト追加候補」で確定したもの。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 1,
+  version: 2,
   items: [
     {
       text: "5秒のことを書いている",
@@ -67,6 +72,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "行のかわり目で止まると、ゆっくり見える",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_5byo_01",
+    },
+    {
+      text: "文字が、もののかたちに見える",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_me_01",
+    },
+    {
+      text: "ならべ方が、けしきになっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_me_01",
+    },
+    {
+      text: "さいごの一行が、絵とであっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_me_01",
     },
   ],
 };

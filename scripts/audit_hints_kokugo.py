@@ -58,11 +58,18 @@ QUESTION = re.compile(r"(だろう|どうな|かな|？|\?|どこ|どっち|何�
 # ※「スローモーション」は日記の言い換え語彙表では「先生の教室のことばなのでそのまま可」
 #   だが、自由詩ジャンルの技法名として既に登録済みなので、検出語彙は動かさず、日記側の
 #   L1/L2 で使わない運用にした（問題文・L3 では使ってよい）。
+# さらに末尾は目で見て楽しむ詩（視覚詩）ジャンルの技法名（docs/視覚詩背骨_kokugo.md の
+# 言い換え語彙表。視覚詩・具体詩→「目で見て楽しむ詩」（先生の教室のことば。問題文でも
+# L1/L2 でも使ってよい言い換えの側）／タイポグラフィ・字形→「文字のすがた」／
+# 配置・レイアウト→「ならべ方」「おきば」／反復→「くりかえし」／差異・コントラスト→
+# 「一つだけちがう」／種明かし・オチ→「さいごの一行」）。既存の俳句・自由詩・お話・
+# 日記の L1/L2 に偽陽性が無いことを確認して追加（2026-08-20）。
 GIHOU = re.compile(
     r"(季語|切れ字|切れ(?!い)|オノマトペ|字余り|字足らず|自由律|本歌取|押韻|体言止め"
     r"|行分け|改行|散文|自由詩|描写|感想語|スローモーション"
     r"|仮説|一貫|伏線|反転|破調|比喩|擬人|寓話|起承転結|あらすじ"
-    r"|時系列|要約|羅列|会話文|かぎかっこ|擬音語|内言|省略)"
+    r"|時系列|要約|羅列|会話文|かぎかっこ|擬音語|内言|省略"
+    r"|視覚詩|具体詩|タイポグラフィ|レイアウト|コントラスト)"
 )
 # 指示調（代筆・お手本を押しつける言い方）
 SHIJI = re.compile(r"(と書きましょう|を使いましょう|と書こう|にしましょう|しなさい)")
@@ -363,11 +370,12 @@ def audit_mentor(used_mentor_ids):
         # ファージョン条項（docs/ファージョン背骨_kokugo.md §権利規律）で追加した区分。
         if not re.search(r'rights:\s*"(PD|original|licensed|quoted)"', block):
             problems.append(f"❌ {mid}: rights（PD/original/licensed/quoted）が無い（G12）")
-        # 自由詩（form: "free_verse"）・お話（form: "prose"）は音数の器を持たない＝
-        # moraCount 非適用（docs/自由詩背骨_kokugo.md 技術ゲート1・
-        # docs/ファージョン背骨_kokugo.md 技術ゲート1）。reading は読みの補助として
-        # 任意で持てるが、音数検算の対象からは外す。
-        free_verse = entry.get("form") in ("free_verse", "prose")
+        # 自由詩（form: "free_verse"）・お話（form: "prose"）・目で見て楽しむ詩
+        # （form: "visual"）は音数の器を持たない＝moraCount 非適用
+        # （docs/自由詩背骨_kokugo.md 技術ゲート1・docs/ファージョン背骨_kokugo.md
+        # 技術ゲート1・docs/視覚詩背骨_kokugo.md 技術ゲート）。reading は読みの補助
+        # として任意で持てるが、音数検算の対象からは外す。
+        free_verse = entry.get("form") in ("free_verse", "prose", "visual")
         reading = entry.get("reading")
         if not reading:
             if not free_verse:

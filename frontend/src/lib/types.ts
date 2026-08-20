@@ -187,8 +187,14 @@ export type KokugoInput =
    * 自由詩の複数行入力（docs/自由詩背骨_kokugo.md 技術ゲート1・加法的追加）。
    * 作品欄のみ（よみがな欄なし）。行分けを保つのが本体なので改行をそのまま保存し、
    * 音数の器を持たないジャンルなので moraCount は適用しない（メーターを出さない）。
+   *
+   * orientation（docs/視覚詩背骨_kokugo.md 技術ゲート1・加法的追加）：
+   *  - 未指定＝現行どおりの横書き textarea（自由詩系列①・お話・日記は不変）。
+   *  - "vertical"＝作品欄を縦書き（writing-mode: vertical-rl）で開く。目で見て楽しむ詩は
+   *    **文字の配置そのものが作品**なので、書く画面と読む画面の形が一致していないと作れない。
+   *    ますをあけるところは全角スペース（placeholder で案内する）。
    */
-  | { type: "poemText" };
+  | { type: "poemText"; orientation?: "vertical" };
 
 /**
  * 産出 step の充足チェック（第3弾§5.3）。
@@ -232,8 +238,13 @@ export type MentorText = {
    * "prose"＝散文（お話）。韻文ではないので moraCount は当然非適用。表示は
    * free_verse と同じ「行を保った縦書き」で開始し、横書きへの切替は表示層だけで
    * できるようにこの値で見分ける（docs/ファージョン背骨_kokugo.md 技術ゲート1）。
+   * "visual"＝目で見て楽しむ詩（視覚詩）。**文字のならべ方そのものが作品**なので、
+   * free_verse と同じ「行を保った縦書き」に加えて、**字間を詰めた等幅グリッド**で描く
+   * （letterSpacing 0・lineHeight 1.6）——字間が空くと格子が崩れて絵が立たない
+   * （docs/視覚詩背骨_kokugo.md 技術ゲート2・先生検収済みの縦書きプレビューと同じ規則）。
+   * moraCount は非適用（free_verse・prose と同じ扱い）。
    */
-  form?: "haiku" | "free_verse" | "prose";
+  form?: "haiku" | "free_verse" | "prose" | "visual";
   author: string;
   /** 出典（memory ruisuishiki-citation-format の書式）。 */
   sourceNote: string;

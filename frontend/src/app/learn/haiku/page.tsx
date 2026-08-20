@@ -56,6 +56,8 @@ type HaikuAnthologyItem = {
   stepId: string;
   work: string;
   reading: string;
+  /** 目で見て楽しむ詩の step で作った作品か（詰めた縦書きで見せる）。 */
+  visual: boolean;
 };
 
 /**
@@ -167,19 +169,28 @@ function visibleViewpointItems(series: KokugoSeries): ViewpointItem[] {
  *
  * 折り返しは殺さない（pre-wrap）——詩の行は短いので実質 1 行＝1 列になり、
  * 比較用に置く「ふつうの文」（長い一続き）だけが自然に複数列へ流れる。
+ *
+ * visual＝目で見て楽しむ詩（視覚詩）。**文字のならべ方そのものが作品**なので、
+ * 字間・行間を詰めた等幅グリッドで描く（letterSpacing 0・lineHeight 1.6）。
+ * 数値は先生が検収した縦書きプレビュー（vault 個人/視覚詩_縦書きプレビュー.html）と同じ。
+ * 既定（false）は従来の値のままなので、俳句・自由詩・お話・日記の見た目は不変。
  */
 function PoemLines({
   text,
   fontSize = "clamp(14px, 2.2vh, 18px)",
   maxHeight = "50vh",
+  visual = false,
 }: {
   text: string;
   fontSize?: string;
   maxHeight?: string;
+  visual?: boolean;
 }) {
   const lines = text.split("\n");
   return (
     <div
+      // 書体は visual でも変えない（プレビューも明朝で組んで検収済み。日本語の
+      // かな漢字・全角スペースはもともと同じ幅なので、明朝のままで格子が立つ）。
       className="font-serif text-foreground"
       style={{
         writingMode: "vertical-rl",
@@ -187,8 +198,8 @@ function PoemLines({
         maxWidth: "100%",
         overflowX: "auto",
         fontSize,
-        letterSpacing: "0.12em",
-        lineHeight: 1.9,
+        letterSpacing: visual ? 0 : "0.12em",
+        lineHeight: visual ? 1.6 : 1.9,
       }}
     >
       {lines.map((line, i) => (
@@ -294,15 +305,19 @@ function MoraMeter({
 function MentorCard({ id }: { id: string }) {
   const m = getMentorText(id);
   if (!m) return null;
-  // 自由詩・お話（散文）は音数の器を持たないので、行を保った複数列表示・音数は出さない。
-  const isFreeVerse = m.form === "free_verse" || m.form === "prose";
+  // 自由詩・お話（散文）・目で見て楽しむ詩は音数の器を持たないので、
+  // 行を保った複数列表示・音数は出さない。
+  const isFreeVerse =
+    m.form === "free_verse" || m.form === "prose" || m.form === "visual";
+  // 視覚詩だけ、字間・行間を詰めた等幅グリッドで描く（ならべ方が作品）。
+  const isVisual = m.form === "visual";
   return (
     <article
       className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"
       style={{ background: "var(--surface)" }}
     >
       {isFreeVerse ? (
-        <PoemLines text={m.text} />
+        <PoemLines text={m.text} visual={isVisual} />
       ) : (
         <p
           className="font-serif text-foreground"
@@ -353,6 +368,8 @@ export default function HaikuPlay() {
   const shownViewpoints = visibleViewpointItems(series);
   // 清書カード（§7.2）：自作句を大きく縦書き表示・匿名切替。句会で見せ合う。
   const [showCard, setShowCard] = useState(false);
+  // 作品集から清書カードを開いたとき、その作品が視覚詩かどうか（詰めた縦書きにする）。
+  const [cardVisual, setCardVisual] = useState(false);
   const [authorName, setAuthorName] = useState("");
   const [showName, setShowName] = useState(false); // 既定は匿名（選のあと作者を明かす運用）
 
@@ -361,6 +378,13 @@ export default function HaikuPlay() {
   const total = series.steps.length;
   const isLast = stepIndex === total - 1;
   const input = step.input;
+  /**
+   * 縦書き入力（docs/視覚詩背骨_kokugo.md 技術ゲート1）。
+   * orientation 未指定の poemText は従来どおり横書き＝自由詩①・お話・日記は挙動不変。
+   * この step は「ならべ方そのものが作品」なので、書く画面と読む画面の形をそろえる。
+   */
+  const poemVertical =
+    input?.type === "poemText" && input.orientation === "vertical";
 
   // 復元（初回のみ）：URL ?seriesId で系列を選び、?fresh=1 でクリア、なければ resume 位置へ
   useEffect(() => {
@@ -533,11 +557,12 @@ export default function HaikuPlay() {
                   style={{ background: "var(--surface)" }}
                 >
                   <div className="flex min-w-0 flex-1 items-center gap-5">
-                    {item.work.includes("\n") ? (
+                    {item.work.includes("\n") || item.visual ? (
                       <PoemLines
                         text={item.work}
                         fontSize="clamp(13px, 2vh, 18px)"
                         maxHeight="42vh"
+                        visual={item.visual}
                       />
                     ) : (
                       <p
@@ -562,6 +587,7 @@ export default function HaikuPlay() {
                     onClick={() => {
                       setWork(item.work);
                       setReading(item.reading);
+                      setCardVisual(item.visual);
                       setShowCard(true);
                     }}
                     className="shrink-0 px-4 py-2 rounded-lg border border-accent text-accent"
@@ -583,6 +609,7 @@ export default function HaikuPlay() {
             setAuthorName={setAuthorName}
             setShowName={setShowName}
             onClose={() => setShowCard(false)}
+            visual={cardVisual}
           />
         )}
       </main>
@@ -1090,12 +1117,17 @@ export default function HaikuPlay() {
         )}
 
         {/* 自由詩の複数行入力（作品欄のみ・よみがな欄なし・音数メーターなし）。
-            改行がそのまま行分け＝作品の一部なので、入力の改行を保って保存・表示する。 */}
+            改行がそのまま行分け＝作品の一部なので、入力の改行を保って保存・表示する。
+            orientation: "vertical" の step（目で見て楽しむ詩）では、作品欄そのものを
+            縦書き（vertical-rl）で開き、字間・行間を表示側と同じに詰める——ならべ方が
+            作品なので、書きながら形が見えないと作れない（技術ゲート1）。 */}
         {input?.type === "poemText" && (
           <section className="flex flex-col gap-3" aria-label={labels.compose.aria}>
             <label className="flex flex-col gap-1">
               <span className="text-muted" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
-                {labels.compose.field}
+                {poemVertical
+                  ? "作品（たて書き。ますをあけたいところは、ぜんかくスペース）"
+                  : labels.compose.field}
               </span>
               <textarea
                 value={work}
@@ -1103,30 +1135,51 @@ export default function HaikuPlay() {
                   setWork(e.target.value);
                   saveHaiku(series.id, step.id, e.target.value, "");
                 }}
-                rows={6}
-                placeholder={labels.compose.placeholder}
-                className="rounded-md border px-3 py-2"
-                style={{
-                  borderColor: "var(--accent-soft)",
-                  background: "var(--background)",
-                  fontSize: "16px",
-                  lineHeight: 1.9,
-                  resize: "vertical",
-                }}
+                rows={poemVertical ? undefined : 6}
+                placeholder={
+                  poemVertical
+                    ? "たてに かいてみよう\nますを あけたいところは、ぜんかくスペース"
+                    : labels.compose.placeholder
+                }
+                className={`rounded-md border px-3 py-2${poemVertical ? " font-serif" : ""}`}
+                style={
+                  poemVertical
+                    ? {
+                        borderColor: "var(--accent-soft)",
+                        background: "var(--background)",
+                        fontSize: "17px",
+                        // 表示（PoemLines の visual）と同じ組み方にそろえる。
+                        writingMode: "vertical-rl",
+                        letterSpacing: 0,
+                        lineHeight: 1.6,
+                        width: "100%",
+                        height: "46vh",
+                        resize: "vertical",
+                      }
+                    : {
+                        borderColor: "var(--accent-soft)",
+                        background: "var(--background)",
+                        fontSize: "16px",
+                        lineHeight: 1.9,
+                        resize: "vertical",
+                      }
+                }
               />
             </label>
             {work.trim() && (
               <div className="flex flex-col gap-1">
                 <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.2em" }}>
-                  たてに読むと
+                  {poemVertical ? "できあがりの かたち" : "たてに読むと"}
                 </span>
                 <div className="flex justify-center rounded-lg border border-border px-4 py-4" style={{ background: "var(--surface)" }}>
-                  <PoemLines text={work} maxHeight="40vh" />
+                  <PoemLines text={work} maxHeight="40vh" visual={poemVertical} />
                 </div>
               </div>
             )}
             <p className="text-muted" style={{ fontSize: "12px" }}>
-              {labels.compose.note}
+              {poemVertical
+                ? "※音の数はかぞえないよ。文字も、ならべ方も、あなたが決めていい。ますをあけたいところは、ぜんかくスペースでね。"
+                : labels.compose.note}
             </p>
             <button
               type="button"
@@ -1271,6 +1324,7 @@ export default function HaikuPlay() {
           setAuthorName={setAuthorName}
           setShowName={setShowName}
           onClose={() => setShowCard(false)}
+          visual={poemVertical}
         />
       )}
     </main>
@@ -1323,6 +1377,31 @@ const AUTHOR_LANDSCAPE_EXTRAS: Record<
         </>
       ),
       note: "— 日本では新作セクションの初出が1956年以降（1963年英国版著作権ページで確認）のため保護期間満了。",
+    },
+  },
+  // 詩系列②「目で見て楽しむ詩」。保護中の作品（内田麟太郎・新国誠一・寺山修司）は
+  // 本文も図版も載せず、書誌だけを出す＝「本物に会う」方式（背骨§権利の整理2）。
+  // 日本語リンクは PD の暮鳥「風景」だけ（本物を読める場所）。
+  kokugo_shi_me_01: {
+    english: [],
+    japanese: [
+      {
+        href: "https://www.aozora.gr.jp/cards/000136/card52348.html",
+        label: "山村暮鳥「風景　純銀もざいく」（青空文庫）",
+        note: "step3 で読んだ詩。本物はここで読める",
+      },
+    ],
+    citation: {
+      apa: (
+        <>
+          山村暮鳥（1915）「風景　純銀もざいく」『聖三稜玻璃』.／内田麟太郎（2000）
+          <i>うみがわらっている：内田麟太郎詩集</i>. 銀の鈴社（ジュニアポエムシリーズ
+          143）.／新国誠一（2019）<i>新国誠一詩集</i>. 思潮社（現代詩文庫 243）.／
+          寺山修司「階段」.／Apollinaire, G. (1918). <i>Calligrammes</i>. Mercure de
+          France.
+        </>
+      ),
+      note: "— 「風景」は著者が1924年に亡くなっていて保護期間が満了しているので、全文を載せています（青空文庫の本文と突き合わせて確認しました）。新国誠一・寺山修司の作品はいまも著作権で守られているため、このページには本文も図版も載せていません（書名だけです）。内田麟太郎さんの目で見て楽しむ詩は、詩集『うみがわらっている』（銀の鈴社）などで会えます——としょかんで さがしてみてね。「白鳥のお散歩」は岩井輝久の自筆（本人の許諾つき）で、数え上げの形は同詩集所収の「はるのいけ」に学んだ本歌取です（構成を借り、文字と場面はオリジナル）。",
     },
   },
   kokugo_hanashi_moshi_01: {
@@ -1418,7 +1497,12 @@ function AuthorLandscape({ series }: { series: KokugoSeries }) {
                     {m.title}
                   </h3>
                 )}
-                <PoemLines text={m.text} fontSize="clamp(14px, 2.1vh, 17px)" maxHeight="46vh" />
+                <PoemLines
+                  text={m.text}
+                  fontSize="clamp(14px, 2.1vh, 17px)"
+                  maxHeight="46vh"
+                  visual={m.form === "visual"}
+                />
                 <span className="text-muted text-center" style={{ fontSize: "12px" }}>
                   — {m.author}
                 </span>
@@ -1503,6 +1587,7 @@ function HaikuCardOverlay({
   setAuthorName,
   setShowName,
   onClose,
+  visual = false,
 }: {
   work: string;
   authorName: string;
@@ -1510,6 +1595,8 @@ function HaikuCardOverlay({
   setAuthorName: (name: string) => void;
   setShowName: (updater: (value: boolean) => boolean) => void;
   onClose: () => void;
+  /** 目で見て楽しむ詩（視覚詩）の作品か。字間・行間を詰めて、ならべ方を崩さない。 */
+  visual?: boolean;
 }) {
   return (
     <div
@@ -1518,12 +1605,13 @@ function HaikuCardOverlay({
       role="dialog"
       aria-label="清書カード"
     >
-      {work.includes("\n") ? (
+      {work.includes("\n") || visual ? (
         // 自由詩は行＝列。俳句の「縦書き1列 nowrap」原則の複数行版。
         <PoemLines
           text={work}
           fontSize="clamp(16px, 3.2vh, 32px)"
           maxHeight="66vh"
+          visual={visual}
         />
       ) : (
         <p
@@ -1646,6 +1734,8 @@ function collectHaikuAnthology(): HaikuAnthologyItem[] {
         stepId: st.id,
         work: saved.work,
         reading: saved.reading,
+        visual:
+          st.input.type === "poemText" && st.input.orientation === "vertical",
       });
     }
   }
