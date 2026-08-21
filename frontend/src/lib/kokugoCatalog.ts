@@ -113,6 +113,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "行のおわりの音をそろえると期待が生まれ、さいごの一行がそれを裏切ると笑いになる。声に出して読みくらべ → そろえる音さがし → オチの発見 → 自分の一口お笑いまで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_SHI_SERIES_LIST, "kokugo_shi_yume_01"),
+    genreId: "shi",
+    shortDescription:
+      "そのものになりきって、ほんとうのすがたをゆめの中でうらがえすと、ねがいが濃く見えてくる。読みくらべ → ゆめから本体の当てっこ → うらがえしの発見 → 自分の「〜のゆめ」まで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_moshi_01"),
     genreId: "monogatari",
     shortDescription:

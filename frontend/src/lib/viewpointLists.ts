@@ -61,10 +61,14 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * 系列④「一口お笑い（脚韻）」の3項目（v4 で追加）も同じ扱い＝④の発見の核なので
  * ④から解禁する。文面は docs/一口お笑い背骨_kokugo.md の「観点リスト追加候補」で
  * 確定したもの（「さいごの一行が、期待を裏切っている」＝系列の核）。
+ *
+ * 系列⑤「〜のゆめ（イメージ遊び）」の3項目（v5 で追加）も同じ扱い＝⑤の発見の核なので
+ * ⑤から解禁する。文面は docs/ゆめ対比背骨_kokugo.md の「観点リスト追加候補」で
+ * 確定したもの（「ほんとうのすがたと、ゆめのすがたが、あべこべになっている」＝系列の核）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 4,
+  version: 5,
   items: [
     {
       text: "5秒のことを書いている",
@@ -125,6 +129,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "声に出して読むと、リズムが気持ちいい",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_owarai_01",
+    },
+    {
+      text: "そのものになりきって、『あのね』と話している",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_yume_01",
+    },
+    {
+      text: "ほんとうのすがたと、ゆめのすがたが、あべこべになっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_yume_01",
+    },
+    {
+      text: "ゆめのすがたから、ほんとうのすがたが見えてくる",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_yume_01",
     },
   ],
 };
