@@ -70,10 +70,15 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * 発見の核なので⑥から解禁する。文面は docs/オノマトペ背骨_kokugo.md の
  * 「観点リスト追加候補」で確定したもの（「せつめいのことばと、ようすことばが、
  * かけ合いになっている」＝系列の核〔有無ペア〕）。
+ *
+ * 系列⑦「6つのへやの詩（くりかえし）」の3項目（v7 で追加）も同じ扱い＝⑦の発見の核なので
+ * ⑦から解禁する。文面は docs/六つのへや背骨_kokugo.md の「観点リスト追加候補」で
+ * 確定したもの（「おなじことばが、くりかえされて、強さとリズムが生まれている」＝系列の核
+ * 〔くりかえしの有無ペア〕。「くりかえす回数が、場面に合わせて決められている」＝型破りの側）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 6,
+  version: 7,
   items: [
     {
       text: "5秒のことを書いている",
@@ -164,6 +169,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "場面が変わると、音も変わっている",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_kakeai_01",
+    },
+    {
+      text: "おなじことばが、くりかえされて、強さとリズムが生まれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_heya_01",
+    },
+    {
+      text: "見たこと・したこと・聞いたこと・かんじたことの部屋から、ことばが集まっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_heya_01",
+    },
+    {
+      text: "くりかえす回数が、場面に合わせて決められている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_heya_01",
     },
   ],
 };
