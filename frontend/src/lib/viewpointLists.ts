@@ -65,10 +65,15 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * 系列⑤「〜のゆめ（イメージ遊び）」の3項目（v5 で追加）も同じ扱い＝⑤の発見の核なので
  * ⑤から解禁する。文面は docs/ゆめ対比背骨_kokugo.md の「観点リスト追加候補」で
  * 確定したもの（「ほんとうのすがたと、ゆめのすがたが、あべこべになっている」＝系列の核）。
+ *
+ * 系列⑥「ようすことばのかけ合い（オノマトペ）」の3項目（v6 で追加）も同じ扱い＝⑥の
+ * 発見の核なので⑥から解禁する。文面は docs/オノマトペ背骨_kokugo.md の
+ * 「観点リスト追加候補」で確定したもの（「せつめいのことばと、ようすことばが、
+ * かけ合いになっている」＝系列の核〔有無ペア〕）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 5,
+  version: 6,
   items: [
     {
       text: "5秒のことを書いている",
@@ -144,6 +149,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "ゆめのすがたから、ほんとうのすがたが見えてくる",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_yume_01",
+    },
+    {
+      text: "ようすことばが、そのものの体と動きを運んでいる",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_kakeai_01",
+    },
+    {
+      text: "せつめいのことばと、ようすことばが、かけ合いになっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_kakeai_01",
+    },
+    {
+      text: "場面が変わると、音も変わっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_kakeai_01",
     },
   ],
 };
