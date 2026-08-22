@@ -25,6 +25,7 @@ import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
 import { KOKUGO_HANASHI_SERIES_LIST } from "@/lib/seriesKokugoHanashi";
 import { KOKUGO_NIKKI_SERIES_LIST } from "@/lib/seriesKokugoNikki";
 import { KOKUGO_SHI_SERIES_LIST } from "@/lib/seriesKokugoShi";
+import { KOKUGO_ZUIHITSU_SERIES_LIST } from "@/lib/seriesKokugoZuihitsu";
 import { getViewpointList } from "@/lib/viewpointLists";
 import type { KokugoSeries, MentorText, ViewpointItem } from "@/lib/types";
 import {
@@ -35,7 +36,7 @@ import {
 } from "@/lib/storage";
 
 /**
- * このプレイヤーが歩ける国語系列の全部（俳句3＋詩6＋お話1＋日記2）。
+ * このプレイヤーが歩ける国語系列の全部（俳句3＋詩7＋お話1＋日記2＋随筆1）。
  * 解禁順（revealedInSeries）・作品集の収集・?seriesId の解決は、すべてこの順が正。
  */
 const KOKUGO_ALL_SERIES: KokugoSeries[] = [
@@ -43,6 +44,7 @@ const KOKUGO_ALL_SERIES: KokugoSeries[] = [
   ...KOKUGO_SHI_SERIES_LIST,
   ...KOKUGO_HANASHI_SERIES_LIST,
   ...KOKUGO_NIKKI_SERIES_LIST,
+  ...KOKUGO_ZUIHITSU_SERIES_LIST,
 ];
 
 /** id から国語系列を引く（俳句・自由詩の両方。未登録は undefined）。 */
@@ -112,6 +114,20 @@ function worksLabels(series: KokugoSeries): {
         note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
       },
       mentor: { original: "元の日記", prior: "さっきの日記", aria: "くらべる日記" },
+    };
+  }
+  if (series.genreId === "zuihitsu") {
+    return {
+      collection: "わたしの随筆集",
+      counter: "編",
+      empty: "まだ随筆がありません。系列を歩くと、ここにたまっていくよ",
+      compose: {
+        aria: "随筆をかく",
+        field: "作品（漢字かなまじりでOK。文のきれ目で改行すると、あとで読みやすいよ）",
+        placeholder: "見つけた。",
+        note: "※音の数はかぞえないよ。長さも、文の数も、あなたが決めていい。",
+      },
+      mentor: { original: "元の随筆", prior: "さっきの随筆", aria: "くらべる随筆" },
     };
   }
   if (series.genreId === "monogatari") {
@@ -636,6 +652,8 @@ export default function HaikuPlay() {
               ? "できたお話を、だれかと読み合ってみよう。"
               : series.genreId === "nikki"
               ? "できた日記を、だれかと読み合ってみよう。"
+              : series.genreId === "zuihitsu"
+              ? "できた随筆を、だれかと読み合ってみよう（発見の交換会）。"
               : "できた句を、だれかと読み合ってみよう（句会）。"}
           </p>
 
@@ -1527,6 +1545,30 @@ const AUTHOR_LANDSCAPE_EXTRAS: Record<
         </>
       ),
       note: "— 「5びょう日記」という書き方は古賀及子さんが見つけたもので、「作家の風景」の一文は同書まえがき・紹介文からの引用です。系列①の手本（ぎょうざ日記）は、光村図書2年「日記を書こう」の構成だけを借りて、場面も文もこちらで作りました（本文は使っていません）。日記の本文と手本は、この教材のために書き下ろした自作と、岩井輝久の自筆（本人の許諾つき）です。",
+    },
+  },
+  // 随筆系列①「見つけたこと作文（発見作文）」。寺田寅彦は1935年没＝戦前没なので
+  // 『柿の種』の短章は全文を載せている（本文は青空文庫版と照合済み）。日本語リンクは
+  // 青空文庫の図書カード1本だけ（本物を丸ごと読める場所）。外国語の原文は無いので
+  // english は空（見出しごと出ない）。『楽しい随筆の授業』は随筆の定義・単元構成を
+  // 参考にした本で、本文と子どもの作例は載せていない（書誌のみ）。
+  kokugo_zuihitsu_mitsuke_01: {
+    english: [],
+    japanese: [
+      {
+        href: "https://www.aozora.gr.jp/cards/000042/card1684.html",
+        label: "『柿の種』全文（青空文庫）",
+        note: "スウスウ雲もコスモスも、ねこの居眠りも——寅彦さんの発見の短章が百以上読める",
+      },
+    ],
+    citation: {
+      apa: (
+        <>
+          寺田寅彦（1996）<i>柿の種</i>. 岩波文庫.（初出＝俳誌「渋柿」）／中島礼子・
+          今井成司（編著）（2011）<i>楽しい随筆の授業</i>（作文シリーズ3）. 日本標準.
+        </>
+      ),
+      note: "— 寺田寅彦は1935年に亡くなっていて保護期間が満了しているので、『柿の種』の短章は全文を載せています（本文は青空文庫『柿の種』〔底本＝岩波文庫1996年版〕と突き合わせて、一字も変わっていないことを確認しました）。随筆とは何かという説明と、単元の組み立ては、中島礼子さん・今井成司さんたちの『楽しい随筆の授業』に学びました。考え方（アイデア）は借りてよいものですが、本の本文と、本にのっている子どもの作例は、このページには載せていません（書名だけです）。ダンゴムシとかさ立ての文は、この教材のために書き下ろした自作です。「いつもの八百屋で」は岩井輝久の自筆で、本人の許諾つきです（日記の系列②と同じ一編を、随筆の目で読み直しています）。",
     },
   },
 };

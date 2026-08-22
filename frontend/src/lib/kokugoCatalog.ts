@@ -12,10 +12,16 @@ import { KOKUGO_HAIKU_SERIES_LIST } from "./seriesKokugoHaiku";
 import { KOKUGO_HANASHI_SERIES_LIST } from "./seriesKokugoHanashi";
 import { KOKUGO_NIKKI_SERIES_LIST } from "./seriesKokugoNikki";
 import { KOKUGO_SHI_SERIES_LIST } from "./seriesKokugoShi";
+import { KOKUGO_ZUIHITSU_SERIES_LIST } from "./seriesKokugoZuihitsu";
 import type { KokugoSeries } from "./types";
 
 /** ジャンル id（ViewpointList.genreId と対応）。 */
-export type KokugoGenreId = "haiku" | "shi" | "monogatari" | "nikki";
+export type KokugoGenreId =
+  | "haiku"
+  | "shi"
+  | "monogatari"
+  | "nikki"
+  | "zuihitsu";
 
 /** 表示順。エントリが無いジャンルは UI 側で出さない。 */
 export const KOKUGO_GENRE_ORDER: KokugoGenreId[] = [
@@ -23,6 +29,7 @@ export const KOKUGO_GENRE_ORDER: KokugoGenreId[] = [
   "shi",
   "monogatari",
   "nikki",
+  "zuihitsu",
 ];
 
 /** 折りたたみ見出し用ラベル（UI。「自由詩」ではなく「詩」でまとめる）。 */
@@ -31,6 +38,8 @@ export const KOKUGO_GENRE_LABEL: Record<KokugoGenreId, string> = {
   shi: "詩",
   monogatari: "物語",
   nikki: "日記",
+  // 「随筆」一語ではなく「随筆（エッセイ）」と添える（2026-08-22 岩井裁定5）。
+  zuihitsu: "随筆（エッセイ）",
 };
 
 /** ジャンル見出し直下の短い導入（任意）。 */
@@ -42,6 +51,8 @@ export const KOKUGO_GENRE_INTRO: Partial<Record<KokugoGenreId, string>> = {
     "ありえないことを一つだけゆるして、あとは筋のとおりにたどる——短いお話のつくり方から。",
   nikki:
     "きのうのことを、おきたじゅんにならべる。それだけで、読んだ人がその時間をいっしょに歩けます。",
+  zuihitsu:
+    "小さな「見つけた！」に、考えを一歩そえる。それだけで、ただの一日が随筆になります。",
 };
 
 export type KokugoCatalogEntry = {
@@ -147,6 +158,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     genreId: "nikki",
     shortDescription:
       "文と文のすきまをなくすと、たった5びょうが、いっぱいに広がる。読みくらべ → すきまさがし → 時間を刻む道具の発見 → じぶんの5びょうまで、全 10 問。",
+  },
+  {
+    series: byId(KOKUGO_ZUIHITSU_SERIES_LIST, "kokugo_zuihitsu_mitsuke_01"),
+    genreId: "zuihitsu",
+    shortDescription:
+      "小さな「見つけた！」に、考えを一歩そえると、読んだ人までいっしょに考えはじめる。読みくらべ → 事実と考えの仕分け → 考えの一歩の発見 → じぶんの発見まで、全 10 問。",
   },
 ];
 

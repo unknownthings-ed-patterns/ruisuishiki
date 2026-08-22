@@ -268,11 +268,44 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
   ],
 };
 
+/**
+ * 随筆（エッセイ）の観点リスト。俳句・自由詩・お話・日記と同じく**薄く生まれる**（G1）。
+ *
+ * 3項目とも系列①「見つけたこと作文（発見作文）」の**発見の核**なので initial には
+ * 置かず、revealedInSeries でこの系列から解禁する。系列①の中では、読み比べ
+ * （step1〜step7）を歩いたあとの観点抽出 step（step8・pickViewpoints）で
+ * はじめて目に入る＝発見が先。文面は docs/見つけたこと背骨_kokugo.md の
+ * 「観点リスト追加候補」で確定したもの（「事実のあとに、考えが一歩そえられている」
+ * ＝系列の核〔考えの一歩の有無ペア〕）。
+ */
+export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
+  genreId: "zuihitsu",
+  version: 1,
+  items: [
+    {
+      text: "小さな『見つけた！』が書きとめられている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_mitsuke_01",
+    },
+    {
+      text: "事実のあとに、考えが一歩そえられている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_mitsuke_01",
+    },
+    {
+      text: "考えから、あたらしい問いやつぎの発見が生まれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_mitsuke_01",
+    },
+  ],
+};
+
 const LISTS: Record<string, ViewpointList> = {
   haiku: HAIKU_VIEWPOINT_LIST_V1,
   shi: SHI_VIEWPOINT_LIST_V1,
   monogatari: MONOGATARI_VIEWPOINT_LIST_V1,
   nikki: NIKKI_VIEWPOINT_LIST_V1,
+  zuihitsu: ZUIHITSU_VIEWPOINT_LIST_V1,
 };
 
 /** ジャンルの現在の観点リストを返す（未登録は undefined）。 */
