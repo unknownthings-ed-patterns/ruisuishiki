@@ -227,10 +227,16 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
  * ③から解禁する。文面は docs/パロディ背骨_kokugo.md の「観点リスト追加候補」で確定した
  * もの（「入れ物（お話のかたち）は借りて、中身がぜんぶ入れかわっている」＝系列の核
  * 〔入れ物と中身の境界〕。「元の話に無い一場面（骨）が、足されている」＝＋αで足す骨）。
+ *
+ * 系列④「七番めのひめ（そろった六つと、ちがう一つ）」の3項目（v4 で追加）も同じ扱い＝
+ * ④の発見の核なので④から解禁する。文面は docs/ファージョン2背骨_kokugo.md ＋
+ * お手本ドラフト §8 の「観点3項目案」で確定したもの（「そっくり同じ六つは、えらべなく
+ * なっている」「ちがう一つが、話を動かしている」＝系列の核〔そろいの行きどまりと、
+ * それを動かすちがい〕）。
  */
 export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "monogatari",
-  version: 3,
+  version: 4,
   items: [
     {
       text: "「もし」は一つだけ",
@@ -276,6 +282,21 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "元の話に無い一場面（骨）が、足されている",
       addedIn: "reading",
       revealedInSeries: "kokugo_hanashi_parody_01",
+    },
+    {
+      text: "ことばのとおりのこたえと、ねがいのとおりのこたえが、ちがっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_princess_01",
+    },
+    {
+      text: "そっくり同じ六つは、えらべなくなっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_princess_01",
+    },
+    {
+      text: "ちがう一つが、話を動かしている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_princess_01",
     },
   ],
 };
