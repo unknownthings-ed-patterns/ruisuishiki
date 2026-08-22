@@ -148,6 +148,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "ありえない「もし」を一つだけ置いて、あとを筋のとおりにたどると、お話がほんとうらしく動きだす。読みくらべ → さいごの一回の破れの発見 → 自分の「もし」まで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_nikoushiki_01"),
+    genreId: "monogatari",
+    shortDescription:
+      "なんのかんけいもない二つのことばを出会わせると、お話のタネが生まれる。二つは遠いほどいい。読みくらべ → タネの逆算 → 二語の遠さの発見 → 自分のファンタジーまで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_mashita_01"),
     genreId: "nikki",
     shortDescription:

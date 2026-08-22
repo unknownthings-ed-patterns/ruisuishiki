@@ -196,10 +196,16 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
  * （step1〜step7）を歩いたあとの観点抽出 step（step8・pickViewpoints）で
  * はじめて目に入る＝発見が先。文面は docs/ファージョン背骨_kokugo.md の
  * 「観点リスト追加候補」で確定したもの。
+ *
+ * 系列②「二つのことばが出会うと（ファンタジーの二項式）」の3項目（v2 で追加）も同じ
+ * 扱い＝②の発見の核なので②から解禁する。系列①を歩く子には①の3項目だけが見え、
+ * ②へ進むと②の3項目が足される（KOKUGO_HANASHI_SERIES_LIST の並び順が解禁順の正）。
+ * 文面は docs/二項式背骨_kokugo.md の「観点リスト追加候補」で確定したもの
+ * （「二つのことばが、遠い（だから、お話が動き出す）」＝系列の核〔遠近ペア〕）。
  */
 export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "monogatari",
-  version: 1,
+  version: 2,
   items: [
     {
       text: "「もし」は一つだけ",
@@ -215,6 +221,21 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "さいごの一回で、形が破れている",
       addedIn: "reading",
       revealedInSeries: "kokugo_hanashi_moshi_01",
+    },
+    {
+      text: "なんのかんけいもない二つのことばが、出会っている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_nikoushiki_01",
+    },
+    {
+      text: "二つのことばが、遠い（だから、お話が動き出す）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_nikoushiki_01",
+    },
+    {
+      text: "ふしぎなきまりから、いいことと、こまることの両方が生まれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_nikoushiki_01",
     },
   ],
 };
