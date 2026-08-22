@@ -222,10 +222,15 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
  * ②へ進むと②の3項目が足される（KOKUGO_HANASHI_SERIES_LIST の並び順が解禁順の正）。
  * 文面は docs/二項式背骨_kokugo.md の「観点リスト追加候補」で確定したもの
  * （「二つのことばが、遠い（だから、お話が動き出す）」＝系列の核〔遠近ペア〕）。
+ *
+ * 系列③「物語の書き換え（パロディ作文）」の3項目（v3 で追加）も同じ扱い＝③の発見の核なので
+ * ③から解禁する。文面は docs/パロディ背骨_kokugo.md の「観点リスト追加候補」で確定した
+ * もの（「入れ物（お話のかたち）は借りて、中身がぜんぶ入れかわっている」＝系列の核
+ * 〔入れ物と中身の境界〕。「元の話に無い一場面（骨）が、足されている」＝＋αで足す骨）。
  */
 export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "monogatari",
-  version: 2,
+  version: 3,
   items: [
     {
       text: "「もし」は一つだけ",
@@ -256,6 +261,21 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "ふしぎなきまりから、いいことと、こまることの両方が生まれている",
       addedIn: "reading",
       revealedInSeries: "kokugo_hanashi_nikoushiki_01",
+    },
+    {
+      text: "入れ物（お話のかたち）は借りて、中身がぜんぶ入れかわっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_parody_01",
+    },
+    {
+      text: "三回のくりかえしなど、昔話の骨が残っている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_parody_01",
+    },
+    {
+      text: "元の話に無い一場面（骨）が、足されている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_parody_01",
     },
   ],
 };

@@ -160,6 +160,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "なんのかんけいもない二つのことばを出会わせると、お話のタネが生まれる。二つは遠いほどいい。読みくらべ → タネの逆算 → 二語の遠さの発見 → 自分のファンタジーまで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_parody_01"),
+    genreId: "monogatari",
+    shortDescription:
+      "人も場所も道具もぜんぶ入れかえたのに、それでもお話が立つ。よくできた入れ物を借りて中身を入れかえてみると、借りた入れ物のかたち——昔話の骨——が、はじめて手の中に見えてくる。読みくらべ → 入れ物と中身の見分け → 骨の図鑑との突き合わせ → 自分の書き換えまで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_mashita_01"),
     genreId: "nikki",
     shortDescription:
