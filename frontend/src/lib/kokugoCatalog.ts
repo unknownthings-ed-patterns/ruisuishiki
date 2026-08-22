@@ -142,6 +142,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "へやに分けてことばを集めると、だれでも詩の材料が手に入る。おなじことばをかさねると強さとリズムが生まれ、その回数は場面が決める。声に出して読みくらべ → へやと詩の行き来 → くりかえしの発見 → 自分の6つのへやの詩まで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_SHI_SERIES_LIST, "kokugo_shi_suki_01"),
+    genreId: "shi",
+    shortDescription:
+      "「好き」をならべるだけ——詩のいちばん低い入口。くわしさを一つ足し、行のおわりを少し動かすだけで、書いた人の顔が立ち上がる。読みくらべ → リストから人の逆算 → 行のおわりの発見 → 自分の好きリストまで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_moshi_01"),
     genreId: "monogatari",
     shortDescription:

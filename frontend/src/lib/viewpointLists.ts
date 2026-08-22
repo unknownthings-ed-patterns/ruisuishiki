@@ -75,10 +75,15 @@ export const HAIKU_VIEWPOINT_LIST_V1: ViewpointList = {
  * ⑦から解禁する。文面は docs/六つのへや背骨_kokugo.md の「観点リスト追加候補」で
  * 確定したもの（「おなじことばが、くりかえされて、強さとリズムが生まれている」＝系列の核
  * 〔くりかえしの有無ペア〕。「くりかえす回数が、場面に合わせて決められている」＝型破りの側）。
+ *
+ * 系列⑧「好きリスト」の3項目（v8 で追加）も同じ扱い＝⑧の発見の核なので⑧から解禁する。
+ * 文面は docs/好きリスト背骨_kokugo.md の「観点リスト追加候補」で確定したもの
+ * （「行のおわりの言い方が、すこしずつ変わっている（声が聞こえる）」＝系列の核
+ * 〔行のおわりの有無ペア〕）。
  */
 export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "shi",
-  version: 7,
+  version: 8,
   items: [
     {
       text: "5秒のことを書いている",
@@ -184,6 +189,21 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "くりかえす回数が、場面に合わせて決められている",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_heya_01",
+    },
+    {
+      text: "その人にしか書けない『好き』が、くわしく書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_suki_01",
+    },
+    {
+      text: "行のおわりの言い方が、すこしずつ変わっている（声が聞こえる）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_suki_01",
+    },
+    {
+      text: "ならべる順番や、さいごの一行が、えらばれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_shi_suki_01",
     },
   ],
 };
