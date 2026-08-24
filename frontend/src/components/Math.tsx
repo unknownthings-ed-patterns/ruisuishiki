@@ -12020,6 +12020,1431 @@ export function M3fDeviceChain() {
   );
 }
 
+/**
+ * 数Ⅲ・C いろいろな関数 系列2 Step 1：外から切った「窓」。
+ * 目盛り・座標軸の数値・y の値を示す水平線は描かない（下端・上端が答えそのもの＝層8）。
+ * 窓は非対称。曲線の高さの比は模式で、問題の値とは一致させない。
+ */
+export function M3fWindowFromOutside() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="外から切った窓の中だけを太くなぞった、下に凸の放物線の模式図。窓の左右のはしは文字で示してあり、目盛りや値は書かれていない。曲線の高さの比は模式で、問題の値とは一致しない"
+    >
+      {/* 座標軸（薄い直線 2 本だけ。目盛り・原点の記号・数値は書かない） */}
+      <path d="M 25 150 L 340 150" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 45 25 L 45 162" fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 放物線の全体（細い破線） */}
+      <path
+        d="M 70 40 Q 160 210 250 40"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,4"
+      />
+      {/* 窓の中だけを太い実線でなぞる */}
+      <path d="M 120 108 Q 177.5 156.5 235 66" fill="none" stroke={accent} strokeWidth="2.6" />
+
+      {/* 窓の左右のはし（縦の点線＋文字のラベル。数値は書かない） */}
+      <path d="M 120 108 L 120 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 235 66 L 235 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <text x="120" y="166" fontSize="12" fill={stroke} textAnchor="middle">
+        x = a
+      </text>
+      <text x="235" y="166" fontSize="12" fill={stroke} textAnchor="middle">
+        x = b
+      </text>
+
+      {/* 放物線のいちばん下の点。ラベルは書かない */}
+      <circle cx="160" cy="125" r="2.8" fill={stroke} />
+
+      <text x="180" y="188" fontSize="11" fill={muted} textAnchor="middle">
+        窓を切ったのは、外にいる私たち。
+      </text>
+      <text x="180" y="204" fontSize="11" fill={muted} textAnchor="middle">
+        いちばん低いところを決めるのは、窓？ それとも放物線？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列2 Step 4：内から生じる制約（数直線にあいた 1 つの穴）。
+ * 数直線に目盛り・数値を書かない（除かれる値そのものが答え）。双曲線も分母の式も描かない。
+ */
+export function M3fDomainHole() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const paper = "var(--background)";
+  return (
+    <svg
+      viewBox="0 0 360 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="実数全体を表す数直線に、白抜きの丸で穴が一つあいている模式図。穴の位置は文字で示してあり、数直線に目盛りは打たれていない。穴の左右で線が二本に切れていることが分かる"
+    >
+      {/* 問いの箱 */}
+      <rect
+        x="55"
+        y="24"
+        width="250"
+        height="32"
+        rx="8"
+        fill={fillColor}
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="5,3"
+      />
+      <text x="180" y="45" fontSize="10.5" fill={stroke} textAnchor="middle">
+        この 1 点だけ、なぜ受け取ってもらえない？
+      </text>
+      <path d="M 205 58 L 205 92" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="2,3" />
+
+      {/* 数直線（両端に矢印＝実数全体） */}
+      <path d="M 25 100 L 335 100" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 33 95 L 25 100 L 33 105" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 327 95 L 335 100 L 327 105" fill="none" stroke={stroke} strokeWidth="1.2" />
+
+      {/* 穴の左右。長さはわざと等しくしない */}
+      <path d="M 31 100 L 197 100" fill="none" stroke={accent} strokeWidth="3" />
+      <path d="M 213 100 L 329 100" fill="none" stroke={accent} strokeWidth="3" />
+
+      {/* 穴（白抜きの丸） */}
+      <circle cx="205" cy="100" r="5" fill={paper} stroke={stroke} strokeWidth="1.5" />
+      <text x="205" y="122" fontSize="12" fill={stroke} textAnchor="middle">
+        x = a
+      </text>
+
+      <text x="180" y="152" fontSize="11" fill={muted} textAnchor="middle">
+        入れてよい数の列に、空席が 1 つ。
+      </text>
+      <text x="180" y="170" fontSize="11" fill={muted} textAnchor="middle">
+        その 1 点は、誰が決めた？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列2 Step 10：同じ式・窓の位置だけが違う 2 つ。
+ * 境目の窓（いちばん下の点が窓のはしにちょうど重なる位置）は描かない＝それが答えそのもの。
+ * 窓を左へずらした図も描かない（「左へも外れる」に気づくのが山だから）。
+ */
+export function M3fSameRuleTwoDomains() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ形の下に凸の放物線を二つ並べた模式図。左は窓の中に曲線のいちばん低いところが入っており、右は窓の外にある。目盛りや値は書かれておらず、窓の位置も文字で示されていない"
+    >
+      <text x="178" y="34" fontSize="10" fill={muted} textAnchor="middle">
+        窓をずらしただけ
+      </text>
+
+      {/* 左：いちばん低い点が窓の中 */}
+      <path
+        d="M 20 50 Q 90 170 160 50"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,4"
+      />
+      <path d="M 70 105.1 Q 92 115.9 114 102.9" fill="none" stroke={accent} strokeWidth="2.6" />
+      <path d="M 70 105.1 L 70 158" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 114 102.9 L 114 158" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <circle cx="90" cy="110" r="2.8" fill={stroke} />
+      <text x="90" y="178" fontSize="13" fill={stroke} textAnchor="middle">
+        F
+      </text>
+
+      {/* 右：いちばん低い点が窓の外（左側） */}
+      <path
+        d="M 195 50 Q 265 170 335 50"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,4"
+      />
+      <path d="M 288 103.5 Q 310 91.1 332 55" fill="none" stroke={accent} strokeWidth="2.6" />
+      <path d="M 288 103.5 L 288 158" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 332 55 L 332 158" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <circle cx="265" cy="110" r="2.8" fill={stroke} />
+      <text x="265" y="178" fontSize="13" fill={stroke} textAnchor="middle">
+        G
+      </text>
+
+      {/* 2 つの図のあいだの矢印 */}
+      <path d="M 166 104 L 190 104" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 182 99 L 190 104 L 182 109" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <text x="180" y="202" fontSize="11" fill={muted} textAnchor="middle">
+        式は同じ。窓の位置だけが違う。
+      </text>
+      <text x="180" y="218" fontSize="11" fill={muted} textAnchor="middle">
+        窓はどちらの向きへずらしても大丈夫？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列3 Step 1：2 つの箱を直列につなぐ。
+ * 数は 1 つも書かない。箱の中身の式も書かない（名前が蓋、という系列1 の帰結を保つ）。
+ */
+export function M3fComposeChain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="二つの箱を直列につないだ図。左の箱が先に動き、出てきた値がまん中を通って右の箱に入る。まん中の値も右端の値も疑問符のままで、箱の中身の式も通る値も書かれていない"
+    >
+      <text x="16" y="71" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 26 66 L 50 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 42 61 L 50 66 L 42 71" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="54" y="44" width="62" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="85" y="72" fontSize="15" fill={stroke} textAnchor="middle">
+        g
+      </text>
+      <text x="85" y="104" fontSize="10" fill={muted} textAnchor="middle">
+        先に動く
+      </text>
+
+      <path d="M 120 66 L 140 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="144"
+        y="52"
+        width="32"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="160" y="72" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="160" y="96" fontSize="10" fill={muted} textAnchor="middle">
+        まん中の値
+      </text>
+      <path d="M 180 66 L 200 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 192 61 L 200 66 L 192 71" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="204" y="44" width="62" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="235" y="72" fontSize="15" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <text x="235" y="104" fontSize="10" fill={muted} textAnchor="middle">
+        あとで動く
+      </text>
+
+      <path d="M 270 66 L 296 66" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 288 61 L 296 66 L 288 71" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="312" y="72" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="134" fontSize="11" fill={muted} textAnchor="middle">
+        まん中に出てくる値は、g の出口？ それとも f の入口？
+      </text>
+      <text x="180" y="156" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの箱を入れかえたら、右端の ? は同じ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列3 Step 6：同じ箱を 2 回通す。
+ * 次数（2 次・4 次）は文字でも式でも書かない＝step6 の答えそのもの。箱は 2 つまで（層5）。
+ */
+export function M3fSelfCompose() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 182"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ箱をつづけて二回通す図。二つの箱には同じ名前が書かれ、同じ箱であることが破線で示されている。とちゅうの値も最後の値も疑問符のままで、式も次数も書かれていない"
+    >
+      {/* 「同じ箱」を言う破線の弧 */}
+      <path d="M 85 60 Q 162 20 239 60" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4,3" />
+      <text x="162" y="32" fontSize="10" fill={muted} textAnchor="middle">
+        同じ箱
+      </text>
+
+      <text x="16" y="87" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 26 82 L 50 82" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 42 77 L 50 82 L 42 87" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="54" y="60" width="62" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="85" y="88" fontSize="15" fill={stroke} textAnchor="middle">
+        g
+      </text>
+      <text x="85" y="122" fontSize="10" fill={muted} textAnchor="middle">
+        1 回目
+      </text>
+
+      <path d="M 120 82 L 140 82" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="144"
+        y="68"
+        width="32"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="160" y="88" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 180 82 L 200 82" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 192 77 L 200 82 L 192 87" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="208" y="60" width="62" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="239" y="88" fontSize="15" fill={stroke} textAnchor="middle">
+        g
+      </text>
+      <text x="239" y="122" fontSize="10" fill={muted} textAnchor="middle">
+        2 回目
+      </text>
+
+      <path d="M 274 82 L 298 82" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 290 77 L 298 82 L 290 87" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="314" y="88" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="150" fontSize="11" fill={muted} textAnchor="middle">
+        同じ箱をもう一度通すと、出てくる式はどう変わる？
+      </text>
+      <text x="180" y="172" fontSize="11" fill={muted} textAnchor="middle">
+        くり返せる回数に、上限はある？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列3 Step 10：積の道と合成の道を上下に並べる。
+ * 数値・符号・次数は 1 つも書かない。? はすべて同じ色・同じ大きさ・同じ高さにそろえて、
+ * 大小や符号をほのめかさない（層8）。
+ */
+export function M3fProductVsCompose() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 246"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ入力から出発する二本の道を上下に並べた図。上の道は二つの箱を別々に動かして出てきた値をかけ算し、下の道は片方の出口をもう片方の入口につなぐ。出力はすべて疑問符のままで、値も符号も書かれていない"
+    >
+      <text x="8" y="14" fontSize="10" fill={muted}>
+        別々に動かして、あとでかける
+      </text>
+
+      {/* 上段：積の道 */}
+      <text x="18" y="73" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 28 68 L 46 68 L 46 41 L 62 41" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 54 36 L 62 41 L 54 46" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 46 68 L 46 95 L 62 95" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 54 90 L 62 95 L 54 100" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="66" y="24" width="56" height="34" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="94" y="46" fontSize="14" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <rect x="66" y="78" width="56" height="34" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="94" y="100" fontSize="14" fill={stroke} textAnchor="middle">
+        g
+      </text>
+
+      <path d="M 126 41 L 146 41" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 138 36 L 146 41 L 138 46" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="158" y="46" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 126 95 L 146 95" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 138 90 L 146 95 L 138 100" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="158" y="100" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <path d="M 170 41 L 192 41 L 192 68" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 170 95 L 192 95 L 192 68" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 192 68 L 202 68" fill="none" stroke={accent} strokeWidth="1.4" />
+      <circle cx="216" cy="68" r="11" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="216" y="73" fontSize="13" fill={stroke} textAnchor="middle">
+        ×
+      </text>
+      <path d="M 230 68 L 252 68" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 244 63 L 252 68 L 244 73" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="266" y="73" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {/* 上下の x をそろえる破線 */}
+      <path d="M 18 82 L 18 168" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+
+      <text x="8" y="146" fontSize="10" fill={muted}>
+        出口を入口につなぐ
+      </text>
+
+      {/* 下段：合成の道 */}
+      <text x="18" y="180" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 28 175 L 52 175" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 44 170 L 52 175 L 44 180" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="56" y="158" width="52" height="34" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="82" y="180" fontSize="14" fill={stroke} textAnchor="middle">
+        g
+      </text>
+      <path d="M 112 175 L 128 175" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="130"
+        y="162"
+        width="28"
+        height="26"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="144" y="181" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 162 175 L 178 175" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 170 170 L 178 175 L 170 180" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="182" y="158" width="52" height="34" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="208" y="180" fontSize="14" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <path d="M 238 175 L 252 175" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 244 170 L 252 175 L 244 180" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="266" y="181" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="218" fontSize="11" fill={muted} textAnchor="middle">
+        同じ箱・同じ入力なのに、2 本の道は同じところに着く？
+      </text>
+      <text x="180" y="238" fontSize="11" fill={muted} textAnchor="middle">
+        ちがうとしたら、どこで分かれた？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列4 Step 1：1 つに見える箱の中を覗く。
+ * derivation でも同じマーカーを使うので、特定の問題の式（sin など）は絶対に入れない。
+ * 継ぎ目に流れる値も出力も伏せる。
+ */
+export function M3fPeekInside() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 172"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="一つに見える関数の箱の中に、小さな箱が二つ直列に並んでいる図。左が内側の箱、右が外側の箱で、二つの継ぎ目を流れる値は文字のまま。具体的な式も値も書かれていない"
+    >
+      <text x="171" y="26" fontSize="10" fill={muted} textAnchor="middle">
+        1 つに見える関数
+      </text>
+      <rect
+        x="44"
+        y="34"
+        width="254"
+        height="72"
+        rx="12"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="5,4"
+      />
+
+      <text x="16" y="75" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 26 70 L 52 70" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 44 65 L 52 70 L 44 75" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="56" y="48" width="60" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="86" y="70" fontSize="14" fill={stroke} textAnchor="middle">
+        g
+      </text>
+      <text x="86" y="85" fontSize="10" fill={muted} textAnchor="middle">
+        内側
+      </text>
+
+      <path d="M 120 70 L 140 70" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="144"
+        y="56"
+        width="30"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="159" y="76" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        t
+      </text>
+      <path d="M 178 70 L 198 70" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 190 65 L 198 70 L 190 75" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="202" y="48" width="60" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="232" y="70" fontSize="14" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <text x="232" y="85" fontSize="10" fill={muted} textAnchor="middle">
+        外側
+      </text>
+
+      <path d="M 266 70 L 312 70" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 304 65 L 312 70 L 304 75" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="326" y="75" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+
+      <text x="180" y="138" fontSize="11" fill={muted} textAnchor="middle">
+        1 つに見える箱の中で、先に動くのはどちらの箱？
+      </text>
+      <text x="180" y="158" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの箱の継ぎ目には、どんな数が流れている？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列4 Step 4：同じ 2 つの部品を、逆の順につなぐ。
+ * どちらが正しいかは書かない（判定は学習者の仕事）。中間の値も出力も伏せる。
+ */
+export function M3fWhichIsInside() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ二つの部品、二次の箱と三角の箱を、上下で逆の順につないだ二本の流れの図。上は三角の箱が外側、下は三角の箱が内側。どちらが正しいかは書かず、途中の値も出力も伏せてある"
+    >
+      {/* 上段：2 次 → 三角 */}
+      <text x="16" y="67" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 26 62 L 50 62" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 42 57 L 50 62 L 42 67" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="54" y="42" width="58" height="40" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="83" y="67" fontSize="13" fill={stroke} textAnchor="middle">
+        2 次
+      </text>
+      <path d="M 116 62 L 138 62" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="142"
+        y="48"
+        width="28"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="156" y="68" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        t
+      </text>
+      <path d="M 174 62 L 198 62" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 190 57 L 198 62 L 190 67" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="202" y="42" width="58" height="40" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="231" y="67" fontSize="13" fill={stroke} textAnchor="middle">
+        三角
+      </text>
+      <path d="M 264 62 L 290 62" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 282 57 L 290 62 L 282 67" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="304" y="67" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+
+      {/* 上下が対であることを示す縦の点線 */}
+      <path d="M 156 84 L 156 126" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+
+      {/* 下段：三角 → 2 次 */}
+      <text x="16" y="153" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 26 148 L 50 148" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 42 143 L 50 148 L 42 153" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="54" y="128" width="58" height="40" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="83" y="153" fontSize="13" fill={stroke} textAnchor="middle">
+        三角
+      </text>
+      <path d="M 116 148 L 138 148" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x="142"
+        y="134"
+        width="28"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x="156" y="154" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        t
+      </text>
+      <path d="M 174 148 L 198 148" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 190 143 L 198 148 L 190 153" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="202" y="128" width="58" height="40" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="231" y="153" fontSize="13" fill={stroke} textAnchor="middle">
+        2 次
+      </text>
+      <path d="M 264 148 L 290 148" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 282 143 L 290 148 L 282 153" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="304" y="153" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+
+      <text x="180" y="188" fontSize="11" fill={muted} textAnchor="middle">
+        同じ 2 つの部品でも、つなぐ順を変えたら同じ関数になる？
+      </text>
+      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
+        どちらが内側かは、式のどこに書いてある？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列4 Step 10：1 つの式の 2 通りの読み方。
+ * どちらが正しいかは書かない（○×・「誤り」「正しい」の語を入れない）。
+ * 図が示すのは「片方には収まりきらない断片が出る」という構造の違いだけ。
+ */
+export function M3fDecomposeTrap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const column = (cx: number, label: string, first: string, second: string) => (
+    <>
+      <text x={cx} y="20" fontSize="11" fill={stroke} textAnchor="middle">
+        {label}
+      </text>
+      <text x={cx} y="42" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d={`M ${cx} 48 L ${cx} 60`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d={`M ${cx - 5} 52 L ${cx} 60 L ${cx + 5} 52`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x={cx - 34}
+        y="64"
+        width="68"
+        height="30"
+        rx="8"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.3"
+      />
+      <text x={cx} y="84" fontSize="12" fill={stroke} textAnchor="middle">
+        {first}
+      </text>
+      <path d={`M ${cx} 96 L ${cx} 108`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d={`M ${cx - 5} 100 L ${cx} 108 L ${cx + 5} 100`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x={cx - 16}
+        y="110"
+        width="32"
+        height="26"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,3"
+      />
+      <text x={cx} y="129" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        t
+      </text>
+      <path d={`M ${cx} 138 L ${cx} 150`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d={`M ${cx - 5} 142 L ${cx} 150 L ${cx + 5} 142`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect
+        x={cx - 34}
+        y="152"
+        width="68"
+        height="30"
+        rx="8"
+        fill={fillColor}
+        stroke={stroke}
+        strokeWidth="1.3"
+      />
+      <text x={cx} y="172" fontSize="12" fill={stroke} textAnchor="middle">
+        {second}
+      </text>
+      <path d={`M ${cx} 184 L ${cx} 196`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d={`M ${cx - 5} 188 L ${cx} 196 L ${cx + 5} 188`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x={cx} y="212" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+    </>
+  );
+  return (
+    <svg
+      viewBox="0 0 360 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="一つの式を二通りに読んだときの流れを、左右に並べた図。左の読み方では、二つの箱のどちらにも入りきらない断片が一つ宙に残っている。右の読み方では残りなくつながっている。どちらが正しいかは書かず、式も値も書かれていない"
+    >
+      {column(90, "A の読み", "2 乗", "三角")}
+      {column(262, "B の読み", "三角", "2 次")}
+
+      {/* A の読みで、どちらの箱にも入りきらずに宙に浮いた断片 */}
+      <rect
+        x="140"
+        y="150"
+        width="36"
+        height="28"
+        rx="6"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="3,3"
+      />
+      <text x="158" y="169" fontSize="11" fill={muted} textAnchor="middle">
+        残り
+      </text>
+
+      <text x="180" y="238" fontSize="11" fill={muted} textAnchor="middle">
+        2 つの箱にきちんと収まるのは、どちらの読み方？
+      </text>
+      <text x="180" y="256" fontSize="11" fill={muted} textAnchor="middle">
+        収まりきらない部分が出たら、それは何のしるし？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列5 Step 1：中心が原点にある、いちばん素直な双曲線。
+ * 目盛り・座標軸の数字は 1 つも書かない。曲線上に点をプロットしない（step1 の答えが読めてしまう）。
+ * 「漸近線」の語も x = 0・y = 0 の式も書かない（step2・step3 の答えを図が先に言わないため）。
+ */
+export function M3fHyperbolaBasic() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const branch = (sign: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 40; i += 1) {
+      const X = 12 + (i * (140 - 12)) / 40;
+      const Y = 900 / X;
+      pts.push(`${(180 + sign * X).toFixed(1)},${(110 - sign * Y).toFixed(1)}`);
+    }
+    return `M ${pts.join(" L ")}`;
+  };
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="座標軸と、原点について点対称な二本の曲線。曲線は縦軸にも横軸にも近づいていくが、どちらにも触れないように描かれている。目盛りは打たれておらず、点の座標は読めない"
+    >
+      {/* 座標軸（目盛り・数字は書かない） */}
+      <path d="M 30 110 L 336 110" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 328 105 L 336 110 L 328 115" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 180 196 L 180 22" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 175 30 L 180 22 L 185 30" fill="none" stroke={muted} strokeWidth="1" />
+
+      <path d={branch(1)} fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round" />
+      <path d={branch(-1)} fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round" />
+
+      <circle cx="180" cy="110" r="2.6" fill={stroke} />
+      <text x="172" y="126" fontSize="10" fill={muted} textAnchor="end">
+        中心
+      </text>
+
+      <text x="288" y="86" fontSize="10" fill={muted} textAnchor="middle">
+        近づくのに、届かない
+      </text>
+
+      <text x="180" y="214" fontSize="11" fill={muted} textAnchor="middle">
+        x を右へどこまでも進めると、この曲線はどこへ近づく？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列5 Step 4：割り算 1 回で「中心のずれ」が現れる。
+ * 数を 1 つも書かない（step4・step5 の答えも、その式に出てくる係数も）。
+ * 右端の十字には目盛りを打たない。双曲線そのものは描かない（開き方まで見えてしまうため）。
+ */
+export function M3fDivideToCenter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 244"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分数の式を、割り算によって定数と分母が同じ分数の和に組み替える図。組み替えたあとの定数が縦方向のずれ、分母がゼロになる場所が横方向のずれに対応することを、文字のまま矢印で示している。係数や定数の値は書かれておらず、右の十字にも目盛りはない"
+    >
+      {/* 上段：もとの形 */}
+      <text x="80" y="38" fontSize="14" fill={stroke} textAnchor="middle">
+        ax + b
+      </text>
+      <path d="M 48 46 L 112 46" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="80" y="64" fontSize="14" fill={stroke} textAnchor="middle">
+        x − p
+      </text>
+
+      {/* 割り算の矢印 */}
+      <path d="M 80 74 L 80 98" fill="none" stroke={accent} strokeWidth="2.2" />
+      <path d="M 74 90 L 80 98 L 86 90" fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x="94" y="90" fontSize="10" fill={muted}>
+        分子を分母で割る（1 回）
+      </text>
+
+      {/* 下段：組み替えたあとの形 */}
+      <text x="44" y="132" fontSize="14" fill={stroke} textAnchor="middle">
+        q +
+      </text>
+      <text x="92" y="124" fontSize="14" fill={stroke} textAnchor="middle">
+        k
+      </text>
+      <path d="M 68 132 L 116 132" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="92" y="150" fontSize="14" fill={stroke} textAnchor="middle">
+        x − p
+      </text>
+
+      {/* 2 つの部品が、それぞれどちら向きのずれになるか */}
+      <path d="M 44 138 L 44 176 L 146 176" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 138 171 L 146 176 L 138 181" fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x="152" y="180" fontSize="10" fill={muted}>
+        y 方向のずれ
+      </text>
+      <path d="M 92 158 L 92 204 L 146 204" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 138 199 L 146 204 L 138 209" fill="none" stroke={muted} strokeWidth="1.1" />
+      <text x="152" y="208" fontSize="10" fill={muted}>
+        x 方向のずれ（分母が 0 になる場所）
+      </text>
+
+      {/* 目盛りのない十字（中心の在りかは文字のまま） */}
+      <path d="M 290 26 L 290 106" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="4,3" />
+      <path d="M 234 64 L 346 64" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="4,3" />
+      <circle cx="290" cy="64" r="2.8" fill={accent} />
+      <text x="290" y="18" fontSize="11" fill={stroke} textAnchor="middle">
+        x = p
+      </text>
+      <text x="230" y="60" fontSize="11" fill={stroke} textAnchor="end">
+        y = q
+      </text>
+      <text x="298" y="80" fontSize="10" fill={muted}>
+        中心
+      </text>
+
+      <text x="180" y="232" fontSize="11" fill={muted} textAnchor="middle">
+        割り算の 2 つの部品は、どちらが縦のずれ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列6 Step 1：分母が 0 になる 1 点だけを外す。
+ * 具体的な数値も数直線の目盛りも書かない。「かけると解が増える」（step3 の中身）も先出ししない。
+ */
+export function M3fClearDenom() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const paper = "var(--background)";
+  return (
+    <svg
+      viewBox="0 0 360 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分数の模式と数直線の図。数直線上の一点が白丸で抜かれていて、そこは分母がゼロになる場所であることを示している。分子と分母の具体的な式は書かれておらず、数直線に目盛りもない"
+    >
+      {/* 分数の模式（具体の式は書かない） */}
+      <text x="180" y="38" fontSize="12" fill={stroke} textAnchor="middle">
+        分子
+      </text>
+      <path d="M 152 46 L 208 46" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="64" fontSize="12" fill={stroke} textAnchor="middle">
+        分母
+      </text>
+
+      <text x="198" y="100" fontSize="10" fill={muted} textAnchor="middle">
+        ここでは分母が 0
+      </text>
+      <path d="M 198 104 L 198 116" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="2,3" />
+
+      {/* 両辺に同じものをかけてよい区間（白丸だけを避けて画面の端まで伸ばす） */}
+      <rect x="25" y="116" width="167" height="18" fill={fillColor} />
+      <rect x="204" y="116" width="131" height="18" fill={fillColor} />
+
+      {/* 数直線 */}
+      <path d="M 25 125 L 335 125" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 33 120 L 25 125 L 33 130" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 327 120 L 335 125 L 327 130" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <circle cx="198" cy="125" r="5" fill={paper} stroke={stroke} strokeWidth="1.5" />
+      <text x="198" y="150" fontSize="12" fill={stroke} textAnchor="middle">
+        x = p
+      </text>
+
+      <text x="180" y="182" fontSize="11" fill={muted} textAnchor="middle">
+        分母が 0 になる 1 点だけは、この式に入れられない。
+      </text>
+      <text x="180" y="200" fontSize="11" fill={muted} textAnchor="middle">
+        その 1 点をよけたところでなら、両辺に同じものをかけてよい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列6 Step 3：払ったあとの式が受け入れる x のほうが広い。
+ * 2 つの黒丸は同じ見た目にする（どちらが答えかを図が言わない）。具体的な数値も書かない。
+ * 下向きの線は「重なるかもしれない」を示す破線にとどめ、結論の文は置かない。
+ */
+export function M3fExtraneousRoot() {
+  const stroke = "var(--foreground)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const paper = "var(--background)";
+  return (
+    <svg
+      viewBox="0 0 360 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="入れ子になった二つの枠の図。内側はもとの式を満たすエックスの集まり、外側は分母を払ったあとの式を満たすエックスの集まりを表す。それぞれに点が一つずつあり、どちらが答えかは示されていない"
+    >
+      <rect x="40" y="26" width="280" height="100" rx="48" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="44" fontSize="10" fill={muted} textAnchor="middle">
+        分母を払ったあとの式を満たす x
+      </text>
+
+      <rect x="68" y="56" width="136" height="64" rx="30" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="136" y="76" fontSize="10" fill={muted} textAnchor="middle">
+        もとの式を満たす x
+      </text>
+      <circle cx="136" cy="94" r="4" fill={stroke} />
+      <text x="136" y="113" fontSize="10" fill={stroke} textAnchor="middle">
+        候補①
+      </text>
+
+      <circle cx="262" cy="94" r="4" fill={stroke} />
+      <text x="262" y="113" fontSize="10" fill={stroke} textAnchor="middle">
+        候補②
+      </text>
+
+      <path d="M 262 132 L 262 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 257 143 L 262 151 L 267 143" fill="none" stroke={muted} strokeWidth="1" />
+      <circle cx="262" cy="160" r="5" fill={paper} stroke={stroke} strokeWidth="1.4" />
+      <text x="262" y="182" fontSize="10" fill={stroke} textAnchor="middle">
+        x = p（分母が 0）
+      </text>
+
+      <text x="180" y="208" fontSize="11" fill={muted} textAnchor="middle">
+        分母を払うと、式が受け入れる x が広がる。
+      </text>
+      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
+        広がったところに現れた候補は、もとの式でも意味をもつ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列6 Step 6：曲線と直線の上下を読む。
+ * 目盛り・座標の数値は書かない（帯の端の位置が答えそのもの）。境目は文字のまま。
+ * 縦の漸近線より右側にできるもう 1 つの解の部分には、帯を置かない。
+ */
+export function M3fIneqBand() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 298"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="二本の破線を漸近線とする双曲線と、右下がりの直線の模式図。二か所で交わっていて、交わる位置には数ではなく文字が書かれている。曲線が直線より上にある部分の一つに、薄い帯がかかっている"
+    >
+      {/* 両側に境目のある部分（帯。数は書かない） */}
+      <rect x="72.5" y="104" width="121.6" height="130" fill={fillColor} />
+
+      {/* 座標軸（目盛りなし・原点の数字なし） */}
+      <path d="M 22 234 L 348 234" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 340 229 L 348 234 L 340 239" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 95 248 L 95 26" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 90 34 L 95 26 L 100 34" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="352" y="230" fontSize="10" fill={muted}>
+        x
+      </text>
+      <text x="84" y="24" fontSize="10" fill={muted}>
+        y
+      </text>
+
+      {/* 漸近線（位置は文字のまま） */}
+      <path d="M 217 24 L 217 240" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="5,4" />
+      <path d="M 22 110 L 350 110" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="5,4" />
+      <text x="217" y="18" fontSize="11" fill={stroke} textAnchor="middle">
+        x = p
+      </text>
+      <text x="346" y="128" fontSize="11" fill={stroke} textAnchor="end">
+        y = q
+      </text>
+
+      {/* 双曲線の 2 本の枝（模式） */}
+      <path d="M 25 114 C 140 117, 190 138, 210 208" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 224 30 C 240 80, 270 98, 346 107" fill="none" stroke={accent} strokeWidth="2" />
+
+      {/* 右下がりの直線（左の枝とだけ 2 回交わる） */}
+      <path d="M 35 99.7 L 300 219.3" fill="none" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 交点（位置は文字のまま） */}
+      <circle cx="72.5" cy="116.7" r="3" fill={stroke} />
+      <circle cx="194.1" cy="171.6" r="3" fill={stroke} />
+      <path d="M 72.5 116.7 L 72.5 234" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 194.1 171.6 L 194.1 234" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <text x="72.5" y="250" fontSize="11" fill={stroke} textAnchor="middle">
+        x = α
+      </text>
+      <text x="194.1" y="250" fontSize="11" fill={stroke} textAnchor="middle">
+        x = β
+      </text>
+
+      <text x="180" y="274" fontSize="11" fill={muted} textAnchor="middle">
+        曲線が直線より上にあるのは、どこからどこまで？
+      </text>
+      <text x="180" y="292" fontSize="11" fill={muted} textAnchor="middle">
+        上下が入れかわるのは、2 本が出会うところだけ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列7 Step 1：装置を裏返して読む。
+ * 具体的な数も f の式も書かない。下段の矢印は 2 本に分けない（それは step4 の図の仕事）。
+ */
+export function M3fFlipDevice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 198"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="関数の箱を、上の段は左から右へ、下の段は右から左へ裏返して読む図。入れた値も返る値も書かれていない"
+    >
+      {/* 上段：ふつうの向き */}
+      <text x="92" y="57" fontSize="13" fill={stroke} textAnchor="middle">
+        x
+      </text>
+      <path d="M 105 52 L 141 52" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 133 47 L 141 52 L 133 57" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="145" y="30" width="70" height="44" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="58" fontSize="15" fill={stroke} textAnchor="middle">
+        f
+      </text>
+      <path d="M 219 52 L 255 52" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 247 47 L 255 52 L 247 57" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="268" y="57" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+
+      <text x="105" y="102" fontSize="10" fill={muted}>
+        裏返す
+      </text>
+
+      {/* 下段：同じ箱を、逆向きに読む */}
+      <text x="92" y="137" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 141 132 L 105 132" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 113 127 L 105 132 L 113 137" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="145" y="110" width="70" height="44" rx="9" fill={fillColor} stroke={muted} strokeWidth="1.3" />
+      <text x="180" y="138" fontSize="15" fill={muted} textAnchor="middle">
+        f
+      </text>
+      <path d="M 255 132 L 219 132" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 227 127 L 219 132 L 227 137" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="268" y="137" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+
+      <text x="180" y="174" fontSize="11" fill={muted} textAnchor="middle">
+        出口の側から入れたら、入口からは何が出てくる？
+      </text>
+      <text x="180" y="192" fontSize="11" fill={muted} textAnchor="middle">
+        返ってくるのは、いつも 1 つ？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列7 Step 4：裏返した箱から矢印が 2 本出る。
+ * 値も式も符号ラベルも書かない（step4・step5 の答えそのもの）。
+ * 「だから定義域を制限する」という結論も書かない。放物線も描き足さない。
+ */
+export function M3fTwoPreimages() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 198"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="裏返した関数の箱から矢印が二本出ている図。返る値は疑問符のままで書かれていない"
+    >
+      <text x="300" y="97" fontSize="13" fill={stroke} textAnchor="middle">
+        y
+      </text>
+      <path d="M 288 92 L 250 92" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 258 87 L 250 92 L 258 97" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <rect x="170" y="68" width="70" height="48" rx="9" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="205" y="98" fontSize="15" fill={stroke} textAnchor="middle">
+        f
+      </text>
+
+      <path d="M 168 84 L 142 62 L 110 62" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 118 57 L 110 62 L 118 67" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 168 100 L 142 122 L 110 122" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 118 117 L 110 122 L 118 127" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <text x="96" y="67" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="96" y="127" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="152" fontSize="11" fill={muted} textAnchor="middle">
+        1 つ入れたのに、2 つ返ってきた
+      </text>
+      <text x="180" y="172" fontSize="11" fill={muted} textAnchor="middle">
+        これは「関数」と呼べる？
+      </text>
+      <text x="180" y="190" fontSize="11" fill={muted} textAnchor="middle">
+        呼べるようにするには、何を捨てればいい？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列7 Step 9：y = x での折り返し。
+ * 目盛り・座標の数値は一切書かない。2 本が交わる点に丸を打たず、交点の在りかも断定しない。
+ * 曲線の端は軸に届く前で止め、切片が読めないようにする。
+ */
+export function M3fMirrorYx() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="右上がりの曲線と、それを直線について折り返した曲線の模式図。目盛りは打たれておらず、二本が出会う点は描かれていない"
+    >
+      {/* 座標軸（目盛りなし） */}
+      <path d="M 30 190 L 330 190" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 322 185 L 330 190 L 322 195" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 40 200 L 40 30" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 35 38 L 40 30 L 45 38" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="338" y="194" fontSize="11" fill={muted}>
+        x
+      </text>
+      <text x="30" y="26" fontSize="11" fill={muted}>
+        y
+      </text>
+
+      {/* 折り返しの鏡 */}
+      <path d="M 55 175 L 200 30" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="5,4" />
+      <text x="208" y="34" fontSize="11" fill={muted} fontStyle="italic">
+        y = x
+      </text>
+
+      {/* もとのグラフ */}
+      <path d="M 62 130 C 92 104, 122 84, 150 68" fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x="120" y="54" fontSize="11" fill={accent} textAnchor="end">
+        y = f(x)
+      </text>
+
+      {/* 折り返した像 */}
+      <path
+        d="M 100 168 C 126 138, 146 108, 162 80"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeDasharray="6,4"
+      />
+      <text x="106" y="182" fontSize="11" fill={stroke}>
+        y = f⁻¹(x)
+      </text>
+
+      {/* 折り返しても動かない点は、どこ？ */}
+      <text x="120" y="110" fontSize="13" fill={muted} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="212" fontSize="11" fill={muted} textAnchor="middle">
+        折り返しても動かない点は、どこにある？
+      </text>
+      <text x="180" y="230" fontSize="11" fill={muted} textAnchor="middle">
+        2 本のグラフが出会うとしたら、それはどのあたり？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列8 Step 1：2 乗を巻き戻すと、縦と横が入れかわる。
+ * 目盛り・軸の数値・端点の座標は書かない（step1 の答えの位置を数で示さない）。
+ * y 切片（step3 の答え）も具体的な式も書かない。格子点・方眼は描かない。
+ */
+export function M3fSqrtHalfParabola() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 262"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上に開いた放物線の右半分と、それを直線で折り返してできる横に寝た曲線を並べた図。寝た曲線は上半分だけが実線で、下半分は薄い破線。曲線の左の端には疑問符が置かれている。目盛りと座標の数値は書かれていない"
+    >
+      {/* 座標軸（細い十字線のみ） */}
+      <path d="M 30 140 L 336 140" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 150 215 L 150 30" fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 折り返しの鏡 */}
+      <path d="M 95 195 L 215 75" fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="5,4" />
+      <text x="88" y="204" fontSize="11" fill={muted} textAnchor="end" fontStyle="italic">
+        y = x
+      </text>
+
+      {/* 放物線：左半分は薄い破線、右半分だけ実線 */}
+      <path
+        d="M 150 176 Q 122.5 176 95 109.45"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,4"
+      />
+      <path d="M 150 176 Q 177.5 176 205 109.45" fill="none" stroke={stroke} strokeWidth="2.2" />
+
+      {/* 折り返してできた、横に寝た曲線：上半分だけ実線 */}
+      <path d="M 114 140 Q 114 112.5 180.55 85" fill="none" stroke={accent} strokeWidth="2.2" />
+      <path
+        d="M 114 140 Q 114 167.5 180.55 195"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.1"
+        strokeDasharray="4,4"
+      />
+      <circle cx="114" cy="140" r="3.4" fill={accent} />
+      <text x="100" y="158" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {/* 折り返す、という手つき */}
+      <text x="212" y="124" fontSize="10" fill={muted}>
+        折り返す
+      </text>
+      <path d="M 206 118 Q 190 106 176 94" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <path d="M 185 96 L 175 93 L 179 103" fill="none" stroke={muted} strokeWidth="1" />
+
+      <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
+        2 乗を巻き戻すと、縦と横が入れかわる
+      </text>
+      <text x="180" y="254" fontSize="11" fill={muted} textAnchor="middle">
+        ——残るのは、どちら半分？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列8 Step 4：符号の置きかえで、曲線は四方向へ裏返る。
+ * 目盛り・軸の数値は書かない。平行移動したあとの曲線は描かない（step4 の答えがずれの量だから）。
+ * y 切片・定義域の端を示す点も、格子点・方眼も描かない。
+ */
+export function M3fFourDirections() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="原点から四方向へ伸びる四本の曲線を一枚に重ねた模式図。右上・右下・左上・左下に一本ずつあり、根号の外につく符号と、根号の中につく符号で、どの向きへ伸びるかが変わることを示している。目盛りと座標の数値は書かれていない"
+    >
+      {/* 座標軸（目盛りなし） */}
+      <path d="M 22 120 L 340 120" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 332 115 L 340 120 L 332 125" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 180 214 L 180 26" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 175 34 L 180 26 L 185 34" fill="none" stroke={muted} strokeWidth="1" />
+
+      <path d="M 180 120 C 190 96, 232 72, 312 40" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 180 120 C 190 144, 232 168, 312 200" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 180 120 C 170 96, 128 72, 48 40" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 180 120 C 170 144, 128 168, 48 200" fill="none" stroke={accent} strokeWidth="2" />
+
+      <text x="316" y="32" fontSize="10" fill={stroke} textAnchor="end">
+        根号のまま
+      </text>
+      <text x="316" y="216" fontSize="10" fill={stroke} textAnchor="end">
+        外にマイナス
+      </text>
+      <text x="44" y="32" fontSize="10" fill={stroke}>
+        中の x にマイナス
+      </text>
+      <text x="44" y="216" fontSize="10" fill={stroke}>
+        両方にマイナス
+      </text>
+
+      <text x="180" y="238" fontSize="11" fill={muted} textAnchor="middle">
+        x を −x に、y を −y に置きかえると、
+      </text>
+      <text x="180" y="254" fontSize="11" fill={muted} textAnchor="middle">
+        曲線はどちらへ裏返る？
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * 数Ⅲ・C いろいろな関数 系列8 derivation：2 乗すると、折り返した直線との出会いまで混ざる。
+ * 目盛り・軸の数値・交点の座標は書かない。どちらが本物かを示す印（○×・色分け・注記）も入れない。
+ * 具体的な式も書かない。
+ */
+export function M3fSquaringTrap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="横に寝た曲線と、一本の直線と、その直線を横軸で折り返した破線を重ねた模式図。曲線は直線とも破線ともそれぞれ一か所で交わり、その二つの点には疑問符が置かれている。目盛りと座標の数値は書かれていない"
+    >
+      {/* 座標軸（目盛りなし） */}
+      <path d="M 20 150 L 345 150" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 337 145 L 345 150 L 337 155" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 50 178 L 50 14" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 45 22 L 50 14 L 55 22" fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 横に寝た曲線（上半分だけ） */}
+      <path
+        d="M 35 150 C 45 124, 62 110, 100 89 C 160 66, 220 47, 310 26"
+        fill="none"
+        stroke={accent}
+        strokeWidth="2.2"
+      />
+
+      {/* 直線と、それを横軸で折り返した破線 */}
+      <path d="M 130 170 L 290 10" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 40 40 L 160 160" fill="none" stroke={stroke} strokeWidth="1.6" strokeDasharray="6,4" />
+
+      {/* 2 つの出会い。どちらが本物かは書かない */}
+      <circle cx="93" cy="93" r="3.6" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="100" y="79" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <circle cx="264" cy="36" r="3.6" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="272" y="58" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="196" fontSize="10.5" fill={muted} textAnchor="middle">
+        両辺を 2 乗すると、破線のほうとの出会いまで一緒に出てくる。
+      </text>
+      <text x="180" y="214" fontSize="11" fill={muted} textAnchor="middle">
+        どちらが本物？
+      </text>
+    </svg>
+  );
+}
+
 export function FuncBoxStep1() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -13438,6 +14863,146 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <M3fDeviceChain />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_WINDOW_FROM_OUTSIDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fWindowFromOutside />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_DOMAIN_HOLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fDomainHole />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_SAME_RULE_TWO_DOMAINS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fSameRuleTwoDomains />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_COMPOSE_CHAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fComposeChain />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_SELF_COMPOSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fSelfCompose />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_PRODUCT_VS_COMPOSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fProductVsCompose />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_PEEK_INSIDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fPeekInside />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_WHICH_IS_INSIDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fWhichIsInside />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_DECOMPOSE_TRAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fDecomposeTrap />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_HYPERBOLA_BASIC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fHyperbolaBasic />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_DIVIDE_TO_CENTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fDivideToCenter />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_CLEAR_DENOM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fClearDenom />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_EXTRANEOUS_ROOT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fExtraneousRoot />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_INEQ_BAND>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fIneqBand />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_FLIP_DEVICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fFlipDevice />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_TWO_PREIMAGES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fTwoPreimages />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_MIRROR_YX>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fMirrorYx />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_SQRT_HALF_PARABOLA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fSqrtHalfParabola />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_FOUR_DIRECTIONS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fFourDirections />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3F_SQUARING_TRAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3fSquaringTrap />
             </div>
           );
         }

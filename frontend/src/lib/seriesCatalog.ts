@@ -50,6 +50,13 @@ import {
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
   M3F_DEVICE_SERIES,
+  M3F_DOMAIN_SERIES,
+  M3F_COMPOSE_SERIES,
+  M3F_DECOMPOSE_SERIES,
+  M3F_FRAC_GRAPH_SERIES,
+  M3F_FRAC_SOLVE_SERIES,
+  M3F_INVERSE_SERIES,
+  M3F_IRRATIONAL_SERIES,
 } from "./seriesMath3Functions";
 import {
   EXP_LOG_SERIES_LIST,
@@ -1705,6 +1712,62 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数",
     shortDescription:
       "関数という装置（名前をつけて、1 個のものにする）— 代入・逆算・係数決めから、式では書けない関数まで。関数が「値を出す手続き」から「持ち運べるもの」に変わる入口",
+  },
+  {
+    series: M3F_DOMAIN_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "定義域と値域（入れてよい数の範囲は、誰が決める？）— 外から窓を切るのと、関数自身の性質が拒むのとの違い。分母・真数・根号の中が定義域を決める",
+  },
+  {
+    series: M3F_COMPOSE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "合成関数（箱をつなぐ）— つなぐ順番を変えると別の関数になる。$f\\circ g$ は $g$ が先に動く。合成と積は違う",
+  },
+  {
+    series: M3F_DECOMPOSE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "関数を分割してとらえる — $1$ つに見える式の中を覗いて $2$ つの箱に分ける。$t$ とおく一手が、合成関数の微分法と置換積分の土台になる",
+  },
+  {
+    series: M3F_FRAC_GRAPH_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "$1$ 次分数関数のグラフ — 割り算を $1$ 回すると、中心と漸近線が見える。すべての $1$ 次分数関数は $\\dfrac{k}{x}$ の平行移動",
+  },
+  {
+    series: M3F_FRAC_SOLVE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "分数方程式と分数不等式 — 分母を払う操作には「$0$ で割らない」「符号で向きが変わる」の $2$ つの但し書きがつく",
+  },
+  {
+    series: M3F_INVERSE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "逆関数（裏返せるように、半分を捨てる）— 裏返した対応はいつも関数とは限らない。$1$ 対 $1$ にするまで定義域を狭める代償",
+  },
+  {
+    series: M3F_IRRATIONAL_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数",
+    shortDescription:
+      "無理関数のグラフ — $2$ 乗を巻き戻すと放物線が横に寝る。$4$ つの向きは符号の置き換えだけで作れる",
   },
 ];
 
