@@ -12967,58 +12967,53 @@ export function M3fClearDenom() {
  */
 export function M3fExtraneousRoot() {
   const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
-  const paper = "var(--background)";
   return (
     <svg
-      viewBox="0 0 360 232"
+      viewBox="0 0 360 236"
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="入れ子になった二つの枠の図。内側はもとの式を満たすエックスの集まり、外側は分母を払ったあとの式を満たすエックスの集まりを表す。それぞれに点が一つずつあり、どちらが答えかは示されていない"
+      aria-label="入れ子になった二つの枠の図。内側はもとの式を満たすエックスの集まり、外側は分母を払ったあとの式を満たすエックスの集まりを表す。二つの候補は枠の外に並べてあり、どちらがどちらの枠に入るかは描かれていない"
     >
-      <rect x="40" y="26" width="280" height="100" rx="48" fill="none" stroke={stroke} strokeWidth="1.3" />
-      <text x="180" y="44" fontSize="10" fill={muted} textAnchor="middle">
+      <rect x="40" y="22" width="280" height="96" rx="46" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="40" fontSize="10" fill={muted} textAnchor="middle">
         分母を払ったあとの式を満たす x
       </text>
 
-      <rect x="68" y="56" width="136" height="64" rx="30" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
-      <text x="136" y="76" fontSize="10" fill={muted} textAnchor="middle">
+      <rect x="86" y="50" width="188" height="54" rx="26" fill={fillColor} stroke={stroke} strokeWidth="1.3" />
+      <text x="180" y="82" fontSize="10" fill={muted} textAnchor="middle">
         もとの式を満たす x
       </text>
-      <circle cx="136" cy="94" r="4" fill={stroke} />
-      <text x="136" y="113" fontSize="10" fill={stroke} textAnchor="middle">
+
+      {/* 候補は枠の外に置き、どちらの部屋に入るかは描かない */}
+      <circle cx="112" cy="186" r="4" fill={stroke} />
+      <text x="112" y="206" fontSize="10" fill={stroke} textAnchor="middle">
         候補①
       </text>
-
-      <circle cx="262" cy="94" r="4" fill={stroke} />
-      <text x="262" y="113" fontSize="10" fill={stroke} textAnchor="middle">
+      <circle cx="248" cy="186" r="4" fill={stroke} />
+      <text x="248" y="206" fontSize="10" fill={stroke} textAnchor="middle">
         候補②
       </text>
 
-      <path d="M 262 132 L 262 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
-      <path d="M 257 143 L 262 151 L 267 143" fill="none" stroke={muted} strokeWidth="1" />
-      <circle cx="262" cy="160" r="5" fill={paper} stroke={stroke} strokeWidth="1.4" />
-      <text x="262" y="182" fontSize="10" fill={stroke} textAnchor="middle">
-        x = p（分母が 0）
+      <path d="M 112 176 L 112 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <text x="112" y="144" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <path d="M 248 176 L 248 150" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3,3" />
+      <text x="248" y="144" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
       </text>
 
-      <text x="180" y="208" fontSize="11" fill={muted} textAnchor="middle">
-        分母を払うと、式が受け入れる x が広がる。
-      </text>
-      <text x="180" y="226" fontSize="11" fill={muted} textAnchor="middle">
-        広がったところに現れた候補は、もとの式でも意味をもつ？
+      <text x="180" y="228" fontSize="11" fill={muted} textAnchor="middle">
+        払って出た 2 つの候補は、それぞれどちらの部屋に入る？
       </text>
     </svg>
   );
 }
 
-/**
- * 数Ⅲ・C いろいろな関数 系列6 Step 6：曲線と直線の上下を読む。
- * 目盛り・座標の数値は書かない（帯の端の位置が答えそのもの）。境目は文字のまま。
- * 縦の漸近線より右側にできるもう 1 つの解の部分には、帯を置かない。
- */
 export function M3fIneqBand() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
