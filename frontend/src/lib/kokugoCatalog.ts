@@ -207,6 +207,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     shortDescription:
       "読んだ人は、その場にいなかった。それなのに、いっしょにドキドキする——「」が声を、（　）が心のつぶやきを運ぶから。声に出して読みくらべ → 声か心の中かの見分け → 心の中が声に出てしまった一か所 → （　）の有無の発見 → じぶんの一篇まで、全 10 問。",
   },
+  {
+    series: byId(KOKUGO_ZUIHITSU_SERIES_LIST, "kokugo_zuihitsu_yure_01"),
+    genreId: "zuihitsu",
+    shortDescription:
+      "心は、一方向に進まない。行ったり来たり、ゆれる。迷いを消すと、読みやすい文章にはなるけれど、心が消える。読みくらべ → ゆれさがし → 気持ちと出来事の線引き → ならした版とゆれのまま版の発見 → じぶんのゆれた時間まで、全 10 問。",
+  },
 ];
 
 /** 折りたたみ状態のキー（数学の `${subject}|${topicGroup}` に対応）。 */

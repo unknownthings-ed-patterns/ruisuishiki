@@ -394,10 +394,17 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
  * 書いてある」＝系列の核〔（　）の有無ペア〕）。日記系列①の「言ったことが「」で書いて
  * ある」に（　）が加わる位置づけだが、ジャンルが別（nikki／zuihitsu）なので観点リストも
  * 別の生き物として育つ——③の項目は「」と（　）を一組で名指しする。
+ *
+ * 系列④「ゆれうごく心」の3項目（v4 で追加）も同じ扱い＝④の発見の核なので④から解禁する。
+ * 文面は docs/ゆれうごく心背骨_kokugo.md の「観点リスト追加候補」で確定したもの
+ * （「心が行ったり来たりする（ゆれる）ところが、ならされずに、そのまま書いてある」＝
+ * 系列の核〔ならした版／ゆれのまま版のペア〕）。二つ目は「気持ちは出来事・会話・様子と
+ * つなげて書く」（Step3・Step4 の線引き）、三つ目は「気持ちを書かない一文」（Step9 の
+ * 事実だけの結び）——書くことと、書かないことが、一つのリストに並ぶ。
  */
 export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "zuihitsu",
-  version: 3,
+  version: 4,
   items: [
     {
       text: "小さな『見つけた！』が書きとめられている",
@@ -443,6 +450,21 @@ export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "声の様子（どんなふうに言ったか）が書いてある",
       addedIn: "reading",
       revealedInSeries: "kokugo_zuihitsu_sonoba_01",
+    },
+    {
+      text: "心が行ったり来たりする（ゆれる）ところが、ならされずに、そのまま書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_yure_01",
+    },
+    {
+      text: "気持ちが、出来事・会話・様子とつながって書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_yure_01",
+    },
+    {
+      text: "気持ちを書かない一文が、かえって気持ちをつたえているところがある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_yure_01",
     },
   ],
 };
