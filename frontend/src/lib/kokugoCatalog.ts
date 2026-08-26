@@ -201,6 +201,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     shortDescription:
       "「書くことがない」がなくなる。心の中をリストにすると、書きたいことがつぎつぎ見つかる。集めるのは多め、書くのは心をとらえる一つ。読みくらべ → 随筆からリストの逆算 → 全部書く版と一つ版の発見 → じぶんのたからものの一篇まで、全 10 問。",
   },
+  {
+    series: byId(KOKUGO_ZUIHITSU_SERIES_LIST, "kokugo_zuihitsu_sonoba_01"),
+    genreId: "zuihitsu",
+    shortDescription:
+      "読んだ人は、その場にいなかった。それなのに、いっしょにドキドキする——「」が声を、（　）が心のつぶやきを運ぶから。声に出して読みくらべ → 声か心の中かの見分け → 心の中が声に出てしまった一か所 → （　）の有無の発見 → じぶんの一篇まで、全 10 問。",
+  },
 ];
 
 /** 折りたたみ状態のキー（数学の `${subject}|${topicGroup}` に対応）。 */

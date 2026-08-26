@@ -387,10 +387,17 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
  * docs/たからものリスト背骨_kokugo.md の「観点リスト追加候補」で確定したもの
  * （「えらんだ一つが、くわしく書かれている（全部をなぞっていない）」＝系列の核
  * 〔全部書く版／一つを選んで書く版のペア〕）。
+ *
+ * 系列③「その場にいるように（「」と（　））」の3項目（v3 で追加）も同じ扱い＝③の発見の核
+ * なので③から解禁する。文面は docs/その場にいるように背骨_kokugo.md の
+ * 「観点リスト追加候補」で確定したもの（「言ったことが「」で、心の中のことばが（　）で
+ * 書いてある」＝系列の核〔（　）の有無ペア〕）。日記系列①の「言ったことが「」で書いて
+ * ある」に（　）が加わる位置づけだが、ジャンルが別（nikki／zuihitsu）なので観点リストも
+ * 別の生き物として育つ——③の項目は「」と（　）を一組で名指しする。
  */
 export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "zuihitsu",
-  version: 2,
+  version: 3,
   items: [
     {
       text: "小さな『見つけた！』が書きとめられている",
@@ -421,6 +428,21 @@ export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "たからものの来歴（どこから来たか）と、なぜ大切かが書かれている",
       addedIn: "reading",
       revealedInSeries: "kokugo_zuihitsu_takara_01",
+    },
+    {
+      text: "言ったことが「」で、心の中のことばが（　）で書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_sonoba_01",
+    },
+    {
+      text: "したとおり・見たとおりに書いてあって、その場にいるみたいに読める",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_sonoba_01",
+    },
+    {
+      text: "声の様子（どんなふうに言ったか）が書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_sonoba_01",
     },
   ],
 };
