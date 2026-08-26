@@ -195,6 +195,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
     shortDescription:
       "小さな「見つけた！」に、考えを一歩そえると、読んだ人までいっしょに考えはじめる。読みくらべ → 事実と考えの仕分け → 考えの一歩の発見 → じぶんの発見まで、全 10 問。",
   },
+  {
+    series: byId(KOKUGO_ZUIHITSU_SERIES_LIST, "kokugo_zuihitsu_takara_01"),
+    genreId: "zuihitsu",
+    shortDescription:
+      "「書くことがない」がなくなる。心の中をリストにすると、書きたいことがつぎつぎ見つかる。集めるのは多め、書くのは心をとらえる一つ。読みくらべ → 随筆からリストの逆算 → 全部書く版と一つ版の発見 → じぶんのたからものの一篇まで、全 10 問。",
+  },
 ];
 
 /** 折りたたみ状態のキー（数学の `${subject}|${topicGroup}` に対応）。 */

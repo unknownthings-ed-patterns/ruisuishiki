@@ -380,10 +380,17 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
  * はじめて目に入る＝発見が先。文面は docs/見つけたこと背骨_kokugo.md の
  * 「観点リスト追加候補」で確定したもの（「事実のあとに、考えが一歩そえられている」
  * ＝系列の核〔考えの一歩の有無ペア〕）。
+ *
+ * 系列②「たからものリスト（心の地図）」の3項目（v2 で追加）も同じ扱い＝②の発見の核なので
+ * ②から解禁する。系列①を歩く子には①の3項目だけが見え、②へ進むと②の3項目が足される
+ * （KOKUGO_ZUIHITSU_SERIES_LIST／KOKUGO_ALL_SERIES の並び順が解禁順の正）。文面は
+ * docs/たからものリスト背骨_kokugo.md の「観点リスト追加候補」で確定したもの
+ * （「えらんだ一つが、くわしく書かれている（全部をなぞっていない）」＝系列の核
+ * 〔全部書く版／一つを選んで書く版のペア〕）。
  */
 export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "zuihitsu",
-  version: 1,
+  version: 2,
   items: [
     {
       text: "小さな『見つけた！』が書きとめられている",
@@ -399,6 +406,21 @@ export const ZUIHITSU_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "考えから、あたらしい問いやつぎの発見が生まれている",
       addedIn: "reading",
       revealedInSeries: "kokugo_zuihitsu_mitsuke_01",
+    },
+    {
+      text: "心の地図（リスト）から、心をとらえる一つをえらんで書いている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_takara_01",
+    },
+    {
+      text: "えらんだ一つが、くわしく書かれている（全部をなぞっていない）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_takara_01",
+    },
+    {
+      text: "たからものの来歴（どこから来たか）と、なぜ大切かが書かれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_zuihitsu_takara_01",
     },
   ],
 };
