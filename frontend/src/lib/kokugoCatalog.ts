@@ -172,6 +172,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "みんなが同じだけたいせつにされて、そっくり同じになると、だれもえらべなくなる。止まったお話を動かすのは、たった一つのちがい。読みくらべ → ことばとねがいのずれ → そろいの行きどまりの発見 → 自分の「ちがう一つ」まで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_HANASHI_SERIES_LIST, "kokugo_hanashi_settei_01"),
+    genreId: "monogatari",
+    shortDescription:
+      "すきなもの・にがてなもの・もちもの・口ぐせ——わくに分けてならべただけのカードから、その人のお話が動き出す。せっていは、うごき出す前のストーリー。カードに分ける → 3つの特徴で当てる → せってい一つちがいの発見 → 自分の一座まで、全 10 問。",
+  },
+  {
     series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_mashita_01"),
     genreId: "nikki",
     shortDescription:

@@ -233,10 +233,16 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
  * お手本ドラフト §8 の「観点3項目案」で確定したもの（「そっくり同じ六つは、えらべなく
  * なっている」「ちがう一つが、話を動かしている」＝系列の核〔そろいの行きどまりと、
  * それを動かすちがい〕）。
+ *
+ * 系列⑤「登場人物のせっていカード（べファーナの分析）」の3項目（v5 で追加）も同じ扱い＝
+ * ⑤の発見の核なので⑤から解禁する。文面は docs/べファーナ背骨_kokugo.md の
+ * 「観点リスト追加候補」で確定したもの（「人物が、せっていの束で書かれている」＝胚細胞、
+ * 「せっていが、筋の種になっている（にがてなものが、事件をつれてくる）」＝Step4・Step5 の
+ * 発見、「『じつは』が一つあって、人物に奥行きが生まれている」＝Step6 の＋α）。
  */
 export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "monogatari",
-  version: 4,
+  version: 5,
   items: [
     {
       text: "「もし」は一つだけ",
@@ -297,6 +303,21 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "ちがう一つが、話を動かしている",
       addedIn: "reading",
       revealedInSeries: "kokugo_hanashi_princess_01",
+    },
+    {
+      text: "人物が、せっていの束（すき・にがて・もちもの・口ぐせ）で書かれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_settei_01",
+    },
+    {
+      text: "せっていが、筋の種になっている（にがてなものが、事件をつれてくる）",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_settei_01",
+    },
+    {
+      text: "『じつは』が一つあって、人物に奥行きが生まれている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_hanashi_settei_01",
     },
   ],
 };
