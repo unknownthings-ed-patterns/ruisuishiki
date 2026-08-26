@@ -47,6 +47,7 @@ import {
   ALGEBRA2_DOT_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
+import { MATH3_LIMITS_SERIES_LIST, M3L_INTRO_SERIES } from "./seriesMath3Limits";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
   M3F_DEVICE_SERIES,
@@ -1769,6 +1770,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "無理関数のグラフ — $2$ 乗を巻き戻すと放物線が横に寝る。$4$ つの向きは符号の置き換えだけで作れる",
   },
+  /* 第2章 数列の極限（背骨：docs/math3c_limits_design.md） */
+  {
+    series: M3L_INTRO_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "無限に続いていく数列（行き先を問う）— 一般項で捕まえた列に、こんどは「どこへ向かうか」を問う。$n$ の肩の符号ひとつが、列の運命を分ける",
+  },
 ];
 
 /**
@@ -1841,6 +1851,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MIDDLE_SCHOOL_SERIES_LIST,
   ...ALGEBRA_2_SERIES_LIST,
   ...MATH3_FUNCTIONS_SERIES_LIST,
+  ...MATH3_LIMITS_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,

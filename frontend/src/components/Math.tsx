@@ -14840,6 +14840,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3L_POINTS_CLOSING>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lPointsClosing />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_STRONGEST_WINS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lStrongestWins />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_MICROSCOPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lMicroscope />
+            </div>
+          );
+        }
         if (trimmed === "<<FUNC_BOX_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -32249,6 +32270,177 @@ export function StatNullLadder() {
       {ladder(250, 360, "仮説検定", "めったに起きない", "帰無仮説を仮定", true)}
       <text x="210" y="296" fontSize="11.5" fill={accent} textAnchor="middle">
         てっぺんが「矛盾」でなくなると、結論の強さは何を失う？
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列1 step1・derivation: 数直線上の点列が 1 点へ寄っていく図。
+ *  項の値も行き先の値も書かない（step1 は第 15 項を、step10 は帯に入る番号を問う）。
+ *  目盛りを打たず、寄る先は白丸＋「?」のまま。 */
+export function M3lPointsClosing() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 点の位置は模式（実際の項の値の比ではない）。右から左へ間隔を詰めながら寄る。 */
+  const xs = [300, 236, 192, 164, 146, 134, 126, 120];
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線の上に、右から左へ間隔を詰めながら並ぶ点の列。寄っていく先は白丸で描かれ、値は書かれていない。目盛りも数字もない模式の図"
+    >
+      <path d="M 40 84 L 336 84" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 328 79 L 336 84 L 328 89" fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 寄っていく先（白丸・値は書かない） */}
+      <circle cx="108" cy="84" r="4" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <text x="108" y="106" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {xs.map((x, k) => (
+        <circle key={k} cx={x} cy="84" r="3.4" fill={accent} />
+      ))}
+      <text x="300" y="70" fontSize="10" fill={muted} textAnchor="middle">
+        a₁
+      </text>
+      <text x="236" y="70" fontSize="10" fill={muted} textAnchor="middle">
+        a₂
+      </text>
+      <text x="192" y="70" fontSize="10" fill={muted} textAnchor="middle">
+        a₃
+      </text>
+      <text x="150" y="58" fontSize="10" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      <path d="M 214 120 L 130 120" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
+        番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列の極限 系列1 step6: 同じ「n でできた式」でも行き先が分かれることの図。
+ *  どの式がどの行き先に着くかは描かない（それが step6 の発見そのもの）。
+ *  レールは無名（㋐㋑㋒）で、行き先は全部「?」のまま。 */
+export function M3lStrongestWins() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  const rows = [
+    { y: 44, label: "㋐" },
+    { y: 84, label: "㋑" },
+    { y: 124, label: "㋒" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三本の無名のレールが左から右へ伸び、右端の行き先はどれも疑問符の箱になっている。どのレールがどこへ着くかは描かれていない模式の図"
+    >
+      {rows.map((r) => (
+        <g key={r.label}>
+          <text x="34" y={r.y + 5} fontSize="12" fill={stroke} textAnchor="middle">
+            {r.label}
+          </text>
+          <path
+            d={`M 52 ${r.y} L 268 ${r.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="5 4"
+          />
+          <path
+            d={`M 260 ${r.y - 5} L 268 ${r.y} L 260 ${r.y + 5}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+          />
+          <rect
+            x="278"
+            y={r.y - 15}
+            width="42"
+            height="30"
+            rx="7"
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x="299" y={r.y + 6} fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+            ?
+          </text>
+        </g>
+      ))}
+      <text x="160" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        どれも「n と数」でできた式
+      </text>
+      <text x="180" y="164" fontSize="11" fill={accent} textAnchor="middle">
+        同じ材料なのに、行き先は同じとは限らない。何が分けている？
+      </text>
+    </svg>
+  );
+}
+
+/** 数列の極限 系列1 step10: 行き先のまわりを帯で拡大し、ある番号から先が全部入る図。
+ *  帯の幅も、入り始める番号も書かない（番号が step10 の答え）。文字のまま。 */
+export function M3lMicroscope() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const bandFill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  /** 点の位置は模式。帯の外に数点、帯の中に残りが入る。境目の番号は N のまま。
+   *  行き先（白丸）に点を重ねない——重ねると白丸がつぶれて読めなくなる。 */
+  const outside = [300, 258, 226, 202];
+  const inside = [184, 172, 162, 153, 145, 138];
+  return (
+    <svg
+      viewBox="0 0 360 194"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線の行き先のまわりに帯が描かれ、はじめの数点は帯の外、ある番号から先の点はすべて帯の中に入っている。帯の幅も、入りはじめる番号も数では書かれていない模式の図"
+    >
+      {/* 帯（幅は文字のまま） */}
+      <rect x="108" y="50" width="80" height="56" fill={bandFill} stroke={accent} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="108" y="42" fontSize="11" fill={accent} textAnchor="middle">
+        −ε
+      </text>
+      <text x="188" y="42" fontSize="11" fill={accent} textAnchor="middle">
+        +ε
+      </text>
+
+      <path d="M 40 84 L 336 84" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 328 79 L 336 84 L 328 89" fill="none" stroke={muted} strokeWidth="1" />
+      <circle cx="128" cy="84" r="4" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <text x="122" y="126" fontSize="10" fill={muted} textAnchor="middle">
+        行き先
+      </text>
+
+      {outside.map((x, k) => (
+        <circle key={`o${k}`} cx={x} cy="84" r="3.4" fill={muted} />
+      ))}
+      {inside.map((x, k) => (
+        <circle key={`i${k}`} cx={x} cy="84" r="3.4" fill={accent} />
+      ))}
+
+      <text x="266" y="70" fontSize="10" fill={muted} textAnchor="middle">
+        はじめの数項は外
+      </text>
+      <text x="180" y="152" fontSize="10" fill={accent} textAnchor="middle">
+        第 N 項から先は全部この中
+      </text>
+      <text x="180" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        帯をどんなに細くしても、そんな N は見つかる？
       </text>
     </svg>
   );
