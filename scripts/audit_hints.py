@@ -28,7 +28,7 @@ import os
 
 LIB = os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "lib")
 
-CALC = re.compile(r"[0-9０-９]\s*[×÷\+\-=＝*/]\s*[0-9０-９]|→|√|\\sqrt|\\frac|\^2|²")
+CALC = re.compile(r"[0-9０-９]\s*[×÷\+\-=＝*/]\s*[0-9０-９]|→|√|\\sqrt|\\[dt]?frac|\^2|²")
 METHOD = re.compile(
     r"(ずれる|代入する|代入し|移項|を引く|を足す|を割る|をかける|"
     r"平方完成する|展開する|因数分解する|公式：|２乗する|2乗する|逆数をかけ)"
