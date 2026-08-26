@@ -14861,6 +14861,146 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3L_GEO_SHRINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lGeoShrink />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_GEO_SERIES_R>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lGeoSeriesR />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_TUG_OF_WAR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lTugOfWar />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_DIVIDE_BY_TOP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lDivideByTop />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_BASE_LADDER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lBaseLadder />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_ZERO_DENOM_FORK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lZeroDenomFork />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_ROOT_INSIDE_ARROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lRootInsideArrow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_RATIONALIZE_ARROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lRationalizeArrow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_FIXED_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lFixedPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_COBWEB>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lCobweb />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_FISH_DRIVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lFishDrive />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_SQUEEZE_LINES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lSqueezeLines />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_FLOOR_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lFloorStairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_PARTIAL_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lPartialStairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_TELESCOPE_CANCEL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lTelescopeCancel />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_TRACK_HALVES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lTrackHalves />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_SELF_SIMILAR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lSelfSimilar />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_STEP_SHRINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lStepShrink />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_SHRINK_BUT_FAR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lShrinkButFar />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3L_ODD_EVEN_FORK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3lOddEvenFork />
+            </div>
+          );
+        }
         if (trimmed === "<<FUNC_BOX_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -32445,3 +32585,1230 @@ export function M3lMicroscope() {
     </svg>
   );
 }
+
+/* ── 数Ⅲ・C 第2章「数列の極限」系列2 等比数列の極限 ─────────────── */
+
+/** 数列の極限 系列2 step1: 公比の大きさが 1 より小さい等比数列が 1 点へ寄る図。
+ *  点の間隔は模式（実際の公比の比ではない）。目盛りを打たず、寄る先は白丸＋? のまま。
+ *  部屋分け（収束する側／しない側）はここでは描かない——それは step6 の発見だから。 */
+export function M3lGeoShrink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 右から左へ、へだたりを一定の割合（約 0.62・模式）で詰めながら寄る。 */
+  const xs = [320, 236.4, 184.6, 152.4, 132.5, 120.2, 112.5];
+  return (
+    <svg
+      viewBox="0 0 360 158"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線の上に、右から左へへだたりを一定の割合で詰めながら並ぶ点の列。となり合う点をつなぐ矢印はどれも同じ数をかけることを表す。寄っていく先は白丸で、値も目盛りも書かれていない模式の図"
+    >
+      <path d="M 34 92 L 344 92" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 336 87 L 344 92 L 336 97" fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 寄っていく先（白丸・値は書かない） */}
+      <circle cx="100" cy="92" r="4.4" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <text x="100" y="114" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {xs.map((x, k) => (
+        <circle key={k} cx={x} cy="92" r="3.6" fill={accent} />
+      ))}
+      <text x="320" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        a₁
+      </text>
+      <text x="236.4" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        a₂
+      </text>
+      <text x="184.6" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        a₃
+      </text>
+      <text x="140" y="80" fontSize="11" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* 同じ数をかける（かける数そのものは書かない） */}
+      <path d="M 318 62 Q 278 34 240 62" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 247 56 L 240 62 L 247 66" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 234 62 Q 210 42 188 62" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 195 56 L 188 62 L 195 66" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="252" y="24" fontSize="11" fill={accent} textAnchor="middle">
+        どの矢印も、かける数は同じ
+      </text>
+
+      <text x="200" y="136" fontSize="11" fill={muted} textAnchor="middle">
+        かけるたびに、となりとのへだたりが同じ割合で縮む
+      </text>
+      <text x="200" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列2 step6: 公比の位置で部屋が分かれる「仕組み」だけの図。
+ *  境目の値（±1）は数で書かない。その問題の 5 つの公比も置かない。
+ *  境目の 2 点が同じ扱いかどうかを一切ほのめかさない（それが step6 の発見そのもの）。 */
+export function M3lGeoSeriesR() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const roomFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 158"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="公比の位置を表す数直線が、二本の破線で三つの部屋に分かれている図。真ん中の部屋はかけるたびに縮む、外側の二部屋はかけるたびに膨らむ。境目の二点は白丸と疑問符だけで、値も、どの公比がどこに入るかも書かれていない"
+    >
+      <rect x="115" y="78" width="130" height="18" fill={roomFill} />
+
+      <path d="M 24 87 L 340 87" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 332 82 L 340 87 L 332 92" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 32 82 L 24 87 L 32 92" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="310" y="106" fontSize="10" fill={muted} textAnchor="middle">
+        公比のいる数直線
+      </text>
+
+      <path d="M 115 60 L 115 100" fill="none" stroke={stroke} strokeWidth="1.1" strokeDasharray="4 3" />
+      <path d="M 245 60 L 245 100" fill="none" stroke={stroke} strokeWidth="1.1" strokeDasharray="4 3" />
+      <circle cx="115" cy="87" r="4.4" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <circle cx="245" cy="87" r="4.4" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <text x="115" y="118" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="245" y="118" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="36" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここにある公比なら
+      </text>
+      <text x="180" y="50" fontSize="10.5" fill={muted} textAnchor="middle">
+        かけるたびに縮む
+      </text>
+      <text x="62" y="36" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここにある公比なら
+      </text>
+      <text x="62" y="50" fontSize="10.5" fill={muted} textAnchor="middle">
+        かけるたびに膨らむ
+      </text>
+      <text x="298" y="36" fontSize="10.5" fill={muted} textAnchor="middle">
+        ここにある公比なら
+      </text>
+      <text x="298" y="50" fontSize="10.5" fill={muted} textAnchor="middle">
+        かけるたびに膨らむ
+      </text>
+
+      <text x="180" y="144" fontSize="11" fill={accent} textAnchor="middle">
+        境目のちょうど上に乗った公比は、どちらの部屋に入る？
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列3 不定形①——多項式の綱引き ─────────────────────────── */
+
+/** 数列の極限 系列3 step1: 分子と分母が反対向きに引き合う綱引きの図。
+ *  結末は 3 つの「?」——どれになるか（どちらが勝つか）は描かない（背骨 D5）。
+ *  引く強さも、項の値も、目盛りも書かない。 */
+export function M3lTugOfWar() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  /** 3 つの結末の箱。中身はどれも「?」で、どれになるかは描かない。 */
+  const ends = [
+    { cx: 76, label: "分子が勝つ" },
+    { cx: 180, label: "分母が勝つ" },
+    { cx: 284, label: "折り合う" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="一本の綱の両はしを、分子と分母が反対向きに引いている図。分子は値を大きくする向きへ、分母は値をゼロへ近づける向きへ引く。綱の結び目はまん中のまま止まっている。下には結末の箱が三つ並び、中身はどれも疑問符で、どれになるかは描かれていない模式の図"
+    >
+      <text x="180" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        分子も分母も、どちらも限りなく大きくなる
+      </text>
+
+      {/* 綱 */}
+      <path d="M 96 58 L 264 58" fill="none" stroke={stroke} strokeWidth="2" />
+      <circle cx="180" cy="58" r="5" fill="var(--background)" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 分母が左へ引く */}
+      <path d="M 92 58 L 56 58" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 64 53 L 56 58 L 64 63" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="10" y="70" width="96" height="30" rx="7" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x="58" y="82" fontSize="10.5" fill={stroke} textAnchor="middle">
+        分母が引く向き
+      </text>
+      <text x="58" y="95" fontSize="10.5" fill={muted} textAnchor="middle">
+        値を 0 へ
+      </text>
+
+      {/* 分子が右へ引く */}
+      <path d="M 268 58 L 304 58" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 296 53 L 304 58 L 296 63" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x="254" y="70" width="96" height="30" rx="7" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x="302" y="82" fontSize="10.5" fill={stroke} textAnchor="middle">
+        分子が引く向き
+      </text>
+      <text x="302" y="95" fontSize="10.5" fill={muted} textAnchor="middle">
+        値を大きく
+      </text>
+
+      <text x="180" y="42" fontSize="10" fill={muted} textAnchor="middle">
+        結び目
+      </text>
+
+      <text x="180" y="122" fontSize="11" fill={muted} textAnchor="middle">
+        この引き合いの結末は、3 つのうちのどれか
+      </text>
+
+      {ends.map((e) => (
+        <g key={e.label}>
+          <rect
+            x={e.cx - 46}
+            y="132"
+            width="92"
+            height="34"
+            rx="8"
+            fill={fillColor}
+            stroke={stroke}
+            strokeWidth="1.1"
+          />
+          <text x={e.cx} y="156" fontSize="17" fill={warm} textAnchor="middle" fontWeight="700">
+            ?
+          </text>
+          <text x={e.cx} y="181" fontSize="10" fill={muted} textAnchor="middle">
+            {e.label}
+          </text>
+        </g>
+      ))}
+
+      <text x="180" y="204" fontSize="11" fill={warm} textAnchor="middle">
+        どれになるかは、式の形のままでは決まらない
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列3 step5: 上も下も「いちばん大きい n の何乗か」で割ると何が起きるかの仕組み図。
+ *  ★割ったあとの具体値は書かない。「?」のところが動かない数になるのかゴマ粒になるのかも描かない
+ *  （そこが分かれ目そのもの）。step5 は 5 件のうち収束するものの個数を問うので、
+ *  ★5 件が読み取れる並びにしない（1 つの分数だけを描く）。 */
+export function M3lDivideByTop() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左に、分子も分母も高い次数の項と小さい項でできた分数。右に、上も下も式全体でいちばん大きい n の何乗かで割ったあとの形。割ったあとの分子と分母には、疑問符とゴマ粒がひとつずつ置かれている。ゴマ粒は番号を大きくするとゼロへ向かうという注記だけがあり、割ったあとの値は書かれていない模式の図"
+    >
+      <text x="180" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        上も下も、式全体でいちばん大きい n の何乗かで割る
+      </text>
+
+      {/* 割る前 */}
+      <text x="76" y="42" fontSize="10" fill={muted} textAnchor="middle">
+        割る前
+      </text>
+      <rect x="14" y="52" width="124" height="26" rx="6" fill={fillColor} stroke={stroke} strokeWidth="1" />
+      <text x="76" y="69" fontSize="10" fill={stroke} textAnchor="middle">
+        高い次数の項 ＋ 小さい項
+      </text>
+      <path d="M 10 88 L 142 88" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <rect x="14" y="98" width="124" height="26" rx="6" fill={fillColor} stroke={stroke} strokeWidth="1" />
+      <text x="76" y="115" fontSize="10" fill={stroke} textAnchor="middle">
+        高い次数の項 ＋ 小さい項
+      </text>
+
+      {/* 割る操作 */}
+      <path d="M 152 88 L 200 88" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 192 83 L 200 88 L 192 93" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="176" y="80" fontSize="10" fill={muted} textAnchor="middle">
+        割る
+      </text>
+
+      {/* 割ったあと */}
+      <text x="278" y="42" fontSize="10" fill={muted} textAnchor="middle">
+        割ったあと
+      </text>
+      <rect x="216" y="52" width="124" height="26" rx="6" fill={fillColor} stroke={warm} strokeWidth="1" />
+      <text x="248" y="70" fontSize="15" fill={warm} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="292" y="69" fontSize="10" fill={stroke} textAnchor="middle">
+        ＋ ゴマ粒
+      </text>
+      <path d="M 212 88 L 344 88" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <rect x="216" y="98" width="124" height="26" rx="6" fill={fillColor} stroke={warm} strokeWidth="1" />
+      <text x="248" y="116" fontSize="15" fill={warm} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="292" y="115" fontSize="10" fill={stroke} textAnchor="middle">
+        ＋ ゴマ粒
+      </text>
+
+      <text x="180" y="148" fontSize="11" fill={muted} textAnchor="middle">
+        ゴマ粒は、番号を大きくすると 0 へ消える
+      </text>
+      <text x="180" y="172" fontSize="11" fill={warm} textAnchor="middle">
+        では「?」のところに残るのは、動かない数？
+      </text>
+      <text x="180" y="190" fontSize="11" fill={warm} textAnchor="middle">
+        それとも、ここもゴマ粒？ 上と下で同じとは限らない
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列4 不定形②——指数の綱引き ─────────────────────────── */
+
+/** 数列の極限 系列4 step1: 底の違う指数が、同じ番号だけ進んでも進み方が違うことの模式図。
+ *  点の位置は模式（実際の値の比ではない）。値・目盛りは一切書かない。
+ *  どの比がどこへ向かうかは「?」の問いで終える（それが step1 の発見）。 */
+export function M3lBaseLadder() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 各レーンの点の位置は模式。左端（n = 1）はそろえ、底が大きいほど間隔を広げてある。 */
+  const lanes = [
+    { y: 40, label: "2ⁿ", xs: [70, 84, 100, 118], tail: 150 },
+    { y: 70, label: "3ⁿ", xs: [70, 92, 122, 158], tail: 190 },
+    { y: 100, label: "4ⁿ", xs: [70, 100, 148, 210], tail: 242 },
+    { y: 130, label: "5ⁿ", xs: [70, 110, 176, 268], tail: 300 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 178"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="四本のレーンに底の違う指数が並び、番号が進むほど底の大きいものが先へ抜けていく模式図。点の位置は模式で、各項の値も目盛りも書かれていない"
+    >
+      <text x="180" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        同じ番号だけ進んでも、進み方は同じではない（模式）
+      </text>
+      {lanes.map((lane) => (
+        <g key={lane.label}>
+          <text x="26" y={lane.y + 5} fontSize="12" fill={stroke} textAnchor="middle">
+            {lane.label}
+          </text>
+          <path
+            d={`M 56 ${lane.y} L 300 ${lane.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1"
+            strokeDasharray="4 4"
+          />
+          {lane.xs.map((x, k) => (
+            <circle key={k} cx={x} cy={lane.y} r="3.4" fill={accent} />
+          ))}
+          <path
+            d={`M ${lane.xs[3] + 8} ${lane.y} L ${lane.tail} ${lane.y}`}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+          />
+          <path
+            d={`M ${lane.tail - 6} ${lane.y - 4} L ${lane.tail} ${lane.y} L ${lane.tail - 6} ${lane.y + 4}`}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1"
+          />
+        </g>
+      ))}
+      <text x="70" y="151" fontSize="10" fill={muted} textAnchor="middle">
+        n = 1
+      </text>
+      <text x="180" y="151" fontSize="10" fill={muted} textAnchor="middle">
+        → 番号が進む →
+      </text>
+      <text x="180" y="170" fontSize="11" fill={accent} textAnchor="middle">
+        底が大きいほど先へ抜ける。では 2ⁿ ÷ 5ⁿ はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列4 step6: 分子が定数に、分母が 0 に収束する形（1/0 型）の仕組み図。
+ *  結末（+∞ / −∞ / 振動）は描かない。「どちら側から 0 に近づくか」を問いのまま残す。
+ *  正負を行き来する第 3 の道は、あえて図に描かない（それが step6 の発見であり、
+ *  図に 3 通りを並べると行数が答えの個数と共鳴してしまう）。 */
+export function M3lZeroDenomFork() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分子が動かない数へ、分母が 0 へ向かう分数の模式図。結末は疑問符の箱で、下の数直線では 0 に向かう矢印が左右から一本ずつ疑問符つきで描かれている。結末の種類は描かれていない"
+    >
+      <rect x="34" y="24" width="150" height="28" rx="7" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x="109" y="43" fontSize="12" fill={stroke} textAnchor="middle">
+        分子 → 動かない数へ
+      </text>
+      <path d="M 28 62 L 190 62" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <rect x="34" y="72" width="150" height="28" rx="7" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x="109" y="91" fontSize="12" fill={stroke} textAnchor="middle">
+        分母 → 0 へ
+      </text>
+
+      <path d="M 200 62 L 244 62" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 236 57 L 244 62 L 236 67" fill="none" stroke={muted} strokeWidth="1.2" />
+      <rect x="254" y="45" width="54" height="34" rx="8" fill={fillColor} stroke={stroke} strokeWidth="1.1" />
+      <text x="281" y="69" fontSize="17" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <path d="M 40 142 L 320 142" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 180 134 L 180 150" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="180" y="164" fontSize="11" fill={stroke} textAnchor="middle">
+        0
+      </text>
+
+      <path d="M 286 128 L 196 138" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 204 132 L 196 138 L 205 140" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="290" y="124" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <path d="M 74 128 L 164 138" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 156 132 L 164 138 L 155 140" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="70" y="124" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        0 へ近づくのは、どちら側から？ それで結末は変わる？
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列5 不定形③——根号と有理化 ─────────────────────────── */
+
+/** 数列の極限 系列5 step1: n を根号の中へ入れる仕組み（1/n = √(1/n²)）。
+ *  問題の係数は 1 つも書かない（■ は「根号の中の式」の記号）。
+ *  実質の次数がいくつになるかも書かない——それが step1 の発見。 */
+export function M3lRootInsideArrow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左に、根号のついた式を n で割った分数。右に、その n を 2 乗して根号の中へ入れた形。あいだの矢印に n イコール ルート n の 2 乗 と書かれている。問題の数字は書かれていない模式の図"
+    >
+      <text x="180" y="24" fontSize="11" fill={muted} textAnchor="middle">
+        ■ は根号の中の式（どんな式でもよい）
+      </text>
+
+      <text x="70" y="62" fontSize="16" fill={stroke} textAnchor="middle">√( ■ )</text>
+      <path d="M 34 72 L 106 72" stroke={stroke} strokeWidth="1.2" fill="none" />
+      <text x="70" y="94" fontSize="16" fill={stroke} textAnchor="middle">n</text>
+
+      <path d="M 124 72 L 196 72" stroke={muted} strokeWidth="1.2" fill="none" />
+      <path d="M 188 67 L 196 72 L 188 77" stroke={muted} strokeWidth="1.2" fill="none" />
+      <text x="160" y="58" fontSize="10" fill={muted} textAnchor="middle">外の n を、中へ</text>
+      <text x="160" y="92" fontSize="12" fill={accent} textAnchor="middle">n = √( n² )</text>
+
+      <text x="282" y="78" fontSize="16" fill={stroke} textAnchor="middle">√( ■ ÷ n² )</text>
+
+      <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
+        根号の外と中は、2 乗すれば行き来できる。
+      </text>
+      <text x="180" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        中へ入れてしまうと、何が見えてくる？
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列5 step4: 分子の有理化＝「差に、符号だけ変えた相棒を掛ける」仕組み。
+ *  ★上に何が残るかは ? のまま伏せる（それが step4 の提出値）。
+ *  ★移したあとの極限値も書かない（背骨 D5 の指定）。 */
+export function M3lRationalizeArrow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上段に、二つの根号の差に、符号だけ変えた和を分母分子に持つ分数を掛ける式。下段に、その結果として分母に根号の和が並び、分子は疑問符のままの分数。問題の数字は書かれていない模式の図"
+    >
+      <text x="180" y="22" fontSize="11" fill={muted} textAnchor="middle">
+        掛けるのは 1 に等しい分数（符号だけ変えた相棒）
+      </text>
+
+      <text x="98" y="67" fontSize="15" fill={stroke} textAnchor="middle">√■ − √▲</text>
+      <text x="170" y="67" fontSize="14" fill={muted} textAnchor="middle">×</text>
+      <text x="254" y="54" fontSize="14" fill={stroke} textAnchor="middle">√■ + √▲</text>
+      <path d="M 208 62 L 300 62" stroke={stroke} strokeWidth="1.2" fill="none" />
+      <text x="254" y="80" fontSize="14" fill={stroke} textAnchor="middle">√■ + √▲</text>
+
+      <path d="M 180 98 L 180 118" stroke={muted} strokeWidth="1.2" fill="none" />
+      <path d="M 175 110 L 180 118 L 185 110" stroke={muted} strokeWidth="1.2" fill="none" />
+
+      <text x="180" y="142" fontSize="18" fill={accent} textAnchor="middle" fontWeight="700">?</text>
+      <path d="M 132 150 L 228 150" stroke={stroke} strokeWidth="1.2" fill="none" />
+      <text x="180" y="170" fontSize="14" fill={stroke} textAnchor="middle">√■ + √▲</text>
+
+      <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        根号は、掛け算で下へ移る。上に残るのは？
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列6 漸化式で定まる数列の極限 ───────────────────────── */
+
+/**
+ * M3L_FIXED_POINT（数列の極限 系列6 step1）：となりへ移る作り方を 1 本の直線として見て、
+ * 「入れた数と出てくる数が同じになる場所」を ? で置く図。
+ * 交点の x 座標がそのまま step1 の答え（動かない数）なので、目盛りも座標も書かない（層8）。
+ */
+export function M3lFixedPoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  return (
+    <svg
+      viewBox="0 0 360 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="横軸を入れた数、縦軸を出てくる数とした平面に、y = x の破線と y = p x + q の直線を描いた図。ためしにとった 1 つの数では、入れた数と出てくる数が別の高さになることを 2 つの点で示している。2 直線の交点は目盛りも数値もない ? の白丸で、そこでは 2 つがぴったり同じになるという注記だけが添えてある"
+    >
+      <text x="180" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        となりへ移る作り方を、1 本の線として見る
+      </text>
+
+      <line x1="70" y1="205" x2="345" y2="205" stroke={stroke} strokeWidth="1.1" />
+      <line x1="70" y1="205" x2="70" y2="32" stroke={stroke} strokeWidth="1.1" />
+      <text x="345" y="222" fontSize="10" fill={muted} textAnchor="end">入れた数</text>
+      <text x="66" y="30" fontSize="10" fill={muted} textAnchor="end">出てくる数</text>
+
+      <line x1="70" y1="205" x2="245" y2="30" stroke={muted} strokeWidth="1.2" strokeDasharray="5 4" />
+      <text x="252" y="34" fontSize="10.5" fill={muted}>y = x</text>
+
+      <line x1="70" y1="152" x2="345" y2="42" stroke={accent} strokeWidth="1.7" />
+      <text x="264" y="92" fontSize="10.5" fill={accent}>y = p x + q</text>
+
+      <line x1="115" y1="205" x2="115" y2="138" stroke={accent} strokeWidth="1.2" strokeDasharray="3 3" />
+      <polygon points="115,134 111,143 119,143" fill={accent} />
+      <circle cx="115" cy="205" r="2.6" fill={stroke} />
+      <text x="125" y="222" fontSize="10" fill={stroke} textAnchor="middle">ためしに、ある数</text>
+      <line x1="115" y1="134" x2="70" y2="134" stroke={accent} strokeWidth="1.2" strokeDasharray="3 3" />
+      <circle cx="70" cy="134" r="2.8" fill={accent} />
+      <line x1="115" y1="160" x2="70" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx="115" cy="160" r="2.2" fill={muted} />
+      <circle cx="70" cy="160" r="2.8" fill={muted} />
+      <path d="M 58 134 q -8 13 0 26" fill="none" stroke={warm} strokeWidth="1.2" />
+      <text x="46" y="151" fontSize="10" fill={warm} textAnchor="end">ちがう</text>
+
+      <circle cx="158" cy="117" r="8.5" fill="var(--background)" stroke={warm} strokeWidth="1.4" strokeDasharray="3 3" />
+      <text x="158" y="121" fontSize="11" fill={warm} textAnchor="middle">?</text>
+      <line x1="164" y1="124" x2="192" y2="141" stroke={warm} strokeWidth="1" />
+      <text x="196" y="146" fontSize="10.5" fill={warm}>ここでは、2 つがぴったり同じ</text>
+
+      <text x="180" y="243" fontSize="11.5" fill={warm} textAnchor="middle">
+        入れても出てくる数が変わらないのは、どの数？
+      </text>
+    </svg>
+  );
+}
+
+
+/**
+ * M3L_COBWEB（数列の極限 系列6 step6・質的変化）：クモの巣図。
+ * 作図の規則（たてに線まで → よこに y = x まで → 足もとが次の項）だけを描き、
+ * 階段は 1 手で止めて「寄るのか、離れるのか」を問いのまま残す（背骨 Q5）。
+ * 交点の x 座標＝極限値なので、目盛りも座標も書かず、交点にも足もとにも ? を置く（層8）。
+ * 母集団 5 件の分類は描かない（監査 4-e）。
+ */
+export function M3lCobweb() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  return (
+    <svg
+      viewBox="0 0 400 268"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="y = x の破線と y = p x + q の直線を描いた平面に、クモの巣図の作図手順を 1 手だけ描いた図。先頭の項からたてに直線まで、よこに y = x まで進み、その足もとが次の項になることを番号つきの矢印で示している。2 直線の交点と、その足もとの位置は、どちらも目盛りのない ? のまま。階段がそこへ寄っていくのか離れていくのかは、両向きの点線矢印と疑問符で問いのまま残してある"
+    >
+      <text x="200" y="18" fontSize="11" fill={muted} textAnchor="middle">
+        同じ動きを、グラフの上でたどってみる
+      </text>
+
+      <line x1="55" y1="205" x2="240" y2="205" stroke={stroke} strokeWidth="1.1" />
+      <line x1="55" y1="205" x2="55" y2="38" stroke={stroke} strokeWidth="1.1" />
+      <text x="238" y="197" fontSize="9.5" fill={muted} textAnchor="end">項の値</text>
+
+      <line x1="55" y1="205" x2="215" y2="45" stroke={muted} strokeWidth="1.2" strokeDasharray="5 4" />
+      <text x="200" y="34" fontSize="10.5" fill={muted} textAnchor="middle">y = x</text>
+
+      <line x1="55" y1="150" x2="240" y2="57" stroke={accent} strokeWidth="1.7" />
+      <line x1="240" y1="57" x2="248" y2="53" stroke={accent} strokeWidth="1" />
+      <text x="252" y="50" fontSize="10.5" fill={accent}>y = p x + q</text>
+
+      <line x1="90" y1="205" x2="90" y2="137" stroke={accent} strokeWidth="1.5" />
+      <polygon points="90,132 86,141 94,141" fill={accent} />
+      <text x="82" y="176" fontSize="10" fill={accent} textAnchor="end">①</text>
+
+      <line x1="90" y1="132.5" x2="122" y2="132.5" stroke={accent} strokeWidth="1.5" />
+      <polygon points="127,132.5 118,128.5 118,136.5" fill={accent} />
+      <text x="106" y="126" fontSize="10" fill={accent} textAnchor="middle">②</text>
+
+      <line x1="127.5" y1="132.5" x2="127.5" y2="205" stroke={accent} strokeWidth="1.1" strokeDasharray="3 3" />
+      <text x="136" y="176" fontSize="10" fill={accent}>③</text>
+
+      <circle cx="90" cy="205" r="2.8" fill={stroke} />
+      <text x="90" y="221" fontSize="10.5" fill={stroke} textAnchor="middle">a₁</text>
+      <circle cx="127.5" cy="205" r="2.8" fill={accent} />
+      <text x="127.5" y="221" fontSize="10.5" fill={accent} textAnchor="middle">a₂</text>
+
+      <line x1="165" y1="95" x2="165" y2="205" stroke={warm} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx="165" cy="205" r="3" fill="var(--background)" stroke={warm} strokeWidth="1.2" />
+      <text x="165" y="221" fontSize="10.5" fill={warm} textAnchor="middle">?</text>
+      <circle cx="165" cy="95" r="8.5" fill="var(--background)" stroke={warm} strokeWidth="1.4" strokeDasharray="3 3" />
+      <text x="165" y="99" fontSize="11" fill={warm} textAnchor="middle">?</text>
+
+      <path d="M 141 121 q 9 -6 15 -13" fill="none" stroke={warm} strokeWidth="1.1" strokeDasharray="3 3" />
+      <polygon points="158,105 149,107 153,113" fill={warm} />
+      <path d="M 115 147 q -9 6 -15 13" fill="none" stroke={warm} strokeWidth="1.1" strokeDasharray="3 3" />
+      <polygon points="98,163 107,161 103,155" fill={warm} />
+
+      <text x="252" y="80" fontSize="10" fill={accent}>① たてに、線まで</text>
+      <text x="252" y="100" fontSize="10" fill={accent}>② よこに、y = x まで</text>
+      <text x="252" y="120" fontSize="10" fill={accent}>③ 足もとが、次の項</text>
+      <text x="252" y="146" fontSize="10" fill={muted}>④ ①へもどって、</text>
+      <text x="252" y="160" fontSize="10" fill={muted}>　 くりかえす</text>
+      <text x="252" y="188" fontSize="11" fill={warm}>この先は ?</text>
+
+      <text x="200" y="252" fontSize="11.5" fill={warm} textAnchor="middle">
+        寄っていくのか、離れていくのか——決めているのは？
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列7 はさみうちの原理 ───────────────────────────────── */
+
+/** 数列の極限 系列7 step1: 追い込み漁。2 枚の板が魚をはさんで近づく。
+ *  挟む先の値は描かない（数字を 1 つも置いていない）。問いで終える。 */
+export function M3lFishDrive() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const water = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  const ghost = "color-mix(in oklch, var(--accent) 25%, transparent)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="細長い水路の中に魚が一匹いて、左右から板がはさむように近づいてくる図。魚が泳いだあとは破線で描かれ、数値は書かれていない"
+    >
+      <rect x="28" y="38" width="304" height="76" fill={water} />
+      <path d="M 28 38 L 332 38" stroke={muted} strokeWidth="1.4" fill="none" />
+      <path d="M 28 114 L 332 114" stroke={muted} strokeWidth="1.4" fill="none" />
+
+      {/* 板の最初の位置（薄い影） */}
+      <rect x="42" y="34" width="6" height="84" rx="2" fill={ghost} />
+      <rect x="312" y="34" width="6" height="84" rx="2" fill={ghost} />
+
+      {/* いまの板 */}
+      <rect x="102" y="30" width="7" height="92" rx="2" fill={accent} />
+      <rect x="251" y="30" width="7" height="92" rx="2" fill={accent} />
+
+      {/* 板が進んできた向き */}
+      <path d="M 52 30 L 98 30" stroke={accent} strokeWidth="1.4" fill="none" />
+      <path d="M 91 26 L 98 30 L 91 34" stroke={accent} strokeWidth="1.4" fill="none" />
+      <path d="M 308 30 L 262 30" stroke={accent} strokeWidth="1.4" fill="none" />
+      <path d="M 269 26 L 262 30 L 269 34" stroke={accent} strokeWidth="1.4" fill="none" />
+
+      {/* 魚が泳ぎまわったあと */}
+      <path
+        d="M 118 90 Q 140 58 160 84 Q 178 106 196 72 Q 210 50 226 80 Q 236 98 244 84"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+        fill="none"
+      />
+
+      {/* 魚 */}
+      <ellipse cx="196" cy="72" rx="15" ry="7.5" fill="var(--background)" stroke={stroke} strokeWidth="1.3" />
+      <path
+        d="M 181 72 L 169 65 Q 174 72 169 79 Z"
+        fill="var(--background)"
+        stroke={stroke}
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <circle cx="204" cy="70" r="1.7" fill={stroke} />
+
+      <text x="105" y="22" fontSize="10" fill={muted} textAnchor="middle">左からの板</text>
+      <text x="255" y="22" fontSize="10" fill={muted} textAnchor="middle">右からの板</text>
+      <text x="180" y="138" fontSize="11" fill={accent} textAnchor="middle">
+        2 枚の板が同じ場所まで来たら、魚はどこにいる？
+      </text>
+      <text x="180" y="152" fontSize="9.5" fill={muted} textAnchor="middle">
+        （魚がどう泳いだかは、だれも見ていない）
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列7 step5・辞書「はさみうちの原理」: 上下 2 本が同じ点へ閉じ、間に暴れる列。
+ *  共通の極限値も係数 k も書かない。閉じる先は白丸と「?」のまま。点の位置は模式で、
+ *  step5 の実際の幅（4/n）とは無関係。 */
+export function M3lSqueezeLines() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 上下は ∓A/k の模式。白丸（はさまれた列）は右へ行くほど暴れ幅を小さく取り、
+   *  丸どうしが重ならないよう最小 7px の隙間を確保してある（PNG で実測して調整）。 */
+  const xs = [55, 99, 143, 187, 231, 275];
+  const up = [35, 65, 75, 80, 83, 85];
+  const lo = [155, 125, 115, 110, 107, 105];
+  const mid = [62, 116, 89, 101.8, 90.8, 97.5];
+  const line = (ys: number[]) => ys.map((y, k) => `${xs[k]},${y}`).join(" ");
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上からおさえる点の列と下からおさえる点の列が、右へ行くほど近づいて一つの高さに閉じていく図。その間に、白丸の列が上下に暴れながら入っている。閉じる先は白丸と疑問符で、値は書かれていない"
+    >
+      <path d="M 40 95 L 332 95" stroke={muted} strokeWidth="1" strokeDasharray="5 4" fill="none" />
+      <circle cx="316" cy="95" r="4.2" fill="var(--background)" stroke={stroke} strokeWidth="1.4" />
+      <text x="316" y="80" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">?</text>
+
+      <polyline points={line(up)} fill="none" stroke={accent} strokeWidth="1.5" />
+      <polyline points={line(lo)} fill="none" stroke={accent} strokeWidth="1.5" />
+      <polyline points={line(mid)} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+
+      {up.map((y, k) => (
+        <circle key={`u${k}`} cx={xs[k]} cy={y} r="2.8" fill={accent} />
+      ))}
+      {lo.map((y, k) => (
+        <circle key={`l${k}`} cx={xs[k]} cy={y} r="2.8" fill={accent} />
+      ))}
+      {mid.map((y, k) => (
+        <circle key={`m${k}`} cx={xs[k]} cy={y} r="3.2" fill="var(--background)" stroke={stroke} strokeWidth="1.3" />
+      ))}
+
+      <text x="70" y="30" fontSize="10" fill={accent}>上からおさえる列</text>
+      <text x="70" y="170" fontSize="10" fill={accent}>下からおさえる列</text>
+      <text x="196" y="30" fontSize="10" fill={muted}>白丸＝はさまれた列</text>
+      <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        上と下が同じ点まで閉じたら、間の列はどこへ行く？
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列7: y = [x] の階段グラフ。**step には置かない**（[x] の早見表そのものなので、
+ *  [x] の値を問う step8 の答えを漏らす）。derivation と辞書「ガウス記号」§1 にだけ置く。
+ *  目盛りは 1〜5 で、系列が使う値（18・59/4・3/4）とはずらしてある。 */
+export function M3lFloorStairs() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = { x: 58, y: 172 };
+  const u = 32;
+  const X = (v: number) => O.x + u * v;
+  const Y = (v: number) => O.y - u * v;
+  return (
+    <svg
+      viewBox="0 0 360 218"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="階段の形をしたグラフ。各段は左の端が黒丸、右の端が白丸で、段の高さは一つずつ上がる。斜めの破線が二本、段の左の端と右の端をそれぞれ通っている"
+    >
+      <path d={`M 40 ${O.y} L 300 ${O.y}`} stroke={muted} strokeWidth="1.1" fill="none" />
+      <path d={`M 293 ${O.y - 5} L 300 ${O.y} L 293 ${O.y + 5}`} stroke={muted} strokeWidth="1.1" fill="none" />
+      <path d={`M ${O.x} 190 L ${O.x} 24`} stroke={muted} strokeWidth="1.1" fill="none" />
+      <path d={`M ${O.x - 5} 31 L ${O.x} 24 L ${O.x + 5} 31`} stroke={muted} strokeWidth="1.1" fill="none" />
+
+      <path d={`M ${X(0)} ${Y(0)} L ${X(4.6)} ${Y(4.6)}`} stroke={muted} strokeWidth="1" strokeDasharray="4 4" fill="none" />
+      <path d={`M ${X(1)} ${Y(0)} L ${X(5.6)} ${Y(4.6)}`} stroke={muted} strokeWidth="1" strokeDasharray="4 4" fill="none" />
+
+      {[1, 2, 3, 4, 5].map((v) => (
+        <g key={`x${v}`}>
+          <path d={`M ${X(v)} ${O.y} L ${X(v)} ${O.y + 4}`} stroke={muted} strokeWidth="1" />
+          <text x={X(v)} y={O.y + 17} fontSize="10" fill={muted} textAnchor="middle">{v}</text>
+        </g>
+      ))}
+      {[1, 2, 3, 4].map((v) => (
+        <g key={`y${v}`}>
+          <path d={`M ${O.x - 4} ${Y(v)} L ${O.x} ${Y(v)}`} stroke={muted} strokeWidth="1" />
+          <text x={O.x - 9} y={Y(v) + 4} fontSize="10" fill={muted} textAnchor="end">{v}</text>
+        </g>
+      ))}
+      {[0, 1, 2, 3, 4].map((m) => (
+        <g key={`s${m}`}>
+          <path d={`M ${X(m)} ${Y(m)} L ${X(m + 1)} ${Y(m)}`} stroke={accent} strokeWidth="2" fill="none" />
+          <circle cx={X(m)} cy={Y(m)} r="3.4" fill={accent} />
+          <circle cx={X(m + 1)} cy={Y(m)} r="3.4" fill="var(--background)" stroke={accent} strokeWidth="1.4" />
+        </g>
+      ))}
+
+      <text x={O.x - 10} y={O.y + 17} fontSize="10" fill={muted} textAnchor="middle">O</text>
+      <text x="304" y={O.y + 5} fontSize="11" fill={muted}>x</text>
+      <text x={O.x - 7} y="22" fontSize="11" fill={muted} textAnchor="middle">y</text>
+      <text x={X(4.7) + 4} y={Y(4.6) - 2} fontSize="10" fill={muted}>y = x</text>
+      <text x={X(5.7) + 2} y={Y(4.6) + 14} fontSize="10" fill={muted}>y = x − 1</text>
+      <text x="180" y="210" fontSize="10.5" fill={accent} textAnchor="middle">
+        左の端（●）でその高さになり、右の端（○）は次の段のもの
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列8 無限級数 ─────────────────────────────────────── */
+
+/** 数Ⅲ・C 系列8 step1: 部分和を積み上げる柱の模式図。
+ *  段の高さは模式（実際の項の比を描かない＝層8）。右端は上を開いたままにして、
+ *  「その先はどこまで伸びるのか」を問いの形で残す。和の値は書かない。 */
+export function M3lPartialStairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const solid = "color-mix(in oklch, var(--accent) 22%, transparent)";
+  const pale = "color-mix(in oklch, var(--accent) 7%, transparent)";
+  // 高さは模式（実際の 2, 3/2, 9/8, 27/32 の比ではない）
+  const cols = [
+    { x: 40, top: 108, inc: 60, label: "S₁" },
+    { x: 86, top: 68, inc: 40, label: "S₂" },
+    { x: 132, top: 44, inc: 24, label: "S₃" },
+    { x: 178, top: 30, inc: 14, label: "S₄" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 340 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="部分和を積み上げた柱の模式図。左から S1, S2, S3, S4 と高くなり、右端は上が開いた破線の柱と上向き矢印とはてなマークで「その先」を表す。段の高さは模式で、実際の項の比は表していない"
+    >
+      <path d="M 18 168 L 322 168" stroke={muted} strokeWidth="1" />
+      {cols.map((c) => (
+        <g key={c.label}>
+          <rect x={c.x} y={c.top} width="36" height={168 - c.top} fill={pale} stroke={stroke} strokeWidth="1.2" />
+          <rect x={c.x} y={c.top} width="36" height={c.inc} fill={solid} stroke={stroke} strokeWidth="1.2" />
+          <text x={c.x + 18} y={c.top - 8} fontSize="12" fill={stroke} textAnchor="middle">
+            {c.label}
+          </text>
+        </g>
+      ))}
+      <text x="236" y="120" fontSize="16" fill={muted} textAnchor="middle">…</text>
+      <path d="M 258 168 L 258 22" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" fill="none" />
+      <path d="M 294 168 L 294 22" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" fill="none" />
+      <path d="M 276 34 L 276 14 M 271 21 L 276 14 L 281 21" stroke={accent} strokeWidth="1.2" fill="none" />
+      <text x="276" y="52" fontSize="12" fill={accent} textAnchor="middle">Sₙ</text>
+      <text x="276" y="100" fontSize="16" fill={accent} textAnchor="middle">?</text>
+      <text x="170" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        4 個までなら、実際に足せる。その先は？
+      </text>
+      <text x="170" y="203" fontSize="9" fill={muted} textAnchor="middle">（高さは模式です）</text>
+    </svg>
+  );
+}
+
+
+/** 数Ⅲ・C 系列8 step5: となりどうしが打ち消しあう仕組みの模式図。
+ *  項は記号（● ▲ ■ ◆）で書き、この問題の式は一切出さない。
+ *  残る「後ろのはし」は ? のままにして、収束するか発散するかを図では答えない。 */
+export function M3lTelescopeCancel() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const row = [
+    { x: 22, t: "(" }, { x: 38, t: "●" }, { x: 54, t: "−" }, { x: 70, t: "▲" }, { x: 86, t: ")" },
+    { x: 100, t: "+" },
+    { x: 114, t: "(" }, { x: 130, t: "▲" }, { x: 146, t: "−" }, { x: 162, t: "■" }, { x: 178, t: ")" },
+    { x: 192, t: "+" },
+    { x: 206, t: "(" }, { x: 222, t: "■" }, { x: 238, t: "−" }, { x: 254, t: "◆" }, { x: 270, t: ")" },
+    { x: 298, t: "+ …" },
+  ];
+  const crosses = [63, 123, 155, 215];
+  return (
+    <svg
+      viewBox="0 0 352 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 352 }}
+      role="img"
+      aria-label="括弧でくくった差が並び、となり合う項どうしが打ち消しあう様子の模式図。消えるものにはバツ印がつき、前のはしと後ろのはしだけが残る。後ろのはしははてなマークのまま"
+    >
+      {row.map((c) => (
+        <text key={c.x} x={c.x} y="62" fontSize="15" fill={stroke} textAnchor="middle">
+          {c.t}
+        </text>
+      ))}
+      {crosses.map((x) => (
+        <path key={x} d={`M ${x} 56 L ${x + 14} 68 M ${x} 68 L ${x + 14} 56`} stroke={accent} strokeWidth="1.4" fill="none" />
+      ))}
+      <path d="M 70 46 C 82 28, 118 28, 130 46" stroke={accent} strokeWidth="1.4" strokeDasharray="3 3" fill="none" />
+      <path d="M 162 46 C 174 28, 210 28, 222 46" stroke={accent} strokeWidth="1.4" strokeDasharray="3 3" fill="none" />
+      <text x="146" y="26" fontSize="10" fill={accent} textAnchor="middle">となりどうしが消しあう</text>
+      <path d="M 38 72 L 38 94 M 33 87 L 38 94 L 43 87" stroke={stroke} strokeWidth="1.2" fill="none" />
+      <path d="M 306 72 L 306 94 M 301 87 L 306 94 L 311 87" stroke={accent} strokeWidth="1.2" fill="none" />
+      <rect x="18" y="98" width="40" height="26" rx="5" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="38" y="116" fontSize="14" fill={stroke} textAnchor="middle">●</text>
+      <text x="38" y="140" fontSize="10" fill={muted} textAnchor="middle">前のはし</text>
+      <rect x="286" y="98" width="40" height="26" rx="5" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      <text x="306" y="117" fontSize="15" fill={accent} textAnchor="middle">?</text>
+      <text x="306" y="140" fontSize="10" fill={muted} textAnchor="middle">後ろのはし</text>
+      <text x="172" y="112" fontSize="11" fill={muted} textAnchor="middle">消えずに残るのは、</text>
+      <text x="172" y="128" fontSize="11" fill={muted} textAnchor="middle">両はしだけ</text>
+      <text x="176" y="168" fontSize="11" fill={accent} textAnchor="middle">後ろのはしは、番号を進めるとどうなる？</text>
+    </svg>
+  );
+}
+
+
+/* ── 系列9 無限等比級数（M3L_GEO_SERIES_R は系列2 の定義を共有） ── */
+
+/** 数列の極限 系列9 step1: 進む幅が毎回同じ割合で縮んでいく走路の図。
+ *  ★図は 3 歩めの途中でちぎってあり、走路の全体も、幅がたまっていく先も見せない
+ *  （背骨監査 4-c）。完結した 1 本の線分は、数値を書かなくても「和は全体」と読めてしまう。
+ *  幅の実比も、行き先も、目盛りも書かない。 */
+export function M3lTrackHalves() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  const bandFill = "color-mix(in oklch, var(--accent) 10%, transparent)";
+  /** 区切りの位置は模式（実際の公比の比ではない）。3 歩めの途中でちぎってあるので、
+   *  幅がたまっていく先は枠の外にあり、図には出てこない。 */
+  const cuts = [40, 172, 264];
+  return (
+    <svg
+      viewBox="0 0 360 194"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左から右へのびる走路の帯に、進んだ幅が区切られて並んでいる図。幅は右へ行くほど同じ割合で縮んでいく。三歩めの途中で帯はぎざぎざにちぎってあり、その先がどこまで続くのかも、幅がたまっていく先も図には出てこない模式の図"
+    >
+      <text x="180" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        進む幅は、毎回同じ割合で縮んでいく（模式）
+      </text>
+
+      {/* 走路の帯。右はしは 3 歩めの途中でちぎってある（全体は描かない） */}
+      <path
+        d="M 40 76 L 306 76 L 298 84 L 306 92 L 298 100 L 306 108 L 40 108 Z"
+        fill={bandFill}
+        stroke={muted}
+        strokeWidth="1"
+      />
+
+      {/* 区切り */}
+      {cuts.map((x, k) => (
+        <path key={k} d={`M ${x} 72 L ${x} 112`} fill="none" stroke={stroke} strokeWidth="1.1" />
+      ))}
+
+      {/* 進んだ幅（値も割合も書かない） */}
+      <path d="M 44 64 L 168 64" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 52 59 L 44 64 L 52 69" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 160 59 L 168 64 L 160 69" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="106" y="56" fontSize="10" fill={accent} textAnchor="middle">
+        1 歩め
+      </text>
+
+      <path d="M 176 64 L 260 64" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 184 59 L 176 64 L 184 69" fill="none" stroke={accent} strokeWidth="1.2" />
+      <path d="M 252 59 L 260 64 L 252 69" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="218" y="56" fontSize="10" fill={accent} textAnchor="middle">
+        2 歩め
+      </text>
+
+      <text x="286" y="56" fontSize="10" fill={accent} textAnchor="middle">
+        3 歩め
+      </text>
+
+      {/* この先も続く（続きは描かない） */}
+      <path d="M 314 92 L 348 92" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d="M 340 87 L 348 92 L 340 97" fill="none" stroke={muted} strokeWidth="1" />
+
+      <text x="40" y="128" fontSize="10" fill={muted} textAnchor="middle">
+        出発
+      </text>
+      <text x="268" y="128" fontSize="10" fill={muted} textAnchor="middle">
+        図はここでちぎってある
+      </text>
+
+      <text x="180" y="158" fontSize="11" fill={muted} textAnchor="middle">
+        止めずに足しつづけると、進んだぶんの合計はどうなる？
+      </text>
+      <text x="180" y="182" fontSize="11" fill={warm} textAnchor="middle">
+        どこまでも増えるのか、それとも 1 つの数に落ちつくのか
+      </text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列9 step9: 相似な長方形が同じ割合で縮みながら並ぶ模式図。
+ *  ★段数を 4 つに pin し、面積比を実比で描かない（層8）——面積比がそのまま公比だから。
+ *  縮み方の割合も、面積も、和も書かない。模式であることは aria-label にも書いてある。 */
+export function M3lSelfSimilar() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const warm = "var(--accent-warm)";
+  const boxFill = "color-mix(in oklch, var(--accent) 8%, transparent)";
+  /** 大きさは模式。実際の相似比とも面積比とも無関係に描いてある（層8）。 */
+  const boxes = [
+    { x: 30, w: 84, h: 56, label: "R₁" },
+    { x: 124, w: 66, h: 44, label: "R₂" },
+    { x: 200, w: 52, h: 35, label: "R₃" },
+    { x: 262, w: 41, h: 27, label: "R₄" },
+  ];
+  const base = 128;
+  return (
+    <svg
+      viewBox="0 0 360 208"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="下辺をそろえた長方形が四つ、左から右へ小さくなりながら並んでいる図。となりへ移るたびに、たてもよこも同じ割合で縮む。四つめのあとは点々で続きを表している。大きさは模式で、実際の相似比とも面積の比とも関係なく描いてあり、面積の比は書かれていない"
+    >
+      <text x="180" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        となりへ移るたび、たても よこも 同じ割合で縮む
+      </text>
+      <text x="180" y="36" fontSize="10" fill={muted} textAnchor="middle">
+        （大きさは模式。実際の比ではない）
+      </text>
+
+      {boxes.map((b) => (
+        <g key={b.label}>
+          <rect
+            x={b.x}
+            y={base - b.h}
+            width={b.w}
+            height={b.h}
+            fill={boxFill}
+            stroke={accent}
+            strokeWidth="1.2"
+          />
+          <text
+            x={b.x + b.w / 2}
+            y={base - b.h / 2 + 4}
+            fontSize="11"
+            fill={stroke}
+            textAnchor="middle"
+          >
+            {b.label}
+          </text>
+        </g>
+      ))}
+      <text x="324" y={base - 8} fontSize="12" fill={muted} textAnchor="middle">
+        …
+      </text>
+
+      {/* たての比・よこの比が同じであることだけを指さす（値は書かない） */}
+      <path d="M 20 72 L 20 128" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 16 77 L 20 72 L 24 77" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 16 123 L 20 128 L 24 123" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="20" y="64" fontSize="10" fill={muted} textAnchor="middle">
+        たて
+      </text>
+      <path d="M 30 142 L 114 142" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 35 138 L 30 142 L 35 146" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 109 138 L 114 142 L 109 146" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="72" y="157" fontSize="10" fill={muted} textAnchor="middle">
+        よこ
+      </text>
+
+      <text x="180" y="180" fontSize="11" fill={muted} textAnchor="middle">
+        たてもよこも同じ割合で縮むとき、面積は何倍になる？
+      </text>
+      <text x="180" y="198" fontSize="11" fill={warm} textAnchor="middle">
+        その倍率が分かれば、あとは前の問と同じ道でいける
+      </text>
+    </svg>
+  );
+}
+
+
+/* ── 系列10 級数が収束するための条件 ───────────────────────── */
+
+/** 数列の極限 系列10 step1: 収束の必要条件の直観（歩幅が縮みながら進む）。
+ *  到達点は描かない（それを描くと「必ず着く」と読めてしまう）。歩幅は模式。 */
+export function M3lStepShrink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 140"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="数直線の上を左から右へ歩く歩幅の弧が、少しずつ小さくなりながら並ぶ図。道は右端で破線になって切れており、到達点は描かれていない。歩幅は模式で、実際の項の比ではない"
+    >
+      <path d="M 26 96 L 330 96" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 330 96 L 346 96" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx="26" cy="96" r="3.2" fill={stroke} />
+      <text x="26" y="114" fontSize="10" fill={muted} textAnchor="middle">出発</text>
+
+      <path d="M 26 92 Q 86 44 146 92" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="86" y="40" fontSize="11" fill={accent} textAnchor="middle">a₁</text>
+      <path d="M 146 92 Q 188 54 230 92" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="188" y="50" fontSize="11" fill={accent} textAnchor="middle">a₂</text>
+      <path d="M 230 92 Q 258 62 286 92" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="258" y="58" fontSize="11" fill={accent} textAnchor="middle">a₃</text>
+      <path d="M 286 92 Q 300 70 314 92" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 314 92 Q 322 78 330 92" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="322" y="66" fontSize="11" fill={accent} textAnchor="middle">…</text>
+
+      <circle cx="146" cy="96" r="2.6" fill={stroke} />
+      <circle cx="230" cy="96" r="2.6" fill={stroke} />
+      <circle cx="286" cy="96" r="2.6" fill={stroke} />
+      <circle cx="314" cy="96" r="2.6" fill={stroke} />
+      <circle cx="330" cy="96" r="2.6" fill={stroke} />
+
+      <text x="180" y="22" fontSize="10" fill={muted} textAnchor="middle">一歩の幅＝足していく数（模式）</text>
+      <text x="180" y="132" fontSize="11" fill={accent} textAnchor="middle">近づいていくなら、一歩の幅はどうなる？</text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列10 step5: 歩幅が縮んでも着くとは限らない仕組み。
+ *  レーンは 1 本だけ。どちらの級数が収束するかは描かない（それが step5 の発見）。 */
+export function M3lShrinkButFar() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 172"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="歩幅が縮みながら進む道が、途中から二本の破線に分かれる図。一方は白丸で止まり「ここで着く？」、もう一方は矢印で伸び続けて「着かない？」と書かれている。どちらがどの級数かは描かれていない模式の図"
+    >
+      <text x="180" y="20" fontSize="10" fill={muted} textAnchor="middle">一歩の幅はどちらも 0 へ縮んでいく（模式）</text>
+
+      <path d="M 24 104 L 196 104" fill="none" stroke={muted} strokeWidth="1" />
+      <circle cx="24" cy="104" r="3.2" fill={stroke} />
+      <text x="24" y="122" fontSize="10" fill={muted} textAnchor="middle">出発</text>
+
+      <path d="M 24 100 Q 60 58 96 100" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 96 100 Q 120 68 144 100" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 144 100 Q 158 78 172 100" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 172 100 Q 180 86 188 100" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 188 100 Q 192 92 196 100" fill="none" stroke={accent} strokeWidth="1.6" />
+      <circle cx="96" cy="104" r="2.6" fill={stroke} />
+      <circle cx="144" cy="104" r="2.6" fill={stroke} />
+      <circle cx="172" cy="104" r="2.6" fill={stroke} />
+      <circle cx="188" cy="104" r="2.6" fill={stroke} />
+
+      <path d="M 196 104 Q 230 102 254 76" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <circle cx="260" cy="70" r="5.2" fill="var(--background)" stroke={stroke} strokeWidth="1.3" />
+      <text x="304" y="56" fontSize="10.5" fill={accent} textAnchor="middle">ここで着く？</text>
+
+      <path d="M 196 104 Q 230 106 254 128" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d="M 254 128 L 288 134" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d="M 281 130 L 289 134 L 281 138" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="300" y="152" fontSize="10.5" fill={accent} textAnchor="middle">着かない？</text>
+
+      <text x="132" y="164" fontSize="11" fill={accent} textAnchor="middle">縮むだけでは、どちらか決まらない</text>
+    </svg>
+  );
+}
+
+
+/** 数列の極限 系列10 derivation: 部分和の列が奇数番目と偶数番目で別の顔をする図。
+ *  derivation 専用（step に置くと step8・9 の発見を先取りする）。
+ *  目盛り・数値ラベルなし。二本のガイドの間隔は模式で、実際の値の比ではない。 */
+export function M3lOddEvenFork() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 176"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="部分和の折れ線が上下に振れ、奇数番目の点が下の破線に、偶数番目の点が上の破線に並ぶ図。目盛りも数値も書かれておらず、二本の破線の間隔は模式である"
+    >
+      <path d="M 34 24 L 34 144" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 34 144 L 344 144" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="34" y="18" fontSize="10" fill={muted} textAnchor="middle">Sₙ</text>
+      <text x="350" y="148" fontSize="10" fill={muted} textAnchor="middle">n</text>
+
+      <path d="M 44 56 L 292 56" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d="M 44 116 L 292 116" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="322" y="52" fontSize="9.5" fill={stroke} textAnchor="middle">偶数番目</text>
+      <text x="322" y="112" fontSize="9.5" fill={stroke} textAnchor="middle">奇数番目</text>
+
+      <polyline
+        points="56,116 88,34 120,116 152,46 184,116 216,52 248,116 280,54"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.2"
+        opacity="0.5"
+      />
+      <circle cx="56" cy="116" r="3" fill={accent} />
+      <circle cx="120" cy="116" r="3" fill={accent} />
+      <circle cx="184" cy="116" r="3" fill={accent} />
+      <circle cx="248" cy="116" r="3" fill={accent} />
+      <circle cx="88" cy="34" r="3" fill="var(--background)" stroke={accent} strokeWidth="1.4" />
+      <circle cx="152" cy="46" r="3" fill="var(--background)" stroke={accent} strokeWidth="1.4" />
+      <circle cx="216" cy="52" r="3" fill="var(--background)" stroke={accent} strokeWidth="1.4" />
+      <circle cx="280" cy="54" r="3" fill="var(--background)" stroke={accent} strokeWidth="1.4" />
+
+      <text x="180" y="170" fontSize="11" fill={accent} textAnchor="middle">同じ列なのに、行き先が二つ見える（模式）</text>
+    </svg>
+  );
+}
+

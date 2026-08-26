@@ -47,7 +47,19 @@ import {
   ALGEBRA2_DOT_SERIES,
   ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
-import { MATH3_LIMITS_SERIES_LIST, M3L_INTRO_SERIES } from "./seriesMath3Limits";
+import {
+  MATH3_LIMITS_SERIES_LIST,
+  M3L_INTRO_SERIES,
+  M3L_GEO_SERIES,
+  M3L_POLY_SERIES,
+  M3L_EXP_SERIES,
+  M3L_SQRT_SERIES,
+  M3L_RECUR_SERIES,
+  M3L_SQUEEZE_SERIES,
+  M3L_SERIES_DEF_SERIES,
+  M3L_GEOSERIES_SERIES,
+  M3L_CONV_SERIES,
+} from "./seriesMath3Limits";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
   M3F_DEVICE_SERIES,
@@ -1778,6 +1790,78 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "数列の極限",
     shortDescription:
       "無限に続いていく数列（行き先を問う）— 一般項で捕まえた列に、こんどは「どこへ向かうか」を問う。$n$ の肩の符号ひとつが、列の運命を分ける",
+  },
+  {
+    series: M3L_GEO_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "等比数列の極限（公比ひとつで運命が決まる）— 同じ「かけ続ける」操作なのに、消える列・暴れる列・止まったままの列に分かれる。分かれ目は公比のどこにあるか",
+  },
+  {
+    series: M3L_POLY_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "不定形①——多項式の綱引き — $\infty-\infty$ も $\dfrac{\infty}{\infty}$ も、そのままでは結末が決まらない。最高次で割ると「ゴマ粒」が $0$ に変わる",
+  },
+  {
+    series: M3L_EXP_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "不定形②——指数の綱引き — 多項式では次数、指数では**底**が強さを決める。$\dfrac10$ 型は $\infty$ とは限らず、分母の近づき方で結末が変わる",
+  },
+  {
+    series: M3L_SQRT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "不定形③——根号と有理化 — 割るが効かないとき、掛けて消す。分子の有理化は「分母の有理化」の逆で、$\infty-\infty$ を有限へ移す",
+  },
+  {
+    series: M3L_RECUR_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "漸化式で定まる数列の極限（動かない点）— となりとの関係だけで決まる列に、行き先はあるか。特性方程式の解＝入れても変わらない数",
+  },
+  {
+    series: M3L_SQUEEZE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "はさみうちの原理（大ざっぱに見積もって、言い当てる）— 暴れてつかめない列を、単純な $2$ 本ではさむ。木を見ずに森を見る",
+  },
+  {
+    series: M3L_SERIES_DEF_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "無限級数（終わりのない足し算に、答えを定める）— 無限個の和はもともと定義されていない。部分和という有限の列を作り、その極限を「和」と呼ぶ",
+  },
+  {
+    series: M3L_GEOSERIES_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "無限等比級数（列は止まるのに、和が暴れるとき）— 等比数「列」と等比「級数」で収束条件がずれる。たった $1$ つの公比 $r=1$ が境目",
+  },
+  {
+    series: M3L_CONV_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "数列の極限",
+    shortDescription:
+      "級数が収束するための条件（縮むだけでは足りない）— 項が $0$ に近づくのは必要か、十分か。一歩の幅を縮め続けても、着くとは限らない",
   },
 ];
 
