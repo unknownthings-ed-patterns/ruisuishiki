@@ -325,7 +325,7 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
 /**
  * 日記（生活文）の観点リスト。俳句・自由詩・お話と同じく**薄く生まれる**（G1）。
  *
- * 2系列ぶんの6項目とも、それぞれの系列の**発見の核**なので initial には置かず、
+ * 3系列ぶんの9項目とも、それぞれの系列の**発見の核**なので initial には置かず、
  * revealedInSeries でその系列から解禁する。系列①を歩く子には①の3項目だけが見え、
  * 系列②へ進むと②の3項目が足される（KOKUGO_ALL_SERIES の並び順が解禁順の正）。
  * 文面は docs/日記背骨_kokugo.md の「観点候補」で確定したもの。
@@ -333,10 +333,16 @@ export const MONOGATARI_VIEWPOINT_LIST_V1: ViewpointList = {
  * ②の「文と文が、すきまなくぴったりつながっている」は、岩井の恩師の学級文集から
  * 教室へ受けつがれてきた指導言そのまま＝系列②の合言葉（2026-08-19 先生指示で収載。
  * 由来は完了画面「作家の風景」に系譜として明記してある）。
+ *
+ * 系列③「思ったことを思ったまま書く」の3項目（v2 で追加）も同じ扱い＝③の発見の核なので
+ * ③から解禁する。文面は docs/思ったまま背骨_kokugo.md の「観点リスト追加候補」で確定した
+ * もの（一つ目＝系列の核〔ぜんぶ（　）版／思ったまま流した版のペア〕、二つ目＝置き場所の
+ * 使い分け〔Step3・Step4〕、三つ目＝「と思いました」をけす〔Step6〕）。③は5・6年向けで、
+ * ①②（小2）より上の学年だが、観点リストはジャンル1本の生き物なので同じリストに積む。
  */
 export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
   genreId: "nikki",
-  version: 1,
+  version: 2,
   items: [
     {
       text: "おきたじゅんに、ました、ましたと書いている",
@@ -367,6 +373,21 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
       text: "音や「」や、心の中のことばで、時間がゆっくりすすむ",
       addedIn: "reading",
       revealedInSeries: "kokugo_nikki_slow_01",
+    },
+    {
+      text: "心の中のことばが、（　）に入れずに、そのまま文になっている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_omoumama_01",
+    },
+    {
+      text: "文のとちゅうの心の声は（　）で、一つの文として立つ心の声はそのまま——置き場所で使い分けている",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_omoumama_01",
+    },
+    {
+      text: "『と思いました』にたよらずに、思ったことが思ったまま書いてある",
+      addedIn: "reading",
+      revealedInSeries: "kokugo_nikki_omoumama_01",
     },
   ],
 };

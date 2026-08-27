@@ -190,6 +190,12 @@ export const STATIC_KOKUGO_CATALOG: KokugoCatalogEntry[] = [
       "文と文のすきまをなくすと、たった5びょうが、いっぱいに広がる。読みくらべ → すきまさがし → 時間を刻む道具の発見 → じぶんの5びょうまで、全 10 問。",
   },
   {
+    series: byId(KOKUGO_NIKKI_SERIES_LIST, "kokugo_nikki_omoumama_01"),
+    genreId: "nikki",
+    shortDescription:
+      "心の中のことばは、（　）に入れないと書けない？　一つの文として立てば、記号がなくても心の声として聞こえ、心と時間がいっしょに流れる。文のとちゅうに挟むなら（　）——置き場所が、記号を決める。読みくらべ → 心の声さがし → 置き場所の発見 → じぶんの思ったまま日記まで、全 10 問（日記の系列①②のつづき・少し上の学年へ）。",
+  },
+  {
     series: byId(KOKUGO_ZUIHITSU_SERIES_LIST, "kokugo_zuihitsu_mitsuke_01"),
     genreId: "zuihitsu",
     shortDescription:
