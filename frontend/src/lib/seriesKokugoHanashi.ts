@@ -1602,7 +1602,7 @@ export const KOKUGO_HANASHI_PRINCESS_SERIES: KokugoSeries = {
  */
 export const KOKUGO_HANASHI_SETTEI_SERIES: KokugoSeries = {
   id: "kokugo_hanashi_settei_01",
-  title: "登場人物のせっていカード（べファーナの分析）",
+  title: "登場人物のせっていカード（ベファーナの分析）",
   subtitle:
     "お話ユニットより — せっていは、うごき出す前のストーリー。読むときの分析と、書くときの設計は、同じカードの表と裏。カードに分ける → 束で当てる → せってい一つちがいの発見 → 自分の一座まで $10$ の問い。",
   genreId: "monogatari",
