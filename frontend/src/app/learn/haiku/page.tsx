@@ -317,6 +317,111 @@ function MoraMeter({
   );
 }
 
+/**
+ * 部屋名に添える自作の線画アイコン（実物ワークシートのネット素材イラストの置き換え。
+ * 2026-08-28 先生裁定）。部屋名の部分一致で選ぶ。該当なしはアイコンなしで degrade。
+ */
+function RoomIcon({ name }: { name: string }) {
+  let d: string[] | null = null;
+  if (name.includes("書く")) {
+    // えんぴつ
+    d = ["M4 20l1-4L16 5l3 3L8 19l-4 1z", "M13.5 7.5l3 3"];
+  } else if (name.includes("見た")) {
+    // 目
+    d = [
+      "M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z",
+      "M12 9.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
+    ];
+  } else if (name.includes("した")) {
+    // 手
+    d = [
+      "M8 12.5V6a1.4 1.4 0 012.8 0v5",
+      "M10.8 11V4.6a1.4 1.4 0 012.8 0V11",
+      "M13.6 11V6a1.4 1.4 0 012.8 0v7.5",
+      "M8 12.5l-1.6-1.6a1.5 1.5 0 00-2.1 2.1L8 16.7A5.3 5.3 0 0013 21h.4a5 5 0 005-5v-2.5",
+    ];
+  } else if (name.includes("聞いた")) {
+    // 耳
+    d = [
+      "M7 10a5 5 0 0110 0c0 2-.9 3-1.9 4-1 1-1.5 2-1.5 3.2a2.5 2.5 0 01-5 .3",
+      "M10 10a2 2 0 014 0",
+    ];
+  } else if (name.includes("かんじた") || name.includes("おもった")) {
+    // ハート
+    d = [
+      "M12 20s-7-4.5-9-9a4.8 4.8 0 018.4-3.2l.6.6.6-.6A4.8 4.8 0 0121 11c-2 4.5-9 9-9 9z",
+    ];
+  } else if (name.includes("くりかえす") || name.includes("キーワード")) {
+    // くりかえし（まわる矢印）
+    d = [
+      "M17 2.5l4 4-4 4",
+      "M3 11.5v-1a4 4 0 014-4h14",
+      "M7 21.5l-4-4 4-4",
+      "M21 12.5v1a4 4 0 01-4 4H3",
+    ];
+  }
+  if (!d) return null;
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      style={{ flexShrink: 0 }}
+    >
+      {d.map((p, i) => (
+        <path key={i} d={p} />
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * ことばを集めるワークシート（6つのへや）。空行区切りの各節＝1部屋を、
+ * 部屋名（＋自作アイコン）を見出しにした枠で並べる。部屋＝倉庫の感覚を
+ * 表示でも保つ（装置が要する表示に従う・2026-08-28 先生裁定）。
+ */
+function WorksheetRooms({ text }: { text: string }) {
+  const rooms = text
+    .split(/\n\s*\n/)
+    .map((block) => {
+      const lines = block.split("\n").filter((l) => l !== "");
+      return { name: lines[0] ?? "", items: lines.slice(1) };
+    })
+    .filter((r) => r.name);
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+      {rooms.map((room, i) => (
+        <section
+          key={i}
+          className="rounded-md border border-border px-3 py-2.5"
+          style={{ background: "var(--background)" }}
+        >
+          <h4
+            className="flex items-center gap-1.5 text-muted"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+          >
+            <RoomIcon name={room.name} />
+            {room.name}
+          </h4>
+          <div className="mt-1.5 font-serif text-foreground" style={{ fontSize: "14px", lineHeight: 1.9 }}>
+            {room.items.map((item, j) => (
+              <p key={j} style={{ whiteSpace: "pre-wrap" }}>
+                {item}
+              </p>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
 /** 模範文カード（縦書き）。viewpointTags は出さない（G1）。 */
 function MentorCard({ id }: { id: string }) {
   const m = getMentorText(id);
@@ -327,6 +432,25 @@ function MentorCard({ id }: { id: string }) {
     m.form === "free_verse" || m.form === "prose" || m.form === "visual";
   // 視覚詩だけ、字間・行間を詰めた等幅グリッドで描く（ならべ方が作品）。
   const isVisual = m.form === "visual";
+  // ワークシート（集める装置）は部屋の枠で見せる（縦書きの作品カードとは別の器）。
+  if (m.form === "worksheet") {
+    return (
+      <article
+        className="rounded-lg border border-border px-4 py-4 flex flex-col gap-3"
+        style={{ background: "var(--surface)" }}
+      >
+        <WorksheetRooms text={m.text} />
+        {m.reading && (
+          <span className="text-muted" style={{ fontSize: "11px", letterSpacing: "0.05em" }}>
+            {m.reading}
+          </span>
+        )}
+        <span className="text-muted" style={{ fontSize: "12px" }}>
+          — {m.author}
+        </span>
+      </article>
+    );
+  }
   return (
     <article
       className="rounded-lg border border-border px-4 py-5 flex flex-col items-center gap-3"

@@ -243,8 +243,13 @@ export type MentorText = {
    * （letterSpacing 0・lineHeight 1.6）——字間が空くと格子が崩れて絵が立たない
    * （docs/視覚詩背骨_kokugo.md 技術ゲート2・先生検収済みの縦書きプレビューと同じ規則）。
    * moraCount は非適用（free_verse・prose と同じ扱い）。
+   * "worksheet"＝ことばを集めるワークシート（6つのへや等）。**部屋に入れて集める
+   * 空間の装置**なので、空行区切りの各節を「部屋名＋集めたことば」の枠にして
+   * 並べる（詩版7条件の7「装置が要する表示に従う」・2026-08-28 先生裁定）。
+   * 部屋名には自作の線画アイコンを添える（実物ワークシートのネット素材イラストは
+   * 使えないため、置き換え）。moraCount は非適用。
    */
-  form?: "haiku" | "free_verse" | "prose" | "visual";
+  form?: "haiku" | "free_verse" | "prose" | "visual" | "worksheet";
   author: string;
   /** 出典（memory ruisuishiki-citation-format の書式）。 */
   sourceNote: string;
