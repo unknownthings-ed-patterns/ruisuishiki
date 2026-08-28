@@ -21,7 +21,7 @@ import type { KokugoSeries } from "./types";
 /** 系列①：五七五のかたち（音数とリズム）。 */
 export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
   id: "kokugo_haiku_form_01",
-  title: "五七五のかたち（音数とリズム）",
+  title: "五七五のかたち——音数とリズムの器",
   subtitle:
     "俳句ユニットより — 声に出して[拍]を数え、五・七・五という『器』が何をしてくれるかを $10$ の問いで感じとる。",
   genreId: "haiku",
@@ -44,7 +44,7 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "小さい「ゃゅょ」は前の音にくっつくから、たたくのは前の音と一回だけ。のばす「ー」・つまる「っ」・はねる「ん」は、それぞれ一回たたくよ。この数え方で二つの句をくらべると、何が見えてくる？",
+          text: "くらべるのは、ことばの意味ではなく、手をたたいた数のならび。二つの句を、それぞれいくつかのかたまりに区切って、かたまりごとの数を書き出してみよう。二つのならびを見くらべると、どうだろう？",
         },
         {
           layer: 3,
@@ -76,7 +76,7 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "前題と変わったのは「小さい字やのばす音があること」だけ。「きゅ」「しょ」は前とくっついて一回、「ー」「ん」「っ」はそれぞれ一回。ここだけ気をつければ、数え方は前と同じ。",
+          text: "前題と変わったのは、小さい字「ゃゅょ」や、のばす「ー」・つまる「っ」・はねる「ん」が入っていること——それだけ。この字たちは、手をたたくとき何回分になるだろう？　声に出して、たしかめながら数えてみよう。",
         },
         {
           layer: 3,
@@ -214,7 +214,7 @@ export const KOKUGO_HAIKU_FORM_SERIES: KokugoSeries = {
         },
         {
           layer: 3,
-          text: "元の「夕焼けが／山をそめてる／かえりみち」は、上 $5$・下 $5$。真ん中の $7$ 音を残して上下を入れかえても、器はこわれない。二つの $5$ を、あなたの景色のことばで満たしてみよう——形の作り方は元の句が見せている。",
+          text: "元の「夕焼けが／山をそめてる／かえりみち」は、上 $5$・下 $5$。真ん中の $7$ 音を残して、上と下のことばを別のものに取りかえても、器はこわれない。二つの $5$ を、あなたの景色のことばで満たしてみよう——形の作り方は元の句が見せている。",
         },
       ],
       variationFromPrevious: "plus_alpha",
@@ -378,7 +378,7 @@ export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "二つの句をくらべてみよう。片方は実りの秋、もう片方は明るい春。その季節を決めているのは、それぞれ一つの言葉——どれだろう？",
+          text: "二つの句をくらべると、実りのものと、咲くもの。それぞれ、目にうかぶ季節を決めている言葉が一つずつある——どれだろう？",
         },
         {
           layer: 3,
@@ -409,7 +409,7 @@ export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは句だけ、さがすことは同じ。三つの中で「冬」を目にうかばせる言葉はどれ？",
+          text: "変わったのは句だけ、さがすことは同じ。三つの中で、目に景色がうかぶ言葉はどれ？　残りの二つは、いつの季節にも使えないかな？",
         },
         {
           layer: 3,
@@ -665,7 +665,7 @@ export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
 };
 
 /**
- * 系列③「切れ——『や・かな・けり』が向かい合わせるもの」。
+ * 系列③「切れ——ひと区切りが向かい合わせるもの」。
  *
  * 正典 §3.2 系列③。＋α（切れ字という制約）・複合（季語＋切れ字＋対比）が重点。
  * 胚細胞＝対比（二物の並置で、言わない意味が生まれる）。
@@ -674,7 +674,7 @@ export const KOKUGO_HAIKU_KIGO_SERIES: KokugoSeries = {
  */
 export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
   id: "kokugo_haiku_kire_01",
-  title: "切れ——「や・かな・けり」が向かい合わせるもの",
+  title: "切れ——ひと区切りが向かい合わせるもの",
   subtitle:
     "俳句ユニットより — 句を「切れ」で二つに割ると、間と対比が生まれる。切れさがし→対比の発見→切れで一句まで $10$ 問。",
   genreId: "haiku",
@@ -697,7 +697,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "「古池や…」の『や』のあたり、読むと一度止まる感じがする。その一字が、句を二つに分けている——どのあたり？",
+          text: "変わるのは読む速さじゃなく、息のつぎ方。上の五音を読み終えたあたりで、声が一度置かれない？　そこに何の字がある？",
         },
         {
           layer: 3,
@@ -754,7 +754,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは句だけ。終わりで『……なあ』と言い切って止める字はどれ？",
+          text: "変わったのは句だけ。終わりで『……たのだった』と言い切って、しみじみ止める字はどれ？",
         },
         {
           layer: 3,
@@ -770,7 +770,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
       position: 4,
       kind: "comparison",
       questionText:
-        "『や』で区切ると、句は二つに分かれる。前は『古池』、後は『蛙が飛びこむ水の音』。この二つを並べると、何が生まれる？ 気づきを書こう。",
+        "『や』で区切ると、句は二つに分かれる。前は『古池』、後は『蛙飛びこむ水の音』。この二つを並べると、何が生まれる？ 気づきを書こう。",
       mentorTextRefs: ["haiku_furuike"],
       hints: [
         {
@@ -779,7 +779,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "前は『古池』、後は『蛙が飛びこむ水の音』。しずかなものと、動く音。二つを並べると、あなたの心に何がうかぶ？",
+          text: "前は『古池』、後は『蛙飛びこむ水の音』。しずかなものと、動く音。二つを並べると、あなたの心に何がうかぶ？",
         },
         {
           layer: 3,
@@ -805,7 +805,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは、はじめの一字『が』→『や』だけ。『夕焼けが…』はすーっと一つづき。『夕焼けや…』は『夕焼け！』で一度止まって、後の景色と向かい合う。読んだ感じはどう？",
+          text: "変わったのは、はじめの一字『が』→『や』だけ。二つを続けて声に出すと、息のつぎ方はどうちがう？",
         },
         {
           layer: 3,
@@ -847,7 +847,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 3,
-          text: "『夕焼けが』の『が』を『や』にすると、『夕焼けや』で切れて、後の景色と向かい合う。『や・かな・けり』が、この区切りをつくる字（[切れ字]）だよ。",
+          text: "『夕焼けが』の『が』を『や』にすると、『夕焼けや』で切れて、後の景色と向かい合う。『や』や『けり』が、この区切りをつくる字（[切れ字]）。前の系列で読んだ「春の海ひねもすのたりのたりかな」の『かな』も、そのなかまだよ。",
         },
       ],
       variationFromPrevious: "inverse",
@@ -884,14 +884,14 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
       position: 8,
       kind: "creation",
       questionText:
-        "[切れ字]（や・かな・けり）を一つ使って、二つのものを向かい合わせた句をつくろう。（作品とよみがなを書いてね）",
+        "[切れ字]（や・けり）を一つ使って、二つのものを向かい合わせた句をつくろう。（作品とよみがなを書いてね）",
       mentorTextRefs: ["haiku_furuike"],
       input: { type: "haikuText" },
       creationCheck: {
         meterTarget: [5, 7, 5],
         meterPolicy: "visualize",
         selfChecklist: [
-          "区切る字（や・かな・けり）を入れた",
+          "区切る字（や・けり）を入れた",
           "前と後で、二つのものが向かい合っている",
           "声に出してリズムを確かめた",
         ],
@@ -907,7 +907,7 @@ export const KOKUGO_HAIKU_KIRE_SERIES: KokugoSeries = {
         },
         {
           layer: 3,
-          text: "作り方は手の中にあるよ。二つのものを選んで、間に『や・かな・けり』のどれかを置く。前と後がぶつかって、言わない意味が生まれる。",
+          text: "作り方は手の中にあるよ。二つのものを選んで、間に『や』か『けり』を置く。前と後がぶつかって、言わない意味が生まれる。",
         },
       ],
       variationFromPrevious: "plus_alpha",

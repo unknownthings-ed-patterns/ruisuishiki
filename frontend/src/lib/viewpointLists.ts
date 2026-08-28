@@ -121,7 +121,7 @@ export const SHI_VIEWPOINT_LIST_V1: ViewpointList = {
       revealedInSeries: "kokugo_shi_nazo_01",
     },
     {
-      text: "言い方がいろいろにかわる（見える・みたい・のようだ）",
+      text: "言い方がいろいろにかわる（見える・みたい・ようだ・でもある）",
       addedIn: "reading",
       revealedInSeries: "kokugo_shi_nazo_01",
     },
@@ -385,7 +385,7 @@ export const NIKKI_VIEWPOINT_LIST_V1: ViewpointList = {
       revealedInSeries: "kokugo_nikki_omoumama_01",
     },
     {
-      text: "『と思いました』にたよらずに、思ったことが思ったまま書いてある",
+      text: "「と思いました」にたよらずに、思ったことが思ったまま書いてある",
       addedIn: "reading",
       revealedInSeries: "kokugo_nikki_omoumama_01",
     },
