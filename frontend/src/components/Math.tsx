@@ -11804,13 +11804,23 @@ export function QuadIneqSign() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
+  const axisY = 100;
+  const vertexX = 180;
+  const vertexY = 125; // x 軸より下（SVG y 増加＝画面下）
+  const coeff = (axisY - vertexY) / (50 * 50); // N₁ (130)・N₂ (230) で y = axisY
+  const yAt = (x: number) => coeff * (x - vertexX) ** 2 + vertexY;
+  const pathD = Array.from({ length: 45 }, (_, i) => {
+    const x = 70 + i * 5;
+    const y = yAt(x);
+    return `${i === 0 ? "M" : "L"} ${x} ${y.toFixed(1)}`;
+  }).join(" ");
   return (
     <svg viewBox="0 0 360 160" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="放物線と x 軸。境界は N。答えの範囲は書かない">
-      <line x1="40" y1="100" x2="320" y2="100" stroke={muted} strokeWidth="1" />
+      <line x1="40" y1={axisY} x2="320" y2={axisY} stroke={muted} strokeWidth="1" />
       <line x1="60" y1="140" x2="60" y2="30" stroke={muted} strokeWidth="1" />
-      <path d="M 70 40 Q 180 160 290 40" fill="none" stroke={accent} strokeWidth="2" />
-      <circle cx="130" cy="100" r="4" fill={stroke} />
-      <circle cx="230" cy="100" r="4" fill={stroke} />
+      <path d={pathD} fill="none" stroke={accent} strokeWidth="2" />
+      <circle cx="130" cy={axisY} r="4" fill={stroke} />
+      <circle cx="230" cy={axisY} r="4" fill={stroke} />
       <text x="130" y="120" fontSize="12" fill={stroke} textAnchor="middle">N₁</text>
       <text x="230" y="120" fontSize="12" fill={stroke} textAnchor="middle">N₂</text>
       <text x="90" y="55" fontSize="11" fill={muted} textAnchor="middle">上？</text>
