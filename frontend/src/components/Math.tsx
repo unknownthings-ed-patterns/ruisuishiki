@@ -14850,6 +14850,41 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3V_TILE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vTile />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_EQUAL_ARROWS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vEqualArrows />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_EXTRACT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vExtract />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_ADD_JOIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vAddJoin />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SUB_DIRECTION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSubDirection />
+            </div>
+          );
+        }
         if (trimmed === "<<M3L_POINTS_CLOSING>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33822,3 +33857,241 @@ export function M3lOddEvenFork() {
   );
 }
 
+
+/* ===== 数Ⅲ・C 第9章 ベクトル（背骨 docs/math3c_vector_design.md D5）===== */
+
+/** ベクトル 系列1 step1: 平行四辺形のタイル床と 2 点 P, Q。
+ *  タイル 1 枚ぶんの a・b の矢印だけ描き、目盛りの数字・枚数は書かない
+ *  （P から Q まで何枚ぶんかを数えるのが step1 の仕事）。 */
+export function M3vTile() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 斜めの格子：原点 (34, 168)、a = (44, 0)、b = (16, -26) */
+  const ox = 34, oy = 168, ax = 40, ay = 0, bx = 16, by = -26;
+  const pt = (i: number, j: number) => [ox + i * ax + j * bx, oy + i * ay + j * by] as const;
+  const cols = 6, rows = 5;
+  const lines: string[] = [];
+  for (let j = 0; j <= rows; j++) {
+    const [x1, y1] = pt(0, j); const [x2, y2] = pt(cols, j);
+    lines.push(`M ${x1} ${y1} L ${x2} ${y2}`);
+  }
+  for (let i = 0; i <= cols; i++) {
+    const [x1, y1] = pt(i, 0); const [x2, y2] = pt(i, rows);
+    lines.push(`M ${x1} ${y1} L ${x2} ${y2}`);
+  }
+  const [px, py] = pt(1, 1);
+  const [qx, qy] = pt(4, 3);
+  const [a0x, a0y] = pt(0, 0); const [a1x, a1y] = pt(1, 0); const [b1x, b1y] = pt(0, 1);
+  return (
+    <svg
+      viewBox="0 0 360 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="平行四辺形のタイルを敷きつめた床。左下のタイル 1 枚に、辺に沿った 2 本の矢印 a と b が描かれている。床の上に 2 点 P と Q が打ってあり、P から Q への矢印はまだ描かれていない。目盛りの数字はない"
+    >
+      <path d={lines.join(" ")} fill="none" stroke={muted} strokeWidth="0.9" />
+      {/* a・b（タイル 1 枚ぶん） */}
+      <path d={`M ${a0x} ${a0y} L ${a1x - 4} ${a1y}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <path d={`M ${a1x - 10} ${a1y - 5} L ${a1x - 3} ${a1y} L ${a1x - 10} ${a1y + 5}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x={(a0x + a1x) / 2} y={a0y + 15} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+      <path d={`M ${a0x} ${a0y} L ${b1x - 2} ${b1y + 3}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <path d={`M ${b1x - 10} ${b1y + 6} L ${b1x - 1} ${b1y + 2} L ${b1x - 4} ${b1y + 12}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x={a0x - 8} y={(a0y + b1y) / 2 + 2} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">b</text>
+      {/* P, Q */}
+      <circle cx={px} cy={py} r="4" fill={stroke} />
+      <text x={px - 10} y={py + 14} fontSize="12" fill={stroke} textAnchor="middle">P</text>
+      <circle cx={qx} cy={qy} r="4" fill={stroke} />
+      <text x={qx + 10} y={qy - 8} fontSize="12" fill={stroke} textAnchor="middle">Q</text>
+      <text x="200" y="26" fontSize="11" fill={accent} textAnchor="middle">
+        P から Q へ、a を何枚ぶん・b を何枚ぶん進む？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列1 step6: 矢印 PQ と、別の場所に置かれた 5 本の矢印①〜⑤。
+ *  どれが等しいかの印は付けない（等しい 2 本・逆向き 1 本・2 倍 1 本・向き違い 1 本）。
+ *  枚数は格子で数えられるが、数字は書かない。 */
+export function M3vEqualArrows() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 16, oy = 196, ax = 30, ay = 0, bx = 10, by = -20;
+  const pt = (i: number, j: number) => [ox + i * ax + j * bx, oy + i * ay + j * by] as const;
+  const cols = 9, rows = 7;
+  const lines: string[] = [];
+  for (let j = 0; j <= rows; j++) { const [x1, y1] = pt(0, j); const [x2, y2] = pt(cols, j); lines.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  for (let i = 0; i <= cols; i++) { const [x1, y1] = pt(i, 0); const [x2, y2] = pt(i, rows); lines.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  /** 矢印：始点(格子) と枚数 (da, db)。ラベルは番号だけ */
+  const arrows: { label: string; from: [number, number]; d: [number, number]; main?: boolean }[] = [
+    { label: "", from: [0, 0], d: [3, 2], main: true },      // PQ
+    { label: "①", from: [8, 6], d: [-3, -2] },               // 逆向き
+    { label: "②", from: [1, 3], d: [6, 4] },                 // 2 倍
+    { label: "③", from: [5, 0], d: [3, 2] },                 // 等しい
+    { label: "④", from: [7, 3], d: [2, 3] },                 // 向き違い
+    { label: "⑤", from: [0, 5], d: [3, 2] },                 // 等しい
+  ];
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 9, hy = y2 - uy * 9;
+    const nx = -uy * 5, ny = ux * 5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="平行四辺形のタイルの床の上に、P から Q への矢印と、番号①から⑤の 5 本の矢印がばらばらの場所に描かれている。向きや長さが同じもの・反対のもの・2 倍のものが混ざっているが、どれが等しいかの印はない"
+    >
+      <path d={lines.join(" ")} fill="none" stroke={muted} strokeWidth="0.7" />
+      {arrows.map((ar, k) => {
+        const [x1, y1] = pt(ar.from[0], ar.from[1]);
+        const [x2, y2] = pt(ar.from[0] + ar.d[0], ar.from[1] + ar.d[1]);
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        return (
+          <g key={k}>
+            {arrow(x1, y1, x2, y2, ar.main ? stroke : accent, ar.main ? 2.4 : 2, `a${k}`)}
+            {ar.main ? (
+              <>
+                <text x={x1 - 9} y={y1 + 4} fontSize="12" fill={stroke} textAnchor="middle">P</text>
+                <text x={x2 + 9} y={y2 - 4} fontSize="12" fill={stroke} textAnchor="middle">Q</text>
+              </>
+            ) : (
+              <text x={mx + 4} y={my + 16} fontSize="12" fill={accent} textAnchor="middle">{ar.label}</text>
+            )}
+          </g>
+        );
+      })}
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        ①〜⑤のうち、ベクトルとして PQ と等しいのはどれ？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列1 derivation・辞書「ベクトル」: 2 点 A, B の矢印から「向き」と「大きさ」を取り出す図。
+ *  別の場所に同じ矢印をもう 1 本置き、場所に縛られないことを見せる。長さの数値は書かない。 */
+export function M3vExtract() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左に、点 A から点 B への矢印。そこから吹き出しが出て「向き」「大きさ」の 2 語が取り出されている。右には、別の場所に同じ向き・同じ長さの矢印がもう 1 本描かれている。長さの数値はない"
+    >
+      {/* 左：A→B */}
+      <circle cx="40" cy="120" r="3.5" fill={stroke} />
+      <circle cx="120" cy="60" r="3.5" fill={stroke} />
+      <path d="M 40 120 L 113 65" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <path d="M 104 62 L 120 60 L 111 74 Z" fill={stroke} />
+      <text x="30" y="136" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="130" y="52" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      {/* 吹き出し：向き・大きさ */}
+      <path d="M 96 100 L 150 126" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <rect x="150" y="112" width="70" height="40" rx="6" fill="var(--background)" stroke={accent} strokeWidth="1.2" />
+      <text x="185" y="128" fontSize="11" fill={accent} textAnchor="middle">向き</text>
+      <text x="185" y="144" fontSize="11" fill={accent} textAnchor="middle">大きさ</text>
+      {/* 右：別の場所の同じ矢印 */}
+      <path d="M 232 138 L 305 83" fill="none" stroke={accent} strokeWidth="2.2" />
+      <path d="M 296 80 L 312 78 L 303 92 Z" fill={accent} />
+      <text x="272" y="66" fontSize="11" fill={muted} textAnchor="middle">別の場所</text>
+      <text x="180" y="24" fontSize="11" fill={accent} textAnchor="middle">
+        場所が違うのに、同じ矢印と呼べるのはなぜ？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列1 derivation・辞書「ベクトル」: 足し算の 2 つの見方。
+ *  左＝a の先に b をつなぐ。右＝始点をそろえた平行四辺形の対角線。係数は書かない。 */
+export function M3vAddJoin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string, dash?: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 9, hy = y2 - uy * 9;
+    const nx = -uy * 5, ny = ux * 5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} strokeDasharray={dash} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左：矢印 a の先に矢印 b をつなぎ、a の始点から b の終点へ向かう矢印を描いた図。右：始点をそろえた a と b で平行四辺形を作り、その対角線を描いた図。どちらも同じ矢印に着くことを示す。数値はない"
+    >
+      {/* 左：つなぐ */}
+      {arrow(30, 130, 110, 120, stroke, 2, "l-a")}
+      {arrow(110, 120, 140, 60, stroke, 2, "l-b")}
+      {arrow(30, 130, 140, 60, accent, 2.2, "l-s")}
+      <text x="70" y="146" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">a</text>
+      <text x="136" y="96" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+      <text x="76" y="86" fontSize="11" fill={accent} textAnchor="middle">つなぐ</text>
+      {/* 右：平行四辺形 */}
+      {arrow(210, 130, 290, 120, stroke, 2, "r-a")}
+      {arrow(210, 130, 240, 70, stroke, 2, "r-b")}
+      <path d="M 290 120 L 320 60 L 240 70" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      {arrow(210, 130, 320, 60, accent, 2.2, "r-s")}
+      <text x="250" y="146" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">a</text>
+      <text x="216" y="96" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+      <text x="300" y="100" fontSize="11" fill={accent} textAnchor="middle">対角線</text>
+      <text x="180" y="24" fontSize="11" fill={accent} textAnchor="middle">
+        つないでも、対角線を引いても、同じ矢印に着く？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列1 derivation・辞書「逆ベクトル」: a − b の向き。
+ *  始点をそろえた a・b と、2 つの終点を結ぶ「向きの決まっていない」線分だけを描く。
+ *  正しい結び方（b の終点から a の終点へ）は描かない（Round 1 監査 4-b）。 */
+export function M3vSubDirection() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="始点をそろえた 2 本の矢印 a と b。2 本の終点どうしを結ぶ線分が破線で描かれ、矢じりは付いていない。線分の脇に疑問符。a − b がどちら向きかは描かれていない"
+    >
+      <circle cx="90" cy="120" r="3.5" fill={stroke} />
+      <path d="M 90 120 L 262 100" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <path d="M 254 94 L 270 99 L 255 108 Z" fill={stroke} />
+      <text x="180" y="128" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">a</text>
+      <path d="M 90 120 L 150 50" fill="none" stroke={stroke} strokeWidth="2.2" />
+      <path d="M 142 50 L 155 44 L 153 60 Z" fill={stroke} />
+      <text x="108" y="80" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+      {/* 終点どうしを結ぶ・矢じりなし */}
+      <path d="M 155 44 L 270 99" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 4" />
+      <text x="228" y="62" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">?</text>
+      <text x="180" y="24" fontSize="11" fill={accent} textAnchor="middle">
+        a − b は、この線分のどちら向き？
+      </text>
+    </svg>
+  );
+}

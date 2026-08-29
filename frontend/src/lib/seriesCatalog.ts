@@ -61,6 +61,10 @@ import {
   M3L_CONV_SERIES,
 } from "./seriesMath3Limits";
 import {
+  MATH3_VECTOR_SERIES_LIST,
+  M3V_QUANTITY_SERIES,
+} from "./seriesMath3Vector";
+import {
   MATH3_FUNCTIONS_SERIES_LIST,
   M3F_DEVICE_SERIES,
   M3F_DOMAIN_SERIES,
@@ -1863,6 +1867,18 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "級数が収束するための条件（縮むだけでは足りない）— 項が $0$ に近づくのは必要か、十分か。一歩の幅を縮め続けても、着くとは限らない",
   },
+  /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
+   * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
+   * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
+   * SERIES_REDIRECTS へ移す（裁定 Q5 案1）。 */
+  {
+    series: M3V_QUANTITY_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "ベクトルという量（向きと大きさだけを取り出す）— 旧課程 数B・新課程 数C の単元。矢印から向きと大きさを取り出して場所を忘れると、矢印は数のように足したり何倍かしたりできる「概念」になる",
+  },
 ];
 
 /**
@@ -1936,6 +1952,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_2_SERIES_LIST,
   ...MATH3_FUNCTIONS_SERIES_LIST,
   ...MATH3_LIMITS_SERIES_LIST,
+  ...MATH3_VECTOR_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,
