@@ -478,7 +478,7 @@ $$x^2 + Cx + D \\longrightarrow (x + a)(x + b)$$
       id: "step1",
       position: 1,
       questionText:
-        "$x^2 + 3x + 2 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
+        "$x^2 + 3x + 2 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えましょう。",
       answer: 1,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -506,7 +506,7 @@ $$x^2 + Cx + D \\longrightarrow (x + a)(x + b)$$
       id: "step2",
       position: 2,
       questionText:
-        "$x^2 + 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
+        "$x^2 + 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えましょう。",
       answer: 2,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -525,7 +525,7 @@ $$x^2 + Cx + D \\longrightarrow (x + a)(x + b)$$
       id: "step3",
       position: 3,
       questionText:
-        "$x^2 + 8x + 15 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
+        "$x^2 + 8x + 15 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えましょう。",
       answer: 3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -544,7 +544,7 @@ $$x^2 + Cx + D \\longrightarrow (x + a)(x + b)$$
       id: "step4",
       position: 4,
       questionText:
-        "$x^2 - 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
+        "$x^2 - 5x + 6 = (x+a)(x+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えましょう。",
       answer: -3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",
@@ -572,7 +572,7 @@ $$x^2 + Cx + D \\longrightarrow (x + a)(x + b)$$
       id: "step5",
       position: 5,
       questionText:
-        "$y^2 + 7y + 12 = (y+a)(y+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えてください。",
+        "$y^2 + 7y + 12 = (y+a)(y+b)$ と因数分解できます。$a$ と $b$ のうち小さい方を答えましょう。",
       answer: 3,
       unit: "",
       unknownLabel: "a と b のうち小さい方",

@@ -46,7 +46,7 @@ export const M3L_INTRO_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "数列 $\\{a_n\\}$ の [一般項] が $a_n = \\dfrac{9}{n+3}$ で与えられています。\n\n番号を大きくしていくと、この列の値がどうなるかを実際に見てみましょう。**第 $15$ 項** $a_{15}$ を求めてください。\n\n答えは既約分数で答えましょう。",
+        "数列 $\\{a_n\\}$ の [一般項] が $a_n = \\dfrac{9}{n+3}$ で与えられています。\n\n番号を大きくしていくと、この列の値がどうなるかを実際に見てみましょう。**第 $15$ 項** $a_{15}$ を求めましょう。\n\n答えは既約分数で答えましょう。",
       answer: 0.5,
       answerDisplay: "1/2",
       unit: "",
@@ -233,7 +233,7 @@ export const M3L_INTRO_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "収束しない数列にも、いくつかの型があります。次の $5$ つを見てください。\n\n① $3 \\cdot (-1)^n$　② $-4n$　③ $\\dfrac{5}{n}$　④ $(-1)^n \\cdot n$　⑤ $\\dfrac{n^2}{3}$\n\nこの $5$ つを一般項とする数列のうち、**振動するものは何個**あるでしょうか。\n\n（数列が収束しないとき発散するといい、発散のうち「正の無限大にも負の無限大にも向かわないもの」を**振動する**といいます。）",
+        "収束しない数列にも、いくつかの型があります。次の $5$ つを見ましょう。\n\n① $3 \\cdot (-1)^n$　② $-4n$　③ $\\dfrac{5}{n}$　④ $(-1)^n \\cdot n$　⑤ $\\dfrac{n^2}{3}$\n\nこの $5$ つを一般項とする数列のうち、**振動するものは何個**あるでしょうか。\n\n（数列が収束しないとき発散するといい、発散のうち「正の無限大にも負の無限大にも向かわないもの」を**振動する**といいます。）",
       answer: 2,
       unit: "個",
       unknownLabel: "振動するものの個数",
@@ -2674,7 +2674,7 @@ export const M3L_SERIES_DEF_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "数Ⅱ・B の [数列] で足し算を考えるとき、私たちが書いていたのは「第 $n$ 項までの和」——**終わりのある足し算**でした。ここでは、その足し算を**止めずに**続けたらどうなるかを考えます。\n\n$2 + \\dfrac{3}{2} + \\dfrac{9}{8} + \\dfrac{27}{32} + \\cdots$\n\nこれは初項 $2$、公比 $\\dfrac{3}{4}$ の [等比数列] を、第 $1$ 項からどこまでも足していったものです。\n\nいきなり全部を足すことはできません。まず、**できることをやってみましょう**。第 $1$ 項から**第 $4$ 項までの和** $S_4$ を求めてください。\n\n答えは既約分数で答えましょう。",
+        "数Ⅱ・B の [数列] で足し算を考えるとき、私たちが書いていたのは「第 $n$ 項までの和」——**終わりのある足し算**でした。ここでは、その足し算を**止めずに**続けたらどうなるかを考えます。\n\n$2 + \\dfrac{3}{2} + \\dfrac{9}{8} + \\dfrac{27}{32} + \\cdots$\n\nこれは初項 $2$、公比 $\\dfrac{3}{4}$ の [等比数列] を、第 $1$ 項からどこまでも足していったものです。\n\nいきなり全部を足すことはできません。まず、**できることをやってみましょう**。第 $1$ 項から**第 $4$ 項までの和** $S_4$ を求めましょう。\n\n答えは既約分数で答えましょう。",
       answer: 175 / 32,
       answerDisplay: "175/32",
       unit: "",
@@ -2754,7 +2754,7 @@ export const M3L_SERIES_DEF_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "こんどは [シグマ記号] で書かれた級数です。**足し始めの番号**に注意してください。\n\n$\\displaystyle\\sum_{n=0}^{\\infty} 3\\left(\\dfrac{5}{9}\\right)^{n} = 3\\left(\\dfrac{5}{9}\\right)^{0} + 3\\left(\\dfrac{5}{9}\\right)^{1} + 3\\left(\\dfrac{5}{9}\\right)^{2} + \\cdots$\n\nこの [無限級数] の和を求めましょう。\n\n答えは既約分数で答えましょう。",
+        "こんどは [シグマ記号] で書かれた級数です。**足し始めの番号**に注意しましょう。\n\n$\\displaystyle\\sum_{n=0}^{\\infty} 3\\left(\\dfrac{5}{9}\\right)^{n} = 3\\left(\\dfrac{5}{9}\\right)^{0} + 3\\left(\\dfrac{5}{9}\\right)^{1} + 3\\left(\\dfrac{5}{9}\\right)^{2} + \\cdots$\n\nこの [無限級数] の和を求めましょう。\n\n答えは既約分数で答えましょう。",
       answer: 27 / 4,
       answerDisplay: "27/4",
       unit: "",
@@ -3132,7 +3132,7 @@ export const M3L_GEOSERIES_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "次の無限等比級数の和を求めましょう。**足し始めが第 $2$ 項から**であることに注意してください。\n\n$\\displaystyle\\sum_{n=2}^{\\infty} 4\\left(\\dfrac{3}{8}\\right)^{n-1} = 4\\left(\\dfrac{3}{8}\\right) + 4\\left(\\dfrac{3}{8}\\right)^{2} + 4\\left(\\dfrac{3}{8}\\right)^{3} + \\cdots$\n\n答えは既約分数で答えましょう。",
+        "次の無限等比級数の和を求めましょう。**足し始めが第 $2$ 項から**であることに注意しましょう。\n\n$\\displaystyle\\sum_{n=2}^{\\infty} 4\\left(\\dfrac{3}{8}\\right)^{n-1} = 4\\left(\\dfrac{3}{8}\\right) + 4\\left(\\dfrac{3}{8}\\right)^{2} + 4\\left(\\dfrac{3}{8}\\right)^{3} + \\cdots$\n\n答えは既約分数で答えましょう。",
       answer: 2.4,
       answerDisplay: "12/5",
       unit: "",
@@ -3429,7 +3429,7 @@ export const M3L_CONV_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "無限級数 $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{9n+2}{4n+5} = \\frac{11}{9} + \\frac{20}{13} + \\frac{29}{17} + \\cdots$ を考えます。\n\nこの足し算に「和」があるかどうかを調べる前に、**足していく数そのもの**——[一般項] $a_n = \\dfrac{9n+2}{4n+5}$——の行き先を見ておきましょう。\n\n$\\displaystyle\\lim_{n \\to \\infty} a_n$ を求めてください。答えは既約分数で答えましょう。",
+        "無限級数 $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{9n+2}{4n+5} = \\frac{11}{9} + \\frac{20}{13} + \\frac{29}{17} + \\cdots$ を考えます。\n\nこの足し算に「和」があるかどうかを調べる前に、**足していく数そのもの**——[一般項] $a_n = \\dfrac{9n+2}{4n+5}$——の行き先を見ておきましょう。\n\n$\\displaystyle\\lim_{n \\to \\infty} a_n$ を求めましょう。答えは既約分数で答えましょう。",
       answer: 2.25,
       answerDisplay: "9/4",
       unit: "",

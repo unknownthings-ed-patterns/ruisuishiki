@@ -2893,7 +2893,7 @@ export const M3V_COMPONENT_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "座標平面上に $3$ 点 A$(-1, 2)$、B$(3, 3)$、C$(-6, 5)$ があります（こんどは点の座標です）。\n\n$\\angle BAC$、すなわち $\\overrightarrow{AB}$ と $\\overrightarrow{AC}$ のなす角の大きさを、**度**で求めましょう。単位はつけず、数だけ答えてください。",
+        "座標平面上に $3$ 点 A$(-1, 2)$、B$(3, 3)$、C$(-6, 5)$ があります（こんどは点の座標です）。\n\n$\\angle BAC$、すなわち $\\overrightarrow{AB}$ と $\\overrightarrow{AC}$ のなす角の大きさを、**度**で求めましょう。単位はつけず、数だけ答えましょう。",
       answer: 135,
       unit: "",
       unknownLabel: "$\\angle BAC$（度）",
