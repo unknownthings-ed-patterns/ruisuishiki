@@ -3091,9 +3091,7 @@ export function LPStep1() {
       <circle cx={Px(0)} cy={Py(0)} r="2.5" fill={muted} />
       <text x={Px(0) - 14} y={Py(0) + 14} fontSize="10" fill={muted}>(0, 0)</text>
       <circle cx={Px(6)} cy={Py(0)} r="2.5" fill={muted} />
-      <text x={Px(6) - 14} y={Py(0) + 14} fontSize="10" fill={muted}>(6, 0)</text>
       <circle cx={Px(0)} cy={Py(6)} r="2.5" fill={muted} />
-      <text x={Px(0) + 6} y={Py(6) + 4} fontSize="10" fill={muted}>(0, 6)</text>
 
       <text x="14" y="20" fontSize="11" fill={muted} fontStyle="italic">
         等高線 x + y = k を動かす——D から離れる瞬間が最大

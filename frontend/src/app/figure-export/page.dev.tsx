@@ -42,6 +42,8 @@ const LIGHT_TOKENS: Record<string, string> = {
   "--accent": "#2c6aa0",
   "--accent-warm": "#c47a2a",
   "--accent-soft": "#c5d8ea",
+  "--success": "#3d8f5a",
+  "--warning": "#c9a227",
 };
 
 const lightStyle = LIGHT_TOKENS as CSSProperties;
@@ -52,6 +54,7 @@ const PAGE_RESET_CSS = `
     min-height:0 !important; height:auto !important; margin:0; }
   nextjs-portal, [data-next-badge-root], [data-nextjs-dev-overlay],
   #__next-build-watcher { display:none !important; }
+  #figure-capture-root svg { min-width: 240px; height: auto; }
 `;
 
 function FigureExportBody() {

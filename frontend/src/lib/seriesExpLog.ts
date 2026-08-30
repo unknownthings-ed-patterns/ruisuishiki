@@ -444,7 +444,7 @@ export const XEL_EXP_GRAPH_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "$5^{-3}$ は正の数か？ 正なら $1$、負なら $0$ で答えてください。",
+        "$5^{-3}$ は正の数か？ 正なら $1$、負なら $0$ で答えましょう。",
       answer: 1,
       unit: "",
       unknownLabel: "正かどうか",
@@ -1476,7 +1476,7 @@ export const XEL_LOG_DEF_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "$\\log_{5} (-25)$ の値は存在するか？ 存在するなら $1$、しないなら $0$ で答えてください。",
+        "$\\log_{5} (-25)$ の値は存在するか？ 存在するなら $1$、しないなら $0$ で答えましょう。",
       answer: 0,
       unit: "",
       unknownLabel: "値の存在",
@@ -2121,7 +2121,7 @@ export const XEL_LOG_GRAPH_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "$y=\\log_{5} x$ について、$x=-5$ のとき $y$ の値は存在するか？ 存在するなら $1$、存在しないなら $0$ で答えてください。",
+        "$y=\\log_{5} x$ について、$x=-5$ のとき $y$ の値は存在するか？ 存在するなら $1$、存在しないなら $0$ で答えましょう。",
       answer: 0,
       unit: "",
       unknownLabel: "値は存在するか",

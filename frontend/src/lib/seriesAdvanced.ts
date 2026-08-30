@@ -2200,7 +2200,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       compareWithStepId: "step7",
       hints: [
         { layer: 1, text: "ここで問いがガラッと変わった。今度は円の「外」の点から接線を2本引く。接点 $(a,b)$ はまだ分からない——でも接点について、どんな条件が2つ立てられそう？" },
-        { layer: 2, text: "条件①：接点での接線 $ax+by=5$ が外の点 $(3,1)$ を通る → $3a+b=5$。条件②：接点は円上 → $a^2+b^2=5$。この2式を連立すれば $a$ が出る。" },
+        { layer: 2, text: "接点は円の上にあり、接線は外の点を通る。その $2$ 本を連立したとき、$a$ は何個出るか。" },
         { layer: 3, text: "$b=5-3a$ を $a^2+b^2=5$ に代入して $a^2-3a+2=0$、$(a-1)(a-2)=0$。$a=1$ または $a=2$、大きいほうは $a=2$。接線の公式＋「接点は円上」を連立する応用。" },
       ],
       formulaPreview: "a = 1, 2（接点: (1,2), (2,-1)）",
@@ -2218,7 +2218,7 @@ export const ADV_CIRCLE_TANGENT_SERIES: LearnerSeries = {
       compareWithStepId: "step8",
       hints: [
         { layer: 1, text: "前題と比べてみよう。同じ「外の点から2本の接線」。立てる2条件は何だった？" },
-        { layer: 2, text: "前題と同じく、接線 $ax+by=10$ が $(4,2)$ を通る（$4a+2b=10$）＋接点は円上（$a^2+b^2=10$）を連立。" },
+        { layer: 2, text: "前題と同じく、$2$ 条件を連立する。接点は円の上にあり、接線は外の点を通る。その $2$ 本から $a$ が何個出るか。" },
         { layer: 3, text: "$b=5-2a$ を代入して $a^2-4a+3=0$、$(a-1)(a-3)=0$。$a=1$ または $a=3$、大きいほうは $a=3$。" },
       ],
       formulaPreview: "a = 1, 3（接点: (1,3), (3,-1)）",
@@ -4108,7 +4108,7 @@ export const ADV_COMPLEX_ROOT_COEFFICIENT_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$(\\alpha - \\beta)^2$ を展開すると $\\alpha^2 - 2 \\alpha \\beta + \\beta^2$。これも $(\\alpha + \\beta)^2$ を経由して書き換えられる——$2 \\alpha \\beta$ の符号に注意。$(\\alpha + \\beta)^2 = \\alpha^2 + 2 \\alpha \\beta + \\beta^2$ から **何を引くと** $(\\alpha - \\beta)^2$ になる？",
+            "$(\\alpha - \\beta)^2$ も、和の $2$ 乗と同じく $\\alpha$ と $\\beta$ の入れ替えで値が変わらない。展開したとき、$\\alpha^2 + \\beta^2$ のほかに残る項の符号は、和の $2$ 乗と同じだろうか？",
         },
         {
           layer: 3,
@@ -4137,7 +4137,7 @@ export const ADV_COMPLEX_ROOT_COEFFICIENT_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "Step 1–3 で見つけた式を逆向きに：$\\alpha + \\beta = 3 + 5$、$\\alpha \\beta = 3 \\cdot 5$。これが $-b$ と $c$ に対応するから（$a = 1$ のとき）、$c$ はどっち？",
+            "Step 1–3 で見つけた式を逆向きに読む。解が分かっているとき、和と積のうち **定数項に対応するのはどっち**？",
         },
         {
           layer: 3,
@@ -4167,7 +4167,7 @@ export const ADV_COMPLEX_ROOT_COEFFICIENT_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "もとの $\\alpha + \\beta = 4, \\alpha \\beta = 1$。新しい解の和：$(\\alpha + 2) + (\\beta + 2) = (\\alpha + \\beta) + 4$。新しい解の積：$(\\alpha + 2)(\\beta + 2)$ を展開すると $\\alpha \\beta + 2(\\alpha + \\beta) + 4$。それぞれ代入すると？",
+            "もとの方程式から $\\alpha + \\beta$ と $\\alpha \\beta$ は係数で読める。新しい解の積 $(\\alpha + 2)(\\beta + 2)$ を、その $2$ つで書き換えたとき、何が残る？",
         },
         {
           layer: 3,
@@ -4196,7 +4196,7 @@ export const ADV_COMPLEX_ROOT_COEFFICIENT_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$|\\alpha - \\beta| = 3$ ⟺ $(\\alpha - \\beta)^2 = 9$。$\\alpha + \\beta = 5, \\alpha \\beta = k$ なので、Step 7 の式 $(\\alpha + \\beta)^2 - 4 \\alpha \\beta = (\\alpha - \\beta)^2$ に代入して、$k$ について解く。",
+            "$|\\alpha - \\beta| = 3$ を $2$ 乗の言葉にすると、左辺は数になる。第七歩 の式の右辺に、係数から読める和と、文字のままの積を置いたとき、何についての方程式が立つ？",
         },
         {
           layer: 3,
@@ -4441,7 +4441,7 @@ export const ADV_REMAINDER_THEOREM_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$P(2)$ を計算するといくつになる？ もし $0$ になったら、$P(x) = (x - 2) Q(x) + R$ で $R = 0$——つまり $P(x)$ は $x - 2$ で **割り切れる**。これは $x - 2$ が $P(x)$ の何？",
+            "$P(2)$ を計算した結果は、$0$ かどうか。$0$ なら余りはどうなり、それは $x - 2$ が $P(x)$ の何であることを意味する？",
         },
         {
           layer: 3,
@@ -4472,7 +4472,7 @@ export const ADV_REMAINDER_THEOREM_SERIES: LearnerSeries = {
         {
           layer: 2,
           text:
-            "$P(1)$ を計算するといくつ？ もし $0$ になったら、Step 4 と同じ「$P(x)$ が $x - 1$ で割り切れる」状況になる。",
+            "$P(1)$ を計算した結果は、$0$ かどうか。第四歩 と同じ状況になるとしたら、余りはどうなる？",
         },
         {
           layer: 3,
