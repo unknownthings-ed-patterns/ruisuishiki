@@ -14885,6 +14885,188 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3V_END_MINUS_START>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vEndMinusStart />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_DETOUR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vDetour />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_DIVISION_ARROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vDivisionArrow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_DIVISION_G3>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vDivisionG3 />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_HANDSIGN_2>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vHandsign2 />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_TWO_WAYS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vTwoWays />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SUM_ONE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSumOne />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_CUSTOM_AXES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vCustomAxes />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_REGION_ST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vRegionSt />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SHADOW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vShadow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SHADOW_ADD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vShadowAdd />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_COSINE_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vCosineTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_THREE_VALUES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vThreeValues />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SQUARE_TO_MOVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSquareToMove />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_COMPONENT_GRID>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vComponentGrid />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_PARALLELOGRAM_D>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vParallelogramD />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_LINE_PARAM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vLineParam />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_FOOT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vFoot />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_HANDSIGN_3>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vHandsign3 />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SIX_VALUES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSixValues />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_COPLANAR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vCoplanar />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_TWO_WAYS_3D>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vTwoWays3d />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SPACE_COORD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSpaceCoord />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_SPACE_TRIANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vSpaceTriangle />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_LINE_PARAM_3D>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vLineParam3d />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3V_PLANE_FOOT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vPlaneFoot />
+            </div>
+          );
+        }
         if (trimmed === "<<M3L_POINTS_CLOSING>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34091,6 +34273,1498 @@ export function M3vSubDirection() {
       <text x="228" y="62" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">?</text>
       <text x="180" y="24" fontSize="11" fill={accent} textAnchor="middle">
         a − b は、この線分のどちら向き？
+      </text>
+    </svg>
+  );
+}
+
+
+/** ベクトル 系列5・9 共用: 矢印（線＋矢じり）を 1 本描く。 */
+const m3vHeadPath = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, k: string) => {
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
+  const ex = dx / L, ey = dy / L;
+  const hx = x2 - ex * 8, hy = y2 - ey * 8;
+  const nx = -ey * 4.2, ny = ex * 4.2;
+  return (
+    <g key={k}>
+      <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+      <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+    </g>
+  );
+};
+
+/** ベクトル 系列2 共用: 矢じりつきの矢印。back を渡すと終点の手前で止める（矢じりの団子よけ）。 */
+const m3vArrowBack = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string, back = 0) => {
+  const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+  const ux = dx / len, uy = dy / len;
+  x2 = x2 - ux * back; y2 = y2 - uy * back;
+  const hx = x2 - ux * 10, hy = y2 - uy * 10;
+  const nx = -uy * 5, ny = ux * 5;
+  return (
+    <g key={key}>
+      <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+      <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+    </g>
+  );
+};
+
+/** ベクトル 系列2 step1・derivation: 基本変形②「終点を指す矢印 − 始点を指す矢印」。
+ *  基準点 O は X, Y を結ぶ線の外に置く。式・係数は書かない（問いの形で終える）。 */
+export function M3vEndMinusStart() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 52, Oy = 168, Xx = 128, Xy = 62, Yx = 306, Yy = 104;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="点 X から点 Y へ向かう矢印が 1 本。X, Y を結ぶ線から離れたところに基準点 O があり、O から X へ、O から Y へも矢印が引いてある。3 点は三角形をつくる。数値や係数は書かれていない"
+    >
+      {m3vArrowBack(Ox, Oy, Xx, Xy, muted, 1.8, "ox")}
+      {m3vArrowBack(Ox, Oy, Yx, Yy, muted, 1.8, "oy", 17)}
+      {m3vArrowBack(Xx, Xy, Yx, Yy, accent, 2.6, "xy")}
+      <circle cx={Ox} cy={Oy} r="3.6" fill={stroke} />
+      <circle cx={Xx} cy={Xy} r="3.6" fill={stroke} />
+      <circle cx={Yx} cy={Yy} r="3.6" fill={stroke} />
+      <text x={Xx - 2} y={Xy - 12} fontSize="13" fill={stroke} textAnchor="middle">X</text>
+      <text x={Yx + 13} y={Yy + 5} fontSize="13" fill={stroke} textAnchor="middle">Y</text>
+      <text x={Ox - 13} y={Oy + 5} fontSize="13" fill={stroke} textAnchor="middle">O</text>
+      <text x={72} y={102} fontSize="10.5" fill={muted} textAnchor="middle">始点へ</text>
+      <text x={186} y={157} fontSize="10.5" fill={muted} textAnchor="middle">終点へ</text>
+      <text x={38} y={192} fontSize="10.5" fill={muted} textAnchor="start">基準点 O はどこにとってもよい</text>
+      <text x="180" y="24" fontSize="11.5" fill={accent} textAnchor="middle">
+        X から Y への矢印を、O から出た 2 本だけで言えないだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列2 step7・derivation: 基本変形①「寄り道」。
+ *  直接の矢印と、Z を経由する 2 本。式・係数は書かない。 */
+export function M3vDetour() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Xx = 48, Xy = 156, Yx = 300, Yy = 156, Zx = 176, Zy = 62;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="点 X から点 Y へまっすぐ向かう矢印と、途中の点 Z を経由して X から Z へ、Z から Y へと向かう 2 本の矢印。どちらも着く先は Y で同じであることを示す図。数値や係数は書かれていない"
+    >
+      {m3vArrowBack(Xx, Xy, Zx, Zy, muted, 2, "xz")}
+      {m3vArrowBack(Zx, Zy, Yx, Yy, muted, 2, "zy", 17)}
+      {m3vArrowBack(Xx, Xy, Yx, Yy, accent, 2.6, "xy")}
+      <circle cx={Xx} cy={Xy} r="3.6" fill={stroke} />
+      <circle cx={Yx} cy={Yy} r="3.6" fill={stroke} />
+      <circle cx={Zx} cy={Zy} r="3.6" fill={stroke} />
+      <text x={Xx - 6} y={Xy + 21} fontSize="13" fill={stroke} textAnchor="middle">X</text>
+      <text x={Yx + 8} y={Yy + 21} fontSize="13" fill={stroke} textAnchor="middle">Y</text>
+      <text x={Zx} y={Zy - 14} fontSize="13" fill={stroke} textAnchor="middle">Z</text>
+      <text x={Zx + 10} y={Zy - 14} fontSize="10.5" fill={muted} textAnchor="start">はどこにとってもよい</text>
+      <text x={97} y={90} fontSize="10.5" fill={muted} textAnchor="middle">寄り道</text>
+      <text x={174} y={178} fontSize="10.5" fill={accent} textAnchor="middle">まっすぐ行く</text>
+      <text x="180" y="24" fontSize="11.5" fill={accent} textAnchor="middle">
+        遠回りしても着く先は同じ。ならば 1 本を 2 本に言いかえられる？
+      </text>
+    </svg>
+  );
+}
+
+export function M3vDivisionArrow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const A = [64, 60] as const;
+  const B = [304, 98] as const;
+  const P = [64 + 0.42 * 240, 60 + 0.42 * 38] as const;
+  const O = [148, 162] as const;
+  const arrow = (T: readonly [number, number], key: string) => {
+    const dx = T[0] - O[0], dy = T[1] - O[1];
+    const L = Math.hypot(dx, dy);
+    const ux = dx / L, uy = dy / L;
+    const ex = T[0] - ux * 7, ey = T[1] - uy * 7;
+    const hx = T[0] - ux * 14, hy = T[1] - uy * 14;
+    const nx = -uy, ny = ux;
+    return (
+      <g key={key}>
+        <path d={`M ${O[0]} ${O[1]} L ${ex} ${ey}`} fill="none" stroke={accent} strokeWidth="1.8" />
+        <path
+          d={`M ${hx + nx * 4.5} ${hy + ny * 4.5} L ${ex} ${ey} L ${hx - nx * 4.5} ${hy - ny * 4.5}`}
+          fill="none"
+          stroke={accent}
+          strokeWidth="1.8"
+        />
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="線分 AB の上に点 P があり、線分の外の点 O から A、B、P へ 3 本の矢印が引かれた模式図。P の位置はおよその位置で、比の数値や係数は書かれていない"
+    >
+      <path d={`M ${A[0]} ${A[1]} L ${B[0]} ${B[1]}`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      {arrow(A, "a")}
+      {arrow(B, "b")}
+      {arrow(P, "p")}
+      <circle cx={A[0]} cy={A[1]} r="3.6" fill={stroke} />
+      <circle cx={B[0]} cy={B[1]} r="3.6" fill={stroke} />
+      <circle cx={P[0]} cy={P[1]} r="3.6" fill={stroke} />
+      <circle cx={O[0]} cy={O[1]} r="3.6" fill={stroke} />
+      <text x={A[0] - 13} y={A[1] - 7} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] + 13} y={B[1] - 7} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={P[0] + 3} y={P[1] - 10} fontSize="12" fill={stroke} textAnchor="middle">P</text>
+      <text x={O[0] - 15} y={O[1] + 5} fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <text x="180" y="22" fontSize="11" fill={accent} textAnchor="middle">
+        O から見ると、P へ向かう矢印はどう書ける？
+      </text>
+      <text x="180" y="193" fontSize="10" fill={muted} textAnchor="middle">
+        模式図（P の位置はおよそ。比は図からは読み取れません）
+      </text>
+    </svg>
+  );
+}
+
+export function M3vDivisionG3() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const A = [44, 160] as const;
+  const B = [304, 160] as const;
+  const C = [124, 46] as const;
+  const on = (X: readonly [number, number], Y: readonly [number, number], t: number) =>
+    [X[0] + (Y[0] - X[0]) * t, X[1] + (Y[1] - X[1]) * t] as const;
+  const P = on(A, B, 0.2);
+  const Q = on(B, C, 0.65);
+  const R = on(C, A, 0.15);
+  const G = [(P[0] + Q[0] + R[0]) / 3, (P[1] + Q[1] + R[1]) / 3] as const;
+  return (
+    <svg
+      viewBox="0 0 360 205"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三角形 ABC の 3 つの辺の上にそれぞれ点 P、Q、R があり、その 3 点を結んだ三角形が点線で描かれている模式図。点線の三角形の内側にはてなマークの点だけが置かれ、比の数値や係数、中線は書かれていない"
+    >
+      <path
+        d={`M ${A[0]} ${A[1]} L ${B[0]} ${B[1]} L ${C[0]} ${C[1]} Z`}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.6"
+      />
+      <path
+        d={`M ${P[0]} ${P[1]} L ${Q[0]} ${Q[1]} L ${R[0]} ${R[1]} Z`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeDasharray="5 4"
+      />
+      <circle cx={A[0]} cy={A[1]} r="3.4" fill={stroke} />
+      <circle cx={B[0]} cy={B[1]} r="3.4" fill={stroke} />
+      <circle cx={C[0]} cy={C[1]} r="3.4" fill={stroke} />
+      <circle cx={P[0]} cy={P[1]} r="3.8" fill={accent} />
+      <circle cx={Q[0]} cy={Q[1]} r="3.8" fill={accent} />
+      <circle cx={R[0]} cy={R[1]} r="3.8" fill={accent} />
+      <circle cx={G[0]} cy={G[1]} r="5" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x={A[0] - 12} y={A[1] + 14} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] + 12} y={B[1] + 14} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={C[0] - 1} y={C[1] - 8} fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x={P[0] - 2} y={P[1] + 17} fontSize="12" fill={accent} textAnchor="middle">P</text>
+      <text x={Q[0] + 14} y={Q[1] + 4} fontSize="12" fill={accent} textAnchor="middle">Q</text>
+      <text x={R[0] - 14} y={R[1] + 2} fontSize="12" fill={accent} textAnchor="middle">R</text>
+      <text x={G[0] + 16} y={G[1] + 5} fontSize="12" fill={accent} textAnchor="middle">?</text>
+      <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">
+        3 点 P, Q, R を混ぜてできる点は、どこにいる？
+      </text>
+      <text x="180" y="198" fontSize="10" fill={muted} textAnchor="middle">
+        模式図（点の位置はおよそ。比は図からは読み取れません）
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列4 step1・辞書「1次独立」: 1 次独立のハンドサイン（親指と人差し指）と、
+ *  つぶれた 2 つの場合（平行・零ベクトル）。オリジナルの線画。値は書かない。 */
+export function M3vHandsign2() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 9, hy = y2 - uy * 9;
+    const nx = -uy * 4.5, ny = ux * 4.5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  /* 手の輪郭（親指を右へ、人差し指を上へ広げた左手・オリジナルの線画） */
+  const hand =
+    "M 54 196 L 54 168 " +
+    "C 54 152 60 142 70 138 " +
+    "L 104 70 C 107 62 116 60 121 64 C 126 68 126 76 123 82 " +
+    "L 92 142 " +
+    "L 140 136 C 149 135 154 140 153 147 C 152 154 146 157 139 158 " +
+    "L 96 168 " +
+    "C 104 172 108 180 108 190 L 108 196 Z";
+  return (
+    <svg
+      viewBox="0 0 360 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左は、親指を右へ人差し指を上へ広げた手の線画に、2 本の矢印を指に沿って重ねた図。2 本が開いているので三角形ができる。右は崩れた 2 つの場合で、上は 2 本の矢印が同じ向きに並んでいる図、下は片方の矢印が長さ 0 の点になっている図。数値や比は書かれていない"
+    >
+      <path d={hand} fill="none" stroke={muted} strokeWidth="1.5" strokeLinejoin="round" />
+      {/* 指の付け根（V の頂点）から 2 本の矢印 */}
+      {arrow(84, 152, 122, 78, accent, 2.2, "h1")}
+      {arrow(84, 152, 142, 143, accent, 2.2, "h2")}
+      <path d="M 122 78 L 142 143" fill="none" stroke={stroke} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="92" y="106" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+      <text x="112" y="172" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">b</text>
+      <text x="98" y="211" fontSize="11" fill={stroke} textAnchor="middle">三角形ができる</text>
+      {/* 右上：同じ向きに並ぶ（平行） */}
+      {arrow(202, 78, 286, 56, accent, 2.2, "p1")}
+      {arrow(212, 104, 326, 74, accent, 2.2, "p2")}
+      <text x="266" y="124" fontSize="11" fill={stroke} textAnchor="middle">2 本とも同じ向き</text>
+      {/* 右下：片方が零ベクトル */}
+      {arrow(202, 158, 290, 140, accent, 2.2, "z1")}
+      <circle cx="202" cy="180" r="4" fill={accent} />
+      <circle cx="202" cy="180" r="9" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="2 2" />
+      <text x="272" y="186" fontSize="11" fill={stroke} textAnchor="middle">片方が長さ 0</text>
+      <text x="180" y="26" fontSize="11" fill={accent} textAnchor="middle">
+        基準に使える 2 本と、使えない 2 本。どこが違う？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列4 step4: 三角形 OAB の 2 直線の交点 P を、AD 側と BC 側の 2 通りで指す図。
+ *  点の位置は模式（問題の内分比とは合わせない）。k・l の値も比も描かない。 */
+export function M3vTwoWays() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O: [number, number] = [50, 184];
+  const A: [number, number] = [300, 166];
+  const B: [number, number] = [128, 46];
+  const t = (P: [number, number], Q: [number, number], s: number): [number, number] =>
+    [P[0] + (Q[0] - P[0]) * s, P[1] + (Q[1] - P[1]) * s];
+  const C = t(O, A, 0.55);
+  const D = t(O, B, 0.38);
+  const cross = (p1: [number, number], p2: [number, number], p3: [number, number], p4: [number, number]): [number, number] => {
+    const a1 = p2[1] - p1[1], b1 = p1[0] - p2[0], c1 = a1 * p1[0] + b1 * p1[1];
+    const a2 = p4[1] - p3[1], b2 = p3[0] - p4[0], c2 = a2 * p3[0] + b2 * p3[1];
+    const det = a1 * b2 - a2 * b1;
+    return [(b2 * c1 - b1 * c2) / det, (a1 * c2 - a2 * c1) / det];
+  };
+  const P = cross(A, D, B, C);
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 10, hy = y2 - uy * 10;
+    const nx = -uy * 5, ny = ux * 5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  const pts: { p: [number, number]; s: string; dx: number; dy: number }[] = [
+    { p: O, s: "O", dx: -12, dy: 6 },
+    { p: A, s: "A", dx: 13, dy: 6 },
+    { p: B, s: "B", dx: 0, dy: -10 },
+    { p: C, s: "C", dx: -2, dy: 19 },
+    { p: D, s: "D", dx: -14, dy: 2 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三角形 OAB。辺 OA 上に点 C、辺 OB 上に点 D があり、線分 AD と線分 BC が点 P で交わっている。P を指す矢印が 2 本、A から P へ向かうものと B から P へ向かうもので描かれている。内分の比や倍率の数値は書かれていない。点の位置は模式で、実際の比とは合わせていない"
+    >
+      <path d={`M ${O[0]} ${O[1]} L ${A[0]} ${A[1]} L ${B[0]} ${B[1]} Z`} fill="none" stroke={stroke} strokeWidth="1.4" />
+      <path d={`M ${A[0]} ${A[1]} L ${D[0]} ${D[1]}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <path d={`M ${B[0]} ${B[1]} L ${C[0]} ${C[1]}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      {(() => {
+        const off = (from: [number, number], to: [number, number], d: number, back: number): [number, number, number, number] => {
+          const vx = to[0] - from[0], vy = to[1] - from[1], L = Math.hypot(vx, vy);
+          const ux = vx / L, uy = vy / L, nx = -uy * d, ny = ux * d;
+          return [from[0] + nx, from[1] + ny, to[0] + nx - ux * back, to[1] + ny - uy * back];
+        };
+        const w1 = off(A, P, 8, 8);
+        const w2 = off(B, P, -8, 8);
+        return (
+          <g>
+            {arrow(w1[0], w1[1], w1[2], w1[3], accent, 2.2, "w1")}
+            {arrow(w2[0], w2[1], w2[2], w2[3], accent, 2.2, "w2")}
+          </g>
+        );
+      })()}
+      {pts.map((e, i) => (
+        <g key={i}>
+          <circle cx={e.p[0]} cy={e.p[1]} r="3.4" fill={stroke} />
+          <text x={e.p[0] + e.dx} y={e.p[1] + e.dy} fontSize="12" fill={stroke} textAnchor="middle">{e.s}</text>
+        </g>
+      ))}
+      <circle cx={P[0]} cy={P[1]} r="4.4" fill={accent} />
+      <text x={P[0] + 2} y={P[1] + 23} fontSize="12" fill={accent} textAnchor="middle">P</text>
+      <text x="180" y="22" fontSize="11" fill={accent} textAnchor="middle">
+        同じ 1 点 P を指す道が 2 本。どうつながる？
+      </text>
+      <text x="180" y="208" fontSize="10" fill={muted} textAnchor="middle">
+        （点の位置は模式。比は描いていません）
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列4 derivation・辞書「共線条件」: 直線 AB 上の点 P と、
+ *  2 つの重みの帯。合わせるとちょうど 1 本ぶん。k の値は書かない。 */
+export function M3vSumOne() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ax = 62, bx = 298, y = 78;
+  const px = 150;
+  return (
+    <svg
+      viewBox="0 0 360 175"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="直線 AB の上に点 P がある図。その下に、A から P までと P から B までの長さを表す 2 本の帯が並び、2 本を合わせると線分 AB 1 本ぶんとちょうど同じ長さになることを示している。倍率の数値は書かれていない"
+    >
+      <path d={`M ${ax - 42} ${y} L ${bx + 42} ${y}`} fill="none" stroke={muted} strokeWidth="0.9" strokeDasharray="4 3" />
+      <path d={`M ${ax} ${y} L ${bx} ${y}`} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx={ax} cy={y} r="3.6" fill={stroke} />
+      <circle cx={bx} cy={y} r="3.6" fill={stroke} />
+      <circle cx={px} cy={y} r="4.2" fill={accent} />
+      <text x={ax} y={y - 13} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={bx} y={y - 13} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={px} y={y - 13} fontSize="12" fill={accent} textAnchor="middle">P</text>
+      <rect x={ax} y={y + 22} width={px - ax} height="17" fill="none" stroke={accent} strokeWidth="1.4" />
+      <rect x={px} y={y + 22} width={bx - px} height="17" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x={(ax + px) / 2} y={y + 35} fontSize="11" fill={accent} textAnchor="middle">B の重み</text>
+      <text x={(px + bx) / 2} y={y + 35} fontSize="11" fill={muted} textAnchor="middle">A の重み</text>
+      <path d={`M ${ax} ${y + 52} L ${bx} ${y + 52}`} fill="none" stroke={stroke} strokeWidth="1" />
+      <path d={`M ${ax} ${y + 48} L ${ax} ${y + 56}`} fill="none" stroke={stroke} strokeWidth="1" />
+      <path d={`M ${bx} ${y + 48} L ${bx} ${y + 56}`} fill="none" stroke={stroke} strokeWidth="1" />
+      <text x={(ax + bx) / 2} y={y + 70} fontSize="11" fill={accent} textAnchor="middle">
+        合わせると、いつでも 1 本ぶん？
+      </text>
+      <text x="180" y="26" fontSize="11" fill={stroke} textAnchor="middle">
+        重みは A と B に 1 つずつ。P が動くと、どう変わる？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列5 step1: 直交する座標軸に三角形が「はまらない」ようす（左）と、
+ *  三角形にあわせて傾けた AB・AC 方向の格子（右）。目盛りの数字・座標の値は書かない。 */
+export function M3vCustomAxes() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /* 左：直交格子（目盛りの数字なし）に、格子の交点に乗らない三角形 */
+  const gx = 14, gy = 148, cell = 15, ncol = 8, nrow = 7;
+  const grid: string[] = [];
+  for (let j = 0; j <= nrow; j++) grid.push(`M ${gx} ${gy - j * cell} L ${gx + ncol * cell} ${gy - j * cell}`);
+  for (let i = 0; i <= ncol; i++) grid.push(`M ${gx + i * cell} ${gy} L ${gx + i * cell} ${gy - nrow * cell}`);
+  const LA: [number, number] = [34, 130];
+  const LB: [number, number] = [124, 103];
+  const LC: [number, number] = [66, 51];
+  /* 右：三角形にあわせて傾けた格子（A が基準点、AB・AC 方向が軸） */
+  const ox = 205, oy = 148;
+  const ux = 16.0, uy = -1.5;
+  const vx = 4.5, vy = -15.0;
+  const n = 5;
+  const pt = (i: number, j: number) => [ox + i * ux + j * vx, oy + i * uy + j * vy] as const;
+  const slant: string[] = [];
+  for (let j = 0; j <= n; j++) { const [x1, y1] = pt(0, j); const [x2, y2] = pt(n, j); slant.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  for (let i = 0; i <= n; i++) { const [x1, y1] = pt(i, 0); const [x2, y2] = pt(i, n); slant.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  const RA = pt(0, 0), RB = pt(4, 0), RC = pt(0, 4);
+  return (
+    <svg
+      viewBox="0 0 360 185"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左は、直交する縦横の格子の上に置かれた三角形。頂点はどれも格子の交点に乗っていない。右は同じ形の三角形で、頂点 A を基準点にして辺 AB と辺 AC の向きに傾けた平行四辺形の格子を敷いたもの。頂点 B と C はこの傾いた格子の交点にちょうど乗っている。どちらの図にも目盛りの数字は書かれていない"
+    >
+      <text x="180" y="17" fontSize="11" fill={accent} textAnchor="middle">基準点と 2 本の矢印を、三角形にあわせて選べないだろうか？</text>
+
+      <path d={grid.join(" ")} fill="none" stroke={muted} strokeWidth="0.7" />
+      <path d={`M ${LA[0]} ${LA[1]} L ${LB[0]} ${LB[1]} L ${LC[0]} ${LC[1]} Z`} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <text x={LA[0] - 9} y={LA[1] + 11} fontSize="11" fill={stroke} textAnchor="middle">A</text>
+      <text x={LB[0] + 9} y={LB[1] + 10} fontSize="11" fill={stroke} textAnchor="middle">B</text>
+      <text x={LC[0] - 1} y={LC[1] - 6} fontSize="11" fill={stroke} textAnchor="middle">C</text>
+      <text x="74" y="170" fontSize="9.5" fill={muted} textAnchor="middle">決まった軸には、はまらない</text>
+
+      <path d={slant.join(" ")} fill="none" stroke={muted} strokeWidth="0.7" />
+      <path d={`M ${RA[0]} ${RA[1]} L ${RB[0]} ${RB[1]} L ${RC[0]} ${RC[1]} Z`} fill="none" stroke={stroke} strokeWidth="1.8" />
+      {m3vHeadPath(RA[0], RA[1], ox + ux, oy + uy, accent, 2.2, "ab")}
+      {m3vHeadPath(RA[0], RA[1], ox + vx, oy + vy, accent, 2.2, "ac")}
+      <text x={230} y={161} fontSize="10" fill={accent} textAnchor="middle">AB</text>
+      <text x={191} y={131} fontSize="10" fill={accent} textAnchor="middle">AC</text>
+      <text x={RA[0] - 9} y={RA[1] + 12} fontSize="11" fill={stroke} textAnchor="middle">A</text>
+      <text x={RB[0] + 9} y={RB[1] + 11} fontSize="11" fill={stroke} textAnchor="middle">B</text>
+      <text x={RC[0] - 10} y={RC[1] + 3} fontSize="11" fill={stroke} textAnchor="middle">C</text>
+      <text x={262} y="170" fontSize="9.5" fill={muted} textAnchor="middle">軸を三角形にあわせる</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列5 step6: OP = sOA + tOB の (s, t) を「傾いた座標」と読む模式図。
+ *  s・t に条件がついたとき P がどこを動くかは描かない（? のまま）。面積の比も書かない。 */
+export function M3vRegionSt() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 120, oy = 170;
+  const ux = 30.0, uy = -4.0;
+  const vx = -9.0, vy = -26.0;
+  const cols = 6, rows = 4;
+  const pt = (i: number, j: number) => [ox + i * ux + j * vx, oy + i * uy + j * vy] as const;
+  const lines: string[] = [];
+  for (let j = 0; j <= rows; j++) { const [x1, y1] = pt(-1, j); const [x2, y2] = pt(cols, j); lines.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  for (let i = -1; i <= cols; i++) { const [x1, y1] = pt(i, 0); const [x2, y2] = pt(i, rows); lines.push(`M ${x1} ${y1} L ${x2} ${y2}`); }
+  const O = pt(0, 0), A = pt(4, 0), B = pt(0, 4);
+  const marks: [number, number][] = [[1.3, 1.0], [4.9, 0.9], [1.6, 3.2]];
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="点 O を基準点として、OA の向きと OB の向きに沿った平行四辺形の格子が敷かれている。三角形 OAB と、O から出る 2 本の矢印 OA、OB が描かれ、格子の上のあちこちにはてなマークが 3 つ散らばっている。目盛りの数字はなく、s と t に条件をつけたときに点 P が動く範囲は描かれていない"
+    >
+      <text x="180" y="16" fontSize="11" fill={accent} textAnchor="middle">OA と OB の向きに引いた、傾いた目盛り</text>
+      <path d={lines.join(" ")} fill="none" stroke={muted} strokeWidth="0.7" />
+      <path d={`M ${O[0]} ${O[1]} L ${A[0]} ${A[1]} L ${B[0]} ${B[1]} Z`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      {m3vHeadPath(O[0], O[1], A[0], A[1], accent, 2.2, "oa")}
+      {m3vHeadPath(O[0], O[1], B[0], B[1], accent, 2.2, "ob")}
+      <circle cx={O[0]} cy={O[1]} r="3" fill={stroke} />
+      <text x={O[0] - 13} y={O[1] + 3} fontSize="11" fill={stroke} textAnchor="middle">O</text>
+      <text x={A[0] + 11} y={A[1] + 11} fontSize="11" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] - 11} y={B[1] - 4} fontSize="11" fill={stroke} textAnchor="middle">B</text>
+      {marks.map((p, k) => {
+        const [x, y] = pt(p[0], p[1]);
+        return <text key={k} x={x} y={y + 4} fontSize="13" fill={accent} textAnchor="middle">?</text>;
+      })}
+      <text x="180" y="193" fontSize="9.5" fill={muted} textAnchor="middle">s と t に条件をつけると、P はどこを動く？</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列6 step1・辞書「内積」: 内積＝「地面のベクトルの長さ × 影の長さ」。
+ *  真上からの光と、a に沿う地面、b が落とす影。影の長さは模式（比を実際の cos に合わせない）。
+ *  数値・比は一切書かない。 */
+export function M3vShadow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 地面（a に沿う直線）
+  const O = [60, 168] as const;
+  const Gx = 320;
+  const aEnd = [176, 168] as const;      // a の終点
+  const bEnd = [262, 92] as const;       // b の終点（影の長さは模式：実際の cos とは無関係）
+  const foot = [262, 168] as const;      // b の影の先端
+  return (
+    <svg
+      viewBox="0 0 360 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="真上から光が当たっている場面の模式図。ベクトル a に沿う直線を地面と見立て、同じ点から出たベクトル b が地面に影を落としている。b の先から地面へ光の筋が下りて、地面の上に影の区間が示されているが、長さの数値も比も書かれていない。図の長さの比は模式で、実際の値を表さない"
+    >
+      {/* 光の矢印（真上から） */}
+      {[176, 214, 252, 290].map((x, i) => (
+        <g key={i}>
+          <path d={`M ${x} 22 L ${x} 44`} fill="none" stroke={muted} strokeWidth="1.4" />
+          <path d={`M ${x - 4} 39 L ${x} 46 L ${x + 4} 39`} fill="none" stroke={muted} strokeWidth="1.4" />
+        </g>
+      ))}
+      <text x="120" y="30" fontSize="11" fill={muted} textAnchor="middle">真上からの光</text>
+
+      {/* 地面 */}
+      <path d={`M 30 ${O[1]} L ${Gx} ${O[1]}`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x={Gx + 14} y={O[1] - 9} fontSize="11" fill={muted} textAnchor="end">地面</text>
+
+      {/* a */}
+      <path d={`M ${O[0]} ${O[1]} L ${aEnd[0] - 9} ${aEnd[1]}`} fill="none" stroke={accent} strokeWidth="2.6" />
+      <path d={`M ${aEnd[0] - 9} ${aEnd[1] - 5} L ${aEnd[0]} ${aEnd[1]} L ${aEnd[0] - 9} ${aEnd[1] + 5} Z`} fill={accent} />
+      <text x={(O[0] + aEnd[0]) / 2} y={O[1] - 8} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+
+      {/* b */}
+      <path d={`M ${O[0]} ${O[1]} L ${bEnd[0] - 7} ${bEnd[1] + 5}`} fill="none" stroke={stroke} strokeWidth="2.6" />
+      <path d={`M ${bEnd[0] - 11} ${bEnd[1] + 1} L ${bEnd[0]} ${bEnd[1]} L ${bEnd[0] - 4} ${bEnd[1] + 11} Z`} fill={stroke} />
+      <text x={bEnd[0] - 58} y={bEnd[1] + 12} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+
+      {/* 角 θ */}
+      <path d="M 92 168 A 32 32 0 0 0 90 157" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="99" y="163" fontSize="12" fill={muted} textAnchor="middle">θ</text>
+
+      {/* b の先から地面への光の筋 */}
+      <path d={`M ${bEnd[0]} ${bEnd[1] + 4} L ${foot[0]} ${foot[1] - 4}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+
+      {/* 影の区間 */}
+      <path d={`M ${O[0]} 188 L ${foot[0]} 188`} fill="none" stroke={stroke} strokeWidth="2.6" />
+      <path d={`M ${O[0]} 184 L ${O[0]} 192`} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${foot[0]} 184 L ${foot[0]} 192`} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={(O[0] + foot[0]) / 2} y={208} fontSize="11" fill={stroke} textAnchor="middle">b の影</text>
+
+      <circle cx={O[0]} cy={O[1]} r="3.4" fill={stroke} />
+      <text x="180" y="66" fontSize="11" fill={accent} textAnchor="middle">
+        影の長さは、b の長さの何倍？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列6 step6: 影の足し算（分配法則）。光と 3 本の棒（b・c・b+c）は描くが、
+ *  影は「?」のまま——足し算でそろっている構図にしない（見る人が結論を先に読まないように）。
+ *  長さの数値・比は書かない。 */
+export function M3vShadowAdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = [44, 178] as const;
+  const P = [148, 84] as const;    // b の終点
+  const Q = [268, 112] as const;   // b+c の終点（c は P → Q）
+  // b+c は矢じりを Q の手前で止め、c の矢じりと重ならないようにする
+  const ux = (Q[0] - O[0]) / Math.hypot(Q[0] - O[0], Q[1] - O[1]);
+  const uy = (Q[1] - O[1]) / Math.hypot(Q[0] - O[0], Q[1] - O[1]);
+  const H: [number, number] = [Q[0] - ux * 20, Q[1] - uy * 20];
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="真上から光が当たる場面の模式図。ベクトル a に沿う地面の上に、b と、b の先につないだ c と、始点から c の先へ向かう b たす c の 3 本が描かれている。3 本が地面に落とす影はどれも描かれておらず、地面には疑問符だけが置いてある。図の長さの比は模式で、実際の値を表さない"
+    >
+      {/* 光（真上から） */}
+      {[92, 136, 180, 224, 268].map((x, i) => (
+        <g key={i}>
+          <path d={`M ${x} 14 L ${x} 32`} fill="none" stroke={muted} strokeWidth="1.3" />
+          <path d={`M ${x - 4} 27 L ${x} 34 L ${x + 4} 27`} fill="none" stroke={muted} strokeWidth="1.3" />
+        </g>
+      ))}
+      <text x="40" y="24" fontSize="11" fill={muted} textAnchor="middle">光</text>
+
+      {/* 地面 */}
+      <path d={`M 22 ${O[1]} L 338 ${O[1]}`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="336" y={O[1] - 9} fontSize="11" fill={muted} textAnchor="end">地面</text>
+
+      {/* a（地面の向き） */}
+      <path d={`M ${O[0]} ${O[1]} L 104 ${O[1]}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path d={`M 104 ${O[1] - 5} L 113 ${O[1]} L 104 ${O[1] + 5} Z`} fill={accent} />
+      <text x="78" y={O[1] + 16} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+
+      {/* b */}
+      <path d={`M ${O[0]} ${O[1]} L ${P[0] - 7} ${P[1] + 7}`} fill="none" stroke={stroke} strokeWidth="2.4" />
+      <path d={`M ${P[0] - 11} ${P[1] + 3} L ${P[0]} ${P[1]} L ${P[0] - 3} ${P[1] + 12} Z`} fill={stroke} />
+      <text x={P[0] - 62} y={P[1] + 34} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+
+      {/* c（b の先につなぐ） */}
+      <path d={`M ${P[0]} ${P[1]} L ${Q[0] - 9} ${Q[1] - 2}`} fill="none" stroke={stroke} strokeWidth="2.4" />
+      <path d={`M ${Q[0] - 10} ${Q[1] - 8} L ${Q[0]} ${Q[1]} L ${Q[0] - 9} ${Q[1] + 3} Z`} fill={stroke} />
+      <text x={(P[0] + Q[0]) / 2 + 6} y={P[1] + 2} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">c</text>
+
+      {/* b+c（矢じりは Q の手前で止める） */}
+      <path d={`M ${O[0]} ${O[1]} L ${H[0] - ux * 8} ${H[1] - uy * 8}`} fill="none" stroke={stroke} strokeWidth="1.6" strokeDasharray="6 4" />
+      <path d={`M ${H[0] - ux * 10 - uy * 5} ${H[1] - uy * 10 + ux * 5} L ${H[0]} ${H[1]} L ${H[0] - ux * 10 + uy * 5} ${H[1] - uy * 10 - ux * 5} Z`} fill={stroke} />
+      <text x={(O[0] + Q[0]) / 2 + 4} y={(O[1] + Q[1]) / 2 + 22} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">b + c</text>
+
+      {/* 影は描かない——地面には ? だけ（Round 1 監査 D） */}
+      <text x={186} y={O[1] + 20} fontSize="14" fill={muted} textAnchor="middle">?</text>
+
+      <circle cx={O[0]} cy={O[1]} r="3.4" fill={stroke} />
+      <text x="180" y={212} fontSize="11" fill={accent} textAnchor="middle">
+        b の影・c の影・b + c の影。この 3 つは、どうつながる？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列6 derivation 専用: 三角形 OAB に a・b・b−a。
+ *  余弦定理との再会を語る場所。辺の長さの数値は書かない。 */
+export function M3vCosineTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = [56, 158] as const;
+  const A = [268, 158] as const;
+  const B = [150, 46] as const;
+  return (
+    <svg
+      viewBox="0 0 360 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三角形 OAB。O から A への矢印を a、O から B への矢印を b、A から B への矢印を b−a として描いてある。角 AOB に θ の印がある。辺の長さの数値は書かれていない"
+    >
+      {/* a */}
+      <path d={`M ${O[0]} ${O[1]} L ${A[0] - 10} ${A[1]}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path d={`M ${A[0] - 10} ${A[1] - 5} L ${A[0]} ${A[1]} L ${A[0] - 10} ${A[1] + 5} Z`} fill={accent} />
+      <text x={(O[0] + A[0]) / 2} y={A[1] + 18} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+
+      {/* b */}
+      <path d={`M ${O[0]} ${O[1]} L ${B[0] - 7} ${B[1] + 8}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path d={`M ${B[0] - 11} ${B[1] + 4} L ${B[0]} ${B[1]} L ${B[0] - 3} ${B[1] + 13} Z`} fill={accent} />
+      <text x={(O[0] + B[0]) / 2 - 14} y={(O[1] + B[1]) / 2} fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic">b</text>
+
+      {/* b − a（A から B へ） */}
+      <path d={`M ${A[0]} ${A[1]} L ${B[0] + 9} ${B[1] + 9}`} fill="none" stroke={stroke} strokeWidth="2.4" />
+      <path d={`M ${B[0] + 15} ${B[1] + 6} L ${B[0] + 5} ${B[1] + 4} L ${B[0] + 11} ${B[1] + 15} Z`} fill={stroke} />
+      <text x={(A[0] + B[0]) / 2 + 18} y={(A[1] + B[1]) / 2 - 4} fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">b − a</text>
+
+      {/* θ */}
+      <path d={`M ${O[0] + 34} ${O[1]} A 34 34 0 0 0 ${O[0] + 24} ${O[1] - 24}`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x={O[0] + 36} y={O[1] - 16} fontSize="12" fill={muted} textAnchor="middle">θ</text>
+
+      {/* 点と名前 */}
+      <circle cx={O[0]} cy={O[1]} r="3.4" fill={stroke} />
+      <text x={O[0] - 12} y={O[1] + 6} fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <circle cx={A[0]} cy={A[1]} r="3.4" fill={stroke} />
+      <text x={A[0] + 12} y={A[1] + 6} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <circle cx={B[0]} cy={B[1]} r="3.4" fill={stroke} />
+      <text x={B[0]} y={B[1] - 10} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+
+      <text x="300" y="30" fontSize="11" fill={muted} textAnchor="middle">AB は b − a</text>
+      <text x="146" y="26" fontSize="11" fill={accent} textAnchor="middle">
+        この 3 本の長さは、どうつながる？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列7 step1: 先にそろえる「3 つの値」。
+ *  基準点 O と 2 本の矢印に、大きさ 2 つと内積 1 つの札を掛ける。値はすべて ? のまま。
+ *  矢印の長さの比も角の開きも問題の値とは変えてある（層8：図が数値を漏らさないため）。 */
+export function M3vThreeValues() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 182"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="基準点 O から 2 本の矢印 a と b が出ている図。矢印の長さも角の開きも模式で、問題の値とは合わせていない。右側に 3 つの札が縦に並び、a の大きさ、b の大きさ、a と b の内積と書かれているが、値はすべて疑問符のまま"
+    >
+    <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">この 3 つだけで、長さも角も面積も出せる？</text>
+    <circle cx="55" cy="140" r="3.5" fill={stroke} />
+    <path d="M 55 140 L 159 132" fill="none" stroke={stroke} strokeWidth="2.2" />
+    <path d="M 151 128 L 168 131 L 153 139 Z" fill={stroke} />
+    <path d="M 55 140 L 123 64" fill="none" stroke={stroke} strokeWidth="2.2" />
+    <path d="M 113 63 L 128 58 L 124 74 Z" fill={stroke} />
+    <path d="M 85 138 A 32 32 0 0 0 76 118" fill="none" stroke={muted} strokeWidth="1" />
+    <text x="46" y="154" fontSize="12" fill={stroke} textAnchor="middle">O</text>
+    <text x="176" y="128" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+    <text x="132" y="50" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+    <text x="118" y="152" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">a</text>
+    <text x="76" y="88" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">b</text>
+    <text x="105" y="170" fontSize="10" fill={muted} textAnchor="middle">（長さも角の開きも模式）</text>
+    <text x="288" y="44" fontSize="10" fill={muted} textAnchor="middle">先にそろえる 3 つ</text>
+    <rect x="216" y="52" width="130" height="26" rx="6" fill="none" stroke={accent} strokeWidth="1.2" />
+    <text x="281" y="69" fontSize="12" fill={accent} textAnchor="middle">| a | ＝ ？</text>
+    <rect x="216" y="86" width="130" height="26" rx="6" fill="none" stroke={accent} strokeWidth="1.2" />
+    <text x="281" y="103" fontSize="12" fill={accent} textAnchor="middle">| b | ＝ ？</text>
+    <rect x="216" y="120" width="130" height="26" rx="6" fill="none" stroke={accent} strokeWidth="1.2" />
+    <text x="281" y="137" fontSize="12" fill={accent} textAnchor="middle">a ・ b ＝ ？</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列7 step7: 大きさの式が「2 乗して動き出す」仕組み。
+ *  展開の形だけを示し、数値も t の値も書かない
+ *  （層8 の補足：仕組みは描いてよいが、その問題でどう働くかは描かない）。 */
+export function M3vSquareToMove() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上の枠に、s 倍した a と t 倍した b の和の大きさを表す式があり、このままでは開けないと添えられている。下向きの矢印に 2 乗すると書かれ、下の枠には展開したあとの 3 つの項が並び、それぞれに下線が引かれている。数値は 1 つも書かれていない"
+    >
+    <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">そのままでは動かない式が、2 乗すると何に変わる？</text>
+    <rect x="92" y="34" width="176" height="34" rx="6" fill="none" stroke={stroke} strokeWidth="1.4" />
+    <text x="180" y="56" fontSize="14" fill={stroke} textAnchor="middle">| s a ＋ t b |</text>
+    <text x="180" y="84" fontSize="10" fill={muted} textAnchor="middle">このままでは開けない</text>
+    <path d="M 180 92 L 180 112" fill="none" stroke={accent} strokeWidth="1.6" />
+    <path d="M 174 108 L 180 120 L 186 108 Z" fill={accent} />
+    <text x="256" y="108" fontSize="11" fill={accent} textAnchor="middle">2 乗する</text>
+    <rect x="24" y="126" width="312" height="36" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+    <text x="180" y="149" fontSize="13" fill={stroke} textAnchor="middle">s² | a |²  ＋  2 s t ( a ・ b )  ＋  t² | b |²</text>
+    <path d="M 90 157 L 124 157" fill="none" stroke={accent} strokeWidth="1.2" />
+    <path d="M 140 157 L 230 157" fill="none" stroke={accent} strokeWidth="1.2" />
+    <path d="M 246 157 L 273 157" fill="none" stroke={accent} strokeWidth="1.2" />
+    <text x="180" y="180" fontSize="11" fill={accent} textAnchor="middle">残るのは、そろえた 3 つだけ</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列8 step1: 座標平面上の矢印と、x 方向・y 方向の進み。
+ *  目盛りを打たない・成分の値を書かない。矢印の見た目の比は、問題の成分の比（7 : 4）と一致させない（層8）。 */
+export function M3vComponentGrid() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 見た目の比はおよそ 154 : 107（問題の 7 : 4 とはずらしてある） */
+  const ax = 78, ay = 145, bx = 232, by = 38;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="座標平面に、点 A から点 B への矢印が 1 本描かれている。A から真横に進んで真上に上がると B に着くことを、点線の直角の道が示している。横の進みと縦の進みには、値のかわりにクエスチョンマークが置かれている。座標軸に目盛りの数字はない"
+    >
+      {/* 軸（目盛りなし） */}
+      <path d="M 20 172 L 340 172" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 334 168 L 342 172 L 334 176 Z" fill={muted} />
+      <path d="M 46 192 L 46 26" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 42 32 L 46 24 L 50 32 Z" fill={muted} />
+      <text x="36" y="188" fontSize="11" fill={muted} textAnchor="middle">O</text>
+      <text x="330" y="188" fontSize="11" fill={muted} textAnchor="middle">x</text>
+      <text x="60" y="32" fontSize="11" fill={muted} textAnchor="middle">y</text>
+      {/* 点線の直角の道（A → 真横 → 真上 → B） */}
+      <path d={`M ${ax} ${ay} L ${bx} ${ay} L ${bx} ${by}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 4" />
+      <path d={`M ${bx - 12} ${ay} L ${bx - 12} ${ay - 12} L ${bx} ${ay - 12}`} fill="none" stroke={muted} strokeWidth="1" />
+      {/* 矢印 A → B */}
+      <path d={`M ${ax} ${ay} L ${bx - 13} ${by + 9}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path d={`M ${bx - 21} ${by + 6} L ${bx - 6} ${by + 3} L ${bx - 15} ${by + 17} Z`} fill={accent} />
+      <circle cx={ax} cy={ay} r="4" fill={stroke} />
+      <circle cx={bx} cy={by} r="4" fill={stroke} />
+      <text x={ax - 12} y={ay + 6} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={bx + 12} y={by + 4} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      {/* 進みのラベル（値は ?） */}
+      <text x={(ax + bx) / 2} y={ay + 17} fontSize="11" fill={accent} textAnchor="middle">
+        横の進み ？
+      </text>
+      <text x={bx + 40} y={(ay + by) / 2 + 4} fontSize="11" fill={accent} textAnchor="middle">
+        縦の進み ？
+      </text>
+      <text x="180" y="19" fontSize="11" fill={accent} textAnchor="middle">
+        A から B へ、横と縦にそれぞれどれだけ進む？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列8 step6: 3 つの頂点 A, B, C と、まだ決まっていない 4 つ目の頂点。
+ *  目盛りなし・座標の値なし。4 つ目の頂点は打たない（点線は途中で切り、「？」だけを置く）——
+ *  位置を描くと、解かずに答えの見当がついてしまう（層8）。図の形も問題の 3 点の実際の配置と一致させない。 */
+export function M3vParallelogramD() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const A = [96, 152], B = [244, 128], C = [284, 60];
+  /** 平行四辺形なら 4 つ目はここ（＝描かない。点線を 45% で切るためだけに使う） */
+  const D = [A[0] + C[0] - B[0], A[1] + C[1] - B[1]];
+  const cut = (from: number[], to: number[], r: number) => [from[0] + (to[0] - from[0]) * r, from[1] + (to[1] - from[1]) * r];
+  const cd = cut(C, D, 0.45), ad = cut(A, D, 0.45);
+  const p = (q: number[]) => `${q[0]} ${q[1]}`;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="座標平面に 3 つの点 A、B、C が打ってある。A から B、B から C への辺は実線。C からと A からは、行き先の決まっていない点線がのびて途中で切れ、その先にクエスチョンマークが置かれている。4 つ目の頂点はまだ打たれていない。座標軸に目盛りの数字はない"
+    >
+      {/* 軸（目盛りなし） */}
+      <path d="M 20 176 L 340 176" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 334 172 L 342 176 L 334 180 Z" fill={muted} />
+      <path d="M 46 194 L 46 26" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 42 32 L 46 24 L 50 32 Z" fill={muted} />
+      <text x="36" y="190" fontSize="11" fill={muted} textAnchor="middle">O</text>
+      <text x="330" y="192" fontSize="11" fill={muted} textAnchor="middle">x</text>
+      <text x="60" y="32" fontSize="11" fill={muted} textAnchor="middle">y</text>
+      {/* 決まっている 2 辺 */}
+      <path d={`M ${p(A)} L ${p(B)} L ${p(C)}`} fill="none" stroke={stroke} strokeWidth="2" />
+      {/* まだ行き先の決まっていない 2 辺（途中で切る） */}
+      <path d={`M ${p(C)} L ${p(cd)}`} fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="5 4" />
+      <path d={`M ${p(A)} L ${p(ad)}`} fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="5 4" />
+      <circle cx={A[0]} cy={A[1]} r="4" fill={stroke} />
+      <circle cx={B[0]} cy={B[1]} r="4" fill={stroke} />
+      <circle cx={C[0]} cy={C[1]} r="4" fill={stroke} />
+      <text x={A[0] - 13} y={A[1] + 12} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] + 8} y={B[1] + 16} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={C[0] + 13} y={C[1] - 4} fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x="146" y="62" fontSize="15" fill={accent} textAnchor="middle">？</text>
+      <text x="180" y="19" fontSize="11" fill={accent} textAnchor="middle">
+        4 つ目の頂点は、どこに来ればよい？
+      </text>
+    </svg>
+  );
+}
+
+const headPath = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, k: string) => {
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
+  const ex = dx / L, ey = dy / L;
+  const hx = x2 - ex * 8, hy = y2 - ey * 8;
+  const nx = -ey * 4.2, ny = ex * 4.2;
+  return (
+    <g key={k}>
+      <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+      <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+    </g>
+  );
+};
+
+/** ベクトル 系列9 step1: 直線のベクトル方程式（始点ベクトル ＋ t × 方向ベクトル）。
+ *  t を動かすと P が直線の上を走る「帯」を描く。
+ *  書かない：t の値・座標の値・目盛り。線の傾きは問題の d=(4,3) の比にしない（模式）。 */
+export function M3vLineParam() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // 直線（模式・実際の方向ベクトルの比とは変えてある）
+  const L1 = { x: 26, y: 152 }, L2 = { x: 336, y: 44 };
+  const dx = L2.x - L1.x, dy = L2.y - L1.y, LEN = Math.hypot(dx, dy);
+  const ux = dx / LEN, uy = dy / LEN;
+  const at = (p: number) => ({ x: L1.x + ux * p, y: L1.y + uy * p });
+  const A = at(78);
+  const Dend = at(78 + 52);
+  const cand = [at(12), at(170), at(272)];
+  const O = { x: 46, y: 172 };
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="座標平面の模式図。原点から点 A へ向かう矢印と、A から直線に沿って伸びる方向ベクトルの矢印が描かれている。直線の上には点 P の候補が三つ、白丸で置いてある。目盛りの数字も座標の値も書かれていない"
+    >
+      {/* 軸（目盛りなし） */}
+      <path d={`M 16 ${O.y} L 348 ${O.y}`} fill="none" stroke={muted} strokeWidth="0.8" />
+      <path d={`M ${O.x} 190 L ${O.x} 16`} fill="none" stroke={muted} strokeWidth="0.8" />
+      <text x={O.x - 10} y={O.y + 14} fontSize="11" fill={muted} textAnchor="middle">O</text>
+      {/* 帯（t が動く範囲） */}
+      <path
+        d={`M ${L1.x} ${L1.y} L ${L2.x} ${L2.y}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="13"
+        opacity="0.14"
+        strokeLinecap="round"
+      />
+      {/* 直線 l */}
+      <path d={`M ${L1.x} ${L1.y} L ${L2.x} ${L2.y}`} fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x={L2.x - 6} y={L2.y - 8} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">l</text>
+      {/* P の候補（白丸・3 つ） */}
+      {cand.map((c, k) => (
+        <g key={k}>
+          <circle cx={c.x} cy={c.y} r="4.6" fill="var(--background)" stroke={accent} strokeWidth="1.6" />
+          {k === 1 ? (
+            <text x={c.x} y={c.y - 10} fontSize="11" fill={accent} textAnchor="middle">P</text>
+          ) : null}
+        </g>
+      ))}
+      {/* 始点ベクトル OA */}
+      {m3vHeadPath(O.x, O.y, A.x, A.y, stroke, 2, "oa")}
+      <text x={(O.x + A.x) / 2 - 13} y={(O.y + A.y) / 2 + 5} fontSize="11" fill={stroke} textAnchor="middle">OA</text>
+      <circle cx={A.x} cy={A.y} r="3.6" fill={stroke} />
+      <text x={A.x - 6} y={A.y - 9} fontSize="11" fill={stroke} textAnchor="middle">A</text>
+      {/* 方向ベクトル d */}
+      {m3vHeadPath(A.x, A.y, Dend.x, Dend.y, accent, 2.4, "dv")}
+      <text x={(A.x + Dend.x) / 2 + 4} y={(A.y + Dend.y) / 2 + 16} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">d</text>
+      {/* キャプション */}
+      <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">
+        A から d の何倍か進んだところが P。
+      </text>
+      <text x="180" y="35" fontSize="11" fill={accent} textAnchor="middle">
+        その「何倍か」を決めると、P はどこに来る？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列9 step6: 直線 l の外の点 B から下ろした垂線の足 H。
+ *  H は白丸に「?」で、座標も t も書かない。直角の印だけ置く。 */
+export function M3vFoot() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const L1 = { x: 24, y: 148 }, L2 = { x: 336, y: 40 };
+  const dx = L2.x - L1.x, dy = L2.y - L1.y, LEN = Math.hypot(dx, dy);
+  const ux = dx / LEN, uy = dy / LEN;
+  const at = (p: number) => ({ x: L1.x + ux * p, y: L1.y + uy * p });
+  const A = at(56);
+  const Dend = at(56 + 50);
+  const B = { x: 236, y: 156 };
+  const proj = (B.x - L1.x) * ux + (B.y - L1.y) * uy;
+  const H = at(proj);
+  // 直角の印（H で、直線方向と BH 方向）
+  const nx = (B.x - H.x) / Math.hypot(B.x - H.x, B.y - H.y);
+  const ny = (B.y - H.y) / Math.hypot(B.x - H.x, B.y - H.y);
+  const s = 13;
+  const p1 = { x: H.x + ux * s, y: H.y + uy * s };
+  const p2 = { x: p1.x + nx * s, y: p1.y + ny * s };
+  const p3 = { x: H.x + nx * s, y: H.y + ny * s };
+  return (
+    <svg
+      viewBox="0 0 360 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="直線と、その外にある点 B の模式図。B から直線へ点線が下ろされ、直角の印がついている。点線が直線と出会うところは白丸にクエスチョンマークで、まだ決まっていないことを表す。座標の数値は書かれていない"
+    >
+      {/* 直線 l */}
+      <path d={`M ${L1.x} ${L1.y} L ${L2.x} ${L2.y}`} fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x={L2.x - 6} y={L2.y - 8} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">l</text>
+      {/* A と方向ベクトル */}
+      <circle cx={A.x} cy={A.y} r="3.6" fill={stroke} />
+      <text x={A.x - 6} y={A.y - 9} fontSize="11" fill={stroke} textAnchor="middle">A</text>
+      {m3vHeadPath(A.x, A.y, Dend.x, Dend.y, accent, 2.4, "dv2")}
+      <text x={(A.x + Dend.x) / 2 + 3} y={(A.y + Dend.y) / 2 + 17} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">d</text>
+      {/* B */}
+      <circle cx={B.x} cy={B.y} r="4" fill={stroke} />
+      <text x={B.x + 12} y={B.y + 5} fontSize="11" fill={stroke} textAnchor="middle">B</text>
+      {/* 垂線 BH（点線） */}
+      <path d={`M ${B.x} ${B.y} L ${H.x} ${H.y}`} fill="none" stroke={accent} strokeWidth="1.8" strokeDasharray="5 4" />
+      <text x={(B.x + H.x) / 2 + 15} y={(B.y + H.y) / 2 + 4} fontSize="11" fill={accent} textAnchor="middle">BH</text>
+      {/* 直角の印 */}
+      <path d={`M ${p1.x} ${p1.y} L ${p2.x} ${p2.y} L ${p3.x} ${p3.y}`} fill="none" stroke={muted} strokeWidth="1.2" />
+      {/* H は ? */}
+      <circle cx={H.x} cy={H.y} r="6" fill="var(--background)" stroke={accent} strokeWidth="1.8" />
+      <text x={H.x} y={H.y + 3.6} fontSize="10" fill={accent} textAnchor="middle">?</text>
+      <text x={H.x + 2} y={H.y - 13} fontSize="11" fill={accent} textAnchor="middle">H</text>
+      {/* キャプション */}
+      <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">
+        B からまっすぐ下ろした足 H は、直線のどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列10 step1・辞書「空間ベクトル」: 空間の 1 次独立（3 本指のハンドサイン・
+ *  オリジナルの線画）と四面体 OABC。数値・比・係数は一切描かない。 */
+export function M3vHandsign3() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 9, hy = y2 - uy * 9;
+    const nx = -uy * 4.5, ny = ux * 4.5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  /* 手の輪郭（親指を右へ、中指を右上へ、人差し指を上へ広げた左手・オリジナルの線画） */
+  const hand =
+    "M 52 202 L 52 172 " +
+    "C 52 156 58 146 68 142 " +
+    "L 96 68 C 99 60 108 58 113 62 C 118 66 118 74 115 80 " +
+    "L 88 144 " +
+    "L 130 104 C 137 98 145 100 147 107 C 149 114 144 119 138 122 " +
+    "L 94 154 " +
+    "L 142 152 C 151 151 156 156 155 163 C 154 170 148 173 141 174 " +
+    "L 98 182 " +
+    "C 105 186 109 192 109 200 L 109 202 Z";
+  return (
+    <svg
+      viewBox="0 0 360 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左は、親指を右へ、中指を右上へ、人差し指を上へ広げた手の線画に、3 本の矢印を指に沿って重ねた図。3 本は同じ平面に寝ていない。右は四面体 O A B C で、頂点 O から A、B、C へ 3 本の矢印が出ている。数値や比は書かれていない"
+    >
+      <path d={hand} fill="none" stroke={muted} strokeWidth="1.5" strokeLinejoin="round" />
+      {arrow(82, 156, 110, 74, accent, 2.2, "f1")}
+      {arrow(82, 156, 140, 110, accent, 2.2, "f2")}
+      {arrow(82, 156, 148, 160, accent, 2.2, "f3")}
+      <text x="96" y="218" fontSize="11" fill={stroke} textAnchor="middle">3 本とも、別の向き</text>
+
+      {/* 四面体 OABC（O は手前下、B は奥。奥の辺は破線） */}
+      <path d="M 272 62 L 344 152" fill="none" stroke={muted} strokeWidth="1.4" />
+      <path d="M 272 62 L 200 122" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 200 122 L 344 152" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      {arrow(262, 192, 272, 62, accent, 2.2, "t1")}
+      {arrow(262, 192, 200, 122, accent, 2.2, "t2")}
+      {arrow(262, 192, 344, 152, accent, 2.2, "t3")}
+      <circle cx="262" cy="192" r="3.2" fill={stroke} />
+      <text x="262" y="212" fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <text x="272" y="52" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="190" y="118" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x="352" y="152" fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x="180" y="24" fontSize="11" fill={accent} textAnchor="middle">2 本の矢印では、どこへ行けない？</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列10 step6: 四面体 OABC と 3 本の矢印、6 つの札（値はすべて ?）。 */
+export function M3vSixValues() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const arrow = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, key: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const hx = x2 - ux * 9, hy = y2 - uy * 9;
+    const nx = -uy * 4.5, ny = ux * 4.5;
+    return (
+      <g key={key}>
+        <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
+        <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
+      </g>
+    );
+  };
+  const tags: [string, number][] = [
+    ["|a| = ?", 40],
+    ["|b| = ?", 62],
+    ["|c| = ?", 84],
+    ["a・b = ?", 118],
+    ["b・c = ?", 140],
+    ["c・a = ?", 162],
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="右は四面体 O A B C で、頂点 O から A、B、C へ 3 本の矢印 a、b、c が出ている図。左には 6 つの札が並び、3 つの長さと 3 つの内積が、値をすべてクエスチョンマークにしたまま書かれている"
+    >
+      <rect x="12" y="26" width="98" height="72" rx="6" fill="none" stroke={muted} strokeWidth="1" />
+      <rect x="12" y="104" width="98" height="72" rx="6" fill="none" stroke={muted} strokeWidth="1" />
+      {tags.map(([t, y]) => (
+        <text key={t} x="24" y={y} fontSize="12" fill={accent}>{t}</text>
+      ))}
+      <text x="61" y="16" fontSize="11" fill={muted} textAnchor="middle">3 つの長さ</text>
+      <text x="61" y="194" fontSize="11" fill={muted} textAnchor="middle">3 つの内積</text>
+
+      <path d="M 274 54 L 340 144" fill="none" stroke={muted} strokeWidth="1.4" />
+      <path d="M 274 54 L 202 114" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 202 114 L 340 144" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      {arrow(264, 184, 274, 54, accent, 2.2, "s1")}
+      {arrow(264, 184, 202, 114, accent, 2.2, "s2")}
+      {arrow(264, 184, 340, 144, accent, 2.2, "s3")}
+      <circle cx="264" cy="184" r="3.2" fill={stroke} />
+      <text x="264" y="203" fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <text x="274" y="44" fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="192" y="110" fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x="349" y="144" fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x="281" y="152" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">a</text>
+      <text x="228" y="163" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">b</text>
+      <text x="313" y="177" fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">c</text>
+      <text x="235" y="16" fontSize="11" fill={accent} textAnchor="middle">この 6 つだけで、どこまで測れる？</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列11 step1: 平面 ABC と、その上の点（A から 2 方向へ進んで届く）・平面の外の点。
+ *  係数は書かない。その問題の点が平面上にあるかどうかも描かない（模式）。 */
+export function M3vCoplanar() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const A = [96, 138] as const, B = [214, 166] as const, C = [268, 112] as const;
+  const mid = [A[0] + 0.55 * (B[0] - A[0]), A[1] + 0.55 * (B[1] - A[1])] as const;
+  const Q = [mid[0] + 0.45 * (C[0] - A[0]), mid[1] + 0.45 * (C[1] - A[1])] as const;
+  const R = [150, 44] as const, F = [150, 122] as const;
+  const head = (x1: number, y1: number, x2: number, y2: number, color: string) => {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len, hx = x2 - ux * 8, hy = y2 - uy * 8;
+    const nx = -uy * 4.2, ny = ux * 4.2;
+    return <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />;
+  };
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="斜めから見た平面を表す平行四辺形の中に、3 点 A、B、C を結ぶ三角形が描かれている。平面の上のある点へは、A から AB の向きと AC の向きへ順に進むと届くことが、点線の折れ線で示されている。平面から離れた上のほうにも点が 1 つあり、平面へ下ろした点線がついている。数値や係数は書かれていない模式図"
+    >
+      {/* 平面（模式） */}
+      <path d="M 30 150 L 230 186 L 336 120 L 136 84 Z" fill={muted} fillOpacity="0.14" stroke={muted} strokeWidth="1.2" />
+      {/* 三角形 ABC */}
+      <path d={`M ${A[0]} ${A[1]} L ${B[0]} ${B[1]} L ${C[0]} ${C[1]} Z`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      {[["A", A, -12, 12], ["B", B, 4, 16], ["C", C, 10, -6]].map(([t, p, dx, dy]) => (
+        <text key={t as string} x={(p as readonly number[])[0] + (dx as number)} y={(p as readonly number[])[1] + (dy as number)} fontSize="12" fill={stroke} textAnchor="middle">{t as string}</text>
+      ))}
+      {[A, B, C].map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="3.4" fill={stroke} />)}
+      {/* A から 2 方向へ */}
+      <path d={`M ${A[0]} ${A[1]} L ${mid[0] - 3} ${mid[1] - 1}`} fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 3" />
+      {head(A[0], A[1], mid[0], mid[1], accent)}
+      <path d={`M ${mid[0]} ${mid[1]} L ${Q[0] - 3} ${Q[1] + 1}`} fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 3" />
+      {head(mid[0], mid[1], Q[0], Q[1], accent)}
+      <circle cx={Q[0]} cy={Q[1]} r="3.6" fill={accent} />
+      <text x={Q[0] + 6} y={Q[1] + 20} fontSize="11" fill={accent} textAnchor="middle">平面の上の点</text>
+      {/* 平面の外の点 */}
+      <circle cx={R[0]} cy={R[1]} r="3.8" fill={stroke} />
+      <path d={`M ${R[0]} ${R[1] + 6} L ${F[0]} ${F[1]}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="3 3" />
+      <circle cx={F[0]} cy={F[1]} r="2.2" fill={muted} />
+      <text x={R[0] + 46} y={R[1] + 4} fontSize="11" fill={stroke} textAnchor="middle">平面の外の点</text>
+      <text x="180" y="20" fontSize="11" fill={accent} textAnchor="middle">
+        平面 ABC の上の点は、A から 2 つの向きへ進めば届く。外の点は？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列11 step5: 直線 LG と平面 AMN の交点 K を、2 通りの道で指す（空間カット）。
+ *  比・k・係数の値は書かない。分点の位置は模式（問題の内分比とは別の割合で描いてある）。 */
+export function M3vTwoWays3d() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = [52, 195] as const, A = [117, 24] as const, B = [311, 191] as const, C = [160, 156] as const;
+  const L = [85, 109] as const, M = [202, 192] as const, N = [101, 177] as const;
+  const G = [196, 123] as const, K = [133, 116] as const;
+  const E2 = [246, 130] as const;
+  const W = [138, 66] as const;   // 平面 AMN の上を、A から M の向きへ進んだ折れ点
+  const toward = (p: readonly number[], q: readonly number[], d: number) => {
+    const dx = q[0] - p[0], dy = q[1] - p[1], len = Math.hypot(dx, dy);
+    return [q[0] - (dx / len) * d, q[1] - (dy / len) * d] as const;
+  };
+  const head = (p: readonly number[], q: readonly number[], color: string) => {
+    const dx = q[0] - p[0], dy = q[1] - p[1], len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len, hx = q[0] - ux * 8, hy = q[1] - uy * 8;
+    const nx = -uy * 4.2, ny = ux * 4.2;
+    return <path d={`M ${hx + nx} ${hy + ny} L ${q[0]} ${q[1]} L ${hx - nx} ${hy - ny} Z`} fill={color} />;
+  };
+  const dot = (p: readonly number[], color: string, r = 3.4) => <circle cx={p[0]} cy={p[1]} r={r} fill={color} />;
+  const end1 = toward(L, K, 9);
+  const end2 = toward(W, K, 9);
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="四面体 OABC の見取り図。辺 OA、OB、OC の上にそれぞれ点 L、M、N があり、三角形 ABC の中に重心 G がある。三角形 AMN が薄く塗られていて、L から G へ引いた直線がその面と交わるところに点 K が丸で示されている。K へは 2 本の道が描いてある。ひとつは L から直線に沿ってまっすぐ進む道、もうひとつは A から平面 AMN の上を 2 つの向きへ折れて進む道。比や係数の数値は書かれていない模式図"
+    >
+      {/* 面 AMN（模式・薄い塗り） */}
+      <path d={`M ${A[0]} ${A[1]} L ${M[0]} ${M[1]} L ${N[0]} ${N[1]} Z`} fill={accent} fillOpacity="0.12" stroke={accent} strokeWidth="1.1" strokeDasharray="4 3" />
+      {/* 四面体：手前の 3 辺は実線、奥の頂点 C につながる 3 辺は破線 */}
+      <path d={`M ${O[0]} ${O[1]} L ${A[0]} ${A[1]} M ${O[0]} ${O[1]} L ${B[0]} ${B[1]} M ${A[0]} ${A[1]} L ${B[0]} ${B[1]}`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={`M ${O[0]} ${O[1]} L ${C[0]} ${C[1]} M ${A[0]} ${A[1]} L ${C[0]} ${C[1]} M ${B[0]} ${B[1]} L ${C[0]} ${C[1]}`} fill="none" stroke={stroke} strokeWidth="1.1" strokeDasharray="5 4" />
+      {/* 直線 LG（延長を含む） */}
+      <path d={`M ${L[0]} ${L[1]} L ${E2[0]} ${E2[1]}`} fill="none" stroke={muted} strokeWidth="1.1" strokeDasharray="3 3" />
+      {/* 道 1：L から直線に沿って K へ */}
+      <path d={`M ${L[0]} ${L[1]} L ${end1[0]} ${end1[1]}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      {head(L, toward(L, K, 6), accent)}
+      {/* 道 2：A から平面 AMN の上を 2 つの向きへ折れて K へ */}
+      <path d={`M ${A[0]} ${A[1]} L ${W[0]} ${W[1]} L ${end2[0]} ${end2[1]}`} fill="none" stroke={accent} strokeWidth="2.2" strokeDasharray="6 3" />
+      {head(W, toward(W, K, 6), accent)}
+      {/* 頂点・分点 */}
+      {[O, A, B, C].map((p, i) => <g key={i}>{dot(p, stroke)}</g>)}
+      {[L, M, N].map((p, i) => <g key={`d${i}`}>{dot(p, stroke, 3)}</g>)}
+      {dot(G, stroke, 3)}
+      <circle cx={K[0]} cy={K[1]} r="6" fill="none" stroke={accent} strokeWidth="2" />
+      <text x={O[0] - 12} y={O[1] + 6} fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <text x={A[0] - 13} y={A[1] - 2} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] + 12} y={B[1] + 5} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={C[0] + 13} y={C[1] + 4} fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x={L[0] - 13} y={L[1] + 3} fontSize="11" fill={stroke} textAnchor="middle">L</text>
+      <text x={M[0] + 1} y={M[1] + 16} fontSize="11" fill={stroke} textAnchor="middle">M</text>
+      <text x={N[0] - 13} y={N[1] + 13} fontSize="11" fill={stroke} textAnchor="middle">N</text>
+      <text x={G[0] + 11} y={G[1] - 5} fontSize="11" fill={stroke} textAnchor="middle">G</text>
+      <text x={K[0] - 15} y={K[1] + 13} fontSize="11" fill={accent} textAnchor="middle">K</text>
+      <text x="252" y="28" fontSize="11" fill={accent} textAnchor="middle">2 通りの道は、どうつながる？</text>
+      <path d="M 160 45 L 176 45" fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x="182" y="49" fontSize="10.5" fill={accent} textAnchor="start">直線 LG に沿ってまっすぐ</text>
+      <path d="M 160 61 L 176 61" fill="none" stroke={accent} strokeWidth="2.2" strokeDasharray="6 3" />
+      <text x="182" y="65" fontSize="10.5" fill={accent} textAnchor="start">平面 AMN の上を 2 つの向きへ</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列12 step1: 空間座標と直方体の対角線。
+ *  目盛りを打たない・成分の値も長さの値も書かない。
+ *  仕組み（3 つの向きがたがいに直角で、底面の対角線を経由して空間の対角線に届く）だけを描く。 */
+export function M3vSpaceCoord() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 斜投影：x は手前左下、y は右、z は上（見た目の比は問題の成分と無関係） */
+  const O = [130, 168];
+  const dx = [-50, 29];
+  const dy = [134, 0];
+  const dz = [0, -84];
+  const add = (...vs: number[][]) => vs.reduce((a, b) => [a[0] + b[0], a[1] + b[1]], [0, 0]);
+  const Xp = add(O, dx);
+  const Yp = add(O, dy);
+  const Zp = add(O, dz);
+  const F = add(O, dx, dy);
+  const A = add(O, dx, dy, dz);
+  const p = (q: number[]) => `${q[0]} ${q[1]}`;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="空間の座標軸が 3 本、たがいに直角に引かれている。原点から点 A へ向かう矢印が 1 本あり、点線で直方体がそえられている。原点から底面の遠い角までの対角線も点線で引かれ、直角のしるしが 1 か所についている。目盛りの数字も長さの値も書かれていない"
+    >
+      {/* 軸（目盛りなし） */}
+      <path d={`M ${p(O)} L 66 199`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 68.1 193.1 L 62 201 L 72.1 201.2 Z" fill={muted} />
+      <path d={`M ${p(O)} L 334 168`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 328 164 L 338 168 L 328 172 Z" fill={muted} />
+      <path d={`M ${p(O)} L 130 36`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 126 44 L 130 34 L 134 44 Z" fill={muted} />
+      <text x="72" y="181" fontSize="11" fill={muted} textAnchor="middle">x</text>
+      <text x="344" y="172" fontSize="11" fill={muted} textAnchor="middle">y</text>
+      <text x="120" y="40" fontSize="11" fill={muted} textAnchor="middle">z</text>
+      <text x="140" y="182" fontSize="11" fill={muted} textAnchor="middle">O</text>
+      {/* 直方体（点線） */}
+      <path d={`M ${p(Xp)} L ${p(F)} L ${p(Yp)}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d={`M ${p(F)} L ${p(A)}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path
+        d={`M ${p(Zp)} L ${p(add(Zp, dx))} L ${p(A)} L ${p(add(Zp, dy))} Z`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      <path d={`M ${p(Xp)} L ${p(add(Zp, dx))}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d={`M ${p(Yp)} L ${p(add(Zp, dy))}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      {/* 底面の対角線（1 回目の三平方が効くところ） */}
+      <path d={`M ${p(O)} L ${p(F)}`} fill="none" stroke={stroke} strokeWidth="1.3" strokeDasharray="6 4" />
+      {/* 直角のしるし：底面の対角線と、立ち上がりの辺（2 回目の三平方が効くところ） */}
+      <path
+        d={`M ${F[0] - 9.4} ${F[1] - 3.4} L ${F[0] - 9.4} ${F[1] - 13.4} L ${F[0]} ${F[1] - 10}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+      />
+      {/* 空間の対角線 OA */}
+      <path d={`M ${p(O)} L ${A[0] - 8} ${A[1] + 5}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path d={`M ${A[0] - 15} ${A[1] + 3} L ${A[0] - 2} ${A[1] - 2} L ${A[0] - 8} ${A[1] + 12} Z`} fill={accent} />
+      <circle cx={O[0]} cy={O[1]} r="3.4" fill={stroke} />
+      <circle cx={A[0]} cy={A[1]} r="4" fill={stroke} />
+      <circle cx={F[0]} cy={F[1]} r="2.6" fill={muted} />
+      <text x={A[0] + 12} y={A[1] + 2} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x="180" y="19" fontSize="11" fill={accent} textAnchor="middle">
+        3 つの向きは、たがいに直角。対角線の長さは出せる？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列12 step6: 空間に浮いた三角形。
+ *  どの座標平面にも平行でない傾きだけを見せる。座標平面に落ちた影の三角形は描かない
+ *  （描くと「影の面積は本物と違う」という step6 の結論を図が先に言ってしまう）。
+ *  目盛りなし・座標の値なし・面積の値なし。 */
+export function M3vSpaceTriangle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = [124, 170];
+  const A = [98, 92];
+  const B = [232, 58];
+  const C = [256, 136];
+  const p = (q: number[]) => `${q[0]} ${q[1]}`;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="空間の座標軸が 3 本引かれ、そのあいだに三角形が 1 つ、どの座標平面とも平行にならない向きで浮かんでいる。頂点には A、B、C の名前がついている。三角形の中にはクエスチョンマークが置かれている。頂点 C からは、床にあたる面へ点線が 1 本おりている。目盛りの数字も座標の値も書かれていない"
+    >
+      {/* 軸（目盛りなし） */}
+      <path d={`M ${p(O)} L 62 199`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 64.3 193.1 L 58 201 L 68.1 201.3 Z" fill={muted} />
+      <path d={`M ${p(O)} L 334 170`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 328 166 L 338 170 L 328 174 Z" fill={muted} />
+      <path d={`M ${p(O)} L 124 36`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 120 44 L 124 34 L 128 44 Z" fill={muted} />
+      <text x="68" y="181" fontSize="11" fill={muted} textAnchor="middle">x</text>
+      <text x="344" y="174" fontSize="11" fill={muted} textAnchor="middle">y</text>
+      <text x="114" y="40" fontSize="11" fill={muted} textAnchor="middle">z</text>
+      <text x="134" y="184" fontSize="11" fill={muted} textAnchor="middle">O</text>
+      {/* 浮いていることの合図（頂点 C から床へ点線を 1 本だけ。影の三角形は描かない） */}
+      <path d={`M ${p(C)} L ${C[0]} 182`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx={C[0]} cy={182} r="2.6" fill="none" stroke={muted} strokeWidth="1" />
+      {/* 三角形 */}
+      <path d={`M ${p(A)} L ${p(B)} L ${p(C)} Z`} fill="none" stroke={stroke} strokeWidth="2" />
+      <circle cx={A[0]} cy={A[1]} r="4" fill={stroke} />
+      <circle cx={B[0]} cy={B[1]} r="4" fill={stroke} />
+      <circle cx={C[0]} cy={C[1]} r="4" fill={stroke} />
+      <text x={A[0] - 13} y={A[1] + 3} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <text x={B[0] + 3} y={B[1] - 9} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <text x={C[0] + 13} y={C[1] + 4} fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x="192" y="108" fontSize="16" fill={accent} textAnchor="middle">？</text>
+      <text x="180" y="19" fontSize="11" fill={accent} textAnchor="middle">
+        どの座標平面とも平行でない三角形。面積は？
+      </text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列13 step1: 空間の直線が xy 平面を突き抜ける（M3V_LINE_PARAM の空間カット）。
+ *  目盛りを打たない・座標の数値を書かない・t の値を書かない。突き抜ける点は「?」のまま。 */
+export function M3vLineParam3d() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  // xy 平面（模式・平行四辺形）
+  const pl = "M 40 160 L 250 160 L 330 112 L 120 112 Z";
+  // 直線：(105,32) から (285,196)
+  const x1 = 105, y1 = 32, x2 = 285, y2 = 196;
+  const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+  const ux = dx / len, uy = dy / len;
+  const px = 198, py = 116.7;                 // 突き抜ける点（模式）
+  const kx = x1 + 0.08 * dx, ky = y1 + 0.08 * dy;   // 直線上の点 K
+  const ax = kx + 42 * ux, ay = ky + 42 * uy;       // 方向ベクトルの矢じり
+  const nx = -uy * 4.5, ny = ux * 4.5;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="空間の模式図。斜めに置かれた xy 平面を、1 本の直線が斜めに突き抜けている。直線の上には点 K と、進む向きを表す矢印 d が描かれ、突き抜ける点にははてなの印だけが置かれている。目盛りも座標の数値も書かれていない"
+    >
+      <path d={pl} fill="none" stroke={muted} strokeWidth="1.2" />
+      {/* 平面の向こう側（下）は破線 */}
+      <path d={`M ${px} ${py} L ${x2} ${y2}`} fill="none" stroke={stroke} strokeWidth="1.6" strokeDasharray="5 4" />
+      {/* 平面の手前側（上）は実線 */}
+      <path d={`M ${x1} ${y1} L ${px} ${py}`} fill="none" stroke={stroke} strokeWidth="1.6" />
+      {/* 方向ベクトル d */}
+      <path d={`M ${kx} ${ky} L ${ax - ux * 8} ${ay - uy * 8}`} fill="none" stroke={accent} strokeWidth="2.4" />
+      <path
+        d={`M ${ax - ux * 8 + nx} ${ay - uy * 8 + ny} L ${ax} ${ay} L ${ax - ux * 8 - nx} ${ay - uy * 8 - ny} Z`}
+        fill={accent}
+      />
+      <text x={ax + 12} y={ay + 4} fontSize="12" fill={accent} textAnchor="middle" fontStyle="italic">d</text>
+      {/* 点 K */}
+      <circle cx={kx} cy={ky} r="4" fill={stroke} />
+      <text x={kx - 12} y={ky + 5} fontSize="12" fill={stroke} textAnchor="middle">K</text>
+      {/* 突き抜ける点（値は書かない） */}
+      <circle cx={px} cy={py} r="5" fill="none" stroke={accent} strokeWidth="2" />
+      <text x={px + 18} y={py - 6} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x={58} y={178} fontSize="11" fill={muted} textAnchor="start">xy 平面</text>
+      <text x={180} y={16} fontSize="11" fill={accent} textAnchor="middle">
+        直線は、xy 平面をどこで突き抜ける？
+      </text>
+      <text x={150} y={201} fontSize="10" fill={muted} textAnchor="middle">（正確な図でなくてよい）</text>
+    </svg>
+  );
+}
+
+/** ベクトル 系列13 step6: 平面への垂線の足（M3V_PLANE_FOOT）。
+ *  平面上の平行でない 2 つの向きの、どちらとも垂直——という仕組みだけを描く。
+ *  座標の数値・体積・s と t の値は書かない。H の場所は模式（この問題の H ではない）。 */
+export function M3vPlaneFoot() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const A = [66, 187], B = [204, 191], C = [166, 128];
+  const H = [156, 168], O = [150, 46];
+  const unit = (p: number[], q: number[]) => {
+    const dx = q[0] - p[0], dy = q[1] - p[1], l = Math.hypot(dx, dy);
+    return [dx / l, dy / l];
+  };
+  const uAB = unit(A, B), uAC = unit(A, C), uHO = unit(H, O);
+  const arrow = (from: number[], u: number[], L: number, key: string) => {
+    const tipx = from[0] + L * u[0], tipy = from[1] + L * u[1];
+    const bx = tipx - 8 * u[0], by = tipy - 8 * u[1];
+    const nx = -u[1] * 4.5, ny = u[0] * 4.5;
+    return (
+      <g key={key}>
+        <path d={`M ${from[0]} ${from[1]} L ${bx} ${by}`} fill="none" stroke={accent} strokeWidth="2.4" />
+        <path d={`M ${bx + nx} ${by + ny} L ${tipx} ${tipy} L ${bx - nx} ${by - ny} Z`} fill={accent} />
+      </g>
+    );
+  };
+  /** H を通り、平面上の向き u に平行な破線（両側）と、HO との間の直角の印 */
+  const dashed = (u: number[], key: string) => (
+    <path
+      key={key}
+      d={`M ${H[0] - 27 * u[0]} ${H[1] - 27 * u[1]} L ${H[0] + 27 * u[0]} ${H[1] + 27 * u[1]}`}
+      fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3"
+    />
+  );
+  const square = (u: number[], key: string) => {
+    const s = 12;
+    const p1 = [H[0] + s * u[0], H[1] + s * u[1]];
+    const p2 = [p1[0] + s * uHO[0], p1[1] + s * uHO[1]];
+    const p3 = [H[0] + s * uHO[0], H[1] + s * uHO[1]];
+    return (
+      <path
+        key={key}
+        d={`M ${p1[0]} ${p1[1]} L ${p2[0]} ${p2[1]} L ${p3[0]} ${p3[1]}`}
+        fill="none" stroke={accent} strokeWidth="1.4"
+      />
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 360 225"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="空間の模式図。斜めに置かれた平面の上に三角形 ABC があり、頂点 A から平面に沿って 2 本の矢印が出ている。平面の外にある点 O から引いた線分が点 H で平面に届き、H のところで平面上の 2 つの向きのどちらとも直角になっている。座標の数値も体積も書かれていない"
+    >
+      <path d="M 30 196 L 226 196 L 312 120 L 116 120 Z" fill="none" stroke={muted} strokeWidth="1.2" />
+      {/* 四面体の稜（O と 3 頂点） */}
+      <path d={`M ${O[0]} ${O[1]} L ${A[0]} ${A[1]}`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d={`M ${O[0]} ${O[1]} L ${B[0]} ${B[1]}`} fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d={`M ${O[0]} ${O[1]} L ${C[0]} ${C[1]}`} fill="none" stroke={muted} strokeWidth="1.1" />
+      {/* 三角形 ABC */}
+      <path
+        d={`M ${A[0]} ${A[1]} L ${B[0]} ${B[1]} L ${C[0]} ${C[1]} Z`}
+        fill="none" stroke={stroke} strokeWidth="1.6"
+      />
+      {/* 平面上の 2 つの向き */}
+      {arrow(A, uAB, 84, "ab")}
+      {arrow(A, uAC, 82, "ac")}
+      <text x={108} y={204} fontSize="11" fill={accent} textAnchor="middle">AB</text>
+      <text x={91} y={149} fontSize="11" fill={accent} textAnchor="middle">AC</text>
+      {/* 垂線 OH */}
+      <path d={`M ${O[0]} ${O[1]} L ${H[0]} ${H[1]}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <text x={172} y={108} fontSize="11" fill={accent} textAnchor="start">高さ</text>
+      {dashed(uAB, "d1")}
+      {dashed(uAC, "d2")}
+      {square(uAB, "sq1")}
+      <circle cx={O[0]} cy={O[1]} r="4" fill={stroke} />
+      <text x={O[0] - 13} y={O[1] + 5} fontSize="12" fill={stroke} textAnchor="middle">O</text>
+      <circle cx={H[0]} cy={H[1]} r="4.5" fill="none" stroke={accent} strokeWidth="2" />
+      <text x={H[0] + 16} y={H[1] + 14} fontSize="12" fill={accent} textAnchor="middle">H</text>
+      <circle cx={A[0]} cy={A[1]} r="3.4" fill={stroke} />
+      <text x={A[0] - 13} y={A[1] + 6} fontSize="12" fill={stroke} textAnchor="middle">A</text>
+      <circle cx={B[0]} cy={B[1]} r="3.4" fill={stroke} />
+      <text x={B[0] + 4} y={B[1] + 17} fontSize="12" fill={stroke} textAnchor="middle">B</text>
+      <circle cx={C[0]} cy={C[1]} r="3.4" fill={stroke} />
+      <text x={C[0] + 13} y={C[1] - 2} fontSize="12" fill={stroke} textAnchor="middle">C</text>
+      <text x={30} y={218} fontSize="11" fill={muted} textAnchor="start">平面 ABC</text>
+      <text x={180} y={15} fontSize="11" fill={accent} textAnchor="middle">
+        OH が、平面上の 2 つの向きのどちらとも垂直
+      </text>
+      <text x={180} y={30} fontSize="11" fill={accent} textAnchor="middle">
+        ——そうなる H は、どこ？
       </text>
     </svg>
   );

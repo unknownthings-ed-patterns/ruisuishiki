@@ -44,8 +44,6 @@ import {
 import {
   ALGEBRA_2_SERIES_LIST,
   ALGEBRA2_DIFF_SERIES,
-  ALGEBRA2_DOT_SERIES,
-  ALGEBRA2_VEC_MAG_SERIES,
 } from "./seriesAlgebra2";
 import {
   MATH3_LIMITS_SERIES_LIST,
@@ -63,6 +61,18 @@ import {
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
+  M3V_TRANSFORM_SERIES,
+  M3V_DIVISION_SERIES,
+  M3V_INDEPENDENT_SERIES,
+  M3V_POSITION_SERIES,
+  M3V_DOT_SERIES,
+  M3V_MEASURE_SERIES,
+  M3V_COMPONENT_SERIES,
+  M3V_LINE_SERIES,
+  M3V_SPACE_SERIES,
+  M3V_COPLANAR_SERIES,
+  M3V_SPACE_COORD_SERIES,
+  M3V_SPACE_LINE_SERIES,
 } from "./seriesMath3Vector";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -1704,22 +1714,8 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "仮説検定（言いたいことを、いったん否定してみる）— 帰無仮説・有意水準・棄却域、片側と両側。「棄却できない」は「正しい」ではない、という締めまで",
   },
-  /* ベクトル（旧課程 数B、新課程では数C に移行。読者の参考書世代を問わず
-     使えるよう、注記つきで 数Ⅱ・B に置く） */
-  {
-    series: ALGEBRA2_VEC_MAG_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "ベクトル（数B 旧／数C 新）",
-    shortDescription: "ベクトルの大きさ",
-  },
-  {
-    series: ALGEBRA2_DOT_SERIES,
-    subject: "secondary2",
-    subjectLabel: "高校数学Ⅱ・B",
-    topicGroup: "ベクトル（数B 旧／数C 新）",
-    shortDescription: "ベクトルの内積",
-  },
+  /* 旧「ベクトル（数B 旧／数C 新）」2 系列（algebra2_vec_mag_01・algebra2_dot_01）は
+     数Ⅲ・C 第9章ユニットの系列8・系列6 へ吸収（背骨 §8 裁定 Q5 案1・SERIES_REDIRECTS）。 */
   /* === 高校数学Ⅲ・C（池田洋介『数学Ⅲ・C 入門問題精講』の章順） === */
   /* 第1章 いろいろな関数（背骨：docs/math3c_functions_design.md） */
   {
@@ -1879,6 +1875,102 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "ベクトルという量（向きと大きさだけを取り出す）— 旧課程 数B・新課程 数C の単元。矢印から向きと大きさを取り出して場所を忘れると、矢印は数のように足したり何倍かしたりできる「概念」になる",
   },
+  {
+    series: M3V_TRANSFORM_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "基本変形（寄り道と、終点−始点）— 矢印は寄り道しても同じ。「終点を指す矢印 − 始点を指す矢印」に書き直せる。この 2 つの書き換えで、三角形の中のどんな点も式に翻訳される",
+  },
+  {
+    series: M3V_DIVISION_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "内分・外分・重心（「平均」という顔）— やり方が分かったあとで公式にする。数Ⅱの座標の公式と同じ式が「点」のレベルで見え、中点は 2 つの平均・重心は 3 つの平均になる",
+  },
+  {
+    series: M3V_INDEPENDENT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "1 次独立と 2 通りの表し方（一里塚）— 基準の矢印を 2 本決めると、どんな矢印も数の組にただ 1 通りで翻訳される。比の分からない交点を、2 通りに書いて係数を比べる計算だけで決める",
+  },
+  {
+    series: M3V_POSITION_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "位置ベクトル（座標軸をカスタマイズする）— 基準点を 1 つ決めた瞬間、ベクトルが点の位置を表す。図形が座標に合わないなら、座標の方を図形に合わせる。存在範囲は「斜めの座標」の領域",
+  },
+  {
+    series: M3V_DOT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "内積——影で測る— ベクトルの「かけ算」を $\\lvert\\vec a\\rvert\\lvert\\vec b\\rvert\\cos\\theta$ で決めるのはなぜか。$\\cos\\theta$ が影の長さなら、影の足し算が保存される。2 乗の展開公式が余弦定理になる",
+  },
+  {
+    series: M3V_MEASURE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "3 つの値で長さ・角・面積— 基準の 2 本について $\\lvert\\vec a\\rvert,\\lvert\\vec b\\rvert,\\vec a\\cdot\\vec b$ の 3 つの数を持てば、平面上のどんな長さも角も面積も計算で出る。長さは 2 乗して初めて動き出す",
+  },
+  {
+    series: M3V_COMPONENT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "成分表示（直交する基準に固定する）— 基準を「長さ 1・直交」の 2 本に固定すると、ベクトルは座標と同じ顔の数の組になり、内積が角の情報なしに「成分どうしの積の和」で出る",
+  },
+  {
+    series: M3V_LINE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "直線のベクトル方程式と垂線の足— 直線は「ここから」と「この向きに」の 2 つで決まる。始点＋$t$×方向の 1 本の式で直線上のすべての点が書け、垂線の足は内積 $=0$ の 1 次方程式で決まる",
+  },
+  {
+    series: M3V_SPACE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "空間ベクトル（基準が 3 本になるだけ）— 平面が空間に変わっても、内分も重心も共線条件も一文字も変えずに使える。変わるのは基準の本数と、計量に要る値が 3 つから 6 つになること",
+  },
+  {
+    series: M3V_COPLANAR_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "共面条件（当たり前が、条件になる）— 平面ではどんな点も 2 方向で書けるのが当たり前だった。空間に出た瞬間、それが「点 P が平面 ABC 上にある条件」に変わる。係数の和が 1 という合言葉は直線でも平面でも同じ",
+  },
+  {
+    series: M3V_SPACE_COORD_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "空間座標（成分で計量する）— 座標を 1 つ足して $(a,b,c)$ にしただけで、大きさも内積も角も面積も平面の式に項を 1 つ足すだけで出る。ただし平面の面積の近道は空間では効かない",
+  },
+  {
+    series: M3V_SPACE_LINE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "ベクトル",
+    shortDescription:
+      "空間の直線と平面（交点・垂線の足・体積）— 空間では直線が図に描けない。それでも「始点＋$t$×方向」と「内積 $=0$」だけで、交点も垂線の足も四面体の体積も計算だけで決まる。章の閉じ石",
+  },
 ];
 
 /**
@@ -1928,6 +2020,9 @@ export const SERIES_REDIRECTS: Record<string, string> = {
   algebra_divisor_01: "algebra1_int_factorization_01",
   /* 微分・積分（背骨 D4）：旧「微分の入り口」5 問プロトタイプ → 系列2「導関数」へ吸収 */
   algebra2_diff_01: "algebra2_calc_derivative_01",
+  /* ベクトル（数Ⅲ・C 第9章・背骨 §8 裁定 Q5 案1）：旧 2 系列を系列8「成分表示」・系列6「内積」へ吸収 */
+  algebra2_vec_mag_01: "math3_vec_component_01",
+  algebra2_dot_01: "math3_vec_dot_01",
 };
 
 /** 旧 seriesId なら現行 seriesId へ読み替える（なければそのまま返す）。 */
