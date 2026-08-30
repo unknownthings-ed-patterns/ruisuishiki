@@ -582,7 +582,7 @@ export const M3V_TRANSFORM_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "ここで、**基準になる点を三角形の外に移して**みます。\n\n三角形 ABC と、その外にある点 O をとり、$\\overrightarrow{OA} = \\vec{a}$、$\\overrightarrow{OB} = \\vec{b}$、$\\overrightarrow{OC} = \\vec{c}$ とします（**ここからの $\\vec{b}$、$\\vec{c}$ は O を始点とする矢印**です。O は直線 AB, BC, CA のどれの上にもないものとします）。辺 BC を $1 : 3$ に内分する点を P とします（$BP : PC = 1 : 3$）。\n\n$\\overrightarrow{OP}$ を $\\vec{a}$、$\\vec{b}$、$\\vec{c}$ で表しましょう。ただし、**O をどこに置きなおしても、そのまま成り立つ式**にします（そのような式は $1$ 通りに決まります）。\n\nその式の **$\\vec{b}$ の係数**を求めましょう。答えは既約分数で答えましょう。",
+        "ここで、**基準になる点を三角形の外に移して**みます。\n\n三角形 ABC と、その外にある点 O をとり、$\\overrightarrow{OA} = \\vec{a}$、$\\overrightarrow{OB} = \\vec{b}$、$\\overrightarrow{OC} = \\vec{c}$ とします（**ここからの $\\vec{b}$、$\\vec{c}$ は O を始点とする矢印**です。O は直線 AB, BC, CA のどれの上にもないものとします）。辺 BC を $1 : 3$ に内分する点を P とします（$BP : PC = 1 : 3$）。\n\n$\\overrightarrow{OP}$ を $\\vec{a}$、$\\vec{b}$、$\\vec{c}$ で表しましょう。ただし、**O をどこに置きなおしても、そのまま成り立つ式**にします（そのような式は $1$ 通りに決まります。O を A の位置に重ねたときだけ使える式——$\\vec{a}$ が消えてしまう式——は不可です）。\n\nその式の **$\\vec{b}$ の係数**を求めましょう。答えは既約分数で答えましょう。",
       answer: 3 / 4,
       answerDisplay: "3/4",
       unit: "",

@@ -34105,7 +34105,7 @@ export function M3vEqualArrows() {
         );
       })}
       <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
-        ①〜⑤のうち、ベクトルとして PQ と等しいのはどれ？
+        ①〜⑤のうち、ベクトルとして PQ と等しいのは何本？
       </text>
     </svg>
   );
@@ -34392,7 +34392,7 @@ export function M3vDivisionG3() {
   const C = [124, 46] as const;
   const on = (X: readonly [number, number], Y: readonly [number, number], t: number) =>
     [X[0] + (Y[0] - X[0]) * t, X[1] + (Y[1] - X[1]) * t] as const;
-  const P = on(A, B, 0.2);
+  const P = on(A, B, 0.27);
   const Q = on(B, C, 0.65);
   const R = on(C, A, 0.15);
   const G = [(P[0] + Q[0] + R[0]) / 3, (P[1] + Q[1] + R[1]) / 3] as const;
