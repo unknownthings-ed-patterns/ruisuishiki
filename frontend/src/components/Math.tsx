@@ -4423,7 +4423,7 @@ export function UnitCircleQ2() {
       className="w-full h-auto"
       style={{ maxWidth: 280 }}
       role="img"
-      aria-label="単位円の第 2 象限の点 P。x 座標は負、y 座標は正"
+      aria-label="単位円の左半分にある点 P。符号は書かない"
     >
       {/* 軸 */}
       <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
@@ -4453,13 +4453,9 @@ export function UnitCircleQ2() {
       <text x={ox + 5} y={oy + 14} fontSize="10" fill={muted}>O</text>
       <text x={px - 6} y={py - 4} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600" textAnchor="end">P</text>
 
-      {/* 符号ラベル（数値でなく符号だけ） */}
-      <text x={(ox + px) / 2} y={oy + 15} fontSize="10.5" fill={accent} textAnchor="middle">x 座標 &lt; 0</text>
-      <text x={px - 8} y={(oy + py) / 2 + 4} fontSize="10.5" fill={accent} textAnchor="end">y 座標 &gt; 0</text>
-
-      {/* 凡例 */}
+      {/* 凡例（符号は問うだけ） */}
       <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
-        第 2 象限：P は y 軸より左 → x 座標（cosθ）が負になる
+        左半分の x は、正か負か
       </text>
     </svg>
   );
@@ -4601,7 +4597,7 @@ export function UnitCircleIdentity() {
       className="w-full h-auto"
       style={{ maxWidth: 280 }}
       role="img"
-      aria-label="単位円上の点 P から x 軸に垂線を下ろすと、斜辺 1・縦 sinθ・横 cosθ の直角三角形ができる"
+      aria-label="単位円上の点 P から x 軸に垂線を下ろした直角三角形。辺の名前は書かない"
     >
       {/* 軸 */}
       <line x1="18" y1={oy} x2="262" y2={oy} stroke={muted} strokeWidth="0.5" />
@@ -4629,14 +4625,9 @@ export function UnitCircleIdentity() {
       <text x={ox - 5} y={oy + 14} fontSize="10" fill={muted} textAnchor="end">O</text>
       <text x={px + 6} y={py - 2} fontSize="11" fill={accent} fontStyle="italic" fontWeight="600">P</text>
 
-      {/* 辺のラベル */}
-      <text x={(ox + px) / 2} y={oy + 15} fontSize="10.5" fill={accent} textAnchor="middle">cosθ</text>
-      <text x={px + 8} y={(oy + py) / 2 + 4} fontSize="10.5" fill={accent}>sinθ</text>
-      <text x={(ox + px) / 2 - 14} y={(oy + py) / 2 - 4} fontSize="11" fill={stroke} fontStyle="italic">1</text>
-
-      {/* 凡例（恒等式は書かない——問いの形で） */}
+      {/* 凡例（辺の名前は書かない——問いの形で） */}
       <text x="140" y="266" fontSize="10" fill={muted} textAnchor="middle" fontStyle="italic">
-        斜辺 1 の直角三角形——三平方の定理は、この 3 辺に何を言っている？
+        この 3 辺に三平方は何を言う？
       </text>
     </svg>
   );
@@ -5336,7 +5327,7 @@ export function UnitTriangleSinCos() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="斜辺 1 の直角三角形：横が cos θ、高さが sin θ"
+      aria-label="直角三角形。辺の長さも名前も書かない"
     >
       {/* 地面参照線 */}
       <line
@@ -5378,31 +5369,7 @@ export function UnitTriangleSinCos() {
         θ
       </text>
 
-      {/* 辺ラベル */}
-      <text
-        x="140"
-        y="198"
-        fontSize="13"
-        fill={accent}
-        textAnchor="middle"
-        fontStyle="italic"
-        fontWeight="600"
-      >
-        cos θ
-      </text>
-      <text
-        x="232"
-        y="124"
-        fontSize="13"
-        fill={accent}
-        fontStyle="italic"
-        fontWeight="600"
-      >
-        sin θ
-      </text>
-      <text x="120" y="110" fontSize="14" fill={stroke} fontStyle="italic" fontWeight="600">
-        1
-      </text>
+      {/* 辺は空欄。斜辺 1 のラベルは公式の景色側へ */}
 
       {/* キャプション */}
       <text
@@ -5413,7 +5380,7 @@ export function UnitTriangleSinCos() {
         textAnchor="middle"
         fontStyle="italic"
       >
-        斜辺 1 の直角三角形——横が cos θ、高さが sin θ
+        この 3 辺は、それぞれ何を表す？
       </text>
     </svg>
   );
@@ -6947,16 +6914,12 @@ export function TrigTanReorient() {
       <text x="78" y="205" fontSize="13" fill={accent} fontStyle="italic">
         θ
       </text>
-      {/* 縦辺＝となり */}
-      <text x="48" y="130" fontSize="11" fill={muted} textAnchor="end">
-        となり
+      {/* 辺ラベルは伏せ、角から読ませる */}
+      <text x="48" y="130" fontSize="13" fill={muted} textAnchor="end">
+        ？
       </text>
-      <text x="48" y="145" fontSize="10" fill={muted} textAnchor="end">
-        （縦に見える）
-      </text>
-      {/* 横辺＝向かい（答え側） */}
-      <text x="140" y="42" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        向かい ？
+      <text x="140" y="42" fontSize="13" fill={accent} textAnchor="middle" fontWeight="600">
+        ？
       </text>
       <text
         x="160"
@@ -7070,11 +7033,11 @@ export function TrigEquilateralHalf() {
       <text x="210" y="198" fontSize="11" fill={muted} textAnchor="middle">
         半分
       </text>
-      <text x="155" y="120" fontSize="12" fill={accent} fontStyle="italic">
-        60°
+      <text x="155" y="120" fontSize="13" fill={accent} fontStyle="italic">
+        ？
       </text>
-      <text x="250" y="130" fontSize="12" fill={accent} fontStyle="italic">
-        30°
+      <text x="250" y="130" fontSize="13" fill={accent} fontStyle="italic">
+        ？
       </text>
       <text
         x="170"
@@ -7084,7 +7047,7 @@ export function TrigEquilateralHalf() {
         textAnchor="middle"
         fontStyle="italic"
       >
-        正三角形を半分——辺の比は図から生える
+        半分にした角は何度？
       </text>
     </svg>
   );
@@ -7547,8 +7510,8 @@ export function GeoAreaRatio() {
       <text x="274" y="212" fontSize="13" fill={stroke}>C</text>
       <circle cx="150" cy="200" r="3" fill={accent} />
       <text x="146" y="216" fontSize="13" fill={accent}>D</text>
-      {/* 高さの注記 */}
-      <text x="166" y="120" fontSize="11" fill={muted} fontStyle="italic">高さは共通</text>
+      {/* 高さは問うだけ。共通であることは出さない */}
+      <text x="166" y="120" fontSize="11" fill={muted} fontStyle="italic">高さは？</text>
       <text
         x="160"
         y="238"
@@ -7557,7 +7520,7 @@ export function GeoAreaRatio() {
         textAnchor="middle"
         fontStyle="italic"
       >
-        高さが同じ 2 三角形——面積の比は、底辺 BD:DC の比とどうつながる？
+        面積の比は、底辺 BD:DC の比とどうつながる？
       </text>
     </svg>
   );
@@ -10864,12 +10827,11 @@ export function ExpandPivotStep1() {
 }
 
 /**
- * 数と式 系列3 Step 4：打ち消される項に取り消し線を引く図。
- * 係数や具体値は書かず、「何が消えるか」だけを問う。
+ * 数と式 系列3 Step 4：向きの違う 2 本の x の項を並べる図。
+ * 取り消し線も「打ち消し合う」も書かず、足すとどうなるかだけを問う。
  */
 export function ExpandCancelStep4() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
     <svg
@@ -10877,7 +10839,7 @@ export function ExpandCancelStep4() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="打ち消される項に取り消し線を引いた図。係数は書かない"
+      aria-label="展開した項のうち、向きの違う2本の x の項を並べた図。打ち消しの結論は書かない"
     >
       <text x="180" y="34" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">
         (x + □)(x − □)
@@ -10895,14 +10857,12 @@ export function ExpandCancelStep4() {
       <text x="160" y="110" fontSize="15" fill={muted} textAnchor="middle" fontStyle="italic">
         □x
       </text>
-      <line x1="136" y1="104" x2="184" y2="104" stroke={accent} strokeWidth="1.8" />
       <text x="210" y="110" fontSize="15" fill={muted} textAnchor="middle">
         −
       </text>
       <text x="250" y="110" fontSize="15" fill={muted} textAnchor="middle" fontStyle="italic">
         □x
       </text>
-      <line x1="226" y1="104" x2="274" y2="104" stroke={accent} strokeWidth="1.8" />
       <text x="290" y="110" fontSize="15" fill={muted} textAnchor="middle">
         +
       </text>
@@ -10910,12 +10870,8 @@ export function ExpandCancelStep4() {
         …
       </text>
 
-      <text x="180" y="148" fontSize="11" fill={accent} textAnchor="middle">
-        反対向きの項が打ち消し合う
-      </text>
-
-      <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
-        残るのはどの項？　x の係数はどうなる？
+      <text x="180" y="176" fontSize="11" fill={muted} textAnchor="middle">
+        この 2 本の x の項は、足すとどうなる？
       </text>
     </svg>
   );
@@ -10923,7 +10879,7 @@ export function ExpandCancelStep4() {
 
 /**
  * 数と式 系列3 Step 8／系列4 Step 9：かたまりを囲む図（共用）。
- * 囲みだけ示し、展開や因数分解の結果は書かない。
+ * 具体式は置かず、囲みだけ示して展開や因数分解の結果は書かない。
  */
 export function ChunkBox() {
   const stroke = "var(--foreground)";
@@ -10936,21 +10892,21 @@ export function ChunkBox() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="式のなかのかたまりを囲んだ図。展開結果は書かない"
+      aria-label="式のなかのかたまりを囲んだ図。具体式も展開結果も書かない"
     >
       <text x="180" y="36" fontSize="12" fill={muted} textAnchor="middle">
         かたまりを1つの文字と見る
       </text>
 
       <rect x="48" y="70" width="110" height="52" rx="10" fill={fillColor} stroke={accent} strokeWidth="1.6" />
-      <text x="103" y="102" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
-        x + y
+      <text x="103" y="102" fontSize="16" fill={stroke} textAnchor="middle">
+        かたまり
       </text>
       <text x="178" y="102" fontSize="16" fill={muted} textAnchor="middle">
         +
       </text>
       <text x="210" y="102" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
-        p
+        □
       </text>
 
       <text x="250" y="102" fontSize="18" fill={muted} textAnchor="middle">
@@ -10961,14 +10917,14 @@ export function ChunkBox() {
       </text>
 
       <rect x="48" y="148" width="110" height="52" rx="10" fill={fillColor} stroke={accent} strokeWidth="1.6" />
-      <text x="103" y="180" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
-        x + y
+      <text x="103" y="180" fontSize="16" fill={stroke} textAnchor="middle">
+        かたまり
       </text>
       <text x="178" y="180" fontSize="16" fill={muted} textAnchor="middle">
         −
       </text>
       <text x="210" y="180" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
-        p
+        □
       </text>
       <text x="250" y="180" fontSize="18" fill={muted} textAnchor="middle">
         )
@@ -11202,7 +11158,7 @@ export function IneqNumlineFlip() {
       </text>
 
       <text x="180" y="196" fontSize="11" fill={muted} textAnchor="middle">
-        向きが裏返ると、塗る側はどう変わる？
+        塗る側は、どちらだろう？
       </text>
     </svg>
   );
@@ -11537,68 +11493,49 @@ export function DiscriminantExtract() {
 
 /**
  * 数と式 系列8 Step 5：放物線と x 軸の交わり方3通り。
- * D>0 / D=0 / D<0 のラベルだけ置き、交点の値は書かない。
+ * 3分岐の D ラベルと交点個数は伏せ、問いで終える（答えの先出しを避ける）。
  */
 export function DiscriminantThreeCases() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const axisY = 95;
   const panels = [
     {
       x: 20,
-      label: "D > 0",
-      // 下に開く放物線が x 軸を2点で切る
+      // 下に開く放物線が x 軸を2点で切る（個数は書かない・印も打たない）
       path: `M 28 55 Q 70 145 112 55`,
-      dots: [48, 92],
-      note: "2点",
     },
     {
       x: 130,
-      label: "D = 0",
-      // 頂点で x 軸に接する
+      // 頂点で x 軸に接する（個数は書かない・印も打たない）
       path: `M 138 55 Q 180 ${axisY + 2} 222 55`,
-      dots: [180],
-      note: "接する",
     },
     {
       x: 240,
-      label: "D < 0",
-      // x 軸の上側だけで交わらない
+      // x 軸の上側だけで交わらない（個数は書かない）
       path: "M 248 50 Q 290 78 332 50",
-      dots: [],
-      note: "交わらない",
     },
   ];
   return (
     <svg
-      viewBox="0 0 360 230"
+      viewBox="0 0 360 200"
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="判別式の符号による放物線とx軸の交わり方3通り。交点の値は書かない"
+      aria-label="放物線とx軸の交わり方を並べた3枚。分岐の名前も交点の個数も書かない"
     >
       {panels.map((p, idx) => (
         <g key={idx}>
-          <text x={p.x + 50} y="28" fontSize="12" fill={idx === 1 ? accent : muted} textAnchor="middle">
-            {p.label}
-          </text>
           <line x1={p.x + 8} y1={axisY} x2={p.x + 92} y2={axisY} stroke={muted} strokeWidth="1" />
           <path d={p.path} fill="none" stroke={stroke} strokeWidth="1.5" />
-          {p.dots.map((dx, j) => (
-            <circle key={j} cx={dx} cy={axisY} r="4" fill={accent} />
-          ))}
-          <text x={p.x + 50} y="130" fontSize="11" fill={muted} textAnchor="middle">
-            {p.note}
-          </text>
         </g>
       ))}
 
-      <text x="180" y="168" fontSize="12" fill={muted} textAnchor="middle">
-        交点の個数だけ見る
+      <text x="180" y="158" fontSize="12" fill={muted} textAnchor="middle">
+        交わり方は、何が違う？
       </text>
-      <text x="180" y="206" fontSize="11" fill={muted} textAnchor="middle">
-        D = 0 のとき、解はいくつあると考える？
+      <text x="180" y="182" fontSize="11" fill={muted} textAnchor="middle">
+        交点は、それぞれ何個？
       </text>
     </svg>
   );
@@ -11609,43 +11546,40 @@ export function DiscriminantThreeCases() {
  * 出力の具体値は書かず、「ただ1つ？」の問いで終える。
  */
 
-/** 系列2 step1：a の符号と開き（目盛り値なし）。 */
+/** 系列2 step1：開きの向き（符号ラベルなし・目盛り値なし）。 */
 export function ParabolaOpeningBundle() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
-    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="下に凸と上に凸の放物線。目盛り値は書かない">
-      <text x="90" y="24" fontSize="12" fill={muted} textAnchor="middle">a &gt; 0</text>
+    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="下に凸と上に凸の放物線。符号も結論も書かない">
       <line x1="30" y1="150" x2="150" y2="150" stroke={muted} strokeWidth="1" />
       <line x1="90" y1="170" x2="90" y2="40" stroke={muted} strokeWidth="1" />
       <path d="M 40 60 Q 90 170 140 60" fill="none" stroke={accent} strokeWidth="2" />
-      <text x="270" y="24" fontSize="12" fill={muted} textAnchor="middle">a &lt; 0</text>
       <line x1="210" y1="80" x2="330" y2="80" stroke={muted} strokeWidth="1" />
       <line x1="270" y1="170" x2="270" y2="40" stroke={muted} strokeWidth="1" />
       <path d="M 220 150 Q 270 40 320 150" fill="none" stroke={stroke} strokeWidth="2" />
-      <text x="180" y="192" fontSize="11" fill={muted} textAnchor="middle">開きの向きは a の符号だけが決める</text>
+      <text x="180" y="192" fontSize="11" fill={muted} textAnchor="middle">口は上？ 下？</text>
     </svg>
   );
 }
 
-/** 系列2 step5：平行移動＝値が遅れて現れる模式（数値空欄）。 */
+/** 系列2 step5：平行移動の箱と矢印。向きと「遅延」は書かず、問いで終える。 */
 export function TranslateDelay() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
-    <svg viewBox="0 0 360 170" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="x を x-p に置き換えると値が遅れて現れる模式。数値は空欄">
-      <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">x → x − p のとき、同じ高さは右へずれる</text>
-      <rect x="40" y="50" width="100" height="70" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
-      <text x="90" y="78" fontSize="12" fill={stroke} textAnchor="middle">もとの式</text>
-      <text x="90" y="100" fontSize="11" fill={muted} textAnchor="middle">x = □ で y = □</text>
-      <path d="M 150 85 L 200 85" fill="none" stroke={accent} strokeWidth="1.5" />
-      <path d="M 190 79 L 200 85 L 190 91" fill="none" stroke={accent} strokeWidth="1.5" />
-      <rect x="210" y="50" width="110" height="70" rx="8" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={accent} strokeWidth="1.3" />
-      <text x="265" y="78" fontSize="12" fill={stroke} textAnchor="middle">置き換え後</text>
-      <text x="265" y="100" fontSize="11" fill={muted} textAnchor="middle">同じ y は x = □+p</text>
-      <text x="180" y="150" fontSize="11" fill={muted} textAnchor="middle">「1を引いたら −1 移動」ではない——遅延</text>
+    <svg viewBox="0 0 360 160" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="もとの式と置き換え後の箱を矢印でつないだ図。移動の向きは書かない">
+      <rect x="40" y="36" width="100" height="70" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="90" y="64" fontSize="12" fill={stroke} textAnchor="middle">もとの式</text>
+      <text x="90" y="86" fontSize="11" fill={muted} textAnchor="middle">x = □ で y = □</text>
+      <path d="M 150 71 L 200 71" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 190 65 L 200 71 L 190 77" fill="none" stroke={accent} strokeWidth="1.5" />
+      <rect x="210" y="36" width="110" height="70" rx="8" fill="color-mix(in oklch, var(--accent) 6%, transparent)" stroke={accent} strokeWidth="1.3" />
+      <text x="265" y="64" fontSize="12" fill={stroke} textAnchor="middle">置き換え後</text>
+      <text x="265" y="86" fontSize="11" fill={muted} textAnchor="middle">同じ y は x = □</text>
+      <text x="180" y="140" fontSize="11" fill={muted} textAnchor="middle">同じ y はどちらの x で現れる？</text>
     </svg>
   );
 }
@@ -11689,21 +11623,22 @@ export function GeneralToStandard() {
   );
 }
 
-/** 系列4：変域で切った放物線（最小／最大）。 */
+/** 系列4：変域で切った放物線（最小）。底が窓の中かは読ませない。 */
 export function DomainWindowMin() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
-    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="変域で切り取った下に凸の放物線。最小の位置は問いかけるのみ">
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="変域で切り取った下に凸の放物線。底の位置は問うだけ">
       <line x1="40" y1="150" x2="260" y2="150" stroke={muted} strokeWidth="1" />
       <line x1="80" y1="180" x2="80" y2="30" stroke={muted} strokeWidth="1" />
       <path d="M 50 40 Q 150 170 250 40" fill="none" stroke={stroke} strokeWidth="1.4" strokeDasharray="4,3" />
-      <path d="M 100 95 Q 150 155 200 95" fill="none" stroke={accent} strokeWidth="2.4" />
-      <circle cx="100" cy="95" r="3.5" fill={accent} />
-      <circle cx="200" cy="95" r="3.5" fill={accent} />
-      <line x1="100" y1="30" x2="100" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
-      <line x1="200" y1="30" x2="200" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
+      {/* 実線は右坂だけ（底は含めない）。窓の外に軸がある読みも、片側の坂の読みもできる */}
+      <path d="M 165 102 Q 195 88 225 65" fill="none" stroke={accent} strokeWidth="2.4" />
+      <circle cx="165" cy="102" r="3.5" fill={accent} />
+      <circle cx="225" cy="65" r="3.5" fill={accent} />
+      <line x1="165" y1="30" x2="165" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
+      <line x1="225" y1="30" x2="225" y2="160" stroke={muted} strokeWidth="1" strokeDasharray="2,2" />
       <text x="150" y="190" fontSize="11" fill={muted} textAnchor="middle">窓の中——最小はどこ？</text>
     </svg>
   );
@@ -11758,43 +11693,44 @@ export function RectConstraint() {
   );
 }
 
-/** 系列5 step9：放物線と内接長方形（座標なし）。 */
+/** 系列5 step9：放物線と内接長方形。横は空欄、t は軸上の印だけ。 */
 export function InscribedRect() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
-    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="放物線と内接長方形。座標値なし">
+    <svg viewBox="0 0 300 200" className="w-full h-auto" style={{ maxWidth: 300 }} role="img" aria-label="放物線と内接長方形。横の長さは空欄、独立変数は軸上の印だけ">
       <line x1="40" y1="160" x2="260" y2="160" stroke={muted} strokeWidth="1" />
       <line x1="150" y1="180" x2="150" y2="30" stroke={muted} strokeWidth="1" />
       <path d="M 60 160 Q 150 40 240 160" fill="none" stroke={stroke} strokeWidth="1.8" />
       <rect x="110" y="100" width="80" height="60" fill="color-mix(in oklch, var(--accent) 8%, transparent)" stroke={accent} strokeWidth="1.6" />
-      <text x="150" y="130" fontSize="11" fill={accent} textAnchor="middle">t</text>
-      <text x="150" y="192" fontSize="11" fill={muted} textAnchor="middle">独立変数は t —— 放物線の x と混同しない</text>
+      <text x="150" y="176" fontSize="11" fill={accent} textAnchor="middle">t</text>
+      <circle cx="150" cy="160" r="3" fill={accent} />
+      <text x="150" y="192" fontSize="11" fill={muted} textAnchor="middle">横の長さは？　軸の印は何を指す？</text>
     </svg>
   );
 }
 
-/** 系列6：3形対応チャート（具体式なし）。 */
+/** 系列6：3形対応チャート。部品名は伏せ、箱だけ。 */
 export function ThreeFormsChart() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const boxes = [
-    { x: 20, title: "一般形", part: "y 切片" },
-    { x: 125, title: "標準形", part: "頂点" },
-    { x: 230, title: "因数分解形", part: "x 切片" },
+    { x: 20, title: "一般形" },
+    { x: 125, title: "標準形" },
+    { x: 230, title: "因数分解形" },
   ];
   return (
-    <svg viewBox="0 0 360 150" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="3つの形と読める部品。具体式なし">
+    <svg viewBox="0 0 360 150" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="3つの形の箱。読める部品の名前は書かない">
       {boxes.map((b) => (
         <g key={b.title}>
           <rect x={b.x} y={30} width={100} height={70} rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
           <text x={b.x + 50} y={58} fontSize="12" fill={stroke} textAnchor="middle">{b.title}</text>
-          <text x={b.x + 50} y={82} fontSize="12" fill={accent} textAnchor="middle">{b.part}</text>
+          <text x={b.x + 50} y={82} fontSize="16" fill={accent} textAnchor="middle">？</text>
         </g>
       ))}
-      <text x="180" y="130" fontSize="11" fill={muted} textAnchor="middle">目的が形を選ばせる——同じ放物線の顔</text>
+      <text x="180" y="130" fontSize="11" fill={muted} textAnchor="middle">同じ放物線の顔——それぞれ何が読める？</text>
     </svg>
   );
 }
@@ -11841,31 +11777,35 @@ export function AlwaysAbove() {
       <line x1="40" y1="140" x2="260" y2="140" stroke={muted} strokeWidth="1" />
       <line x1="80" y1="160" x2="80" y2="30" stroke={muted} strokeWidth="1" />
       <path d="M 60 50 Q 150 120 240 50" fill="none" stroke={accent} strokeWidth="2.2" />
-      <text x="150" y="170" fontSize="11" fill={muted} textAnchor="middle">交わらない・常に上 → すべての実数？</text>
+      <text x="150" y="170" fontSize="11" fill={muted} textAnchor="middle">交わらない。全体は軸のどちら側？</text>
     </svg>
   );
 }
 
-/** 系列8 step7：正根の失敗例2枚。 */
+/**
+ * 系列8 step7：正の2解が失敗する配置2枚。
+ * 左＝両交点が縦軸の左（ア）、右＝交点が縦軸をまたぐ（イ）。
+ * 失敗の理由は書かず、問いで終える。
+ */
 export function ParamRootFail() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
-    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="正の2実数根の失敗例2枚。座標値なし">
-      <text x="90" y="24" fontSize="11" fill={muted} textAnchor="middle">失敗① 頂点が左</text>
+    <svg viewBox="0 0 360 200" className="w-full h-auto" style={{ maxWidth: 360 }} role="img" aria-label="正の2実数根の失敗例2枚。左は両交点が縦軸の左、右は交点が縦軸をまたぐ。座標値なし">
+      <text x="90" y="24" fontSize="11" fill={muted} textAnchor="middle">(ア)</text>
       <line x1="30" y1="120" x2="150" y2="120" stroke={muted} strokeWidth="1" />
-      <line x1="90" y1="160" x2="90" y2="40" stroke={muted} strokeWidth="1" />
-      <path d="M 40 60 Q 70 150 140 70" fill="none" stroke={stroke} strokeWidth="1.8" />
-      <circle cx="55" cy="120" r="3" fill={accent} />
-      <circle cx="120" cy="120" r="3" fill={accent} />
-      <text x="270" y="24" fontSize="11" fill={muted} textAnchor="middle">失敗② 切片が非正</text>
+      <line x1="128" y1="160" x2="128" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 32 55 C 50 172 88 172 148 50" fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx="50" cy="120" r="3" fill={accent} />
+      <circle cx="107" cy="120" r="3" fill={accent} />
+      <text x="270" y="24" fontSize="11" fill={muted} textAnchor="middle">(イ)</text>
       <line x1="210" y1="120" x2="330" y2="120" stroke={muted} strokeWidth="1" />
-      <line x1="240" y1="160" x2="240" y2="40" stroke={muted} strokeWidth="1" />
-      <path d="M 220 80 Q 280 160 320 50" fill="none" stroke={stroke} strokeWidth="1.8" />
-      <circle cx="255" cy="120" r="3" fill={accent} />
+      <line x1="270" y1="160" x2="270" y2="40" stroke={muted} strokeWidth="1" />
+      <path d="M 218 52 C 238 180 305 180 330 55" fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx="240" cy="120" r="3" fill={accent} />
       <circle cx="305" cy="120" r="3" fill={accent} />
-      <text x="180" y="185" fontSize="11" fill={muted} textAnchor="middle">D&gt;0 だけでは足りない——3条件のチェック</text>
+      <text x="180" y="185" fontSize="11" fill={muted} textAnchor="middle">この 2 枚は、どこで失敗している？</text>
     </svg>
   );
 }
@@ -13510,11 +13450,11 @@ export function LinearSlopeDomain() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="傾きが正の直線と負の直線。変域の両端に点だけ置き、値は書かない"
+      aria-label="上り坂と下り坂の直線。変域の両端に点だけ置き、符号の結論は書かない"
     >
-      {/* 左：上り坂 */}
+      {/* 左：上り坂（符号ラベルは出さない） */}
       <text x="90" y="28" fontSize="12" fill={muted} textAnchor="middle">
-        傾き &gt; 0
+        （ア）
       </text>
       <line x1="30" y1="150" x2="150" y2="150" stroke={muted} strokeWidth="1" />
       <line x1="40" y1="170" x2="40" y2="50" stroke={muted} strokeWidth="1" />
@@ -13534,9 +13474,9 @@ export function LinearSlopeDomain() {
         変域の端だけ実線
       </text>
 
-      {/* 右：下り坂 */}
+      {/* 右：下り坂（符号の結論は書かない） */}
       <text x="270" y="28" fontSize="12" fill={muted} textAnchor="middle">
-        傾き &lt; 0
+        （イ）
       </text>
       <line x1="210" y1="150" x2="330" y2="150" stroke={muted} strokeWidth="1" />
       <line x1="220" y1="170" x2="220" y2="50" stroke={muted} strokeWidth="1" />
@@ -13557,7 +13497,7 @@ export function LinearSlopeDomain() {
       </text>
 
       <text x="180" y="212" fontSize="11" fill={muted} textAnchor="middle">
-        最大はどちらの端？——傾きの符号が決める
+        最大はどちらの端？
       </text>
     </svg>
   );
@@ -16949,16 +16889,16 @@ export function MathBody({ text }: { text: string }) {
  * 「フェードアウトする足場」：step1 と質的変化 step のみ。答え（総数）は描かない。
  * ========================================================================== */
 
-/** 系1 step1: 辞書式（五十音順）の樹形図。3枚から2枚を並べる。総数は描かない。 */
+/** 系1 step1: 辞書式（五十音順）の樹形図。先頭の1段だけ描き、葉は空欄。総数は描かない。 */
 export function CountTreeLex() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
   const firsts = [
-    { label: "こ", y: 62, children: ["た", "ね"] },
-    { label: "た", y: 122, children: ["こ", "ね"] },
-    { label: "ね", y: 182, children: ["こ", "た"] },
+    { label: "こ", y: 70 },
+    { label: "た", y: 122 },
+    { label: "ね", y: 174 },
   ];
   const node = (x: number, y: number, label: string, key: string) => (
     <g key={key}>
@@ -16983,7 +16923,7 @@ export function CountTreeLex() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="五十音順の樹形図。先頭の文字こ・た・ねのそれぞれから2文字目の枝が伸びる。総数は書かない"
+      aria-label="五十音順の樹形図。先頭の文字こ・た・ねだけを描き、2文字目の葉は空欄。総数は書かない"
     >
       <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
         先頭（五十音順）
@@ -16994,20 +16934,27 @@ export function CountTreeLex() {
       {firsts.map((f, i) => (
         <g key={`f${i}`}>
           {node(60, f.y, f.label, `n${i}`)}
-          {f.children.map((c, j) => {
-            const cy = f.y - 16 + j * 32;
-            return (
-              <g key={`c${i}${j}`}>
-                <path
-                  d={`M 76 ${f.y} L 184 ${cy}`}
-                  fill="none"
-                  stroke={muted}
-                  strokeWidth="1.2"
-                />
-                {node(200, cy, c, `cn${i}${j}`)}
-              </g>
-            );
-          })}
+          <path
+            d={`M 76 ${f.y} L 184 ${f.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <rect
+            x={186}
+            y={f.y - 14}
+            width="28"
+            height="28"
+            rx="6"
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <text x="200" y={f.y + 5} fontSize="14" fill={accent} textAnchor="middle">
+            ?
+          </text>
         </g>
       ))}
       <path
@@ -17027,17 +16974,17 @@ export function CountTreeLex() {
   );
 }
 
-/** 系1 step5: 後もどりしない規則の樹形図。4人から順番のない2人組。総数は描かない。 */
+/** 系1 step5: 後もどりしない規則の説明。完成した組の一覧は出さない。 */
 export function CountTreeNoReturn() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
-  /** 五十音順: つ→な,は,る／な→は,る／は→る（後もどりしない） */
-  const rows = [
-    { label: "つ", y: 58, children: ["な", "は", "る"] },
-    { label: "な", y: 120, children: ["は", "る"] },
-    { label: "は", y: 166, children: ["る"] },
+  /** 規則の例示だけ：つ→な,は,る。な・はからの完成一覧は描かない。 */
+  const example = { label: "つ", y: 78, children: ["な", "は", "る"] };
+  const rest = [
+    { label: "な", y: 154 },
+    { label: "は", y: 196 },
   ];
   const node = (x: number, y: number, label: string, key: string) => (
     <g key={key}>
@@ -17062,7 +17009,7 @@ export function CountTreeNoReturn() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="後もどりしない規則の樹形図。つ・な・はのそれぞれから、五十音であとの文字だけへ枝が伸びる。る・は のような後もどりの枝はない。総数は書かない"
+      aria-label="後もどりしない規則の説明図。つから五十音であとの文字へ伸びる例だけを描き、完成した組の一覧は出さない"
     >
       <text x="60" y="24" fontSize="11" fill={muted} textAnchor="middle">
         前の文字
@@ -17070,23 +17017,45 @@ export function CountTreeNoReturn() {
       <text x="200" y="24" fontSize="11" fill={muted} textAnchor="middle">
         あとの文字（後もどりしない）
       </text>
-      {rows.map((f, i) => (
-        <g key={`f${i}`}>
+      {node(60, example.y, example.label, "ex")}
+      {example.children.map((c, j) => {
+        const cy = example.y - 32 + j * 32;
+        return (
+          <g key={`c${j}`}>
+            <path
+              d={`M 76 ${example.y} L 184 ${cy}`}
+              fill="none"
+              stroke={muted}
+              strokeWidth="1.2"
+            />
+            {node(200, cy, c, `cn${j}`)}
+          </g>
+        );
+      })}
+      {rest.map((f, i) => (
+        <g key={`r${i}`}>
           {node(60, f.y, f.label, `n${i}`)}
-          {f.children.map((c, j) => {
-            const cy = f.y - 16 * (f.children.length - 1) + j * 32;
-            return (
-              <g key={`c${i}${j}`}>
-                <path
-                  d={`M 76 ${f.y} L 184 ${cy}`}
-                  fill="none"
-                  stroke={muted}
-                  strokeWidth="1.2"
-                />
-                {node(200, cy, c, `cn${i}${j}`)}
-              </g>
-            );
-          })}
+          <path
+            d={`M 76 ${f.y} L 184 ${f.y}`}
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <rect
+            x={186}
+            y={f.y - 14}
+            width="28"
+            height="28"
+            rx="6"
+            fill="none"
+            stroke={muted}
+            strokeWidth="1.2"
+            strokeDasharray="4 3"
+          />
+          <text x="200" y={f.y + 5} fontSize="14" fill={accent} textAnchor="middle">
+            ?
+          </text>
         </g>
       ))}
       <text x="252" y="200" fontSize="12" fill={accent}>
@@ -17193,7 +17162,7 @@ export function CountTreeSum() {
       strokeWidth="1.2"
     />
   );
-  /** 左の木＝ある場合（枝 4 本）／右の木＝別の場合（枝 3 本）。同時には起こらない。 */
+  /** 左の木＝ある場合／右の木＝別の場合。同時には起こらない。枝は例示だけで本数は読ませない。 */
   const tree = (
     ox: number,
     label: string,
@@ -17231,10 +17200,10 @@ export function CountTreeSum() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="分かれて並ぶ2本の木。左の場合と右の場合は同時には起こらない。総数は書かない"
+      aria-label="分かれて並ぶ2本の木。左の場合と右の場合は同時には起こらない。枝の本数は読ませない"
     >
-      {tree(20, "運動部を選ぶ", [76, 108, 140, 172], "L")}
-      {tree(190, "文化部を選ぶ", [92, 128, 164], "R")}
+      {tree(20, "運動部を選ぶ", [108, 148], "L")}
+      {tree(190, "文化部を選ぶ", [108, 148], "R")}
       <path
         d="M 170 44 L 170 196"
         fill="none"
@@ -17518,14 +17487,14 @@ export function ProbCoinSplit() {
   const boxFill = "color-mix(in oklch, var(--accent) 6%, transparent)";
   const grainFill = "color-mix(in oklch, var(--accent) 16%, transparent)";
   const leftLabels = ["2枚とも表", "1枚ずつ", "2枚とも裏"];
-  const rightLabels = ["A表 B表", "A表 B裏", "A裏 B表", "A裏 B裏"];
+  const rightSlots = [0, 1, 2, 3];
   return (
     <svg
       viewBox="0 0 360 220"
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="左は「2枚とも表・1枚ずつ・2枚とも裏」の3つの箱に重さのはてなマーク。右はコインをA・Bと区別した4つの均等な粒。確率の値は書かない"
+      aria-label="左は「2枚とも表・1枚ずつ・2枚とも裏」の3つの箱に重さのはてなマーク。右は空欄の粒だけ。確率の値も右のラベルも書かない"
     >
       <text x="92" y="30" fontSize="12" fill={muted} textAnchor="middle">
         枚数で分けた 3 つの箱
@@ -17567,7 +17536,7 @@ export function ProbCoinSplit() {
       <text x="266" y="30" fontSize="12" fill={muted} textAnchor="middle">
         A・B と名前をつけて割る
       </text>
-      {rightLabels.map((label, i) => (
+      {rightSlots.map((i) => (
         <g key={i}>
           <rect
             x="208"
@@ -17582,11 +17551,11 @@ export function ProbCoinSplit() {
           <text
             x="266"
             y={61 + i * 34}
-            fontSize="11.5"
-            fill={stroke}
+            fontSize="14"
+            fill={muted}
             textAnchor="middle"
           >
-            {label}
+            ？
           </text>
         </g>
       ))}
@@ -17926,10 +17895,9 @@ export function ProbPaths() {
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const hitFill = "color-mix(in oklch, var(--accent) 20%, transparent)";
-  // 2回のうちちょうど1回「起こる（◯）」の2本の道：◯× と ×◯
+  // ちょうど1回起こる道は1本だけ例示。もう何本あるかは問う。
   const paths: ("hit" | "miss")[][] = [
     ["hit", "miss"],
-    ["miss", "hit"],
   ];
   const cell = 44;
   const gap = 10;
@@ -17940,10 +17908,10 @@ export function ProbPaths() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="ちょうど1回起こる2本の道。上の道は「起こる・起こらない」、下の道は「起こらない・起こる」。どちらの道も、◯（起こる）が1つと×（起こらない）が1つ。道の本数や確率の値は書かない"
+      aria-label="ちょうど1回起こる道を1本だけ例示。もう何本あるかは問う。確率の値は書かない"
     >
       <text x="180" y="28" fontSize="12" fill={muted} textAnchor="middle">
-        「ちょうど 1 回起こる」道を、ぜんぶ書き出すと
+        「ちょうど 1 回起こる」道の、1 本の例
       </text>
       {paths.map((row, r) => (
         <g key={r}>
@@ -17986,7 +17954,7 @@ export function ProbPaths() {
         </g>
       ))}
       <text x="180" y="192" fontSize="12" fill={accent} textAnchor="middle">
-        どの道も、かける数の顔ぶれ（◯ と × の数）は同じ？
+        もう何本あるか
       </text>
     </svg>
   );
@@ -18586,16 +18554,16 @@ export function CountTreeShrink() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="減っていく枝の樹形図。1段目からは3本、そのどれからも2本、さらに1本と、使ったものが使えないので枝が1段ごとに1本ずつやせていく。総数は書かない"
+      aria-label="減っていく枝の樹形図。本数の数字は書かない。総数も書かない"
     >
       <text x="52" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        左（3本）
+        左
       </text>
       <text x="160" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        中（2本）
+        中
       </text>
       <text x="268" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        右（1本）
+        右
       </text>
       {firsts.map((fy, i) => (
         <g key={`f${i}`}>
@@ -18633,7 +18601,7 @@ export function CountTreeShrink() {
       ))}
       {dot(30, 116, "root")}
       <text x="160" y="222" fontSize="11" fill={accent} textAnchor="middle">
-        枝が 3 → 2 → 1 とやせていく——なぜ？
+        枝がやせていく——なぜ？
       </text>
     </svg>
   );
@@ -18725,16 +18693,16 @@ export function CountTreeConst() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="減らない枝の樹形図。1段目からは3本、そのどれからも3本、さらに3本と、使っても減らないので枝が段ごとに同じ本数のまま伸び続ける。総数は書かない"
+      aria-label="減らない枝の樹形図。同じ本数のまま伸びることだけ示し、本数の数字は書かない"
     >
       <text x="52" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        1回め（3本）
+        1回め
       </text>
       <text x="160" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        2回め（3本）
+        2回め
       </text>
       <text x="268" y="22" fontSize="11" fill={muted} textAnchor="middle">
-        3回め（3本）
+        3回め
       </text>
       {firsts.map((fy, i) => (
         <g key={`f${i}`}>
@@ -18772,7 +18740,7 @@ export function CountTreeConst() {
       ))}
       {dot(30, 116, "root")}
       <text x="160" y="222" fontSize="11" fill={accent} textAnchor="middle">
-        枝が 3 → 3 → 3 と減らない——なぜ？
+        同じ本数のまま伸びる——なぜ？
       </text>
     </svg>
   );
@@ -19043,26 +19011,23 @@ export function CountRotateBundle() {
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const bundleFill = "color-mix(in oklch, var(--accent) 12%, transparent)";
-  /** 小さい円卓を 4 つ並べ、同じ座り方（甲乙丙…）が回転してゆく様子を示す */
+  /** 小さい円卓を並べ、席は点だけ（人数は読ませない） */
   const mini = (mx: number, rot: number, key: string) => {
     const r = 26;
-    const labels = ["甲", "乙", "丙", "丁"];
+    const n = 4;
     return (
       <g key={key}>
         <circle cx={mx} cy={92} r={r - 12} fill="none" stroke={muted} strokeWidth="1" />
-        {labels.map((l, k) => {
-          const a = -Math.PI / 2 + (2 * Math.PI * ((k + rot) % 4)) / 4;
+        {Array.from({ length: n }, (_, k) => {
+          const a = -Math.PI / 2 + (2 * Math.PI * ((k + rot) % n)) / n;
           return (
-            <text
+            <circle
               key={`${key}${k}`}
-              x={mx + r * Math.cos(a)}
-              y={92 + r * Math.sin(a) + 4}
-              fontSize="11"
+              cx={mx + r * Math.cos(a)}
+              cy={92 + r * Math.sin(a)}
+              r="3.5"
               fill={stroke}
-              textAnchor="middle"
-            >
-              {l}
-            </text>
+            />
           );
         })}
       </g>
@@ -19074,10 +19039,10 @@ export function CountRotateBundle() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="同じ座り方がテーブルごと回転して4つ並ぶ図。番号を消すと全部が同じ1つに束ねられる。総数は書かない"
+      aria-label="同じ座り方がテーブルごと回転して並ぶ図。席は点だけ、人数は読ませない。総数は書かない"
     >
       <rect x="10" y="46" width="320" height="94" rx="12" fill={bundleFill} stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
-      {[0, 1, 2, 3].map((r) => mini(52 + r * 78, r, `m${r}`))}
+      {[0, 1, 2].map((r) => mini(70 + r * 100, r, `m${r}`))}
       <text x="170" y="30" fontSize="11" fill={muted} textAnchor="middle">
         1 つの座り方を、テーブルごと回すと…
       </text>
@@ -19281,33 +19246,26 @@ export function CountStarsBars() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
-  const seq = ["○", "○", "|", "○", "|", "|", "○", "○"];
+  const slots = [0, 1, 2, 3, 4, 5, 6, 7];
   return (
     <svg
       viewBox="0 0 340 170"
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="○5個と仕切り棒3本の列が、4種類の個数の組（2個・1個・0個・2個）にちょうど1つ対応する図。総数は書かない"
+      aria-label="○と仕切り棒の列の枠だけ。中身も個数ラベルも書かない"
     >
-      {seq.map((c, j) => (
+      {slots.map((j) => (
         <g key={`s${j}`}>
-          <rect x={26 + j * 36} y={38} width="30" height="34" rx="6" fill={c === "|" ? "color-mix(in oklch, var(--accent) 12%, transparent)" : "color-mix(in oklch, var(--accent) 4%, transparent)"} stroke={c === "|" ? accent : stroke} strokeWidth="1.1" />
-          <text x={41 + j * 36} y={62} fontSize="15" fill={c === "|" ? accent : stroke} textAnchor="middle">{c}</text>
+          <rect x={26 + j * 36} y={38} width="30" height="34" rx="6" fill="color-mix(in oklch, var(--accent) 4%, transparent)" stroke={stroke} strokeWidth="1.1" strokeDasharray="4 3" />
+          <text x={41 + j * 36} y={62} fontSize="15" fill={muted} textAnchor="middle">？</text>
         </g>
       ))}
-      {[
-        { x: 60, label: "1種類め 2個" },
-        { x: 132, label: "2種類め 1個" },
-        { x: 190, label: "3種類め 0個" },
-        { x: 280, label: "4種類め 2個" },
-      ].map((t, j) => (
-        <text key={`t${j}`} x={t.x} y={j % 2 === 0 ? 100 : 120} fontSize="10" fill={muted} textAnchor="middle">
-          {t.label}
-        </text>
-      ))}
+      <text x="170" y="112" fontSize="11" fill={muted} textAnchor="middle">
+        ○ と | を並べる列
+      </text>
       <text x="170" y="152" fontSize="11" fill={accent} textAnchor="middle">
-        ○と棒の列ひとつで、詰め合わせはちょうどひとつ決まる？
+        この列はどの詰め合わせか
       </text>
     </svg>
   );
@@ -19573,14 +19531,13 @@ export function SetDeMorgan() {
   const muted = "var(--muted)";
   const bg = "var(--background)";
   const fillUnion = "color-mix(in oklch, var(--accent) 20%, transparent)";
-  const fillOutside = "color-mix(in oklch, var(--accent) 14%, transparent)";
   return (
     <svg
       viewBox="0 0 360 220"
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="2 枚の塗り比べ図。左は A と B を合わせた領域を塗り『その外を見ると？』と問い、右は A の外と B の外の重なりを塗る。2 つの道が同じ場所に着くかどうか（＝答え）は書かない"
+      aria-label="2 枚の塗り比べ図。左は A と B を合わせた領域を塗り『その外を見ると？』と問い、右は輪だけ置いて重なりは問う。等式の片方は塗らない"
     >
       {/* 左パネル：A ∪ B を作って、その外を見る道 */}
       <text x="90" y="24" fontSize="11" fill={muted} textAnchor="middle">
@@ -19605,7 +19562,7 @@ export function SetDeMorgan() {
         塗ったのは「A または B」——その外は？
       </text>
 
-      {/* 右パネル：A の外・B の外の重なり（外側を塗り、輪の中は背景でくり抜く） */}
+      {/* 右パネル：輪だけ。外の重なりは問う（塗り分けは公式の景色側） */}
       <text x="270" y="24" fontSize="11" fill={muted} textAnchor="middle">
         それぞれの外の、重なりの道
       </text>
@@ -19615,17 +19572,17 @@ export function SetDeMorgan() {
         width="152"
         height="120"
         rx="8"
-        fill={fillOutside}
+        fill={bg}
         stroke={stroke}
         strokeWidth="1.1"
         strokeDasharray="4 3"
       />
-      <circle cx="254" cy="92" r="34" fill={bg} stroke={stroke} strokeWidth="1.3" />
-      <circle cx="288" cy="92" r="34" fill={bg} stroke={stroke} strokeWidth="1.3" />
+      <circle cx="254" cy="92" r="34" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <circle cx="288" cy="92" r="34" fill="none" stroke={stroke} strokeWidth="1.3" />
       <text x="234" y="70" fontSize="12" fill={stroke} textAnchor="middle">A</text>
       <text x="308" y="70" fontSize="12" fill={stroke} textAnchor="middle">B</text>
       <text x="270" y="148" fontSize="10.5" fill={accent} textAnchor="middle">
-        塗ったのは「A でなく B でもない」
+        それぞれの外の、重なりはどこ？
       </text>
 
       <text x="180" y="182" fontSize="12" fill={accent} textAnchor="middle">
@@ -19933,7 +19890,7 @@ export function ProofParity() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="左に偶数を式で表した箱（2k）、右に奇数を式で表した箱（2k+1）を並べた図。奇数を自分自身とかけ合わせると偶数と奇数のどちらの仲間になるかを問う。2 で割った余りの値は書かない"
+      aria-label="左に偶数を式で表した箱（2k）、右に奇数を式で表した箱（2k+1）を並べた図。奇数を自分自身とかけ合わせると偶数と奇数のどちらの仲間になるかを問う。余りの値は書かない"
     >
       {/* 偶数の箱 */}
       <text x="96" y="34" fontSize="11" fill={muted} textAnchor="middle">
@@ -19956,7 +19913,7 @@ export function ProofParity() {
         2k + 1
       </text>
       <text x="264" y="140" fontSize="10.5" fill={muted} textAnchor="middle">
-        2 で分けると 1 だけあまる
+        2 で分けると何かあまる
       </text>
 
       <text x="180" y="172" fontSize="11.5" fill={accent} textAnchor="middle">
@@ -20060,7 +20017,7 @@ export function LogicNumlineNeg() {
       className="w-full h-auto"
       style={{ maxWidth: 360 }}
       role="img"
-      aria-label="2 本の数直線図。上は『もとの条件』で境界より左側を塗り、境界は白丸（入らない）。下は『否定した条件』で境界より右側を塗り、境界は黒丸（入る）。境界の 1 点が否定するとどちら側に入るのかを問う。境界の値は書かない"
+      aria-label="2 本の数直線図。上は『もとの条件』で境界より左側を塗り、境界は白丸。下は『否定した条件』で境界より右側を塗り、境界も白丸のまま。入るか入らないかは問う。境界の値は書かない"
     >
       {/* もとの条件（上・境界より左を塗り、境界は白丸＝入らない） */}
       <text x="30" y="34" fontSize="11" fill={muted} textAnchor="start">
@@ -20083,13 +20040,13 @@ export function LogicNumlineNeg() {
       <polygon points="336,150 328,146 328,154" fill={stroke} />
       <rect x={bx} y="143" width={336 - bx} height="14" rx="3" fill={fill} />
       <line x1={bx} y1="150" x2="336" y2="150" stroke={accent} strokeWidth="3" />
-      <circle cx={bx} cy="150" r="6" fill={accent} stroke={accent} strokeWidth="1.8" />
+      <circle cx={bx} cy="150" r="6" fill={bg} stroke={accent} strokeWidth="1.8" />
       <text x={bx} y="176" fontSize="10" fill={muted} textAnchor="middle">
-        境界（黒丸＝入る？）
+        境界（入る？入らない？）
       </text>
 
       <text x="180" y="200" fontSize="11.5" fill={accent} textAnchor="middle">
-        境界の 1 点は、否定するとどちら側に入る？
+        境界の 1 点は、否定すると入る？入らない？
       </text>
     </svg>
   );
@@ -21726,20 +21683,16 @@ export function DataSdUnit() {
   );
 }
 
-/** データの分析 系7 step1: 平均の十字で 4 つに分けた散布図。相関の結論・r の値は描かない。 */
+/** データの分析 系7 step1: 平均の十字で 4 つに分けた散布図。点は 2 個だけ例示し、残りは問う。 */
 export function DataScatterQuadrant() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fill = "color-mix(in oklch, var(--accent) 16%, transparent)";
-  // 系7 step1 のデータ（肥料 2,5,9,11,13 kg／収穫 21,15,32,23,29 kg）と整合させた位置。
-  // 値のラベルは書かないので、いくつあるかは数え直す必要がある。
+  // 5点のうち 2 点だけ例示（左下＝積が正の例、右下＝積が負の例）。残りを数えると答えになるので描かない。
   const pts = [
     [80, 106],
-    [132, 139],
-    [201, 46],
     [236, 95],
-    [270, 63],
   ];
   const mx = 184;
   const my = 90;
@@ -21749,7 +21702,7 @@ export function DataScatterQuadrant() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="点を打った散布図に、x の平均を通る縦線と y の平均を通る横線を引いて 4 つの区画に分けた図。どの区画に何個の点があるか（答え）は書かない"
+      aria-label="平均の十字で4つの区画に分けた散布図。点は2個だけ例示し、残りの区画は問う。値は書かない"
     >
       {/* 軸 */}
       <line x1="45" y1="160" x2="312" y2="160" stroke={stroke} strokeWidth="1.2" />
@@ -21815,7 +21768,7 @@ export function DataScatterQuadrant() {
       </text>
 
       <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
-        4 つの区画のうち、2 つのずれの向きがそろうのはどこ？
+        2 点は例。残りは何区画か
       </text>
     </svg>
   );
@@ -21922,7 +21875,7 @@ export function DataRNonlinear() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="山のかたちに並ぶ 5 つの点と、平均を通る縦線・横線。相関係数の値や、相関があるかどうかの結論は書かない"
+      aria-label="左半分の点だけ例示した散布図と、平均を通る縦線・横線。反対側と相関係数の値は書かない"
     >
       {/* 軸 */}
       <line x1="40" y1="150" x2="312" y2="150" stroke={stroke} strokeWidth="1.2" />
@@ -21944,22 +21897,19 @@ export function DataRNonlinear() {
         y の平均
       </text>
 
-      {/* 点 */}
-      {pts.map(([px, py], k) => (
+      {/* 点は左半分だけ例示。反対側は問う */}
+      {pts.slice(0, 2).map(([px, py], k) => (
         <circle key={k} cx={px} cy={py} r="5" fill={fill} stroke={accent} strokeWidth="1.6" />
       ))}
 
       <text x="105" y="168" fontSize="9" fill={muted} textAnchor="middle">
         左半分
       </text>
-      <text x="235" y="168" fontSize="9" fill={muted} textAnchor="middle">
-        右半分
+      <text x="235" y="168" fontSize="9" fill={accent} textAnchor="middle">
+        反対側は？
       </text>
 
-      <text x="170" y="180" fontSize="11" fill={accent} textAnchor="middle">
-        これほどきれいに並んでいても、
-      </text>
-      <text x="170" y="195" fontSize="11" fill={accent} textAnchor="middle">
+      <text x="170" y="190" fontSize="11" fill={accent} textAnchor="middle">
         「右上がり」「右下がり」のどちらかに言える？
       </text>
     </svg>
@@ -21984,7 +21934,7 @@ export function IntPlaceSplit() {
       className="w-full h-auto"
       style={{ maxWidth: 380 }}
       role="img"
-      aria-label="1 本の帯が 2 つに切り分けられた図。左の大きい部分は「まとまった束の分」で最初から割り切れている、右の小さい部分は「はした」。どちらが余りを決めるかを問う。具体の数や余りの値は書かない"
+      aria-label="1 本の帯が 2 つに切り分けられた図。左はまとまった束の分、右ははした。束の側がはじめから割り切れているかは問う。具体の数や余りの値は書かない"
     >
       <text x="190" y="26" fontSize="11" fill={muted} textAnchor="middle">
         1 つの数を、2 つの部分に切り分ける
@@ -22008,7 +21958,7 @@ export function IntPlaceSplit() {
       <path d="M 30 108 L 270 108" fill="none" stroke={muted} strokeWidth="1" />
       <path d="M 30 104 L 30 112 M 270 104 L 270 112" stroke={muted} strokeWidth="1" />
       <text x="150" y="126" fontSize="10.5" fill={muted} textAnchor="middle">
-        いくつ集まっても、はじめから割り切れている
+        束の側は、はじめから割り切れているか？
       </text>
 
       <path d="M 270 108 L 350 108" fill="none" stroke={accent} strokeWidth="1" />
