@@ -14415,6 +14415,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_CONJ_MIRROR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cConjMirror />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_REAL_IMAG_ROOMS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cRealImagRooms />
+            </div>
+          );
+        }
         if (trimmed === "<<QUADRATIC_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -32922,6 +32936,107 @@ export function M3cTwoPoints() {
 
       <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle">
         測れるのは原点からの長さだけ。A から B までを言うには？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列3 step1: 共役は実軸で折り返す動き、という図。
+ *  step1 は conj(z) の虚部を問うので、座標の数値も目盛りも書かない。
+ *  折り返した先は白丸＋「?」のまま。 */
+export function M3cConjMirror() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 120;
+  const Oy = 104;
+  const Zx = 248;
+  const Zy = 48;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。実軸の上側に点 z があり、実軸をはさんで下側の対称な位置に白丸が置かれ、疑問符がついている。2 点を結ぶ縦の破線が実軸と直角に交わる。座標も目盛りも書かれていない模式の図"
+    >
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 186 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy - 8} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox - 8} y={Oy + 15} fontSize="11" fill={muted} textAnchor="end">
+        O
+      </text>
+
+      {/* z とその折り返し先 */}
+      <circle cx={Zx} cy={Zy} r="4" fill={accent} />
+      <text x={Zx + 10} y={Zy + 4} fontSize="13" fill={accent} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <circle cx={Zx} cy={2 * Oy - Zy} r="4.5" fill="var(--background)" stroke={stroke} strokeWidth="1.6" />
+      <text x={Zx + 12} y={2 * Oy - Zy + 5} fontSize="15" fill={accent} fontWeight="700">
+        ?
+      </text>
+
+      {/* 折り返しの軸に垂直な破線＋直角の印 */}
+      <path d={`M ${Zx} ${Zy} L ${Zx} ${2 * Oy - Zy}`} fill="none" stroke={stroke} strokeWidth="1.4" strokeDasharray="4 3" />
+      <path d={`M ${Zx - 11} ${Oy} L ${Zx - 11} ${Oy - 11} L ${Zx} ${Oy - 11}`} fill="none" stroke={stroke} strokeWidth="1" />
+
+      <text x="180" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        実軸を鏡にして折り返すと、点はどこへ？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列3 step6（質的変化）: 実軸の上＝実数の部屋／虚軸の上＝純虚数の部屋、という仕組み図。
+ *  層8 の補足どおり、仕組みだけを描き「この問題の点がどちらに入るか」は描かない。
+ *  条件の式（z の共役 = z など）も書かない——それが step6・7 の発見そのものだから。 */
+export function M3cRealImagRooms() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 180;
+  const Oy = 100;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。実軸に沿った帯と虚軸に沿った帯に色がついていて、それぞれ実数がいる場所、純虚数がいる場所と書かれている。点は 1 つも置かれておらず、どちらに入るかは問いのまま残されている"
+    >
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 180 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+
+      {/* 実軸に沿った帯 */}
+      <rect x="40" y={Oy - 9} width="284" height="18" fill={accent} opacity="0.13" />
+      <text x="56" y={Oy - 16} fontSize="11" fill={accent}>
+        実数がいるのは、この帯の上だけ
+      </text>
+
+      {/* 虚軸に沿った帯 */}
+      <rect x={Ox - 9} y="30" width="18" height="140" fill={stroke} opacity="0.12" />
+      <text x={Ox + 16} y="44" fontSize="11" fill={stroke}>
+        純虚数がいるのは
+      </text>
+      <text x={Ox + 16} y="58" fontSize="11" fill={stroke}>
+        この帯の上だけ
+      </text>
+
+      <text x={Ox - 8} y={Oy + 16} fontSize="11" fill={muted} textAnchor="end">
+        O
+      </text>
+      <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        ある複素数がどちらの帯に入るかは、何を見れば決まる？
       </text>
     </svg>
   );

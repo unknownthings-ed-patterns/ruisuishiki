@@ -78,6 +78,7 @@ import {
   MATH3_COMPLEX_SERIES_LIST,
   M3C_PLANE_SERIES,
   M3C_ABS_SERIES,
+  M3C_CONJ_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -1993,6 +1994,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "絶対値と $2$ 点間の距離 — 測れるのは原点からの長さだけ。それでも引き算をひと手間はさむと、どこからどこへでも測れる。数直線でやったことが、そのまま平面へ持ち上がる",
+  },
+  {
+    series: M3C_CONJ_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "共役複素数（実軸で折り返す）— 符号をひとつ変えるだけの操作が、「実数である」という言葉の判定を、計算できる等式に変える。$z$ を知らないまま答えを出す道も開く",
   },
 ];
 
