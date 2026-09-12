@@ -14401,6 +14401,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_ABS_DIST>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cAbsDist />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_TWO_POINTS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cTwoPoints />
+            </div>
+          );
+        }
         if (trimmed === "<<QUADRATIC_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -32786,6 +32800,128 @@ export function M3cIRotate90() {
 
       <text x="180" y="184" fontSize="11" fill={accent} textAnchor="middle">
         1 は i へ動いた。では z に i をかけると、どこへ行く？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列2 step1: 原点と点を結ぶ線分が絶対値であることの図。
+ *  step1 は |z| を問うので、長さの数値も目盛りも直角三角形の辺の値も書かない。
+ *  横と縦の移動を破線で見せ、斜辺に「?」を置いて問いで終える。 */
+export function M3cAbsDist() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 190;
+  const Oy = 152;
+  const Px = 96;
+  const Py = 56;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。原点から 1 つの点へ線分が引かれ、その線分に疑問符がついている。横の移動と縦の移動が破線で示され、直角の印がある。長さの数値も目盛りも書かれていない模式の図"
+    >
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 190 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox + 8} y={Oy + 15} fontSize="11" fill={muted}>
+        O
+      </text>
+
+      {/* 横の移動・縦の移動（値は書かない） */}
+      <path d={`M ${Ox} ${Oy} L ${Px} ${Oy}`} fill="none" stroke={stroke} strokeWidth="1.6" strokeDasharray="4 3" />
+      <path d={`M ${Px} ${Oy} L ${Px} ${Py}`} fill="none" stroke={stroke} strokeWidth="1.6" strokeDasharray="4 3" />
+      <path d={`M ${Px} ${Oy - 12} L ${Px + 12} ${Oy - 12} L ${Px + 12} ${Oy}`} fill="none" stroke={stroke} strokeWidth="1" />
+      <text x={(Ox + Px) / 2} y={Oy + 16} fontSize="11" fill={stroke} textAnchor="middle">
+        横にこれだけ
+      </text>
+      <text x={Px - 8} y={(Oy + Py) / 2} fontSize="11" fill={stroke} textAnchor="end">
+        縦にこれだけ
+      </text>
+
+      {/* 原点から点への線分＝絶対値（長さは ?） */}
+      <path d={`M ${Ox} ${Oy} L ${Px} ${Py}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={Px} cy={Py} r="3.8" fill={accent} />
+      <text x={Px - 8} y={Py - 6} fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <text x="152" y="92" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        原点から点 z まで、まっすぐ測るとどれだけ？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列2 step3（質的変化）: 2 点を結ぶ矢印が引き算で作れることの仕組み図。
+ *  step3 は AB の長さを問うので、2 点の座標も距離も書かない。
+ *  「原点からの距離しか測れない道具で、この長さを言えないか」という問いで終える。 */
+export function M3cTwoPoints() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 84;
+  const Oy = 150;
+  const Ax = 176;
+  const Ay = 120;
+  const Bx = 258;
+  const By = 54;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。原点から 2 つの点 A と B へそれぞれ破線が引かれ、A から B へ向かう矢印に疑問符がついている。座標も距離も書かれていない模式の図"
+    >
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 190 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox - 8} y={Oy + 15} fontSize="11" fill={muted} textAnchor="end">
+        O
+      </text>
+
+      {/* 原点から A・B への矢印（これは測れる） */}
+      <path d={`M ${Ox} ${Oy} L ${Ax} ${Ay}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d={`M ${Ox} ${Oy} L ${Bx} ${By}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <circle cx={Ax} cy={Ay} r="3.8" fill={stroke} />
+      <text x={Ax + 10} y={Ay + 14} fontSize="12" fill={stroke} textAnchor="start">
+        A
+      </text>
+      <circle cx={Bx} cy={By} r="3.8" fill={stroke} />
+      <text x={Bx + 10} y={By + 2} fontSize="12" fill={stroke}>
+        B
+      </text>
+
+      {/* A から B へ向かう矢印＝この step が問うているもの */}
+      <path d={`M ${Ax} ${Ay} L ${Bx} ${By}`} fill="none" stroke={accent} strokeWidth="2" />
+      <path d={`M ${Bx - 11} ${By + 3} L ${Bx} ${By} L ${Bx - 3} ${By + 10}`} fill="none" stroke={accent} strokeWidth="2" />
+      <text x="230" y="100" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        測れるのは原点からの長さだけ。A から B までを言うには？
       </text>
     </svg>
   );

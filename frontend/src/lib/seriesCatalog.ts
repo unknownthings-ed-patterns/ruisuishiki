@@ -77,6 +77,7 @@ import {
 import {
   MATH3_COMPLEX_SERIES_LIST,
   M3C_PLANE_SERIES,
+  M3C_ABS_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -1984,6 +1985,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "直線から平面へ（$i$ の居場所）— 数直線に置けなかった $i$ は、虚ろだったのではなく、私たちが直線しか見ていなかった。$i$ をかけることが $90°$ 回すことだと分かると、計算が形になる",
+  },
+  {
+    series: M3C_ABS_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "絶対値と $2$ 点間の距離 — 測れるのは原点からの長さだけ。それでも引き算をひと手間はさむと、どこからどこへでも測れる。数直線でやったことが、そのまま平面へ持ち上がる",
   },
 ];
 
