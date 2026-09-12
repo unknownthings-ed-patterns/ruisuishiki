@@ -3832,6 +3832,53 @@ export function LogNegMiss() {
 }
 
 /**
+ * 対数法則 系列6 Step 1：真数の行と「2 の肩」の行を並べた対応表。
+ * 真数はかけ算のまま置き、問われている肩の値は ? のまま残す
+ * （figure-does-not-reveal-answer / 図は問いの形で終える）。
+ */
+export function LogTableAdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 112"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="真数の行と 2 の肩の行を並べた対応表。真数は 64、32、64×32。肩は 6、5、そして問われている値は ? のまま"
+    >
+      <line x1="104" y1="10" x2="104" y2="102" stroke={muted} strokeWidth="0.8" />
+      <line x1="18" y1="58" x2="348" y2="58" stroke={muted} strokeWidth="0.8" />
+      <text x="96" y="44" fontSize="12" fill={muted} textAnchor="end">
+        真数
+      </text>
+      <text x="96" y="90" fontSize="12" fill={muted} textAnchor="end">
+        2 の肩
+      </text>
+      <text x="148" y="44" fontSize="14" fill={stroke} textAnchor="middle">
+        64
+      </text>
+      <text x="220" y="44" fontSize="14" fill={stroke} textAnchor="middle">
+        32
+      </text>
+      <text x="303" y="44" fontSize="14" fill={stroke} textAnchor="middle">
+        64 × 32
+      </text>
+      <text x="148" y="90" fontSize="14" fill={stroke} textAnchor="middle">
+        6
+      </text>
+      <text x="220" y="90" fontSize="14" fill={stroke} textAnchor="middle">
+        5
+      </text>
+      <text x="303" y="90" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+    </svg>
+  );
+}
+
+/**
  * 対数法則 系列6 Step 1・5：$x$ 軸の和 ↔ $y$ 軸の積（$y=a^x$ の schematic）。
  * 答えの数値は書かない。
  */
@@ -14169,6 +14216,13 @@ export function MathBody({ text }: { text: string }) {
           return (
             <div key={i} className="my-6 flex justify-center">
               <LogNegMiss />
+            </div>
+          );
+        }
+        if (trimmed === "<<LOG_TABLE_ADD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <LogTableAdd />
             </div>
           );
         }
