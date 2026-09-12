@@ -75,6 +75,10 @@ import {
   M3V_SPACE_LINE_SERIES,
 } from "./seriesMath3Vector";
 import {
+  MATH3_COMPLEX_SERIES_LIST,
+  M3C_PLANE_SERIES,
+} from "./seriesMath3Complex";
+import {
   MATH3_FUNCTIONS_SERIES_LIST,
   M3F_DEVICE_SERIES,
   M3F_DOMAIN_SERIES,
@@ -1971,6 +1975,16 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "空間の直線と平面（交点・垂線の足・体積）— 空間では直線が図に描けない。それでも「始点＋$t$×方向」と「内積 $=0$」だけで、交点も垂線の足も四面体の体積も計算だけで決まる。章の閉じ石",
   },
+
+  /* 第10章 複素数平面（背骨：docs/math3c_complex_design.md） */
+  {
+    series: M3C_PLANE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "直線から平面へ（$i$ の居場所）— 数直線に置けなかった $i$ は、虚ろだったのではなく、私たちが直線しか見ていなかった。$i$ をかけることが $90°$ 回すことだと分かると、計算が形になる",
+  },
 ];
 
 /**
@@ -2048,6 +2062,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_FUNCTIONS_SERIES_LIST,
   ...MATH3_LIMITS_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
+  ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,

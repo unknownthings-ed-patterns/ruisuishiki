@@ -14387,6 +14387,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_PLANE_ADD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cPlaneAdd />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_I_ROTATE90>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cIRotate90 />
+            </div>
+          );
+        }
         if (trimmed === "<<QUADRATIC_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -32644,6 +32658,138 @@ export function StatNullLadder() {
   );
 }
 
+
+/** 複素数平面 系列1 step1: 複素数平面（実軸・虚軸）に、2 本の矢印を継いだ和。
+ *  step1 は和の虚部を問うので、和の座標は書かない（継いだ先は白丸＋「?」）。
+ *  目盛りを打たず、点の位置は模式（実際の値の比ではない）。 */
+export function M3cPlaneAdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 150;
+  const Oy = 150;
+  return (
+    <svg
+      viewBox="0 0 360 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。横軸が実軸、縦軸が虚軸。原点から出た矢印の先に、もう 1 本の矢印を継いである。継いだ先は白丸で描かれ、座標は書かれていない。目盛りも数字もない模式の図"
+    >
+      {/* 軸 */}
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 196 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox - 8} y={Oy + 15} fontSize="11" fill={muted} textAnchor="end">
+        O
+      </text>
+
+      {/* 1 本目の矢印（原点から） */}
+      <path d={`M ${Ox} ${Oy} L 232 182`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 224 179 L 232 182 L 229 174" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="184" y="184" fontSize="12" fill={accent} fontStyle="italic" fontWeight="700">
+        z₁
+      </text>
+
+      {/* 2 本目の矢印（1 本目の先から継ぐ） */}
+      <path d="M 232 182 L 108 62" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 111 70 L 108 62 L 116 65" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="196" y="128" fontSize="12" fill={accent} fontStyle="italic" fontWeight="700">
+        z₂
+      </text>
+
+      {/* 継いだ先（座標は書かない） */}
+      <circle cx="108" cy="62" r="4.5" fill="var(--background)" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 虚軸へ渡す破線＝この step が問うているもの */}
+      <path d={`M 113 62 L ${Ox} 62`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d={`M ${Ox - 4} 62 L ${Ox + 4} 62`} fill="none" stroke={accent} strokeWidth="2" />
+      <text x={Ox + 10} y="67" fontSize="14" fill={accent} textAnchor="start" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="202" fontSize="11" fill={accent} textAnchor="middle">
+        2 本の矢印を継いだ先は、縦にどれだけ進んだ？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列1 step5（質的変化）: 1 に i をかけると i になる、という仕組みだけを描く図。
+ *  step5 の発見は「z に i をかけると 90° 回る」なので、z の行き先には弧を引かない
+ *  （引くと、解く前に結論が読めてしまう＝層8 の補足）。90 という数値も書かない（弧だけ）。 */
+export function M3cIRotate90() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 130;
+  const Oy = 140;
+  const r = 74;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面。実軸上の点 1 から虚軸上の点 i へ、原点のまわりを回る弧が引いてある。弧には角度の数値は書かれていない。別の場所に点 z があり、その行き先には弧も印もなく、問いのまま残されている"
+    >
+      {/* 軸 */}
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 190 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox - 8} y={Oy + 15} fontSize="11" fill={muted} textAnchor="end">
+        O
+      </text>
+
+      {/* 1 と i（数Ⅱ から分かっている 1 組だけ） */}
+      <circle cx={Ox + r} cy={Oy} r="3.6" fill={stroke} />
+      <text x={Ox + r} y={Oy + 17} fontSize="12" fill={stroke} textAnchor="middle">
+        1
+      </text>
+      <circle cx={Ox} cy={Oy - r} r="3.6" fill={accent} />
+      <text x={Ox - 10} y={Oy - r + 4} fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        i
+      </text>
+
+      {/* 1 から i への弧（角度の数値は書かない） */}
+      <path
+        d={`M ${Ox + 56} ${Oy} A 56 56 0 0 0 ${Ox + 14} ${Oy - 54}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <path d={`M ${Ox + 20} ${Oy - 48} L ${Ox + 12} ${Oy - 57} L ${Ox + 22} ${Oy - 58}`} fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x={Ox + 60} y={Oy - 46} fontSize="11" fill={accent} textAnchor="start" fontStyle="italic">
+        ×i
+      </text>
+
+      {/* z は置くだけ。行き先には弧も印も引かない */}
+      <circle cx="268" cy="92" r="3.6" fill={stroke} />
+      <text x="276" y="88" fontSize="13" fill={stroke} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <path d={`M ${Ox} ${Oy} L 268 92`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+
+      <text x="180" y="184" fontSize="11" fill={accent} textAnchor="middle">
+        1 は i へ動いた。では z に i をかけると、どこへ行く？
+      </text>
+    </svg>
+  );
+}
 
 /** 数列の極限 系列1 step1・derivation: 数直線上の点列が 1 点へ寄っていく図。
  *  項の値も行き先の値も書かない（step1 は第 15 項を、step10 は帯に入る番号を問う）。
