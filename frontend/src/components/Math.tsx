@@ -14429,6 +14429,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_PRODUCT_PUZZLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cProductPuzzle />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_ABS_MULTIPLY>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cAbsMultiply />
+            </div>
+          );
+        }
         if (trimmed === "<<QUADRATIC_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33037,6 +33051,111 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列4 step1: 2 数とその積を置いても規則が見えない、という図。
+ *  層8 の最大の地雷なので、点の位置は模式にし、絶対値の比も偏角の和も実寸で描かない。
+ *  「規則は見えない」で終える（規則が見えたら step2・3 の発見を先取りしてしまう）。 */
+export function M3cProductPuzzle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const Ox = 176;
+  const Oy = 112;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="複素数平面に 3 つの点が置かれている。2 つはもとの複素数、1 つはその積。3 点はばらばらの向きにあり、どの点にも座標は書かれていない。長さの比も角の大きさも模式で、実際の比率ではない"
+    >
+      <path d={`M 24 ${Oy} L 340 ${Oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 332 ${Oy - 5} L 340 ${Oy} L 332 ${Oy + 5}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox} 178 L ${Ox} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${Ox - 5} 24 L ${Ox} 16 L ${Ox + 5} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="332" y={Oy + 18} fontSize="11" fill={muted} fontStyle="italic" textAnchor="end">
+        実軸
+      </text>
+      <text x={Ox + 8} y="26" fontSize="11" fill={muted} fontStyle="italic">
+        虚軸
+      </text>
+      <text x={Ox + 9} y={Oy + 16} fontSize="11" fill={muted}>
+        O
+      </text>
+
+      {/* 3 点（位置は模式。長さの比も角も実寸ではない——ここで規則が読めてはいけない） */}
+      <path d={`M ${Ox} ${Oy} L 92 150`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <circle cx="92" cy="150" r="3.8" fill={stroke} />
+      <text x="84" y="164" fontSize="12" fill={stroke} fontStyle="italic" textAnchor="middle">
+        z₁
+      </text>
+
+      <path d={`M ${Ox} ${Oy} L 274 94`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <circle cx="274" cy="94" r="3.8" fill={stroke} />
+      <text x="282" y="90" fontSize="12" fill={stroke} fontStyle="italic">
+        z₂
+      </text>
+
+      <path d={`M ${Ox} ${Oy} L 108 44`} fill="none" stroke={accent} strokeWidth="1.6" />
+      <circle cx="108" cy="44" r="4" fill={accent} />
+      <text x="100" y="36" fontSize="12" fill={accent} fontStyle="italic" fontWeight="700" textAnchor="end">
+        z₁z₂
+      </text>
+
+      <text x="180" y="194" fontSize="11" fill={accent} textAnchor="middle">
+        積の点は、もとの 2 点とどう関係している？（位置は模式）
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列4 step5（質的変化）: 共役をかけると長さの 2 乗が残る、という仕組み図。
+ *  証明の骨（分配して組み直す）だけを描き、この問題の値は一切書かない。 */
+export function M3cAbsMultiply() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 182"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="3 段の枠。上の段は積に共役をかけた形、中の段は共役を分配した形、下の段は同じ相手どうしを組み直した形。数値は書かれていない"
+    >
+      <rect x="46" y="16" width="268" height="34" rx="6" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="180" y="38" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        (z₁z₂) × (z₁z₂ の共役)
+      </text>
+
+      <path d="M 180 50 L 180 62" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 175 56 L 180 64 L 185 56" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="192" y="62" fontSize="10" fill={muted}>
+        共役を分配する
+      </text>
+
+      <rect x="46" y="66" width="268" height="34" rx="6" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="180" y="88" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        z₁ × z₂ × (z₁ の共役) × (z₂ の共役)
+      </text>
+
+      <path d="M 180 100 L 180 112" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 175 106 L 180 114 L 185 106" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="192" y="112" fontSize="10" fill={muted}>
+        同じ相手どうしで組み直す
+      </text>
+
+      <rect x="46" y="116" width="268" height="34" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="180" y="138" fontSize="13" fill={accent} textAnchor="middle" fontStyle="italic" fontWeight="700">
+        (z₁ × z₁ の共役) × (z₂ × z₂ の共役)
+      </text>
+
+      <text x="180" y="172" fontSize="11" fill={accent} textAnchor="middle">
+        いちばん下の 2 つのかたまりは、それぞれ何だった？
       </text>
     </svg>
   );

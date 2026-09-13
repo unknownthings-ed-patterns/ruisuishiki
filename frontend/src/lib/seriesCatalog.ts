@@ -79,6 +79,7 @@ import {
   M3C_PLANE_SERIES,
   M3C_ABS_SERIES,
   M3C_CONJ_SERIES,
+  M3C_MULT_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2002,6 +2003,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "共役複素数（実軸で折り返す）— 符号をひとつ変えるだけの操作が、「実数である」という言葉の判定を、計算できる等式に変える。$z$ を知らないまま答えを出す道も開く",
+  },
+  {
+    series: M3C_MULT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "かけ算＝絶対値と偏角 — 積を平面に置いても規則は見えない。点の位置ではなく「長さ」と「角」に分けて見た瞬間、かけ算が長さのかけ算と角の足し算に割れる",
   },
 ];
 
