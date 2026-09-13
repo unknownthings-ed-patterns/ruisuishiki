@@ -81,6 +81,7 @@ import {
   M3C_CONJ_SERIES,
   M3C_MULT_SERIES,
   M3C_POLAR_SERIES,
+  M3C_DEMOIVRE_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2020,6 +2021,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "極形式とかけ算・割り算 — $a+bi$ は「どこにあるか」を教え、「どれだけ回すか」を隠す。書き方を変えると、かけ算が加法定理として割れ、表にない角の三角比までこぼれてくる",
+  },
+  {
+    series: M3C_DEMOIVRE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "ド・モアブルの定理（累乗）— $240$ 乗を展開する道ははじめから閉じている。$n$ 乗を「同じ回転を $n$ 回重ねること」と読み直すと、$360°$ の余りだけが残る",
   },
 ];
 

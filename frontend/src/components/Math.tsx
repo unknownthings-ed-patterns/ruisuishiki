@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_POWER_OBSERVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cPowerObserve />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_UNIT_SPIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cUnitSpin />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_POLAR_READ>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33065,6 +33079,168 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列6 step1: 「2 乗してから測る」道と「測ってから 2 乗する」道の 2 本を並べる図。
+ *  層8：着いた先は両方とも「?」のまま。**2 本が同じ所に着くことを図で示さない**
+ *  （それが step2 の発見そのもの。D2-6 の一致を図が先取りしてはいけない）。
+ *  数値も書かない。 */
+export function M3cPowerObserve() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 340 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="z から 2 本の道が分かれる図。左は 2 乗してから測る道、右は測ってから 2 乗する道。どちらの行き先も疑問符のまま"
+    >
+      <rect x="145" y="10" width="50" height="26" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="170" y="28" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        z
+      </text>
+
+      <path d="M 158 38 L 106 54" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 112 48 L 102 55 L 113 58" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="104" y="42" fontSize="10" fill={muted} textAnchor="end">
+        先に 2 乗する
+      </text>
+      <path d="M 182 38 L 234 54" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 228 48 L 238 55 L 227 58" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="236" y="42" fontSize="10" fill={muted}>
+        先に測る
+      </text>
+
+      <rect x="58" y="58" width="84" height="30" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="100" y="78" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        z²
+      </text>
+      <rect x="198" y="58" width="84" height="30" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="240" y="78" fontSize="14" fill={stroke} textAnchor="middle">
+        |&#8201;<tspan fontStyle="italic">z</tspan>&#8201;|
+      </text>
+
+      <path d="M 100 90 L 100 116" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 96 110 L 100 120 L 104 110" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="108" y="107" fontSize="10" fill={muted}>
+        測る
+      </text>
+      <path d="M 240 90 L 240 116" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 236 110 L 240 120 L 244 110" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="248" y="107" fontSize="10" fill={muted}>
+        2 乗する
+      </text>
+
+      <rect x="66" y="122" width="68" height="34" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="100" y="147" fontSize="19" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <rect x="206" y="122" width="68" height="34" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="240" y="147" fontSize="19" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="170" y="184" fontSize="11" fill={accent} textAnchor="middle">
+        先に測るか、先に 2 乗するか。順番を入れかえると、
+      </text>
+      <text x="170" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        着く先は変わる？ 変わらない？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列6 step7（質的変化）: 長さ 1 の複素数が単位円上を同じ角ずつ回る図。
+ *  層8：**何番目で実軸に来るかを数えられないようにする**（それが答え）。
+ *  描く点は 3 つだけで、そこから先は破線と「…」。角は模式（35° ではない）とキャプションに明記。
+ *  実軸との交点は左右とも「?」にして、どちら側かも漏らさない。 */
+export function M3cUnitSpin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 256"
+      className="w-full h-auto"
+      style={{ maxWidth: 300 }}
+      role="img"
+      aria-label="単位円の上を同じ角ずつ進む点の列。z、z の 2 乗、z の 3 乗の 3 点だけを描き、その先は円の外側の破線。実軸との交点は左右とも疑問符"
+    >
+      <circle cx="150" cy="132" r="76" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 44 132 L 272 132" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 266 128 L 274 132 L 266 136" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="270" y="150" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 150 216 L 150 40" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 146 46 L 150 38 L 154 46" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="160" y="48" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="142" y="148" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <path d="M 150 132 L 198.9 73.8" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 150 132 L 136.8 57.2" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 150 132 L 84.2 94" fill="none" stroke={muted} strokeWidth="1" />
+
+      <path d="M 190 132 A 40 40 0 0 0 175.7 101.4" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 175.7 101.4 A 40 40 0 0 0 143.1 92.6" fill="none" stroke={accent} strokeWidth="1.3" />
+      <path d="M 143.1 92.6 A 40 40 0 0 0 115.4 112" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="202" y="113" fontSize="11" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="167" y="84" fontSize="11" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <text x="116" y="92" fontSize="11" fill={accent} textAnchor="end" fontStyle="italic">
+        θ
+      </text>
+
+      <circle cx="198.9" cy="73.8" r="3.4" fill={stroke} />
+      <text x="206" y="70" fontSize="11" fill={stroke} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <circle cx="136.8" cy="57.2" r="3.4" fill={stroke} />
+      <text x="141" y="49" fontSize="11" fill={stroke} fontStyle="italic" fontWeight="700">
+        z²
+      </text>
+      <circle cx="84.2" cy="94" r="3.4" fill={stroke} />
+      <text x="78" y="86" fontSize="11" fill={stroke} textAnchor="end" fontStyle="italic" fontWeight="700">
+        z³
+      </text>
+
+      <path
+        d="M 65 109.2 A 88 88 0 0 0 93.4 199.4"
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.3"
+        strokeDasharray="4 4"
+      />
+      <text x="97" y="211" fontSize="13" fill={muted}>
+        …
+      </text>
+
+      <circle cx="226" cy="132" r="4" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="226" y="120" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <circle cx="74" cy="132" r="4" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="74" y="120" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="150" y="230" fontSize="11" fill={accent} textAnchor="middle">
+        長さは変わらず、同じ角ずつ回り続ける。
+      </text>
+      <text x="150" y="246" fontSize="11" fill={accent} textAnchor="middle">
+        実軸にのるのは何番目？（角の大きさは模式）
       </text>
     </svg>
   );
