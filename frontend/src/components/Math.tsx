@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_POLAR_READ>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cPolarRead />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_ARG_ADD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cArgAdd />
+            </div>
+          );
+        }
         if (trimmed === "<<QUADRATIC_STEP1>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33051,6 +33065,125 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列5 step1: 同じ 1 点を「横と縦」と「長さと角」の 2 通りで持つ図。
+ *  層8：目盛りを打たず、a・b・r・θ はすべて文字のまま（step1 は |z| を、step2 は θ を問う）。
+ *  かけ算のことは一切描かない（step5 の発見を先取りしないため）。 */
+export function M3cPolarRead() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 340 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="複素数平面上の 1 点。原点から点へ引いた線分に r、実軸からその線分までの弧に θ、点から両軸へ下ろした破線に a と b の文字。目盛りも数値もない"
+    >
+      <path d="M 26 160 L 322 160" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 316 156 L 324 160 L 316 164" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="318" y="178" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 170 176 L 170 34" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 166 40 L 170 32 L 174 40" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="180" y="40" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="178" y="176" fontSize="11" fill={stroke}>
+        O
+      </text>
+
+      <path d="M 68 101 L 68 160" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 68 101 L 170 101" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="119" y="178" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">
+        a
+      </text>
+      <text x="178" y="122" fontSize="12" fill={stroke} fontStyle="italic">
+        b
+      </text>
+
+      <path d="M 170 160 L 68 101" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="68" cy="101" r="3.5" fill={accent} />
+      <text x="62" y="92" fontSize="12" fill={accent} textAnchor="end" fontWeight="700">
+        z
+      </text>
+      <text x="108" y="144" fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        r
+      </text>
+
+      <path d="M 196 160 A 26 26 0 0 0 147.5 147" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="150" y="126" fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        θ
+      </text>
+
+      <text x="170" y="210" fontSize="11" fill={accent} textAnchor="middle">
+        横と縦（a, b）でも、長さと角（r, θ）でも、
+      </text>
+      <text x="170" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        同じ 1 点を指せる。なぜ 2 つで足りる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列5 step5（質的変化）: 2 数の向きだけが与えられている図。
+ *  層8：積 αβ は描かない（偏角が足されるという発見そのものを図が漏らさないため）。
+ *  角の数値も和も書かない。与えられている材料＝2 本の向きと 2 つの角、だけを描く。 */
+export function M3cArgAdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="原点から 2 本の向きが出ている図。それぞれ実軸からの弧に θ1、θ2 の文字。積の向きは描かれていない"
+    >
+      <path d="M 22 150 L 298 150" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 292 146 L 300 150 L 292 154" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="294" y="168" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 150 166 L 150 28" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 146 34 L 150 26 L 154 34" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="160" y="34" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="158" y="166" fontSize="11" fill={stroke}>
+        O
+      </text>
+
+      <path d="M 150 150 L 232 103" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <circle cx="232" cy="103" r="3.2" fill={stroke} />
+      <text x="240" y="100" fontSize="12" fill={stroke} fontWeight="700" fontStyle="italic">
+        α
+      </text>
+
+      <path d="M 150 150 L 135 66" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <circle cx="135" cy="66" r="3.2" fill={stroke} />
+      <text x="141" y="58" fontSize="12" fill={stroke} fontWeight="700" fontStyle="italic">
+        β
+      </text>
+
+      <path d="M 176 150 A 26 26 0 0 0 172.5 137" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="189" y="146" fontSize="12" fill={accent} fontStyle="italic" fontWeight="700">
+        θ₁
+      </text>
+      <path d="M 228 150 A 78 78 0 0 0 136.5 73.2" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="196" y="74" fontSize="12" fill={accent} fontStyle="italic" fontWeight="700">
+        θ₂
+      </text>
+
+      <text x="160" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        2 本の向きが分かっている。積 αβ は、どちらを向く？
       </text>
     </svg>
   );
