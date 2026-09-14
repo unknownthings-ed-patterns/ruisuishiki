@@ -85,6 +85,7 @@ import {
   M3C_NTHROOT_SERIES,
   M3C_ROTATE_SERIES,
   M3C_ANGLE_SERIES,
+  M3C_SHAPE_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2056,6 +2057,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "なす角・平行・垂直 — $\\dfrac{\\beta}{\\alpha}$ は「$\\alpha$ を $\\beta$ に変える変換」そのもの。実数なら平行、純虚数なら垂直——判定ではなく、解くべき方程式になる",
+  },
+  {
+    series: M3C_SHAPE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "条件式から図形を読む — 関係式が $1$ 本あるだけで、点がどこにあるかは分からないのに「どんな三角形か」が決まる。位置は自由、形は不変",
   },
 ];
 

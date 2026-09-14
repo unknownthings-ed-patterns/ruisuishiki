@@ -3419,6 +3419,397 @@ $$\\frac{\\beta}{\\alpha} = \\frac{\\beta\\bar\\alpha}{\\lvert\\alpha\\rvert^2},
 `,
 };
 
+/** M3C10: 条件式から図形を読む。
+ *  中心の問い＝関係式が 1 本あるだけで、位置も大きさも分からないのに「形」が決まるのはなぜか。
+ *  山場（C12・step10）＝原典 p.435 の応用2（「初等的な方法で証明するのは難しい」と原典が明言）。
+ *  追補10 への対処：原典の応用1 をそのまま出すと Re(β/α) はつねに −1/2、|β/α| はつねに 1、
+ *  ∠AOB はつねに 120° になる。**係数を動かして全部を可変にした**（step1〜5）。
+ *  追補12 への対処：先頭係数と定数項が等しいと |β/α| は 1 に固定される。step3 は a≠c の形にした。
+ *  背骨の型指定の誤りを 1 件直した（§8-7）：step8「頂点の実部が分数」・step9「もう一方の頂点の虚部が整数」・
+ *  step10「|MP|² が整数」は、頂点がガウス整数である限り mod 2 で矛盾する。step8 を整数にした。
+ */
+export const M3C_SHAPE_SERIES: LearnerSeries = {
+  id: "math3_cpx_shape_01",
+  title: "条件式から図形を読む",
+  subtitle:
+    "数Ⅲ・C 複素数平面より — 関係式が $1$ 本あるだけで、点がどこにあるかは分からないのに「どんな三角形か」が決まってしまう。$10$ 問。",
+  patternId: "M3C10",
+  unit: "math_3",
+  revelationLabel:
+    "**位置も大きさも決まらないのに、形だけが決まった**。関係式を $\\dfrac\\beta\\alpha$ の方程式に書き直すと、残るのは**辺の比と角**だけ——それが [相似] という考え方の正体",
+  drivingQuestion:
+    "$\\alpha$ と $\\beta$ の**関係式が $1$ 本**与えられただけで、点の位置は分からないのに「**どんな三角形か**」が決まってしまうのはなぜ？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "原点 $\\mathrm{O}$ と $2$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$ が三角形をなし、\n\n$$2\\alpha^2 + 3\\alpha\\beta + 2\\beta^2 = 0$$\n\nを満たしています。$\\alpha$ も $\\beta$ も具体的には分かりませんが、$\\dfrac{\\beta}{\\alpha}$ の [実部] は求められます。求めましょう。",
+      answer: -0.75,
+      answerDisplay: "−3/4",
+      unit: "",
+      unknownLabel: "$\\dfrac{\\beta}{\\alpha}$ の実部",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$\\alpha$ も $\\beta$ も分からないのに答えが出るというのは、**$2$ つが単独では決まらず、比だけが決まる**ということではないだろうか。比を作るには、両辺を何で割ればいい？",
+        },
+        {
+          layer: 2,
+          text: "見るところは $1$ つだけ——**式のすべての項が $2$ 次**だということ。$\\alpha^2$ で割ると、残るのは $\\beta$ と $\\alpha$ の比だけになる。",
+        },
+        {
+          layer: 3,
+          text: "三角形をなすので $\\alpha \\ne 0$。両辺を $\\alpha^2$ で割ります。\n\n$$2 + 3\\cdot\\frac{\\beta}{\\alpha} + 2\\left(\\frac{\\beta}{\\alpha}\\right)^2 = 0$$\n\n$w = \\dfrac{\\beta}{\\alpha}$ と置けば、ただの $2$ 次方程式です：\n\n$$2w^2 + 3w + 2 = 0 \\quad \\Longrightarrow \\quad w = \\frac{-3 \\pm \\sqrt{9 - 16}}{4} = \\frac{-3 \\pm \\sqrt{7}\\,i}{4}$$\n\nよって [実部] は $-\\dfrac34$ です。\n\n**$\\alpha$ も $\\beta$ も最後まで分かりませんでした。** 分かったのは比だけ。けれど前の系列で見たとおり、$\\dfrac\\beta\\alpha$ は「$\\alpha$ を $\\beta$ に変える変換」——その [絶対値] が $\\mathrm{OB} : \\mathrm{OA}$ の比、[偏角] が $\\angle\\mathrm{AOB}$ です。\n\n中心の問いへの最初の部分回答：**すべての項が同じ次数の式は、比についての式**です。だから位置も大きさも決まらないのに、**比と角＝形**だけが決まります。",
+        },
+      ],
+      formulaPreview: "両辺を α² で割る → 2w² + 3w + 2 = 0（w = β/α）→ w = (−3 ± √7 i)/4 → 実部 −3/4",
+      figureMarker: "<<M3C_COND_TO_SHAPE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "係数を変えても、やることは同じです。\n\n$3\\alpha^2 + 4\\alpha\\beta + 3\\beta^2 = 0$ のとき、$\\dfrac{\\beta}{\\alpha}$ の [虚部] を求めましょう（$2$ 通りありますが、**正のほう**を答えてください）。",
+      answer: 5 ** 0.5 / 3,
+      answerDisplay: "√5/3",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "$\\dfrac{\\beta}{\\alpha}$ の虚部（正のほう）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。手順は同じ。違うのは係数と、読む場所が縦の成分だということ。ところで「$2$ 通りある」と書いてあるのはなぜだろう。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**読む場所が [実部] から [虚部] に移った**こと $1$ つ。$2$ 次方程式の解は $2$ つ——その $2$ つは、平面の上でどういう関係にある？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく両辺を $\\alpha^2$ で割って\n\n$$3w^2 + 4w + 3 = 0 \\quad \\Longrightarrow \\quad w = \\frac{-4 \\pm \\sqrt{16 - 36}}{6} = \\frac{-4 \\pm 2\\sqrt5\\,i}{6} = \\frac{-2 \\pm \\sqrt5\\,i}{3}$$\n\n[虚部] は $\\pm\\dfrac{\\sqrt5}{3}$ で、正のほうは $\\dfrac{\\sqrt5}{3}$ です。\n\n**$2$ つの解は [共役複素数] どうし**でした（係数が実数の $2$ 次方程式なので当然です）。共役は実軸に関する折り返しなので、**片方は $\\mathrm{B}$ が $\\mathrm{OA}$ の左側にいる場合、もう片方は右側にいる場合**——つまり**鏡うつしの $2$ 通りの三角形**を表しています。\n\n**形としては同じ**（辺の比も角の大きさも等しい）で、違うのは裏返しかどうかだけ。だから「[虚部] を求めよ」には $2$ つ答えがあり、問題文で片方に絞りました。中心の問いへの部分回答：条件式が決めるのは**形**であって、**向き（裏返しかどうか）までは決めません**。",
+        },
+      ],
+      formulaPreview: "3w² + 4w + 3 = 0 → w = (−2 ± √5 i)/3。虚部の正のほうは √5/3（2 解は共役＝鏡うつし）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "ここまでの $2$ 問は、**$\\alpha^2$ の係数と $\\beta^2$ の係数が等しい**形でした。等しくないとどうなるでしょう。\n\n$4\\alpha^2 + 6\\alpha\\beta + 25\\beta^2 = 0$ のとき、$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$ を求めましょう。",
+      answer: 0.4,
+      answerDisplay: "2/5",
+      unit: "",
+      unknownLabel: "$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までと比べてみよう。読む量が [絶対値] に変わった。ところで前題までの $2$ 問で $\\left\\lvert w \\right\\rvert$ を計算していたら、どちらも同じ値になっていたはずだ——なぜだろう。そして今度は？",
+        },
+        {
+          layer: 2,
+          text: "前題までと変わったのは、**$\\alpha^2$ と $\\beta^2$ の係数が等しくなくなった**こと $1$ つ。$2$ 解が [共役複素数] のとき、**解と係数の関係**で積を作ると何が出る？",
+        },
+        {
+          layer: 3,
+          text: "両辺を $\\alpha^2$ で割って $25w^2 + 6w + 4 = 0$。判別式は $36 - 400 < 0$ なので $2$ 解は [共役複素数] $w$、$\\bar w$ です。\n\n解と係数の関係より、$2$ 解の積は $\\dfrac{4}{25}$。共役どうしの積は\n\n$$w\\bar w = \\lvert w \\rvert^2 = \\frac{4}{25} \\quad \\Longrightarrow \\quad \\lvert w \\rvert = \\frac25$$\n\n**解かずに出ました。** $\\mathrm{OB} : \\mathrm{OA} = 2 : 5$ ということです。\n\n**ここが前題までとの違いです。** $a\\alpha^2 + b\\alpha\\beta + c\\beta^2 = 0$ なら $\\lvert w \\rvert^2 = \\dfrac{a}{c}$ ——つまり**辺の比を決めているのは、$\\alpha^2$ と $\\beta^2$ の係数だけ**。前題までは $a = c$ だったので、$b$ をどう変えても $\\lvert w \\rvert$ は $1$ のまま（$\\mathrm{OA} = \\mathrm{OB}$ の二等辺三角形）でした。\n\n中心の問いへの部分回答：**$3$ つの係数が、形の $2$ つの要素を分担している**。両端の $2$ つが辺の比を、真ん中が角を決めます。",
+        },
+      ],
+      formulaPreview: "25w² + 6w + 4 = 0。2 解は共役なので積 = |w|² = 4/25 → |w| = 2/5（辺の比は両端の係数だけで決まる）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "もう一方の要素——**角**を読みます。\n\n$\\alpha^2 + 3\\alpha\\beta + 3\\beta^2 = 0$ のとき、$\\angle\\mathrm{AOB}$ を求めましょう（**度**で）。",
+      answer: 150,
+      unit: "",
+      unknownLabel: "$\\angle\\mathrm{AOB}$（度）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までに、$w$ の [実部] と [絶対値] はそれぞれ出せるようになった。角を知るには、その $2$ つがあれば足りないだろうか。",
+        },
+        {
+          layer: 2,
+          text: "前題までに**角を読む一歩が足された**だけ。[極形式] で [実部] は $r\\cos\\theta$ だった。$r$ と [実部] が分かっていれば $\\cos\\theta$ が出る。",
+        },
+        {
+          layer: 3,
+          text: "$3w^2 + 3w + 1 = 0$ より、解と係数の関係から\n\n$$\\lvert w \\rvert^2 = \\frac13, \\qquad w + \\bar w = 2\\,\\text{Re}(w) = -1 \\ \\Longrightarrow \\ \\text{Re}(w) = -\\frac12$$\n\n[実部] $= \\lvert w \\rvert\\cos\\theta$ なので\n\n$$\\cos\\theta = \\frac{\\text{Re}(w)}{\\lvert w \\rvert} = \\frac{-\\frac12}{\\frac{1}{\\sqrt3}} = -\\frac{\\sqrt3}{2} \\quad \\Longrightarrow \\quad \\theta = 150°$$\n\nよって $\\angle\\mathrm{AOB} = 150°$ です。\n\n**係数を変えれば角も変わります。** 一般に $a\\alpha^2+b\\alpha\\beta+c\\beta^2=0$ なら\n\n$$\\cos\\theta = \\frac{-b}{2\\sqrt{ac}}$$\n\n真ん中の係数 $b$ が角を、両端の $a$ と $c$ が辺の比を決める——**$3$ つの係数が、三角形の形をちょうど過不足なく決めています**（位置と大きさは決めません）。中心の問いへの部分回答：**式 $1$ 本に、形の情報がちょうど入っている**。",
+        },
+      ],
+      formulaPreview: "3w²+3w+1 = 0 → |w|² = 1/3、Re(w) = −1/2。cosθ = (−1/2)/(1/√3) = −√3/2 → 150°",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "こんどは**形から係数を逆算**します。\n\n$\\alpha^2 + 5\\alpha\\beta + t\\beta^2 = 0$（$t$ は正の実数）のとき、$\\angle\\mathrm{AOB} = 135°$ になりました。$t$ の値を求めましょう。",
+      answer: 12.5,
+      answerDisplay: "25/2",
+      unit: "",
+      unknownLabel: "$t$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは係数が分かっていて形を出しにいった。今度は形が分かっていて、係数が空いている。前題の最後に、係数と角を結ぶ式が $1$ 本できていたはずだ。",
+        },
+        {
+          layer: 2,
+          text: "前題までと変わったのは、**未知が係数に移った**こと $1$ つ。角と係数を結ぶ式に $135°$ を入れれば、$t$ についての方程式になる。",
+        },
+        {
+          layer: 3,
+          text: "前題で作った式をそのまま使います。$a = 1$、$b = 5$、$c = t$ なので\n\n$$\\cos 135° = \\frac{-5}{2\\sqrt{t}} \\quad \\Longrightarrow \\quad -\\frac{1}{\\sqrt2} = \\frac{-5}{2\\sqrt t}$$\n\n$$2\\sqrt t = 5\\sqrt2 \\quad \\Longrightarrow \\quad \\sqrt t = \\frac{5\\sqrt2}{2} \\quad \\Longrightarrow \\quad t = \\frac{50}{4} = \\frac{25}{2}$$\n\n検算：$t = \\dfrac{25}{2}$ のとき $\\dfrac{25}{2}w^2 + 5w + 1 = 0$、つまり $25w^2 + 10w + 2 = 0$ で $w = \\dfrac{-10 \\pm \\sqrt{100-200}}{50} = \\dfrac{-1 \\pm i}{5}$。[偏角] はたしかに $135°$ ✓\n\n**「どんな三角形か」を先に決めて、それを作る式を書けました。** 形と式が行き来できる——**図形の条件と代数の条件が、同じものの表と裏**になっています。中心の問いへの部分回答：対応が $1$ 対 $1$ に近いので、**どちら向きにも解けます**。",
+        },
+      ],
+      formulaPreview: "cos135° = −5/(2√t) → −1/√2 = −5/(2√t) → 2√t = 5√2 → t = 25/2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "ここまでは $1$ 頂点が原点でした。**$3$ 点とも動く**場合に進みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が三角形をなし、\n\n$$4(\\gamma - \\alpha)^2 + 5(\\gamma - \\alpha)(\\beta - \\alpha) + 4(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ の [実部] を求めましょう。",
+      answer: -0.625,
+      answerDisplay: "−5/8",
+      unit: "",
+      unknownLabel: "$\\dfrac{\\gamma-\\alpha}{\\beta-\\alpha}$ の実部",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは原点が頂点だったので $\\alpha$ と $\\beta$ をそのまま使えた。今度は $3$ 点とも原点ではない。前の系列で、原点以外の頂点の角を測るときに何をしたか思い出せないだろうか。",
+        },
+        {
+          layer: 2,
+          text: "前題までと変わったのは、**基準の頂点が原点から $\\mathrm{A}$ に移った**こと $1$ つ。式の中にすでに $\\gamma - \\alpha$ と $\\beta - \\alpha$ という形が入っている。何で割れば比になる？",
+        },
+        {
+          layer: 3,
+          text: "三角形をなすので $\\beta \\ne \\alpha$。両辺を $(\\beta - \\alpha)^2$ で割ります。$u = \\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ と置けば\n\n$$4u^2 + 5u + 4 = 0 \\quad \\Longrightarrow \\quad u = \\frac{-5 \\pm \\sqrt{25 - 64}}{8} = \\frac{-5 \\pm \\sqrt{39}\\,i}{8}$$\n\nよって [実部] は $-\\dfrac58$ です。\n\n**やったことは前題までとまったく同じ**でした。違うのは「何で割るか」だけ——原点が頂点なら $\\alpha^2$ で、$\\mathrm{A}$ が頂点なら $(\\beta-\\alpha)^2$ で割ります。**引き算が「基準を移す」に当たる**のは、前の系列と同じ手つきです。\n\nそして $u = \\dfrac{\\gamma-\\alpha}{\\beta-\\alpha}$ は、前の系列で見たとおり **$\\overrightarrow{\\mathrm{AB}}$ を $\\overrightarrow{\\mathrm{AC}}$ に変える変換**。[絶対値] が $\\mathrm{AC} : \\mathrm{AB}$、[偏角] が $\\angle\\mathrm{BAC}$ です。\n\n中心の問いへの部分回答：**原点は特別な点ではありませんでした**。どの頂点を基準にしても、同じ $1$ 本の式が形を決めます。",
+        },
+      ],
+      formulaPreview: "両辺を (β−α)² で割る → 4u² + 5u + 4 = 0（u = (γ−α)/(β−α)）→ 実部 −5/8",
+      figureMarker: "<<M3C_THREE_POINT_RATIO>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "同じ形の条件で、角を読みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が\n\n$$(\\gamma - \\alpha)^2 + (\\gamma - \\alpha)(\\beta - \\alpha) + (\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\angle\\mathrm{BAC}$ を求めましょう（**度**で）。",
+      answer: 120,
+      unit: "",
+      unknownLabel: "$\\angle\\mathrm{BAC}$（度）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。割る相手も、置きかえる文字も同じ。違うのは係数と、読む量が角だということ。$4$ 問前に作った「係数から角を出す式」は、基準が $\\mathrm{A}$ に移っても同じように使えるだろうか。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**読む量が [実部] から角に移った**こと $1$ つ。係数がすべて $1$ のとき、$\\lvert u \\rvert$ と $\\text{Re}(u)$ はそれぞれいくつになる？",
+        },
+        {
+          layer: 3,
+          text: "両辺を $(\\beta-\\alpha)^2$ で割って $u^2 + u + 1 = 0$。解と係数の関係から\n\n$$\\lvert u \\rvert^2 = 1 \\ \\Longrightarrow \\ \\lvert u \\rvert = 1, \\qquad \\text{Re}(u) = -\\frac12$$\n\n$$\\cos\\theta = \\frac{-\\frac12}{1} = -\\frac12 \\quad \\Longrightarrow \\quad \\angle\\mathrm{BAC} = 120°$$\n\n（step 4 で作った式 $\\cos\\theta = \\dfrac{-b}{2\\sqrt{ac}}$ に $a=b=c=1$ を入れても同じです。）\n\n**$\\lvert u \\rvert = 1$ なので $\\mathrm{AB} = \\mathrm{AC}$**。頂角 $120°$ の二等辺三角形——底角はどちらも $30°$ です。$3$ 点の位置はまったく分からないのに、**三角形の形はここまで決まりました**。\n\n**係数がすべて $1$ でも正三角形にはなりません。** 正三角形の条件は $u^2 - u + 1 = 0$（真ん中の符号が逆）で、こちらは $\\text{Re}(u) = \\dfrac12$、$\\cos\\theta = \\dfrac12$、$\\angle\\mathrm{BAC} = 60°$ です。**符号 $1$ つで別の形**になります。中心の問いへの部分回答：形は係数に**敏感**——だからこそ、係数を読めば形が言えます。",
+        },
+      ],
+      formulaPreview: "u² + u + 1 = 0 → |u| = 1、Re(u) = −1/2 → cosθ = −1/2 → 120°（頂角 120° の二等辺三角形）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "ここからは、原典が「**複素数の真骨頂**」と呼ぶ配置を歩きます。\n\n三角形 $\\mathrm{ABC}$ の頂点を $\\mathrm{A}(1 + 3i)$、$\\mathrm{B}(9 + 9i)$、$\\mathrm{C}(3 + 9i)$ とします。辺 $\\mathrm{AB}$ の**外側**に、$\\mathrm{AB}$ を斜辺とする直角二等辺三角形 $\\mathrm{ABP}$ を作ります（直角の頂点が $\\mathrm{P}$）。\n\n$\\mathrm{P}$ の [実部] を求めましょう。",
+      answer: 8,
+      unit: "",
+      unknownLabel: "$\\mathrm{P}$ の実部",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までは条件式から形を読んでいた。今度は形が先に決まっていて、点そのものを作る。$\\mathrm{P}$ は $\\mathrm{AB}$ の中点から見て、どの向きに、どれだけ離れているだろう。",
+        },
+        {
+          layer: 2,
+          text: "前題までと変わったのは、**点を作る側にまわった**こと $1$ つ。直角二等辺三角形なので、$\\mathrm{P}$ は $\\mathrm{AB}$ の中点の真横（$\\mathrm{AB}$ に垂直な向き）にあり、距離は $\\mathrm{AB}$ のちょうど半分。「垂直な向き」を作るには、何を掛ければよかった？",
+        },
+        {
+          layer: 3,
+          text: "$\\mathrm{AB}$ を斜辺とする直角二等辺三角形なので、$\\mathrm{P}$ は **$\\mathrm{AB}$ の中点から、$\\mathrm{AB}$ に垂直な向きに $\\dfrac{\\mathrm{AB}}{2}$ だけ離れた点**です（直角の頂点は斜辺を直径とする円の上にあり、二等辺なのでその弧の真ん中）。\n\n垂直な向きを作るには $i$ を掛けます。$\\mathrm{C}$ と反対側（外側）に取るので、符号は $-$ のほう：\n\n$$\\mathrm{P} = \\frac{\\alpha + \\beta}{2} - \\frac{i(\\beta - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\beta}{2} = \\dfrac{(1+3i)+(9+9i)}{2} = 5 + 6i$、$\\beta - \\alpha = 8 + 6i$ なので\n\n$$\\frac{i(8+6i)}{2} = \\frac{8i - 6}{2} = -3 + 4i$$\n\n$$\\mathrm{P} = (5 + 6i) - (-3 + 4i) = 8 + 2i$$\n\nよって [実部] は $8$ です。\n\n**確かめておきます。** $\\dfrac{\\alpha - \\mathrm{P}}{\\beta - \\mathrm{P}} = \\dfrac{-7+i}{1+7i} = i$ ——[純虚数] なので $\\angle\\mathrm{APB} = 90°$、[絶対値] が $1$ なので $\\mathrm{PA} = \\mathrm{PB}$ ✓ たしかに直角二等辺三角形です。\n\n中心の問いへの部分回答：**「外側に直角二等辺三角形を作る」という作図が、$1$ 本の式になりました**。作図の手順が式の形に写っています。",
+        },
+      ],
+      formulaPreview: "P = (α+β)/2 − i(β−α)/2 = (5+6i) − (−3+4i) = 8 + 2i → 実部 8",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "同じ三角形 $\\mathrm{ABC}$（$\\mathrm{A}(1+3i)$、$\\mathrm{B}(9+9i)$、$\\mathrm{C}(3+9i)$）について、こんどは辺 $\\mathrm{AC}$ の**外側**に、$\\mathrm{AC}$ を斜辺とする直角二等辺三角形 $\\mathrm{ACQ}$ を作ります（直角の頂点が $\\mathrm{Q}$）。\n\n$\\mathrm{Q}$ の [虚部] を求めましょう。",
+      answer: 7,
+      unit: "",
+      unknownLabel: "$\\mathrm{Q}$ の虚部",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。作り方はまったく同じ。違うのは、$\\mathrm{AB}$ でなく $\\mathrm{AC}$ の外側だということ。**「外側」はどちら向き**だろう——前題と同じ符号でよいだろうか。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**辺が $\\mathrm{AB}$ から $\\mathrm{AC}$ に移った**こと $1$ つ。$\\mathrm{AB}$ の外側は $\\mathrm{C}$ と反対側、$\\mathrm{AC}$ の外側は $\\mathrm{B}$ と反対側。$\\mathrm{A}$ から見て $\\mathrm{B}$ と $\\mathrm{C}$ は左右どちらにある？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じ形の式ですが、**符号が逆**になります。$\\mathrm{A}$ から見て $\\mathrm{C}$ は $\\mathrm{B}$ の**左側**にあるので、$\\mathrm{AC}$ の外側（$\\mathrm{B}$ と反対側）はさらに左——つまり $+i$ のほうです：\n\n$$\\mathrm{Q} = \\frac{\\alpha + \\gamma}{2} + \\frac{i(\\gamma - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\gamma}{2} = \\dfrac{(1+3i)+(3+9i)}{2} = 2 + 6i$、$\\gamma - \\alpha = 2 + 6i$ なので\n\n$$\\frac{i(2+6i)}{2} = \\frac{2i - 6}{2} = -3 + i$$\n\n$$\\mathrm{Q} = (2 + 6i) + (-3 + i) = -1 + 7i$$\n\nよって [虚部] は $7$ です。\n\n**符号の選び方が急所でした。** $\\pm i$ のどちらを取るかで、$\\mathrm{P}$ や $\\mathrm{Q}$ は辺をはさんで反対側に来ます。「外側」という言葉を式にするには、**三角形の向き（$\\mathrm{A} \\to \\mathrm{B} \\to \\mathrm{C}$ が反時計回りか時計回りか）を確かめる**必要があります。\n\n（確かめ：$\\dfrac{\\alpha - \\mathrm{Q}}{\\gamma - \\mathrm{Q}} = \\dfrac{2-4i}{4+2i} = -i$ ——[純虚数] で [絶対値] $1$ なので、こちらも直角二等辺 ✓）\n\n中心の問いへの部分回答：**作図の「向き」は、式では $i$ の符号として現れます**。これで $\\mathrm{P}$ と $\\mathrm{Q}$ がそろいました。",
+        },
+      ],
+      formulaPreview: "Q = (α+γ)/2 + i(γ−α)/2 = (2+6i) + (−3+i) = −1 + 7i → 虚部 7（符号は AB のときと逆）",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "同じ配置を仕上げます。$\\mathrm{A}(1+3i)$、$\\mathrm{B}(9+9i)$、$\\mathrm{C}(3+9i)$、辺 $\\mathrm{AB}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{P}$、辺 $\\mathrm{AC}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{Q}$ です。\n\n$\\mathrm{M}$ を辺 $\\mathrm{BC}$ の**中点**とするとき、$\\lvert \\mathrm{MP} \\rvert^2$ を求めましょう。",
+      answer: 53,
+      unit: "",
+      unknownLabel: "$\\lvert \\mathrm{MP} \\rvert^2$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "前題までと比べてみよう。点を作る手つきは同じ——$\\mathrm{M}$ は $\\mathrm{B}$ と $\\mathrm{C}$ の中点なのだから、いちばんやさしい作り方でできる。けれど $\\mathrm{M}$ は、前の $2$ 問で作った $\\mathrm{P}$ とも $\\mathrm{Q}$ とも、辺でつながっていない点だ。その $\\mathrm{M}$ から $\\mathrm{P}$ までの距離が出たとき、$\\mathrm{Q}$ までの距離はどうなっているだろう。",
+        },
+        {
+          layer: 2,
+          text: "前題までに**中点という第 $3$ の点が足された**だけ。中点は「和の半分」、距離の $2$ 乗は「実部の $2$ 乗＋虚部の $2$ 乗」——どちらもすでに歩いた道。",
+        },
+        {
+          layer: 3,
+          text: "$\\mathrm{M}$ は $\\mathrm{BC}$ の中点なので\n\n$$\\mathrm{M} = \\frac{(9+9i) + (3+9i)}{2} = 6 + 9i$$\n\n$\\mathrm{P} = 8 + 2i$（step 8）なので\n\n$$\\mathrm{P} - \\mathrm{M} = (8 + 2i) - (6 + 9i) = 2 - 7i, \\qquad \\lvert \\mathrm{MP} \\rvert^2 = 2^2 + 7^2 = 53$$\n\n**ここで $\\mathrm{Q}$ も測ってみます。** $\\mathrm{Q} = -1 + 7i$（step 9）なので\n\n$$\\mathrm{Q} - \\mathrm{M} = -7 - 2i, \\qquad \\lvert \\mathrm{MQ} \\rvert^2 = 49 + 4 = 53$$\n\n**まったく同じ値です。** そして比をとると\n\n$$\\frac{\\mathrm{P} - \\mathrm{M}}{\\mathrm{Q} - \\mathrm{M}} = \\frac{2 - 7i}{-7 - 2i} = \\frac{(2-7i)(-7+2i)}{53} = \\frac{53i}{53} = i$$\n\n[絶対値] が $1$ で [純虚数] ——**$\\mathrm{MP} = \\mathrm{MQ}$ かつ $\\mathrm{MP} \\perp \\mathrm{MQ}$**。三角形 $\\mathrm{MPQ}$ は直角二等辺三角形です。\n\n**これは偶然ではありません。** $\\alpha,\\beta,\\gamma$ を文字のまま置いて計算すると\n\n$$\\mathrm{P} - \\mathrm{M} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2}, \\qquad \\mathrm{Q} - \\mathrm{M} = \\frac{(\\alpha - \\beta) + i(\\gamma - \\alpha)}{2}$$\n\nとなり、後者に $i$ を掛けると\n\n$$i(\\mathrm{Q} - \\mathrm{M}) = \\frac{i(\\alpha-\\beta) - (\\gamma - \\alpha)}{2} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2} = \\mathrm{P} - \\mathrm{M}$$\n\n**どんな三角形でも成り立ちます。** 原典はこの性質について「シンプルで美しい性質ですが、**初等的な方法で証明するのは難しい**」と書いています。実際、$\\mathrm{MP}$ の長さを初等幾何で出そうとしても、$\\mathrm{M}$ は $\\mathrm{P}$ とも $\\mathrm{Q}$ とも直接つながっていないので取りかかりがありません。\n\n**なぜ複素数だと通るのか。** 「外側に直角二等辺三角形を作る」も「中点をとる」も、複素数では**足し算と $i$ 倍だけ**で書けます。だから $\\mathrm{P} - \\mathrm{M}$ と $\\mathrm{Q} - \\mathrm{M}$ が同じ材料（$\\alpha, \\beta, \\gamma$ と $i$）の式になり、**片方が他方の $i$ 倍だと目で見て分かる**——それだけのことです。\n\n中心の問いに戻ると：条件式が形を決めたのは、**式がすべて「比」についての式だった**からでした。ここでも同じです。$\\mathrm{P}$、$\\mathrm{Q}$、$\\mathrm{M}$ の位置は $\\alpha,\\beta,\\gamma$ によって変わりますが、$\\dfrac{\\mathrm{P}-\\mathrm{M}}{\\mathrm{Q}-\\mathrm{M}}$ という**比**は $i$ に固定されます。\n\n**位置は自由、形は不変。** これが [相似] という見方の正体であり、この単元がずっと言ってきたことでした。",
+        },
+      ],
+      formulaPreview:
+        "M = (B+C)/2 = 6+9i。P−M = 2−7i → |MP|² = 4+49 = 53｜Q−M = −7−2i → |MQ|² = 53｜比は i（MP = MQ かつ MP ⊥ MQ）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $\\alpha$ と $\\beta$ の**関係式が $1$ 本**与えられただけで、点の位置は分からないのに「**どんな三角形か**」が決まってしまうのはなぜ？
+
+────────
+
+**すべての項が同じ次数の式は、比についての式**
+
+$$a\\alpha^2 + b\\alpha\\beta + c\\beta^2 = 0$$
+
+この式は、$\\alpha$ と $\\beta$ を何倍かしても成り立ちます（$\\alpha \\to k\\alpha$、$\\beta \\to k\\beta$ とすると全体が $k^2$ 倍になるだけ）。つまり**大きさの情報を持っていません**。
+
+だから両辺を $\\alpha^2$ で割ると、残るのは比だけ：
+
+$$c w^2 + b w + a = 0 \\qquad \\left(w = \\frac{\\beta}{\\alpha}\\right)$$
+
+**ただの $2$ 次方程式になりました。** そして前の系列で見たとおり、$w = \\dfrac\\beta\\alpha$ は「$\\alpha$ を $\\beta$ に変える変換」——[絶対値] が $\\mathrm{OB} : \\mathrm{OA}$、[偏角] が $\\angle\\mathrm{AOB}$ です。
+
+────────
+
+**考え方の核：$3$ つの係数が、形をちょうど過不足なく決める**
+
+$2$ 解が [共役複素数] $w$、$\\bar w$ のとき（判別式が負のとき）、解と係数の関係から
+
+| 読むもの | 係数から | 図形で言うと |
+|---|---|---|
+| $w\\bar w = \\lvert w \\rvert^2 = \\dfrac{a}{c}$ | **両端**の係数だけ | **辺の比** $\\mathrm{OB} : \\mathrm{OA} = \\sqrt a : \\sqrt c$ |
+| $w + \\bar w = 2\\,\\text{Re}(w) = -\\dfrac{b}{c}$ | 真ん中も使う | 実部 |
+| $\\cos\\theta = \\dfrac{\\text{Re}(w)}{\\lvert w \\rvert} = \\dfrac{-b}{2\\sqrt{ac}}$ | **$3$ つ全部** | **頂角** $\\angle\\mathrm{AOB}$ |
+
+**辺の比を決めているのは両端の係数だけ**です。だから $a = c$ の形（$\\alpha^2$ と $\\beta^2$ の係数が等しい形）では、真ん中の $b$ をどう動かしても $\\lvert w \\rvert$ は $1$ に固定され、**いつでも $\\mathrm{OA} = \\mathrm{OB}$ の二等辺三角形**になります。形を自由に動かしたければ、**両端の係数を変えなければなりません**（step 3）。
+
+そして $2$ 解が共役どうしということは、**$2$ つの三角形は実軸に関する鏡うつし**——形は同じで、裏返しかどうかだけが違います。**条件式は形を決めますが、向きまでは決めません**（step 2）。
+
+────────
+
+**原点は特別な点ではない**
+
+$1$ 頂点が原点でなくても、話はまったく同じです。基準の頂点を $\\mathrm{A}$ にするなら、**$\\mathrm{A}$ を引いてから**割ります：
+
+$$a(\\gamma-\\alpha)^2 + b(\\gamma-\\alpha)(\\beta-\\alpha) + c(\\beta-\\alpha)^2 = 0 \\ \\xrightarrow{\\ \\div (\\beta-\\alpha)^2\\ } \\ au^2 + bu + c = 0$$
+
+ここで $u = \\dfrac{\\gamma-\\alpha}{\\beta-\\alpha}$。引き算が「基準を移す」に当たるのは、回転のときと同じ手つきです。
+
+**よく知られた形を $2$ つ**：
+
+| 条件 | $u$ の方程式 | 形 |
+|---|---|---|
+| $u^2 - u + 1 = 0$ | $\\lvert u \\rvert = 1$、$\\cos\\theta = \\dfrac12$ | **正三角形**（$60°$） |
+| $u^2 + u + 1 = 0$ | $\\lvert u \\rvert = 1$、$\\cos\\theta = -\\dfrac12$ | 頂角 $120°$ の二等辺三角形 |
+
+**真ん中の符号 $1$ つで別の形**になります。係数に敏感だからこそ、係数を読めば形が言えます。
+
+────────
+
+**やってしまいがちな誤り**
+
+**誤り $1$：$\\alpha$ か $\\beta$ を具体的に求めようとする。** 求まりません——条件式は比しか決めていないからです。**求まらないことこそが答え**で、だから「位置は自由、形は不変」になります。
+
+**誤り $2$：$\\alpha^2$ で割るときに $\\alpha \\ne 0$ を確かめない。** $3$ 点が三角形をなすなら $\\alpha \\ne 0$ ですが、そこを一言書いておくのが筋です。
+
+**誤り $3$：判別式が正のときも同じように読む。** $2$ 解が実数になると、$w$ は実軸の上——つまり $\\mathrm{O}$、$\\mathrm{A}$、$\\mathrm{B}$ が**一直線に並んで三角形になりません**。「三角形をなす」という条件は、**判別式が負**であることとつながっています。
+
+**誤り $4$：「外側」の向きを確かめずに符号を決める。** $\\pm i$ のどちらを掛けるかで、作った点は辺をはさんで反対側に来ます（step 8・9）。三角形の向きを確かめてから符号を決めます。
+
+────────
+
+**もっと深く** — 「示すべきことから逆算して確認する」は、ずるではない
+
+step 10 の性質——外側に作った直角二等辺三角形の直角の頂点 $\\mathrm{P}$、$\\mathrm{Q}$ と、$\\mathrm{BC}$ の中点 $\\mathrm{M}$ について $\\mathrm{MP} = \\mathrm{MQ}$ かつ $\\mathrm{MP} \\perp \\mathrm{MQ}$ ——を、$\\dfrac{\\mathrm{P}-\\mathrm{M}}{\\mathrm{Q}-\\mathrm{M}}$ の形から**見抜く**のは難しいことです。
+
+実際の手順はこうなります。
+
+1. **示したいこと**を式にする：$\\mathrm{P} - \\mathrm{M} = i(\\mathrm{Q} - \\mathrm{M})$
+2. 両辺を $\\alpha, \\beta, \\gamma$ で書き下す
+3. **両辺が一致することを確かめる**
+
+「結論から出発している」ように見えますが、**これは正しい証明です**。示したい等式の両辺をそれぞれ独立に計算し、**同じ式になることを確かめている**からです。
+
+やってはいけないのは「示したい等式を**仮定して**、そこから既知の事実を導く」形です。それは逆向きの論証で、同値性を確かめない限り証明になりません。**両辺を別々に計算して突き合わせるのは、まったく別の手つき**——$2$ つの道が同じ所に着くことを見る、この単元がくり返しやってきたことです。
+
+**なぜ複素数だと通るのか**：「外側に直角二等辺三角形を作る」も「中点をとる」も、複素数では**足し算と $i$ 倍だけ**で書けます。だから $\\mathrm{P}-\\mathrm{M}$ と $\\mathrm{Q}-\\mathrm{M}$ が同じ材料の式になり、片方が他方の $i$ 倍だと**目で見て分かります**。初等幾何では $\\mathrm{M}$ が $\\mathrm{P}$ とも $\\mathrm{Q}$ とも直接つながっておらず、取りかかりがありません。
+
+**転移先**：「すべての項が同じ次数の式は比についての式」という見方は、**無次元量**の考え方そのものです。物理では、長さや時間の単位を変えても値が変わらない量（レイノルズ数など）が現象の「形」を決めます。単位を変えても成り立つ式は、**大きさの情報を持っていない**——だから形だけを語れます。
+
+────────
+
+**問いに戻ると**
+
+関係式 $1$ 本で形が決まるのは、その式が**比についての式**だからでした。$\\alpha$ も $\\beta$ も求まりませんが、$\\dfrac\\beta\\alpha$ は求まります。そして $\\dfrac\\beta\\alpha$ の [絶対値] が辺の比、[偏角] が角——**それだけで「形」は決まりきっています**。
+
+位置も大きさも決まらないのに、形だけが決まる。**これが [相似] という考え方の正体**です。数Ⅲで新しく出てきた話ではなく、中学で「$2$ 組の辺の比とその間の角」と習ったことが、$1$ つの複素数の [絶対値] と [偏角] として並んでいるだけでした。
+
+次の系列では、点が**動く**ときに何が起きるかを見ます。関係式が $1$ 本あると、動く点は勝手な場所には行けません——**軌跡**が現れます。
+
+**出典**
+
+- 池田洋介『数学Ⅲ・C 入門問題精講』旺文社
+  — 第10章の単元構成（複素数と図形の性質・条件式から三角形の形を読む）を参考。問題の値・場面はすべてオリジナル。
+`,
+};
+
 /** 複素数平面ユニットの系列一覧（背骨 docs/math3c_complex_design.md の順）。 */
 export const MATH3_COMPLEX_SERIES_LIST: LearnerSeries[] = [
   M3C_PLANE_SERIES,
@@ -3430,4 +3821,5 @@ export const MATH3_COMPLEX_SERIES_LIST: LearnerSeries[] = [
   M3C_NTHROOT_SERIES,
   M3C_ROTATE_SERIES,
   M3C_ANGLE_SERIES,
+  M3C_SHAPE_SERIES,
 ];

@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_COND_TO_SHAPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cCondToShape />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_THREE_POINT_RATIO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cThreePointRatio />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_RATIO_TRANSFORM>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33121,6 +33135,126 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列10 step1: 条件式 → w の 2 次方程式 → 三角形、と渡る仕組みの図。
+ *  層8：三角形は輪郭だけ（辺の等号記号も角の数値も書かない）。どんな形かは「?」のまま。
+ *  係数も具体値を書かず a, b, c で置く。 */
+export function M3cCondToShape() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 258"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="条件式の箱から、w の 2 次方程式の箱を経て、輪郭だけの三角形へ渡る図。三角形の形は疑問符のまま"
+    >
+      <rect x="26" y="12" width="268" height="32" rx="7" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="160" y="33" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        aα² + bαβ + cβ² = 0
+      </text>
+
+      <path d="M 160 46 L 160 70" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 156 64 L 160 74 L 164 64" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="170" y="62" fontSize="10" fill={muted}>
+        両辺を α² で割る
+      </text>
+
+      <rect x="52" y="76" width="216" height="34" rx="7" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="160" y="92" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        cw² + bw + a = 0
+      </text>
+      <text x="160" y="105" fontSize="10" fill={muted} textAnchor="middle">
+        w = β / α
+      </text>
+
+      <path d="M 160 112 L 160 136" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 156 130 L 160 140 L 164 130" fill="none" stroke={muted} strokeWidth="1" />
+
+      <path
+        d="M 96 202 L 214 202 L 176 146 Z"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="5 4"
+      />
+      <circle cx="96" cy="202" r="3" fill={accent} />
+      <text x="88" y="214" fontSize="11" fill={accent} textAnchor="end" fontStyle="italic">
+        O
+      </text>
+      <circle cx="214" cy="202" r="3" fill={accent} />
+      <text x="222" y="212" fontSize="11" fill={accent} fontStyle="italic">
+        A
+      </text>
+      <circle cx="176" cy="146" r="3" fill={accent} />
+      <text x="184" y="142" fontSize="11" fill={accent} fontStyle="italic">
+        B
+      </text>
+      <text x="126" y="192" fontSize="15" fill={accent} fontWeight="700">
+        ?
+      </text>
+
+      <text x="160" y="236" fontSize="11" fill={accent} textAnchor="middle">
+        α も β も求まらない。場所も大きさも決まらない。
+      </text>
+      <text x="160" y="252" fontSize="11" fill={accent} textAnchor="middle">
+        それなのに、決まってしまうものがある？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列10 step6（質的変化）: 3 点版。(γ−α)/(β−α) が
+ *  「A から B への矢印を A から C への矢印に変える数」であることの仕組み。
+ *  層8：拡大率も角の数値も書かない。三角形は輪郭だけで、形は「?」のまま。
+ *  応用問題2 の外側の直角二等辺三角形は**描かない**（step8〜10 の発見を先取りしないため）。 */
+export function M3cThreePointRatio() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="頂点 A から B へ、A から C へ引いた 2 本の矢印。一方を他方に変える数に疑問符がついている"
+    >
+      <circle cx="58" cy="158" r="3.6" fill={stroke} />
+      <text x="50" y="172" fontSize="12" fill={stroke} textAnchor="end" fontStyle="italic" fontWeight="700">
+        A
+      </text>
+      <path d="M 58 158 L 218 128" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <path d="M 212 123 L 224 127 L 213 133" fill={stroke} stroke="none" />
+      <circle cx="226" cy="126" r="3.6" fill={stroke} />
+      <text x="234" y="124" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        B
+      </text>
+      <path d="M 58 158 L 128 52" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <path d="M 124 47 L 133 44 L 133 56" fill={stroke} stroke="none" />
+      <circle cx="134" cy="44" r="3.6" fill={stroke} />
+      <text x="142" y="40" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        C
+      </text>
+      <path d="M 226 126 L 134 44" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+
+      <path d="M 148 132 A 96 96 0 0 0 110 78" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 118 77 L 108 74 L 112 84" fill={accent} stroke="none" />
+      <text x="146" y="104" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        × ?
+      </text>
+
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        A から B への矢印を、A から C への矢印に変える数。
+      </text>
+      <text x="160" y="206" fontSize="11" fill={accent} textAnchor="middle">
+        この「?」は、三角形の何を知っている？
       </text>
     </svg>
   );
