@@ -84,6 +84,7 @@ import {
   M3C_DEMOIVRE_SERIES,
   M3C_NTHROOT_SERIES,
   M3C_ROTATE_SERIES,
+  M3C_ANGLE_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2047,6 +2048,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "回転移動（拡大＋回転）— 実数をかけても伸び縮みするだけ。複素数をかけると平面が回る。正方形の残り $2$ 頂点が、連立ではなくかけ算 $1$ 回で出る",
+  },
+  {
+    series: M3C_ANGLE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "なす角・平行・垂直 — $\\dfrac{\\beta}{\\alpha}$ は「$\\alpha$ を $\\beta$ に変える変換」そのもの。実数なら平行、純虚数なら垂直——判定ではなく、解くべき方程式になる",
   },
 ];
 

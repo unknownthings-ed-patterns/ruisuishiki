@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_RATIO_TRANSFORM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cRatioTransform />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_ANGLE_BETWEEN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cAngleBetween />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_ROTATE_ORIGIN>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33107,6 +33121,101 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列9 step1: β/α が「α を β に変える変換」であることの図。
+ *  層8：拡大率も角の数値も書かない。行き先の箱に「× ?」を置いて問いで終える。
+ *  平面には描かない（平面図にすると比と角が実寸で出てしまう）。 */
+export function M3cRatioTransform() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 168"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="α の箱から β の箱へ向かう曲がった矢印。矢印には「× ?」とだけ書かれている"
+    >
+      <rect x="34" y="52" width="66" height="36" rx="7" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="67" y="77" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        α
+      </text>
+      <rect x="220" y="52" width="66" height="36" rx="7" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="253" y="77" fontSize="16" fill={stroke} textAnchor="middle" fontStyle="italic">
+        β
+      </text>
+
+      <path d="M 102 58 Q 160 18 216 56" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 208 48 L 220 58 L 206 60" fill={accent} stroke="none" />
+      <text x="160" y="24" fontSize="17" fill={accent} textAnchor="middle" fontWeight="700">
+        × ?
+      </text>
+
+      <text x="160" y="124" fontSize="11" fill={accent} textAnchor="middle">
+        α に何を掛けたら β になるだろう。
+      </text>
+      <text x="160" y="140" fontSize="11" fill={accent} textAnchor="middle">
+        その「?」を実際に計算すると、何が見える？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列9 step3（質的変化）: 始点をそろえて測るなす角。角は「?」のまま。
+ *  層8：角の数値も点の座標も書かない。目盛りも打たない。
+ *  2 本とも原点から出ていることを見せて、「この角はどんな計算で出せる？」で終える。 */
+export function M3cAngleBetween() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 300 }}
+      role="img"
+      aria-label="原点から出る 2 本の矢印 α と β。その間の角に疑問符がついている"
+    >
+      <path d="M 30 150 L 276 150" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 270 146 L 278 150 L 270 154" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="272" y="168" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 80 172 L 80 30" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 76 36 L 80 28 L 84 36" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="88" y="36" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="72" y="166" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <path d="M 80 150 L 200 110" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="200" cy="110" r="3.4" fill={stroke} />
+      <text x="208" y="106" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        α
+      </text>
+      <path d="M 80 150 L 140 52" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="140" cy="52" r="3.4" fill={stroke} />
+      <text x="146" y="44" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        β
+      </text>
+
+      <path d="M 129.3 133.6 A 52 52 0 0 0 107.2 105.7" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="137" y="112" fontSize="15" fill={accent} fontWeight="700">
+        ?
+      </text>
+
+      <text x="150" y="188" fontSize="11" fill={accent} textAnchor="middle">
+        始点をそろえて測る、α から β までの角。
+      </text>
+      <text x="150" y="202" fontSize="11" fill={accent} textAnchor="middle">
+        この角は、どんな計算で出せる？
       </text>
     </svg>
   );
