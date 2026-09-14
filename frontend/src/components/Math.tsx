@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_ROTATE_ORIGIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cRotateOrigin />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_ROTATE_CENTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cRotateCenter />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_EQ_COMPARE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33093,6 +33107,129 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列8 step1: 原点まわりの回転。行き先は「?」のまま。
+ *  層8：回転後の座標も角の数値も書かない。目盛りも打たない。
+ *  「長さは変わらない」だけを与えて、「では何が変わる？」で終える。 */
+export function M3cRotateOrigin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 300 }}
+      role="img"
+      aria-label="原点から点 z へ引いた矢印と、そこから反時計回りに回した先を示す弧。回した先は白丸と疑問符のまま"
+    >
+      <path d="M 26 140 L 276 140" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 270 136 L 278 140 L 270 144" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="272" y="158" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 110 176 L 110 30" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 106 36 L 110 28 L 114 36" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="118" y="36" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="102" y="156" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <path d="M 110 140 L 188 95" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <circle cx="188" cy="95" r="3.4" fill={stroke} />
+      <text x="196" y="92" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+
+      <path d="M 155 114 A 52 52 0 0 0 92.2 91.1" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 99 84 L 91 91 L 100 96" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="135" y="84" fontSize="11" fill={accent} fontStyle="italic">
+        θ
+      </text>
+
+      <path d="M 110 140 L 79 56" fill="none" stroke={accent} strokeWidth="1.3" strokeDasharray="4 4" />
+      <circle cx="79.2" cy="55.4" r="4" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="70" y="48" fontSize="14" fill={accent} textAnchor="end" fontWeight="700">
+        ?
+      </text>
+
+      <text x="150" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        長さは変わらない。では、変わるのは何？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列8 step5（質的変化）: 中心が原点でないときの「始点をそろえる」図。
+ *  層8：回転後の座標も角の数値も書かない。回した先は「?」のまま。
+ *  描くのは、α→z の矢印と、それを原点へ平行移動した同じ矢印の 2 本。 */
+export function M3cRotateCenter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 232"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="点 α から点 z へ引いた矢印と、それを原点へ平行移動した同じ矢印。原点の矢印から回した先は疑問符のまま"
+    >
+      <path d="M 24 160 L 296 160" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 290 156 L 298 160 L 290 164" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="292" y="178" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 60 172 L 60 34" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 56 40 L 60 32 L 64 40" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="68" y="40" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="52" y="176" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <circle cx="178" cy="116" r="3.4" fill={stroke} />
+      <text x="172" y="110" fontSize="12" fill={stroke} textAnchor="end" fontStyle="italic" fontWeight="700">
+        α
+      </text>
+      <path d="M 178 116 L 233 86" fill="none" stroke={stroke} strokeWidth="1.7" />
+      <path d="M 227 82 L 239 83 L 231 92" fill={stroke} stroke="none" />
+      <circle cx="241" cy="82" r="3.4" fill={stroke} />
+      <text x="249" y="78" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <text x="208" y="116" fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">
+        z − α
+      </text>
+
+      <path d="M 60 160 L 115 130" fill="none" stroke={accent} strokeWidth="1.5" strokeDasharray="5 3" />
+      <path d="M 109 126 L 121 127 L 113 136" fill={accent} stroke="none" />
+      <text x="122" y="186" fontSize="10" fill={accent} textAnchor="middle">
+        同じ矢印を原点へ
+      </text>
+
+      <path d="M 95.2 141 A 40 40 0 0 0 74.7 122.8" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="99" y="126" fontSize="11" fill={accent} fontStyle="italic">
+        θ
+      </text>
+      <path d="M 60 160 L 85 94" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="3 3" />
+      <circle cx="86.3" cy="93.4" r="4" fill="none" stroke={accent} strokeWidth="1.3" />
+      <text x="78" y="86" fontSize="14" fill={accent} textAnchor="end" fontWeight="700">
+        ?
+      </text>
+
+      <text x="160" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        回す道具は、原点のまわりでしか使えない。
+      </text>
+      <text x="160" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        原点で回したあと、何をすれば元の場所に戻る？
       </text>
     </svg>
   );

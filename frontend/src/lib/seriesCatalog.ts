@@ -83,6 +83,7 @@ import {
   M3C_POLAR_SERIES,
   M3C_DEMOIVRE_SERIES,
   M3C_NTHROOT_SERIES,
+  M3C_ROTATE_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2038,6 +2039,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "$1$ の $n$ 乗根と方程式の解 — 実数の中では $n$ の偶奇でいびつに見えた解の個数。平面に上がると、解はいつでも円を $n$ 等分する位置に並んでいる",
+  },
+  {
+    series: M3C_ROTATE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "回転移動（拡大＋回転）— 実数をかけても伸び縮みするだけ。複素数をかけると平面が回る。正方形の残り $2$ 頂点が、連立ではなくかけ算 $1$ 回で出る",
   },
 ];
 
