@@ -86,6 +86,7 @@ import {
   M3C_ROTATE_SERIES,
   M3C_ANGLE_SERIES,
   M3C_SHAPE_SERIES,
+  M3C_LOCUS_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2065,6 +2066,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "条件式から図形を読む — 関係式が $1$ 本あるだけで、点がどこにあるかは分からないのに「どんな三角形か」が決まる。位置は自由、形は不変",
+  },
+  {
+    series: M3C_LOCUS_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "軌跡と円の方程式 — $\\lvert z - \\alpha \\rvert = r$ は「$\\alpha$ からの距離が $r$」という日本語そのもの。条件を式に訳せば図形が出て、式を距離に巻き戻せば図形が読める",
   },
 ];
 

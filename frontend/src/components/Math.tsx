@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_CIRCLE_EQ>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cCircleEq />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_PERP_BISECTOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cPerpBisector />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_COND_TO_SHAPE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33135,6 +33149,103 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列11 step1: |z − α| = r が「α からの距離が r」であることの図。
+ *  層8：中心の座標も半径の数値も書かない。目盛りも打たない。半径は「?」のまま。 */
+export function M3cCircleEq() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 216"
+      className="w-full h-auto"
+      style={{ maxWidth: 300 }}
+      role="img"
+      aria-label="複素数平面上の円。中心 α と円周上の点 z を結ぶ線分に疑問符がついている。座標も半径の数値もない"
+    >
+      <path d="M 24 158 L 276 158" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 270 154 L 278 158 L 270 162" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="272" y="176" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 52 180 L 52 26" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 48 32 L 52 24 L 56 32" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="60" y="32" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="44" y="174" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <circle cx="168" cy="96" r="56" fill="none" stroke={accent} strokeWidth="1.4" />
+      <circle cx="168" cy="96" r="3.6" fill={accent} />
+      <text x="160" y="112" fontSize="12" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        α
+      </text>
+      <path d="M 168 96 L 213 63" fill="none" stroke={accent} strokeWidth="1.5" />
+      <circle cx="215" cy="61" r="3.4" fill={stroke} />
+      <text x="222" y="56" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <text x="184" y="70" fontSize="15" fill={accent} fontWeight="700">
+        ?
+      </text>
+
+      <text x="150" y="198" fontSize="11" fill={accent} textAnchor="middle">
+        「α からの距離がいつも同じ」を式で書くと？
+      </text>
+      <text x="150" y="212" fontSize="11" fill={accent} textAnchor="middle">
+        そして式から α を読むとき、符号はそのままでよい？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列11 step4（質的変化）: 2 定点から等距離 → 垂直二等分線という仕組み。
+ *  層8：直線の傾きも切片も 2 定点の座標も書かない。2 本の等しい距離だけを描く。 */
+export function M3cPerpBisector() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="2 定点 A、B と、そこから等距離にある点 z。z から A、B へ引いた 2 本の線分に同じ印がついている。z を通る直線が AB の垂直二等分線"
+    >
+      <path d="M 70 132 L 234 88" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+      <circle cx="70" cy="132" r="3.6" fill={stroke} />
+      <text x="62" y="146" fontSize="12" fill={stroke} textAnchor="end" fontStyle="italic" fontWeight="700">
+        A
+      </text>
+      <circle cx="234" cy="88" r="3.6" fill={stroke} />
+      <text x="242" y="84" fontSize="12" fill={stroke} fontStyle="italic" fontWeight="700">
+        B
+      </text>
+
+      <path d="M 136.5 52 L 167.5 168" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <path d="M 143 77 L 70 132" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 143 77 L 234 88" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="143" cy="77" r="3.4" fill={accent} />
+      <text x="135" y="70" fontSize="12" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+        z
+      </text>
+      <path d="M 103.5 100.5 L 109.5 108.5" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 189.1 77.5 L 187.9 87.5" fill="none" stroke={accent} strokeWidth="1.4" />
+
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        A からの距離と B からの距離が、いつも等しい点。
+      </text>
+      <text x="160" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        そういう点を全部集めると、どんな形になる？
       </text>
     </svg>
   );
