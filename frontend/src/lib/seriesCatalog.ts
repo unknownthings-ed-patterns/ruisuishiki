@@ -82,6 +82,7 @@ import {
   M3C_MULT_SERIES,
   M3C_POLAR_SERIES,
   M3C_DEMOIVRE_SERIES,
+  M3C_NTHROOT_SERIES,
 } from "./seriesMath3Complex";
 import {
   MATH3_FUNCTIONS_SERIES_LIST,
@@ -2029,6 +2030,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "複素数平面",
     shortDescription:
       "ド・モアブルの定理（累乗）— $240$ 乗を展開する道ははじめから閉じている。$n$ 乗を「同じ回転を $n$ 回重ねること」と読み直すと、$360°$ の余りだけが残る",
+  },
+  {
+    series: M3C_NTHROOT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "複素数平面",
+    shortDescription:
+      "$1$ の $n$ 乗根と方程式の解 — 実数の中では $n$ の偶奇でいびつに見えた解の個数。平面に上がると、解はいつでも円を $n$ 等分する位置に並んでいる",
   },
 ];
 

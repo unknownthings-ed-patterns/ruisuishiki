@@ -14443,6 +14443,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3C_EQ_COMPARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cEqCompare />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3C_PLUS_2KPI>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cPlus2kpi />
+            </div>
+          );
+        }
         if (trimmed === "<<M3C_POWER_OBSERVE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -33079,6 +33093,136 @@ export function M3cRealImagRooms() {
       </text>
       <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
         ある複素数がどちらの帯に入るかは、何を見れば決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列7 step1: 方程式 zⁿ = w を「長さ」と「角」の 2 本に割る仕組みの図。
+ *  層8：その問題の r・θ の数値は書かない。両辺の下に 2 本の比較を並べるだけで、
+ *  右側（角の式）の行き先は「?」のままにする（解が n 個になるのは step3 の発見）。 */
+export function M3cEqCompare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 340 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="方程式 z の n 乗 = w を、長さの式と角の式の 2 本に割る図。長さの式の行き先は 1 つ、角の式の行き先は疑問符"
+    >
+      <rect x="110" y="10" width="120" height="30" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="170" y="30" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
+        zⁿ = w
+      </text>
+
+      <path d="M 148 42 L 96 60" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 102 54 L 92 61 L 103 64" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="94" y="48" fontSize="10" fill={muted} textAnchor="end">
+        長さを比べる
+      </text>
+      <path d="M 192 42 L 244 60" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 238 54 L 248 61 L 237 64" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="246" y="48" fontSize="10" fill={muted}>
+        角を比べる
+      </text>
+
+      <rect x="16" y="64" width="146" height="32" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="89" y="85" fontSize="13" fill={stroke} textAnchor="middle">
+        |&#8201;<tspan fontStyle="italic">z</tspan>&#8201;|<tspan fontStyle="italic">ⁿ</tspan> ={" "}
+        |&#8201;<tspan fontStyle="italic">w</tspan>&#8201;|
+      </text>
+      <rect x="178" y="64" width="146" height="32" rx="6" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="251" y="85" fontSize="13" fill={stroke} textAnchor="middle" fontStyle="italic">
+        nθ = θ₀ ?
+      </text>
+
+      <path d="M 89 98 L 89 124" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 85 118 L 89 128 L 93 118" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 251 98 L 251 124" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 247 118 L 251 128 L 255 118" fill="none" stroke={muted} strokeWidth="1" />
+
+      <rect x="30" y="130" width="118" height="32" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="89" y="151" fontSize="11" fill={accent} textAnchor="middle">
+        長さは 1 つに決まる
+      </text>
+      <rect x="192" y="130" width="118" height="32" rx="6" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="251" y="152" fontSize="17" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="170" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        長さのほうは 1 つに決まった。角のほうも、
+      </text>
+      <text x="170" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        同じように 1 つに決まる？
+      </text>
+    </svg>
+  );
+}
+
+/** 複素数平面 系列7 step3（質的変化）: 同じ向きに届く回り方は 1 通りか、を問いで終える図。
+ *  層8：解の個数も解の位置も描かない。**「2kπ ずれる」という結論そのものがこの step の発見**なので、
+ *  等間隔に並ぶ点は 1 つも置かない。描くのは 1 本の向きと、そこへ届く回り方の弧だけ。 */
+export function M3cPlus2kpi() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 226"
+      className="w-full h-auto"
+      style={{ maxWidth: 300 }}
+      role="img"
+      aria-label="原点から 1 本の向きが出ている図。そこへ届く回り方として弧が 1 本描かれ、その先は破線と疑問符"
+    >
+      <path d="M 26 120 L 274 120" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 268 116 L 276 120 L 268 124" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="272" y="138" fontSize="10" fill={muted} textAnchor="end">
+        実軸
+      </text>
+      <path d="M 150 196 L 150 24" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 146 30 L 150 22 L 154 30" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="158" y="32" fontSize="10" fill={muted}>
+        虚軸
+      </text>
+      <text x="142" y="136" fontSize="10" fill={stroke} textAnchor="end">
+        O
+      </text>
+
+      <path d="M 150 120 L 226 76" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <circle cx="226" cy="76" r="3.4" fill={stroke} />
+      <text x="234" y="72" fontSize="11" fill={stroke} fontStyle="italic" fontWeight="700">
+        w
+      </text>
+
+      <path d="M 194 120 A 44 44 0 0 0 188 98.4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="202" y="106" fontSize="11" fill={accent} fontStyle="italic">
+        θ₀
+      </text>
+
+      <path
+        d="M 198.5 92 A 56 56 0 0 0 114 77.1"
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.3"
+        strokeDasharray="4 4"
+      />
+      <path d="M 122 70 L 113 77 L 122 82" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="106" y="70" fontSize="15" fill={accent} textAnchor="end" fontWeight="700">
+        ?
+      </text>
+
+      <text x="150" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        この向きに届く回り方は、θ₀ だけだろうか。
+      </text>
+      <text x="150" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        もう 1 周してから届いても、指す先は同じでは？
+      </text>
+      <text x="150" y="216" fontSize="11" fill={accent} textAnchor="middle">
+        では、n 倍して θ₀ になる角は何通り？
       </text>
     </svg>
   );
