@@ -33894,42 +33894,42 @@ export function M3cPolarRead() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="複素数平面上の 1 点。原点から点へ引いた線分に r、実軸からその線分までの弧に θ、点から両軸へ下ろした破線に a と b の文字。目盛りも数値もない"
+      aria-label="複素数平面上の 1 点。原点から右上へ引いた線分に r、実軸からその線分までの弧に θ、点から両軸へ下ろした破線に a と b の文字。目盛りも数値もない"
     >
-      <path d="M 26 160 L 322 160" fill="none" stroke={muted} strokeWidth="1" />
-      <path d="M 316 156 L 324 160 L 316 164" fill="none" stroke={muted} strokeWidth="1" />
-      <text x="318" y="178" fontSize="10" fill={muted} textAnchor="end">
+      <path d="M 26 168 L 322 168" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 316 164 L 324 168 L 316 172" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="318" y="186" fontSize="10" fill={muted} textAnchor="end">
         実軸
       </text>
-      <path d="M 170 176 L 170 34" fill="none" stroke={muted} strokeWidth="1" />
-      <path d="M 166 40 L 170 32 L 174 40" fill="none" stroke={muted} strokeWidth="1" />
-      <text x="180" y="40" fontSize="10" fill={muted}>
+      <path d="M 100 184 L 100 34" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 96 40 L 100 32 L 104 40" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="110" y="42" fontSize="10" fill={muted}>
         虚軸
       </text>
-      <text x="178" y="176" fontSize="11" fill={stroke}>
+      <text x="108" y="184" fontSize="11" fill={stroke}>
         O
       </text>
 
-      <path d="M 68 101 L 68 160" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
-      <path d="M 68 101 L 170 101" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
-      <text x="119" y="178" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">
+      <path d="M 230 93 L 230 168" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d="M 230 93 L 100 93" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="165" y="186" fontSize="12" fill={stroke} textAnchor="middle" fontStyle="italic">
         a
       </text>
-      <text x="178" y="122" fontSize="12" fill={stroke} fontStyle="italic">
+      <text x="106" y="132" fontSize="12" fill={stroke} fontStyle="italic">
         b
       </text>
 
-      <path d="M 170 160 L 68 101" fill="none" stroke={accent} strokeWidth="1.8" />
-      <circle cx="68" cy="101" r="3.5" fill={accent} />
-      <text x="62" y="92" fontSize="12" fill={accent} textAnchor="end" fontWeight="700">
+      <path d="M 100 168 L 230 93" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="230" cy="93" r="3.5" fill={accent} />
+      <text x="238" y="88" fontSize="12" fill={accent} fontWeight="700">
         z
       </text>
-      <text x="108" y="144" fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+      <text x="201" y="132" fontSize="13" fill={accent} fontStyle="italic" fontWeight="700">
         r
       </text>
 
-      <path d="M 196 160 A 26 26 0 0 0 147.5 147" fill="none" stroke={accent} strokeWidth="1.4" />
-      <text x="150" y="126" fontSize="13" fill={accent} textAnchor="end" fontStyle="italic" fontWeight="700">
+      <path d="M 134 168 A 34 34 0 0 0 129.4 151" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="156" y="157" fontSize="13" fill={accent} fontStyle="italic" fontWeight="700">
         θ
       </text>
 

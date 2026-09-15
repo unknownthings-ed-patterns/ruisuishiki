@@ -1352,7 +1352,7 @@ export const M3C_MULT_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "ここからは、もう $1$ つの要素——**角**を見ます。実軸の正の向きから、原点と点を結ぶ向きまで回った角を、その複素数の**偏角**といいます。\n\n$z_6 = -5\\sqrt{3} + 5i$ の偏角を求めましょう。ただし偏角は $0° \\le \\theta < 360°$ の範囲でとり、正の向き（反時計回り）に測るものとします。",
+        "ここからは、もう $1$ つの要素——**角**を見ます。実軸の正の向きから、原点と点を結ぶ向きまで回った角を、その複素数の**偏角**といいます。\n\n$z_6 = -9\\sqrt{3} + 9i$ の偏角を求めましょう。ただし偏角は $0° \\le \\theta < 360°$ の範囲でとり、正の向き（反時計回り）に測るものとします。",
       answer: 150,
       unit: "",
       unknownLabel: "$z_6$ の偏角（度）",
@@ -1369,10 +1369,10 @@ export const M3C_MULT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$z_6 = -5\\sqrt{3} + 5i$ は [実部] が負、[虚部] が正なので第 $2$ 象限 にいます。原点からの距離は $\\lvert z_6 \\rvert = \\sqrt{75 + 25} = \\sqrt{100} = 10$。横が $-5\\sqrt{3}$、縦が $5$ なので、$\\cos\\theta = -\\dfrac{5\\sqrt{3}}{10} = -\\dfrac{\\sqrt{3}}{2}$、$\\sin\\theta = \\dfrac{5}{10} = \\dfrac{1}{2}$。[単位円] でこの組になる角は $\\theta = 150°$ です。中心の問いへの部分回答：**複素数には長さのほかに「角」という顔がある**。この $2$ つで点は決まります。",
+          text: "$z_6 = -9\\sqrt{3} + 9i$ は [実部] が負、[虚部] が正なので第 $2$ 象限 にいます。原点からの距離は $\\lvert z_6 \\rvert = \\sqrt{243 + 81} = \\sqrt{324} = 18$。横が $-9\\sqrt{3}$、縦が $9$ なので、$\\cos\\theta = -\\dfrac{9\\sqrt{3}}{18} = -\\dfrac{\\sqrt{3}}{2}$、$\\sin\\theta = \\dfrac{9}{18} = \\dfrac{1}{2}$。[単位円] でこの組になる角は $\\theta = 150°$ です。中心の問いへの部分回答：**複素数には長さのほかに「角」という顔がある**。この $2$ つで点は決まります。",
         },
       ],
-      formulaPreview: "|z₆| = 10、cosθ = −√3/2、sinθ = 1/2 → θ = 150°",
+      formulaPreview: "|z₆| = 18、cosθ = −√3/2、sinθ = 1/2 → θ = 150°",
     },
     {
       id: "step8",
@@ -1583,7 +1583,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "前の系列で、かけ算は「長さ」と「角」に分けて見ると規則が現れると分かりました。そこで、点を**はじめから長さと角で言い表す**ことを考えます。\n\n$z = 5\\sqrt{3} - 5i$ について、まず「原点からどれだけ離れているか」を出しましょう。$\\lvert z \\rvert$ を求めてください。",
+        "前の系列で、かけ算は「長さ」と「角」に分けて見ると規則が現れると分かりました。そこで、点を**はじめから長さと角で言い表す**ことを考えます。\n\n$z = 5\\sqrt{3} + 5i$ について、まず「原点からどれだけ離れているか」を出しましょう。$\\lvert z \\rvert$ を求めてください。",
       answer: 10,
       unit: "",
       unknownLabel: "$\\lvert z \\rvert$",
@@ -1596,14 +1596,14 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "見るところは $1$ つだけ——**横の $-5\\sqrt{3}$ と縦の $5$ が作る直角三角形の斜辺**。$2$ 乗して足すとき、$\\sqrt{3}$ はどうなる？",
+          text: "見るところは $1$ つだけ——**横の $5\\sqrt{3}$ と縦の $5$ が作る直角三角形の斜辺**。$2$ 乗して足すとき、$\\sqrt{3}$ はどうなる？",
         },
         {
           layer: 3,
-          text: "$\\lvert z \\rvert = \\sqrt{(5\\sqrt{3})^2 + (-5)^2}$ です。$(5\\sqrt{3})^2 = 25 \\times 3 = 75$、$(-5)^2 = 25$ なので $\\sqrt{75 + 25} = \\sqrt{100} = 10$。\n\nこの $10$ が、点 $z$ の「**原点からの距離**」です。[複素数平面] の上で点を指すには、いままで「横に $5\\sqrt{3}$、縦に $-5$」と言ってきました。でも「**原点から $10$ 離れた、ある向き**」と言っても、同じ点を指せます。中心の問いへの最初の部分回答：**同じ $1$ 点に、$2$ 通りの言い方がある**。次の問題で、もう一方の数——「向き」のほうを測ってみます。",
+          text: "$\\lvert z \\rvert = \\sqrt{(5\\sqrt{3})^2 + 5^2}$ です。$(5\\sqrt{3})^2 = 25 \\times 3 = 75$、$5^2 = 25$ なので $\\sqrt{75 + 25} = \\sqrt{100} = 10$。\n\nこの $10$ が、点 $z$ の「**原点からの距離**」です。[複素数平面] の上で点を指すには、いままで「横に $5\\sqrt{3}$、縦に $5$」と言ってきました。でも「**原点から $10$ 離れた、ある向き**」と言っても、同じ点を指せます。中心の問いへの最初の部分回答：**同じ $1$ 点に、$2$ 通りの言い方がある**。次の問題で、もう一方の数——「向き」のほうを測ってみます。",
         },
       ],
-      formulaPreview: "|z| = √((5√3)² + (−5)²) = √(75+25) = √100 = 10",
+      formulaPreview: "|z| = √((5√3)² + 5²) = √(75+25) = √100 = 10",
       figureMarker: "<<M3C_POLAR_READ>>",
     },
     {
@@ -1627,7 +1627,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$w = -3-3i$ は、横が $-3$・縦が $-3$。$\\lvert w \\rvert = \\sqrt{9+9} = 3\\sqrt{2}$ なので\n\n$$\\cos\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}, \\qquad \\sin\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}$$\n\n[単位円] でこの組になる角は、第 $3$ 象限の $225°$ です。\n\n**なぜ「別の点」で測ったか**：$z$ の距離を出したときに使った $\\sqrt{(5\\sqrt3)^2+(-5)^2}$ の計算は、そのまま $\\cos\\theta$ と $\\sin\\theta$ の分母にもなります。同じ点で距離と向きを両方聞くと、**$1$ 回の計算で $2$ つがそろってしまう**——だから別の点にしました。中心の問いへの部分回答：**点を決めるのに必要な数は $2$ つ。「横と縦」でも「長さと角」でも、どちらの組でもよい**。",
+          text: "$w = -3-3i$ は、横が $-3$・縦が $-3$。$\\lvert w \\rvert = \\sqrt{9+9} = 3\\sqrt{2}$ なので\n\n$$\\cos\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}, \\qquad \\sin\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}$$\n\n[単位円] でこの組になる角は、第 $3$ 象限の $225°$ です。\n\n**なぜ「別の点」で測ったか**：$z$ の距離を出したときに使った $\\sqrt{(5\\sqrt3)^2+5^2}$ の計算は、そのまま $\\cos\\theta$ と $\\sin\\theta$ の分母にもなります。同じ点で距離と向きを両方聞くと、**$1$ 回の計算で $2$ つがそろってしまう**——だから別の点にしました。中心の問いへの部分回答：**点を決めるのに必要な数は $2$ つ。「横と縦」でも「長さと角」でも、どちらの組でもよい**。",
         },
       ],
       formulaPreview: "|w| = 3√2、cosθ = sinθ = −1/√2 → θ = 225°",
@@ -3567,9 +3567,9 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "こんどは**形から係数を逆算**します。\n\n$\\alpha^2 + 5\\alpha\\beta + t\\beta^2 = 0$（$t$ は正の実数）のとき、$\\angle\\mathrm{AOB} = 135°$ になりました。$t$ の値を求めましょう。答えは既約分数で答えましょう。",
-      answer: 12.5,
-      answerDisplay: "25/2",
+        "こんどは**形から係数を逆算**します。\n\n$2\\alpha^2 + 7\\alpha\\beta + t\\beta^2 = 0$（$t$ は正の実数）のとき、$\\angle\\mathrm{AOB} = 120°$ になりました。$t$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 24.5,
+      answerDisplay: "49/2",
       unit: "",
       unknownLabel: "$t$",
       variationFromPrevious: "inverse",
@@ -3581,20 +3581,20 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題までと変わったのは、**未知が係数に移った**こと $1$ つ。角と係数を結ぶ式に $135°$ を入れれば、$t$ についての方程式になる。",
+          text: "前題までと変わったのは、**未知が係数に移った**こと $1$ つ。角と係数を結ぶ式に $120°$ を入れれば、$t$ についての方程式になる。",
         },
         {
           layer: 3,
-          text: "前題で作った式をそのまま使います。$a = 1$、$b = 5$、$c = t$ なので\n\n$$\\cos 135° = \\frac{-5}{2\\sqrt{t}} \\quad \\Longrightarrow \\quad -\\frac{1}{\\sqrt2} = \\frac{-5}{2\\sqrt t}$$\n\n$$2\\sqrt t = 5\\sqrt2 \\quad \\Longrightarrow \\quad \\sqrt t = \\frac{5\\sqrt2}{2} \\quad \\Longrightarrow \\quad t = \\frac{50}{4} = \\frac{25}{2}$$\n\n検算：$t = \\dfrac{25}{2}$ のとき $\\dfrac{25}{2}w^2 + 5w + 1 = 0$、つまり $25w^2 + 10w + 2 = 0$ で $w = \\dfrac{-10 \\pm \\sqrt{100-200}}{50} = \\dfrac{-1 \\pm i}{5}$。[偏角] はたしかに $135°$ ✓\n\n**「どんな三角形か」を先に決めて、それを作る式を書けました。** 形と式が行き来できる——**図形の条件と代数の条件が、同じものの表と裏**になっています。中心の問いへの部分回答：対応が $1$ 対 $1$ に近いので、**どちら向きにも解けます**。",
+          text: "前題で作った式をそのまま使います。$a = 2$、$b = 7$、$c = t$ なので\n\n$$\\cos 120° = \\frac{-7}{2\\sqrt{2t}} \\quad \\Longrightarrow \\quad -\\frac{1}{2} = \\frac{-7}{2\\sqrt{2t}}$$\n\n$$2\\sqrt{2t} = 14 \\quad \\Longrightarrow \\quad \\sqrt{2t} = 7 \\quad \\Longrightarrow \\quad 2t = 49 \\quad \\Longrightarrow \\quad t = \\frac{49}{2}$$\n\n検算：$t = \\dfrac{49}{2}$ のとき $2\\alpha^2 + 7\\alpha\\beta + \\dfrac{49}{2}\\beta^2 = 0$、両辺を $2$ 倍して $\\alpha^2$ で割ると $49w^2 + 14w + 4 = 0$ で $w = \\dfrac{-14 \\pm \\sqrt{196-784}}{98} = \\dfrac{-1 \\pm \\sqrt3\\,i}{7}$。$\\lvert w \\rvert = \\dfrac27$、$\\cos\\theta = \\dfrac{-1/7}{2/7} = -\\dfrac12$ ——[偏角] はたしかに $120°$ ✓\n\n**「どんな三角形か」を先に決めて、それを作る式を書けました。** 形と式が行き来できる——**図形の条件と代数の条件が、同じものの表と裏**になっています。中心の問いへの部分回答：対応が $1$ 対 $1$ に近いので、**どちら向きにも解けます**。",
         },
       ],
-      formulaPreview: "cos135° = −5/(2√t) → −1/√2 = −5/(2√t) → 2√t = 5√2 → t = 25/2",
+      formulaPreview: "cos120° = −7/(2√(2t)) → −1/2 = −7/(2√(2t)) → √(2t) = 7 → t = 49/2",
     },
     {
       id: "step6",
       position: 6,
       questionText:
-        "ここまでは $1$ 頂点が原点でした。**$3$ 点とも動く**場合に進みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が三角形をなし、\n\n$$4(\\gamma - \\alpha)^2 + 5(\\gamma - \\alpha)(\\beta - \\alpha) + 4(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
+        "ここまでは $1$ 頂点が原点でした。**$3$ 点とも動く**場合に進みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が三角形をなし、\n\n$$4(\\beta - \\alpha)^2 + 5(\\beta - \\alpha)(\\gamma - \\alpha) + 4(\\gamma - \\alpha)^2 = 0$$\n\nを満たすとき、$\\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -0.625,
       answerDisplay: "−5/8",
       unit: "",
@@ -3622,7 +3622,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "同じ形の条件で、角を読みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が\n\n$$(\\gamma - \\alpha)^2 + 2(\\gamma - \\alpha)(\\beta - \\alpha) + 2(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\angle\\mathrm{BAC}$ を求めましょう（**度**で）。",
+        "同じ形の条件で、角を読みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が\n\n$$(\\beta - \\alpha)^2 + 2(\\beta - \\alpha)(\\gamma - \\alpha) + 2(\\gamma - \\alpha)^2 = 0$$\n\nを満たすとき、$\\angle\\mathrm{BAC}$ を求めましょう（**度**で）。",
       answer: 135,
       unit: "",
       unknownLabel: "$\\angle\\mathrm{BAC}$（度）",
@@ -3631,11 +3631,11 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。割る相手も、置きかえる文字も同じ。違うのは係数と、読む量が角だということ。$4$ 問前に作った「係数から角を出す式」は、基準が $\\mathrm{A}$ に移っても同じように使えるだろうか。",
+          text: "前題と比べてみよう。割る相手も、置きかえる文字も同じ。違うのは係数と、読む量が角だということ。$3$ 問前に作った「係数から角を出す式」は、基準が $\\mathrm{A}$ に移っても同じように使えるだろうか。",
         },
         {
           layer: 2,
-          text: "前題と変わったのは、**読む量が [実部] から角に移った**こと $1$ つ。$4$ 問前に作った「係数から角を出す式」は、両端の係数が違っていても同じように使えるだろうか。",
+          text: "前題と変わったのは、**読む量が [実部] から角に移った**こと $1$ つ。$3$ 問前に作った「係数から角を出す式」は、両端の係数が違っていても同じように使えるだろうか。",
         },
         {
           layer: 3,
