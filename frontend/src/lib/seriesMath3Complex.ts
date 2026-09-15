@@ -241,7 +241,7 @@ export const M3C_PLANE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題までは $1$ つの複素数を回していた。今度は $5$ つ並んでいて、回したあとの**居場所**を聞かれている。前題までに見た「入れかわって符号がつく」を、$5$ つとも試してみるとどうなる？",
+          text: "前題までは $1$ つの複素数を回していた。今度は $5$ つ並んでいて、回したあとの**居場所**を聞かれている。前題までに見た「入れかわって符号がつく」が、$5$ つのそれぞれに当たるとどうなるだろう。実軸の上にいるとは、$2$ つの成分のうちどちらが $0$ だということだった？",
         },
         {
           layer: 2,
@@ -621,9 +621,9 @@ export const M3C_ABS_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "$3$ 点 A$(5 + i)$、B$(-6 + 7i)$、C$(2 - 2i)$ を頂点とする三角形 ABC をとります。\n\nこの三角形の [重心] G に対応する複素数の [実部] を求めましょう。答えは既約分数で答えましょう。",
-      answer: 0.3333333333333333,
-      answerDisplay: "1/3",
+        "$3$ 点 A$(5 + i)$、B$(-6 + 7i)$、C$(6 - 4i)$ を頂点とする三角形 ABC をとります。\n\nこの三角形の [重心] G に対応する複素数の [実部] を求めましょう。答えは既約分数で答えましょう。",
+      answer: 5 / 3,
+      answerDisplay: "5/3",
       unit: "",
       unknownLabel: "G の実部",
       variationFromPrevious: "plus_alpha",
@@ -639,10 +639,10 @@ export const M3C_ABS_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題では $m = \\dfrac{p+q}{2}$ と、$2$ つの平均を取りました。三角形の [重心] は $3$ 頂点の平均です：$g = \\dfrac{\\alpha + \\beta + \\gamma}{3} = \\dfrac{(5 + i) + (-6 + 7i) + (2 - 2i)}{3} = \\dfrac{1 + 6i}{3} = \\dfrac{1}{3} + 2i$。よって [実部] は $\\dfrac{1}{3}$ です。数Ⅱ・B の座標平面で習った重心の公式（$3$ 頂点の座標の平均）と、まったく同じ形をしています。中心の問いへの部分回答：**足す・実数倍で書ける公式は、複素数にそのまま置きかえられる**。[中点]・内分・[重心] は全部この仲間です。",
+          text: "前題では $m = \\dfrac{p+q}{2}$ と、$2$ つの平均を取りました。三角形の [重心] は $3$ 頂点の平均です：$g = \\dfrac{\\alpha + \\beta + \\gamma}{3} = \\dfrac{(5 + i) + (-6 + 7i) + (6 - 4i)}{3} = \\dfrac{5 + 4i}{3} = \\dfrac{5}{3} + \\dfrac43 i$。よって [実部] は $\\dfrac{5}{3}$ です。**$\\dfrac13$ ではありません**——重心の公式に $\\dfrac13$ が出てくるからといって、答えが $\\dfrac13$ になるとはかぎらないからです（$3$ 頂点の実部の和は $5$ で、$3$ では割り切れません）。数Ⅱ・B の座標平面で習った重心の公式（$3$ 頂点の座標の平均）と、まったく同じ形をしています。中心の問いへの部分回答：**足す・実数倍で書ける公式は、複素数にそのまま置きかえられる**。[中点]・内分・[重心] は全部この仲間です。",
         },
       ],
-      formulaPreview: "g = ((5+i) + (−6+7i) + (2−2i))/3 = (1+6i)/3、実部は 1/3",
+      formulaPreview: "g = ((5+i) + (−6+7i) + (6−4i))/3 = (5+4i)/3、実部は 5/3",
     },
     {
       id: "step9",
@@ -1221,53 +1221,53 @@ export const M3C_MULT_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "同じ $z_1 = -7 - 5i$、$z_2 = -3 - i$ について、こんどは**それぞれの長さを別々に測って**から掛けてみます。\n\n$\\lvert z_1 \\rvert^2 \\times \\lvert z_2 \\rvert^2$ の値を求めましょう。",
+        "前題で出した積 $z_1 z_2$ を、**そのまま測って**みましょう。\n\n$\\lvert z_1 z_2 \\rvert^2$ の値を求めましょう。",
       answer: 740,
       unit: "",
-      unknownLabel: "$\\lvert z_1 \\rvert^2 \\times \\lvert z_2 \\rvert^2$",
+      unknownLabel: "$\\lvert z_1 z_2 \\rvert^2$",
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。同じ $2$ つの複素数を使っているのに、聞かれていることが違う。前題は積を出した。今度は積を出さずに、$1$ つずつ何かをしている。",
+          text: "前題と比べてみよう。使っている複素数は同じで、前題で出した積もそのまま使える。違うのは、その積をどう扱うかだけ。積の点は、原点からどれくらい離れているだろう。",
         },
         {
           layer: 2,
-          text: "前題と変わったのは、**$2$ つをかけ合わせる前に、それぞれを測る**という点 $1$ つ。長さの $2$ 乗の出し方は、前の系列で歩いたとおり。",
+          text: "前題と変わったのは、**積を出したあとに、それを測る**という一手が足されたこと $1$ つ。長さの $2$ 乗の出し方は、前の系列で歩いたとおり。",
         },
         {
           layer: 3,
-          text: "前の系列で $\\lvert z \\rvert^2 = a^2 + b^2$ と確かめました。だから $\\lvert z_1 \\rvert^2 = (-7)^2 + (-5)^2 = 49 + 25 = 74$、$\\lvert z_2 \\rvert^2 = (-3)^2 + (-1)^2 = 9 + 1 = 10$。かけて $74 \\times 10 = 740$ です。前題では $2$ つを**かけてから**平面を見ました。今度は **$1$ つずつ測ってから**かけています。中心の問いへの部分回答：**同じ $2$ 数に対して、順序の違う $2$ つの道がある**。次の問題で、もう一方の道を歩いてみます。",
+          text: "前題で $z_1 z_2 = 16 + 22i$ と出しました。これをそのまま測ります。前の系列で $\\lvert z \\rvert^2 = a^2 + b^2$ と確かめたので\n\n$$\\lvert z_1 z_2 \\rvert^2 = 16^2 + 22^2 = 256 + 484 = 740$$\n\nこれで「**掛けてから測る**」という道を $1$ 本歩きました。積の点が、原点からどれだけ離れているかが分かったことになります。\n\n中心の問いへの部分回答：**積を平面に置いても規則は見えなかったけれど、長さという $1$ つの量に絞れば数が出る**。次の問題では、同じ $2$ 数に対して**順序の違うもう $1$ 本の道**を歩いてみます。",
         },
       ],
-      formulaPreview: "|z₁|² = 49+25 = 74、|z₂|² = 9+1 = 10、かけて 740",
+      formulaPreview: "z₁z₂ = 16+22i をそのまま測る。|z₁z₂|² = 16² + 22² = 256+484 = 740",
     },
     {
       id: "step3",
       position: 3,
       questionText:
-        "こんどは順序を逆にします。前々題で出した積 $z_1 z_2$ を、**そのまま測って**みましょう。\n\n$\\lvert z_1 z_2 \\rvert^2$ の値を求めましょう。",
+        "こんどは順序を逆にします。同じ $z_1 = -7 - 5i$、$z_2 = -3 - i$ について、**それぞれの長さを別々に測って**から掛けてみましょう。\n\n$\\lvert z_1 \\rvert^2 \\times \\lvert z_2 \\rvert^2$ の値を求めましょう。",
       answer: 740,
       unit: "",
-      unknownLabel: "$\\lvert z_1 z_2 \\rvert^2$",
+      unknownLabel: "$\\lvert z_1 \\rvert^2 \\times \\lvert z_2 \\rvert^2$",
       variationFromPrevious: "same",
       compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。前題は「$1$ つずつ測ってからかけた」。今度は「かけてから測る」。**何が同じで、何が違う？** 出てくる数は、どうなりそうだろうか。",
+          text: "前題と比べてみよう。前題は「かけてから測った」。今度は「測ってからかける」。**何が同じで、何が違う？**",
         },
         {
           layer: 2,
-          text: "前題と変わったのは、**測るのとかけるの、どちらを先にやるか**だけ。使う材料はまったく同じ $2$ つの複素数。",
+          text: "前題と変わったのは、**測るのとかけるの、どちらを先にやるか**だけ。使う材料はまったく同じ $2$ つの複素数。今度は積を作らずに、$1$ つずつ測る。",
         },
         {
           layer: 3,
-          text: "前々題で $z_1 z_2 = 16 + 22i$ と出しました。これをそのまま測ります：$\\lvert z_1 z_2 \\rvert^2 = 16^2 + 22^2 = 256 + 484 = 740$。**前題と同じ数**になりました。前題は「測ってから掛ける」、今度は「掛けてから測る」——**順序が逆なのに、同じ場所に着いた**のです。平面ではあれほどバラバラに見えた $3$ つの点が、**長さだけを見ると $1$ 本の規則でつながっていました**。中心の問いへの部分回答：**規則が見えなかったのは、見る場所が悪かっただけ**。点の位置ではなく「長さ」という $1$ つの量に絞ると、規則が顔を出します。ただし、これが**この $2$ 数だけの偶然ではない**ことは、まだ言えていません。",
+          text: "$\\lvert z_1 \\rvert^2 = (-7)^2 + (-5)^2 = 49 + 25 = 74$、$\\lvert z_2 \\rvert^2 = (-3)^2 + (-1)^2 = 9 + 1 = 10$。かけて\n\n$$74 \\times 10 = 740$$\n\n**前題と同じ数**になりました。前題は「掛けてから測る」、今度は「測ってから掛ける」——**順序が逆なのに、同じ場所に着いた**。\n\n偶然でしょうか。それとも、いつでもそうなるのでしょうか。中心の問いへの部分回答：**積という $1$ つの演算の中に、長さについての規則がひそんでいる**。次の $2$ 問で、なぜそうなるのかを確かめます。",
         },
       ],
-      formulaPreview: "z₁z₂ = 16+22i なので |z₁z₂|² = 256+484 = 740。前題と同じ数",
+      formulaPreview: "|z₁|² = 49+25 = 74、|z₂|² = 9+1 = 10、かけて 74 × 10 = 740",
     },
     {
       id: "step4",
@@ -1583,7 +1583,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "前の系列で、かけ算は「長さ」と「角」に分けて見ると規則が現れると分かりました。そこで、点を**はじめから長さと角で言い表す**ことを考えます。\n\n$z = -5\\sqrt{3} + 5i$ について、まず「原点からどれだけ離れているか」を出しましょう。$\\lvert z \\rvert$ を求めてください。",
+        "前の系列で、かけ算は「長さ」と「角」に分けて見ると規則が現れると分かりました。そこで、点を**はじめから長さと角で言い表す**ことを考えます。\n\n$z = 5\\sqrt{3} - 5i$ について、まず「原点からどれだけ離れているか」を出しましょう。$\\lvert z \\rvert$ を求めてください。",
       answer: 10,
       unit: "",
       unknownLabel: "$\\lvert z \\rvert$",
@@ -1600,10 +1600,10 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\lvert z \\rvert = \\sqrt{(-5\\sqrt{3})^2 + 5^2}$ です。$(-5\\sqrt{3})^2 = 25 \\times 3 = 75$、$5^2 = 25$ なので $\\sqrt{75 + 25} = \\sqrt{100} = 10$。\n\nこの $10$ が、点 $z$ の「**原点からの距離**」です。[複素数平面] の上で点を指すには、いままで「横に $-5\\sqrt{3}$、縦に $5$」と言ってきました。でも「**原点から $10$ 離れた、ある向き**」と言っても、同じ点を指せます。中心の問いへの最初の部分回答：**同じ $1$ 点に、$2$ 通りの言い方がある**。次の問題で、もう一方の数——「向き」のほうを測ってみます。",
+          text: "$\\lvert z \\rvert = \\sqrt{(5\\sqrt{3})^2 + (-5)^2}$ です。$(5\\sqrt{3})^2 = 25 \\times 3 = 75$、$(-5)^2 = 25$ なので $\\sqrt{75 + 25} = \\sqrt{100} = 10$。\n\nこの $10$ が、点 $z$ の「**原点からの距離**」です。[複素数平面] の上で点を指すには、いままで「横に $5\\sqrt{3}$、縦に $-5$」と言ってきました。でも「**原点から $10$ 離れた、ある向き**」と言っても、同じ点を指せます。中心の問いへの最初の部分回答：**同じ $1$ 点に、$2$ 通りの言い方がある**。次の問題で、もう一方の数——「向き」のほうを測ってみます。",
         },
       ],
-      formulaPreview: "|z| = √((−5√3)² + 5²) = √(75+25) = √100 = 10",
+      formulaPreview: "|z| = √((5√3)² + (−5)²) = √(75+25) = √100 = 10",
       figureMarker: "<<M3C_POLAR_READ>>",
     },
     {
@@ -1627,7 +1627,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$w = -3-3i$ は、横が $-3$・縦が $-3$。$\\lvert w \\rvert = \\sqrt{9+9} = 3\\sqrt{2}$ なので\n\n$$\\cos\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}, \\qquad \\sin\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}$$\n\n[単位円] でこの組になる角は、第 $3$ 象限の $225°$ です。\n\n**なぜ「別の点」で測ったか**：$z$ の距離を出したときに使った $\\sqrt{(-5\\sqrt3)^2+5^2}$ の計算は、そのまま $\\cos\\theta$ と $\\sin\\theta$ の分母にもなります。同じ点で距離と向きを両方聞くと、**$1$ 回の計算で $2$ つがそろってしまう**——だから別の点にしました。中心の問いへの部分回答：**点を決めるのに必要な数は $2$ つ。「横と縦」でも「長さと角」でも、どちらの組でもよい**。",
+          text: "$w = -3-3i$ は、横が $-3$・縦が $-3$。$\\lvert w \\rvert = \\sqrt{9+9} = 3\\sqrt{2}$ なので\n\n$$\\cos\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}, \\qquad \\sin\\theta = \\frac{-3}{3\\sqrt{2}} = -\\frac{1}{\\sqrt{2}}$$\n\n[単位円] でこの組になる角は、第 $3$ 象限の $225°$ です。\n\n**なぜ「別の点」で測ったか**：$z$ の距離を出したときに使った $\\sqrt{(5\\sqrt3)^2+(-5)^2}$ の計算は、そのまま $\\cos\\theta$ と $\\sin\\theta$ の分母にもなります。同じ点で距離と向きを両方聞くと、**$1$ 回の計算で $2$ つがそろってしまう**——だから別の点にしました。中心の問いへの部分回答：**点を決めるのに必要な数は $2$ つ。「横と縦」でも「長さと角」でも、どちらの組でもよい**。",
         },
       ],
       formulaPreview: "|w| = 3√2、cosθ = sinθ = −1/√2 → θ = 225°",
@@ -1636,7 +1636,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "この $2$ つ——長さ $r$ と角 $\\theta$——を使って複素数を書いたものを [極形式] といいます。\n\n$$z = r(\\cos\\theta + i\\sin\\theta)$$\n\nでは、極形式で $z = 5(\\cos 300° + i\\sin 300°)$ と書かれた複素数の [実部] を求めましょう。",
+        "この $2$ つ——長さ $r$ と角 $\\theta$——を使って複素数を書いたものを [極形式] といいます。\n\n$$z = r(\\cos\\theta + i\\sin\\theta)$$\n\nでは、極形式で $z = 5(\\cos 300° + i\\sin 300°)$ と書かれた複素数の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: 2.5,
       answerDisplay: "5/2",
       unit: "",
@@ -1663,7 +1663,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "こんどは、極形式の式そのものは書かれていません。\n\n[絶対値] が $15$、[偏角] が $330°$ である複素数の [虚部] を求めましょう。",
+        "こんどは、極形式の式そのものは書かれていません。\n\n[絶対値] が $15$、[偏角] が $330°$ である複素数の [虚部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -7.5,
       answerDisplay: "−15/2",
       unit: "",
@@ -1743,7 +1743,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "角のほうは片づきました。では、**もう一方の数**はどうなっているでしょう。\n\n$$z_5 = 7(\\cos 310° + i\\sin 310°), \\qquad z_6 = 4(\\cos 100° + i\\sin 100°)$$\n\n商 $\\dfrac{z_5}{z_6}$ の [絶対値] を求めましょう。",
+        "角のほうは片づきました。では、**もう一方の数**はどうなっているでしょう。\n\n$$z_5 = 7(\\cos 310° + i\\sin 310°), \\qquad z_6 = 4(\\cos 100° + i\\sin 100°)$$\n\n商 $\\dfrac{z_5}{z_6}$ の [絶対値] を求めましょう。答えは既約分数で答えましょう。",
       answer: 1.75,
       answerDisplay: "7/4",
       unit: "",
@@ -1796,7 +1796,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "ここで、**極形式を使わない道**も見ておきます。角が特別角でない複素数どうしは、極形式に直せません。そういうときは $a+bi$ のまま割ります。\n\n$$\\frac{5 + 2i}{4 - i}$$\n\nこの商の [実部] を求めましょう。",
+        "ここで、**極形式を使わない道**も見ておきます。角が特別角でない複素数どうしは、極形式に直せません。そういうときは $a+bi$ のまま割ります。\n\n$$\\frac{5 + 2i}{4 - i}$$\n\nこの商の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: 18 / 17,
       answerDisplay: "18/17",
       unit: "",
@@ -2056,7 +2056,7 @@ export const M3C_DEMOIVRE_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "定理が手に入ったので、使ってみます。\n\n$u = \\dfrac{3}{2}(\\cos 30° + i\\sin 30°)$ とします。$u^4$ の [実部] を求めましょう。",
+        "定理が手に入ったので、使ってみます。\n\n$u = \\dfrac{3}{2}(\\cos 30° + i\\sin 30°)$ とします。$u^4$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -81 / 32,
       answerDisplay: "−81/32",
       unit: "",
@@ -2188,7 +2188,7 @@ export const M3C_DEMOIVRE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "$$\\alpha = 7(\\cos 61° + i\\sin 61°), \\qquad \\beta = 7(\\cos 44° + i\\sin 44°)$$\n\nとし、$z = \\dfrac{\\alpha}{\\beta}$ とします。\n\n$z^{240}$ の [実部] を求めましょう。",
+        "$$\\alpha = 7(\\cos 61° + i\\sin 61°), \\qquad \\beta = 7(\\cos 44° + i\\sin 44°)$$\n\nとし、$z = \\dfrac{\\alpha}{\\beta}$ とします。\n\n$z^{240}$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -0.5,
       answerDisplay: "−1/2",
       unit: "",
@@ -2422,7 +2422,7 @@ export const M3C_NTHROOT_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "角が決まれば、解そのものも書けます。\n\n$z^3 = -27$ の解のうち、**偏角が $60°$ であるもの**の [実部] を求めましょう。",
+        "角が決まれば、解そのものも書けます。\n\n$z^3 = -27$ の解のうち、**偏角が $300°$ であるもの**の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: 1.5,
       answerDisplay: "3/2",
       unit: "",
@@ -2440,10 +2440,10 @@ export const M3C_NTHROOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "長さの式から $\\lvert z \\rvert^3 = 27$ なので $\\lvert z \\rvert = 3$。角の式から $3\\theta = 180° + 360°k$、つまり $\\theta = 60° + 120°k$ で $\\theta = 60°,\\ 180°,\\ 300°$。\n\n聞かれているのは $\\theta = 60°$ の解なので、[極形式] の [実部] は $r\\cos\\theta$ より\n\n$$3 \\times \\cos 60° = 3 \\times \\frac{1}{2} = \\frac{3}{2}$$\n\n（ついでに [虚部] は $3\\sin 60° = \\dfrac{3\\sqrt3}{2}$ なので、この解は $\\dfrac{3}{2} + \\dfrac{3\\sqrt3}{2}i$ です。）\n\n**$3$ 個の解のうち、実数は $\\theta = 180°$ の $z = -3$ だけ。** 残りの $2$ つは複素数で、実軸をはさんで上下に対になっています。実数の範囲で $x^3 = -27$ を解いたとき「答えは $-3$ ひとつ」と見えたのは、**残り $2$ つが数直線の外にいたから**でした。中心の問いへの部分回答：**解は消えていたのではなく、見ていた場所になかった**だけです。",
+          text: "長さの式から $\\lvert z \\rvert^3 = 27$ なので $\\lvert z \\rvert = 3$。角の式から $3\\theta = 180° + 360°k$、つまり $\\theta = 60° + 120°k$ で $\\theta = 60°,\\ 180°,\\ 300°$。\n\n聞かれているのは $\\theta = 300°$ の解なので、[極形式] の [実部] は $r\\cos\\theta$ より\n\n$$3 \\times \\cos 300° = 3 \\times \\frac{1}{2} = \\frac{3}{2}$$\n\n（[虚部] は $3\\sin 300° = -\\dfrac{3\\sqrt3}{2}$ なので、この解は $\\dfrac{3}{2} - \\dfrac{3\\sqrt3}{2}i$ です。）\n\n**$300°$ の解は、$+360°k$ を落とすと見つかりません。** 角の式を $3\\theta = 180°$ とだけ書くと $\\theta = 60°$ しか出てこないからです。$k = 2$ まで動かして、はじめて $300°$ に届きます。\n\n**$3$ 個の解のうち、実数は $\\theta = 180°$ の $z = -3$ だけ。** 残りの $2$ つは複素数で、実軸をはさんで上下に対になっています。実数の範囲で $x^3 = -27$ を解いたとき「答えは $-3$ ひとつ」と見えたのは、**残り $2$ つが数直線の外にいたから**でした。中心の問いへの部分回答：**解は消えていたのではなく、見ていた場所になかった**だけです。",
         },
       ],
-      formulaPreview: "|z| = 3、θ = 60° + 120°k。θ = 60° の解の実部は 3cos60° = 3/2",
+      formulaPreview: "|z| = 3、θ = 60° + 120°k（k = 0,1,2）。θ = 300° は k = 2。実部は 3cos300° = 3/2",
     },
     {
       id: "step6",
@@ -2555,8 +2555,8 @@ export const M3C_NTHROOT_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "$$z^{139} = \\frac{1}{2} + \\frac{\\sqrt{3}}{2}i$$\n\nこの方程式の解のうち、**[実部] が正である**ものはいくつあるでしょう。",
-      answer: 69,
+        "$$z^{139} = -\\frac{\\sqrt{3}}{2} + \\frac{1}{2}i$$\n\nこの方程式の解のうち、**[実部] が正である**ものはいくつあるでしょう。",
+      answer: 70,
       unit: "",
       unknownLabel: "実部が正である解の個数",
       variationFromPrevious: "composite",
@@ -2572,11 +2572,11 @@ export const M3C_NTHROOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "**第 $1$ 歩——右辺を読む。** $\\dfrac{1}{2} + \\dfrac{\\sqrt3}{2}i$ は [絶対値] $1$、[偏角] $60°$ の複素数です（$\\cos 60° = \\dfrac12$、$\\sin 60° = \\dfrac{\\sqrt3}{2}$）。\n\n**第 $2$ 歩——$2$ 本の式に割る。** 長さから $\\lvert z \\rvert^{139} = 1$ なので $\\lvert z \\rvert = 1$。**$139$ 個の解は全部 [単位円] の上**にいます。だから [実部] の符号は、偏角だけで決まります。角からは\n\n$$139\\theta = 60° + 360°k \\quad \\Longrightarrow \\quad \\theta = \\frac{60 + 360k}{139}\\ ° \\qquad (k = 0, 1, \\ldots, 138)$$\n\n**第 $3$ 歩——条件を $k$ の不等式に翻訳する。** [実部] が正とは $\\cos\\theta > 0$、つまり $0° \\le \\theta < 90°$ または $270° < \\theta < 360°$ です。\n\n$$\\theta < 90 \\iff 60 + 360k < 90 \\times 139 = 12510 \\iff k < 34.58\\ldots$$\n\nなので $k = 0, 1, \\ldots, 34$ の **$35$ 個**。\n\n$$\\theta > 270 \\iff 60 + 360k > 270 \\times 139 = 37530 \\iff k > 104.08\\ldots$$\n\nなので $k = 105, 106, \\ldots, 138$ の **$34$ 個**。\n\n**第 $4$ 歩——足す。** $35 + 34 = 69$ 個です。\n\n（$\\theta$ の刻み幅は $\\dfrac{360}{139}$ 度で、割り切れません。**書き出そうとすれば $139$ 行、しかもどれも分数**——通れなくはありませんが、現実的ではありません。step 8 で $40$ 個を刻み幅から数えたのと、**やっていることはまったく同じ**です。変わったのは規模だけ。）\n\n中心の問いに戻ると：実数だけで見たときのいびつさは、**解の側にはありませんでした**。解はいつでも、円の上に $n$ 個きっちり等間隔に並んでいます。いびつに見えたのは、**実軸という $1$ 本の直線が、その等間隔の並びをどこで横切るかが $n$ によって変わる**からでした。\n\n見る場所を平面に広げると、$n$ が $3$ 桁でも並びかたは同じ $1$ 本の式で言えます。**規則がいびつだったのではなく、私たちが規則の一部しか見ていなかった**——数Ⅱ で $i$ を作ったときと、まったく同じことが起きていました。",
+          text: "**第 $1$ 歩——右辺を読む。** $-\\dfrac{\\sqrt3}{2} + \\dfrac{1}{2}i$ は [絶対値] $1$、[偏角] $150°$ の複素数です（$\\cos 150° = -\\dfrac{\\sqrt3}{2}$、$\\sin 150° = \\dfrac12$）。\n\n**第 $2$ 歩——$2$ 本の式に割る。** 長さから $\\lvert z \\rvert^{139} = 1$ なので $\\lvert z \\rvert = 1$。**$139$ 個の解は全部 [単位円] の上**にいます。だから [実部] の符号は、偏角だけで決まります。角からは\n\n$$139\\theta = 150° + 360°k \\quad \\Longrightarrow \\quad \\theta = \\frac{150 + 360k}{139}\\ ° \\qquad (k = 0, 1, \\ldots, 138)$$\n\n**第 $3$ 歩——条件を $k$ の不等式に翻訳する。** [実部] が正とは $\\cos\\theta > 0$、つまり $0° \\le \\theta < 90°$ または $270° < \\theta < 360°$ です。\n\n$$\\theta < 90 \\iff 150 + 360k < 90 \\times 139 = 12510 \\iff k < 34.33\\ldots$$\n\nなので $k = 0, 1, \\ldots, 34$ の **$35$ 個**。\n\n$$\\theta > 270 \\iff 150 + 360k > 270 \\times 139 = 37530 \\iff k > 103.83\\ldots$$\n\nなので $k = 104, 105, \\ldots, 138$ の **$35$ 個**。\n\n**第 $4$ 歩——足す。** $35 + 35 = 70$ 個です。\n\n（$\\theta$ の刻み幅は $\\dfrac{360}{139}$ 度で、割り切れません。**書き出そうとすれば $139$ 行、しかもどれも分数**——通れなくはありませんが、現実的ではありません。step 8 で $40$ 個を刻み幅から数えたのと、**やっていることはまったく同じ**です。変わったのは規模だけ。）\n\n中心の問いに戻ると：実数だけで見たときのいびつさは、**解の側にはありませんでした**。解はいつでも、円の上に $n$ 個きっちり等間隔に並んでいます。いびつに見えたのは、**実軸という $1$ 本の直線が、その等間隔の並びをどこで横切るかが $n$ によって変わる**からでした。\n\n見る場所を平面に広げると、$n$ が $3$ 桁でも並びかたは同じ $1$ 本の式で言えます。**規則がいびつだったのではなく、私たちが規則の一部しか見ていなかった**——数Ⅱ で $i$ を作ったときと、まったく同じことが起きていました。",
         },
       ],
       formulaPreview:
-        "右辺は |1|・偏角 60°。|z| = 1（全部単位円上）、θ = (60+360k)/139 度｜θ<90 ⟺ k<34.58 → 35 個｜θ>270 ⟺ k>104.08 → 34 個｜35 + 34 = 69",
+        "右辺は |1|・偏角 150°。|z| = 1（全部単位円上）、θ = (150+360k)/139 度｜θ<90 ⟺ k<34.33 → 35 個｜θ>270 ⟺ k>103.83 → 35 個｜35 + 35 = 70",
     },
   ],
   derivation: `**中心の問い** ｜ $x^n = 1$ の答えは、実数だけで見ると「$n$ が偶数なら $1$ と $-1$、奇数なら $1$ だけ」と**いびつに見えた**。平面に上がると、そのいびつさが消えてしまうのはなぜ？
@@ -3070,7 +3070,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "前の系列で、複素数をかけることは「拡大＋回転」だと分かりました。では逆に、**$\\alpha$ に何をかけたら $\\beta$ になるか**を知りたいとき、何を計算すればよいでしょう。\n\n$\\alpha = 1 - 2i$、$\\beta = 6 + 7i$ とします。$\\dfrac{\\beta}{\\alpha}$ の [実部] を求めましょう。",
+        "前の系列で、複素数をかけることは「拡大＋回転」だと分かりました。では逆に、**$\\alpha$ に何をかけたら $\\beta$ になるか**を知りたいとき、何を計算すればよいでしょう。\n\n$\\alpha = 1 - 2i$、$\\beta = 6 + 7i$ とします。$\\dfrac{\\beta}{\\alpha}$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -1.6,
       answerDisplay: "−8/5",
       unit: "",
@@ -3098,7 +3098,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "別の組でも同じことをします。\n\n$\\alpha = 4 + 4i$、$\\beta = 6 - 5i$ のとき、$\\dfrac{\\beta}{\\alpha}$ の [虚部] を求めましょう。",
+        "別の組でも同じことをします。\n\n$\\alpha = 4 + 4i$、$\\beta = 6 - 5i$ のとき、$\\dfrac{\\beta}{\\alpha}$ の [虚部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -1.375,
       answerDisplay: "−11/8",
       unit: "",
@@ -3256,7 +3256,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "角ではなく、**もう一方の量**を見てみます。\n\n$\\alpha = -5 + 5\\sqrt{3}\\,i$、$\\beta = 12\\sqrt{3} + 12i$ のとき、$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$ を求めましょう。",
+        "角ではなく、**もう一方の量**を見てみます。\n\n$\\alpha = -5 + 5\\sqrt{3}\\,i$、$\\beta = 12\\sqrt{3} + 12i$ のとき、$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$ を求めましょう。答えは既約分数で答えましょう。",
       answer: 2.4,
       answerDisplay: "12/5",
       unit: "",
@@ -3283,7 +3283,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "$\\alpha = 4 + 3i$ と $\\beta = (2t + 5) + (3t + 2)i$（$t$ は実数）について、原点から $\\alpha$ へ向かう向きと、原点から $\\beta$ へ向かう向きが**平行**になるときの $t$ を求めましょう。",
+        "$\\alpha = 4 + 3i$ と $\\beta = (2t + 5) + (3t + 2)i$（$t$ は実数）について、原点から $\\alpha$ へ向かう向きと、原点から $\\beta$ へ向かう向きが**平行**になるときの $t$ を求めましょう。答えは既約分数で答えましょう。",
       answer: 7 / 6,
       answerDisplay: "7/6",
       unit: "",
@@ -3310,7 +3310,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "$3$ 点 $\\mathrm{A}(5 + 2i)$、$\\mathrm{B}(1 + 8i)$、$\\mathrm{C}(ti)$（$t$ は実数）を考えます。$\\mathrm{C}$ は虚軸の上を動きます。\n\n三角形 $\\mathrm{ABC}$ が**直角三角形**になるような $t$ のうち、**最大のもの**を求めましょう。",
+        "$3$ 点 $\\mathrm{A}(5 + 2i)$、$\\mathrm{B}(1 + 8i)$、$\\mathrm{C}(ti)$（$t$ は実数）を考えます。$\\mathrm{C}$ は虚軸の上を動きます。\n\n三角形 $\\mathrm{ABC}$ が**直角三角形**になるような $t$ のうち、**最大のもの**を求めましょう。答えは既約分数で答えましょう。",
       answer: 22 / 3,
       answerDisplay: "22/3",
       unit: "",
@@ -3458,7 +3458,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "原点 $\\mathrm{O}$ と $2$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$ が三角形をなし、\n\n$$2\\alpha^2 + 3\\alpha\\beta + 2\\beta^2 = 0$$\n\nを満たしています。$\\alpha$ も $\\beta$ も具体的には分かりませんが、$\\dfrac{\\beta}{\\alpha}$ の [実部] は求められます。求めましょう。",
+        "原点 $\\mathrm{O}$ と $2$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$ が三角形をなし、\n\n$$2\\alpha^2 + 3\\alpha\\beta + 2\\beta^2 = 0$$\n\nを満たしています。$\\alpha$ も $\\beta$ も具体的には分かりませんが、$\\dfrac{\\beta}{\\alpha}$ の [実部] は求められます。求めましょう。答えは既約分数で答えましょう。",
       answer: -0.75,
       answerDisplay: "−3/4",
       unit: "",
@@ -3514,7 +3514,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "ここまでの $2$ 問は、**$\\alpha^2$ の係数と $\\beta^2$ の係数が等しい**形でした。等しくないとどうなるでしょう。\n\n$4\\alpha^2 + 6\\alpha\\beta + 25\\beta^2 = 0$ のとき、$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$ を求めましょう。",
+        "ここまでの $2$ 問は、**$\\alpha^2$ の係数と $\\beta^2$ の係数が等しい**形でした。等しくないとどうなるでしょう。\n\n$4\\alpha^2 + 6\\alpha\\beta + 25\\beta^2 = 0$ のとき、$\\left\\lvert \\dfrac{\\beta}{\\alpha} \\right\\rvert$ を求めましょう。答えは既約分数で答えましょう。",
       answer: 0.4,
       answerDisplay: "2/5",
       unit: "",
@@ -3524,7 +3524,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題までと比べてみよう。読む量が [絶対値] に変わった。ところで前題までの $2$ 問で $\\left\\lvert w \\right\\rvert$ を計算していたら、どちらも同じ値になっていたはずだ——なぜだろう。そして今度は？",
+          text: "前題までと比べてみよう。読む量が [絶対値] に変わった。前題までの $2$ 問でも、聞かれてはいないが $\\left\\lvert w \\right\\rvert$ は出せたはずだ。**出していたら、何が見えただろう。** そして今度は、どこが違う？",
         },
         {
           layer: 2,
@@ -3567,7 +3567,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "こんどは**形から係数を逆算**します。\n\n$\\alpha^2 + 5\\alpha\\beta + t\\beta^2 = 0$（$t$ は正の実数）のとき、$\\angle\\mathrm{AOB} = 135°$ になりました。$t$ の値を求めましょう。",
+        "こんどは**形から係数を逆算**します。\n\n$\\alpha^2 + 5\\alpha\\beta + t\\beta^2 = 0$（$t$ は正の実数）のとき、$\\angle\\mathrm{AOB} = 135°$ になりました。$t$ の値を求めましょう。答えは既約分数で答えましょう。",
       answer: 12.5,
       answerDisplay: "25/2",
       unit: "",
@@ -3594,7 +3594,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "ここまでは $1$ 頂点が原点でした。**$3$ 点とも動く**場合に進みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が三角形をなし、\n\n$$4(\\gamma - \\alpha)^2 + 5(\\gamma - \\alpha)(\\beta - \\alpha) + 4(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ の [実部] を求めましょう。",
+        "ここまでは $1$ 頂点が原点でした。**$3$ 点とも動く**場合に進みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が三角形をなし、\n\n$$4(\\gamma - \\alpha)^2 + 5(\\gamma - \\alpha)(\\beta - \\alpha) + 4(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\dfrac{\\gamma - \\alpha}{\\beta - \\alpha}$ の [実部] を求めましょう。答えは既約分数で答えましょう。",
       answer: -0.625,
       answerDisplay: "−5/8",
       unit: "",
@@ -3622,8 +3622,8 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "同じ形の条件で、角を読みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が\n\n$$(\\gamma - \\alpha)^2 + (\\gamma - \\alpha)(\\beta - \\alpha) + (\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\angle\\mathrm{BAC}$ を求めましょう（**度**で）。",
-      answer: 120,
+        "同じ形の条件で、角を読みます。\n\n$3$ 点 $\\mathrm{A}(\\alpha)$、$\\mathrm{B}(\\beta)$、$\\mathrm{C}(\\gamma)$ が\n\n$$(\\gamma - \\alpha)^2 + 2(\\gamma - \\alpha)(\\beta - \\alpha) + 2(\\beta - \\alpha)^2 = 0$$\n\nを満たすとき、$\\angle\\mathrm{BAC}$ を求めましょう（**度**で）。",
+      answer: 135,
       unit: "",
       unknownLabel: "$\\angle\\mathrm{BAC}$（度）",
       variationFromPrevious: "same",
@@ -3635,14 +3635,14 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題と変わったのは、**読む量が [実部] から角に移った**こと $1$ つ。係数がすべて $1$ のとき、$\\lvert u \\rvert$ と $\\text{Re}(u)$ はそれぞれいくつになる？",
+          text: "前題と変わったのは、**読む量が [実部] から角に移った**こと $1$ つ。$4$ 問前に作った「係数から角を出す式」は、両端の係数が違っていても同じように使えるだろうか。",
         },
         {
           layer: 3,
-          text: "両辺を $(\\beta-\\alpha)^2$ で割って $u^2 + u + 1 = 0$。解と係数の関係から\n\n$$\\lvert u \\rvert^2 = 1 \\ \\Longrightarrow \\ \\lvert u \\rvert = 1, \\qquad \\text{Re}(u) = -\\frac12$$\n\n$$\\cos\\theta = \\frac{-\\frac12}{1} = -\\frac12 \\quad \\Longrightarrow \\quad \\angle\\mathrm{BAC} = 120°$$\n\n（step 4 で作った式 $\\cos\\theta = \\dfrac{-b}{2\\sqrt{ac}}$ に $a=b=c=1$ を入れても同じです。）\n\n**$\\lvert u \\rvert = 1$ なので $\\mathrm{AB} = \\mathrm{AC}$**。頂角 $120°$ の二等辺三角形——底角はどちらも $30°$ です。$3$ 点の位置はまったく分からないのに、**三角形の形はここまで決まりました**。\n\n**係数がすべて $1$ でも正三角形にはなりません。** 正三角形の条件は $u^2 - u + 1 = 0$（真ん中の符号が逆）で、こちらは $\\text{Re}(u) = \\dfrac12$、$\\cos\\theta = \\dfrac12$、$\\angle\\mathrm{BAC} = 60°$ です。**符号 $1$ つで別の形**になります。中心の問いへの部分回答：形は係数に**敏感**——だからこそ、係数を読めば形が言えます。",
+          text: "両辺を $(\\beta-\\alpha)^2$ で割って $2u^2 + 2u + 1 = 0$。step 4 で作った式に $a=1$、$b=2$、$c=2$ を入れると\n\n$$\\lvert u \\rvert = \\sqrt{\\frac ac} = \\frac{1}{\\sqrt2}, \\qquad \\cos\\theta = \\frac{-b}{2\\sqrt{ac}} = \\frac{-2}{2\\sqrt2} = -\\frac{1}{\\sqrt2}$$\n\n$$\\Longrightarrow \\quad \\angle\\mathrm{BAC} = 135°$$\n\n（解いて確かめると $u = \\dfrac{-1 \\pm i}{2}$ で、たしかに $\\lvert u \\rvert = \\dfrac{\\sqrt2}{2}$、[偏角] $135°$ です。）\n\n**$\\lvert u \\rvert = \\dfrac{1}{\\sqrt2}$ なので $\\mathrm{AC} : \\mathrm{AB} = 1 : \\sqrt2$**。$3$ 点の位置はまったく分からないのに、**辺の比も頂角も決まりました**。\n\n**真ん中の係数を $1$ 変えるだけで、形は別物になります。** $b$ を $1$ にすると $\\cos\\theta = -\\dfrac{1}{2\\sqrt2}$ で、特別角ですらありません。ちなみに**正三角形の条件は $u^2 - u + 1 = 0$**（両端が $1$ で真ん中が $-1$）で、$\\angle\\mathrm{BAC} = 60°$ になります。**形は係数に敏感**——だからこそ、係数を読めば形が言えます。中心の問いへの部分回答：$3$ つの係数が、形をちょうど過不足なく決めています。",
         },
       ],
-      formulaPreview: "u² + u + 1 = 0 → |u| = 1、Re(u) = −1/2 → cosθ = −1/2 → 120°（頂角 120° の二等辺三角形）",
+      formulaPreview: "2u² + 2u + 1 = 0。|u| = √(a/c) = 1/√2、cosθ = −b/(2√(ac)) = −2/(2√2) = −1/√2 → 135°",
     },
     {
       id: "step8",
@@ -3928,7 +3928,7 @@ export const M3C_LOCUS_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "等号の右辺が数ではなく、**もう $1$ つの距離**だったらどうなるでしょう。\n\n$$\\lvert z + 6 - 3i \\rvert = \\lvert z - 4 - 9i \\rvert$$\n\nこれが表す図形の**傾き**を求めましょう。",
+        "等号の右辺が数ではなく、**もう $1$ つの距離**だったらどうなるでしょう。\n\n$$\\lvert z + 6 - 3i \\rvert = \\lvert z - 4 - 9i \\rvert$$\n\nこれが表す図形の**傾き**を求めましょう。答えは既約分数で答えましょう。",
       answer: -5 / 3,
       answerDisplay: "−5/3",
       unit: "",
@@ -3956,7 +3956,7 @@ export const M3C_LOCUS_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "別の $2$ 点で、こんどは切片を読みます。\n\n$$\\lvert z - 1 - 2i \\rvert = \\lvert z - 9 - 8i \\rvert$$\n\nこれが表す直線の **$y$ 切片**を求めましょう。",
+        "別の $2$ 点で、こんどは切片を読みます。\n\n$$\\lvert z - 1 - 2i \\rvert = \\lvert z - 9 - 8i \\rvert$$\n\nこれが表す直線の **$y$ 切片**を求めましょう。答えは既約分数で答えましょう。",
       answer: 35 / 3,
       answerDisplay: "35/3",
       unit: "",
@@ -3983,7 +3983,7 @@ export const M3C_LOCUS_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "等号の両側が距離のまま、**比が $1$ でない**とどうなるでしょう。\n\n$$2\\lvert z - (4 + 3i) \\rvert = \\lvert z - (2 + 9i) \\rvert$$\n\nこれが表す図形の、**中心の [実部]** を求めましょう。",
+        "等号の両側が距離のまま、**比が $1$ でない**とどうなるでしょう。\n\n$$2\\lvert z - (4 + 3i) \\rvert = \\lvert z - (2 + 9i) \\rvert$$\n\nこれが表す図形の、**中心の [実部]** を求めましょう。答えは既約分数で答えましょう。",
       answer: 14 / 3,
       answerDisplay: "14/3",
       unit: "",
@@ -4011,7 +4011,7 @@ export const M3C_LOCUS_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "別の比・別の $2$ 点で、こんどは大きさを読みます。\n\n$$3\\lvert z - (5 + 4i) \\rvert = \\lvert z - (7 + 10i) \\rvert$$\n\nこれが表す円の、**半径の $2$ 乗**を求めましょう。",
+        "別の比・別の $2$ 点で、こんどは大きさを読みます。\n\n$$3\\lvert z - (5 + 4i) \\rvert = \\lvert z - (7 + 10i) \\rvert$$\n\nこれが表す円の、**半径の $2$ 乗**を求めましょう。答えは既約分数で答えましょう。",
       answer: 45 / 8,
       answerDisplay: "45/8",
       unit: "",
@@ -4039,7 +4039,7 @@ export const M3C_LOCUS_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "こんどは**比のほうが分かっていません**。\n\n$$k\\lvert z - (6 + 2i) \\rvert = \\lvert z - (1 + 7i) \\rvert \\qquad (k > 0,\\ k \\ne 1)$$\n\nこれが表す円の中心が $-3 + 11i$ であるとき、$k$ の値を求めましょう。",
+        "こんどは**比のほうが分かっていません**。\n\n$$k\\lvert z - (6 + 2i) \\rvert = \\lvert z - (1 + 7i) \\rvert \\qquad (k > 0,\\ k \\ne 1)$$\n\nこれが表す円の中心が $-3 + 11i$ であるとき、$k$ の値を求めましょう。答えは既約分数で答えましょう。",
       answer: 2 / 3,
       answerDisplay: "2/3",
       unit: "",
