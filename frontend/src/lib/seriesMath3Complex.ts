@@ -1378,7 +1378,7 @@ export const M3C_MULT_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "$z_7 = 4 + 4i$、$z_8 = -1 + \\sqrt{3}\\,i$ とします。\n\n積 $z_7 z_8$ の偏角を求めましょう。偏角は $0° \\le \\theta < 360°$ の範囲でとります。",
+        "$z_7 = 4 + 4i$、$z_8 = -6 + 6\\sqrt{3}\\,i$ とします。\n\n積 $z_7 z_8$ の偏角を求めましょう。偏角は $0° \\le \\theta < 360°$ の範囲でとります。",
       answer: 165,
       unit: "",
       unknownLabel: "$z_7 z_8$ の偏角（度）",
@@ -1395,7 +1395,7 @@ export const M3C_MULT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "まず $2$ つの角を読みます。$z_7 = 4+4i$ は第 $1$ 象限 で横と縦が等しいので $45°$。$z_8 = -1+\\sqrt{3}i$ は $\\lvert z_8 \\rvert = 2$ で $\\cos\\theta = -\\dfrac12$、$\\sin\\theta = \\dfrac{\\sqrt3}{2}$ なので $120°$。つぎに積を出します：$z_7z_8 = (4+4i)(-1+\\sqrt3 i) = -4 + 4\\sqrt3 i - 4i + 4\\sqrt3 i^2 = (-4 - 4\\sqrt3) + (4\\sqrt3 - 4)i$。この点の角を読むと $165°$ です。ここで $3$ つを並べてみてください——$45°$、$120°$、そして $165°$。**$45 + 120 = 165$**。長さは**かけ算**されましたが、**角は足し算**されています。中心の問いへの部分回答：**かけ算という $1$ つの演算が、長さと角という $2$ つの別々の動きに分かれる**。なぜそうなるのかは、次の系列で証明します。",
+          text: "まず $2$ つの角を読みます。$z_7 = 4+4i$ は第 $1$ 象限 で横と縦が等しいので $45°$。$z_8 = -6+6\\sqrt{3}i$ は $\\lvert z_8 \\rvert = \\sqrt{36+108} = 12$ で $\\cos\\theta = -\\dfrac12$、$\\sin\\theta = \\dfrac{\\sqrt3}{2}$ なので $120°$。つぎに積を出します：$z_7z_8 = (4+4i)(-6+6\\sqrt3 i) = -24 + 24\\sqrt3 i - 24i + 24\\sqrt3 i^2 = (-24 - 24\\sqrt3) + (24\\sqrt3 - 24)i$。この点の角を読むと $165°$ です。ここで $3$ つを並べてみてください——$45°$、$120°$、そして $165°$。**$45 + 120 = 165$**。長さは**かけ算**されましたが、**角は足し算**されています。中心の問いへの部分回答：**かけ算という $1$ つの演算が、長さと角という $2$ つの別々の動きに分かれる**。なぜそうなるのかは、次の系列で証明します。",
         },
       ],
       formulaPreview: "z₇ の偏角 45°、z₈ の偏角 120°、積の偏角 165°。45 + 120 = 165",
@@ -1823,7 +1823,7 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "$\\alpha = -1 + i$、$\\beta = 2 + 2\\sqrt{3}\\,i$ とします。この $2$ つは、**極形式の道と直交形式の道の両方が通れます**。\n\n- **極形式の道**：$\\alpha$ と $\\beta$ をそれぞれ [極形式] に直してから掛ける\n- **直交形式の道**：$(-1+i)(2+2\\sqrt{3}\\,i)$ をそのまま展開する\n\n積 $\\alpha\\beta$ の [偏角] を $\\theta$（$0° \\le \\theta < 360°$）とするとき、$\\cos\\theta$ の値を求めましょう。**分母を有理化した形**で答えてください。",
+        "$\\alpha = -6 + 6i$、$\\beta = 2 + 2\\sqrt{3}\\,i$ とします。この $2$ つは、**極形式の道と直交形式の道の両方が通れます**。\n\n- **極形式の道**：$\\alpha$ と $\\beta$ をそれぞれ [極形式] に直してから掛ける\n- **直交形式の道**：$(-6+6i)(2+2\\sqrt{3}\\,i)$ をそのまま展開する\n\n積 $\\alpha\\beta$ の [偏角] を $\\theta$（$0° \\le \\theta < 360°$）とするとき、$\\cos\\theta$ の値を求めましょう。**分母を有理化した形**で答えてください。",
       answer: -(Math.sqrt(6) + Math.sqrt(2)) / 4,
       answerDisplay: "−(√6+√2)/4",
       inputAffordances: ["sqrt"],
@@ -1842,11 +1842,11 @@ export const M3C_POLAR_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "**極形式の道**：$\\lvert \\alpha \\rvert = \\sqrt{1+1} = \\sqrt2$ で、$\\cos = -\\dfrac{1}{\\sqrt2}$・$\\sin = \\dfrac{1}{\\sqrt2}$ より $\\arg\\alpha = 135°$。$\\lvert \\beta \\rvert = \\sqrt{4+12} = 4$ で、$\\cos = \\dfrac12$・$\\sin = \\dfrac{\\sqrt3}{2}$ より $\\arg\\beta = 60°$。よって\n\n$$\\alpha\\beta = 4\\sqrt2 \\{\\cos(135° + 60°) + i\\sin(135° + 60°)\\} = 4\\sqrt2(\\cos 195° + i\\sin 195°)$$\n\nつまり $r = 4\\sqrt2$、$\\theta = 195°$ です。**ところが $195°$ は特別角の表にありません。** この道だけでは $\\cos\\theta$ の値が書けない。\n\n**直交形式の道**：\n\n$$\\alpha\\beta = (-1+i)(2+2\\sqrt3\\,i) = -2 - 2\\sqrt3\\,i + 2i + 2\\sqrt3\\,i^2 = (-2 - 2\\sqrt3) + (2 - 2\\sqrt3)i$$\n\n**突き合わせる**：step 3 で確かめたとおり [実部] $= r\\cos\\theta$ なので\n\n$$4\\sqrt2 \\cos\\theta = -2 - 2\\sqrt3 \\quad\\Longrightarrow\\quad \\cos\\theta = \\frac{-2(1+\\sqrt3)}{4\\sqrt2} = -\\frac{1+\\sqrt3}{2\\sqrt2}$$\n\n分母を有理化して\n\n$$\\cos 195° = -\\frac{(1+\\sqrt3)\\sqrt2}{4} = -\\frac{\\sqrt2 + \\sqrt6}{4}$$\n\n**表にない角の三角比が、複素数のかけ算の副産物として出てきました。** 暗記では届かない値です。$2$ 本の道のどちらか一方だけでは出ません——極形式の道は「角が $195°$」までしか言えず、直交形式の道は「実部が $-2-2\\sqrt3$」までしか言えない。**$2$ つを同じ点について並べた瞬間**に、間に挟まっていた $\\cos\\theta$ が落ちてきます。\n\n（これは step 5 で見た [加法定理] と同じことをしています。$\\cos 195° = \\cos(135° + 60°)$ を加法定理で展開しても同じ値に着きます。**複素数の道と三角関数の道が、同じ結論を別の入口から出している**——どちらか一方を忘れても、もう一方から導けます。）\n\n中心の問いに戻ると：$a+bi$ は「どこにあるか」を、$r(\\cos\\theta+i\\sin\\theta)$ は「どれだけ伸ばして、どれだけ回すか」を表に出す書き方でした。**$1$ つの対象に $2$ つの記述を持つと、記述どうしを突き合わせることで、どちらの記述にも書いていなかった値が取り出せます。**",
+          text: "**極形式の道**：$\\lvert \\alpha \\rvert = \\sqrt{36+36} = 6\\sqrt2$ で、$\\cos = -\\dfrac{1}{\\sqrt2}$・$\\sin = \\dfrac{1}{\\sqrt2}$ より $\\arg\\alpha = 135°$。$\\lvert \\beta \\rvert = \\sqrt{4+12} = 4$ で、$\\cos = \\dfrac12$・$\\sin = \\dfrac{\\sqrt3}{2}$ より $\\arg\\beta = 60°$。よって\n\n$$\\alpha\\beta = 24\\sqrt2 \\{\\cos(135° + 60°) + i\\sin(135° + 60°)\\} = 24\\sqrt2(\\cos 195° + i\\sin 195°)$$\n\nつまり $r = 24\\sqrt2$、$\\theta = 195°$ です。**ところが $195°$ は特別角の表にありません。** この道だけでは $\\cos\\theta$ の値が書けない。\n\n**直交形式の道**：\n\n$$\\alpha\\beta = (-6+6i)(2+2\\sqrt3\\,i) = -12 - 12\\sqrt3\\,i + 12i + 12\\sqrt3\\,i^2 = (-12 - 12\\sqrt3) + (12 - 12\\sqrt3)i$$\n\n**突き合わせる**：step 3 で確かめたとおり [実部] $= r\\cos\\theta$ なので\n\n$$24\\sqrt2 \\cos\\theta = -12 - 12\\sqrt3 \\quad\\Longrightarrow\\quad \\cos\\theta = \\frac{-12(1+\\sqrt3)}{24\\sqrt2} = -\\frac{1+\\sqrt3}{2\\sqrt2}$$\n\n分母を有理化して\n\n$$\\cos 195° = -\\frac{(1+\\sqrt3)\\sqrt2}{4} = -\\frac{\\sqrt2 + \\sqrt6}{4}$$\n\n**表にない角の三角比が、複素数のかけ算の副産物として出てきました。** 暗記では届かない値です。$2$ 本の道のどちらか一方だけでは出ません——極形式の道は「角が $195°$」までしか言えず、直交形式の道は「実部が $-2-2\\sqrt3$」までしか言えない。**$2$ つを同じ点について並べた瞬間**に、間に挟まっていた $\\cos\\theta$ が落ちてきます。\n\n（これは step 5 で見た [加法定理] と同じことをしています。$\\cos 195° = \\cos(135° + 60°)$ を加法定理で展開しても同じ値に着きます。**複素数の道と三角関数の道が、同じ結論を別の入口から出している**——どちらか一方を忘れても、もう一方から導けます。）\n\n中心の問いに戻ると：$a+bi$ は「どこにあるか」を、$r(\\cos\\theta+i\\sin\\theta)$ は「どれだけ伸ばして、どれだけ回すか」を表に出す書き方でした。**$1$ つの対象に $2$ つの記述を持つと、記述どうしを突き合わせることで、どちらの記述にも書いていなかった値が取り出せます。**",
         },
       ],
       formulaPreview:
-        "極形式：4√2(cos195°+isin195°)｜直交形式：(−2−2√3)+(2−2√3)i｜突き合わせて 4√2 cosθ = −2−2√3 → cos195° = −(√6+√2)/4",
+        "極形式：24√2(cos195°+isin195°)｜直交形式：(−12−12√3)+(12−12√3)i｜突き合わせて 24√2 cosθ = −12−12√3 → cos195° = −(√6+√2)/4",
     },
   ],
   derivation: `**中心の問い** ｜ $a+bi$ という書き方は「**どこにあるか**」を教えてくれるが、「**どれだけ伸ばして、どれだけ回すか**」は隠している。書き方を変えるだけで、かけ算があっという間に終わってしまうのはなぜ？
@@ -2657,6 +2657,20 @@ $\\theta = \\dfrac{\\theta_0}{n} + \\dfrac{360°}{n}k$ ——$k$ が $1$ 増え�
 
 **転移先**：$z^n = 1$ の解（[1のn乗根]）は、かけ算について閉じた有限の世界を作ります（$2$ つ掛けてもまた $n$ 乗根）。この構造は、正 $n$ 角形の対称性、時計の針の代数、暗号理論で使われる巡回群——「同じ操作を繰り返すといつか戻ってくる」あらゆる場面に現れます。
 
+────────
+
+**問いに戻ると**
+
+$x^n = 1$ の答えが実数の中でいびつに見えたのは、**方程式のせいでも、$n$ のせいでもありませんでした**。
+
+平面に上がると、解はいつでも $2$ 本の式で決まります——長さの式 $r^n = \\lvert w \\rvert$ が $r$ をただ $1$ つに決め、角の式 $n\\theta = \\theta_0 + 360°k$ が $\\theta$ を $n$ 通り出す。だから解は**必ず円の上に $n$ 個、等間隔**。ここには一切の例外も、偶奇による場合分けもありません。
+
+いびつさは、**実軸という $1$ 本の直線が、その等間隔の並びをどこで横切るか**という、まったく別の場所にありました。$n$ が奇数なら $1$ 回、偶数なら $2$ 回（右辺が正のとき）——横切る回数が $n$ で変わるだけのことを、私たちは「解の個数がガタガタ変わる」と読んでいたのです。
+
+**見る場所を広げると、規則が現れたのではありません。規則ははじめからあって、私たちが一部しか見ていなかった**——この単元の入口で $i$ について言ったことが、そのまま $2$ 度目に起きました。
+
+次の系列では、この「等間隔に並ぶ」を逆から使います。**回転を自在に作れる**ようになると、図形そのものを複素数で動かせるようになります。
+
 **出典**
 
 - 池田洋介『数学Ⅲ・C 入門問題精講』旺文社
@@ -3190,7 +3204,7 @@ export const M3C_ANGLE_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "別の三角形で、別の頂点の角を測ります。\n\n三角形 $\\mathrm{DEF}$ の頂点が $\\mathrm{D}\\big((2 + 6\\sqrt{3}) + 3i\\big)$、$\\mathrm{E}(2 - 3i)$、$\\mathrm{F}\\big(-2 + (-3 + 4\\sqrt{3})i\\big)$ であるとき、**頂点 $\\mathrm{E}$ における角** $\\angle\\mathrm{DEF}$ を求めましょう（**度**で）。",
+        "別の三角形で、別の頂点の角を測ります。\n\n三角形 $\\mathrm{DEF}$ の頂点が $\\mathrm{D}\\big((2 + 6\\sqrt{3}) + 2i\\big)$、$\\mathrm{E}(2 - 4i)$、$\\mathrm{F}\\big(-2 + (-4 + 4\\sqrt{3})i\\big)$ であるとき、**頂点 $\\mathrm{E}$ における角** $\\angle\\mathrm{DEF}$ を求めましょう（**度**で）。",
       answer: 90,
       unit: "",
       unknownLabel: "$\\angle\\mathrm{DEF}$（度）",
@@ -3634,7 +3648,7 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "ここからは、原典が「**複素数の真骨頂**」と呼ぶ配置を歩きます。\n\n三角形 $\\mathrm{ABC}$ の頂点を $\\mathrm{A}(1 + 3i)$、$\\mathrm{B}(9 + 9i)$、$\\mathrm{C}(3 + 9i)$ とします。辺 $\\mathrm{AB}$ の**外側**に、$\\mathrm{AB}$ を斜辺とする直角二等辺三角形 $\\mathrm{ABP}$ を作ります（直角の頂点が $\\mathrm{P}$）。\n\n$\\mathrm{P}$ の [実部] を求めましょう。",
+        "ここからは、原典が「**複素数の真骨頂**」と呼ぶ配置を歩きます。\n\n三角形 $\\mathrm{ABC}$ の頂点を $\\mathrm{A}(1 + 5i)$、$\\mathrm{B}(9 + 11i)$、$\\mathrm{C}(3 + 11i)$ とします。辺 $\\mathrm{AB}$ の**外側**に、$\\mathrm{AB}$ を斜辺とする直角二等辺三角形 $\\mathrm{ABP}$ を作ります（直角の頂点が $\\mathrm{P}$）。\n\n$\\mathrm{P}$ の [実部] を求めましょう。",
       answer: 8,
       unit: "",
       unknownLabel: "$\\mathrm{P}$ の実部",
@@ -3651,17 +3665,17 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\mathrm{AB}$ を斜辺とする直角二等辺三角形なので、$\\mathrm{P}$ は **$\\mathrm{AB}$ の中点から、$\\mathrm{AB}$ に垂直な向きに $\\dfrac{\\mathrm{AB}}{2}$ だけ離れた点**です（直角の頂点は斜辺を直径とする円の上にあり、二等辺なのでその弧の真ん中）。\n\n垂直な向きを作るには $i$ を掛けます。$\\mathrm{C}$ と反対側（外側）に取るので、符号は $-$ のほう：\n\n$$\\mathrm{P} = \\frac{\\alpha + \\beta}{2} - \\frac{i(\\beta - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\beta}{2} = \\dfrac{(1+3i)+(9+9i)}{2} = 5 + 6i$、$\\beta - \\alpha = 8 + 6i$ なので\n\n$$\\frac{i(8+6i)}{2} = \\frac{8i - 6}{2} = -3 + 4i$$\n\n$$\\mathrm{P} = (5 + 6i) - (-3 + 4i) = 8 + 2i$$\n\nよって [実部] は $8$ です。\n\n**確かめておきます。** $\\dfrac{\\alpha - \\mathrm{P}}{\\beta - \\mathrm{P}} = \\dfrac{-7+i}{1+7i} = i$ ——[純虚数] なので $\\angle\\mathrm{APB} = 90°$、[絶対値] が $1$ なので $\\mathrm{PA} = \\mathrm{PB}$ ✓ たしかに直角二等辺三角形です。\n\n中心の問いへの部分回答：**「外側に直角二等辺三角形を作る」という作図が、$1$ 本の式になりました**。作図の手順が式の形に写っています。",
+          text: "$\\mathrm{AB}$ を斜辺とする直角二等辺三角形なので、$\\mathrm{P}$ は **$\\mathrm{AB}$ の中点から、$\\mathrm{AB}$ に垂直な向きに $\\dfrac{\\mathrm{AB}}{2}$ だけ離れた点**です（直角の頂点は斜辺を直径とする円の上にあり、二等辺なのでその弧の真ん中）。\n\n垂直な向きを作るには $i$ を掛けます。$\\mathrm{C}$ と反対側（外側）に取るので、符号は $-$ のほう：\n\n$$\\mathrm{P} = \\frac{\\alpha + \\beta}{2} - \\frac{i(\\beta - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\beta}{2} = \\dfrac{(1+5i)+(9+11i)}{2} = 5 + 8i$、$\\beta - \\alpha = 8 + 6i$ なので\n\n$$\\frac{i(8+6i)}{2} = \\frac{8i - 6}{2} = -3 + 4i$$\n\n$$\\mathrm{P} = (5 + 8i) - (-3 + 4i) = 8 + 4i$$\n\nよって [実部] は $8$ です。\n\n**確かめておきます。** $\\dfrac{\\alpha - \\mathrm{P}}{\\beta - \\mathrm{P}} = \\dfrac{-7+i}{1+7i} = i$ ——[純虚数] なので $\\angle\\mathrm{APB} = 90°$、[絶対値] が $1$ なので $\\mathrm{PA} = \\mathrm{PB}$ ✓ たしかに直角二等辺三角形です。\n\n中心の問いへの部分回答：**「外側に直角二等辺三角形を作る」という作図が、$1$ 本の式になりました**。作図の手順が式の形に写っています。",
         },
       ],
-      formulaPreview: "P = (α+β)/2 − i(β−α)/2 = (5+6i) − (−3+4i) = 8 + 2i → 実部 8",
+      formulaPreview: "P = (α+β)/2 − i(β−α)/2 = (5+8i) − (−3+4i) = 8 + 4i → 実部 8",
     },
     {
       id: "step9",
       position: 9,
       questionText:
-        "同じ三角形 $\\mathrm{ABC}$（$\\mathrm{A}(1+3i)$、$\\mathrm{B}(9+9i)$、$\\mathrm{C}(3+9i)$）について、こんどは辺 $\\mathrm{AC}$ の**外側**に、$\\mathrm{AC}$ を斜辺とする直角二等辺三角形 $\\mathrm{ACQ}$ を作ります（直角の頂点が $\\mathrm{Q}$）。\n\n$\\mathrm{Q}$ の [虚部] を求めましょう。",
-      answer: 7,
+        "同じ三角形 $\\mathrm{ABC}$（$\\mathrm{A}(1+5i)$、$\\mathrm{B}(9+11i)$、$\\mathrm{C}(3+11i)$）について、こんどは辺 $\\mathrm{AC}$ の**外側**に、$\\mathrm{AC}$ を斜辺とする直角二等辺三角形 $\\mathrm{ACQ}$ を作ります（直角の頂点が $\\mathrm{Q}$）。\n\n$\\mathrm{Q}$ の [虚部] を求めましょう。",
+      answer: 9,
       unit: "",
       unknownLabel: "$\\mathrm{Q}$ の虚部",
       variationFromPrevious: "composite",
@@ -3677,16 +3691,16 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題と同じ形の式ですが、**符号が逆**になります。$\\mathrm{A}$ から見て $\\mathrm{C}$ は $\\mathrm{B}$ の**左側**にあるので、$\\mathrm{AC}$ の外側（$\\mathrm{B}$ と反対側）はさらに左——つまり $+i$ のほうです：\n\n$$\\mathrm{Q} = \\frac{\\alpha + \\gamma}{2} + \\frac{i(\\gamma - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\gamma}{2} = \\dfrac{(1+3i)+(3+9i)}{2} = 2 + 6i$、$\\gamma - \\alpha = 2 + 6i$ なので\n\n$$\\frac{i(2+6i)}{2} = \\frac{2i - 6}{2} = -3 + i$$\n\n$$\\mathrm{Q} = (2 + 6i) + (-3 + i) = -1 + 7i$$\n\nよって [虚部] は $7$ です。\n\n**符号の選び方が急所でした。** $\\pm i$ のどちらを取るかで、$\\mathrm{P}$ や $\\mathrm{Q}$ は辺をはさんで反対側に来ます。「外側」という言葉を式にするには、**三角形の向き（$\\mathrm{A} \\to \\mathrm{B} \\to \\mathrm{C}$ が反時計回りか時計回りか）を確かめる**必要があります。\n\n（確かめ：$\\dfrac{\\alpha - \\mathrm{Q}}{\\gamma - \\mathrm{Q}} = \\dfrac{2-4i}{4+2i} = -i$ ——[純虚数] で [絶対値] $1$ なので、こちらも直角二等辺 ✓）\n\n中心の問いへの部分回答：**作図の「向き」は、式では $i$ の符号として現れます**。これで $\\mathrm{P}$ と $\\mathrm{Q}$ がそろいました。",
+          text: "前題と同じ形の式ですが、**符号が逆**になります。$\\mathrm{A}$ から見て $\\mathrm{C}$ は $\\mathrm{B}$ の**左側**にあるので、$\\mathrm{AC}$ の外側（$\\mathrm{B}$ と反対側）はさらに左——つまり $+i$ のほうです：\n\n$$\\mathrm{Q} = \\frac{\\alpha + \\gamma}{2} + \\frac{i(\\gamma - \\alpha)}{2}$$\n\n代入します。$\\dfrac{\\alpha+\\gamma}{2} = \\dfrac{(1+5i)+(3+11i)}{2} = 2 + 8i$、$\\gamma - \\alpha = 2 + 6i$ なので\n\n$$\\frac{i(2+6i)}{2} = \\frac{2i - 6}{2} = -3 + i$$\n\n$$\\mathrm{Q} = (2 + 8i) + (-3 + i) = -1 + 9i$$\n\nよって [虚部] は $9$ です。\n\n**符号の選び方が急所でした。** $\\pm i$ のどちらを取るかで、$\\mathrm{P}$ や $\\mathrm{Q}$ は辺をはさんで反対側に来ます。「外側」という言葉を式にするには、**三角形の向き（$\\mathrm{A} \\to \\mathrm{B} \\to \\mathrm{C}$ が反時計回りか時計回りか）を確かめる**必要があります。\n\n（確かめ：$\\dfrac{\\alpha - \\mathrm{Q}}{\\gamma - \\mathrm{Q}} = \\dfrac{2-4i}{4+2i} = -i$ ——[純虚数] で [絶対値] $1$ なので、こちらも直角二等辺 ✓）\n\n中心の問いへの部分回答：**作図の「向き」は、式では $i$ の符号として現れます**。これで $\\mathrm{P}$ と $\\mathrm{Q}$ がそろいました。",
         },
       ],
-      formulaPreview: "Q = (α+γ)/2 + i(γ−α)/2 = (2+6i) + (−3+i) = −1 + 7i → 虚部 7（符号は AB のときと逆）",
+      formulaPreview: "Q = (α+γ)/2 + i(γ−α)/2 = (2+8i) + (−3+i) = −1 + 9i → 虚部 9（符号は AB のときと逆）",
     },
     {
       id: "step10",
       position: 10,
       questionText:
-        "同じ配置を仕上げます。$\\mathrm{A}(1+3i)$、$\\mathrm{B}(9+9i)$、$\\mathrm{C}(3+9i)$、辺 $\\mathrm{AB}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{P}$、辺 $\\mathrm{AC}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{Q}$ です。\n\n$\\mathrm{M}$ を辺 $\\mathrm{BC}$ の**中点**とするとき、$\\lvert \\mathrm{MP} \\rvert^2$ を求めましょう。",
+        "同じ配置を仕上げます。$\\mathrm{A}(1+5i)$、$\\mathrm{B}(9+11i)$、$\\mathrm{C}(3+11i)$、辺 $\\mathrm{AB}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{P}$、辺 $\\mathrm{AC}$ の外側の直角二等辺三角形の直角の頂点が $\\mathrm{Q}$ です。\n\n$\\mathrm{M}$ を辺 $\\mathrm{BC}$ の**中点**とするとき、$\\lvert \\mathrm{MP} \\rvert^2$ を求めましょう。",
       answer: 53,
       unit: "",
       unknownLabel: "$\\lvert \\mathrm{MP} \\rvert^2$",
@@ -3703,11 +3717,11 @@ export const M3C_SHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\mathrm{M}$ は $\\mathrm{BC}$ の中点なので\n\n$$\\mathrm{M} = \\frac{(9+9i) + (3+9i)}{2} = 6 + 9i$$\n\n$\\mathrm{P} = 8 + 2i$（step 8）なので\n\n$$\\mathrm{P} - \\mathrm{M} = (8 + 2i) - (6 + 9i) = 2 - 7i, \\qquad \\lvert \\mathrm{MP} \\rvert^2 = 2^2 + 7^2 = 53$$\n\n**ここで $\\mathrm{Q}$ も測ってみます。** $\\mathrm{Q} = -1 + 7i$（step 9）なので\n\n$$\\mathrm{Q} - \\mathrm{M} = -7 - 2i, \\qquad \\lvert \\mathrm{MQ} \\rvert^2 = 49 + 4 = 53$$\n\n**まったく同じ値です。** そして比をとると\n\n$$\\frac{\\mathrm{P} - \\mathrm{M}}{\\mathrm{Q} - \\mathrm{M}} = \\frac{2 - 7i}{-7 - 2i} = \\frac{(2-7i)(-7+2i)}{53} = \\frac{53i}{53} = i$$\n\n[絶対値] が $1$ で [純虚数] ——**$\\mathrm{MP} = \\mathrm{MQ}$ かつ $\\mathrm{MP} \\perp \\mathrm{MQ}$**。三角形 $\\mathrm{MPQ}$ は直角二等辺三角形です。\n\n**これは偶然ではありません。** $\\alpha,\\beta,\\gamma$ を文字のまま置いて計算すると\n\n$$\\mathrm{P} - \\mathrm{M} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2}, \\qquad \\mathrm{Q} - \\mathrm{M} = \\frac{(\\alpha - \\beta) + i(\\gamma - \\alpha)}{2}$$\n\nとなり、後者に $i$ を掛けると\n\n$$i(\\mathrm{Q} - \\mathrm{M}) = \\frac{i(\\alpha-\\beta) - (\\gamma - \\alpha)}{2} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2} = \\mathrm{P} - \\mathrm{M}$$\n\n**どんな三角形でも成り立ちます。** 原典はこの性質について「シンプルで美しい性質ですが、**初等的な方法で証明するのは難しい**」と書いています。実際、$\\mathrm{MP}$ の長さを初等幾何で出そうとしても、$\\mathrm{M}$ は $\\mathrm{P}$ とも $\\mathrm{Q}$ とも直接つながっていないので取りかかりがありません。\n\n**なぜ複素数だと通るのか。** 「外側に直角二等辺三角形を作る」も「中点をとる」も、複素数では**足し算と $i$ 倍だけ**で書けます。だから $\\mathrm{P} - \\mathrm{M}$ と $\\mathrm{Q} - \\mathrm{M}$ が同じ材料（$\\alpha, \\beta, \\gamma$ と $i$）の式になり、**片方が他方の $i$ 倍だと目で見て分かる**——それだけのことです。\n\n中心の問いに戻ると：条件式が形を決めたのは、**式がすべて「比」についての式だった**からでした。ここでも同じです。$\\mathrm{P}$、$\\mathrm{Q}$、$\\mathrm{M}$ の位置は $\\alpha,\\beta,\\gamma$ によって変わりますが、$\\dfrac{\\mathrm{P}-\\mathrm{M}}{\\mathrm{Q}-\\mathrm{M}}$ という**比**は $i$ に固定されます。\n\n**位置は自由、形は不変。** これが [相似] という見方の正体であり、この単元がずっと言ってきたことでした。",
+          text: "$\\mathrm{M}$ は $\\mathrm{BC}$ の中点なので\n\n$$\\mathrm{M} = \\frac{(9+11i) + (3+11i)}{2} = 6 + 11i$$\n\n$\\mathrm{P} = 8 + 4i$（step 8）なので\n\n$$\\mathrm{P} - \\mathrm{M} = (8 + 4i) - (6 + 11i) = 2 - 7i, \\qquad \\lvert \\mathrm{MP} \\rvert^2 = 2^2 + 7^2 = 53$$\n\n**ここで $\\mathrm{Q}$ も測ってみます。** $\\mathrm{Q} = -1 + 9i$（step 9）なので\n\n$$\\mathrm{Q} - \\mathrm{M} = -7 - 2i, \\qquad \\lvert \\mathrm{MQ} \\rvert^2 = 49 + 4 = 53$$\n\n**まったく同じ値です。** そして比をとると\n\n$$\\frac{\\mathrm{P} - \\mathrm{M}}{\\mathrm{Q} - \\mathrm{M}} = \\frac{2 - 7i}{-7 - 2i} = \\frac{(2-7i)(-7+2i)}{53} = \\frac{53i}{53} = i$$\n\n[絶対値] が $1$ で [純虚数] ——**$\\mathrm{MP} = \\mathrm{MQ}$ かつ $\\mathrm{MP} \\perp \\mathrm{MQ}$**。三角形 $\\mathrm{MPQ}$ は直角二等辺三角形です。\n\n**これは偶然ではありません。** $\\alpha,\\beta,\\gamma$ を文字のまま置いて計算すると\n\n$$\\mathrm{P} - \\mathrm{M} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2}, \\qquad \\mathrm{Q} - \\mathrm{M} = \\frac{(\\alpha - \\beta) + i(\\gamma - \\alpha)}{2}$$\n\nとなり、後者に $i$ を掛けると\n\n$$i(\\mathrm{Q} - \\mathrm{M}) = \\frac{i(\\alpha-\\beta) - (\\gamma - \\alpha)}{2} = \\frac{(\\alpha - \\gamma) - i(\\beta - \\alpha)}{2} = \\mathrm{P} - \\mathrm{M}$$\n\n**どんな三角形でも成り立ちます。** 原典はこの性質について「シンプルで美しい性質ですが、**初等的な方法で証明するのは難しい**」と書いています。実際、$\\mathrm{MP}$ の長さを初等幾何で出そうとしても、$\\mathrm{M}$ は $\\mathrm{P}$ とも $\\mathrm{Q}$ とも直接つながっていないので取りかかりがありません。\n\n**なぜ複素数だと通るのか。** 「外側に直角二等辺三角形を作る」も「中点をとる」も、複素数では**足し算と $i$ 倍だけ**で書けます。だから $\\mathrm{P} - \\mathrm{M}$ と $\\mathrm{Q} - \\mathrm{M}$ が同じ材料（$\\alpha, \\beta, \\gamma$ と $i$）の式になり、**片方が他方の $i$ 倍だと目で見て分かる**——それだけのことです。\n\n中心の問いに戻ると：条件式が形を決めたのは、**式がすべて「比」についての式だった**からでした。ここでも同じです。$\\mathrm{P}$、$\\mathrm{Q}$、$\\mathrm{M}$ の位置は $\\alpha,\\beta,\\gamma$ によって変わりますが、$\\dfrac{\\mathrm{P}-\\mathrm{M}}{\\mathrm{Q}-\\mathrm{M}}$ という**比**は $i$ に固定されます。\n\n**位置は自由、形は不変。** これが [相似] という見方の正体であり、この単元がずっと言ってきたことでした。",
         },
       ],
       formulaPreview:
-        "M = (B+C)/2 = 6+9i。P−M = 2−7i → |MP|² = 4+49 = 53｜Q−M = −7−2i → |MQ|² = 53｜比は i（MP = MQ かつ MP ⊥ MQ）",
+        "M = (B+C)/2 = 6+11i。P−M = 2−7i → |MP|² = 4+49 = 53｜Q−M = −7−2i → |MQ|² = 53｜比は i（MP = MQ かつ MP ⊥ MQ）",
     },
   ],
   derivation: `**中心の問い** ｜ $\\alpha$ と $\\beta$ の**関係式が $1$ 本**与えられただけで、点の位置は分からないのに「**どんな三角形か**」が決まってしまうのはなぜ？
