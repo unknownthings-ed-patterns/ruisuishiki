@@ -1406,11 +1406,11 @@ export const M3D_DEF_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "数Ⅱ・B では、多項式の [平均変化率] を何度も計算しました。こんどは相手を替えます。\n\n$$f(x) = \\frac{1}{x}$$\n\nについて、$x$ が $2$ から $4$ まで変わるときの [平均変化率] を求めましょう。\n\n答えは既約分数で答えましょう。",
-      answer: -0.125,
-      answerDisplay: "−1/8",
+        "数Ⅱ・B では、多項式の [平均変化率] を何度も計算しました。こんどは相手を替えます。\n\n$$f(x) = \\frac{1}{x}$$\n\nについて、$x$ が $6$ から $12$ まで変わるときの [平均変化率] を求めましょう。\n\n答えは既約分数で答えましょう。",
+      answer: -0.013888888888888888,
+      answerDisplay: "−1/72",
       unit: "",
-      unknownLabel: "$x$ が $2$ から $4$ までの平均変化率",
+      unknownLabel: "$x$ が $6$ から $12$ までの平均変化率",
       variationFromPrevious: null,
       compareWithStepId: null,
       hints: [
@@ -1420,25 +1420,25 @@ export const M3D_DEF_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "見るところは $1$ つ——**$y$ の増えた分を、$x$ の増えた分で割る**。$x$ が $2$ から $4$ へ動いたとき、$y$ はいくつからいくつへ動いた？",
+          text: "見るところは $1$ つ——**$y$ の増えた分を、$x$ の増えた分で割る**。$x$ が $6$ から $12$ へ動いたとき、$y$ はいくつからいくつへ動いた？",
         },
         {
           layer: 3,
-          text: "数Ⅱ・B と同じ作り方です。$x$ が $2$ から $4$ まで動くと、$y$ は $\\dfrac{1}{2}$ から $\\dfrac{1}{4}$ へ動きます。$y$ の増分は $\\dfrac14 - \\dfrac12 = -\\dfrac14$、$x$ の増分は $2$。よって [平均変化率] は $\\dfrac{-\\frac14}{2} = -\\dfrac18$。負になるのは、この関数が右下がりだからです。中心の問いへの最初の部分回答：**測り方は数Ⅱ・B のまま。替わったのは相手だけ**。",
+          text: "数Ⅱ・B と同じ作り方です。$x$ が $6$ から $12$ まで動くと、$y$ は $\\dfrac{1}{6}$ から $\\dfrac{1}{12}$ へ動きます。$y$ の増分は $\\dfrac1{12} - \\dfrac16 = -\\dfrac1{12}$、$x$ の増分は $6$。よって [平均変化率] は $\\dfrac{-\\frac1{12}}{6} = -\\dfrac1{72}$。負になるのは、この関数が右下がりだからです。中心の問いへの最初の部分回答：**測り方は数Ⅱ・B のまま。替わったのは相手だけ**。",
         },
       ],
-      formulaPreview: "(1/4 − 1/2) ÷ 2 = (−1/4) ÷ 2 = −1/8",
+      formulaPreview: "(1/12 − 1/6) ÷ 6 = (−1/12) ÷ 6 = −1/72",
       figureMarker: "<<M3D_SECANT_ONE>>",
     },
     {
       id: "step2",
       position: 2,
       questionText:
-        "同じ $f(x) = \\dfrac{1}{x}$ について、$x$ が $2$ から $\\dfrac{5}{2}$ まで変わるときの [平均変化率] を求めましょう。\n\n答えは既約分数で答えましょう。",
-      answer: -0.2,
-      answerDisplay: "−1/5",
+        "同じ $f(x) = \\dfrac{1}{x}$ について、$x$ が $6$ から $7$ まで変わるときの [平均変化率] を求めましょう。\n\n答えは既約分数で答えましょう。",
+      answer: -0.023809523809523808,
+      answerDisplay: "−1/42",
       unit: "",
-      unknownLabel: "$x$ が $2$ から $\\dfrac52$ までの平均変化率",
+      unknownLabel: "$x$ が $6$ から $7$ までの平均変化率",
       variationFromPrevious: "same",
       compareWithStepId: "step1",
       hints: [
@@ -1452,20 +1452,20 @@ export const M3D_DEF_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題では $2$ から $4$ まで、幅 $2$ でした。今度は $2$ から $\\dfrac52$ まで、幅は $\\dfrac12$ です。$y$ は $\\dfrac12$ から $\\dfrac25$ へ動くので増分は $\\dfrac25-\\dfrac12 = -\\dfrac1{10}$。割ると $\\dfrac{-\\frac1{10}}{\\frac12} = -\\dfrac15$。前題の $-\\dfrac18$ より小さい（急な）値になりました。**幅を縮めると、値は動いていきます**——どこへ向かうのかが、次の問いです。",
+          text: "前題では $6$ から $12$ まで、幅 $6$ でした。今度は $6$ から $7$ まで、幅は $1$ です。$y$ は $\\dfrac16$ から $\\dfrac17$ へ動くので増分は $\\dfrac17-\\dfrac16 = -\\dfrac1{42}$。割ると $\\dfrac{-\\frac1{42}}{1} = -\\dfrac1{42}$。前題の $-\\dfrac1{72}$ より小さい（急な）値になりました。**幅を縮めると、値は動いていきます**——どこへ向かうのかが、次の問いです。",
         },
       ],
-      formulaPreview: "(2/5 − 1/2) ÷ (1/2) = (−1/10) ÷ (1/2) = −1/5",
+      formulaPreview: "(1/7 − 1/6) ÷ 1 = (−1/42) ÷ 1 = −1/42",
     },
     {
       id: "step3",
       position: 3,
       questionText:
-        "同じ $f(x) = \\dfrac{1}{x}$ について、右の端を $2 + h$ と文字で置き、$h$ を限りなく $0$ に近づけます。\n\n$$\\lim_{h \\to 0} \\frac{f(2+h) - f(2)}{h}$$\n\nを求めましょう（これが $x=2$ における [微分係数] $f'(2)$ です）。\n\n答えは既約分数で答えましょう。",
-      answer: -0.25,
-      answerDisplay: "−1/4",
+        "同じ $f(x) = \\dfrac{1}{x}$ について、右の端を $6 + h$ と文字で置き、$h$ を限りなく $0$ に近づけます。\n\n$$\\lim_{h \\to 0} \\frac{f(6+h) - f(6)}{h}$$\n\nを求めましょう（これが $x=6$ における [微分係数] $f'(6)$ です）。\n\n答えは既約分数で答えましょう。",
+      answer: -0.027777777777777776,
+      answerDisplay: "−1/36",
       unit: "",
-      unknownLabel: "$f'(2)$",
+      unknownLabel: "$f'(6)$",
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step2",
       hints: [
@@ -1479,10 +1479,10 @@ export const M3D_DEF_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題までと同じ式を文字で書きます。$\\dfrac{\\frac{1}{2+h}-\\frac12}{h}$。前の系列と同じく、$\\left[\\frac00\\right]$ の [不定形] なので邪魔しているものを取り除きます。分子を通分すると $\\dfrac{2-(2+h)}{2(2+h)} = \\dfrac{-h}{2(2+h)}$。全体は $\\dfrac{1}{h} \\cdot \\dfrac{-h}{2(2+h)}$ で、**$h$ が約分されて不定形が解消**します。残るのは $\\dfrac{-1}{2(2+h)}$ で、$h \\to 0$ として $-\\dfrac14$。これが $f'(2)$ です。中心の問いへ：**縮めた先に数があった**——けれど「あった」というのは、当たり前のことだろうか。",
+          text: "前題までと同じ式を文字で書きます。$\\dfrac{\\frac{1}{6+h}-\\frac16}{h}$。前の系列と同じく、$\\left[\\frac00\\right]$ の [不定形] なので邪魔しているものを取り除きます。分子を通分すると $\\dfrac{6-(6+h)}{6(6+h)} = \\dfrac{-h}{6(6+h)}$。全体は $\\dfrac{1}{h} \\cdot \\dfrac{-h}{6(6+h)}$ で、**$h$ が約分されて不定形が解消**します。残るのは $\\dfrac{-1}{6(6+h)}$ で、$h \\to 0$ として $-\\dfrac1{36}$。これが $f'(6)$ です。中心の問いへ：**縮めた先に数があった**——けれど「あった」というのは、当たり前のことだろうか。",
         },
       ],
-      formulaPreview: "通分して −h/(2(2+h))。h が約分されて −1/(2(2+h)) → −1/4",
+      formulaPreview: "通分して −h/(6(6+h))。h が約分されて −1/(6(6+h)) → −1/36",
     },
     {
       id: "step4",
@@ -2910,11 +2910,11 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
       id: "step5",
       position: 5,
       questionText:
-        "ここで、微分の**新しい記号**に慣れておきます。$y$ を $x$ で微分することを $\\dfrac{dy}{dx}$、あるいは $\\dfrac{d}{dx}y$ と書きます。\n\nこの記号の利点は、複数の文字を含む式で **どの文字で微分するか** を書き分けられることです。\n\n$$\\frac{d}{dx}\\left(\\frac{x^2}{t^3}\\right)$$\n\nについて、$x = 3$、$t = 2$ のときの値を求めましょう。\n\n答えは既約分数で答えましょう。",
+        "ここで、微分の**新しい記号**に慣れておきます。$y$ を $x$ で微分することを $\\dfrac{dy}{dx}$、あるいは $\\dfrac{d}{dx}y$ と書きます。\n\nこの記号の利点は、複数の文字を含む式で **どの文字で微分するか** を書き分けられることです。\n\n$$\\frac{d}{dx}\\left(\\frac{x^3}{t^2}\\right)$$\n\nについて、$x = 2$、$t = 4$ のときの値を求めましょう。\n\n答えは既約分数で答えましょう。",
       answer: 0.75,
       answerDisplay: "3/4",
       unit: "",
-      unknownLabel: "$\\dfrac{d}{dx}\\left(\\dfrac{x^2}{t^3}\\right)$ の値",
+      unknownLabel: "$\\dfrac{d}{dx}\\left(\\dfrac{x^3}{t^2}\\right)$ の値",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
@@ -2928,21 +2928,21 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題までは文字が $1$ 種類だったので、迷う余地がありませんでした。今度は $\\dfrac{d}{dx}$ と書いてあるので、**$x$ を動かす文字、$t$ を動かない数**として扱います。$\\dfrac{1}{t^3}$ は定数なので前に出せて\n\n$\\dfrac{d}{dx}\\left(\\dfrac{x^2}{t^3}\\right) = \\dfrac{1}{t^3} \\cdot 2x = \\dfrac{2x}{t^3}$。\n\n$x=3$、$t=2$ を入れると $\\dfrac{6}{8} = \\dfrac34$。中心の問いのとなりで、もう $1$ つ大事なことが起きています：**記号が、何を動かして何を止めるかを書き分けてくれる**。",
+          text: "前題までは文字が $1$ 種類だったので、迷う余地がありませんでした。今度は $\\dfrac{d}{dx}$ と書いてあるので、**$x$ を動かす文字、$t$ を動かない数**として扱います。$\\dfrac{1}{t^2}$ は定数なので前に出せて\n\n$\\dfrac{d}{dx}\\left(\\dfrac{x^3}{t^2}\\right) = \\dfrac{1}{t^2} \\cdot 3x^2 = \\dfrac{3x^2}{t^2}$。\n\n$x=2$、$t=4$ を入れると $\\dfrac{12}{16} = \\dfrac34$。中心の問いのとなりで、もう $1$ つ大事なことが起きています：**記号が、何を動かして何を止めるかを書き分けてくれる**。",
         },
       ],
-      formulaPreview: "t を定数とみなして前に出す。(1/t³)·2x = 2x/t³。x=3, t=2 で 6/8 = 3/4",
+      formulaPreview: "t を定数とみなして前に出す。(1/t²)·3x² = 3x²/t²。x=2, t=4 で 12/16 = 3/4",
       figureMarker: "<<M3D_WHICH_LETTER>>",
     },
     {
       id: "step6",
       position: 6,
       questionText:
-        "**同じ式**について、こんどは $t$ で微分します。\n\n$$\\frac{d}{dt}\\left(\\frac{x^2}{t^3}\\right)$$\n\nについて、$x = 3$、$t = 2$ のときの値を求めましょう。\n\n答えは既約分数で答えましょう。",
-      answer: -1.6875,
-      answerDisplay: "−27/16",
+        "**同じ式**について、こんどは $t$ で微分します。\n\n$$\\frac{d}{dt}\\left(\\frac{x^3}{t^2}\\right)$$\n\nについて、$x = 2$、$t = 4$ のときの値を求めましょう。\n\n答えは既約分数で答えましょう。",
+      answer: -0.25,
+      answerDisplay: "−1/4",
       unit: "",
-      unknownLabel: "$\\dfrac{d}{dt}\\left(\\dfrac{x^2}{t^3}\\right)$ の値",
+      unknownLabel: "$\\dfrac{d}{dt}\\left(\\dfrac{x^3}{t^2}\\right)$ の値",
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
@@ -2956,18 +2956,18 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題では $t$ を止めて $x$ を動かしました。今度は逆で、**$x^2$ が定数、$t$ が動く文字**です。$\\dfrac{1}{t^3} = t^{-3}$ の微分は $-3t^{-4}$（前の系列の規則）なので\n\n$\\dfrac{d}{dt}\\left(\\dfrac{x^2}{t^3}\\right) = x^2 \\cdot (-3t^{-4}) = -\\dfrac{3x^2}{t^4}$。\n\n$x=3$、$t=2$ を入れると $-\\dfrac{27}{16}$。**同じ式でも、どちらを動かすかで答えが変わります**——前題の答えを写した人は必ず外れます。だから記号で書き分ける必要があるのです。",
+          text: "前題では $t$ を止めて $x$ を動かしました。今度は逆で、**$x^3$ が定数、$t$ が動く文字**です。$\\dfrac{1}{t^2} = t^{-2}$ の微分は $-2t^{-3}$（前の系列の規則）なので\n\n$\\dfrac{d}{dt}\\left(\\dfrac{x^3}{t^2}\\right) = x^3 \\cdot (-2t^{-3}) = -\\dfrac{2x^3}{t^3}$。\n\n$x=2$、$t=4$ を入れると $-\\dfrac{16}{64} = -\\dfrac14$。**同じ式でも、どちらを動かすかで答えが変わります**——前題の答えを写した人は必ず外れます。だから記号で書き分ける必要があるのです。",
         },
       ],
-      formulaPreview: "x² を定数とみなす。x²·(−3t^(−4)) = −3x²/t⁴。x=3, t=2 で −27/16",
+      formulaPreview: "x³ を定数とみなす。x³·(−2t^(−3)) = −2x³/t³。x=2, t=4 で −16/64 = −1/4",
     },
     {
       id: "step7",
       position: 7,
       questionText:
-        "$$y = \\frac{\\sqrt{x}}{x + 1}$$\n\nについて、$x = 4$ における微分係数を求めましょう。\n\n答えは既約分数で答えましょう。",
-      answer: -0.03,
-      answerDisplay: "−3/100",
+        "$$y = \\frac{\\sqrt{x}}{x + 8}$$\n\nについて、$x = 4$ における微分係数を求めましょう。\n\n答えは既約分数で答えましょう。",
+      answer: 0.006944444444444444,
+      answerDisplay: "1/144",
       unit: "",
       unknownLabel: "$y'(4)$",
       variationFromPrevious: "plus_alpha",
@@ -2983,10 +2983,10 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "公式どおりです。$f = \\sqrt x$、$g = x+1$ なので $f' = \\dfrac{1}{2\\sqrt x}$、$g' = 1$。分子は\n\n$\\dfrac{1}{2\\sqrt x}(x+1) - \\sqrt x \\cdot 1$。\n\n$x=4$ を入れると $\\dfrac14 \\times 5 - 2 = \\dfrac54 - 2 = -\\dfrac34$。分母は $(4+1)^2 = 25$ なので $y'(4) = \\dfrac{-\\frac34}{25} = -\\dfrac{3}{100}$。**分子に何が入っても、公式の骨格は変わりません**。",
+          text: "公式どおりです。$f = \\sqrt x$、$g = x+8$ なので $f' = \\dfrac{1}{2\\sqrt x}$、$g' = 1$。分子は\n\n$\\dfrac{1}{2\\sqrt x}(x+8) - \\sqrt x \\cdot 1$。\n\n$x=4$ を入れると $\\dfrac14 \\times 12 - 2 = 3 - 2 = 1$。分母は $(4+8)^2 = 144$ なので $y'(4) = \\dfrac{1}{144}$。**分子に何が入っても、公式の骨格は変わりません**。",
         },
       ],
-      formulaPreview: "分子 = (1/(2√x))(x+1) − √x。x=4 で 5/4 − 2 = −3/4。分母 25 で割って −3/100",
+      formulaPreview: "分子 = (1/(2√x))(x+8) − √x。x=4 で 3 − 2 = 1。分母 144 で割って 1/144",
     },
     {
       id: "step8",
@@ -3018,9 +3018,9 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "$$y = \\frac{x\\sqrt{x}}{x + 1}$$\n\nについて、$x = 4$ における微分係数を求めましょう。\n\n答えは既約分数で答えましょう。",
-      answer: 0.28,
-      answerDisplay: "7/25",
+        "$$y = \\frac{x\\sqrt{x}}{x + 8}$$\n\nについて、$x = 4$ における微分係数を求めましょう。\n\n答えは既約分数で答えましょう。",
+      answer: 0.19444444444444445,
+      answerDisplay: "7/36",
       unit: "",
       unknownLabel: "$y'(4)$",
       variationFromPrevious: "composite",
@@ -3036,10 +3036,10 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "step7 では分子が $\\sqrt x$ そのものでした。今度は $x\\sqrt x$ です。ここは $2$ 通りの道があります——前の系列の積の公式を使ってもよいし、$x\\sqrt x = x^{\\frac32}$ と指数にそろえてもよい。後者なら $(x^{\\frac32})' = \\dfrac32 x^{\\frac12} = \\dfrac32\\sqrt x$。商の公式に入れると、分子は $\\dfrac32\\sqrt x (x+1) - x\\sqrt x$。$x=4$ で $\\dfrac32 \\times 2 \\times 5 - 8 = 15 - 8 = 7$。分母は $25$ なので $\\dfrac{7}{25}$。**道具は重ねて使える**——商の公式の中で、前の系列の道具が働いています。",
+          text: "step7 では分子が $\\sqrt x$ そのものでした。今度は $x\\sqrt x$ です。ここは $2$ 通りの道があります——前の系列の積の公式を使ってもよいし、$x\\sqrt x = x^{\\frac32}$ と指数にそろえてもよい。後者なら $(x^{\\frac32})' = \\dfrac32 x^{\\frac12} = \\dfrac32\\sqrt x$。商の公式に入れると、分子は $\\dfrac32\\sqrt x (x+8) - x\\sqrt x$。$x=4$ で $\\dfrac32 \\times 2 \\times 12 - 8 = 36 - 8 = 28$。分母は $144$ なので $\\dfrac{28}{144} = \\dfrac{7}{36}$。**道具は重ねて使える**——商の公式の中で、前の系列の道具が働いています。",
         },
       ],
-      formulaPreview: "分子 = (3/2)√x(x+1) − x√x。x=4 で 15 − 8 = 7。分母 25 で割って 7/25",
+      formulaPreview: "分子 = (3/2)√x(x+8) − x√x。x=4 で 36 − 8 = 28。分母 144 で割って 28/144 = 7/36",
     },
     {
       id: "step10",
@@ -3105,7 +3105,7 @@ $\\dfrac{d}{dx}$ なら $x$ を動かして他を止める。$\\dfrac{d}{dt}$ �
 
 **分子から $x$ が消えることがある。** $\\dfrac{ax+1}{x+3}$ のような「$1$ 次式ぶんの $1$ 次式」では、微分した分子が定数になる。傾きの変わり方が分母の $2$ 乗だけで決まる形で、この単元でよく出てくる。
 
-**道具は重ねて使える。** 商の公式の中で、積の公式や $(x^{\\alpha})'$ が働くことがある。$\\dfrac{x\\sqrt x}{x+1}$ では、分子を微分するのに前の系列の道具を呼び出した。**新しい公式は、古い公式を置きかえるのではなく、その上に乗る。**
+**道具は重ねて使える。** 商の公式の中で、積の公式や $(x^{\\alpha})'$ が働くことがある。$\\dfrac{x\\sqrt x}{x+8}$ では、分子を微分するのに前の系列の道具を呼び出した。**新しい公式は、古い公式を置きかえるのではなく、その上に乗る。**
 
 ────────
 
@@ -3621,11 +3621,11 @@ export const M3D_INV_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "$$y = \\sqrt[3]{x}$$\n\nについて、$x = 64$ のときの $\\dfrac{dy}{dx}$ を求めましょう。\n\n答えは既約分数で答えましょう。",
+        "$$y = \\sqrt[3]{x + 7}$$\n\nについて、$x = 57$ のときの $\\dfrac{dy}{dx}$ を求めましょう。\n\n答えは既約分数で答えましょう。",
       answer: 0.020833333333333332,
       answerDisplay: "1/48",
       unit: "",
-      unknownLabel: "$x=64$ のときの $\\dfrac{dy}{dx}$",
+      unknownLabel: "$x=57$ のときの $\\dfrac{dy}{dx}$",
       variationFromPrevious: "same",
       compareWithStepId: "step5",
       hints: [
@@ -3639,17 +3639,17 @@ export const M3D_INV_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題までと同じ手順です。$y = \\sqrt[3]{x}$ の両辺を $3$ 乗して $x = y^3$。$\\dfrac{dx}{dy} = 3y^2$。$x=64$ のとき $y = 4$ なので $3 \\times 16 = 48$。逆数をとって $\\dfrac{dy}{dx} = \\dfrac1{48}$。**$x$ を立方数に選んでおくと、$y$ が整数になって計算が楽になります**。",
+          text: "前題までと同じ手順です。$y = \\sqrt[3]{x+7}$ の両辺を $3$ 乗して $x + 7 = y^3$、つまり $x = y^3 - 7$。$\\dfrac{dx}{dy} = 3y^2$。$x=57$ のとき $y^3 = 64$ より $y = 4$ なので $3 \\times 16 = 48$。逆数をとって $\\dfrac{dy}{dx} = \\dfrac1{48}$。**$x+7$ を立方数になるように選んでおくと、$y$ が整数になって計算が楽になります**。",
         },
       ],
-      formulaPreview: "x = y³、dx/dy = 3y²。x=64 なら y=4 で 48。逆数で 1/48",
+      formulaPreview: "x = y³ − 7、dx/dy = 3y²。x=57 なら y=4 で 48。逆数で 1/48",
     },
     {
       id: "step7",
       position: 7,
       questionText:
-        "$y = \\sqrt[3]{x}$ について、$\\dfrac{dy}{dx} = \\dfrac{1}{147}$ となるのは $x$ がいくつのときでしょう。",
-      answer: 343,
+        "$y = \\sqrt[3]{x + 7}$ について、$\\dfrac{dy}{dx} = \\dfrac{1}{147}$ となるのは $x$ がいくつのときでしょう。",
+      answer: 336,
       unit: "",
       unknownLabel: "$x$",
       variationFromPrevious: "inverse",
@@ -3665,10 +3665,10 @@ export const M3D_INV_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "前題では $\\dfrac{dy}{dx} = \\dfrac{1}{3y^2}$ でした。これが $\\dfrac{1}{147}$ に等しいので $3y^2 = 147$、$y^2 = 49$、$y = 7$（$y>0$）。求めるのは $x$ なので $x = y^3 = 343$。**$y$ を経由してから $x$ に戻る**——逆関数を扱うときの自然な道すじです。",
+          text: "前題では $\\dfrac{dy}{dx} = \\dfrac{1}{3y^2}$ でした。これが $\\dfrac{1}{147}$ に等しいので $3y^2 = 147$、$y^2 = 49$、$y = 7$（$y>0$）。求めるのは $x$ なので $x = y^3 - 7 = 343 - 7 = 336$。**$y$ を経由してから $x$ に戻る**——逆関数を扱うときの自然な道すじです。",
         },
       ],
-      formulaPreview: "1/(3y²) = 1/147 より y = 7。x = y³ = 343",
+      formulaPreview: "1/(3y²) = 1/147 より y = 7。x = y³ − 7 = 336",
     },
     {
       id: "step8",
