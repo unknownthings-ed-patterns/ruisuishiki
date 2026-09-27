@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_HIDDEN_FACTOR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dHiddenFactor />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_FACTOR_ROAD_CLOSED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dFactorRoadClosed />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_DISCRETE_VS_DENSE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34165,6 +34179,103 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列2 step1: 分母を 0 にしている因子が、分子にも隠れている図。
+ *  どの因子かは書かない（それを見つけるのが step1 の仕事）。値も式も書かない模式。 */
+function M3dHiddenFactor() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分数の模式図。分母の箱が一つ、分子の箱が二つに分かれて並び、分子の片方と分母が同じ色の枠で囲まれている。中に入る式は書かれていない"
+    >
+      {/* 分子：2 つの箱 */}
+      <rect x="96" y="30" width="74" height="30" rx="4" fill="none" stroke={accent} strokeWidth="1.8" />
+      <rect x="182" y="30" width="74" height="30" rx="4" fill="none" stroke={muted} strokeWidth="1.4" strokeDasharray="4 3" />
+      <text x="133" y="50" fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="219" y="50" fontSize="16" fill={muted} textAnchor="middle">
+        ?
+      </text>
+
+      {/* 分数の横線 */}
+      <path d="M 88 74 L 264 74" fill="none" stroke={stroke} strokeWidth="1.6" />
+
+      {/* 分母：1 つの箱（分子の左と同じ枠） */}
+      <rect x="96" y="88" width="74" height="30" rx="4" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="133" y="108" fontSize="16" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <text x="292" y="40" fontSize="10" fill={muted} textAnchor="middle">
+        分子は
+      </text>
+      <text x="292" y="54" fontSize="10" fill={muted} textAnchor="middle">
+        2 つに分かれる
+      </text>
+      <text x="292" y="108" fontSize="10" fill={muted} textAnchor="middle">
+        分母
+      </text>
+
+      <text x="180" y="140" fontSize="11" fill={accent} textAnchor="middle">
+        同じ枠の 2 つは、消し合えるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列2 step5: 因数分解の道が閉じ、別の道が開く図。
+ *  ★層8 の補足★ どちらの道がどこへ通じるかは描かない——開いているほうの先は「?」のまま。 */
+function M3dFactorRoadClosed() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分かれ道の模式図。左の道は途中で二重線にさえぎられ、右の道は開いたまま先が疑問符になっている。道の先に何があるかは書かれていない"
+    >
+      <circle cx="60" cy="76" r="5" fill={accent} />
+      <text x="60" y="102" fontSize="10.5" fill={muted} textAnchor="middle">
+        0/0 の形
+      </text>
+
+      {/* 上の道：閉じている */}
+      <path d="M 70 70 L 186 40" fill="none" stroke={muted} strokeWidth="1.6" />
+      <path d="M 188 30 L 200 48" fill="none" stroke={stroke} strokeWidth="2" />
+      <path d="M 196 28 L 208 46" fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="134" y="24" fontSize="10.5" fill={muted} textAnchor="middle">
+        因数に分ける道
+      </text>
+      <text x="252" y="44" fontSize="10.5" fill={stroke} textAnchor="middle">
+        通れない
+      </text>
+
+      {/* 下の道：開いている */}
+      <path d="M 70 84 L 250 112" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 242 105 L 252 112 L 242 119" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="140" y="128" fontSize="10.5" fill={muted} textAnchor="middle">
+        もう一つの道
+      </text>
+      <text x="278" y="116" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="146" fontSize="11" fill={accent} textAnchor="middle">
+        通れる道は、どこへ通じている？
       </text>
     </svg>
   );
