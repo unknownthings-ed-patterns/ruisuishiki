@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_CHAIN_LINK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dChainLink />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_TWO_DEVICES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dTwoDevices />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_QUOTIENT_SHAPE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34277,6 +34291,110 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列10 step1: y ← t ← x の連鎖図。
+ *  ★層8 の補足★ 変化率がかけ算になることは描かない——つながっているという仕組みだけ。 */
+function M3dChainLink() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 140"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三つの丸が横に並び、右から左へ矢印でつながれている図。矢印の上には疑問符が置かれている。関係を表す式は書かれていない"
+    >
+      {[{ cx: 78, label: "y" }, { cx: 180, label: "t" }, { cx: 282, label: "x" }].map((n) => (
+        <g key={n.label}>
+          <circle cx={n.cx} cy="64" r="20" fill="none" stroke={accent} strokeWidth="1.7" />
+          <text x={n.cx} y="70" fontSize="15" fill={stroke} textAnchor="middle" fontWeight="700">
+            {n.label}
+          </text>
+        </g>
+      ))}
+
+      <path d="M 158 64 L 102 64" fill="none" stroke={muted} strokeWidth="1.5" />
+      <path d="M 110 59 L 102 64 L 110 69" fill="none" stroke={muted} strokeWidth="1.5" />
+      <path d="M 260 64 L 204 64" fill="none" stroke={muted} strokeWidth="1.5" />
+      <path d="M 212 59 L 204 64 L 212 69" fill="none" stroke={muted} strokeWidth="1.5" />
+
+      <text x="130" y="48" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+      <text x="232" y="48" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="122" fontSize="11" fill={accent} textAnchor="middle">
+        2 つのつながりから、端から端への変わり方は決まるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列10 step3: 2 つの装置を棒で連結する図（原典 p.105）。
+ *  ★層8 の補足★ 出口の動く量は ? のまま——それがこの step の問い。 */
+function M3dTwoDevices() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="二つの箱が棒で連結されている図。右端の入口に 1 と書かれ、連結部分と左端の出口は疑問符になっている。倍率の数は箱の中に書かれている"
+    >
+      {/* 右：装置 g（先に動く） */}
+      <rect x="196" y="36" width="96" height="58" rx="5" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="244" y="60" fontSize="11" fill={stroke} textAnchor="middle">
+        装置 g
+      </text>
+      <text x="244" y="78" fontSize="11.5" fill={accent} textAnchor="middle" fontWeight="700">
+        6 倍
+      </text>
+
+      {/* 左：装置 f */}
+      <rect x="62" y="36" width="96" height="58" rx="5" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="110" y="60" fontSize="11" fill={stroke} textAnchor="middle">
+        装置 f
+      </text>
+      <text x="110" y="78" fontSize="11.5" fill={accent} textAnchor="middle" fontWeight="700">
+        7 倍
+      </text>
+
+      {/* 連結の棒 */}
+      <path d="M 158 65 L 196 65" fill="none" stroke={stroke} strokeWidth="2.4" />
+      <text x="177" y="54" fontSize="10" fill={muted} textAnchor="middle">
+        連結
+      </text>
+      <text x="177" y="110" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      {/* 入口と出口 */}
+      <text x="316" y="70" fontSize="11" fill={stroke} textAnchor="middle">
+        入口
+      </text>
+      <text x="316" y="86" fontSize="12" fill={stroke} textAnchor="middle" fontWeight="700">
+        1
+      </text>
+      <text x="34" y="70" fontSize="11" fill={stroke} textAnchor="middle">
+        出口
+      </text>
+      <text x="34" y="86" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
+        入口を 1 動かすと、出口はいくつ動く？
       </text>
     </svg>
   );
