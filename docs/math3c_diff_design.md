@@ -1143,7 +1143,7 @@ step1 が $x\to8+0$、step2 が $x\to-5-0$ で、**点も符号も向きも変�
 #### ★M-1 は新しい層だった（層13）★
 
 **$2$ つのフィールドの「間」にある欠陥**で、どちらのフィールドも単体では正しい。
-`audit_hints.py` はヒストの中身しか見ず、`precommit_audit.py` はフィールド単位で見る。
+`audit_hints.py` はヒントの中身しか見ず、`precommit_audit.py` はフィールド単位で見る。
 **$5$ 巡の監査で誰も見ていなかった**（実装の最初からあった）。
 
 **機械で見られる**（$20$ 行ほど）。`compareWithStepId` を持つ step について、
@@ -1268,7 +1268,7 @@ $\lvert x\rvert$（連続だが微分不可）と $x\lvert x\rvert$（両方○�
 | **Round 3 監査（作り替えた step だけ）** | **済＝Blocker 0・Major 4・Minor 1。却下ゼロ（3 巡連続）。全件反映**。詳細は §7-6 の次の §7-7 | 2026-09-27 |
 | **Round 4（Round 3 で作り替えた step だけ）** | **済＝Blocker 0・Major 3・Minor 1。却下ゼロ（4 巡連続）。全件反映**。詳細は §7-8 | 2026-09-27 |
 | **Round 5（Round 4 で作り替えた step だけ）** | **済＝Blocker 1・Major 1・Minor 1。却下ゼロ（5 巡連続）。全件反映**。監査の判定は**「収束未了」**。詳細は §7-9 | 2026-09-27 |
-| Round 6（Round 5 で作り替えた step だけ） | 未。**対象＝系列3 step1 の問題文・`compareWithStepId` を替えた 8 step・系列11 step10 の L3 と `subtitle`** | — |
+| Round 6（Round 5 で作り替えた step だけ） | **プロンプト作成済**＝`~/ruisuishiki-refs/prompts/round6_math3c_ch3_recheck_codex.txt`（90 行）。**対象＝系列3 step1 の問題文・`compareWithStepId` を替えた 8 step〔オペレータが新しい比較相手と合うかを見てもらう〕・系列11 step10 の L3 と `subtitle`**。**収束の判断も依頼**（6 巡目） | 2026-09-27 |
 | 他単元に残る層13（4 件） | **未＝先生の裁定待ち**。`seriesTrigRatio.ts:1503/1857/1912`・`seriesTrig.ts:254`。**歩行済みの単元なので手を付けていない** | — |
 | 図 22 枚の PNG 目視（Round 2 の未実施分） | 未。**監査には頼めない工程**（画像を見る必要がある）。メインが実装時に見ているが、**Round 2 の直しで図は触っていない**ので再確認の優先度は低い | — |
 | 還流（背骨・handoff・quality_bar・memory） | 未 | — |
