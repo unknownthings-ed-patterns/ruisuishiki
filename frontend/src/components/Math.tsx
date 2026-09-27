@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_SECANT_ONE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dSecantOne />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_CORNER_TWO_SLOPES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dCornerTwoSlopes />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_HOLE_TO_FILL>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34207,6 +34221,99 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列5 step1: 右下がりの曲線に、2 点を結ぶ直線を 1 本だけ引いた図。
+ *  ★CALC_SECANT は流用しない★——あちらは軸が「時間」「深さ」で、数Ⅱ・B の水そうの文脈が入っている。
+ *  傾きの値は書かない。問いで終える。 */
+function M3dSecantOne() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="右下がりの曲線の上に二つの点があり、その二点を結ぶ直線が引かれている。よこの幅とたての変化が破線で示されているが、値は書かれていない模式の図"
+    >
+      <path d="M 40 132 L 336 132" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 56 144 L 56 20" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="342" y="136" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* 右下がりの曲線 */}
+      <path d="M 76 34 Q 150 116 320 124" fill="none" stroke={accent} strokeWidth="1.8" />
+      {/* 2 点と、それを結ぶ直線 */}
+      <path d="M 104 60 L 244 118" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="104" cy="60" r="3.6" fill={stroke} />
+      <circle cx="244" cy="118" r="3.6" fill={stroke} />
+
+      {/* よこ幅・たての変化（値は書かない） */}
+      <path d="M 104 128 L 244 128" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="174" y="142" fontSize="10.5" fill={muted} textAnchor="middle">
+        よこの幅
+      </text>
+      <path d="M 252 60 L 252 118" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="286" y="92" fontSize="10.5" fill={muted} textAnchor="middle">
+        たての変化
+      </text>
+
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        この直線のかたむきは、幅を縮めるとどうなる？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列5 step10: 折れ点へ、右と左から別々に寄る図。
+ *  ★層8 の補足★ 傾きの値も、一致しないという結論も書かない——
+ *  「2 本の直線が別の向きを向いている」という仕組みだけを描く。 */
+function M3dCornerTwoSlopes() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="V の字に折れたグラフ。折れ点から左へ向かう矢印と右へ向かう矢印があり、二つは別の向きを指している。傾きの値は書かれていない模式の図"
+    >
+      <path d="M 30 132 L 336 132" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 186 144 L 186 24" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+
+      {/* 折れたグラフ（左枝は急な下り、右枝はゆるい上り） */}
+      <path d="M 66 36 L 186 104 L 320 46" fill="none" stroke={accent} strokeWidth="1.9" />
+      <circle cx="186" cy="104" r="4" fill={accent} />
+
+      {/* 折れ点から左右へ向かう矢印（枝が直線なので、割線を重ねると見分けられない）*/}
+      <path d="M 176 98 L 116 64" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 124 62 L 116 64 L 119 72" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 196 100 L 268 69" fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d="M 260 66 L 268 69 L 264 77" fill="none" stroke={stroke} strokeWidth="1.6" />
+
+      <text x="104" y="118" fontSize="10.5" fill={stroke} textAnchor="middle">
+        左から寄せると
+      </text>
+      <text x="104" y="131" fontSize="10.5" fill={stroke} textAnchor="middle">
+        この向き
+      </text>
+      <text x="284" y="118" fontSize="10.5" fill={stroke} textAnchor="middle">
+        右から寄せると
+      </text>
+      <text x="284" y="131" fontSize="10.5" fill={stroke} textAnchor="middle">
+        この向き
+      </text>
+
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        2 つの向きは、同じ数で言い表せるだろうか？
       </text>
     </svg>
   );

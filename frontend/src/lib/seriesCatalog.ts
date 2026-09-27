@@ -64,6 +64,7 @@ import {
   M3D_LIM_ZERO_SERIES,
   M3D_LIM_SIDE_SERIES,
   M3D_CONT_DEF_SERIES,
+  M3D_DEF_SERIES,
 } from "./seriesMath3Diff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -1916,6 +1917,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数の極限と微分",
     shortDescription:
       "関数の連続（「つながっている」を絵なしで言う）— 行き先が $1$ つに決まるか、そしてその高さに値が置いてあるか。**直せる破れ方と、直せない破れ方**がある",
+  },
+  {
+    series: M3D_DEF_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "微分の定義（測り方は同じ。相手が変わる）— 数Ⅱ・B の測り方はそのまま。多項式でない相手に向けたとき、**その測り方が失敗する場所**がはじめて見える",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
