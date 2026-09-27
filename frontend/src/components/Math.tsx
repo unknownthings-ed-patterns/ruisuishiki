@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_HOLE_TO_FILL>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dHoleToFill />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_THREE_CASES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dThreeCases />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_STAIRS_FROM_RIGHT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34193,6 +34207,99 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列4 step1: 曲線に穴が 1 つあいていて、埋める高さが ? の図。
+ *  高さの値は書かない。穴があること（仕組み）だけを描く。 */
+function M3dHoleToFill() {
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="右上がりの直線の途中が切れていて、そこに白丸で穴が一つあいている図。穴の上に疑問符がある。目盛りの数字も値も書かれていない模式の図"
+    >
+      <path d="M 30 122 L 336 122" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 48 136 L 48 24" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="342" y="126" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* 穴の手前で切り、穴の先から再開する（穴が穴に見えるだけの隙間を空ける） */}
+      <path d="M 62 108 L 178 66" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 216 52 L 318 16" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="197" cy="59" r="4.5" fill="var(--background)" stroke={accent} strokeWidth="1.7" />
+
+      <path d="M 197 122 L 197 70" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="197" y="40" fontSize="16" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="142" fontSize="11" fill={accent} textAnchor="middle">
+        この穴に、どの高さの点を置けばつながる？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列4 step5: 3 通りの形（左右がずれる／離れ小島／そろう）を並べる図。
+ *  ★層8 の補足★ 仕組み（3 通りある）だけを描き、
+ *  どれが「点の高さでは直せない」かは問いに預ける——それがこの step の発見。 */
+function M3dThreeCases() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panels: { x: number; label: string; kind: "gap" | "island" | "join" }[] = [
+    { x: 16, label: "ア", kind: "gap" },
+    { x: 130, label: "イ", kind: "island" },
+    { x: 244, label: "ウ", kind: "join" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三つの小さな図が横に並んでいる。左は左右の枝が別の高さで終わり、さらに離れた高さに黒丸がある。中は枝がそろっているが黒丸だけ離れた高さにある。右は枝と黒丸が同じ高さにある。どれがどの場合かの名前は書かれていない"
+    >
+      {panels.map((p) => (
+        <g key={p.label}>
+          <path d={`M ${p.x + 6} 106 L ${p.x + 94} 106`} fill="none" stroke={muted} strokeWidth="1" />
+          <path d={`M ${p.x + 50} 116 L ${p.x + 50} 18`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+          <path d={`M ${p.x + 10} 84 L ${p.x + 45} 66`} fill="none" stroke={accent} strokeWidth="1.7" />
+          {p.kind === "gap" ? (
+            <>
+              <path d={`M ${p.x + 55} 40 L ${p.x + 90} 26`} fill="none" stroke={accent} strokeWidth="1.7" />
+              <circle cx={p.x + 47} cy="65" r="3.4" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+              <circle cx={p.x + 53} cy="42" r="3.4" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+              <circle cx={p.x + 50} cy="86" r="3.6" fill={accent} />
+            </>
+          ) : (
+            <>
+              <path d={`M ${p.x + 55} 61 L ${p.x + 90} 47`} fill="none" stroke={accent} strokeWidth="1.7" />
+              {p.kind === "island" ? (
+                <>
+                  <circle cx={p.x + 50} cy="63" r="3.4" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+                  <circle cx={p.x + 50} cy="30" r="3.6" fill={accent} />
+                </>
+              ) : (
+                <circle cx={p.x + 50} cy="63" r="3.6" fill={accent} />
+              )}
+            </>
+          )}
+          <text x={p.x + 50} y="122" fontSize="11" fill={stroke} textAnchor="middle" fontWeight="700">
+            {p.label}
+          </text>
+        </g>
+      ))}
+      <text x="180" y="142" fontSize="11" fill={accent} textAnchor="middle">
+        点の高さを動かして直せるのは、どれだろう？
       </text>
     </svg>
   );
