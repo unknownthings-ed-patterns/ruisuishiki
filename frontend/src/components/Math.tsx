@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_NO_UNIQUE_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dNoUniqueTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_SMOOTH_JOIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dSmoothJoin />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_SECANT_ONE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34221,6 +34235,85 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列6 step1: 尖った点では接線が 1 本に決まらない図（原典 p.89 の左図）。
+ *  候補の直線を何本も破線で置き、どれが正しいかは描かない。傾きの値も書かない。 */
+function M3dNoUniqueTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 尖った点を通る候補の直線（傾きは模式・値は書かない）。 */
+  const slopes = [-1.05, -0.55, 0, 0.55, 1.05];
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="V の字に折れたグラフの折れ点を通る直線が、破線で何本も引かれている図。どれが接線かは示されていない。傾きの値も目盛りも書かれていない模式の図"
+    >
+      <path d="M 30 134 L 336 134" fill="none" stroke={muted} strokeWidth="1" />
+
+      {slopes.map((m, k) => (
+        <path
+          key={k}
+          d={`M ${180 - 78} ${100 - m * -78} L ${180 + 78} ${100 - m * 78}`}
+          fill="none"
+          stroke={muted}
+          strokeWidth="1"
+          strokeDasharray="4 3"
+        />
+      ))}
+
+      <path d="M 72 38 L 180 100 L 296 44" fill="none" stroke={accent} strokeWidth="1.9" />
+      <circle cx="180" cy="100" r="4" fill={accent} />
+      <text x="180" y="124" fontSize="10.5" fill={stroke} textAnchor="middle">
+        この点
+      </text>
+
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        この点に寄りそう直線は、1 本に決まるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列6 step3: 2 つの曲線がなめらかに継がる図（原典 p.90 のコメント）。
+ *  ★層8 の補足★ どちらが尖るかは描かない——並べるのではなく、
+ *  「継ぎ目で向きがそろっている」という仕組みだけを 1 枚で見せる。 */
+function M3dSmoothJoin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="縦の破線をはさんで、左の曲線と右の曲線が一点でつながっている図。つなぎ目で二つの曲線は同じ向きを向いている。値も目盛りも書かれていない模式の図"
+    >
+      <path d="M 30 134 L 336 134" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 180 146 L 180 26" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+
+      {/* 左の枝と右の枝が、継ぎ目で同じ向きを向いている */}
+      <path d="M 66 118 Q 130 96 180 86" fill="none" stroke={accent} strokeWidth="1.9" />
+      <path d="M 180 86 Q 236 75 314 40" fill="none" stroke={accent} strokeWidth="1.9" />
+      <circle cx="180" cy="86" r="4" fill={accent} />
+
+      {/* 継ぎ目での向きを示す短い直線（値は書かない） */}
+      <path d="M 132 96 L 232 76" fill="none" stroke={stroke} strokeWidth="1.3" strokeDasharray="4 3" />
+
+      <text x="180" y="112" fontSize="10.5" fill={stroke} textAnchor="middle">
+        つなぎ目
+      </text>
+
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        ここでは、左右の向きはそろっているだろうか？
       </text>
     </svg>
   );
