@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_QUOTIENT_SHAPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dQuotientShape />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_WHICH_LETTER>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dWhichLetter />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_SUM_VS_PRODUCT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34263,6 +34277,105 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列9 step1: 商の公式の形（分母が 2 乗、分子が引き算）を枠で示す図。
+ *  中身の式は書かない。引き算に「順序がある」ことだけを見せ、どちらが前かは問いに預ける。 */
+function M3dQuotientShape() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分数の形の枠。分子は二つの箱を引き算でつないだ形、分母は一つの箱に小さな 2 が添えられた形。箱の中身は疑問符で伏せられている"
+    >
+      <rect x="86" y="30" width="72" height="26" rx="4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="122" y="48" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <text x="180" y="48" fontSize="16" fill={stroke} textAnchor="middle">
+        −
+      </text>
+      <rect x="202" y="30" width="72" height="26" rx="4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="238" y="48" fontSize="14" fill={accent} textAnchor="middle">
+        ?
+      </text>
+
+      <path d="M 74 68 L 286 68" fill="none" stroke={stroke} strokeWidth="1.6" />
+
+      <rect x="144" y="82" width="72" height="26" rx="4" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="180" y="100" fontSize="14" fill={muted} textAnchor="middle">
+        ?
+      </text>
+      <text x="224" y="88" fontSize="12" fill={muted}>
+        2
+      </text>
+
+      <text x="308" y="48" fontSize="10.5" fill={muted} textAnchor="middle">
+        引き算
+      </text>
+      <text x="292" y="100" fontSize="10.5" fill={muted} textAnchor="middle">
+        2 乗
+      </text>
+
+      <text x="180" y="138" fontSize="11" fill={accent} textAnchor="middle">
+        引き算は、どちらを前に置くのだろう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列9 step5: どの文字で微分するかを書き分ける図。
+ *  ★層8 の補足★ 答えが変わることは描かない——動かす側と止める側があることだけを見せる。 */
+function M3dWhichLetter() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ式を表す箱が上下に二つ並び、上は左の文字に動く印、下は右の文字に動く印がついている図。式そのものは疑問符で伏せられている"
+    >
+      {[{ y: 36, left: true, tag: "d/dx" }, { y: 90, left: false, tag: "d/dt" }].map((row) => (
+        <g key={row.tag}>
+          <text x="46" y={row.y + 18} fontSize="11.5" fill={stroke} textAnchor="middle" fontWeight="700">
+            {row.tag}
+          </text>
+          <rect x="86" y={row.y} width="180" height="30" rx="5" fill="none" stroke={muted} strokeWidth="1.3" />
+          <text x="140" y={row.y + 20} fontSize="13" fill={row.left ? accent : muted} textAnchor="middle">
+            ?
+          </text>
+          <text x="212" y={row.y + 20} fontSize="13" fill={row.left ? muted : accent} textAnchor="middle">
+            ?
+          </text>
+          {/* 動く側の下に線を引く（箱の外に矢印を出すと、どちらの段の印か読めない） */}
+          <path
+            d={`M ${(row.left ? 140 : 212) - 9} ${row.y + 25} L ${(row.left ? 140 : 212) + 9} ${row.y + 25}`}
+            fill="none"
+            stroke={accent}
+            strokeWidth="2"
+          />
+          <text x={row.left ? 140 : 212} y={row.y - 4} fontSize="9.5" fill={accent} textAnchor="middle">
+            動く
+          </text>
+          <text x="300" y={row.y + 20} fontSize="10.5" fill={muted} textAnchor="middle">
+            動くのは片方
+          </text>
+        </g>
+      ))}
+
+      <text x="180" y="140" fontSize="11" fill={accent} textAnchor="middle">
+        同じ式でも、動かす文字が違えば答えも違うだろうか？
       </text>
     </svg>
   );

@@ -68,6 +68,7 @@ import {
   M3D_DIFFCONT_SERIES,
   M3D_POW_SERIES,
   M3D_PROD_SERIES,
+  M3D_QUOT_SERIES,
 } from "./seriesMath3Diff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -1952,6 +1953,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数の極限と微分",
     shortDescription:
       "積の微分（差を「中継地点」で割る）— 積が分けられないのは $2$ つが同時に動くから。中継地点を置いて「片方ずつ」に直すと、和の形に書き直せる",
+  },
+  {
+    series: M3D_QUOT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "商の微分と微分の記号（覚えるしかない？）— 分母は $2$ 乗、分子は引き算。$\\dfrac{d}{dx}$ と $\\dfrac{d}{dt}$ は**どれを動かしてどれを止めるか**を書き分ける記号",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
