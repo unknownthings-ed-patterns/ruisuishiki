@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_STAIRS_FROM_RIGHT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dStairsFromRight />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_TWO_SIDED_GAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dTwoSidedGap />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_HIDDEN_FACTOR>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34179,6 +34193,101 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列3 step1: 階段と ●／○、右からの矢印。
+ *  ●＝その高さを含む端／○＝含まない端（第2章 M3L_FLOOR_STAIRS の視覚言語を継承）。
+ *  目盛りの数字は書かない。どの段に乗るかは問いに預ける。 */
+function M3dStairsFromRight() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 段は模式（実際の点の値ではない）。左端が ●、右端が ○。 */
+  const steps = [0, 1, 2];
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="階段の形をしたグラフ。各段は左の端が黒丸、右の端が白丸で、一段ずつ上がっている。右から左へ向かう矢印が一本あり、向かう先の段には疑問符がついている。目盛りの数字は書かれていない"
+    >
+      <path d="M 30 128 L 336 128" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 48 140 L 48 28" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="342" y="132" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {steps.map((k) => {
+        const x0 = 66 + k * 72;
+        const y = 112 - k * 26;
+        return (
+          <g key={k}>
+            <path d={`M ${x0} ${y} L ${x0 + 72} ${y}`} fill="none" stroke={accent} strokeWidth="1.8" />
+            <circle cx={x0} cy={y} r="3.4" fill={accent} />
+            <circle cx={x0 + 72} cy={y} r="3.4" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+          </g>
+        );
+      })}
+
+      {/* 右から寄ってくる矢印（向かう先の段は ? のまま） */}
+      <path d="M 300 40 L 224 40" fill="none" stroke={stroke} strokeWidth="1.4" strokeDasharray="4 3" />
+      <path d="M 232 35 L 224 40 L 232 45" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="262" y="32" fontSize="10.5" fill={stroke} textAnchor="middle">
+        右から寄る
+      </text>
+      <text x="210" y="45" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        ● は含む端、○ は含まない端。どちらの段に乗る？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列3 step5: 左右から別の高さへ向かう図。
+ *  ★層8 の補足★ 高さの値も、差の大きさも書かない——食い違いがあること自体は仕組みなので描き、
+ *  「だから極限は存在しない」という結論は問いに預ける。 */
+function M3dTwoSidedGap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="縦の破線をはさんで、左からの曲線と右からの曲線が別々の高さで終わっている図。それぞれの端は白丸で、高さの値は書かれていない模式の図"
+    >
+      <path d="M 28 130 L 336 130" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 182 142 L 182 22" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+
+      {/* 左から来る枝 */}
+      <path d="M 46 108 Q 118 96 176 88" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="178" cy="88" r="3.6" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+      <path d="M 118 74 L 166 82" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 158 76 L 166 82 L 157 85" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="98" y="70" fontSize="10.5" fill={stroke} textAnchor="middle">
+        左から
+      </text>
+
+      {/* 右から来る枝（別の高さ） */}
+      <path d="M 188 44 Q 254 50 330 60" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="186" cy="44" r="3.6" fill="var(--background)" stroke={accent} strokeWidth="1.5" />
+      <path d="M 252 32 L 198 40" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <path d="M 206 34 L 198 40 L 207 43" fill="none" stroke={stroke} strokeWidth="1.2" />
+      <text x="276" y="30" fontSize="10.5" fill={stroke} textAnchor="middle">
+        右から
+      </text>
+
+      <text x="180" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        2 つの端は、同じ高さに来ているだろうか？
       </text>
     </svg>
   );

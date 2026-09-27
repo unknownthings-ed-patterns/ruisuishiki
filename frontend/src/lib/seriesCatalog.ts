@@ -62,6 +62,7 @@ import {
   MATH3_DIFF_SERIES_LIST,
   M3D_LIM_INFTY_SERIES,
   M3D_LIM_ZERO_SERIES,
+  M3D_LIM_SIDE_SERIES,
 } from "./seriesMath3Diff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -1898,6 +1899,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数の極限と微分",
     shortDescription:
       "不定形の原因を取り除く — $\\dfrac{0}{0}$ は「決まらない」のではなく、決めるのを邪魔しているものがまだ残っている。因数分解で取り出し、有理化で呼び出す",
+  },
+  {
+    series: M3D_LIM_SIDE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "右極限と左極限（「近づく」に向きがある）— 極限が存在するとは「$1$ つの数がある」ことではなく、**右から来た先と左から来た先が一致する**こと",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
