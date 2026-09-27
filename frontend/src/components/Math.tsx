@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_SWAP_DEVICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dSwapDevice />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_AXIS_SWAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dAxisSwap />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_CHAIN_LINK>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34291,6 +34305,110 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列11 step1: 装置の入口と出口を入れ替える図（原典 p.108）。
+ *  ★層8 の補足★ 裏返したあとの動く量は ? のまま——それがこの step の問い。 */
+function M3dSwapDevice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="二つの箱が左右に並び、間に入れ替えの矢印がある図。左の箱は入口が右で出口が左、右の箱は入口と出口が反対になっている。右の箱の出口の動く量は疑問符のまま"
+    >
+      {/* 左：もとの装置 */}
+      <rect x="34" y="38" width="118" height="54" rx="5" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="62" y="62" fontSize="10" fill={stroke} textAnchor="middle">
+        出口
+      </text>
+      <text x="62" y="80" fontSize="12" fill={accent} textAnchor="middle" fontWeight="700">
+        9
+      </text>
+      <text x="124" y="62" fontSize="10" fill={stroke} textAnchor="middle">
+        入口
+      </text>
+      <text x="124" y="80" fontSize="12" fill={stroke} textAnchor="middle" fontWeight="700">
+        1
+      </text>
+
+      {/* 入れ替えの矢印 */}
+      <path d="M 162 65 L 198 65" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 190 60 L 198 65 L 190 70" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="180" y="44" fontSize="10" fill={muted} textAnchor="middle">
+        入れ替える
+      </text>
+
+      {/* 右：裏返した装置 */}
+      <rect x="208" y="38" width="118" height="54" rx="5" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="236" y="62" fontSize="10" fill={stroke} textAnchor="middle">
+        入口
+      </text>
+      <text x="236" y="80" fontSize="12" fill={stroke} textAnchor="middle" fontWeight="700">
+        1
+      </text>
+      <text x="298" y="62" fontSize="10" fill={stroke} textAnchor="middle">
+        出口
+      </text>
+      <text x="298" y="80" fontSize="14" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="130" fontSize="11" fill={accent} textAnchor="middle">
+        入れ替えたら、出口はいくつ動くだろう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列11 step5: 同じ曲線を、軸を入れ替えて見る図（原典 p.109 の図1・図2）。
+ *  ★層8 の補足★ 原典の図3（反転して逆数になる）は描かない——それがこの step の発見。
+ *  描くのは「軸を入れ替えると別の関数の顔をする」という仕組みだけ。 */
+function M3dAxisSwap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ曲線を二通りの向きで描いた図。左は横軸が x で寝た形、右は横軸が y で立ち上がった形。接線の傾きは書かれていない"
+    >
+      {/* 左：横軸 x */}
+      <path d="M 26 112 L 156 112" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 40 124 L 40 26" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="160" y="116" fontSize="10" fill={muted}>
+        x
+      </text>
+      <path d="M 44 108 Q 92 60 150 44" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="112" cy="54" r="3.4" fill={accent} />
+      <text x="92" y="136" fontSize="10.5" fill={stroke} textAnchor="middle">
+        横軸が x
+      </text>
+
+      {/* 右：横軸 y */}
+      <path d="M 206 112 L 336 112" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 220 124 L 220 26" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="340" y="116" fontSize="10" fill={muted}>
+        y
+      </text>
+      <path d="M 224 108 Q 286 104 322 34" fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx="300" cy="66" r="3.4" fill={accent} />
+      <text x="272" y="136" fontSize="10.5" fill={stroke} textAnchor="middle">
+        横軸が y
+      </text>
+
+      <text x="180" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        同じ曲線なのに、向きを変えると何に見える？
       </text>
     </svg>
   );

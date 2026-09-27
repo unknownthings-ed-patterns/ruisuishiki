@@ -70,6 +70,7 @@ import {
   M3D_PROD_SERIES,
   M3D_QUOT_SERIES,
   M3D_CHAIN_SERIES,
+  M3D_INV_SERIES,
 } from "./seriesMath3Diff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -1970,6 +1971,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数の極限と微分",
     shortDescription:
       "合成関数の微分法（装置をつなぐ）— つないだ装置の変化率は、それぞれの変化率の**かけ算**。関数の合成が数のかけ算に化ける。商の公式もここで作れる",
+  },
+  {
+    series: M3D_INV_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "逆関数の微分法（裏返すと逆数）— 難しい向きの微分を、易しい向きの微分に置きかえる。章のはじめに預けた $(x^{\\alpha})'$ を、ここで自分の手で返す",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
