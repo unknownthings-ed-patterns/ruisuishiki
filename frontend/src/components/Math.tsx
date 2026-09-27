@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_SUM_VS_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dSumVsProduct />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_EXPAND_ROAD_CLOSED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dExpandRoadClosed />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_THREE_RESULTS_LINEUP>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34249,6 +34263,104 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列8 step1: 和は分けられる／積は？ の対比図。
+ *  ★層8 の補足★ 積のほうは「分かれるのか」を問いのまま残す（答えは描かない）。 */
+function M3dSumVsProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上下に二段の図。上の段は一つの箱が二つの箱に分かれる矢印が実線で描かれ、下の段は同じ形の矢印が疑問符つきで描かれている。式は書かれていない"
+    >
+      {/* 上：和は分けられる */}
+      <text x="34" y="46" fontSize="11" fill={stroke} textAnchor="middle" fontWeight="700">
+        和
+      </text>
+      <rect x="58" y="28" width="56" height="26" rx="4" fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d="M 122 41 L 158 41" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d="M 152 37 L 158 41 L 152 45" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <rect x="166" y="28" width="56" height="26" rx="4" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="234" y="46" fontSize="13" fill={muted} textAnchor="middle">
+        +
+      </text>
+      <rect x="246" y="28" width="56" height="26" rx="4" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="322" y="46" fontSize="11" fill={muted} textAnchor="middle">
+        できる
+      </text>
+
+      {/* 下：積は？ */}
+      <text x="34" y="100" fontSize="11" fill={stroke} textAnchor="middle" fontWeight="700">
+        積
+      </text>
+      <rect x="58" y="82" width="56" height="26" rx="4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <path d="M 122 95 L 158 95" fill="none" stroke={accent} strokeWidth="1.3" strokeDasharray="4 3" />
+      <path d="M 152 91 L 158 95 L 152 99" fill="none" stroke={accent} strokeWidth="1.3" />
+      <rect x="166" y="82" width="56" height="26" rx="4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="234" y="100" fontSize="13" fill={accent} textAnchor="middle">
+        ?
+      </text>
+      <rect x="246" y="82" width="56" height="26" rx="4" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="322" y="100" fontSize="13" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
+        和と同じように、積も分けられるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列8 step5: 展開という逃げ道が閉じる図。
+ *  ★層8 の補足★ 残った道の先は「?」のまま（何が待っているかは描かない）。 */
+function M3dExpandRoadClosed() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="分かれ道の図。上の道は二重線でさえぎられ、下の道は開いていて先が疑問符になっている。道の名前は書かれているが、先にあるものは書かれていない"
+    >
+      <circle cx="56" cy="76" r="5" fill={accent} />
+      <text x="56" y="102" fontSize="10.5" fill={muted} textAnchor="middle">
+        積の微分
+      </text>
+
+      <path d="M 66 68 L 184 38" fill="none" stroke={muted} strokeWidth="1.6" />
+      <path d="M 186 28 L 198 46" fill="none" stroke={stroke} strokeWidth="2" />
+      <path d="M 194 26 L 206 44" fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="132" y="24" fontSize="10.5" fill={muted} textAnchor="middle">
+        展開してから微分
+      </text>
+      <text x="252" y="42" fontSize="10.5" fill={stroke} textAnchor="middle">
+        通れない
+      </text>
+
+      <path d="M 66 86 L 248 114" fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d="M 240 107 L 250 114 L 240 121" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="130" y="110" fontSize="10.5" fill={muted} textAnchor="middle">
+        もう一つの道
+      </text>
+      <text x="276" y="118" fontSize="15" fill={accent} textAnchor="middle" fontWeight="700">
+        ?
+      </text>
+
+      <text x="180" y="144" fontSize="11" fill={accent} textAnchor="middle">
+        逃げ道が閉じたとき、残るのは何だろう？
       </text>
     </svg>
   );

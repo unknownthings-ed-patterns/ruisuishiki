@@ -67,6 +67,7 @@ import {
   M3D_DEF_SERIES,
   M3D_DIFFCONT_SERIES,
   M3D_POW_SERIES,
+  M3D_PROD_SERIES,
 } from "./seriesMath3Diff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -1943,6 +1944,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "関数の極限と微分",
     shortDescription:
       "導関数と $(x^{\\alpha})'$（肩を下ろす規則はどこまで広がる）— 定義から $3$ つ出して指数でそろえると、**肩が負でも分数でも同じ形**だった。規則を作ると定義に戻らずに済む",
+  },
+  {
+    series: M3D_PROD_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "積の微分（差を「中継地点」で割る）— 積が分けられないのは $2$ つが同時に動くから。中継地点を置いて「片方ずつ」に直すと、和の形に書き直せる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
