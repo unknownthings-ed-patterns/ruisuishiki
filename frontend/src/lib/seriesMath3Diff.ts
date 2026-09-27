@@ -561,7 +561,7 @@ export const M3D_LIM_ZERO_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$a$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step6",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
@@ -738,7 +738,7 @@ export const M3D_LIM_SIDE_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "第2章で出てきた [ガウス記号] $[x]$（$x$ を超えない最大の整数）を思い出します。\n\nこの関数のグラフの、$x = 8$ のところへ **右から** 歩いて近づきます。\n\n$$\\lim_{x \\to 34+0} [x]$$\n\nを求めましょう。",
+        "第2章で出てきた [ガウス記号] $[x]$（$x$ を超えない最大の整数）を思い出します。\n\nこの関数のグラフの、$x = 34$ のところへ **右から** 歩いて近づきます。\n\n$$\\lim_{x \\to 34+0} [x]$$\n\nを求めましょう。",
       answer: 34,
       unit: "",
       unknownLabel: "$\\displaystyle\\lim_{x \\to 34+0} [x]$",
@@ -1310,7 +1310,7 @@ export const M3D_CONT_DEF_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$a$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step8",
       hints: [
         {
           layer: 1,
@@ -1601,7 +1601,7 @@ export const M3D_DEF_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$f'(25)$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step7",
+      compareWithStepId: "step6",
       hints: [
         {
           layer: 1,
@@ -2971,7 +2971,7 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$y'(4)$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step6",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
@@ -3024,7 +3024,7 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$y'(4)$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step8",
+      compareWithStepId: "step7",
       hints: [
         {
           layer: 1,
@@ -3051,7 +3051,7 @@ export const M3D_QUOT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\dfrac{d}{dx}F - \\dfrac{d}{dt}F$ の値",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step6",
       hints: [
         {
           layer: 1,
@@ -3252,7 +3252,7 @@ export const M3D_CHAIN_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$x=0$ における $\\dfrac{dy}{dx}$",
       variationFromPrevious: "same",
-      compareWithStepId: "step4",
+      compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
@@ -3476,7 +3476,7 @@ export const M3D_INV_SERIES: LearnerSeries = {
   id: "math3_dinv_01",
   title: "逆関数の微分法——裏返すと逆数",
   subtitle:
-    "数Ⅲ・C 関数の極限と微分より — 装置を**裏返す**と、変化率はどうなるのか。章のはじめに預けた公式を返し、最後に**裏返すのがいちばん短い相手**に出会う。",
+    "数Ⅲ・C 関数の極限と微分より — 装置を**裏返す**と、変化率はどうなるのか。章のはじめに預けた公式を返し、最後に、**$y$ を $x$ の式で書けない相手**に出会う。",
   patternId: "M3D11",
   unit: "math_3",
   revelationLabel:
@@ -3683,7 +3683,7 @@ export const M3D_INV_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$x=162$ のときの $\\dfrac{dy}{dx}$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step7",
+      compareWithStepId: "step5",
       hints: [
         {
           layer: 1,
@@ -3749,7 +3749,7 @@ export const M3D_INV_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$x = y^3 + y$ は $y$ の多項式なので、**$y$ で微分するのは数Ⅱ・B の仕事**です。$\\dfrac{dx}{dy} = 3y^2 + 1$。$y=2$ を入れると $3 \\times 4 + 1 = 13$。裏返して $\\dfrac{dy}{dx} = \\dfrac{1}{13}$。（その点の $x$ は $8 + 2 = 10$ です。）\n\n**ここが、この道具のいちばん短い通り道です。** $x = y^3+y$ を $y$ について解くことは高校の範囲ではできません。それでも **$\\dfrac{dx}{dy}$ のほうは $1$ 行で出る**——だから裏返せばよいのです。\n\n**正直に書いておくと、これも「唯一の道」ではありません。** 前の系列の合成関数の微分を両辺に当てると、$y^3$ の微分が $3y^2 \\cdot \\dfrac{dy}{dx}$ になるので $1 = (3y^2+1)\\dfrac{dy}{dx}$、やはり $\\dfrac{1}{13}$ です。**$2$ 本の道がまた同じ数に着きました**——step8 と同じことが、ここでも起きています。\n\n中心の問いに戻ると：**裏返すと逆数になる**。そして裏返すことで、**難しい向きの微分を、易しい向きの微分に置きかえられる**——$y$ を $x$ の式で書けない相手にさえ、$1$ 行で届く。それがこの道具の値打ちです。",
+          text: "$x = y^3 + y$ は $y$ の多項式なので、**$y$ で微分するのは数Ⅱ・B の仕事**です。$\\dfrac{dx}{dy} = 3y^2 + 1$。$y=2$ を入れると $3 \\times 4 + 1 = 13$。裏返して $\\dfrac{dy}{dx} = \\dfrac{1}{13}$。（その点の $x$ は $8 + 2 = 10$ です。）\n\n**$y$ を $x$ の式で書けない相手でも、この道なら通れます。** $x = y^3+y$ を $y$ について解くことは高校の範囲ではできません。それでも **$\\dfrac{dx}{dy}$ のほうは $1$ 行で出る**——だから裏返せばよいのです。\n\n**正直に書いておくと、これも「唯一の道」ではありません。** 前の系列の合成関数の微分を両辺に当てると、$y^3$ の微分が $3y^2 \\cdot \\dfrac{dy}{dx}$ になるので $1 = (3y^2+1)\\dfrac{dy}{dx}$、やはり $\\dfrac{1}{13}$ です。**$2$ 本の道が同じ数に着きました。** ただし step8 とは少し性質が違います——step8 は $2$ つの**別々の公式**が同じ数に着く話でした。ここで起きているのは、**合成関数の微分から、逆数の関係そのものを作り直している**ことです。$\\dfrac{dy}{dx}$ と $\\dfrac{dx}{dy}$ が逆数になる理由が、もう $1$ 本の道からも見えた、と読むほうが近いでしょう。\n\n中心の問いに戻ると：**裏返すと逆数になる**。そして裏返すことで、**難しい向きの微分を、易しい向きの微分に置きかえられる**——$y$ を $x$ の式で書けない相手にさえ、$1$ 行で届く。それがこの道具の値打ちです。",
         },
       ],
       formulaPreview: "dx/dy = 3y² + 1。y=2 で 13。裏返して dy/dx = 1/13",
