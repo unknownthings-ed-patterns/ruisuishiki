@@ -59,6 +59,10 @@ import {
   M3L_CONV_SERIES,
 } from "./seriesMath3Limits";
 import {
+  MATH3_DIFF_SERIES_LIST,
+  M3D_LIM_INFTY_SERIES,
+} from "./seriesMath3Diff";
+import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
   M3V_TRANSFORM_SERIES,
@@ -1877,6 +1881,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "級数が収束するための条件（縮むだけでは足りない）— 項が $0$ に近づくのは必要か、十分か。一歩の幅を縮め続けても、着くとは限らない",
   },
+  /* 第3章 関数の極限と微分（背骨：docs/math3c_diff_design.md・2026-09-27 凍結） */
+  {
+    series: M3D_LIM_INFTY_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "関数の極限と微分",
+    shortDescription:
+      "関数の極限——数列と何が違う — 数列は「とびとび」、関数は「べったり」。$x$ を負の方向へ飛ばせるようになった瞬間、$\\sqrt{x^2}$ は $x$ でなくなる",
+  },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
    * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
@@ -2151,6 +2164,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...ALGEBRA_2_SERIES_LIST,
   ...MATH3_FUNCTIONS_SERIES_LIST,
   ...MATH3_LIMITS_SERIES_LIST,
+  ...MATH3_DIFF_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,

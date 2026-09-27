@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_DISCRETE_VS_DENSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dDiscreteVsDense />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_SQRT_SQUARE_V>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dSqrtSquareV />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34151,6 +34165,94 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列1 step1: 数列＝とびとび／関数＝べったり の対比。
+ *  同じ式でも、自然数に対してだけ値が決まるのか、実数すべてに対して決まるのかで見え方が変わる。
+ *  値も目盛りも書かない。極限の行き先も描かない（この step で問うのは行き先そのもの）。 */
+function M3dDiscreteVsDense() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  /** 点の位置は模式。左＝とびとび（自然数のところだけ）、右＝べったり（切れ目なし）。 */
+  const ns = [0, 1, 2, 3, 4];
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左右に並んだ 2 つの座標の図。左は自然数のところにだけ点が飛び飛びに置かれ、右は切れ目のない曲線が描かれている。目盛りの数字も値も書かれていない模式の図"
+    >
+      {/* --- 左：とびとび --- */}
+      <text x="76" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        番号に対して
+      </text>
+      <path d="M 30 122 L 140 122" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 34 130 L 34 34" fill="none" stroke={muted} strokeWidth="1" />
+      {ns.map((k) => (
+        <circle key={k} cx={52 + k * 18} cy={122 - k * k * 4.7 - k * 0.3} r="3.4" fill={accent} />
+      ))}
+      <text x="76" y="146" fontSize="11.5" fill={stroke} textAnchor="middle" fontWeight="700">
+        とびとび
+      </text>
+
+      {/* --- 右：べったり（左とまったく同じ形。違うのは切れ目の有無だけ） --- */}
+      <text x="266" y="20" fontSize="11" fill={muted} textAnchor="middle">
+        どの実数に対しても
+      </text>
+      <path d="M 220 122 L 330 122" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 224 130 L 224 34" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 224 122 Q 290 122 314 47" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="266" y="146" fontSize="11.5" fill={stroke} textAnchor="middle" fontWeight="700">
+        べったり
+      </text>
+
+      <text x="180" y="164" fontSize="11" fill={accent} textAnchor="middle">
+        切れ目が無いと、近づき方は何通りになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列1 step7: y = √(x²) の形だけを描く図。
+ *  ★層8 の補足★ x<0 側が −x に等しいことは描かない——それがこの step の発見そのもの。
+ *  描くのは「原点で折れた V の字である」という形だけ。式も値も目盛りも書かない。 */
+function M3dSqrtSquareV() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="原点で折れた V の字のグラフ。左右の枝はどちらも上向きに伸びている。枝が何の式に等しいかは書かれておらず、目盛りも値も無い模式の図"
+    >
+      <path d="M 28 118 L 330 118" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 182 134 L 182 26" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="338" y="122" fontSize="10.5" fill={muted}>
+        x
+      </text>
+
+      {/* V の字。左右とも同じ見た目にして、片側だけ答えを示さない */}
+      <path d="M 74 40 L 182 118 L 290 40" fill="none" stroke={accent} strokeWidth="1.9" />
+      <circle cx="182" cy="118" r="3.2" fill={accent} />
+
+      {/* ラベルは枝の下・軸の上の空きへ（枝に串刺しにしない） */}
+      <text x="106" y="112" fontSize="10.5" fill={muted} textAnchor="middle">
+        x が負の側
+      </text>
+      <text x="258" y="112" fontSize="10.5" fill={muted} textAnchor="middle">
+        x が正の側
+      </text>
+
+      <text x="182" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        左の枝は、x そのものと同じ高さだろうか？
       </text>
     </svg>
   );
