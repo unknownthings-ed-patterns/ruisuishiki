@@ -15381,6 +15381,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3D_THREE_RESULTS_LINEUP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dThreeResultsLineup />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3D_EXPONENT_ALIGN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3dExponentAlign />
+            </div>
+          );
+        }
         if (trimmed === "<<M3D_NO_UNIQUE_TANGENT>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -34235,6 +34249,94 @@ export function M3lPointsClosing() {
       <path d="M 138 115 L 130 120 L 138 125" fill="none" stroke={muted} strokeWidth="1" />
       <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
         番号を大きくすると、点はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列7 step1: 点を入れると傾きが返る装置の図。
+ *  ★CALC_DERIV_MACHINE は流用しない★——あちらはキャプションが
+ *  「この箱の中身は 1 本の式で書けている？」で、数Ⅱ・B の導関数の系列の問いそのもの。
+ *  ここでは中身も出力も伏せ、相手が多項式でないことだけを示す。 */
+function M3dThreeResultsLineup() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="箱の左から点が入り、右から傾きが出てくる図。箱の中身は疑問符で伏せられている。入れる点も出てくる傾きも、値は書かれていない模式の図"
+    >
+      <rect x="126" y="44" width="108" height="52" rx="6" fill="none" stroke={accent} strokeWidth="1.8" />
+      <text x="180" y="66" fontSize="11" fill={stroke} textAnchor="middle">
+        多項式ではない
+      </text>
+      <text x="180" y="82" fontSize="11" fill={stroke} textAnchor="middle">
+        相手でも？
+      </text>
+
+      <path d="M 52 70 L 118 70" fill="none" stroke={muted} strokeWidth="1.4" />
+      <path d="M 110 65 L 118 70 L 110 75" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="70" y="60" fontSize="10.5" fill={muted} textAnchor="middle">
+        点を入れる
+      </text>
+
+      <path d="M 242 70 L 308 70" fill="none" stroke={muted} strokeWidth="1.4" />
+      <path d="M 300 65 L 308 70 L 300 75" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="292" y="60" fontSize="10.5" fill={muted} textAnchor="middle">
+        傾きが出る
+      </text>
+
+      <text x="180" y="130" fontSize="11" fill={accent} textAnchor="middle">
+        点ごとに計算し直さずに済むのは、多項式だけだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** 関数の極限と微分 系列7 step4: 3 つの結果を並べる枠だけを描く図。
+ *  ★層8 の補足★ 枠と「そろえて見る」という仕組みだけを描き、
+ *  そろえたら同じ形になる、という発見そのものは書かない。 */
+function M3dExponentAlign() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rows = [56, 82, 108];
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="三行の表の枠だけが描かれている図。左の列にもとの式、右の列に微分した式が入る場所があり、どちらも疑問符で伏せられている。式そのものは書かれていない"
+    >
+      <text x="106" y="38" fontSize="10.5" fill={muted} textAnchor="middle">
+        もとの式
+      </text>
+      <text x="254" y="38" fontSize="10.5" fill={muted} textAnchor="middle">
+        微分した式
+      </text>
+
+      {rows.map((y, k) => (
+        <g key={k}>
+          <rect x="56" y={y - 14} width="100" height="22" rx="4" fill="none" stroke={muted} strokeWidth="1.2" />
+          <text x="106" y={y + 2} fontSize="13" fill={muted} textAnchor="middle">
+            ?
+          </text>
+          <path d={`M 164 ${y - 3} L 196 ${y - 3}`} fill="none" stroke={stroke} strokeWidth="1.2" />
+          <path d={`M 190 ${y - 7} L 196 ${y - 3} L 190 ${y + 1}`} fill="none" stroke={stroke} strokeWidth="1.2" />
+          <rect x="204" y={y - 14} width="100" height="22" rx="4" fill="none" stroke={accent} strokeWidth="1.4" />
+          <text x="254" y={y + 2} fontSize="13" fill={accent} textAnchor="middle">
+            ?
+          </text>
+        </g>
+      ))}
+
+      <text x="180" y="138" fontSize="11" fill={accent} textAnchor="middle">
+        書き方をそろえたら、3 つは同じ顔をするだろうか？
       </text>
     </svg>
   );
