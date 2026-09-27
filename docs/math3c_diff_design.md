@@ -1347,7 +1347,7 @@ $\lvert x\rvert$（連続だが微分不可）と $x\lvert x\rvert$（両方○�
 | **Round 5（Round 4 で作り替えた step だけ）** | **済＝Blocker 1・Major 1・Minor 1。却下ゼロ（5 巡連続）。全件反映**。監査の判定は**「収束未了」**。詳細は §7-9 | 2026-09-27 |
 | **Round 6（Round 5 で作り替えた step だけ）** | **済＝Blocker 0・Major 2・Minor 2。却下ゼロ（6 巡連続）。全件反映**。判定はなお**「収束未了」**。詳細は §7-10 | 2026-09-27 |
 | **Round 7（Round 6 で作り替えた step だけ）** | **済＝Blocker 0・Major 2・Minor 0。却下ゼロ（7 巡連続）。全件反映**。Round 6 の修正には追加指摘なし。判定は**「歩行でしか発見できない問題ではない」**。詳細は §7-11 | 2026-09-28 |
-| Round 8（系列8 の断定 4 か所） | 未。**対象＝系列8 の `revelationLabel`・step5 の L3・step10 の L3・derivation**。**ここで「もう無い」が出たら収束点** | — |
+| Round 8（系列8 の断定 4 か所） | **プロンプト作成済**＝`~/ruisuishiki-refs/prompts/round8_math3c_ch3_recheck_codex.txt`。**対象＝系列8 の `revelationLabel`・step5 の L3・step10 の L3・derivation**。**断定語 grep 60 件の判断そのものも疑ってもらう**。**ここで「もう無い」が出たら収束点** | 2026-09-28 |
 | 他単元に残る層13（4 件） | **未＝先生の裁定待ち**。`seriesTrigRatio.ts:1503/1857/1912`・`seriesTrig.ts:254`。**歩行済みの単元なので手を付けていない** | — |
 | 図 22 枚の PNG 目視（Round 2 の未実施分） | 未。**監査には頼めない工程**（画像を見る必要がある）。メインが実装時に見ているが、**Round 2 の直しで図は触っていない**ので再確認の優先度は低い | — |
 | 還流（背骨・handoff・quality_bar・memory） | 未 | — |
