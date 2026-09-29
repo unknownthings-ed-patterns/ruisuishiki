@@ -262,7 +262,7 @@ export const TRIG_GENERAL_ANGLE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "cos(−225°)（P の x 座標）",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step3",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
@@ -270,7 +270,7 @@ export const TRIG_GENERAL_ANGLE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step4 と変わったのは回す向きだけ。時計回りの $-225°$ と反時計回りの $135°$ は、円周上のどの位置に着くかを比べてみよう。",
+          text: "step4 と変わったのは角の表し方——時計回りの $-225°$ になったこと。時計回りの $-225°$ と反時計回りの $135°$ は、円周上のどの位置に着くかを比べてみよう。",
         },
         {
           layer: 3,
@@ -2057,11 +2057,11 @@ export const TRIG_PROPERTY_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。同じ「$\\dfrac{\\pi}{2}$ がらみの読み替え」。変わったのは引き算が足し算になったこと。$\\dfrac{\\pi}{2} + \\theta = \\dfrac{\\pi}{2} - (-\\theta)$ と見れば、前題の入れ替えと step2 の折り返しの**合わせ読み**にできそう？",
+          text: "前題と比べてみよう。同じ「$\\pi/2$ がらみ」だが、前題は $\\pi/2 - \\theta$、今度は $\\pi/2 + \\theta$。$\\theta$ の前の符号が変わっただけ。その符号のちがいは、これまでのどの折り返しが受け持っていた？",
         },
         {
           layer: 2,
-          text: "前題と変わったのは符号だけ。$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$ は、前題の入れ替え（$\\sin$ と $\\cos$ が交代）を効かせると $\\cos$ の何かになる。$+\\theta$ と $-\\theta$ の違いは step2・3 の $x$ 軸対称で処理できる——$\\cos$ は $-\\theta$ に強かったね。",
+          text: "前題と変わったのは $\\theta$ の前の符号だけ。前題の関係は、この符号のちがいの分だけそのままでは当てはまらない。符号を扱ったのは step2・3 の折り返しだった——見返して、今回の $+\\theta$ にそれがどう関わるか考えてみよう。",
         },
         {
           layer: 3,
@@ -3129,11 +3129,11 @@ export const TRIG_COMPOSITION_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "$\\sin$ と $\\cos$ が混ざったままでは [三角方程式] の型に持ち込めない。でもこの系列で身につけた手で、左辺を $1$ つの波にまとめてしまえば——あとは系列3の逆読みで解けそうでは？",
+          text: "step5 では、$\\sin$ と $\\cos$ が混ざった式を扱ったあと、その最大・最小を読んだ。今度は最大・最小ではなく、$=1$ になる $\\theta$ を求めたい。左辺が $\\sin$ と $\\cos$ の混ざった形のままで、この方程式に取りかかれるだろうか？",
         },
         {
           layer: 2,
-          text: "新しいのは「合成してから方程式を解く」こと。左辺は点 $P(\\sqrt{3}, 1)$ から $2\\sin\\left(\\theta + \\dfrac{\\pi}{6}\\right)$ にまとまる。方程式は $\\sin\\left(\\theta + \\dfrac{\\pi}{6}\\right) = \\dfrac{1}{2}$——ただし中身 $\\theta + \\dfrac{\\pi}{6}$ の動く範囲に注意（[三角関数のグラフ] の step10 と同じ「範囲を中身の範囲に直す」）。",
+          text: "step5 と変わったのは、聞かれるものが波の「高さ」から「$=1$ になる $\\theta$ をすべて」になったこと。範囲 $0 \\le \\theta < 2\\pi$ の中で角を拾うとき、[三角関数のグラフ] の step10 や系列3では何に気をつけていたか、思い出してみよう。",
         },
         {
           layer: 3,

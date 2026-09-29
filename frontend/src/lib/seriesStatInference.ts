@@ -3275,7 +3275,7 @@ export const STAT_STANDARDIZE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$a$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step3",
       hints: [
         {
           layer: 1,
@@ -3283,7 +3283,7 @@ export const STAT_STANDARDIZE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step 3 と変わったのは $1$ つ——$1$ 次式が $2$ 段に重なったこと。内側の段は step 3 の解式で見たとおりの書き直しを、今度の平均と標準偏差でやり直せば作れる。",
+          text: "step 3 と比べて中心になる違いは、$1$ 次式が $2$ 段に重なったこと。内側の段は step 3 の解式で見たとおりの書き直しを、今度の平均と標準偏差でやり直せば作れる。",
         },
         {
           layer: 3,
@@ -3523,7 +3523,7 @@ export const STAT_APPROX_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$P(72 \\le X \\le 96)$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step5",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
@@ -3814,7 +3814,7 @@ export const STAT_SAMPLING_SERIES: LearnerSeries = {
       unit: "cm",
       unknownLabel: "$E(\\bar{X})$",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step2",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -5091,7 +5091,7 @@ export const STAT_TEST_SERIES: LearnerSeries = {
       unit: "%",
       unknownLabel: "この結果で棄却できるようになる、有意水準の最小の整数パーセント",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step7",
+      compareWithStepId: "step3",
       hints: [
         {
           layer: 1,
@@ -5099,7 +5099,7 @@ export const STAT_TEST_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題までと変わったのは、動かすものが結果ではなく **基準のほう** だということ $1$ つ。整数のパーセントで順に見ていくと、どこかで確率が基準の下に入る。",
+          text: "step 3 と比べて中心になる違いは、基準を動かす向き——きびしくする側ではなく **ゆるめる側** だということ。整数のパーセントで順に見ていくと、どこかで確率が基準の下に入る。",
         },
         {
           layer: 3,

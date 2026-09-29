@@ -264,7 +264,7 @@ export const M3V_QUANTITY_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$s$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step8",
+      compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
@@ -290,7 +290,7 @@ export const M3V_QUANTITY_SERIES: LearnerSeries = {
       unit: "本",
       unknownLabel: "$\\vec{a}-\\vec{b}$ と等しい矢印の本数",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step6",
       hints: [
         {
           layer: 1,
@@ -588,7 +588,7 @@ export const M3V_TRANSFORM_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\vec{b}$ の係数",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step6",
+      compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
@@ -670,7 +670,7 @@ export const M3V_TRANSFORM_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\vec{b}$ の係数",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step8",
       hints: [
         {
           layer: 1,
@@ -678,7 +678,7 @@ export const M3V_TRANSFORM_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題までと変わったのは、**求める矢印の両端が、どちらも分ける点になった**こと $1$ つ。P も Q も、A から見た矢印としてなら書けます。それに、$\\overrightarrow{BD}$ はまだ $\\vec{b}$、$\\vec{d}$ の式になっていません——先にそこを片づける必要がありそうです。",
+          text: "step 8 と比べて中心になる違いは、**求める矢印の両端が、どちらも分ける点になった**こと。P も Q も、A から見た矢印としてなら書けます。それに、$\\overrightarrow{BD}$ はまだ $\\vec{b}$、$\\vec{d}$ の式になっていません——先にそこを片づける必要がありそうです。",
         },
         {
           layer: 3,
@@ -1001,7 +1001,7 @@ export const M3V_DIVISION_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$s$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step7",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
@@ -1861,7 +1861,7 @@ export const M3V_POSITION_SERIES: LearnerSeries = {
       unit: "個",
       unknownLabel: "範囲に含まれる整数 $c$ の個数",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -1869,7 +1869,7 @@ export const M3V_POSITION_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは $1$ つ——**$3$ つの係数のうち $2$ つに、動く文字 $c$ が入っている**こと。step 1 と同じように始点を A にそろえれば、$\\overrightarrow{AP}$ は $\\overrightarrow{AB}$ と $\\overrightarrow{AC}$ の式になります。そのとき「P が三角形の内部にある」は、$2$ つの係数についてのどんな条件になるでしょう。",
+          text: "step 1 と比べて中心になる違いは、**$3$ つの係数のうち $2$ つに、動く文字 $c$ が入っている**こと。step 1 と同じように始点を A にそろえれば、$\\overrightarrow{AP}$ は $\\overrightarrow{AB}$ と $\\overrightarrow{AC}$ の式になります。そのとき「P が三角形の内部にある」は、$2$ つの係数についてのどんな条件になるでしょう。",
         },
         {
           layer: 3,
@@ -2628,7 +2628,7 @@ export const M3V_MEASURE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\dfrac{OC}{CB}$",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step8",
+      compareWithStepId: "step7",
       hints: [
         {
           layer: 1,
@@ -2951,15 +2951,15 @@ export const M3V_COMPONENT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "三角形 ABC の面積",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step6",
+      compareWithStepId: "step5",
       hints: [
         {
           layer: 1,
-          text: "step 5 と比べてみよう。あのときも $3$ 点から始まり、$2$ 本の矢印を作って角を出した。今度は同じ出だしで、聞かれているものだけが違う。$2$ 本の矢印について前に出した値は、そのまま今度も効くだろうか？",
+          text: "step 5 と比べてみよう。あのときも $3$ 点から始まり、$2$ 本の矢印を作って角を出した。点の座標は別のものだが、出だしは同じで、聞かれているものだけが違う。角を出すために作った $2$ 本の矢印は、今度の問いにも使えるだろうか？",
         },
         {
           layer: 2,
-          text: "step 5 と変わったのは、**聞かれているのが角ではなく面積**になったこと $1$ つ。step 5 で手に入れた $3$ つの値（$2$ 本の長さと内積）だけで、面積まで行けるかどうかを考えてみよう。",
+          text: "step 5 と変わったのは、点の座標の値を別にすれば、**聞かれているのが角ではなく面積**になったこと $1$ つ。step 5 で角を出すときに手に入れた $3$ つの量（$2$ 本の長さと内積）だけで、面積まで行けるかどうかを考えてみよう。",
         },
         {
           layer: 3,
@@ -3030,15 +3030,15 @@ export const M3V_COMPONENT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$s$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step4",
       hints: [
         {
           layer: 1,
-          text: "step 4 と比べてみよう。あのとき計算がすっきりしたのは、基準の $2$ 本が「長さ $1$・直交」だったから。今度の $\\vec{a}$、$\\vec{b}$ は直交してもいないし長さも $1$ ではない。それでも $\\overrightarrow{AP}$ を、この $2$ 本の枚数で言い表せるだろうか？ 斜めの $2$ 本を基準にしたときは、何を手がかりにしていた？",
+          text: "step 4 と比べてみよう。あのとき計算がすっきりしたのは、基準の $2$ 本が「長さ $1$・直交」だったから。今度、基準に取りかえる $\\vec{a}$、$\\vec{b}$ は直交してもいないし長さも $1$ ではない。それでも $\\overrightarrow{AP}$ を、この $2$ 本の枚数で言い表せるだろうか？ 斜めの $2$ 本を基準にしたときは、何を手がかりにしていた？",
         },
         {
           layer: 2,
-          text: "変わったのは $1$ つ——**基準の $2$ 本が直交でなくなった**こと。$s\\vec{a} + t\\vec{b}$ を成分で書くと、$x$ 成分も $y$ 成分も $s$ と $t$ の式になる。それを $\\overrightarrow{AP}$ の成分とそろえるには、等式はいくつ立つ？",
+          text: "大きな違いは、**基準の $2$ 本が直交でなくなった**こと。$s\\vec{a} + t\\vec{b}$ を成分で書くと、$x$ 成分も $y$ 成分も $s$ と $t$ の式になる。それを $\\overrightarrow{AP}$ の成分とそろえるには、等式はいくつ立つ？",
         },
         {
           layer: 3,
@@ -4169,7 +4169,7 @@ export const M3V_COPLANAR_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "避けるべき $\\gamma$ の値",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step8",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -4195,7 +4195,7 @@ export const M3V_COPLANAR_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$k$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step7",
       hints: [
         {
           layer: 1,
@@ -4203,7 +4203,7 @@ export const M3V_COPLANAR_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは $1$ つ——**点が乗っているのが平面ではなく直線 LM** であること。L も M も、O から出る辺の上にあります。そのことが $\\overrightarrow{OP}$ の書き方にどう効いてくるだろう。",
+          text: "step 7 と比べて中心になる違いは、**点が乗っているのが平面ではなく直線 LM** であること。L も M も、O から出る辺の上にあります。そのことが $\\overrightarrow{OP}$ の書き方にどう効いてくるだろう。",
         },
         {
           layer: 3,
@@ -4595,7 +4595,7 @@ export const M3V_SPACE_COORD_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "D の $x$ 座標",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step8",
       hints: [
         {
           layer: 1,
@@ -4953,7 +4953,7 @@ export const M3V_SPACE_LINE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\overrightarrow{AB} = (6,\\ 6,\\ 0)$、$\\overrightarrow{AC} = (7,\\ 5,\\ -4)$ から $3$ つの値を出します。\n\n$\\lvert\\overrightarrow{AB}\\rvert^2 = 36 + 36 + 0 = 72$、$\\lvert\\overrightarrow{AC}\\rvert^2 = 49 + 25 + 16 = 90$、$\\overrightarrow{AB}\\cdot\\overrightarrow{AC} = 42 + 30 + 0 = 72$。\n\n$S = \\dfrac{1}{2}\\sqrt{\\lvert\\overrightarrow{AB}\\rvert^2\\lvert\\overrightarrow{AC}\\rvert^2 - (\\overrightarrow{AB}\\cdot\\overrightarrow{AC})^2} = \\dfrac{1}{2}\\sqrt{72\\cdot 90 - 72^2} = \\dfrac{1}{2}\\sqrt{6480 - 5184} = \\dfrac{1}{2}\\sqrt{1296} = 18$。\n\n**やってしまいがちな誤り**：平面で使えた $\\dfrac{1}{2}\\lvert a_1b_2 - a_2b_1\\rvert$ を、そのまま空間に持ち込むこと。この式は $x$ 成分と $y$ 成分しか見ていないので、いまの $2$ 本に当てると $\\dfrac{1}{2}\\lvert 6\\cdot 5 - 6\\cdot 7\\rvert = 6$ になります。これは三角形 ABC の面積ではなく、それを $xy$ 平面に落とした**影**の面積です。空間では、$3$ つの値の式のほうが唯一の道になります。\n\n中心の問いへの部分回答：**平面と空間で変わったのは、成分の個数だけ**。$3$ つの値さえ出れば、面積の出方は何も変わりません。",
+          text: "$\\overrightarrow{AB} = (6,\\ 6,\\ 0)$、$\\overrightarrow{AC} = (7,\\ 5,\\ -4)$ から $3$ つの値を出します。\n\n$\\lvert\\overrightarrow{AB}\\rvert^2 = 36 + 36 + 0 = 72$、$\\lvert\\overrightarrow{AC}\\rvert^2 = 49 + 25 + 16 = 90$、$\\overrightarrow{AB}\\cdot\\overrightarrow{AC} = 42 + 30 + 0 = 72$。\n\n$S = \\dfrac{1}{2}\\sqrt{\\lvert\\overrightarrow{AB}\\rvert^2\\lvert\\overrightarrow{AC}\\rvert^2 - (\\overrightarrow{AB}\\cdot\\overrightarrow{AC})^2} = \\dfrac{1}{2}\\sqrt{72\\cdot 90 - 72^2} = \\dfrac{1}{2}\\sqrt{6480 - 5184} = \\dfrac{1}{2}\\sqrt{1296} = 18$。\n\n**やってしまいがちな誤り**：平面で使えた $\\dfrac{1}{2}\\lvert a_1b_2 - a_2b_1\\rvert$ を、そのまま空間に持ち込むこと。この式は $x$ 成分と $y$ 成分しか見ていないので、いまの $2$ 本に当てると $\\dfrac{1}{2}\\lvert 6\\cdot 5 - 6\\cdot 7\\rvert = 6$ になります。これは三角形 ABC の面積ではなく、それを $xy$ 平面に落とした**影**の面積です。$2$ つの式のうち、空間へそのまま持ち込めるのは $3$ つの値の式のほうです。\n\n**もう $1$ つの道で検算**：$\\overrightarrow{BC} = (1,\\ -1,\\ -4)$ とすると $\\overrightarrow{AB}\\cdot\\overrightarrow{BC} = 6 - 6 + 0 = 0$。この三角形は B で直角なので、底辺 $\\lvert\\overrightarrow{AB}\\rvert = \\sqrt{72}$、高さ $\\lvert\\overrightarrow{BC}\\rvert = \\sqrt{18}$ で $S = \\dfrac{1}{2}\\sqrt{72\\cdot 18} = \\dfrac{1}{2}\\cdot 36 = 18$——同じ値に着きます。直角が見つからない三角形でも、$3$ つの値の式は同じ形で使えます。\n\n中心の問いへの部分回答：**平面と空間で変わったのは、成分の個数だけ**。$3$ つの値さえ出れば、面積の出方は何も変わりません。",
         },
       ],
       formulaPreview: "|AB|^2 = 72、|AC|^2 = 90、AB・AC = 72。S = (1/2)√(72·90 − 72^2) = (1/2)√1296 = 18",
@@ -5056,7 +5056,7 @@ export const M3V_SPACE_LINE_SERIES: LearnerSeries = {
 - **Step 5**：$t$ から座標に戻る。直線上の住所を、空間の言葉に直す
 - **Step 6（転換点）**：平面への垂線の足。垂直条件が $2$ 本になり、連立でしか捕まらない
 - **Step 7**：同じ H のへだたりの $2$ 乗。成分に戻せば $3$ つの $2$ 乗の和。もう $1$ つの道もある
-- **Step 8**：三角形の面積。空間では $3$ つの値の式が唯一の道
+- **Step 8**：三角形の面積。平面の成分の公式は空間では影の面積になり、$3$ つの値の式はそのまま使える
 - **Step 9**：四面体の体積。角錐の公式に、面積とへだたりを入れるだけ
 - **Step 10（山場）**：体積から頂点の高さを逆算。底面をとり替えると、高さが $z$ そのものになる
 
@@ -5068,7 +5068,7 @@ export const M3V_SPACE_LINE_SERIES: LearnerSeries = {
 
 **やってしまいがちな誤り $1$：イメージ図を正確な図だと思うこと**。空間の図は、あくまで式を作るための下書きです。step 1 の交点 P は、$t$ が負でしたから、K から $\\vec{d}$ の向きへ進んだ側ではなく、その**反対側**にあります。イメージ図でそこを逆に描いてしまっていても、問題を解くうえでは何も困りません。困るのは、図から答えの見当をつけようとしたときだけです。
 
-**やってしまいがちな誤り $2$：平面の面積公式を空間に持ち込むこと**。$\\dfrac{1}{2}\\lvert a_1b_2 - a_2b_1\\rvert$ は $x$ 成分と $y$ 成分しか見ていないので、空間の三角形に当てると、$xy$ 平面に落とした影の面積が出てきます（step 8 では $6$。本当の面積は $18$ でした）。空間では、$\\lvert\\vec{a}\\rvert$、$\\lvert\\vec{b}\\rvert$、$\\vec{a}\\cdot\\vec{b}$ の $3$ つの値から作る式が唯一の道です。
+**やってしまいがちな誤り $2$：平面の面積公式を空間に持ち込むこと**。$\\dfrac{1}{2}\\lvert a_1b_2 - a_2b_1\\rvert$ は $x$ 成分と $y$ 成分しか見ていないので、空間の三角形に当てると、$xy$ 平面に落とした影の面積が出てきます（step 8 では $6$。本当の面積は $18$ でした）。$\\lvert\\vec{a}\\rvert$、$\\lvert\\vec{b}\\rvert$、$\\vec{a}\\cdot\\vec{b}$ の $3$ つの値から作る式なら、空間でもそのまま使えます。
 
 **やってしまいがちな誤り $3$：底面を $1$ 通りに決めつけること**。step 10 で、前題の底面（三角形 ABC）にしがみつくと、根号だらけの $z$ の式と格闘することになります。四面体の面は $4$ つあり、どれを底面と見てもよい。**いちばん高さが読みやすい面を選ぶ**——これは図形の問題全体に効く構えです。
 

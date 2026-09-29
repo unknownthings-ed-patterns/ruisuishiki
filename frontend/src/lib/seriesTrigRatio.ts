@@ -1511,7 +1511,7 @@ export const TR_OBTUSE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "sin 120°",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step3",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -1864,7 +1864,7 @@ export const TR_IDENTITY_RATIO_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "cos θ",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step3",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -1920,11 +1920,11 @@ export const TR_IDENTITY_RATIO_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "cos θ",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step5",
+      compareWithStepId: "step3",
       hints: [
         {
           layer: 1,
-          text: "step3 と比べてみよう。step3 は $\\cos$ から $\\tan$ へ進んだ。今度はその**逆向き**——$\\tan$ から $\\cos$ へ戻る。$\\sin$ を経由してもいいけれど、$\\tan$ と $\\cos$ を直接つなぐ縛りが、第 $1$ の式から作れないかな？",
+          text: "step3 と比べてみよう。step3 は $\\sin$ と $\\cos$ から $\\tan$ へ進んだ。今度はその**逆向き**——$\\tan$ から $\\cos$ へ戻る。$\\sin$ を経由してもいいけれど、$\\tan$ と $\\cos$ を直接つなぐ縛りが、第 $1$ の式から作れないかな？",
         },
         {
           layer: 2,
@@ -2300,7 +2300,7 @@ export const TR_COSINE_APP_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "面積のほうから逆読みします。面積が $6$、$2$ 辺が $4$ と $3$ のとき、その挟む角の $\\sin$ はいくつでしょう？（鋭角とする）",
+        "面積のほうから逆読みします。面積が $6$、$2$ 辺が $4$ と $3$ のとき、その挟む角の $\\sin$ はいくつでしょう？",
       answer: 1,
       answerDisplay: "1",
       unit: "",
@@ -2310,15 +2310,15 @@ export const TR_COSINE_APP_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題までは辺から面積へ進んだ。今度はその逆——面積と $2$ 辺から $\\sin$ を割り出す。面積公式を $\\sin\\theta$ について解き直すとどうなる？",
+          text: "前題と比べてみよう。前題までは辺と角から面積へ進んだ。今度は、与えられているものと聞かれているものが入れかわっていない？",
         },
         {
           layer: 2,
-          text: "前題と変わったのは向きだけ。$S=\\dfrac{1}{2}ab\\sin\\theta$ を移項して $\\sin\\theta = \\dfrac{2S}{ab}$。",
+          text: "前題と変わったのは向きだけ。前題で面積を出したときの式の中で、今度わかっていないのはどの文字？",
         },
         {
           layer: 3,
-          text: "$\\sin\\theta = \\dfrac{2\\times6}{4\\times3} = 1$。$\\sin\\theta=1$ になるのは $\\theta=90°$ のときだけ——面積の値そのものが、実は直角三角形だったことをこっそり教えてくれた。",
+          text: "前題までの式 $S=\\dfrac{1}{2}ab\\sin\\theta$ を $\\sin\\theta$ について解くと $\\sin\\theta = \\dfrac{2S}{ab}$。$\\sin\\theta = \\dfrac{2\\times6}{4\\times3} = 1$。$\\sin\\theta=1$ になるのは $\\theta=90°$ のときだけ——面積の値そのものが、実は直角三角形だったことをこっそり教えてくれた。",
         },
       ],
       formulaPreview: "sinθ = 2S/(ab) = 1 → θ=90°",

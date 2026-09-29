@@ -290,7 +290,7 @@ export const M3L_INTRO_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "最小の番号 $n$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
@@ -558,7 +558,7 @@ export const M3L_GEO_SERIES: LearnerSeries = {
       unit: "個",
       unknownLabel: "収束するものの個数",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step5",
+      compareWithStepId: "step3",
       hints: [
         {
           layer: 1,
@@ -640,7 +640,7 @@ export const M3L_GEO_SERIES: LearnerSeries = {
       unit: "個",
       unknownLabel: "収束する $x$ の範囲に含まれる整数の個数",
       variationFromPrevious: "inverse",
-      compareWithStepId: "step8",
+      compareWithStepId: "step5",
       hints: [
         {
           layer: 1,
@@ -648,7 +648,7 @@ export const M3L_GEO_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは $1$ つ——**答えるのが $x$ そのものではなく、条件をみたす整数の個数**だということ。step 6 の範囲を公比の場所に当てはめて、そのまま $x$ の話に翻訳してみよう。両端の閉じ方がそろっていないことを忘れずに。",
+          text: "step 5 と比べて大きく変わったのは、**求めるものが、境目の $x$ ではなく、収束する $x$ の全体に含まれる整数の個数**だということ。step 6 の範囲を公比の場所に当てはめて、そのまま $x$ の話に翻訳してみよう。両端の閉じ方がそろっていないことを忘れずに。",
         },
         {
           layer: 3,
@@ -1796,7 +1796,7 @@ export const M3L_SQRT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\displaystyle\\lim_{n \\to \\infty} t_n$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step7",
       hints: [
         {
           layer: 1,
@@ -1804,7 +1804,7 @@ export const M3L_SQRT_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "変わったのは $1$ つ——**文字が最高次の係数にいる**こと。step 7 の文字は $1$ 次の項にいたので、収束するかどうかには関係しなかった。今度は、まず「そもそも収束するのはどんなときか」を決めないと、掛けて書き直す先が定まらない。",
+          text: "大きな違いは、**文字が最高次の係数にいる**こと。step 7 の文字は $1$ 次の項にいたので、収束するかどうかには関係しなかった。今度は、まず「そもそも収束するのはどんなときか」を決めないと、掛けて書き直す先が定まらない。",
         },
         {
           layer: 3,
@@ -2416,7 +2416,7 @@ export const M3L_SQUEEZE_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$\\displaystyle\\lim_{n \\to \\infty} g_n$",
       variationFromPrevious: "plus_alpha",
-      compareWithStepId: "step4",
+      compareWithStepId: "step2",
       hints: [
         {
           layer: 1,
@@ -3300,15 +3300,15 @@ export const M3L_GEOSERIES_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$x$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step9",
+      compareWithStepId: "step6",
       hints: [
         {
           layer: 1,
-          text: "step 6 と比べてみよう。step 6 も公比が $x$ の式で、収束する範囲を聞かれた。今度はそこに「和が $9$」という条件が加わる。step 3 で歩いた「和から逆にたどる」道と、step 6 で歩いた「範囲を出す」道——この問題では、どちらか一方で足りるだろうか？",
+          text: "step 6 と比べてみよう。step 6 も公比が $x$ の式で、収束する範囲を調べた。今度はそこに「和が $9$」という条件が加わる。step 3 で歩いた「和から逆にたどる」道と、step 6 で歩いた「範囲を出す」道——この問題では、どちらか一方で足りるだろうか？",
         },
         {
           layer: 2,
-          text: "step 6 と変わったのは $1$ つ——**和の値まで指定されている**こと。step 6 で出したような「収束する $x$ の範囲」は、和が決まってしまえばもう要らない？ それとも、まだ仕事が残っている？",
+          text: "step 6 と比べて大きく変わったのは、**和の値まで指定されている**こと。step 6 で出したような「収束する $x$ の範囲」は、和が決まってしまえばもう要らない？ それとも、まだ仕事が残っている？",
         },
         {
           layer: 3,
@@ -3598,7 +3598,7 @@ export const M3L_CONV_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "無限級数の和",
       variationFromPrevious: "composite",
-      compareWithStepId: "step6",
+      compareWithStepId: "step5",
       hints: [
         {
           layer: 1,
@@ -3606,7 +3606,7 @@ export const M3L_CONV_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step 5 と変わったのは $1$ つ——**打ち消し合う相手が、$2$ つ先ではなく隣**にいること。$\\dfrac{1}{4n-1}$ と $\\dfrac{1}{4n+3}$ を並べて、$n$ を $1$ つ進めると何が起きるか見てみよう。",
+          text: "step 5 の ② と変わったのは $1$ つ——**打ち消し合う相手が、$2$ つ先ではなく隣**にいること。$\\dfrac{1}{4n-1}$ と $\\dfrac{1}{4n+3}$ を並べて、$n$ を $1$ つ進めると何が起きるか見てみよう。",
         },
         {
           layer: 3,
