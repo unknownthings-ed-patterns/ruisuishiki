@@ -80,6 +80,7 @@ import {
   M3VD_TRIG_COMB_SERIES,
   M3VD_LOG_SERIES,
   M3VD_NATLOG_SERIES,
+  M3VD_EXP_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -2037,6 +2038,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数の微分",
     shortDescription:
       "自然対数（底を選ぶ）— 底を $e$ にすると係数が消えて $(\\log x)'=\\frac1x$。合成は「中の傾き ÷ 中の式」。自然さを決めるのは、式がどれだけ単純になるか",
+  },
+  {
+    series: M3VD_EXP_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数の微分",
+    shortDescription:
+      "指数関数の微分（微分しても自分自身）— $(e^x)'=e^x$。傾きがいつも高さに等しい。底が $e$ でないと係数 $\\log a$ が付く",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

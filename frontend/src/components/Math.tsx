@@ -15619,6 +15619,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_EXP_MIRROR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdExpMirror />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_NEST_EXP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdNestExp />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35891,6 +35905,79 @@ function M3vdNestLog() {
       <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
       <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
         外の log と中の多項式、全体の傾きはどう組み立てる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列7 step1: y = e^x と y = log x が y = x に関して鏡像になっている図。
+ *  ★層8 の補足★ e^x の上の点の接線の傾きは「?」のまま（傾き＝高さ、はこの系列の発見）。目盛りなし。 */
+function M3vdExpMirror() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 150;
+  const oy = 132;
+  const s = 34;
+  const X = (u: number) => ox + u * s;
+  const Y = (v: number) => oy - v * s;
+  const ex = Array.from({ length: 81 }, (_, k) => -4 + (5.35 * k) / 80)
+    .map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.exp(u)).toFixed(1)}`).join(" ");
+  const lg = Array.from({ length: 81 }, (_, k) => 0.34 + (4.9 * k) / 80)
+    .map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.log(u)).toFixed(1)}`).join(" ");
+  const a = 0.9;
+  const m = Math.exp(a);
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="指数関数と自然対数のグラフが、原点を通る 45 度の直線に関して折り返しの位置にある図。指数関数の上に 1 点をとって接線を引き、その傾きは疑問符。目盛りは無い模式の図"
+    >
+      <path d={`M 12 ${oy} L 350 ${oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${ox} 180 L ${ox} 8`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(-1.3)} ${Y(-1.3)} L ${X(3.9)} ${Y(3.9)}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+      <text x={X(3.9) + 3} y={Y(3.9) + 12} fontSize="10.5" fill={muted}>y = x</text>
+      <path d={ex} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={lg} fill="none" stroke={stroke} strokeWidth="1.2" strokeDasharray="5 3" />
+      <text x={X(-3.8)} y={Y(0.2) - 6} fontSize="10.5" fill={stroke}>y = eˣ</text>
+      <text x={X(4.3)} y={Y(Math.log(4.3)) + 16} fontSize="10.5" fill={stroke}>y = log x</text>
+      <path d={`M ${X(a - 0.55)} ${Y(m - 0.55 * m)} L ${X(a + 0.45)} ${Y(m + 0.45 * m)}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={X(a)} cy={Y(m)} r="3.4" fill={accent} />
+      <text x={X(a) + 10} y={Y(m) + 8} fontSize="12" fill={accent} fontWeight="600">傾き ?</text>
+      <text x="180" y="210" fontSize="11" fill={accent} textAnchor="middle">
+        log x の傾きが分かっているなら、折り返した eˣ の傾きは？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列7 step3（質的変化）: 入れ子の箱（外が e の累乗・中が 1 次式）。
+ *  ★層8 の補足★ 「自分自身 × 肩の傾き」は描かない。外と中の区別（仕組み）だけ。 */
+function M3vdNestExp() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="外側の箱に e の累乗、その中の箱に 1 次式（肩の式）と書かれた入れ子の図。x は内側の箱に入り、出てきたものが外側の箱に入る。全体の傾きは疑問符"
+    >
+      <rect x="60" y="22" width="240" height="104" rx="10" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="76" y="42" fontSize="11.5" fill={stroke}>外：e の累乗</text>
+      <rect x="130" y="56" width="120" height="50" rx="8" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="190" y="86" fontSize="12" fill={accent} textAnchor="middle">中：肩の 1 次式</text>
+      <text x="36" y="86" fontSize="12" fill={stroke} fontStyle="italic">x</text>
+      <path d="M 46 82 L 128 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 122 78 L 128 82 L 122 86" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 302 82 L 336 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
+      <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
+        外が「自分自身に戻る」とき、全体の傾きはどう組み立てる？
       </text>
     </svg>
   );
