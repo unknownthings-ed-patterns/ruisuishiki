@@ -15591,6 +15591,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_POWER_ROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdPowerRow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_MISSING_TARGET>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdMissingTarget />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35731,6 +35745,69 @@ function M3vdNestTrig() {
       <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
       <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
         外と中の両方が変化を運ぶとき、全体の傾きは？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列5 step1: x^α の並び（上段）と、微分した結果の欄（下段・すべて ?）。
+ *  ★Round 1 F5★ どの欄が空くか（穴）は描かない。下段は全部「?」で、どれも同じ扱い。 */
+function M3vdPowerRow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const tops = ["x³", "x²", "x", "1", "x⁻¹", "x⁻²"];
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上の段に x の 3 乗から x のマイナス 2 乗までの 6 つの式が並び、それぞれから下向きの矢印が微分した結果の欄へ向かっている。下の欄はすべて疑問符"
+    >
+      {tops.map((t, k) => {
+        const cx = 34 + k * 58;
+        return (
+          <g key={t}>
+            <text x={cx} y="36" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">{t}</text>
+            <path d={`M ${cx} 46 L ${cx} 74`} fill="none" stroke={muted} strokeWidth="1.2" />
+            <path d={`M ${cx - 4} 68 L ${cx} 74 L ${cx + 4} 68`} fill="none" stroke={muted} strokeWidth="1.2" />
+            <rect x={cx - 22} y="80" width="44" height="28" rx="5" fill="none" stroke={accent} strokeWidth="1.2" />
+            <text x={cx} y="99" fontSize="13" fill={accent} textAnchor="middle" fontWeight="600">?</text>
+          </g>
+        );
+      })}
+      <text x="8" y="64" fontSize="10" fill={muted}>微分</text>
+      <text x="180" y="138" fontSize="11" fill={accent} textAnchor="middle">
+        微分した結果の次数は、どんな並びになる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列5 step3（質的変化）: 「?」の箱から微分の矢印で 1/x の箱へ。
+ *  ★層8 の補足★ 箱が空であること（答えが「無い」）は描かない。問いの形だけ。 */
+function M3vdMissingTarget() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 140"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="左の箱に c かける x の α 乗と疑問符、右の箱に x 分の 1。左から右へ微分と書かれた矢印。左の箱に何が入るかは書かれていない"
+    >
+      <rect x="36" y="36" width="116" height="48" rx="8" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="94" y="66" fontSize="14" fill={accent} textAnchor="middle" fontStyle="italic">c·x<tspan dy="-7" fontSize="10">α</tspan><tspan dy="7"> = ?</tspan></text>
+      <path d="M 158 60 L 214 60" fill="none" stroke={muted} strokeWidth="1.4" />
+      <path d="M 207 55 L 214 60 L 207 65" fill="none" stroke={muted} strokeWidth="1.4" />
+      <text x="186" y="50" fontSize="10.5" fill={muted} textAnchor="middle">微分</text>
+      <rect x="222" y="36" width="100" height="48" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="272" y="66" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">1/x</text>
+      <text x="180" y="122" fontSize="11" fill={accent} textAnchor="middle">
+        左の箱に入る c と α は、見つかるだろうか？
       </text>
     </svg>
   );

@@ -78,6 +78,7 @@ import {
   M3VD_SUM_PROD_SERIES,
   M3VD_TRIG_DIFF_SERIES,
   M3VD_TRIG_COMB_SERIES,
+  M3VD_LOG_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -2019,6 +2020,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数の微分",
     shortDescription:
       "三角関数と積・商・合成（道具の総動員）— 部品が三角関数に替わっても、第3章のつなぎ方はそのまま効く。公式を押す前に、畳める式は畳む",
+  },
+  {
+    series: M3VD_LOG_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数の微分",
+    shortDescription:
+      "対数関数の微分（ミッシングリンクと $e$）— 微分して $\\frac1x$ になる $x^\\alpha$ は無い。その穴を対数関数が埋め、$1^\\infty$ の綱引きの行き先に定数 $e$ が現れる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
