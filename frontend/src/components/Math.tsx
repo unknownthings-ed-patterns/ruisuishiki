@@ -15605,6 +15605,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_LOG_SLOPE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdLogSlope />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_NEST_LOG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdNestLog />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35808,6 +35822,75 @@ function M3vdMissingTarget() {
       <text x="272" y="66" fontSize="15" fill={stroke} textAnchor="middle" fontStyle="italic">1/x</text>
       <text x="180" y="122" fontSize="11" fill={accent} textAnchor="middle">
         左の箱に入る c と α は、見つかるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列6 step1: y = log x の上の 1 点での接線。傾きは「?」。
+ *  ★層8 の補足★ y = 1/x のグラフは描かない（傾きと 1/x の対応はこの系列の中身）。目盛りなし。 */
+function M3vdLogSlope() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 40;
+  const y0 = 120;
+  const sx = 34;
+  const sy = 44;
+  const X = (u: number) => x0 + u * sx;
+  const Y = (v: number) => y0 - v * sy;
+  const us = Array.from({ length: 121 }, (_, k) => 0.34 + (8.4 * k) / 120);
+  const d = us.map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.log(u)).toFixed(1)}`).join(" ");
+  const a = 3;
+  const m = 1 / a;
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="対数関数のグラフの上に 1 点をとり、接線を引いた図。グラフは点 (1, 0) を通り、右へ行くほどゆるやかに上がる。接線の傾きは疑問符。目盛りは無い模式の図"
+    >
+      <path d={`M 20 ${y0} L 344 ${y0}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${x0} 176 L ${x0} 14`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={d} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx={X(1)} cy={Y(0)} r="2.6" fill={stroke} />
+      <text x={X(1) + 4} y={y0 + 14} fontSize="10.5" fill={muted}>1</text>
+      <path d={`M ${X(a - 2)} ${Y(Math.log(a) - 2 * m)} L ${X(a + 2.4)} ${Y(Math.log(a) + 2.4 * m)}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={X(a)} cy={Y(Math.log(a))} r="3.4" fill={accent} />
+      <text x={X(a + 2.4) + 4} y={Y(Math.log(a) + 2.4 * m) - 2} fontSize="12" fill={accent} fontWeight="600">傾き ?</text>
+      <text x="180" y="194" fontSize="11" fill={accent} textAnchor="middle">
+        底を e にすると、この傾きはどんな形で書けるだろう？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列6 step5（質的変化）: 入れ子の箱（外が log・中が多項式）。
+ *  ★層8 の補足★ 「中の傾き ÷ 中の式」は描かない。外と中の区別（仕組み）だけ。 */
+function M3vdNestLog() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="外側の箱に自然対数、その中の箱に多項式と書かれた入れ子の図。x は内側の箱に入り、出てきたものが外側の箱に入る。全体の傾きは疑問符"
+    >
+      <rect x="60" y="22" width="240" height="104" rx="10" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="76" y="42" fontSize="11.5" fill={stroke}>外：log（底 e）</text>
+      <rect x="130" y="56" width="120" height="50" rx="8" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="190" y="86" fontSize="12" fill={accent} textAnchor="middle">中：多項式</text>
+      <text x="36" y="86" fontSize="12" fill={stroke} fontStyle="italic">x</text>
+      <path d="M 46 82 L 128 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 122 78 L 128 82 L 122 86" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 302 82 L 336 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
+      <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
+        外の log と中の多項式、全体の傾きはどう組み立てる？
       </text>
     </svg>
   );
