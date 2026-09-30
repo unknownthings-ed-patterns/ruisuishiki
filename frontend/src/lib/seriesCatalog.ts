@@ -86,6 +86,7 @@ import {
 } from "./seriesMath3VariousDiff";
 import {
   M3DA_TANGENT_SERIES,
+  M3DA_EXTREMUM_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2077,6 +2078,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "接線と法線（点が外にあるなら、接点を文字で置く）— 材料は「通る点」と「傾き」の 2 つ。点が曲線の外なら接点を文字で置く。傾きの無い縦の法線も取りこぼさない",
+  },
+  {
+    series: M3DA_EXTREMUM_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "増減と最大最小（符号を決める因子を取り出す）— いつも正の因子をよけると、上り下りを決める因子が残る。f'(p)=0 は候補を出すだけで、前後の符号が答えを決める",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

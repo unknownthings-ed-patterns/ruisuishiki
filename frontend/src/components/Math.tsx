@@ -15675,6 +15675,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_SIGN_CORE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daSignCore />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_DROP_CANDIDATE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daDropCandidate />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39415,6 +39429,95 @@ function M3daOutsidePoint() {
       </text>
       <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
         では、何を文字で置く？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列2 step1: f'(x) を因子に分けた符号の表。いつも正の因子（淡い）と、符号を決める因子（強調）。
+ *  ★図に答えを描かない★ 因子は「いつも正」「？」と名前だけで、式・符号の変わり目の x の値・+/− は書かない。
+ *  この図から読めてしまうもの：「f' はいくつかの因子の積で、1 つだけが符号を決める」という見方だけ（どの因子か・どこで変わるかは読めない）。 */
+function M3daSignCore() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rows = [
+    { label: "いつも正の因子", color: muted, cells: ["+", "+", "+", "+", "+"] },
+    { label: "符号を決める因子", color: accent, cells: ["?", "?", "?", "?", "?"] },
+    { label: "f'(x)", color: stroke, cells: ["?", "?", "?", "?", "?"] },
+  ];
+  const x0 = 118;
+  const w = 38;
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="f プライムを因子に分けて、いつも正の因子の行と、符号を決める因子の行と、f プライムの行を並べた符号の表。符号を決める因子の行と f プライムの行は、すべて疑問符になっている"
+    >
+      <text x={x0 + (w * 5) / 2} y="22" fontSize="11" fill={muted} textAnchor="middle">x が左から右へ</text>
+      <path d={`M ${x0} 30 L ${x0 + w * 5} 30`} fill="none" stroke={muted} strokeWidth="1" />
+      {rows.map((r, i) => (
+        <g key={i}>
+          <text x={x0 - 8} y={56 + i * 34} fontSize="11" fill={r.color} textAnchor="end">
+            {r.label}
+          </text>
+          {r.cells.map((c, j) => (
+            <text key={j} x={x0 + w * j + w / 2} y={56 + i * 34} fontSize="13" fill={r.color} textAnchor="middle">
+              {c}
+            </text>
+          ))}
+          <path d={`M ${x0} ${66 + i * 34} L ${x0 + w * 5} ${66 + i * 34}`} fill="none" stroke={muted} strokeWidth="0.6" />
+        </g>
+      ))}
+      <text x="160" y="170" fontSize="11" fill={accent} textAnchor="middle">
+        いつも正の因子をよけたら、上り下りを決めるのはどの行？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列2 step7: 「f'(p) = 0」を満たす 2 つの候補のグラフ。1 つは p で山（または谷）、1 つは p で踊り場。
+ *  ★図に答えを描かない★ どちらの候補がどちらの形になるかは描かない（候補の名前は「候補 ①」「候補 ②」だけで、k の値を書かない。
+ *  左右どちらの枠がどちらの候補かも決めない）。2 つの枠は「谷になる形」と「踊り場になる形」の仕組みだけ。
+ *  この図から読めてしまうもの：「f'(p)=0 でも形が 2 通りある」ことだけ（どの k が落ちるかは読めない）。 */
+function M3daDropCandidate() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panel = (ox: number, kind: "valley" | "plateau") => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const u = -1 + (2 * k) / 40;
+      const v = kind === "valley" ? 0.9 * u * u : 0.78 * u * u * u;
+      pts.push(`${(ox + 60 + u * 50).toFixed(1)},${(96 - v * 50).toFixed(1)}`);
+    }
+    return (
+      <g>
+        <rect x={ox + 4} y="20" width="112" height="120" fill="none" stroke={muted} strokeWidth="0.8" rx="4" />
+        <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+        <path d={`M ${ox + 30} 96 L ${ox + 90} 96`} fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+        <circle cx={ox + 60} cy="96" r="3" fill={accent} />
+        <text x={ox + 60} y="154" fontSize="11" fill={stroke} textAnchor="middle">
+          {kind === "valley" ? "前後で傾きの符号が変わる" : "前後で傾きの符号が同じ"}
+        </text>
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 320 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="どちらも x が p の点で傾きが 0 になる 2 つのグラフの枠。一方は谷の形、もう一方は傾きが 0 になっても通り過ぎる踊り場の形。どちらの候補の係数がどちらの形になるかは書かれていない"
+    >
+      {panel(34, "valley")}
+      {panel(170, "plateau")}
+      <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも x = p で傾きが 0</text>
+      <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        候補の係数は、どちらの形になる？
       </text>
     </svg>
   );
