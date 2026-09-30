@@ -1983,7 +1983,7 @@ export const M3V_DOT_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "真上から光が当たっている地面に、棒を斜めに立てかけます。棒と地面のなす角が $\\theta$ なら、地面に落ちる影の長さは（棒の長さ）$\\times\\cos\\theta$ です（[三角比]）。\n\nこの「影」を使って、$2$ つのベクトルに $1$ つの実数を対応させる新しい演算を決めます。$\\vec{a}$ に沿う直線を地面と見立て、そこに落ちる $\\vec{b}$ の影の長さを測り、それに $\\vec{a}$ の長さをかけたものを **内積** といい、$\\vec{a}\\cdot\\vec{b}$ と書きます。$\\vec{a}$ と $\\vec{b}$ の [なす角]（始点をそろえて測った開き）を $\\theta$ とすると\n\n$$\\vec{a}\\cdot\\vec{b} = \\lvert\\vec{a}\\rvert\\lvert\\vec{b}\\rvert\\cos\\theta$$\n\nです。$\\lvert\\vec{a}\\rvert = 6$、$\\lvert\\vec{b}\\rvert = 5$ で、なす角が $60°$ のとき、$\\vec{a}\\cdot\\vec{b}$ の値を求めましょう。",
+        "真上から光が当たっている地面に、棒を斜めに立てかけます。棒と地面のなす角が $\\theta$ なら、地面に落ちる影の長さは（棒の長さ）$\\times\\cos\\theta$ です（[三角比]）。\n\nこの「影」を使って、$2$ つのベクトルに $1$ つの実数を対応させる新しい演算を決めます。$\\vec{a}$ に沿う直線を地面と見立て、そこに落ちる $\\vec{b}$ の影の長さを測り、それに $\\vec{a}$ の長さをかけたものを **[内積]** といい、$\\vec{a}\\cdot\\vec{b}$ と書きます。$\\vec{a}$ と $\\vec{b}$ の [なす角]（始点をそろえて測った開き）を $\\theta$ とすると\n\n$$\\vec{a}\\cdot\\vec{b} = \\lvert\\vec{a}\\rvert\\lvert\\vec{b}\\rvert\\cos\\theta$$\n\nです。$\\lvert\\vec{a}\\rvert = 6$、$\\lvert\\vec{b}\\rvert = 5$ で、なす角が $60°$ のとき、$\\vec{a}\\cdot\\vec{b}$ の値を求めましょう。",
       answer: 15,
       unit: "",
       unknownLabel: "$\\vec{a}\\cdot\\vec{b}$",
@@ -3030,15 +3030,15 @@ export const M3V_COMPONENT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "$s$",
       variationFromPrevious: "composite",
-      compareWithStepId: "step4",
+      compareWithStepId: "step1",
       hints: [
         {
           layer: 1,
-          text: "step 4 と比べてみよう。あのとき計算がすっきりしたのは、基準の $2$ 本が「長さ $1$・直交」だったから。今度、基準に取りかえる $\\vec{a}$、$\\vec{b}$ は直交してもいないし長さも $1$ ではない。それでも $\\overrightarrow{AP}$ を、この $2$ 本の枚数で言い表せるだろうか？ 斜めの $2$ 本を基準にしたときは、何を手がかりにしていた？",
+          text: "step 1 と比べてみよう。あのときは $2$ 点から矢印の成分を読んだ。成分は、横向き・縦向きの長さ $1$ の矢印を何枚ずつ使うか、という枚数でもあった。今度は、その基準の $2$ 本が別の $2$ 本に取りかえられている。枚数は、まだ成分からそのまま読める？",
         },
         {
           layer: 2,
-          text: "大きな違いは、**基準の $2$ 本が直交でなくなった**こと。$s\\vec{a} + t\\vec{b}$ を成分で書くと、$x$ 成分も $y$ 成分も $s$ と $t$ の式になる。それを $\\overrightarrow{AP}$ の成分とそろえるには、等式はいくつ立つ？",
+          text: "step 1 と変わったのは $1$ つ——**基準の $2$ 本が、長さ $1$・直交の $2$ 本ではなくなった**こと。基準の $1$ 本が横にも縦にも同時に効いてしまうとき、$2$ つの枚数を決める手がかりは何本そろう？",
         },
         {
           layer: 3,

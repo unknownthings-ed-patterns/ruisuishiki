@@ -507,7 +507,7 @@ export const NE_EXPONENT_LAW_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "$(2y^{3})^{4}$ を $1$ つの単項式に整理すると、係数はいくつになるでしょう？",
+        "$(2y^{3})^{4}$ を $1$ つの[単項式]に整理すると、係数はいくつになるでしょう？",
       answer: 16,
       unit: "",
       unknownLabel: "(2y³)⁴ を整理したときの係数",

@@ -1057,7 +1057,7 @@ export const TRIG_EQUATION_SERIES: LearnerSeries = {
 
 **系列1・2は「角 → 値」。三角方程式はその矢印を逆に読む。**
 
-系列1では角から [単位円] の座標を読み（$\\sin\\theta = P$ の $y$ 座標）、系列2ではその角を [弧度法] で測りました。三角方程式は逆で、**値が先に決まっていて、その値になる角（＝ $P$ の場所）を探します**。
+系列1では角から [単位円] の座標を読み（$\\sin\\theta = P$ の $y$ 座標）、系列2ではその角を [弧度法] で測りました。[三角方程式] は逆で、**値が先に決まっていて、その値になる角（＝ $P$ の場所）を探します**。
 
 <<UNIT_CIRCLE_STEP1>>
 
@@ -1784,7 +1784,7 @@ export const TRIG_GRAPH_SERIES: LearnerSeries = {
 
 **円運動と波は、同じものの $2$ つの見方。**
 
-[単位円] を回る点 $P$ の高さ（$y$ 座標）は $\\sin\\theta$ でした（系列1）。角 $\\theta$ を横軸にして、この高さを順に写し取っていくと——上がって、下がって、また戻る——**波**（サインカーブ）が現れます。
+[単位円] を回る点 $P$ の高さ（$y$ 座標）は $\\sin\\theta$ でした（系列1）。角 $\\theta$ を横軸にして、この高さを順に写し取っていくと——上がって、下がって、また戻る——**波**（サインカーブ）が現れます。これが [三角関数のグラフ] です。
 
 <<TRIG_CIRCLE_TO_WAVE>>
 
@@ -2130,7 +2130,7 @@ export const TRIG_PROPERTY_SERIES: LearnerSeries = {
 
 **公式は覚えない。折り返しから、その場で導く。**
 
-$\\sin(\\pi - \\theta)$・$\\cos(-\\theta)$・$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$……この単元は公式の数がやたら多く見えます。でも暗記は要りません。すべては [単位円] の **$4$ つの折り返し**の言い換えだからです。「忘れない」ことより「**忘れても導ける**」ことが、この単元のほんとうの目標です。
+$\\sin(\\pi - \\theta)$・$\\cos(-\\theta)$・$\\sin\\left(\\dfrac{\\pi}{2} + \\theta\\right)$……こうした [変換公式] は、数がやたら多く見えます。でも暗記は要りません。すべては [単位円] の **$4$ つの折り返し**の言い換えだからです。「忘れない」ことより「**忘れても導ける**」ことが、この単元のほんとうの目標です。
 
 | 変換 | 対称 | 起きること | 公式 |
 |---|---|---|---|
@@ -2481,7 +2481,7 @@ export const TRIG_ADDITION_SERIES: LearnerSeries = {
 
 $$\\sin(\\alpha+\\beta) \\ne \\sin\\alpha + \\sin\\beta$$
 
-$\\sin$ は「掛け算」ではないので、カッコの中に分配はできません（$\\sin$ は $\\theta$ という角への**操作**であって、$\\sin \\times \\theta$ ではない）。では $\\sin(\\alpha+\\beta)$ をバラす正しい道は何か——それがこの単元の主役、**加法定理**です：
+$\\sin$ は「掛け算」ではないので、カッコの中に分配はできません（$\\sin$ は $\\theta$ という角への**操作**であって、$\\sin \\times \\theta$ ではない）。では $\\sin(\\alpha+\\beta)$ をバラす正しい道は何か——それがこの単元の主役、**[加法定理]** です：
 
 $$\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$$
 $$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$$
@@ -2825,7 +2825,7 @@ export const TRIG_DOUBLE_HALF_SERIES: LearnerSeries = {
 
 **特殊化——$\\beta$ に $\\alpha$ を入れる、それだけ。**
 
-[加法定理] は $2$ つの角 $\\alpha, \\beta$ について成り立つ**一般**の定理。一般に成り立つなら、$\\beta = \\alpha$ という**特別な場合**にも当然成り立ちます：
+[加法定理] は $2$ つの角 $\\alpha, \\beta$ について成り立つ**一般**の定理。一般に成り立つなら、$\\beta = \\alpha$ という**特別な場合**にも当然成り立ちます。それが [2倍角の公式] です：
 
 $$\\sin 2\\theta = \\sin(\\theta+\\theta) = \\sin\\theta\\cos\\theta + \\cos\\theta\\sin\\theta = 2\\sin\\theta\\cos\\theta$$
 $$\\cos 2\\theta = \\cos(\\theta+\\theta) = \\cos^2\\theta - \\sin^2\\theta$$
@@ -3178,7 +3178,7 @@ export const TRIG_COMPOSITION_SERIES: LearnerSeries = {
 
 **合成は、加法定理の巻き戻し。**
 
-[加法定理] は $\\sin\\left(\\theta + \\dfrac{\\pi}{4}\\right)$ のようなまとまった波を、$\\sin\\theta$ と $\\cos\\theta$ の**バラバラの和にひらく**操作でした。合成はその**逆**——バラバラの和 $a\\sin\\theta + b\\cos\\theta$ を、$1$ つの波 $r\\sin(\\theta + \\alpha)$ に**畳み直す**操作です。ひらくのは何も考えずにできるけれど、畳むのはパズルの逆再生——展開と因数分解の関係とそっくりです。
+[加法定理] は $\\sin\\left(\\theta + \\dfrac{\\pi}{4}\\right)$ のようなまとまった波を、$\\sin\\theta$ と $\\cos\\theta$ の**バラバラの和にひらく**操作でした。[三角関数の合成] はその**逆**——バラバラの和 $a\\sin\\theta + b\\cos\\theta$ を、$1$ つの波 $r\\sin(\\theta + \\alpha)$ に**畳み直す**操作です。ひらくのは何も考えずにできるけれど、畳むのはパズルの逆再生——展開と因数分解の関係とそっくりです。
 
 **畳み方（点 $P(a, b)$ が全部教えてくれる）**：
 
