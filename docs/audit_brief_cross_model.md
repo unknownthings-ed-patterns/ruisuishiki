@@ -30,6 +30,7 @@
 | **数列の極限（10 系列 100 問・数Ⅲ・C 第2章）** | `frontend/src/lib/seriesMath3Limits.ts` | `docs/math3c_limits_design.md` | `~/ruisuishiki-refs/第２章　数列の極限_jpeg/source_notes.md` | `M3L*`（新規約 20 枚＋流用数枚） | `~/ruisuishiki-refs/audit_math3c_ch2_grok.md`（Round 2）／`..._backbone_grok.md`（Round 1）／`..._recheck_grok.md`（Round 3） |
 | **ベクトル（13 系列 130 問・数Ⅲ・C 第9章）** | `frontend/src/lib/seriesMath3Vector.ts` | `docs/math3c_vector_design.md` | `~/ruisuishiki-refs/第９章　ベクトル/source_notes.md` | `M3V*`（新規 26 枚） | `~/ruisuishiki-refs/audit_math3c_ch9_grok.md`（Round 2）／`..._backbone_grok.md`（Round 1・実施済み）／`..._recheck_grok.md`（Round 3） |
 | **複素数平面（11 系列 110 問・数Ⅲ・C 第10章）** | `frontend/src/lib/seriesMath3Complex.ts` | `docs/math3c_complex_design.md` | `~/ruisuishiki-refs/第１０章　複素数平面/source_notes.md` | `M3c*`（新規 22 枚・流用 0） | `~/ruisuishiki-refs/audit_math3c_ch10_grok.md`（Round 2）／`..._backbone_grok.md`（Round 1・実施済み）／`..._recheck_grok.md`（Round 3） |
+| **いろいろな関数の微分（9 系列 90 問・数Ⅲ・C 第4章）** | `frontend/src/lib/seriesMath3VariousDiff.ts`（予定） | `docs/math3c_various_diff_design.md` | `~/ruisuishiki-refs/第４章　いろいろな関数の微分_jpeg/source_notes.md` | `M3VD*`（新規 18 枚予定） | `~/ruisuishiki-refs/audit_math3c_ch4_backbone_codex.md`（Round 1）／`..._impl_codex.md`（Round 2・最後） |
 
 **渡す前に、機械 5 本を先に通す**（`python3 scripts/audit_cross_refs.py <対象ファイル>`）。
 機械で拾えるものを潰してから渡すと、モデルの時間が**判断の要る読み**に寄る。
