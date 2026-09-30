@@ -15661,6 +15661,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_TANGENT_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daTangentPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_OUTSIDE_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daOutsidePoint />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39303,6 +39317,104 @@ export function M3vPlaneFoot() {
       </text>
       <text x={180} y={30} fontSize="11" fill={accent} textAnchor="middle">
         ——そうなる H は、どこ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列1 step1: 根号の曲線の上の 1 点と、そこに接する直線。
+ *  ★図に答えを描かない★ 傾きは「?」。目盛り・座標の値は書かない（接点の x = 12 も描かない）。
+ *  この図から読めてしまうもの：「接線は右上がり」ということだけ（傾きの値は読めない。曲線は模式）。 */
+function M3daTangentPoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 30 + u * 26;
+  const Y = (v: number) => 186 - v * 26;
+  const g = (u: number) => Math.sqrt(2 * u + 1);
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = -0.5 + (10.5 * k) / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(g(u)).toFixed(1)}`);
+  }
+  const t = 4;
+  const m = 1 / g(t);
+  const L = (u: number) => g(t) + m * (u - t);
+  return (
+    <svg
+      viewBox="0 0 320 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="根号の式のグラフの上に 1 つの点をとり、その点で曲線に接する直線を引いた模式の図。直線を決める 2 つの材料「通る点」と「傾き」のうち、傾きは疑問符になっている"
+    >
+      <path d={`M 14 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 204 L ${X(0)} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path
+        d={`M ${X(-0.4).toFixed(1)} ${Y(L(-0.4)).toFixed(1)} L ${X(10.4).toFixed(1)} ${Y(L(10.4)).toFixed(1)}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.6"
+      />
+      <circle cx={X(t)} cy={Y(g(t))} r="3.4" fill={accent} />
+      <text x={X(t) - 18} y={Y(g(t)) + 20} fontSize="11" fill={accent}>通る点</text>
+      <text x={X(8.2)} y={Y(L(8.2)) - 10} fontSize="11" fill={accent}>傾き ?</text>
+      <text x={X(7.2)} y={Y(g(7.2)) + 22} fontSize="11" fill={stroke} fontStyle="italic">y = √(2x+1)</text>
+      <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        通る点と傾き——2 つはそれぞれ、どこから手に入る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列1 step7: 対数の曲線と、曲線の外（y 軸上）の点から引いた接線。
+ *  ★図に答えを描かない★ 接点の位置は「?」の印だけで、座標も高さの目盛りも書かない。外の点の高さも数値で書かない。
+ *  この図から読めてしまうもの：「接点は外の点より右上にある」ことだけ（接点の y 座標は読めない。曲線と点の位置は模式）。 */
+function M3daOutsidePoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 40 + u * 22;
+  const Y = (v: number) => 150 - v * 22;
+  const g = (u: number) => 2 * Math.log(u);
+  const pts: string[] = [];
+  for (let k = 0; k <= 80; k++) {
+    const u = 0.35 + (11.5 * k) / 80;
+    pts.push(`${X(u).toFixed(1)},${Y(g(u)).toFixed(1)}`);
+  }
+  const q = 1.2;
+  const t = Math.exp((q + 2) / 2);
+  const m = 2 / t;
+  const L = (u: number) => q + m * u;
+  return (
+    <svg
+      viewBox="0 0 320 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="対数の曲線と、y 軸の上にある曲線の外の点。その点から曲線に接する直線を引いた模式の図。接点は疑問符になっていて、座標は書かれていない"
+    >
+      <path d={`M 14 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 208 L ${X(0)} 14`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path
+        d={`M ${X(0).toFixed(1)} ${Y(L(0)).toFixed(1)} L ${X(11.6).toFixed(1)} ${Y(L(11.6)).toFixed(1)}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="1.5"
+        strokeDasharray="5 3"
+      />
+      <circle cx={X(0)} cy={Y(q)} r="3.4" fill={stroke} />
+      <text x={X(0) + 30} y={Y(q) + 4} fontSize="11" fill={stroke}>← 外の点（y 軸の上）</text>
+      <circle cx={X(t)} cy={Y(g(t))} r="3.6" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x={X(t) - 6} y={Y(g(t)) + 20} fontSize="12" fill={accent}>?</text>
+      <text x={X(10)} y={Y(g(10)) + 20} fontSize="11" fill={stroke} fontStyle="italic">y = 2 log x</text>
+      <text x="160" y="198" fontSize="11" fill={accent} textAnchor="middle">
+        外の点での傾きは、曲線のどこにも書いていない。
+      </text>
+      <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        では、何を文字で置く？
       </text>
     </svg>
   );

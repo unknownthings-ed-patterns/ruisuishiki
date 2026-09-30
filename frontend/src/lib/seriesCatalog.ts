@@ -85,6 +85,10 @@ import {
   M3VD_LOGDIFF_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
+  M3DA_TANGENT_SERIES,
+  MATH3_DIFF_APP_SERIES_LIST,
+} from "./seriesMath3DiffApp";
+import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
   M3V_TRANSFORM_SERIES,
@@ -2065,6 +2069,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "対数微分法（対数は触媒）— $\\log$ をとると積は和に・累乗は係数に。微分して $y$ を掛けて戻す。$x^x$ と $(x^\\alpha)'$ の返済",
   },
+  /* 第5章 微分法の応用（背骨：docs/math3c_diff_app_design.md・2026-10-01 凍結） */
+  {
+    series: M3DA_TANGENT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "接線と法線（点が外にあるなら、接点を文字で置く）— 材料は「通る点」と「傾き」の 2 つ。点が曲線の外なら接点を文字で置く。傾きの無い縦の法線も取りこぼさない",
+  },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
    * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
@@ -2341,6 +2354,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_LIMITS_SERIES_LIST,
   ...MATH3_DIFF_SERIES_LIST,
   ...MATH3_VARIOUS_DIFF_SERIES_LIST,
+  ...MATH3_DIFF_APP_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,
