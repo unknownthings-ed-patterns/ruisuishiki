@@ -2841,6 +2841,351 @@ $3$ つの極限は、別々の場所で出会ったように見えて、どれ�
 「$1$」は自然が勝手にくれた数ではなく、**傾きが $1$ になるようにものさしを選んだ結果**である。`,
 };
 
+/** M3VD9: 対数微分法——対数は触媒。
+ *  step1〜3 は積商・累乗の y'/y（log をとると 1 因数 1 項）。質的変化 step4 は底にも肩にも x がある x^{3x} を x = e² で。
+ *  ★Round 1 I3★ 比較は係数つき＝正答 a(k+1) = 9・肩を定数扱い a = 3・底を定数扱い ak = 6（3 つとも別）。
+ *  step6（係数の逆算）は k = −1/2 で k+1 ≠ 0。第三の誤概念 (log y)' = 1/y（y' の掛け忘れ）は y'/y を問う step では値にならないので、
+ *  y' そのものを問う step7 以降の L3 と derivation で名指す。
+ *  step4 の L3 に 2 本目の道 x^{3x} = e^{3x log x}（系列7 の合成）＝「対数微分法でしか解けない」とは書かない（C1 追補18-b）。
+ *  step8 は第3章で預けた (x^α)' の一般の実数 α での返済（α = √5）。山場 step10 は ③手間型＝積・商の公式を重ねる道は開いている（追補18-c）。 */
+export const M3VD_LOGDIFF_SERIES: LearnerSeries = {
+  id: "math3_vd_logdiff_01",
+  title: "対数微分法——対数は触媒",
+  subtitle:
+    "数Ⅲ・C いろいろな関数の微分より — 両辺の $\\log$ をとると、積は和に、累乗は係数に変わる。そうしてから微分し、最後に $y$ を掛けて戻す。$10$ 問で、途中にだけ現れて消える道具を使いこなす。",
+  patternId: "M3VD9",
+  unit: "math_3",
+  revelationLabel:
+    "**$\\log$ は、積を和に・累乗を係数に翻訳してから微分させ、最後に消える**。スタートにもゴールにも無いのに、途中の計算だけを軽くする「触媒」",
+  drivingQuestion:
+    "両辺の対数をとると、なぜ微分が楽になる？——**最後には消えてしまう対数**は、途中で何をしていたのか？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$y = (x+1)(x+3)(x+5)$ の両辺の自然対数をとると、[対数法則] で右辺は $3$ つの $\\log$ の和になります。両辺を $x$ で微分して、$x = 1$ における $\\dfrac{y'}{y}$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 11 / 12,
+      answerDisplay: "11/12",
+      unit: "",
+      unknownLabel: "$x=1$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$\\log$ をとると、掛け算は何に変わる？ 足し算になったら、微分はどうなる？ 左辺の $\\log y$ は、$x$ で微分すると何になるだろう。",
+        },
+        {
+          layer: 2,
+          text: "右辺は $1$ 項ずつ系列6 の形で微分できる。左辺の $\\log y$ は、$y$ が $x$ の関数であることに注意——第3章で、「どの文字で微分するか」を気にしたのはどんなときだった？",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = \\log(x+1) + \\log(x+3) + \\log(x+5)$。両辺を $x$ で微分すると、左辺は [合成関数の微分法] で $\\dfrac{1}{y}\\cdot y'$ なので $$\\frac{y'}{y} = \\frac{1}{x+1} + \\frac{1}{x+3} + \\frac{1}{x+5}$$ $x=1$ では $\\dfrac12 + \\dfrac14 + \\dfrac16 = \\dfrac{11}{12}$。**$3$ つの因数が、$3$ つの項に分かれた**——[積の微分] を $2$ 回重ねると $3$ 項の積が出てくるところです。中心の問いへの最初の部分回答：**$\\log$ は掛け算を足し算に翻訳し、足し算なら $1$ 項ずつ微分できる**。",
+        },
+      ],
+      formulaPreview: "log y = log(x+1) + log(x+3) + log(x+5) → y'/y = 1/(x+1) + 1/(x+3) + 1/(x+5)。x = 1 で 11/12",
+      figureMarker: "<<M3VD_LOG_TRANSLATE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$y = \\dfrac{(x+1)(x+2)}{x+3}$（$x>-1$）の、$x = 2$ における $\\dfrac{y'}{y}$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 23 / 60,
+      answerDisplay: "23/60",
+      unit: "",
+      unknownLabel: "$x=2$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**因数の $1$ つが分母に回った**こと $1$ つ。$\\log$ をとったとき、分母の因数はどう現れる？",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = \\log(x+1) + \\log(x+2) - \\log(x+3)$。前題と同じく両辺を微分して $$\\frac{y'}{y} = \\frac{1}{x+1} + \\frac{1}{x+2} - \\frac{1}{x+3}$$ $x=2$ では $\\dfrac13 + \\dfrac14 - \\dfrac15 = \\dfrac{23}{60}$。分母の因数を足してしまうと $\\dfrac{47}{60}$ です。中心の問いへ：**割り算は引き算に翻訳される**——[商の微分] の公式を使わずに済んだ。",
+        },
+      ],
+      formulaPreview: "y'/y = 1/(x+1) + 1/(x+2) − 1/(x+3)。x = 2 で 1/3 + 1/4 − 1/5 = 23/60",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$y = (x+1)^3(x-2)^2$ の、$x = 3$ における $\\dfrac{y'}{y}$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 2.75,
+      answerDisplay: "11/4",
+      unit: "",
+      unknownLabel: "$x=3$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は $1$ 次式の積と商だった。今度は因数に肩が乗っている。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**因数が累乗になった**こと $1$ つ。$\\log$ をとったとき、肩の数はどこへ行く？",
+        },
+        {
+          layer: 3,
+          text: "$y$ は $x=3$ の近くで正なので、$\\log y = 3\\log(x+1) + 2\\log(x-2)$。前題と同じく微分して $$\\frac{y'}{y} = \\frac{3}{x+1} + \\frac{2}{x-2}$$ $x=3$ では $\\dfrac34 + 2 = \\dfrac{11}{4}$。**肩の数は、$\\log$ の前の係数に降りてきた**。中心の問いへ：**累乗は係数に翻訳される**。",
+        },
+      ],
+      formulaPreview: "log y = 3log(x+1) + 2log(x−2) → y'/y = 3/(x+1) + 2/(x−2)。x = 3 で 11/4",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "こんどは**底にも肩にも $x$** がある関数です。$$y = x^{3x} \\qquad (x>0)$$ の、$x = e^2$ における $\\dfrac{y'}{y}$ の値を求めましょう。",
+      answer: 9,
+      unit: "",
+      unknownLabel: "$x=e^2$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は底に $x$、肩は数だった。今度は肩にも $x$ がいる。これまでに知っている $2$ つの規則——肩が数のときと、底が数のとき——は、そのまま使える？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**肩にも $x$ が入った**こと $1$ つ。前題で肩の数は $\\log$ の前に降りてきた。肩が $x$ の式でも、同じことが起きる？",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = 3x\\log x$。右辺は [積の微分] で $$\\frac{y'}{y} = 3\\log x + 3x\\cdot\\frac1x = 3(\\log x + 1)$$ $x=e^2$ では $\\log x = 2$ なので $3\\cdot3 = 9$。**肩を数と見て $x^\\alpha$ の規則を当てると $3$、底を数と見て $a^x$ の規則を当てると $6$**——どちらも別の値で、$x^{3x}$ は多項式でも指数関数でもありません。**2 本目の道**：$x^{3x} = e^{3x\\log x}$ と底を $e$ にそろえれば、系列7 の合成だけで $y' = e^{3x\\log x}\\cdot3(\\log x+1)$ と同じ結果に着きます。中心の問いへ：**$\\log$ をとると、底と肩の両方にいた $x$ が、積の $2$ つの因子として並ぶ**。",
+        },
+      ],
+      formulaPreview: "log y = 3x log x → y'/y = 3(log x + 1)。x = e² で 9（誤答：肩を数扱い 3・底を数扱い 6）",
+      figureMarker: "<<M3VD_TWO_RULES>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$y = x^{6x}$（$x>0$）の、$x = e^{\\frac14}$ における $\\dfrac{y'}{y}$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 7.5,
+      answerDisplay: "15/2",
+      unit: "",
+      unknownLabel: "$x=e^{\\frac14}$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**肩の係数と、点**。前題で出した $\\dfrac{y'}{y}$ の形のうち、どこが変わる？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく $\\log y = 6x\\log x$ で $\\dfrac{y'}{y} = 6(\\log x + 1)$。$x=e^{\\frac14}$ では $\\log x = \\dfrac14$ なので $6\\cdot\\dfrac54 = \\dfrac{15}{2}$。中心の問いへ：**翻訳した形 $a(\\log x + 1)$ が $1$ つ手に入れば、あとは点を入れるだけ**。",
+        },
+      ],
+      formulaPreview: "y'/y = 6(log x + 1)。x = e^{1/4} で 6·5/4 = 15/2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "こんどは向きが逆です。$a$ を定数とします。$y = x^{ax}$（$x>0$）の、$x = e^{-\\frac12}$ における $\\dfrac{y'}{y}$ の値が $\\dfrac56$ になるとき、$a$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: 5 / 3,
+      answerDisplay: "5/3",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は係数から値を出した。今度は値が先に分かっていて、係数を求める。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**問われているのが値から係数に入れ替わった**こと $1$ つ。前題の形で、係数 $a$ はどこにいた？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく $\\dfrac{y'}{y} = a(\\log x + 1)$。$x = e^{-\\frac12}$ では $\\log x + 1 = \\dfrac12$ なので $\\dfrac a2 = \\dfrac56$、$a = \\dfrac53$（解は $1$ つ）。もし点が $x = e^{-1}$ なら $\\log x + 1 = 0$ で、$\\dfrac{y'}{y}$ は $a$ によらず $0$——係数は決まりません。中心の問いへ：**翻訳した形が単純だから、逆向きにもたどれる**。",
+        },
+      ],
+      formulaPreview: "a(log x + 1) = 5/6、x = e^{−1/2} で a/2 = 5/6 → a = 5/3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "step1 の $y = (x+1)(x+3)(x+5)$ に戻ります。こんどは $\\dfrac{y'}{y}$ ではなく、**微分係数 $y'$ そのもの**を、$x = 1$ で求めましょう。",
+      answer: 44,
+      unit: "",
+      unknownLabel: "$x=1$ における $y'$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。関数も点も同じ。求めるものだけが違う。",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、**$\\dfrac{y'}{y}$ でなく $y'$ を問われた**こと $1$ つ。step1 で出した値から $y'$ へは、あと何が要る？",
+        },
+        {
+          layer: 3,
+          text: "step1 で $\\dfrac{y'}{y} = \\dfrac{11}{12}$。$x=1$ で $y = 2\\cdot4\\cdot6 = 48$ なので $$y' = y\\cdot\\frac{11}{12} = 44$$ **最後に $y$ を掛けて戻すと、$\\log$ はどこにも残らない**。左辺の微分を $(\\log y)' = \\dfrac1y$ と書いてしまうと（$y'$ の掛け忘れ）、そもそも $y'$ が式に現れず、この戻す一歩が踏めません。[積の微分] を $2$ 回重ねて $(x+3)(x+5) + (x+1)(x+5) + (x+1)(x+3)$ に $x=1$ を入れても $24 + 12 + 8 = 44$——同じ値が交差検算です。中心の問いへ：**$\\log$ は途中で現れ、最後には消える**。",
+        },
+      ],
+      formulaPreview: "y' = y·(y'/y) = 48·11/12 = 44（積の微分でも 24 + 12 + 8 = 44）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "第3章で「証明はあと」と預けていた $(x^\\alpha)' = \\alpha x^{\\alpha-1}$ を、$\\alpha$ が無理数でも確かめます。$y = x^{\\sqrt5}$（$x>0$）の両辺の $\\log$ をとって微分し、$x = 5$ における $\\dfrac{y'}{y}$ の値を求めましょう。",
+      answer: Math.sqrt(5) / 5,
+      answerDisplay: "√5/5",
+      unit: "",
+      unknownLabel: "$x=5$ における $\\dfrac{y'}{y}$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。step3 でも肩の数を扱った。今度の肩は整数でも分数でもない。step3 の手つきは、それでも効く？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、**肩が無理数になった**こと $1$ つ。step3 で肩が係数に降りてきたとき、肩が整数であることを使っていただろうか。",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = \\sqrt5\\,\\log x$。step3 と同じく微分して $\\dfrac{y'}{y} = \\dfrac{\\sqrt5}{x}$。$x=5$ では $\\dfrac{\\sqrt5}{5}$。一般に $\\log y = \\alpha\\log x$ から $\\dfrac{y'}{y} = \\dfrac\\alpha x$、$y$ を掛けて戻すと $$y' = \\alpha\\cdot\\frac{x^\\alpha}{x} = \\alpha x^{\\alpha-1}$$ **第3章で預けた公式が、$x>0$ で、どんな実数 $\\alpha$ でも返済された**。スタートの $x^\\alpha$ にもゴールの $\\alpha x^{\\alpha-1}$ にも $\\log$ は無い。中心の問いへ：**$\\log$ は途中の計算だけを助けて、最後にはいなくなる——化学反応の「触媒」のように**。",
+        },
+      ],
+      formulaPreview: "log y = √5·log x → y'/y = √5/x。x = 5 で √5/5。一般に y' = αx^{α−1}",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "次の関数の、$x = 3$ における微分係数 $y'$ を求めましょう。答えは既約分数で答えましょう。$$y = \\frac{(x+2)\\sqrt{x+1}}{\\sqrt[3]{x+5}} \\qquad (x>-1)$$",
+      answer: 17 / 12,
+      answerDisplay: "17/12",
+      unit: "",
+      unknownLabel: "$x=3$ における $y'$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "step7 と比べてみよう。step7 も $y'$ そのものを求めた。今度は根号が $2$ 種類、しかも片方は分母にいる。",
+        },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、**因数が根号になった**こと $1$ つ。根号は、肩が分数の累乗だった。step3 と step8 で、肩はどうなった？",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = \\log(x+2) + \\dfrac12\\log(x+1) - \\dfrac13\\log(x+5)$。微分して $$\\frac{y'}{y} = \\frac{1}{x+2} + \\frac{1}{2(x+1)} - \\frac{1}{3(x+5)}$$ $x=3$ では $\\dfrac15 + \\dfrac18 - \\dfrac1{24} = \\dfrac{17}{60}$。$y = \\dfrac{5\\cdot2}{2} = 5$ なので、step7 と同じく戻して $y' = 5\\cdot\\dfrac{17}{60} = \\dfrac{17}{12}$。中心の問いへ：**積・商・根号がまざっても、翻訳すれば「係数つきの和」になる**。",
+        },
+      ],
+      formulaPreview: "y'/y = 1/(x+2) + 1/{2(x+1)} − 1/{3(x+5)} = 17/60（x = 3）。y = 5 → y' = 17/12",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "因数の多い関数です。$x = 1$ における微分係数 $y'$ を求めましょう。答えは既約分数で答えましょう。$$y = \\frac{(x+1)^2(x+2)^3(x+4)}{(x+3)^2(x+5)}$$",
+      answer: 69 / 8,
+      answerDisplay: "69/8",
+      unit: "",
+      unknownLabel: "$x=1$ における $y'$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "step9 と比べてみよう。因数の数が増えた。積と商の公式を重ねていく道と、step9 の道。どちらが、項の数が少なくて済みそう？",
+        },
+        {
+          layer: 2,
+          text: "step9 と変わったのは、**因数が $5$ つに増えた**こと $1$ つ。step9 の道で、因数 $1$ つにつき何項できた？",
+        },
+        {
+          layer: 3,
+          text: "$\\log y = 2\\log(x+1) + 3\\log(x+2) + \\log(x+4) - 2\\log(x+3) - \\log(x+5)$ で、**因数 $1$ つにつき $1$ 項**。$$\\frac{y'}{y} = \\frac{2}{x+1} + \\frac{3}{x+2} + \\frac{1}{x+4} - \\frac{2}{x+3} - \\frac{1}{x+5}$$ $x=1$ では $1 + 1 + \\dfrac15 - \\dfrac12 - \\dfrac16 = \\dfrac{23}{15}$。$y = \\dfrac{4\\cdot27\\cdot5}{16\\cdot6} = \\dfrac{45}{8}$ なので $y' = \\dfrac{45}{8}\\cdot\\dfrac{23}{15} = \\dfrac{69}{8}$。積と商の公式を重ねる道でも同じ値に着きますが、分子の積の微分だけで $3$ 項、さらに商の公式で分母の積の微分が掛かり、途中の項がいくつも並びます。中心の問いに戻ると：**$\\log$ が積を和に・累乗を係数に翻訳してくれるから、因数がいくつあっても $1$ 因数 $1$ 項で済み、最後に $y$ を掛けて戻せば $\\log$ は消える**。",
+        },
+      ],
+      formulaPreview: "y'/y = 2/(x+1) + 3/(x+2) + 1/(x+4) − 2/(x+3) − 1/(x+5) = 23/15（x = 1）。y = 45/8 → y' = 69/8",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 両辺の対数をとると、なぜ微分が楽になる？——**最後には消えてしまう対数**は、途中で何をしていたのか？
+
+────────
+
+## 翻訳してから微分し、戻す
+
+$y$ が積・商・累乗でできているとき、両辺の自然対数をとると、[対数法則] で
+
+- **積は和に**（step1）、**商は差に**（step2）、**累乗は係数に**（step3）
+
+翻訳される。和なら $1$ 項ずつ微分できる。左辺の $\\log y$ は $y$ が $x$ の関数なので、[合成関数の微分法] で $(\\log y)' = \\dfrac{y'}{y}$。最後に $y$ を掛けて戻す（step7）。この手順を [対数微分法] と呼ぶ。
+
+## ここが胚細胞：途中にだけ現れる道具
+
+スタートの式にもゴールの式にも $\\log$ は無い。$\\log$ は途中で、掛け算を足し算に変えて微分を軽くし、最後にはいなくなる——**化学反応の「触媒」**のように。**翻訳した先で仕事をして、元の言葉に戻す**。これが、$\\log$ をとると微分が楽になる理由である。
+
+## 2 つの規則のどちらでもない相手
+
+$x^{3x}$ は、肩が数の $x^\\alpha$ でも、底が数の $a^x$ でもない（step4）。どちらかの規則を当てはめると値がずれる。$\\log$ をとれば、底と肩にいた $2$ つの $x$ が、積 $3x\\cdot\\log x$ の $2$ つの因子として並び、[積の微分] で片づく。$x^{3x} = e^{3x\\log x}$ と底を $e$ にそろえて系列7 の合成で押す道もあり、同じ結果に着く。
+
+## Step の道筋
+
+- **step1〜3**：積・商・累乗の翻訳（$\\dfrac{y'}{y}$ で）
+- **step4〜6**：底にも肩にも $x$——$2$ つの規則のどちらでもない
+- **step7**：$y$ を掛けて戻す＝触媒が消える
+- **step8**：第3章で預けた $(x^\\alpha)' = \\alpha x^{\\alpha-1}$ を、$x>0$ で、どんな実数 $\\alpha$ でも返済する
+- **step9〜10（山場）**：根号・分数・多くの因数が混ざっても、$1$ 因数 $1$ 項
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $(x^\\alpha)'$ を忘れたら、$\\log y = \\alpha\\log x$ から $\\dfrac{y'}{y} = \\dfrac\\alpha x$、戻して $\\alpha x^{\\alpha-1}$。**公式を覚えるより、翻訳して戻す手つきを覚える**。
+
+**よくある取り違え。** ①$(x^x)' = x\\cdot x^{x-1}$（肩を数と見る）②$(x^x)' = (\\log x)\\,x^x$（底を数と見る）③$(\\log y)' = \\dfrac1y$（$y$ が $x$ の関数であることを忘れて $y'$ を掛け忘れる）。③は「$y$ で微分するのか、$x$ で微分するのか」の取り違えで、第3章で「どの文字で微分するか」を気にしたのと同じ注意である。
+
+**縦の鎖。** 第3章では $(x^\\alpha)'$ を、$\\alpha$ が整数と $\\dfrac1n$ の場合まで確かめて、一般の場合は預けていた。この系列の step8 で、$x>0$ の範囲で、無理数を含むすべての実数 $\\alpha$ について返された。
+
+**この先の景色。** 「掛け算を足し算に翻訳して扱いやすくする」は、確率の世界でも使われる。独立なできごとの確率は掛け算で重なるが、$\\log$ をとれば足し算になる——統計の「尤度」や、情報の量を測る「情報量」がこの形である。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第4章「対数微分法」「微分の公式の証明」の構成（$x^x$ の $2$ つの誤りと $(\\log y)'$ の注意、$(x^\\alpha)'$ の証明、対数を「触媒」にたとえる見方）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$\\log$ をとると微分が楽になるのは、**積を和に、商を差に、累乗を係数に翻訳してくれる**からである。和なら $1$ 項ずつ微分できる。
+
+そして $\\log$ は、最後に $y$ を掛けて戻すとき、式から消える。スタートにもゴールにも無いのに、途中の計算だけを軽くする——**触媒**。$(x^\\alpha)' = \\alpha x^{\\alpha-1}$ の証明もこの触媒のおかげで、第3章の預けものがここで返された。`,
+};
+
 /** 「いろいろな関数の微分」ユニットの系列一覧（数Ⅲ・C 第4章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
@@ -2852,4 +3197,5 @@ export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
   M3VD_NATLOG_SERIES,
   M3VD_EXP_SERIES,
   M3VD_ELIM_SERIES,
+  M3VD_LOGDIFF_SERIES,
 ];

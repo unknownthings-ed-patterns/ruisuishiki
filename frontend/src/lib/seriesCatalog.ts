@@ -82,6 +82,7 @@ import {
   M3VD_NATLOG_SERIES,
   M3VD_EXP_SERIES,
   M3VD_ELIM_SERIES,
+  M3VD_LOGDIFF_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -2055,6 +2056,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数の微分",
     shortDescription:
       "e と極限（極限 3 兄弟）— $\\frac{\\sin t}{t}$・$\\frac{\\log(1+t)}{t}$・$\\frac{e^t-1}{t}$ はどれも出発点での接線の傾き。$2^x$ と $4^x$ の割線で底 $e$ をはさむ",
+  },
+  {
+    series: M3VD_LOGDIFF_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数の微分",
+    shortDescription:
+      "対数微分法（対数は触媒）— $\\log$ をとると積は和に・累乗は係数に。微分して $y$ を掛けて戻す。$x^x$ と $(x^\\alpha)'$ の返済",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

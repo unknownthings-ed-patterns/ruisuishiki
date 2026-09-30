@@ -15647,6 +15647,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_LOG_TRANSLATE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdLogTranslate />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_TWO_RULES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdTwoRules />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -36090,6 +36104,89 @@ function M3vdBaseSqueeze() {
       <text x={X(0) + 6} y={Y(1) + 14} fontSize="10.5" fill={stroke}>(0, 1)</text>
       <text x="180" y="208" fontSize="11" fill={accent} textAnchor="middle">
         (0, 1) での接線の傾きがちょうど 1 になる底は、どこにある？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列9 step1: 積 → 和 の翻訳。3 つの因数の箱が「log」の門を通ると、+ でつながった 3 つの箱になる。
+ *  ★層8 の補足★ 微分した結果（1/(x+1) など）は描かない。翻訳の仕組みだけ。 */
+function M3vdLogTranslate() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const box = (x: number, y: number, t: string, c: string, k: string) => (
+    <g key={k}>
+      <rect x={x} y={y} width="62" height="28" rx="5" fill="none" stroke={c} strokeWidth="1.4" />
+      <text x={x + 31} y={y + 18} fontSize="11" fill={c} textAnchor="middle">{t}</text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 360 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="上の段に 3 つの因数の箱が掛け算の記号でつながり、下向きの矢印に log と書かれている。下の段では同じ 3 つの箱に log が付き、足し算の記号でつながっている。そのあと微分するとどうなるかは疑問符"
+    >
+      {box(40, 24, "x + 1", stroke, "a1")}
+      <text x="112" y="43" fontSize="14" fill={stroke} textAnchor="middle">×</text>
+      {box(122, 24, "x + 3", stroke, "a2")}
+      <text x="194" y="43" fontSize="14" fill={stroke} textAnchor="middle">×</text>
+      {box(204, 24, "x + 5", stroke, "a3")}
+      <text x="296" y="43" fontSize="12" fill={stroke}>= y</text>
+      <path d="M 180 60 L 180 96" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 175 90 L 180 97 L 185 90" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="190" y="84" fontSize="12" fill={accent} fontWeight="600">log をとる</text>
+      {box(40, 106, "log(x+1)", accent, "b1")}
+      <text x="112" y="125" fontSize="14" fill={accent} textAnchor="middle">+</text>
+      {box(122, 106, "log(x+3)", accent, "b2")}
+      <text x="194" y="125" fontSize="14" fill={accent} textAnchor="middle">+</text>
+      {box(204, 106, "log(x+5)", accent, "b3")}
+      <text x="296" y="125" fontSize="12" fill={accent}>= log y</text>
+      <text x="180" y="170" fontSize="11" fill={muted} textAnchor="middle">
+        掛け算が足し算になった。足し算なら、微分は？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列9 step4（質的変化）: 2 つの既習の規則の表（肩が数／底が数）と、どちらでもない x^{3x} は「?」。
+ *  ★層8 の補足★ 正しい微分も誤答の値も描かない。「どちらの行にも入らない」ことだけ。 */
+function M3vdTwoRules() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="3 行の表。1 行目は底が変数で肩が数の関数とその微分の規則、2 行目は底が数で肩が変数の関数とその微分の規則。3 行目は底にも肩にも変数がある関数で、微分の欄は疑問符"
+    >
+      <path d="M 30 22 L 330 22 M 30 56 L 330 56 M 30 90 L 330 90 M 30 124 L 330 124 M 30 158 L 330 158" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 150 22 L 150 158" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="90" y="44" fontSize="11" fill={muted} textAnchor="middle">関数</text>
+      <text x="240" y="44" fontSize="11" fill={muted} textAnchor="middle">微分</text>
+      <text x="90" y="78" fontSize="12" fill={stroke} textAnchor="middle">
+        x<tspan dy="-5" fontSize="9">α</tspan><tspan dy="5" fontSize="10">（肩が数）</tspan>
+      </text>
+      <text x="240" y="78" fontSize="12" fill={stroke} textAnchor="middle">
+        αx<tspan dy="-5" fontSize="9">α−1</tspan>
+      </text>
+      <text x="90" y="112" fontSize="12" fill={stroke} textAnchor="middle">
+        a<tspan dy="-5" fontSize="9">x</tspan><tspan dy="5" fontSize="10">（底が数）</tspan>
+      </text>
+      <text x="240" y="112" fontSize="12" fill={stroke} textAnchor="middle">
+        (log a)·a<tspan dy="-5" fontSize="9">x</tspan>
+      </text>
+      <text x="90" y="146" fontSize="12" fill={accent} textAnchor="middle" fontWeight="600">
+        x<tspan dy="-5" fontSize="9">3x</tspan><tspan dy="5" fontSize="10">（どちらも x）</tspan>
+      </text>
+      <text x="240" y="146" fontSize="14" fill={accent} textAnchor="middle" fontWeight="600">?</text>
+      <text x="180" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        どちらの行にも入らない相手は、どう微分する？
       </text>
     </svg>
   );
