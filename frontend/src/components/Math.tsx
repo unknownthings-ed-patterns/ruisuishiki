@@ -15577,6 +15577,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_PARTS_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdPartsProduct />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_NEST_TRIG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdNestTrig />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35659,6 +35673,64 @@ function M3vdDegRad() {
       </text>
       <text x="180" y="196" fontSize="11" fill={accent} textAnchor="middle">
         同じ山なのに、原点での傾きの「数」は同じだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列4 step1: 部品（多項式・三角関数）の箱を「×」でつなぐ図。
+ *  ★図に答えを描かない★ 導関数の形も値も書かない。部品の傾きが分かっていることだけを示す。 */
+function M3vdPartsProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 150"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="多項式の箱と三角関数の箱が、掛け算の記号でつながれた図。それぞれの箱の下に、部品の傾きは分かっていると書かれ、つないだ全体の傾きは疑問符"
+    >
+      <rect x="30" y="34" width="110" height="46" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="85" y="62" fontSize="13" fill={stroke} textAnchor="middle">多項式</text>
+      <text x="180" y="64" fontSize="18" fill={accent} textAnchor="middle">×</text>
+      <rect x="220" y="34" width="110" height="46" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="275" y="62" fontSize="13" fill={stroke} textAnchor="middle">三角関数</text>
+      <text x="85" y="100" fontSize="10.5" fill={muted} textAnchor="middle">傾きは分かる</text>
+      <text x="275" y="100" fontSize="10.5" fill={muted} textAnchor="middle">傾きは分かる</text>
+      <text x="180" y="136" fontSize="11" fill={accent} textAnchor="middle">
+        掛け合わせた全体の傾きは？ つなぎ方は第3章と同じだろうか
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列4 step4（質的変化）: 入れ子の箱（外が三角関数・中が 1 次式）。
+ *  ★層8 の補足★ 「中の傾きを掛ける」ことは描かない。外と中の区別（仕組み）だけ。 */
+function M3vdNestTrig() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="外側の箱に三角関数、その中の箱に 1 次式と書かれた入れ子の図。x は内側の箱に入り、出てきたものが外側の箱に入る。全体の傾きは疑問符"
+    >
+      <rect x="60" y="22" width="240" height="104" rx="10" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="76" y="42" fontSize="11.5" fill={stroke}>外：三角関数</text>
+      <rect x="130" y="56" width="120" height="50" rx="8" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="190" y="86" fontSize="12" fill={accent} textAnchor="middle">中：1 次式</text>
+      <text x="36" y="86" fontSize="12" fill={stroke} fontStyle="italic">x</text>
+      <path d="M 46 82 L 128 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 122 78 L 128 82 L 122 86" fill="none" stroke={muted} strokeWidth="1.2" />
+      <path d="M 302 82 L 336 82" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
+      <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
+        外と中の両方が変化を運ぶとき、全体の傾きは？
       </text>
     </svg>
   );

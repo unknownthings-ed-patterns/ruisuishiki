@@ -1115,10 +1115,357 @@ $\\cos x$ も同じ部品で運べる（和積の公式が $-$ を連れてく�
 そして、原点での傾きがちょうど $1$ だったのは、**角を弧の長さで測っていたから**だった。度で測れば $\\dfrac{\\pi}{180}$、$1$ 周を $N$ と数えれば $\\dfrac{2\\pi}{N}$。$(\\sin x)'=\\cos x$ という単純な形は、関数だけで決まったのではなく、**私たちのものさしの選び方**と組になって決まっていた。`,
 };
 
+/** M3VD4: 三角関数と積・商・合成——道具の総動員。
+ *  第3章の積・商・合成の公式に、新しい部品（sin・cos・tan の導関数）を差し込む合流の系列（C13 の本家）。
+ *  質的変化 step4 は合成（外が三角・中が 1 次式）。かたまりの微分を掛け忘れると届かない（内側の係数≠1）。
+ *  山場 step10 は、商と合成で押す道と、2 倍角で tan x に畳む道が同じ値に着く（Q3）。
+ *  「公式でしか解けない」とは書かない——恒等変形を先にすれば一瞬で済む、というのがこの step の発見（C1 追補18-c）。
+ *  step1・2 は x = 0 で評価するので、積の片方の項が消える（Round 1 I2）。積を f'g' とする誤りは検出するが、
+ *  片方の項の落としは検出しない。両方の項が効く検出は step3・step10 が担う。 */
+export const M3VD_TRIG_COMB_SERIES: LearnerSeries = {
+  id: "math3_vd_trig_comb_01",
+  title: "三角関数と積・商・合成——道具の総動員",
+  subtitle:
+    "数Ⅲ・C いろいろな関数の微分より — $\\sin$・$\\cos$・$\\tan$ という新しい部品が来ても、第3章で手に入れたつなぎ方（積・商・合成）はそのまま使える。$10$ 問で、部品を差しかえて組み立てる。",
+  patternId: "M3VD4",
+  unit: "math_3",
+  revelationLabel:
+    "**$\\sin$ の中に $1$ 次式が入ると、中の式の傾きが掛け算で出てくる**。部品が三角関数に替わっても、合成の組み立て方は第3章と同じだった",
+  drivingQuestion:
+    "新しい相手（$\\sin$・$\\cos$・$\\tan$）が来ても、第3章で手に入れた**つなぎ方**（積・商・合成）は、そのまま効く？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "第3章の [積の微分] を思い出しながら、次の関数の $x = 0$ における微分係数を求めましょう。\n\n$$y = (x^2 + 3x + 2)\\cos x$$",
+      answer: 3,
+      unit: "",
+      unknownLabel: "$x=0$ における微分係数",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "多項式と $\\cos x$ の**積**になっている。第3章で、積を微分するときはどうした？ そして、$\\cos x$ の微分は前の系列で何になった？",
+        },
+        {
+          layer: 2,
+          text: "第3章の積と変わったのは、**掛けている相手の片方が $\\cos x$ になった**こと $1$ つ。$\\cos x$ という部品の傾きは、もう手に入っているだろうか。",
+        },
+        {
+          layer: 3,
+          text: "[積の微分] $(fg)' = f'g + fg'$ に、前の系列の $(\\cos x)' = -\\sin x$ を差し込みます。 $$y' = (2x+3)\\cos x + (x^2+3x+2)(-\\sin x)$$ $x=0$ では $3\\cdot1 + 2\\cdot0 = 3$。「それぞれ微分して掛ける」$f'g'$ だと $(2x+3)(-\\sin x)$ で $x=0$ では $0$ になり、別の値です。中心の問いへの最初の部分回答：**部品が三角関数に替わっても、積のつなぎ方はそのまま**。",
+        },
+      ],
+      formulaPreview: "y' = (2x+3)cos x − (x²+3x+2)sin x。x = 0 で 3·1 − 2·0 = 3",
+      figureMarker: "<<M3VD_PARTS_PRODUCT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "次の関数の $x = 0$ における微分係数を求めましょう。\n\n$$y = (x^2 - 2x + 5)\\sin x$$",
+      answer: 5,
+      unit: "",
+      unknownLabel: "$x=0$ における微分係数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？ 前題で使った組み立て方は、今度も使える？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$\\cos x$ が $\\sin x$ になった**（と多項式の係数）こと。$\\sin x$ という部品の傾きは何だった？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく [積の微分] で $$y' = (2x-2)\\sin x + (x^2-2x+5)\\cos x$$ $x=0$ では $(-2)\\cdot0 + 5\\cdot1 = 5$。中心の問いへ：**差しかえる部品が $\\sin$ でも $\\cos$ でも、組み立て方は変わらない**。",
+        },
+      ],
+      formulaPreview: "y' = (2x−2)sin x + (x²−2x+5)cos x。x = 0 で 0 + 5 = 5",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "こんどは**商**です。次の関数の $x = 0$ における微分係数を求めましょう。答えは既約分数で答えましょう。\n\n$$y = \\frac{\\cos x}{x + 3}$$",
+      answer: -1 / 9,
+      answerDisplay: "−1/9",
+      unit: "",
+      unknownLabel: "$x=0$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は掛け算だった。今度は割り算。第3章で、割り算の組み立て方はどうだった？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**積が商になった**こと $1$ つ。第3章の [商の微分] で、分子の引き算はどちらからどちらを引いた？",
+        },
+        {
+          layer: 3,
+          text: "[商の微分] $\\left(\\dfrac fg\\right)' = \\dfrac{f'g - fg'}{g^2}$ に $f = \\cos x$、$g = x+3$ を入れると $$y' = \\frac{(-\\sin x)(x+3) - \\cos x\\cdot1}{(x+3)^2}$$ $x=0$ では $\\dfrac{0 - 1}{9} = -\\dfrac19$。分子の引き算の順を逆にすると $+\\dfrac19$ になり、符号が逆の値です。中心の問いへ：**商のつなぎ方も、部品を差しかえるだけ**。",
+        },
+      ],
+      formulaPreview: "y' = {(−sin x)(x+3) − cos x}/(x+3)²。x = 0 で (0 − 1)/9 = −1/9",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "こんどは**合成**です。$\\sin$ の中に $1$ 次式が入った関数\n\n$$y = \\sin\\left(3x + \\frac{\\pi}{4}\\right)$$\n\nの、$x = 0$ における微分係数を求めましょう。",
+      answer: (3 * Math.SQRT2) / 2,
+      answerDisplay: "3√2/2",
+      unit: "",
+      unknownLabel: "$x=0$ における微分係数",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは $2$ つの関数を掛けたり割ったりした。今度は $\\sin$ の**中に**式が入っている。第3章で、式の中に式が入った関数はどう扱った？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**つなぎ方が「中に入れる」になった**こと $1$ つ。第3章で、式の中に式が入った関数の傾きは、どことどこから集めてきた？",
+        },
+        {
+          layer: 3,
+          text: "第3章の [合成関数の微分法] で、$t = 3x+\\dfrac\\pi4$ とおくと $y = \\sin t$。 $$\\frac{dy}{dx} = \\frac{dy}{dt}\\cdot\\frac{dt}{dx} = \\cos t \\cdot 3 = 3\\cos\\left(3x+\\frac\\pi4\\right)$$ $x=0$ では $3\\cos\\dfrac\\pi4 = \\dfrac{3\\sqrt2}{2}$。**かたまりの微分 $3$ を掛け忘れると $\\dfrac{\\sqrt2}{2}$** になり、別の値です。中心の問いへ：**部品が三角関数でも、合成は「外の傾き × 中の傾き」のまま**。",
+        },
+      ],
+      formulaPreview: "y' = cos(3x+π/4)·3。x = 0 で 3cos(π/4) = 3√2/2",
+      figureMarker: "<<M3VD_NEST_TRIG>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "次の関数の $x = \\dfrac{\\pi}{10}$ における微分係数を求めましょう。\n\n$$y = \\cos 5x$$",
+      answer: -5,
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{10}$ における微分係数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？ 前題で最後に掛けた数は、今度もどこかから出てくる？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**外側が $\\sin$ から $\\cos$ になった**（と中の式）こと。$\\cos$ の傾きには、何が付いてきた？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく $t = 5x$ とおくと $y=\\cos t$。 $$y' = -\\sin t\\cdot 5 = -5\\sin5x$$ $x = \\dfrac\\pi{10}$ では $5x = \\dfrac\\pi2$ なので $-5\\cdot1 = -5$。かたまりの微分を掛け忘れると $-1$ です。中心の問いへ：**外側の部品の符号も、中の傾きも、どちらも運ばれる**。",
+        },
+      ],
+      formulaPreview: "y' = −sin5x·5。x = π/10 で −5",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "こんどは**中と外が入れ替わります**。多項式（$4$ 乗）の中に $\\sin x$ が入った関数\n\n$$y = \\sin^4 x = (\\sin x)^4$$\n\nの、$x = \\dfrac{\\pi}{3}$ における微分係数を求めましょう。",
+      answer: (3 * Math.sqrt(3)) / 4,
+      answerDisplay: "3√3/4",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{3}$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。step4 は「$\\sin$ の中に $1$ 次式」だった。今度は「$4$ 乗の中に $\\sin x$」。何が入れ替わった？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、**外側と内側が入れ替わった**こと $1$ つ。今度のかたまりは何で、外側は何の関数？",
+        },
+        {
+          layer: 3,
+          text: "今度は $t = \\sin x$ がかたまりで、外側は $y = t^4$。 $$y' = 4t^3\\cdot\\frac{dt}{dx} = 4\\sin^3x\\cos x$$ $x=\\dfrac\\pi3$ では $4\\cdot\\left(\\dfrac{\\sqrt3}2\\right)^3\\cdot\\dfrac12 = 4\\cdot\\dfrac{3\\sqrt3}{8}\\cdot\\dfrac12 = \\dfrac{3\\sqrt3}4$。中心の問いへ：**外が多項式で中が三角関数でも、合成の組み立て方は同じ**。",
+        },
+      ],
+      formulaPreview: "y' = 4sin³x·cos x。x = π/3 で 4·(3√3/8)·(1/2) = 3√3/4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "こんどは向きが逆です。$a$ を定数とします。\n\n$$y = \\sin ax + x$$\n\nの $x = 0$ における微分係数が $7$ になるとき、$a$ の値を求めましょう。",
+      answer: 6,
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。step4 は式から傾きを出した。今度は**傾きが先に**分かっていて、式の中の数を求める。",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、**問われているのが傾きから中の係数に入れ替わった**こと $1$ つ。step4 で最後に掛けた数は、式のどこから来ていた？",
+        },
+        {
+          layer: 3,
+          text: "step4 と同じく、$\\sin ax$ の傾きは $a\\cos ax$。$x$ の傾きは $1$。よって $y' = a\\cos ax + 1$ で、$x=0$ では $a+1$。これが $7$ なので $a = 6$。中心の問いへ：**合成で掛け算に出てくる数が中の係数だと分かれば、傾きから係数を逆にたどれる**。",
+        },
+      ],
+      formulaPreview: "y' = a cos ax + 1。x = 0 で a + 1 = 7 → a = 6",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "次の関数の $x = \\dfrac{\\pi}{6}$ における微分係数を求めましょう。\n\n$$y = \\sqrt{1 + \\sin x}$$",
+      answer: Math.SQRT2 / 4,
+      answerDisplay: "√2/4",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{6}$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。step6 は「$4$ 乗の中に三角関数」だった。今度は外側が別のものになった。",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、**外側が $4$ 乗から根号になった**こと $1$ つ。根号は、第3章で何乗として扱った？",
+        },
+        {
+          layer: 3,
+          text: "$t = 1+\\sin x$ とおくと $y = t^{\\frac12}$。 $$y' = \\frac12 t^{-\\frac12}\\cdot\\cos x = \\frac{\\cos x}{2\\sqrt{1+\\sin x}}$$ $x=\\dfrac\\pi6$ では $\\dfrac{\\ \\dfrac{\\sqrt3}{2}\\ }{2\\sqrt{\\dfrac32}} = \\dfrac{\\sqrt3}{2}\\cdot\\dfrac{1}{\\sqrt6} = \\dfrac{1}{2\\sqrt2} = \\dfrac{\\sqrt2}4$。中心の問いへ：**外側が根号でも、第3章の $(x^\\alpha)'$ と合成の組み立てがそのまま使える**。",
+        },
+      ],
+      formulaPreview: "y' = cos x/{2√(1+sin x)}。x = π/6 で (√3/2)/(2√(3/2)) = √2/4",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "次の関数の $x = \\dfrac{\\pi}{6}$ における微分係数を求めましょう。答えは既約分数で答えましょう。\n\n$$y = (\\sin 2x)^3$$",
+      answer: 9 / 4,
+      answerDisplay: "9/4",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{6}$ における微分係数",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。step6 は「多項式の中に三角関数」の $2$ 重だった。今度は、その三角関数の中にも、さらに式が入っている。",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、**入れ子が $2$ 重から $3$ 重になった**こと $1$ つ。いちばん外・まん中・いちばん内側は、それぞれ何の関数？",
+        },
+        {
+          layer: 3,
+          text: "外から $y = u^3$、$u = \\sin s$、$s = 2x$ の $3$ 重（3 次関数・三角関数・1 次関数）。 $$y' = 3u^2\\cdot\\cos s\\cdot2 = 6\\sin^2 2x\\cos2x$$ $x=\\dfrac\\pi6$ では $2x = \\dfrac\\pi3$ なので $6\\cdot\\dfrac34\\cdot\\dfrac12 = \\dfrac94$。第3章の $3$ 重の入れ子は多項式どうしでしたが、**種類の違う関数が混ざっても、外から順に傾きを掛けていけばよい**。中心の問いへ：**つなぎ方は、部品の種類を選ばない**。",
+        },
+      ],
+      formulaPreview: "y' = 3sin²2x·cos2x·2。x = π/6 で 6·(3/4)·(1/2) = 9/4",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "次の関数の $x = \\dfrac{\\pi}{4}$ における微分係数を求めましょう。\n\n$$y = \\frac{\\sin 2x}{1 + \\cos 2x}$$",
+      answer: 2,
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{4}$ における微分係数",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。step3 も商だった。今度は分子にも分母にも、三角関数の中に式が入っている。公式を押す前に、式そのものをよく見てみよう。",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、**分子・分母の両方が合成になった**こと $1$ つ。数Ⅱ・B で、角を $2$ 倍した三角関数について何を学んだか思い出してみよう。",
+        },
+        {
+          layer: 3,
+          text: "**道 1（公式で押す）**：[商の微分] と合成で $$y' = \\frac{2\\cos2x(1+\\cos2x) - \\sin2x\\cdot(-2\\sin2x)}{(1+\\cos2x)^2} = \\frac{2\\cos2x + 2(\\cos^22x+\\sin^22x)}{(1+\\cos2x)^2} = \\frac{2}{1+\\cos2x}$$ $x=\\dfrac\\pi4$ では $\\cos\\dfrac\\pi2 = 0$ なので $2$。**道 2（先に畳む）**：[2倍角の公式] で $\\sin2x = 2\\sin x\\cos x$、$1+\\cos2x = 2\\cos^2x$ なので $y = \\dfrac{2\\sin x\\cos x}{2\\cos^2x} = \\tan x$。$(\\tan x)' = \\dfrac1{\\cos^2x}$ で、$x=\\dfrac\\pi4$ では $\\dfrac{1}{1/2} = 2$。**同じ $2$ に着きました**。中心の問いに戻ると：**つなぎ方はそのまま効く。けれど、公式を押す前に式を見ると、つなぐまでもなく畳めることがある**。",
+        },
+      ],
+      formulaPreview: "道1：y' = 2/(1+cos2x) → 2。道2：y = tan x、y' = 1/cos²x → 2",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 新しい相手（$\\sin$・$\\cos$・$\\tan$）が来ても、第3章で手に入れた**つなぎ方**（積・商・合成）は、そのまま効く？
+
+────────
+
+## 部品とつなぎ方は、別々に手に入る
+
+微分の計算は、**部品**と**つなぎ方**でできている。部品は「$x^\\alpha$ の傾き」「$\\sin x$ の傾き」のような、ひとつの関数の導関数。つなぎ方は、第3章で作った [積の微分]・[商の微分]・[合成関数の微分法]。
+
+前の系列で、部品に $(\\sin x)'=\\cos x$、$(\\cos x)' = -\\sin x$、$(\\tan x)' = \\dfrac{1}{\\cos^2x}$ が加わった。**つなぎ方は、部品が何であるかを問わない**。だから新しい部品を差しこむだけで、三角関数を含む関数がすべて微分できる。
+
+## ここが胚細胞：部品が増えても、組み立て方は変わらない
+
+- 積：$(fg)' = f'g + fg'$（step1・2）
+- 商：$\\left(\\dfrac fg\\right)' = \\dfrac{f'g-fg'}{g^2}$（step3）
+- 合成：外の傾き × 中の傾き（step4〜9）
+
+合成では、**どちらが外でどちらが中かを見きわめる**ことが仕事になる。$\\sin(3x+\\cdots)$ は外が $\\sin$・中が $1$ 次式、$\\sin^4x$ は外が $4$ 乗・中が $\\sin x$（step6）。$3$ 重でも、外から順に傾きを掛けていけばよい（step9）。
+
+## 公式を押す前に、式を見る
+
+山場（step10）の $\\dfrac{\\sin2x}{1+\\cos2x}$ は、商と合成を組み合わせれば（分母が $0$ でないところで）微分できる。けれど [2倍角の公式] で書き直すと $\\tan x$ に畳めて、微分は一瞬で終わる。**$2$ 本の道が同じ値に着く**ことが、互いの検算になる。
+
+## Step の道筋
+
+- **step1〜2**：積——多項式と三角関数
+- **step3**：商——分子の引き算の順に注意
+- **step4〜5**：合成——三角関数の中に $1$ 次式（中の傾きを掛け忘れない）
+- **step6**：中と外が入れ替わる——多項式の中に三角関数
+- **step7**：傾きから中の係数を逆にたどる
+- **step8〜9**：外が根号／$3$ 重の入れ子
+- **step10（山場）**：公式で押す道と、先に畳む道
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 合成で「何を掛けるか」に迷ったら、$\\dfrac{dy}{dx} = \\dfrac{dy}{dt}\\cdot\\dfrac{dt}{dx}$ と分数のように書いてみる。かたまりに $t$ と名前を付ければ、外側と内側の傾きが自然に分かれる。積の公式を忘れたら、長方形のたてと横が同時に少し伸びるとき、面積の増え方が「たての増え方 × 横」と「たて × 横の増え方」の $2$ か所から来ることを思い出せばよい。
+
+**よくある取り違え。** ①**かたまりの微分を掛け忘れる**：$(\\sin3x)' = \\cos3x$ としてしまう。$x=0$ 付近でグラフを描けば、$y=\\sin3x$ は $y=\\sin x$ の $3$ 倍の速さで立ち上がるので、傾きも $3$ 倍のはずだと分かる。②**積を「それぞれ微分して掛ける」**：$(fg)'=f'g'$ は誤り（step1 で $0$ になってしまう）。③**商の分子の順を逆にする**：符号だけが変わるので、答えの符号で気づける（step3）。
+
+**この先の景色。** 次の系列からは、指数関数と対数関数という新しい部品が加わる。そのときも、つなぎ方は同じである。第5章では、三角関数を含む関数の最大・最小やグラフの山と谷を、ここで作った導関数から読む。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第4章の練習問題の構成（三角関数を含む積・商、三角関数を含む合成、3 重の入れ子）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+効く。第3章のつなぎ方は、**部品が何であるかを問わなかった**。$\\sin$・$\\cos$・$\\tan$ という新しい部品を差しこむだけで、積も商も合成も、そのまま組み立てられた。
+
+そして山場で見たとおり、**部品が微分できるところでは、つなぎ方がいつでも使える。だからこそ、使う前に式を見る**意味がある。畳めるものは畳んでから微分する——公式が消してくれるのは「解けないこと」ではなく、「定義まで戻る手間」である。`,
+};
+
 /** 「いろいろな関数の微分」ユニットの系列一覧（数Ⅲ・C 第4章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
   M3VD_TRIG_LIM_SERIES,
   M3VD_SUM_PROD_SERIES,
   M3VD_TRIG_DIFF_SERIES,
+  M3VD_TRIG_COMB_SERIES,
 ];

@@ -77,6 +77,7 @@ import {
   M3VD_TRIG_LIM_SERIES,
   M3VD_SUM_PROD_SERIES,
   M3VD_TRIG_DIFF_SERIES,
+  M3VD_TRIG_COMB_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -2010,6 +2011,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数の微分",
     shortDescription:
       "三角関数の微分（原点の傾きを全点へ）— $(\\sin x)'=\\cos x$。原点での傾き $1$ を和積の公式が運ぶ。角を度で測ると、その $1$ が $\\frac{\\pi}{180}$ に崩れる",
+  },
+  {
+    series: M3VD_TRIG_COMB_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数の微分",
+    shortDescription:
+      "三角関数と積・商・合成（道具の総動員）— 部品が三角関数に替わっても、第3章のつなぎ方はそのまま効く。公式を押す前に、畳める式は畳む",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
