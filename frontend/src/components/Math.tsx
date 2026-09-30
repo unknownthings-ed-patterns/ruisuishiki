@@ -15549,6 +15549,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_ADD_TWO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdAddTwo />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_SIN_DIFF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdSinDiff />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35449,6 +35463,98 @@ function M3vdSqueezeWalls() {
       <text x={cx + 10} y={top - 8} fontSize="13" fill={accent} fontWeight="600">?</text>
       <text x="180" y="208" fontSize="11" fill={accent} textAnchor="middle">
         2 枚の壁が同じ高さへ向かうとき、間の曲線はどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列2 step1: 加法定理 2 本を縦に並べ、4 つの項を枠に入れた図。
+ *  ★図に発見を描かない★ どの項が打ち消し合うか（印・矢印）は描かない。並べて見比べる枠だけ。 */
+function M3vdAddTwo() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const rows = [
+    { y: 46, lhs: "sin(α＋β)", t1: "sinα cosβ", op: "＋", t2: "cosα sinβ" },
+    { y: 102, lhs: "sin(α−β)", t1: "sinα cosβ", op: "−", t2: "cosα sinβ" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="加法定理の 2 本の式を上下に並べ、右辺の 2 つの項をそれぞれ枠で囲んだ図。どの項が残るか、どの項が消えるかの印は描かれていない"
+    >
+      {rows.map((r) => (
+        <g key={r.y}>
+          <text x="16" y={r.y + 5} fontSize="13" fill={stroke} fontStyle="italic">
+            {r.lhs}
+          </text>
+          <text x="104" y={r.y + 5} fontSize="13" fill={muted}>
+            ＝
+          </text>
+          <rect x="124" y={r.y - 16} width="92" height="30" rx="5" fill="none" stroke={accent} strokeWidth="1.4" />
+          <text x="170" y={r.y + 5} fontSize="12.5" fill={stroke} textAnchor="middle" fontStyle="italic">
+            {r.t1}
+          </text>
+          <text x="230" y={r.y + 5} fontSize="14" fill={stroke} textAnchor="middle">
+            {r.op}
+          </text>
+          <rect x="244" y={r.y - 16} width="92" height="30" rx="5" fill="none" stroke={accent} strokeWidth="1.4" />
+          <text x="290" y={r.y + 5} fontSize="12.5" fill={stroke} textAnchor="middle" fontStyle="italic">
+            {r.t2}
+          </text>
+        </g>
+      ))}
+      <text x="180" y="156" fontSize="11" fill={accent} textAnchor="middle">
+        2 本を足すと、どの枠が残る？ 引くと？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列2 step6（質的変化）: y = sin x の上の 2 点 x と x+h と、その高さの差。
+ *  ★層8★ 高さの差の値も、それが何の積になるかも書かない。目盛りなし。差は「?」のまま。 */
+function M3vdSinDiff() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 28;
+  const y0 = 110;
+  const sx = 46;
+  const sy = 58;
+  const X = (u: number) => x0 + u * sx;
+  const Y = (v: number) => y0 - v * sy;
+  const pts = Array.from({ length: 141 }, (_, k) => (6.8 * k) / 140);
+  const d = pts.map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.sin(u)).toFixed(1)}`).join(" ");
+  const a = 0.35;
+  const b = 1.55;
+  return (
+    <svg
+      viewBox="0 0 360 212"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="正弦の波の上に 2 点をとった図。左の点の横の位置が x、右の点が x＋h。2 点の高さの差が縦の線で示され、その大きさは疑問符。目盛りも値も無い模式の図"
+    >
+      <path d={`M 16 ${y0} L 344 ${y0}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={d} fill="none" stroke={stroke} strokeWidth="1.5" />
+      {/* 2 点 */}
+      <circle cx={X(a)} cy={Y(Math.sin(a))} r="3.2" fill={accent} />
+      <circle cx={X(b)} cy={Y(Math.sin(b))} r="3.2" fill={accent} />
+      <path d={`M ${X(a)} ${y0} L ${X(a)} ${Y(Math.sin(a))}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d={`M ${X(b)} ${y0} L ${X(b)} ${Y(Math.sin(b))}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      {/* 高さの差（右の点の縦線上で、左の点の高さまで） */}
+      <path d={`M ${X(a)} ${Y(Math.sin(a))} L ${X(b) + 10} ${Y(Math.sin(a))}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="2 3" />
+      <path d={`M ${X(b) + 10} ${Y(Math.sin(a))} L ${X(b) + 10} ${Y(Math.sin(b))}`} fill="none" stroke={accent} strokeWidth="2" />
+      <text x={X(b) + 18} y={(Y(Math.sin(a)) + Y(Math.sin(b))) / 2 + 4} fontSize="13" fill={accent} fontWeight="600">
+        ?
+      </text>
+      <text x={X(a)} y={y0 + 16} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">x</text>
+      <text x={X(b)} y={y0 + 16} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">x＋h</text>
+      <text x="180" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        2 点の高さの差は、どんな形に書きかえられる？
       </text>
     </svg>
   );

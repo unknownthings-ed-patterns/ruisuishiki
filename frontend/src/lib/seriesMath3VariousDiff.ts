@@ -386,6 +386,377 @@ $\\dfrac{\\sin t}{t}$ の $\\dfrac00$ は、約分や有理化のような式の
 弦と弧は、$t$ が $0$ に近づくとき、**比が $1$ に向かうほど近づく**。その近さは、角を弧の長さで測ったからこそ言える。そして、その $1$ つの事実が、形をそろえるだけで多くの極限を決め、曲線の曲がり具合まで決めてしまった。`,
 };
 
+/** M3VD2: 和積の公式——差を積に。
+ *  加法定理 2 本を足し引きするだけで、和と積が行き来する（原典 p.118〜120・「忘れても導ける」）。
+ *  step1→4 は「和 → 差 → 角 A,B で差 → cos の差」と、差異を 1 つずつ動かす。
+ *  質的変化 step6 は「数から文字へ」＝ sin(x+h) − sin x を積に直す（次の系列 (sin x)' の分子そのもの）。
+ *  山場 step10 は sin(x+c) − sin x の最大値。素朴な読み「1 − (−1) = 2」が外れる（Q1 の②）。
+ *  Round 1 F2：初稿の山場「積に直すと特殊角になる組」は手間の差が無かった（A=U+V・B=U−V で加法定理 1 回）ので型を替えた。
+ *  実装時の変更：背骨の山場「sin x + sin(x+c)」を「sin(x+c) − sin x」にした（step6 からの差異を 1 つに保つため・背骨 §9 に記録）。 */
+export const M3VD_SUM_PROD_SERIES: LearnerSeries = {
+  id: "math3_vd_sumprod_01",
+  title: "和積の公式——差を積に",
+  subtitle:
+    "数Ⅲ・C いろいろな関数の微分より — 加法定理を 2 本並べて足し引きするだけで、$\\sin$ の和や差が積に、積が和に変わる。$10$ 問で、その行き来と、差を積にすると何が取り出せるかを見る。",
+  patternId: "M3VD2",
+  unit: "math_3",
+  revelationLabel:
+    "**差を積に書きかえると、$\\sin(x+h)-\\sin x$ の中から $\\sin\\dfrac h2$ という小さいかたまりが取り出せる**。$h$ が $0$ に近づくとき、そのかたまりが主役になる——次の系列で微分の定義の分子になる形",
+  drivingQuestion:
+    "$\\sin$ の**差**を**積**に書きかえると、何がうれしい？——微分の定義の分子が、ちょうど「差」の形をしているとしたら？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "数Ⅱ・B の [加法定理] を $2$ 本並べます。\n\n$$\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$$\n$$\\sin(\\alpha-\\beta) = \\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$$\n\n$\\alpha = \\dfrac{\\pi}{3}$、$\\beta = \\dfrac{\\pi}{4}$ のとき、$2$ 本を**展開したまま足して**、\n\n$$\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)$$\n\nの値を求めましょう。",
+      answer: Math.sqrt(6) / 2,
+      answerDisplay: "√6/2",
+      unit: "",
+      unknownLabel: "$\\sin\\dfrac{7\\pi}{12} + \\sin\\dfrac{\\pi}{12}$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "[加法定理] の $2$ 本を見比べてみよう。右辺はどちらも $2$ つの項でできている。**足したとき**、どの項が生き残りそうだろう？",
+        },
+        {
+          layer: 2,
+          text: "$2$ 本の右辺で、**同じ形の項**と、**符号だけが逆の項**があるはず。足したあとに残るのはどちらの形？",
+        },
+        {
+          layer: 3,
+          text: "$2$ 本を足すと $\\cos\\alpha\\sin\\beta$ の項が打ち消し合い、$$\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta) = 2\\sin\\alpha\\cos\\beta$$ が残ります。$\\alpha=\\dfrac\\pi3$、$\\beta=\\dfrac\\pi4$ なら $2 \\cdot \\dfrac{\\sqrt3}{2} \\cdot \\dfrac{\\sqrt2}{2} = \\dfrac{\\sqrt6}{2}$。左辺は $\\sin\\dfrac{7\\pi}{12}+\\sin\\dfrac{\\pi}{12}$ で、どちらも表に無い角なのに、**足した結果は表にある角だけで書けた**。中心の問いへの最初の部分回答：**$2$ つの $\\sin$ の和が、$1$ つの積に化けた**。",
+        },
+      ],
+      formulaPreview: "sin(α+β)+sin(α−β) = 2 sinα cosβ = 2·(√3/2)·(√2/2) = √6/2",
+      figureMarker: "<<M3VD_ADD_TWO>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題と同じ $2$ 本を、こんどは**引きます**。$\\alpha = \\dfrac{2\\pi}{3}$、$\\beta = \\dfrac{\\pi}{4}$ のとき、\n\n$$\\sin(\\alpha+\\beta) - \\sin(\\alpha-\\beta)$$\n\nの値を求めましょう。",
+      answer: -Math.SQRT2 / 2,
+      answerDisplay: "−√2/2",
+      unit: "",
+      unknownLabel: "$\\sin\\dfrac{11\\pi}{12} - \\sin\\dfrac{5\\pi}{12}$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？ 前題で「足すと消えた」項は、引いたときも消えるだろうか。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**足すが引くになった**こと $1$ つ。引いたとき、$2$ 本の右辺のどちらの形の項が残る？",
+        },
+        {
+          layer: 3,
+          text: "前題では $\\cos\\alpha\\sin\\beta$ の項が消えました。引くと今度は $\\sin\\alpha\\cos\\beta$ の項が消えて $$\\sin(\\alpha+\\beta)-\\sin(\\alpha-\\beta) = 2\\cos\\alpha\\sin\\beta$$ $\\alpha=\\dfrac{2\\pi}3$、$\\beta=\\dfrac\\pi4$ なら $2 \\cdot \\left(-\\dfrac12\\right) \\cdot \\dfrac{\\sqrt2}{2} = -\\dfrac{\\sqrt2}{2}$。中心の問いへ：**差も積に化ける**。化けるのは、加法定理の $2$ 本が「同じ項」と「符号だけ逆の項」でできているからでした。",
+        },
+      ],
+      formulaPreview: "sin(α+β)−sin(α−β) = 2 cosα sinβ = 2·(−1/2)·(√2/2) = −√2/2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "前題までは $\\alpha$ と $\\beta$ が先に与えられていました。こんどは、**引き算する $2$ つの角 $A$、$B$ のほう**が与えられます。$\\alpha+\\beta = A$、$\\alpha-\\beta = B$ となる $\\alpha$、$\\beta$ を考えて、\n\n$$\\sin\\frac{13\\pi}{12} - \\sin\\frac{7\\pi}{12}$$\n\nの値を求めましょう。",
+      answer: -Math.sqrt(6) / 2,
+      answerDisplay: "−√6/2",
+      unit: "",
+      unknownLabel: "$\\sin\\dfrac{13\\pi}{12} - \\sin\\dfrac{7\\pi}{12}$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。求めるものの形は同じ「$\\sin$ − $\\sin$」。違うのは、何が先に与えられているか。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**与えられたのが $\\alpha,\\beta$ ではなく、引き算する $2$ つの角そのもの**になったこと $1$ つ。前題の式に出てきた $\\alpha$ と $\\beta$ は、今度の問題では何にあたるだろう？",
+        },
+        {
+          layer: 3,
+          text: "前題では $\\sin(\\alpha+\\beta)-\\sin(\\alpha-\\beta) = 2\\cos\\alpha\\sin\\beta$ でした。今度は $A=\\alpha+\\beta$、$B=\\alpha-\\beta$ から $\\alpha = \\dfrac{A+B}{2}$、$\\beta = \\dfrac{A-B}{2}$。つまり $$\\sin A - \\sin B = 2\\cos\\frac{A+B}{2}\\sin\\frac{A-B}{2}$$ ここでは $\\dfrac{A+B}{2} = \\dfrac{5\\pi}{6}$、$\\dfrac{A-B}{2} = \\dfrac{\\pi}{4}$ なので $2 \\cdot \\left(-\\dfrac{\\sqrt3}2\\right) \\cdot \\dfrac{\\sqrt2}{2} = -\\dfrac{\\sqrt6}{2}$。**2 本目の道**：$\\dfrac{13\\pi}{12} = \\dfrac{5\\pi}{6}+\\dfrac{\\pi}{4}$、$\\dfrac{7\\pi}{12} = \\dfrac{5\\pi}{6}-\\dfrac{\\pi}{4}$ と分けて [加法定理] で $1$ 項ずつ出しても、同じ値に着きます——それは前題をそのままなぞることです。中心の問いへ：**差を積に直す公式は、前題の式を「角の名前を付けかえて」読んだものにすぎない**。",
+        },
+      ],
+      formulaPreview: "sinA − sinB = 2 cos{(A+B)/2} sin{(A−B)/2} = 2·cos(5π/6)·sin(π/4) = −√6/2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "こんどは $\\cos$ の差です。数Ⅱ・B の [加法定理]\n\n$$\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta, \\qquad \\cos(\\alpha-\\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$$\n\nを使って、次の値を求めましょう。\n\n$$\\cos\\frac{17\\pi}{12} - \\cos\\frac{11\\pi}{12}$$",
+      answer: Math.SQRT2 / 2,
+      answerDisplay: "√2/2",
+      unit: "",
+      unknownLabel: "$\\cos\\dfrac{17\\pi}{12} - \\cos\\dfrac{11\\pi}{12}$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題の道筋のうち、何がそのまま使えて、どこに気をつける？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$\\sin$ の差が $\\cos$ の差になった**こと $1$ つ。$\\sin$ と $\\cos$ の [加法定理] で、右辺の符号の並びは同じだっただろうか。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos$ の $2$ 本を**引く**と、$\\cos\\alpha\\cos\\beta$ が消えて $$\\cos(\\alpha+\\beta)-\\cos(\\alpha-\\beta) = -2\\sin\\alpha\\sin\\beta$$ **先頭にマイナスが付きます**。前題と同じく名前を付けかえて $\\cos A-\\cos B = -2\\sin\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$。$A=\\dfrac{17\\pi}{12}$、$B=\\dfrac{11\\pi}{12}$ なら $\\dfrac{A+B}2 = \\dfrac{7\\pi}{6}$、$\\dfrac{A-B}2 = \\dfrac{\\pi}{4}$ なので $-2 \\cdot \\left(-\\dfrac12\\right) \\cdot \\dfrac{\\sqrt2}{2} = \\dfrac{\\sqrt2}{2}$。先頭のマイナスを落とすと $-\\dfrac{\\sqrt2}{2}$ になり、符号が逆の別の値になります。中心の問いへ：**$\\cos$ の差も積に化ける。ただし、符号を連れてくる**。",
+        },
+      ],
+      formulaPreview: "cosA − cosB = −2 sin{(A+B)/2} sin{(A−B)/2} = −2·sin(7π/6)·sin(π/4) = √2/2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "こんどは向きが逆です。**積を和（差）に**直します。\n\n$$\\sin 4\\theta \\cos 7\\theta = \\frac12\\left(\\sin p\\theta - \\sin q\\theta\\right)$$\n\nがすべての $\\theta$ で成り立つように、正の整数 $p$、$q$（$p > q$）を決めます。$p$ の値を求めましょう。",
+      answer: 11,
+      unit: "",
+      unknownLabel: "$p$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。step1 は和を積にした。今度は**積のほうが先に**ある。同じ $2$ 本の式を、どちら向きに読めばいい？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、**矢印の向き**だけ。step1 で出てきた「$2\\sin\\alpha\\cos\\beta$」は、何と何の和だった？",
+        },
+        {
+          layer: 3,
+          text: "step1 の式 $\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta) = 2\\sin\\alpha\\cos\\beta$ を**右から左へ**読むと $$\\sin\\alpha\\cos\\beta = \\frac12\\left\\{\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta)\\right\\}$$ $\\alpha = 4\\theta$、$\\beta = 7\\theta$ なら $\\alpha-\\beta = -3\\theta$ で、$\\sin(-3\\theta) = -\\sin3\\theta$。よって $\\sin4\\theta\\cos7\\theta = \\dfrac12(\\sin11\\theta - \\sin3\\theta)$、$p = 11$。中心の問いへ：**和と積は、同じ式の表と裏**。どちら向きにも読める。",
+        },
+      ],
+      formulaPreview: "sin4θ cos7θ = ½{sin11θ + sin(−3θ)} = ½(sin11θ − sin3θ)、p = 11",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "ここから、**数ではなく文字**で和積を使います。\n\n$$\\sin\\left(x + \\frac{2\\pi}{3}\\right) - \\sin x = a\\cos\\left(x + \\frac{\\pi}{3}\\right)$$\n\nが**すべての $x$ で**成り立つような定数 $a$ の値を求めましょう。",
+      answer: Math.sqrt(3),
+      answerDisplay: "√3",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。step3 では $2$ つの角がどちらも数だった。今度は角に $x$ が入っている。step3 の道筋は、角が文字でも通るだろうか？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、**角に $x$ が入った**こと $1$ つ（だから答えは「$1$ つの値」ではなく「すべての $x$ で成り立つ係数」になる）。step3 の式の中で、$x$ を含むのはどの部分になりそうだろう？",
+        },
+        {
+          layer: 3,
+          text: "step3 の形 $\\sin A - \\sin B = 2\\cos\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$ で $A = x+\\dfrac{2\\pi}3$、$B = x$ とすると $\\dfrac{A+B}2 = x+\\dfrac\\pi3$、$\\dfrac{A-B}2 = \\dfrac\\pi3$ なので $$\\sin\\left(x+\\frac{2\\pi}{3}\\right)-\\sin x = 2\\sin\\frac{\\pi}{3}\\cos\\left(x+\\frac{\\pi}{3}\\right) = \\sqrt3\\cos\\left(x+\\frac{\\pi}{3}\\right)$$ $a = \\sqrt3$。**へだたりの半分 $\\dfrac{\\pi}{3}$ が、$\\sin$ の中に取り出された**。中心の問いへの答えの芯：**差を積にすると、$2$ つの角の「へだたり」だけでできた因子が外に出る**。へだたりが小さくなれば、その因子も小さくなる。",
+        },
+      ],
+      formulaPreview: "sinA − sinB = 2cos{(A+B)/2} sin{(A−B)/2}。A=x+2π/3, B=x で 2 sin(π/3) cos(x+π/3)、a = √3",
+      figureMarker: "<<M3VD_SIN_DIFF>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$$\\cos\\left(x + \\frac{\\pi}{2}\\right) - \\cos x = b\\sin\\left(x + \\frac{\\pi}{4}\\right)$$\n\nが**すべての $x$ で**成り立つような定数 $b$ の値を求めましょう。",
+      answer: -Math.SQRT2,
+      answerDisplay: "−√2",
+      unit: "",
+      unknownLabel: "$b$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$\\sin$ の差が $\\cos$ の差になった。前題の道筋のどこに、気をつけるところが増える？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$\\cos$ の差**になったこと $1$ つ。step4 で、$\\cos$ の差だけが連れてきたものがあった。",
+        },
+        {
+          layer: 3,
+          text: "step4 と同じく $\\cos A - \\cos B = -2\\sin\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$。$A = x+\\dfrac\\pi2$、$B=x$ なら $\\dfrac{A+B}2 = x+\\dfrac\\pi4$、$\\dfrac{A-B}2 = \\dfrac\\pi4$ なので $$\\cos\\left(x+\\frac\\pi2\\right)-\\cos x = -2\\sin\\frac\\pi4\\sin\\left(x+\\frac\\pi4\\right) = -\\sqrt2\\sin\\left(x+\\frac\\pi4\\right)$$ $b = -\\sqrt2$。**検算**：$x=0$ を入れると左辺は $0-1 = -1$、右辺は $-\\sqrt2 \\cdot \\dfrac{\\sqrt2}{2} = -1$。中心の問いへ：**$\\cos$ の差でも、へだたりの半分が因子として外に出る**。",
+        },
+      ],
+      formulaPreview: "cosA − cosB = −2 sin{(A+B)/2} sin{(A−B)/2}。−2 sin(π/4) sin(x+π/4)、b = −√2",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "方程式\n\n$$\\sin 5x - \\sin x = 0 \\qquad (0 \\le x < \\pi)$$\n\nの解は何個ありますか。",
+      answer: 4,
+      unit: "個",
+      unknownLabel: "解の個数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。step6 は $\\sin$ の差を積に書きかえて係数を読んだ。今度は「差 $=0$」の方程式。積に書きかえた形は、方程式を解くうえで何の役に立つだろう？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、**式が「$=0$」の方程式になった**こと $1$ つ。step6 で書きかえた形の、どんな性質が方程式を解くときに効きそうだろう？",
+        },
+        {
+          layer: 3,
+          text: "step6 と同じく差を積にすると $$\\sin5x-\\sin x = 2\\cos3x\\sin2x$$ 積が $0$ なので、$\\cos3x = 0$ または $\\sin2x = 0$。$0\\le x<\\pi$ では、$\\cos3x=0$ から $x = \\dfrac\\pi6,\\ \\dfrac\\pi2,\\ \\dfrac{5\\pi}6$（$3x$ は $0\\le3x<3\\pi$）、$\\sin2x=0$ から $x = 0,\\ \\dfrac\\pi2$（$2x$ は $0\\le2x<2\\pi$）。**$x=\\dfrac\\pi2$ は両方に出てくる**ので $1$ 回だけ数え、$0,\\ \\dfrac\\pi6,\\ \\dfrac\\pi2,\\ \\dfrac{5\\pi}6$ の $4$ 個。二重に数えると $5$ 個になってしまいます。中心の問いへ：**差のままでは手の出ない方程式が、積にすると「どちらかが $0$」に割れる**。",
+        },
+      ],
+      formulaPreview: "sin5x − sin x = 2 cos3x sin2x = 0 → x = 0, π/6, π/2, 5π/6（π/2 は重なり）の 4 個",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$3$ つの積\n\n$$\\sin x \\sin 3x \\sin 4x$$\n\nを、$\\sin$ の項だけの和（差）\n\n$$c_1\\sin 2x + c_2\\sin 6x + c_3 \\sin 8x$$\n\nの形に直します。$c_3$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: -0.25,
+      answerDisplay: "−1/4",
+      unit: "",
+      unknownLabel: "$c_3$（$\\sin 8x$ の係数）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "step5 と比べてみよう。step5 は $2$ つの積を和にした。今度は $3$ つの積。step5 の手つきを、何回使えば届くだろう？",
+        },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、**積の数が $2$ つから $3$ つに増えた**こと $1$ つ。step5 の手つきは、一度にいくつの積を相手にしていた？",
+        },
+        {
+          layer: 3,
+          text: "まず $\\sin x\\sin3x$ を和にします。step4 の $\\cos$ の $2$ 本を引いた式から $\\sin\\alpha\\sin\\beta = -\\dfrac12\\{\\cos(\\alpha+\\beta)-\\cos(\\alpha-\\beta)\\}$ なので $$\\sin x\\sin3x = \\frac12(\\cos2x - \\cos4x)$$ これに $\\sin4x$ を掛けると $\\dfrac12(\\sin4x\\cos2x - \\sin4x\\cos4x)$。ここで step5 の形 $\\sin\\alpha\\cos\\beta = \\dfrac12\\{\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta)\\}$ をもう一度使うと $$\\sin4x\\cos2x = \\frac12(\\sin6x+\\sin2x), \\qquad \\sin4x\\cos4x = \\frac12\\sin8x$$ よって全体は $\\dfrac14\\sin2x + \\dfrac14\\sin6x - \\dfrac14\\sin8x$、$c_3 = -\\dfrac14$。中心の問いへ：**積をいくつ重ねても、同じ手つきを繰り返せば和に戻せる**。",
+        },
+      ],
+      formulaPreview: "sinx sin3x = ½(cos2x − cos4x)。×sin4x → ¼ sin2x + ¼ sin6x − ¼ sin8x、c₃ = −1/4",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$\\sin\\left(x + \\dfrac{\\pi}{3}\\right)$ と $\\sin x$ は、どちらも $-1$ から $1$ までの値をとる波です。その**差**\n\n$$y = \\sin\\left(x + \\frac{\\pi}{3}\\right) - \\sin x$$\n\nの最大値を求めましょう。",
+      answer: 1,
+      unit: "",
+      unknownLabel: "$y$ の最大値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。step6 は差を $1$ つの項にまとめて係数を読んだ。今度は最大値。そもそも、$-1$ から $1$ までの波どうしの差は、$1-(-1)=2$ まで大きくなれるだろうか？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、**問われているのが係数ではなく最大値**になったこと $1$ つ。step6 で出てきた形の、どの部分が $y$ の大きさを決めていそうだろう？",
+        },
+        {
+          layer: 3,
+          text: "step6 と同じく差を積にすると、$A = x+\\dfrac{\\pi}3$、$B = x$ で $\\dfrac{A+B}2 = x+\\dfrac\\pi6$、$\\dfrac{A-B}2 = \\dfrac\\pi6$ なので $$y = 2\\sin\\frac{\\pi}{6}\\,\\cos\\left(x+\\frac{\\pi}{6}\\right) = \\cos\\left(x+\\frac{\\pi}{6}\\right)$$ 最大値は $1$。**$1-(-1)=2$ にはなりません**。$2$ つの波のへだたりが $\\dfrac\\pi3$ しかないので、片方が山のとき、もう片方は谷の近くにいないからです。**2 本目の道**：数Ⅱ・B の [三角関数の合成] で $y = \\dfrac12\\sin x+\\dfrac{\\sqrt3}2\\cos x - \\sin x = -\\dfrac12\\sin x+\\dfrac{\\sqrt3}{2}\\cos x$ とまとめても、振幅は $\\sqrt{\\left(\\dfrac12\\right)^2+\\left(\\dfrac{\\sqrt3}2\\right)^2} = 1$ で同じ値に着きます。中心の問いに戻ると：**差を積に直すと、$2$ つの波の「へだたり」が $2\\sin\\dfrac{A-B}{2}$ という $1$ つの数になって、差の大きさを決めていた**。",
+        },
+      ],
+      formulaPreview: "sin(x+π/3) − sin x = 2 sin(π/6) cos(x+π/6) = cos(x+π/6)、最大値 1",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $\\sin$ の**差**を**積**に書きかえると、何がうれしい？——微分の定義の分子が、ちょうど「差」の形をしているとしたら？
+
+────────
+
+## 公式は 2 本の加法定理から生える
+
+[加法定理] の $\\sin$ の $2$ 本
+
+$$\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta, \\qquad \\sin(\\alpha-\\beta) = \\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$$
+
+は、右辺が「**同じ項**」と「**符号だけ逆の項**」でできている。だから足せば一方が、引けばもう一方が消える。
+
+$$\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta) = 2\\sin\\alpha\\cos\\beta, \\qquad \\sin(\\alpha+\\beta)-\\sin(\\alpha-\\beta) = 2\\cos\\alpha\\sin\\beta$$
+
+$\\cos$ の $2$ 本も同じで、足すと $2\\cos\\alpha\\cos\\beta$、引くと $-2\\sin\\alpha\\sin\\beta$。**この $4$ 本が、和積の公式の原型のすべてである**（step1・2・4）。
+
+## 角の名前を付けかえると、和や差を積に直す公式になる
+
+$\\alpha+\\beta = A$、$\\alpha-\\beta = B$ と名前を付けかえると $\\alpha = \\dfrac{A+B}{2}$、$\\beta = \\dfrac{A-B}{2}$。原型に戻すと
+
+$$\\sin A-\\sin B = 2\\cos\\frac{A+B}{2}\\sin\\frac{A-B}{2}, \\qquad \\cos A-\\cos B = -2\\sin\\frac{A+B}{2}\\sin\\frac{A-B}{2}$$
+
+など $4$ 本の [和積の公式] になる（step3・4）。**新しい事実は何も増えていない**。原型を、角の名前を替えて読んだだけである。
+
+## 表と裏——積を和に戻す
+
+原型を右から左へ読めば、積が和になる（積和の公式・step5）。$3$ つの積も、この手つきを $2$ 回繰り返せば和に戻る（step9）。**和と積は、同じ式の表と裏**である。
+
+## ここが胚細胞：差を積にすると、へだたりが因子として外に出る
+
+$\\sin A - \\sin B = 2\\cos\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$ の右辺には、$2$ つの角の**平均** $\\dfrac{A+B}{2}$ と、**へだたりの半分** $\\dfrac{A-B}{2}$ が、別々の因子として並んでいる。
+
+$A = x+h$、$B = x$ とおけば
+
+$$\\sin(x+h)-\\sin x = 2\\cos\\left(x+\\frac h2\\right)\\sin\\frac h2$$
+
+$h$ が小さいとき、$\\sin\\dfrac h2$ は小さく、しかも前の系列で [三角関数の極限] を調べた、**まさにその形**をしている（step6・7）。**差のままでは見えなかった「小さいかたまり」が、積にすると取り出せる。**これが、次の系列で $\\sin x$ を微分するときの鍵になる。
+
+## Step の道筋
+
+- **step1〜2**：加法定理 $2$ 本を足すと和が、引くと差が、積に化ける
+- **step3〜4**：角の名前を付けかえて、差を積に直す（$\\cos$ の差は符号を連れてくる）
+- **step5**：逆向き——積を和に
+- **step6〜7**：数から文字へ——へだたりの半分が因子として外に出る
+- **step8〜9**：方程式を「積 $=0$」に割る（重なる解に注意）／$3$ つの積を和に戻す
+- **step10（山場）**：$-1$ から $1$ までの波どうしの差でも、最大値は $2$ にならない
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 和積の公式は $4$ 本×$2$ 向きで $8$ 本あり、似ているが少しずつ違う。丸暗記は大変だが、**[加法定理] の $2$ 本を並べて足すか引くか**すれば、その場で原型が出る。あとは $\\alpha = \\dfrac{A+B}{2}$、$\\beta = \\dfrac{A-B}{2}$ と名前を付けかえるだけ。覚えておくのは「$2$ 本を並べる」という手つきのほうである。
+
+**よくある取り違え——$\\sin A-\\sin B = \\sin(A-B)$ ではない。** $\\sin$ は「角に掛ける数」ではなく、角を値に変える**はたらき**なので、引き算を中へ配れない。$A=\\dfrac{\\pi}{2}$、$B=-\\dfrac{\\pi}{2}$ なら左辺は $1-(-1)=2$、右辺は $\\sin\\pi = 0$ で、数を入れると食い違いが見える。**もう $1$ つの取り違え**は $\\cos A - \\cos B$ の先頭のマイナスを落とすこと。落とすと符号が逆の値になる（step4）。
+
+**波を足し引きすると、へだたりが大きさを決める。** step10 で見たとおり、同じ大きさの $2$ つの波の差の大きさは $2\\left|\\sin\\dfrac{A-B}{2}\\right|$ 倍になる。へだたりが $0$ なら打ち消し合って $0$、へだたりが半周なら $2$ 倍。和なら逆に $2\\left|\\cos\\dfrac{A-B}{2}\\right|$ 倍になる。少しだけ周期のちがう $2$ つの音を重ねると、音が大きくなったり小さくなったりをゆっくり繰り返す「**うなり**」が聞こえるのは、和を積に直すと $\\cos\\dfrac{A-B}{2}$ がゆっくり変わる因子として現れるからである。
+
+**この先の景色。** 次の系列で、$\\sin(x+h)-\\sin x$ を積に直した形から $(\\sin x)' = \\cos x$ が出る。第6章の積分では、逆向きの積和の公式が $\\sin mx\\cos nx$ の積分を和の積分に直す。大学では、波をいくつもの $\\sin$・$\\cos$ の和に分けるフーリエ解析の、土台の $1$ つになる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第4章「和積の公式」の構成（三角関数の微分の準備として、加法定理 $4$ 本を足し引きして原型を作り、角の名前を付けかえて和積・積和に進む順序）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$\\sin$ の差を積に書きかえると、$2$ つの角の**平均**と**へだたりの半分**が、別々の因子として並ぶ。差のままでは混ざっていた $2$ つの情報が、積にすると分かれて見える。
+
+とくに $\\sin(x+h)-\\sin x$ では、へだたりの半分 $\\dfrac h2$ が $\\sin\\dfrac h2$ という因子になって外に出た。$h$ を $0$ に近づけたいとき、その因子こそが主役になる——**微分の定義の分子が「差」の形をしているから、差を積にする公式が、微分への道を開く**。`,
+};
+
 /** 「いろいろな関数の微分」ユニットの系列一覧（数Ⅲ・C 第4章・背骨の順）。
  *  実装が進むごとに追加する。 */
-export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [M3VD_TRIG_LIM_SERIES];
+export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
+  M3VD_TRIG_LIM_SERIES,
+  M3VD_SUM_PROD_SERIES,
+];
