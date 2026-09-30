@@ -15563,6 +15563,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_SIN_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdSinTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_DEG_RAD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdDegRad />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35555,6 +35569,96 @@ function M3vdSinDiff() {
       <text x={X(b)} y={y0 + 16} fontSize="11" fill={stroke} textAnchor="middle" fontStyle="italic">x＋h</text>
       <text x="180" y="204" fontSize="11" fill={accent} textAnchor="middle">
         2 点の高さの差は、どんな形に書きかえられる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列3 step1: y = sin x の上の 1 点での接線。傾きは「?」。
+ *  ★層8 の補足★ y = cos x のグラフは描かない（傾きと cos の値の対応は、この系列の発見そのもの）。原点の接線（傾き 1）だけは既習として描く。 */
+function M3vdSinTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x0 = 40;
+  const y0 = 100;
+  const sx = 42;
+  const sy = 58;
+  const X = (u: number) => x0 + u * sx;
+  const Y = (v: number) => y0 - v * sy;
+  const us = Array.from({ length: 141 }, (_, k) => -0.6 + (7.2 * k) / 140);
+  const d = us.map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.sin(u)).toFixed(1)}`).join(" ");
+  const a = 2.25;
+  const m = Math.cos(a);
+  const t1 = a - 0.8;
+  const t2 = a + 0.8;
+  return (
+    <svg
+      viewBox="0 0 360 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="正弦の波の上に 1 点をとり、そこでの接線を引いた図。接線の傾きは疑問符。原点には傾き 1 の短い接線が淡くかかれている。目盛りは無い模式の図"
+    >
+      <path d={`M 16 ${y0} L 344 ${y0}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${x0} 176 L ${x0} 24`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={d} fill="none" stroke={stroke} strokeWidth="1.5" />
+      {/* 原点での接線（既習：傾き 1） */}
+      <path d={`M ${X(-0.5)} ${Y(-0.5)} L ${X(0.5)} ${Y(0.5)}`} fill="none" stroke={muted} strokeWidth="1.3" strokeDasharray="4 3" />
+      <text x={X(0.12)} y={y0 + 22} fontSize="10.5" fill={muted}>原点で傾き 1</text>
+      {/* 点 a での接線 */}
+      <path d={`M ${X(t1)} ${Y(Math.sin(a) + m * (t1 - a))} L ${X(t2)} ${Y(Math.sin(a) + m * (t2 - a))}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={X(a)} cy={Y(Math.sin(a))} r="3.4" fill={accent} />
+      <text x={X(t1) - 6} y={Y(Math.sin(a) + m * (t1 - a)) - 8} fontSize="12" fill={accent} fontWeight="600" textAnchor="end">傾き ?</text>
+      <text x="180" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        原点で分かった「傾き 1」から、この点の傾きは分かるだろうか？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列3 step7（質的変化）: 同じ正弦の山を、横軸を「度」と「ラジアン」で描いた 2 枚。
+ *  ★層8★ 原点での傾きの値は書かない（? のまま）。★Round 1 I5★ 横軸の目盛りの幅が違うので、画面上の傾きと
+ *  数値の微分係数が一致しないことを図中に書く（2 枚は横方向の縮尺を変えて同じ幅に描いている）。 */
+function M3vdDegRad() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panels = [
+    { x0: 24, label: "横軸：ラジアン", end: "π" },
+    { x0: 196, label: "横軸：度", end: "180" },
+  ];
+  const w = 140;
+  const y0 = 120;
+  const hgt = 70;
+  return (
+    <svg
+      viewBox="0 0 360 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="同じ正弦の山を 2 枚並べた図。左は横軸をラジアン、右は横軸を度で測っていて、右端の目盛りはそれぞれ π と 180。どちらも原点に接線がかかれ、その傾きは疑問符。2 枚は横方向の縮尺を変えて同じ幅に描いてあり、画面上の傾きは数値の傾きと一致しないことが注記されている"
+    >
+      {panels.map((p) => {
+        const pts = Array.from({ length: 61 }, (_, k) => k / 60);
+        const d = pts.map((q, k) => `${k === 0 ? "M" : "L"} ${(p.x0 + q * w).toFixed(1)} ${(y0 - hgt * Math.sin(Math.PI * q)).toFixed(1)}`).join(" ");
+        return (
+          <g key={p.label}>
+            <path d={`M ${p.x0 - 6} ${y0} L ${p.x0 + w + 6} ${y0}`} fill="none" stroke={muted} strokeWidth="1" />
+            <path d={d} fill="none" stroke={stroke} strokeWidth="1.5" />
+            <path d={`M ${p.x0} ${y0} L ${p.x0 + 34} ${y0 - 34 * (hgt * Math.PI) / w}`} fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="4 3" />
+            <text x={p.x0 + 18} y={y0 - 34 * (hgt * Math.PI) / w - 6} fontSize="12" fill={accent} fontWeight="600" textAnchor="end">?</text>
+            <text x={p.x0} y={y0 + 14} fontSize="10" fill={muted} textAnchor="middle">0</text>
+            <text x={p.x0 + w} y={y0 + 14} fontSize="10" fill={muted} textAnchor="middle">{p.end}</text>
+            <text x={p.x0 + w / 2} y={y0 + 32} fontSize="10.5" fill={stroke} textAnchor="middle">{p.label}</text>
+          </g>
+        );
+      })}
+      <text x="180" y="176" fontSize="9.5" fill={muted} textAnchor="middle">
+        2 枚は横の縮尺を変えて同じ幅にかいてある（画面の傾きは数値の傾きではない）
+      </text>
+      <text x="180" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        同じ山なのに、原点での傾きの「数」は同じだろうか？
       </text>
     </svg>
   );

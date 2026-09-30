@@ -76,6 +76,7 @@ import {
   MATH3_VARIOUS_DIFF_SERIES_LIST,
   M3VD_TRIG_LIM_SERIES,
   M3VD_SUM_PROD_SERIES,
+  M3VD_TRIG_DIFF_SERIES,
 } from "./seriesMath3VariousDiff";
 import {
   MATH3_VECTOR_SERIES_LIST,
@@ -2001,6 +2002,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな関数の微分",
     shortDescription:
       "和積の公式（差を積に）— 加法定理 2 本を足し引きするだけで、和や差が積に変わる。差を積にすると、2 つの角のへだたりが因子として外に出る",
+  },
+  {
+    series: M3VD_TRIG_DIFF_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな関数の微分",
+    shortDescription:
+      "三角関数の微分（原点の傾きを全点へ）— $(\\sin x)'=\\cos x$。原点での傾き $1$ を和積の公式が運ぶ。角を度で測ると、その $1$ が $\\frac{\\pi}{180}$ に崩れる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

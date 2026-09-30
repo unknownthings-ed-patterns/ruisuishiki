@@ -754,9 +754,371 @@ $\\sin$ の差を積に書きかえると、$2$ つの角の**平均**と**へ�
 とくに $\\sin(x+h)-\\sin x$ では、へだたりの半分 $\\dfrac h2$ が $\\sin\\dfrac h2$ という因子になって外に出た。$h$ を $0$ に近づけたいとき、その因子こそが主役になる——**微分の定義の分子が「差」の形をしているから、差を積にする公式が、微分への道を開く**。`,
 };
 
+/** M3VD3: 三角関数の微分——原点の傾きを全点へ運ぶ（段1・段2 一体）。
+ *  step1・2 は定義から個別の点で計算でき、答えが cos a と一致して驚く＝事例がそのまま証明（お手本 algebra2_exp_extend_01 の型）。
+ *  質的変化 step7 は「角を度で測る」＝ 数Ⅱ・B 弧度法の derivation の約束（ラジアンのときだけ (sinθ)'=cosθ）の回収。
+ *  山場 step10 は「1 周を N とする単位で原点の傾きが指定値になる N」。「傾きがちょうど 1 になる N」は問わない（弧度法のラベル＝追補10）。 */
+export const M3VD_TRIG_DIFF_SERIES: LearnerSeries = {
+  id: "math3_vd_trig_01",
+  title: "三角関数の微分——原点の傾きを全点へ運ぶ",
+  subtitle:
+    "数Ⅲ・C いろいろな関数の微分より — $y=\\sin x$ の原点での傾きは $1$ だった。その $1$ 点の事実が、和積の公式に運ばれて、すべての点の傾きになる。そして、角を度で測っていたら何が変わっていたかを確かめる。",
+  patternId: "M3VD3",
+  unit: "math_3",
+  revelationLabel:
+    "**角を度で測ると、$\\sin$ の原点での傾きは $1$ ではなく $\\dfrac{\\pi}{180}$ になる**。$(\\sin x)'=\\cos x$ という美しい形は、角を弧の長さで測ったから成り立っていた",
+  drivingQuestion:
+    "$y=\\sin x$ の**原点**での傾き $1$ は、どうやって**すべての点**の傾きになる？——そして、角を**度**で測っていたら、何が変わっていた？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "第3章と同じく、[微分係数] を定義から求めます。$f(x) = \\sin x$ の $x = \\dfrac{\\pi}{3}$ における微分係数\n\n$$\\lim_{h \\to 0} \\frac{\\sin\\left(\\dfrac{\\pi}{3}+h\\right) - \\sin\\dfrac{\\pi}{3}}{h}$$\n\nの値を求めましょう。",
+      answer: 0.5,
+      answerDisplay: "1/2",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{3}$ における微分係数",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "分子は $\\sin$ の**差**になっている。前の系列（[和積の公式]）で、$\\sin$ の差を書きかえると何が取り出せたのだった？ そして、その前の系列で行き先を調べたのは、どんな形だった？",
+        },
+        {
+          layer: 2,
+          text: "前の系列の step6 で書きかえた式と、この分子を見比べてみよう。$h$ が小さいとき、小さくなるのはどの部分だろう？",
+        },
+        {
+          layer: 3,
+          text: "[和積の公式] で $$\\sin\\left(\\frac\\pi3+h\\right)-\\sin\\frac\\pi3 = 2\\cos\\left(\\frac\\pi3+\\frac h2\\right)\\sin\\frac h2$$ $h$ で割って、$t=\\dfrac h2$ とおくと $$\\cos\\left(\\frac\\pi3+t\\right)\\cdot\\frac{\\sin t}{t}$$ $h\\to0$ のとき $t\\to0$ で、$\\dfrac{\\sin t}{t}\\to1$（[三角関数の極限]）、$\\cos\\left(\\dfrac\\pi3+t\\right)\\to\\cos\\dfrac\\pi3$（$\\cos$ は [関数の連続] な関数）。よって $\\cos\\dfrac\\pi3 = \\dfrac12$。中心の問いへの最初の部分回答：**原点で調べた「$\\dfrac{\\sin t}{t}\\to1$」が、$x=\\dfrac\\pi3$ の傾きを決めた**。",
+        },
+      ],
+      formulaPreview: "{sin(π/3+h) − sin(π/3)}/h = cos(π/3 + h/2)·{sin(h/2)/(h/2)} → cos(π/3) = 1/2",
+      figureMarker: "<<M3VD_SIN_TANGENT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題と同じく定義から、$f(x) = \\sin x$ の $x = \\dfrac{5\\pi}{6}$ における微分係数を求めましょう。",
+      answer: -Math.sqrt(3) / 2,
+      answerDisplay: "−√3/2",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{5\\pi}{6}$ における微分係数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？ 前題の答えは、どこから出てきた数だった？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**微分係数を求める点**だけ。前題の答え $\\dfrac12$ は、$\\dfrac\\pi3$ という点とどんな関係にあった？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じ手順で、分子は $2\\cos\\left(\\dfrac{5\\pi}6+\\dfrac h2\\right)\\sin\\dfrac h2$、$h$ で割って $\\cos\\left(\\dfrac{5\\pi}6+t\\right)\\cdot\\dfrac{\\sin t}t \\to \\cos\\dfrac{5\\pi}6 = -\\dfrac{\\sqrt3}{2}$。前題も今題も、**答えは「その点での $\\cos$ の値」**でした。どの点 $a$ でも同じ手順で $\\cos a$ が出ます——つまり $$(\\sin x)' = \\cos x$$ 中心の問いへ：**原点の $1$ を、和積の公式が $\\cos x$ という形ですべての点へ運んだ**。",
+        },
+      ],
+      formulaPreview: "cos(5π/6 + h/2)·{sin(h/2)/(h/2)} → cos(5π/6) = −√3/2。どの点でも (sin x)' = cos x",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "こんどは $f(x) = \\cos x$ です。定義から、$x = \\dfrac{4\\pi}{3}$ における微分係数を求めましょう。",
+      answer: Math.sqrt(3) / 2,
+      answerDisplay: "√3/2",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{4\\pi}{3}$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$\\sin$ が $\\cos$ になった。前題の道筋は、そのまま通るだろうか。どこかで気をつけるところは？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$\\sin$ の差が $\\cos$ の差になった**こと $1$ つ。前の系列で、$\\cos$ の差を積にしたとき、$\\sin$ の差とちがって何が付いてきた？",
+        },
+        {
+          layer: 3,
+          text: "[和積の公式] で $\\cos A-\\cos B = -2\\sin\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$ なので、分子は $-2\\sin\\left(\\dfrac{4\\pi}3+\\dfrac h2\\right)\\sin\\dfrac h2$。$h$ で割ると $-\\sin\\left(\\dfrac{4\\pi}3+t\\right)\\cdot\\dfrac{\\sin t}{t} \\to -\\sin\\dfrac{4\\pi}3 = -\\left(-\\dfrac{\\sqrt3}2\\right) = \\dfrac{\\sqrt3}{2}$。どの点でも $$(\\cos x)' = -\\sin x$$ **マイナスを落とすと $-\\dfrac{\\sqrt3}2$ になり、別の値になります**。中心の問いへ：**$\\cos$ の傾きも同じ $1$ から運ばれる。ただし和積の公式が連れてきた符号も一緒に運ばれる**。",
+        },
+      ],
+      formulaPreview: "cosA − cosB = −2sin{(A+B)/2}sin{(A−B)/2}。−sin(4π/3 + h/2)·{sin(h/2)/(h/2)} → −sin(4π/3) = √3/2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$f(x) = \\tan x = \\dfrac{\\sin x}{\\cos x}$ の、$x = \\dfrac{\\pi}{6}$ における微分係数を求めましょう。答えは既約分数で答えましょう。",
+      answer: 4 / 3,
+      answerDisplay: "4/3",
+      unit: "",
+      unknownLabel: "$x=\\dfrac{\\pi}{6}$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題までは定義に戻った。今度の相手は $\\sin$ と $\\cos$ の**割り算**。もう手に入っているものは何だろう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**相手が $\\sin$ と $\\cos$ の商になった**こと $1$ つ。分子の傾きも分母の傾きも、もう分かっている。第3章で、商はどう扱った？",
+        },
+        {
+          layer: 3,
+          text: "第3章の [商の微分] $\\left(\\dfrac fg\\right)' = \\dfrac{f'g-fg'}{g^2}$ に、step2・3 の結果 $(\\sin x)'=\\cos x$・$(\\cos x)'=-\\sin x$ を入れると $$(\\tan x)' = \\frac{\\cos x\\cdot\\cos x - \\sin x\\cdot(-\\sin x)}{\\cos^2 x} = \\frac{\\cos^2x+\\sin^2x}{\\cos^2x} = \\frac{1}{\\cos^2 x}$$（[相互関係]）。$x=\\dfrac\\pi6$ では $\\cos^2\\dfrac\\pi6 = \\dfrac34$ なので $\\dfrac43$。中心の問いへ：**$\\tan$ はもう定義に戻らなくてよい。運ばれた $2$ つの傾きを、商の公式が組み立てる**。",
+        },
+      ],
+      formulaPreview: "(tan x)' = {cos²x + sin²x}/cos²x = 1/cos²x。x = π/6 で 1/(3/4) = 4/3",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "こんどは向きが逆です。$y = \\sin x$ のグラフの接線の傾きが $-\\dfrac12$ になる $x$ を、$0 \\le x < 2\\pi$ の範囲で**すべて**求めましょう。カンマで区切って答えましょう。",
+      answer: (2 * Math.PI) / 3,
+      answerDisplay: "2π/3, 4π/3",
+      solutionSet: [(2 * Math.PI) / 3, (4 * Math.PI) / 3],
+      inputAffordances: ["pi", "multi"],
+      unit: "",
+      unknownLabel: "接線の傾きが $-\\dfrac12$ になる $x$（すべて）",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は点を決めて傾きを出した。今度は**傾きのほうが先に**決まっている。何が同じで、何が違う？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、**問われているのが傾きから点に入れ替わった**こと $1$ つ。step2 で分かった「傾き」の正体は何だった？",
+        },
+        {
+          layer: 3,
+          text: "step2 で $(\\sin x)' = \\cos x$ が分かりました。傾きが $-\\dfrac12$ ということは $\\cos x = -\\dfrac12$。$0\\le x<2\\pi$ では $x = \\dfrac{2\\pi}3,\\ \\dfrac{4\\pi}3$ の $2$ つ（数Ⅱ・B の [三角方程式]）。範囲を決めないと、$2\\pi$ ごとに無数に出てきます。中心の問いへ：**傾きの地図が $\\cos x$ だと分かれば、傾きから点を逆にたどれる**。",
+        },
+      ],
+      formulaPreview: "(sin x)' = cos x = −1/2 → x = 2π/3, 4π/3（0 ≤ x < 2π）",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$f(x) = \\sin x$ を**続けて $10$ 回**微分した関数を $f^{(10)}(x)$ と書きます。$f^{(10)}\\left(\\dfrac{\\pi}{6}\\right)$ の値を求めましょう。",
+      answer: -0.5,
+      answerDisplay: "−1/2",
+      unit: "",
+      unknownLabel: "$f^{(10)}\\left(\\dfrac{\\pi}{6}\\right)$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。step1 は $1$ 回だけ微分した。今度は何度も続ける。$1$ 回ずつ書いていくと、何か繰り返しが見えないだろうか。",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、**微分する回数**だけ。$\\sin x$ から始めて、$1$ 回・$2$ 回・$3$ 回……と微分すると、何回目で元の $\\sin x$ に戻る？",
+        },
+        {
+          layer: 3,
+          text: "$(\\sin x)'=\\cos x$、$(\\cos x)'=-\\sin x$ を繰り返すと $$\\sin x \\to \\cos x \\to -\\sin x \\to -\\cos x \\to \\sin x$$ と **$4$ 回で元に戻ります**。$10 = 4\\times2+2$ なので、$10$ 回微分すると $2$ 回微分したときと同じ $-\\sin x$。$x=\\dfrac\\pi6$ では $-\\dfrac12$。中心の問いへ：**運ばれた傾きの関数を、もう一度運ぶと、また三角関数に戻る**——$\\sin$ と $\\cos$ は微分で入れ替わりながら回る。",
+        },
+      ],
+      formulaPreview: "sin → cos → −sin → −cos → sin（4 回で 1 周）。10 回 = 2 回ぶん → −sin(π/6) = −1/2",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "ここで、**角を度で測った**場合を考えます。$x$ 度の角の $\\sin$ を $y = \\sin(x°)$ と書くことにします。弧度法で書き直すと $x° = \\dfrac{\\pi x}{180}$（ラジアン）なので $y = \\sin\\dfrac{\\pi x}{180}$ です。\n\nこの関数の、$x = 0$ における微分係数を求めましょう。",
+      answer: Math.PI / 180,
+      answerDisplay: "π/180",
+      unit: "",
+      unknownLabel: "$x=0$ における $\\sin(x°)$ の微分係数",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      inputAffordances: ["pi"],
+      hints: [
+        {
+          layer: 1,
+          text: "step1 と比べてみよう。同じ $\\sin$ の傾きを調べている。違うのは、**角をどんな「ものさし」で測っているか**。ものさしを替えても、原点での傾きは $1$ のままだろうか？",
+        },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、**$x$ が度の数になった**こと $1$ つ。$x$ が $1$ 増えたとき、角は弧の長さにしてどれだけ増えている？",
+        },
+        {
+          layer: 3,
+          text: "$y=\\sin\\dfrac{\\pi x}{180}$ の $x=0$ での微分係数は、定義から $$\\lim_{h\\to0}\\frac{\\sin\\dfrac{\\pi h}{180}}{h} = \\frac{\\pi}{180}\\cdot\\lim_{h\\to0}\\frac{\\sin\\dfrac{\\pi h}{180}}{\\dfrac{\\pi h}{180}} = \\frac{\\pi}{180}\\cdot1 = \\frac{\\pi}{180}$$（系列1 の「形をそろえる」）。**$1$ ではありません**。「度で測っても $(\\sin x)' = \\cos x$」と思っていると $1$ を答えてしまいます。中心の問いへの答えの芯：**原点での傾きがちょうど $1$ だったのは、角を弧の長さ（ラジアン）で測っていたからだった**——数Ⅱ・B で [弧度法] を学んだとき「微分がきれいになる」と予告されていたのは、このことです。",
+        },
+      ],
+      formulaPreview: "sin(πh/180)/h = (π/180)·{sin(πh/180)/(πh/180)} → π/180",
+      figureMarker: "<<M3VD_DEG_RAD>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "前題と同じ $y = \\sin(x°) = \\sin\\dfrac{\\pi x}{180}$ の、こんどは $x = 60$ における微分係数を求めましょう。",
+      answer: Math.PI / 360,
+      answerDisplay: "π/360",
+      unit: "",
+      unknownLabel: "$x=60$ における $\\sin(x°)$ の微分係数",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      inputAffordances: ["pi"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。ものさしも関数も同じ度の $\\sin$。点が変わった。前題で付いてきた余分な数は、今度も付いてくるだろうか？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**点が $0$ でなくなった**こと $1$ つ。前題で、$\\dfrac{\\pi}{180}$ はどこから出てきた？",
+        },
+        {
+          layer: 3,
+          text: "$y = \\sin\\dfrac{\\pi x}{180}$ は $\\sin$ の中に $\\dfrac{\\pi}{180}x$ が入った合成なので、第3章の [合成関数の微分法] で $$y' = \\cos\\frac{\\pi x}{180}\\cdot\\frac{\\pi}{180}$$ $x=60$ では $\\cos\\dfrac\\pi3\\cdot\\dfrac{\\pi}{180} = \\dfrac12\\cdot\\dfrac{\\pi}{180} = \\dfrac{\\pi}{360}$。**度で測るかぎり、微分するたびに $\\dfrac{\\pi}{180}$ が付いてまわります**。中心の問いへ：**ものさしの選び方の代償は、すべての点に運ばれる**。",
+        },
+      ],
+      formulaPreview: "{sin(πx/180)}' = cos(πx/180)·(π/180)。x = 60 で (1/2)(π/180) = π/360",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "角の単位には、**$1$ 周を $400$ とする**もの（グラード）もあります。$x$ グラードの角は $\\dfrac{2\\pi x}{400}$ ラジアンです。\n\n$y = \\sin\\dfrac{2\\pi x}{400}$ の、$x = 0$ における微分係数を求めましょう。",
+      answer: Math.PI / 200,
+      answerDisplay: "π/200",
+      unit: "",
+      unknownLabel: "$x=0$ における微分係数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      inputAffordances: ["pi"],
+      hints: [
+        {
+          layer: 1,
+          text: "step7 と比べてみよう。度のかわりに、別のものさしが出てきた。step7 の余分な数は、ものさしのどこから決まっていた？",
+        },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、**$1$ 周を $360$ ではなく $400$ とするものさし**になったこと $1$ つ。$1$ 周の数を替えると、$x$ が $1$ 増えたときの弧の長さはどう変わる？",
+        },
+        {
+          layer: 3,
+          text: "step7 と同じく形をそろえて $$\\lim_{h\\to0}\\frac{\\sin\\dfrac{2\\pi h}{400}}{h} = \\frac{2\\pi}{400}\\cdot1 = \\frac{\\pi}{200}$$ 一般に、$1$ 周を $N$ とする単位では、原点での傾きは $\\dfrac{2\\pi}{N}$。$N=360$ なら $\\dfrac{2\\pi}{360} = \\dfrac\\pi{180}$（step7）。中心の問いへ：**原点での傾きは、$1$ 周をいくつと数えるかで決まる**。",
+        },
+      ],
+      formulaPreview: "sin(2πh/400)/h = (2π/400)·{…} → π/200。1 周を N とすると原点の傾きは 2π/N",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$1$ 周を $N$ とする角の単位で $\\sin$ を測ったところ、$x = 0$ における微分係数が $\\dfrac{\\pi}{150}$ になりました。$N$ の値を求めましょう。",
+      answer: 300,
+      unit: "",
+      unknownLabel: "$N$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step9",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題はものさしから傾きを出した。今度は**傾きのほうが先に**分かっている。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**問われているのが傾きから「$1$ 周の数」に入れ替わった**こと $1$ つ。前題で、$1$ 周の数と原点の傾きはどんな式で結ばれていた？",
+        },
+        {
+          layer: 3,
+          text: "前題で、$1$ 周を $N$ とする単位では原点での傾きが $\\dfrac{2\\pi}{N}$ でした。これが $\\dfrac{\\pi}{150}$ なので $\\dfrac{2\\pi}{N} = \\dfrac{\\pi}{150}$、$N = 300$。傾きが大きいほど $N$ は小さく、傾きが小さいほど $N$ は大きい——**$1$ 周を細かく刻むほど、$x$ が $1$ 増えたときに進む弧は短くなり、傾きは小さくなる**。では、傾きがちょうど $1$ になる $N$ は？ それは「$1$ 周を弧の長さそのもので数える」ものさし、つまり [弧度法] です。中心の問いに戻ると：**$\\sin x$ の微分が $\\cos x$ という単純な形になったのは、関数のおかげだけではなく、ものさしの選び方のおかげでもあった**。",
+        },
+      ],
+      formulaPreview: "2π/N = π/150 → N = 300",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $y=\\sin x$ の**原点**での傾き $1$ は、どうやって**すべての点**の傾きになる？——そして、角を**度**で測っていたら、何が変わっていた？
+
+────────
+
+## 1 点の事実を、和積の公式が全点へ運ぶ
+
+どんな関数でも、[微分係数] の定義そのものは変わらない。$\\sin x$ を点 $a$ で微分するには
+
+$$\\lim_{h\\to0}\\frac{\\sin(a+h)-\\sin a}{h}$$
+
+を計算すればよい。分子は差の形なので、[和積の公式] で積に直す。
+
+$$\\sin(a+h)-\\sin a = 2\\cos\\left(a+\\frac h2\\right)\\sin\\frac h2$$
+
+$h$ で割り、$t=\\dfrac h2$ とおくと $\\cos(a+t)\\cdot\\dfrac{\\sin t}{t}$。$t\\to0$ で後ろの因子は $1$（[三角関数の極限]）、前の因子は $\\cos a$（$\\cos$ が [関数の連続] な関数だから）。よって
+
+$$(\\sin x)' = \\cos x$$
+
+## ここが胚細胞：原点の 1 と、それを運ぶ法則
+
+この計算は $2$ つの部品でできている。**原点での傾き $1$**（$\\dfrac{\\sin t}{t}\\to1$）と、**それをどの点にも運ぶ法則**（和積の公式＝加法定理）。どちらが欠けても、$\\cos x$ という答えは出ない。
+
+$\\cos x$ も同じ部品で運べる（和積の公式が $-$ を連れてくるので $(\\cos x)'=-\\sin x$）。$\\tan x$ は、運ばれた $2$ つを [商の微分] で組み立てて $\\dfrac{1}{\\cos^2x}$。
+
+## ものさしを替えると、原点の 1 が崩れる
+
+角を度で測ると、$y=\\sin(x°) = \\sin\\dfrac{\\pi x}{180}$ の原点での傾きは $\\dfrac{\\pi}{180}$ になる（step7）。一般に $1$ 周を $N$ とする単位なら $\\dfrac{2\\pi}{N}$。**傾きがちょうど $1$ になるのは、$1$ 周を $2\\pi$、つまり角を弧の長さで測るときだけ**——$\\dfrac{2\\pi}{N}=1$ を満たす $N$ は $2\\pi$ しかないからである。
+
+数Ⅱ・B で [弧度法] を学んだとき、「なじみの深い度を捨てて、なぜ一見不自然な単位を？」と思ったかもしれない。答えがここにある。**弧度法は、原点での傾きをちょうど $1$ にする、ただ $1$ つの角のものさし**である。
+
+## Step の道筋
+
+- **step1〜2**：定義から個別の点で計算すると、答えが「その点の $\\cos$」になる（事例がそのまま証明）
+- **step3**：$\\cos$ も同じ部品で。符号が付いてくる
+- **step4**：$\\tan$ は商の公式で組み立てる
+- **step5**：傾きから点を逆にたどる
+- **step6**：$4$ 回微分すると元に戻る
+- **step7〜9**：角を度・グラードで測ると、原点の傾きが $1$ でなくなる
+- **step10（山場）**：傾きから、ものさし（$1$ 周の数）を逆にたどる
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $(\\sin x)'=\\cos x$ を忘れたら、$y=\\sin x$ のグラフを描いて傾きを読めばよい。原点で傾き $1$、山のてっぺん $x=\\dfrac\\pi2$ で傾き $0$、$x=\\pi$ で傾き $-1$——これは $\\cos x$ の値の並びそのものである。$(\\cos x)'$ の符号に迷ったら、$y=\\cos x$ が原点のすぐ右で**下がっている**ことを見れば、傾きは負、つまり $-\\sin x$ だと分かる。
+
+**よくある取り違え。** ①$(\\cos x)' = \\sin x$（符号を落とす）。$x$ に $\\dfrac\\pi2$ 付近の値を入れれば、$y=\\cos x$ は下がっているのに傾きが正になってしまい、食い違いが見える。②「度で測っても $(\\sin x)'=\\cos x$」。step7 のとおり、度では $\\dfrac{\\pi}{180}$ が付く。電卓が度になっているときに微分の式を使うと、答えが約 $57$ 倍ずれる。
+
+**$4$ 回で元に戻る。** $\\sin\\to\\cos\\to-\\sin\\to-\\cos\\to\\sin$。**$2$ 回微分すると符号が反転して元の関数に戻る**（$(\\sin x)'' = -\\sin x$）。これは「引き戻す力が、ずれに比例する」ばねや振り子の運動の式 $y'' = -y$ そのもので、$\\sin$ と $\\cos$ が波やゆれを表すのはこのためである。
+
+**この先の景色。** 次の系列で、三角関数を多項式と積・商・合成でつないだ関数も微分できるようになる。第5章では、$(\\sin x)'=\\cos x$ を使って三角関数を含む関数のグラフの山と谷を調べる。大学では、微分方程式 $y''=-y$ の解がちょうど $\\sin$ と $\\cos$ の組み合わせであることを学ぶ。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第4章「三角関数の微分」の構成（和積の公式と三角関数の極限で $(\\sin x)'$ を定義から導き、$\\cos$・$\\tan$ へ進み、弧度法の正当性をコラムで回収する順序）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+原点での傾き $1$ は、**和積の公式という「運び役」**によって、どの点の傾きにも運ばれた。運ばれた先の値が $\\cos x$ である。
+
+そして、原点での傾きがちょうど $1$ だったのは、**角を弧の長さで測っていたから**だった。度で測れば $\\dfrac{\\pi}{180}$、$1$ 周を $N$ と数えれば $\\dfrac{2\\pi}{N}$。$(\\sin x)'=\\cos x$ という単純な形は、関数だけで決まったのではなく、**私たちのものさしの選び方**と組になって決まっていた。`,
+};
+
 /** 「いろいろな関数の微分」ユニットの系列一覧（数Ⅲ・C 第4章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
   M3VD_TRIG_LIM_SERIES,
   M3VD_SUM_PROD_SERIES,
+  M3VD_TRIG_DIFF_SERIES,
 ];
