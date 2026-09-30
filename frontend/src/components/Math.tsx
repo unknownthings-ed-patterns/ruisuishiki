@@ -15535,6 +15535,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_CHORD_ARC>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdChordArc />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_SQUEEZE_WALLS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdSqueezeWalls />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35303,6 +35317,138 @@ function M3dDiscreteVsDense() {
 
       <text x="180" y="164" fontSize="11" fill={accent} textAnchor="middle">
         切れ目が無いと、近づき方は何通りになる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列1 step1: 単位円の上の角 t と、3 つの長さ（高さ PH・弧 AP・接線 AT）。
+ *  ★図に答えを描かない★ 比 sin t / t の値も、どれがどれより長いかも書かない（step1〜3 で計算させる）。
+ *  長さは名前だけ。角 t は模式（48° 前後）で、特殊角の目盛りも書かない。 */
+function M3vdChordArc() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const O = [52, 176];
+  const r = 124;
+  const th = (48 * Math.PI) / 180;
+  const A = [O[0] + r, O[1]];
+  const P = [O[0] + r * Math.cos(th), O[1] - r * Math.sin(th)];
+  const H = [P[0], O[1]];
+  const T = [A[0], O[1] - r * Math.tan(th)];
+  const f = (v: number) => v.toFixed(1);
+  return (
+    <svg
+      viewBox="0 0 320 222"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="半径 1 の円の一部に、点 O・A・P・H・T をとった図。P から x 軸へ下ろした高さ PH、A から P までの弧、A で円に接する線の上の長さ AT の 3 つに名前がついている。長さの値やどれが長いかは書かれていない模式の図"
+    >
+      <path d={`M 20 ${O[1]} L 300 ${O[1]}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${O[0]} 204 L ${O[0]} 14`} fill="none" stroke={muted} strokeWidth="1" />
+      {/* 四分円（淡く） */}
+      <path
+        d={`M ${f(A[0])} ${f(A[1])} A ${r} ${r} 0 0 0 ${O[0]} ${O[1] - r}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1"
+        strokeDasharray="3 3"
+      />
+      {/* A での接線 x = 1 */}
+      <path d={`M ${A[0]} 196 L ${A[0]} 16`} fill="none" stroke={muted} strokeWidth="1" />
+      {/* O から P を通って T まで */}
+      <path d={`M ${O[0]} ${O[1]} L ${f(T[0])} ${f(T[1])}`} fill="none" stroke={stroke} strokeWidth="1.1" />
+      {/* 3 つの長さ */}
+      <path d={`M ${f(P[0])} ${f(P[1])} L ${f(H[0])} ${f(H[1])}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <path
+        d={`M ${f(A[0])} ${f(A[1])} A ${r} ${r} 0 0 0 ${f(P[0])} ${f(P[1])}`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="2.2"
+      />
+      <path d={`M ${f(A[0])} ${f(A[1])} L ${f(T[0])} ${f(T[1])}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      {/* 角 t */}
+      <path d={`M ${O[0] + 26} ${O[1]} A 26 26 0 0 0 ${f(O[0] + 26 * Math.cos(th))} ${f(O[1] - 26 * Math.sin(th))}`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={O[0] + 32} y={O[1] - 10} fontSize="11" fill={stroke} fontStyle="italic">t</text>
+      {[
+        [O, "O", -12, 14],
+        [A, "A", 6, 14],
+        [P, "P", -14, -6],
+        [H, "H", -4, 14],
+        [T, "T", 7, 4],
+      ].map(([pt, name, dx, dy]) => (
+        <text
+          key={name as string}
+          x={(pt as number[])[0] + (dx as number)}
+          y={(pt as number[])[1] + (dy as number)}
+          fontSize="11"
+          fill={stroke}
+          fontStyle="italic"
+        >
+          {name as string}
+        </text>
+      ))}
+      {[P, A, T, H].map((pt, k) => (
+        <circle key={k} cx={f(pt[0])} cy={f(pt[1])} r="2.6" fill={stroke} />
+      ))}
+      {/* 名前だけ（値は書かない）。線に重ならない位置へ */}
+      <text x={f(P[0] - 40)} y={f((P[1] + H[1]) / 2 + 22)} fontSize="10.5" fill={accent}>高さ PH</text>
+      <text x={f(A[0] - 30)} y={f(P[1] - 6)} fontSize="10.5" fill={accent}>弧 AP</text>
+      <text x={f(A[0] + 8)} y={f((A[1] + T[1]) / 2)} fontSize="10.5" fill={accent}>接線の長さ AT</text>
+      <text x="160" y="216" fontSize="11" fill={accent} textAnchor="middle">
+        角 t を小さくすると、3 つの長さはどれだけ近づく？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列1 step5（質的変化）: 2 枚の壁ではさまれた曲線。
+ *  ★層8★ 目盛りも値も書かない。壁が向かう高さは「?」のまま（そろう先が 1 か別の数かが、この step の発見）。
+ *  描くのは「上の壁は水平・下の壁は山形・その間に曲線」という仕組みだけ。 */
+function M3vdSqueezeWalls() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 180;
+  const top = 56;
+  const amp = 110;
+  const sc = 60;
+  const xs = Array.from({ length: 121 }, (_, k) => -1.35 + (2.7 * k) / 120);
+  const toX = (u: number) => cx + u * sc * 1.9;
+  const mid = xs
+    .map((u, k) => {
+      const v = Math.abs(u) < 1e-9 ? 1 : Math.sin(u) / u;
+      return `${k === 0 ? "M" : "L"} ${toX(u).toFixed(1)} ${(top + amp * (1 - v)).toFixed(1)}`;
+    })
+    .join(" ");
+  const low = xs
+    .map((u, k) => `${k === 0 ? "M" : "L"} ${toX(u).toFixed(1)} ${(top + amp * (1 - Math.cos(u))).toFixed(1)}`)
+    .join(" ");
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="横軸を t とするグラフに、水平な上の壁と山形の下の壁がかかれ、その間に 1 本の曲線がはさまれている。t が 0 に近づくところで 3 本が 1 点に集まるが、その高さは疑問符で、目盛りも値も無い模式の図"
+    >
+      <path d="M 20 186 L 340 186" fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 200 L ${cx} 20`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="344" y="190" fontSize="10.5" fill={muted}>t</text>
+      {/* 上の壁（水平） */}
+      <path d={`M 30 ${top} L 330 ${top}`} fill="none" stroke={muted} strokeWidth="1.4" strokeDasharray="6 4" />
+      <text x="34" y={top - 6} fontSize="10.5" fill={muted}>上の壁</text>
+      {/* 下の壁（山形） */}
+      <path d={low} fill="none" stroke={muted} strokeWidth="1.4" strokeDasharray="6 4" />
+      <text x="30" y="160" fontSize="10.5" fill={muted}>下の壁</text>
+      {/* はさまれた曲線 */}
+      <path d={mid} fill="none" stroke={accent} strokeWidth="2" />
+      {/* 集まる点は ? のまま（t = 0 そのものは使わない＝白抜き） */}
+      <circle cx={cx} cy={top} r="3.6" fill="var(--background)" stroke={accent} strokeWidth="1.6" />
+      <text x={cx + 10} y={top - 8} fontSize="13" fill={accent} fontWeight="600">?</text>
+      <text x="180" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        2 枚の壁が同じ高さへ向かうとき、間の曲線はどこへ向かう？
       </text>
     </svg>
   );
