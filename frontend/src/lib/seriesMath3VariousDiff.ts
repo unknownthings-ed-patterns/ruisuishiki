@@ -2496,6 +2496,351 @@ $a^x = e^{(\\log a)x}$ と書けば、合成で $(a^x)' = (\\log a)\\,a^x$。**�
 その性質は、積・商・合成の中でも形をくずさず、山場では接線の方程式から $e$ そのものを消した。**ものさし（底）を $e$ に選ぶことが、微分に付く係数をちょうど $1$ にする**——対数のときと同じ理由である。`,
 };
 
+/** M3VD8: e と極限——極限 3 兄弟（三段）。
+ *  段1＝step1〜3（3 兄弟を 1 人ずつ。答えはどれも係数＝追補10 の「意図した同じ形」。3 つとも違う係数）。
+ *  段2＝step4〜5（y = 2^x の右割線・y = 4^x の左割線で「傾き 1 の底」をはさむ＝原典 p.143 の直感的な納得。証明ではない）。
+ *  段3＝step6〜10（形をそろえる。1^∞ は e の肩へ折る）。原典 練習問題9 の値（2x・e^{3x}・1−2x・(1−1/x)^x・2x+1）は避けた。
+ *  山場 step10 は 2 兄弟の比。2 本目の道＝「分子も分母も x = 0 での傾き × x に近い」（傾きの比）を L3 で見せる。 */
+export const M3VD_ELIM_SERIES: LearnerSeries = {
+  id: "math3_vd_elim_01",
+  title: "e と極限——極限 3 兄弟",
+  subtitle:
+    "数Ⅲ・C いろいろな関数の微分より — $\\dfrac{\\sin t}{t}$・$\\dfrac{\\log(1+t)}{t}$・$\\dfrac{e^t-1}{t}$。別々の場所で出会った $3$ つの極限は、どれも $1$ に着く。$10$ 問で、その $3$ 兄弟を $1$ つの絵にまとめる。",
+  patternId: "M3VD8",
+  unit: "math_3",
+  revelationLabel:
+    "**$3$ つの極限は、どれも「出発点での接線の傾き」**。角は弧度法、対数と指数は底 $e$——その傾きがちょうど $1$ になるように、ものさしを選んでいた",
+  drivingQuestion:
+    "$\\sin$、$e^x$、$\\log$——別々に育った $3$ つの極限が、なぜそろって「$1$」に着く？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "系列1 で $\\displaystyle\\lim_{t\\to0}\\frac{\\sin t}{t} = 1$ を見つけました。次の極限値を求めましょう。答えは既約分数で答えましょう。\n\n$$\\lim_{x\\to0}\\frac{\\sin\\frac34x}{x}$$",
+      answer: 0.75,
+      answerDisplay: "3/4",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "系列1 で、$\\sin$ の中身と分母がそろっていない形は、どうやって [三角関数の極限] の形に持ちこんだ？",
+        },
+        {
+          layer: 2,
+          text: "$\\sin$ の中身は $\\dfrac34x$、分母は $x$。分母を中身と同じ形にするには、何が足りない？",
+        },
+        {
+          layer: 3,
+          text: "分母を $\\sin$ の中身にそろえると $$\\frac{\\sin\\frac34x}{x} = \\frac34\\cdot\\frac{\\sin\\frac34x}{\\frac34x}$$ $x\\to0$ で $\\dfrac34x\\to0$ なので、後ろの分数は $1$ に近づき、極限値は $\\dfrac34$。中心の問いへの最初の部分回答：**$1$ 人目の兄弟 $\\dfrac{\\sin t}{t}\\to1$ は、形をそろえれば係数だけを残す**。",
+        },
+      ],
+      formulaPreview: "sin(3x/4)/x = (3/4)·sin(3x/4)/(3x/4) → 3/4",
+      figureMarker: "<<M3VD_THREE_BROTHERS>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$2$ 人目です。系列5 の $\\displaystyle\\lim_{t\\to0}(1+t)^{\\frac1t} = e$ を使って、次の極限値を求めましょう。答えは既約分数で答えましょう。\n\n$$\\lim_{x\\to0}\\frac{\\log\\left(1+\\frac25x\\right)}{x}$$",
+      answer: 0.4,
+      answerDisplay: "2/5",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$\\sin$ が $\\log$ に替わった。前題でした「そろえる」は、今度も効く？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**兄弟が $\\log(1+t)$ になった**こと $1$ つ。そろえたあとの $\\dfrac{\\log(1+t)}{t}$ は、系列5 の $(1+t)^{\\frac1t}$ とどうつながる？",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく分母をそろえて $t = \\dfrac25x$ とおくと $$\\frac{\\log\\left(1+\\frac25x\\right)}{x} = \\frac25\\cdot\\frac{\\log(1+t)}{t}$$ [対数法則] で $\\dfrac{\\log(1+t)}{t} = \\log(1+t)^{\\frac1t}$ で、中身は $e$ に近づくので $\\log e = 1$ に近づく。極限値は $\\dfrac25$。中心の問いへ：**$2$ 人目の兄弟 $\\dfrac{\\log(1+t)}{t}\\to1$ も、形をそろえれば係数だけを残す**。",
+        },
+      ],
+      formulaPreview: "log(1+2x/5)/x = (2/5)·log(1+t)/t、log(1+t)/t = log(1+t)^{1/t} → log e = 1。極限 2/5",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$3$ 人目です。次の極限値を求めましょう。答えは既約分数で答えましょう。\n\n$$\\lim_{x\\to0}\\frac{e^{\\frac73x}-1}{x}$$",
+      answer: 7 / 3,
+      answerDisplay: "7/3",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$\\log$ が $e$ の累乗に替わった。$e^x$ と $\\log x$ は、系列7 でどんな関係だった？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**兄弟が $e^t - 1$ になった**こと $1$ つ。前題の兄弟とこの兄弟は、$x$ と $y$ の役を入れ替えるとどうつながる？",
+        },
+        {
+          layer: 3,
+          text: "$s = e^{\\frac73x} - 1$ とおくと $\\dfrac73x = \\log(1+s)$、$x\\to0$ で $s\\to0$。$$\\frac{e^{\\frac73x}-1}{x} = \\frac73\\cdot\\frac{s}{\\log(1+s)}$$ 後ろの分数は前題の兄弟の逆数なので $1$ に近づき、極限値は $\\dfrac73$。**$y$ と $x$ の役を入れ替える**（系列7 の逆関数と同じ手つき）と、$3$ 人目は $2$ 人目に帰着しました。中心の問いへ：**$3$ 人目の兄弟 $\\dfrac{e^t-1}{t}\\to1$ で、$3$ 兄弟がそろった**。",
+        },
+      ],
+      formulaPreview: "s = e^{7x/3} − 1、(7/3)x = log(1+s)。(e^{7x/3}−1)/x = (7/3)·s/log(1+s) → 7/3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "ここから、$3$ 人目の兄弟が図で何を言っているかを確かめます。$y = 2^x$ のグラフ上の $2$ 点 $(0,\\ 1)$ と $\\left(\\dfrac12,\\ \\sqrt2\\right)$ を結ぶ直線の傾きを求めましょう。",
+      answer: 2 * Math.SQRT2 - 2,
+      answerDisplay: "2√2 − 2",
+      unit: "",
+      unknownLabel: "直線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は極限の値を出した。今度は、グラフの上の $2$ 点を結ぶ直線を見ている。前題の極限は、グラフの上では何の傾きだった？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**式の極限から、グラフ上の $2$ 点の傾きに移った**こと $1$ つ。極限をとる前の式は、グラフの上で何を表していた？",
+        },
+        {
+          layer: 3,
+          text: "傾きは $$\\frac{\\sqrt2 - 1}{\\ \\dfrac12 - 0\\ } = 2\\sqrt2 - 2 = 0.828\\cdots$$ 前題の $\\dfrac{e^x-1}{x}$ は、$y=e^x$ の $(0,1)$ と $(x,\\ e^x)$ を結ぶ直線の傾きで、$x\\to0$ の極限が $(0,1)$ での**接線の傾き**でした。$y=2^x$ のグラフは下に向かって膨らんでいる（右へ行くほど急になる）ので、$(0,1)$ での接線は、右へ結んだこの直線より**緩やか**です。つまり **$y=2^x$ の $(0,1)$ での接線の傾きは $0.828\\cdots$ より小さく、$1$ に届かない**。中心の問いへ：**$3$ 人目の兄弟の「$1$」は、$(0,1)$ での接線の傾きのこと。底が $2$ では、それが $1$ より小さい**。",
+        },
+      ],
+      formulaPreview: "(√2 − 1)/(1/2) = 2√2 − 2 ≒ 0.83 < 1 → 2ˣ の (0,1) の接線は傾き 1 未満",
+      figureMarker: "<<M3VD_BASE_SQUEEZE>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$y = 4^x$ のグラフ上の $2$ 点 $\\left(-\\dfrac12,\\ \\dfrac12\\right)$ と $(0,\\ 1)$ を結ぶ直線の傾きを求めましょう。",
+      answer: 1,
+      unit: "",
+      unknownLabel: "直線の傾き",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。底も、$2$ 点を取る向きも違う。前題で「接線はこの直線より緩やか」と言えたのは、なぜだった？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$(0,1)$ から左へ結んだ**こと。グラフが右へ行くほど急になるなら、左へ結んだ直線と接線は、どちらが急？",
+        },
+        {
+          layer: 3,
+          text: "傾きは $$\\frac{1 - \\dfrac12}{\\ 0 - \\left(-\\dfrac12\\right)\\ } = 1$$ グラフは右へ行くほど急になるので、$(0,1)$ での接線は、**左へ結んだこの直線より急**です。つまり **$y=4^x$ の $(0,1)$ での接線の傾きは $1$ より大きい**。底が大きいほど $(0,1)$ でのグラフは急なので、**傾きがちょうど $1$ になる底は、$2$ と $4$ の間にある**——それが $e = 2.718\\cdots$ です。ただしこれは「ある」ことの**直感的な納得**で、証明ではありません。中心の問いへ：**$e$ は「$(0,1)$ での接線の傾きが $1$ になる底」として選ばれている**。",
+        },
+      ],
+      formulaPreview: "(1 − 1/2)/(0 − (−1/2)) = 1 → 4ˣ の (0,1) の接線は傾き 1 より急。傾き 1 の底は 2 と 4 の間",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$a$ を定数とします。$$\\lim_{x\\to0}(1+ax)^{\\frac3x} = e^{-4}$$ となるとき、$a$ の値を求めましょう。答えは既約分数で答えましょう。",
+      answer: -4 / 3,
+      answerDisplay: "−4/3",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は $\\log$ の極限だった。今度は $\\log$ が無く、行き先の値が先に分かっていて、係数を求める。",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、**$\\log$ の外側にいた形が、$e$ の肩の側に現れた**こと $1$ つ。step2 の式と今度の式は、何を施せば同じ形になる？",
+        },
+        {
+          layer: 3,
+          text: "両辺の自然対数をとると、左辺は $$\\log(1+ax)^{\\frac3x} = 3\\cdot\\frac{\\log(1+ax)}{x}\\ \\longrightarrow\\ 3a$$（step2 と同じ形）、右辺は $-4$。よって $3a = -4$、$a = -\\dfrac43$（解は $1$ つ）。中心の問いへ：**$1^\\infty$ 型も、$\\log$ をとれば $2$ 人目の兄弟に帰着する**。",
+        },
+      ],
+      formulaPreview: "log をとると 3·log(1+ax)/x → 3a = −4 → a = −4/3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "こんどは $x\\to\\infty$ です。$$\\lim_{x\\to\\infty}\\left(1+\\frac2x\\right)^{7x} = e^{\\square}$$ の $\\square$ に入る数を求めましょう。",
+      answer: 14,
+      unit: "",
+      unknownLabel: "$\\square$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は $x\\to0$ だった。今度は $x\\to\\infty$。前題で使った兄弟の形は、どこに隠れている？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**$x$ が $0$ でなく $\\infty$ に向かう**こと $1$ つ。$\\dfrac2x$ は、$x\\to\\infty$ のときどこへ向かう？",
+        },
+        {
+          layer: 3,
+          text: "$\\log$ をとって $t = \\dfrac2x$ とおくと、$x\\to\\infty$ で $t\\to+0$、$x = \\dfrac2t$。$$7x\\log\\left(1+\\frac2x\\right) = 14\\cdot\\frac{\\log(1+t)}{t}\\ \\longrightarrow\\ 14$$ よって $\\square = 14$。中心の問いへ：**$x\\to\\infty$ でも、$0$ に向かう部分を $1$ 文字でおけば、同じ兄弟が現れる**。",
+        },
+      ],
+      formulaPreview: "t = 2/x → +0。7x·log(1+2/x) = 14·log(1+t)/t → 14",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$$\\lim_{x\\to\\infty}\\left(1-\\frac{3}{2x}\\right)^{x} = e^{\\square}$$ の $\\square$ に入る数を求めましょう。答えは既約分数で答えましょう。",
+      answer: -1.5,
+      answerDisplay: "−3/2",
+      unit: "",
+      unknownLabel: "$\\square$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。何が同じで、何が違う？ 括弧の中の記号に注目。",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、**括弧の中が引き算になった**こと。前題の $t$ のおき方を、今度はどう変える？",
+        },
+        {
+          layer: 3,
+          text: "$\\log$ をとって $t = -\\dfrac{3}{2x}$ とおくと、$x\\to\\infty$ で $t\\to-0$、$x = -\\dfrac{3}{2t}$。$$x\\log\\left(1-\\frac{3}{2x}\\right) = -\\frac32\\cdot\\frac{\\log(1+t)}{t}\\ \\longrightarrow\\ -\\frac32$$ よって $\\square = -\\dfrac32$。**符号を落とすと $\\dfrac32$** になり、別の値です——括弧の中が $1$ より小さいので、何回も掛けると $1$ より小さくなる、と確かめると符号の向きが分かります。中心の問いへ：**兄弟の形 $\\dfrac{\\log(1+t)}{t}$ は、$t$ が負の側から $0$ に近づいても $1$ に着く**。",
+        },
+      ],
+      formulaPreview: "t = −3/(2x) → −0。x·log(1 − 3/(2x)) = −(3/2)·log(1+t)/t → −3/2",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "次の極限値を求めましょう。答えは既約分数で答えましょう。\n\n$$\\lim_{x\\to\\infty}x\\left\\{\\log(3x+5) - \\log(3x)\\right\\}$$",
+      answer: 5 / 3,
+      answerDisplay: "5/3",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。$\\log$ が $2$ つあり、$x$ は $\\infty$ に向かう。step2 の兄弟の形は、この式のどこに作れる？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、**$\\log$ の差になった**こと $1$ つ。step2 の形には $\\log$ が $1$ つしかなかった。",
+        },
+        {
+          layer: 3,
+          text: "[対数法則] で $$\\log(3x+5) - \\log(3x) = \\log\\left(1 + \\frac{5}{3x}\\right)$$ $t = \\dfrac{5}{3x}$ とおくと $x\\to\\infty$ で $t\\to+0$、$x = \\dfrac{5}{3t}$ なので $$x\\log\\left(1+\\frac5{3x}\\right) = \\frac53\\cdot\\frac{\\log(1+t)}{t}\\ \\longrightarrow\\ \\frac53$$ **分子と分母を取り違えると $\\dfrac35$** です。中心の問いへ：**対数法則でまとめ、$0$ に向かう部分を $1$ 文字でおく——$2$ つの手つきを重ねても、最後は同じ兄弟**。",
+        },
+      ],
+      formulaPreview: "log(3x+5) − log(3x) = log(1 + 5/(3x))。t = 5/(3x) で (5/3)·log(1+t)/t → 5/3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$2$ 人の兄弟を割り算にします。次の極限値を求めましょう。答えは既約分数で答えましょう。\n\n$$\\lim_{x\\to0}\\frac{e^{4x}-1}{\\sin7x}$$",
+      answer: 4 / 7,
+      answerDisplay: "4/7",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。分子は step3 と同じ兄弟。分母が $x$ でなく、別の兄弟になっている。",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、**分母が $\\sin$ の兄弟になった**こと $1$ つ。step3 の分母の $x$ は、今度の式のどこに作れる？",
+        },
+        {
+          layer: 3,
+          text: "**道 1（形をそろえる）**：分子と分母をそれぞれ $x$ で割ると $$\\frac{e^{4x}-1}{\\sin7x} = \\frac{\\ \\dfrac{e^{4x}-1}{x}\\ }{\\ \\dfrac{\\sin7x}{x}\\ }\\ \\longrightarrow\\ \\frac{4}{7}$$（分子は step3、分母は step1 と同じ形）。**道 2（傾きの比）**：$x$ が $0$ に近いとき、$e^{4x}-1$ は「$x=0$ での傾き $4$」$\\times x$ に、$\\sin7x$ は「$x=0$ での傾き $7$」$\\times x$ に近い。だから比は傾きの比 $\\dfrac47$。同じ値に着いたことが互いの検算です。分子と分母を取り違えると $\\dfrac74$。中心の問いに戻ると：**$3$ 兄弟はどれも「出発点での接線の傾き」だから、兄弟どうしの比は、傾きどうしの比になる**。",
+        },
+      ],
+      formulaPreview: "{(e^{4x}−1)/x}/{sin7x/x} → 4/7（出発点での傾き 4 と 7 の比）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $\\sin$、$e^x$、$\\log$——別々に育った $3$ つの極限が、なぜそろって「$1$」に着く？
+
+────────
+
+## 3 兄弟
+
+$$\\lim_{t\\to0}\\frac{\\sin t}{t} = 1, \\qquad \\lim_{t\\to0}\\frac{\\log(1+t)}{t} = 1, \\qquad \\lim_{t\\to0}\\frac{e^t-1}{t} = 1$$
+
+$1$ 人目は系列1 で、単位円の面積ではさんで見つけた。$2$ 人目は系列5 の $e$ の定義 $(1+t)^{\\frac1t}\\to e$ と対数法則から出る（step2）。$3$ 人目は、$y$ と $x$ の役を入れ替えると $2$ 人目に帰着する（step3）。
+
+## ここが胚細胞：3 つとも「出発点での接線の傾き」
+
+$\\dfrac{e^t-1}{t}$ は、$y=e^x$ の上の $2$ 点 $(0,\\ 1)$ と $(t,\\ e^t)$ を結ぶ直線の傾きである。$t\\to0$ でその極限は、$(0,1)$ での**接線の傾き**になる。同じように、$\\dfrac{\\sin t}{t}$ は $y=\\sin x$ の原点での接線の傾き、$\\dfrac{\\log(1+t)}{t}$ は $y=\\log x$ の $(1,0)$ での接線の傾きである。
+
+$3$ つの極限がそろって $1$ に着くのは、偶然ではない。**角の単位を弧度法に、指数と対数の底を $e$ に——その接線の傾きがちょうど $1$ になるように、ものさしのほうを選んでいた**からである。
+
+## e を割線ではさむ（直感的な納得）
+
+$y = 2^x$ の $(0,1)$ から右へ結んだ直線の傾きは $2\\sqrt2-2 = 0.828\\cdots$（step4）。グラフは右へ行くほど急になるので、$(0,1)$ での接線はそれより緩やかで、傾きは $1$ に届かない。$y = 4^x$ の $(0,1)$ から左へ結んだ直線の傾きは $1$（step5）で、接線はそれより急。**傾きがちょうど $1$ になる底は $2$ と $4$ の間**にあり、それが $e$ である。
+
+これは $e$ が**ある**ことの直感的な納得であって、証明ではない。底を少しずつ動かすと接線の傾きも切れ目なく動く、ということを認めて使っている。
+
+## Step の道筋
+
+- **段1（step1〜3）**：$3$ 兄弟を $1$ 人ずつ——形をそろえれば係数だけが残る（答えがどれも係数になるのは、意図した「同じ形」）
+- **段2（step4〜5）**：$y=2^x$・$y=4^x$ の割線で、傾き $1$ の底 $e$ をはさむ
+- **段3（step6〜10）**：$1^\\infty$ 型は $\\log$ をとって $2$ 人目へ（step6〜8）／対数法則でまとめてから（step9）／兄弟どうしの比は傾きの比（step10・山場）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $3$ 兄弟の値を忘れたら、$3$ 枚の絵を思い出す。$y=\\sin x$ の原点、$y=e^x$ の $(0,1)$、$y=\\log x$ の $(1,0)$——どれも接線の傾きが $1$ になるように、ものさしが選ばれている。
+
+**2 本目の道。** 系列7 で $(e^x)'=e^x$ を逆関数の微分で出した。定義からも出せる：$$\\frac{e^{x+h}-e^x}{h} = e^x\\cdot\\frac{e^h-1}{h}\\ \\longrightarrow\\ e^x$$（$3$ 人目の兄弟）。同じ結果に $2$ 本の道で着いた。
+
+**どれを出発点にしてもよい。** この単元では $(1+t)^{\\frac1t}\\to e$ を $e$ の定義にしたが、「$y=a^x$ の $(0,1)$ での接線の傾きが $1$ になる底を $e$ とする」を定義に選んでも、残りはそこから導ける。唯一の出発点があるのではなく、$3$ つが $1$ つの事実の $3$ つの顔である。
+
+**よくある取り違え。** $\\left(1-\\dfrac ax\\right)^x \\to e^{a}$ と符号を落とす（step8）。括弧の中が $1$ より小さいのだから、何回も掛けた行き先は $1$ より小さい——$e^{-a}$ のほうである。
+
+**この先の景色。** 「$x$ が $0$ に近いとき、$\\sin x\\approx x$、$e^x-1\\approx x$、$\\log(1+x)\\approx x$」は、関数を接線で置き換える近似（$1$ 次近似）の入口である。大学では、$2$ 次・$3$ 次……と近似を細かくしていくテイラー展開へ続く。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第4章「$e$ と極限」（練習問題9・$e$ の存在を $2^x$ と $4^x$ の間で直感的に納得する見方・コメント「極限 3 兄弟」と $3$ つのグラフの接線の傾き）の構成を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$3$ つの極限は、別々の場所で出会ったように見えて、どれも「**出発点での接線の傾き**」を言っていた。それが $1$ にそろうのは、角を弧度法で、指数と対数を底 $e$ で測ると決めたからである。
+
+「$1$」は自然が勝手にくれた数ではなく、**傾きが $1$ になるようにものさしを選んだ結果**である。`,
+};
+
 /** 「いろいろな関数の微分」ユニットの系列一覧（数Ⅲ・C 第4章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
@@ -2506,4 +2851,5 @@ export const MATH3_VARIOUS_DIFF_SERIES_LIST: LearnerSeries[] = [
   M3VD_LOG_SERIES,
   M3VD_NATLOG_SERIES,
   M3VD_EXP_SERIES,
+  M3VD_ELIM_SERIES,
 ];

@@ -15633,6 +15633,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3VD_THREE_BROTHERS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdThreeBrothers />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3VD_BASE_SQUEEZE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3vdBaseSqueeze />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -35978,6 +35992,104 @@ function M3vdNestExp() {
       <text x="344" y="86" fontSize="12" fill={stroke} fontStyle="italic">y</text>
       <text x="180" y="158" fontSize="11" fill={accent} textAnchor="middle">
         外が「自分自身に戻る」とき、全体の傾きはどう組み立てる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列8 step1: 3 兄弟の 3 枚並び（y = sin x の原点・y = eˣ の (0,1)・y = log x の (1,0)）。
+ *  各枚に点 A と近くの点 P、割線 AP だけ（接線は描かない＝同じ尺度で引くと 3 本が平行に見えて「3 つとも同じ傾き」という発見を漏らす）。目盛りなし。 */
+function M3vdThreeBrothers() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panel = (
+    key: string,
+    ox: number,
+    f: (u: number) => number,
+    u0: number,
+    u1: number,
+    ax: number,
+    px: number,
+    cx: number,
+    cy: number,
+    label: string,
+  ) => {
+    const s = 26;
+    const X = (u: number) => ox + (u - cx) * s;
+    const Y = (v: number) => 92 - (v - cy) * s;
+    const d = Array.from({ length: 61 }, (_, k) => u0 + ((u1 - u0) * k) / 60)
+      .map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(f(u)).toFixed(1)}`).join(" ");
+    const ay = f(ax);
+    const py = f(px);
+    const ms = (py - ay) / (px - ax);
+    return (
+      <g key={key}>
+        <path d={`M ${X(u0) - 4} ${Y(cy)} L ${X(u1) + 4} ${Y(cy)}`} fill="none" stroke={muted} strokeWidth="0.8" />
+        <path d={d} fill="none" stroke={stroke} strokeWidth="1.4" />
+        <path d={`M ${X(ax - 0.6)} ${Y(ay - 0.6 * ms)} L ${X(px + 0.3)} ${Y(py + 0.3 * ms)}`} fill="none" stroke={accent} strokeWidth="1.5" />
+        <circle cx={X(ax)} cy={Y(ay)} r="2.8" fill={accent} />
+        <circle cx={X(px)} cy={Y(py)} r="2.4" fill={stroke} />
+        <text x={X(ax) - 8} y={Y(ay) - 6} fontSize="10.5" fill={accent} textAnchor="end">A</text>
+        <text x={X(px) + 5} y={Y(py) + 12} fontSize="10.5" fill={stroke}>P</text>
+        <text x={ox} y="168" fontSize="11" fill={stroke} textAnchor="middle">{label}</text>
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 360 206"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="3 枚の小さなグラフが横に並ぶ図。左から、正弦のグラフの原点、指数関数のグラフの点 (0, 1)、自然対数のグラフの点 (1, 0) に点 A をとり、近くの点 P と直線で結んでいる。P を A に近づけたときの傾きを問う。目盛りは無い模式の図"
+    >
+      {panel("sin", 62, Math.sin, -1.7, 1.7, 0, 1.2, 0, 0, "y = sin x")}
+      {panel("exp", 180, (u) => Math.exp(u), -1.8, 1.0, 0, 0.8, 0, 1, "y = eˣ")}
+      {panel("log", 298, (u) => Math.log(u), 0.3, 2.7, 1, 2.0, 1, 0, "y = log x")}
+      <text x="180" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        P を A に近づけると、3 本の直線の傾きはどこへ向かう？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな関数の微分 系列8 step4（質的変化）: y = 2ˣ と y = 4ˣ、(0,1) から 2ˣ は右へ・4ˣ は左へ結んだ割線。
+ *  ★Round 1 の注意★ 接線は描かない・目盛りなし・割線の傾きの値も書かない（傾き 1 の底が図から読めないように）。 */
+function M3vdBaseSqueeze() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 170;
+  const oy = 175;
+  const s = 60;
+  const X = (u: number) => ox + u * s;
+  const Y = (v: number) => oy - v * s;
+  const curve = (b: number, u0: number, u1: number) =>
+    Array.from({ length: 61 }, (_, k) => u0 + ((u1 - u0) * k) / 60)
+      .map((u, k) => `${k === 0 ? "M" : "L"} ${X(u).toFixed(1)} ${Y(Math.pow(b, u)).toFixed(1)}`).join(" ");
+  return (
+    <svg
+      viewBox="0 0 360 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="底が 2 と 4 の指数関数のグラフが点 (0, 1) で交わる図。底 2 のグラフには点 (0, 1) から右の点へ、底 4 のグラフには点 (0, 1) から左の点へ、それぞれ直線を結んでいる。接線と目盛りは描いていない"
+    >
+      <path d={`M 14 ${oy} L 346 ${oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${ox} 190 L ${ox} 8`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={curve(2, -2.2, 1.4)} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d={curve(4, -1.1, 0.7)} fill="none" stroke={stroke} strokeWidth="1.5" strokeDasharray="6 3" />
+      <text x={X(1.4) + 4} y={Y(Math.pow(2, 1.4)) + 12} fontSize="11" fill={stroke}>y = 2ˣ</text>
+      <text x={X(0.7) - 8} y={Y(Math.pow(4, 0.7)) + 4} fontSize="11" fill={stroke} textAnchor="end">y = 4ˣ</text>
+      <path d={`M ${X(0)} ${Y(1)} L ${X(0.5)} ${Y(Math.SQRT2)}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d={`M ${X(-0.5)} ${Y(0.5)} L ${X(0)} ${Y(1)}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <circle cx={X(0)} cy={Y(1)} r="3.2" fill={accent} />
+      <circle cx={X(0.5)} cy={Y(Math.SQRT2)} r="2.6" fill={accent} />
+      <circle cx={X(-0.5)} cy={Y(0.5)} r="2.6" fill={accent} />
+      <text x={X(0) + 6} y={Y(1) + 14} fontSize="10.5" fill={stroke}>(0, 1)</text>
+      <text x="180" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        (0, 1) での接線の傾きがちょうど 1 になる底は、どこにある？
       </text>
     </svg>
   );
