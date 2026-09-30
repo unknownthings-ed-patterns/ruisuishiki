@@ -718,6 +718,8 @@ Q5（ハブ胚細胞）は問いを立てていない——**推奨案で進め�
 | **系列7** | **実装済**（`math3_vd_exp_01`・図 `M3VD_EXP_MIRROR`・`M3VD_NEST_EXP`・`微分する` に指数の段落・`逆関数の微分法` の関連語に `自然対数`） | 2026-09-30 |
 | **系列8** | **実装済**（`math3_vd_elim_01`・図 `M3VD_THREE_BROTHERS`・`M3VD_BASE_SQUEEZE`・`ネイピア数` に割線ではさむ見方と関連語 `三角関数の極限`） | 2026-09-30 |
 | **系列9** | **実装済**（`math3_vd_logdiff_01`・図 `M3VD_LOG_TRANSLATE`・`M3VD_TWO_RULES`・辞書 `対数微分法` 新設・`対数法則` に微分の段落）＝**全 9 系列 90 問 実装完了** | 2026-09-30 |
+| **横断検収** | **済**：層13 不一致 0／原典照合 既知の 2 件のみ／系列内の答えの重複 0・系列をまたぐ偶然の一致 7 組（Round 2 に開示）／90 問すべて `answerDisplay` を評価器で正解判定／図 18 枚すべて描画・step1 と質的変化 step のみ／audit_cross_refs 本命 0 | 2026-09-30 |
+| **Round 2（Codex・報告のみ・最後の監査）** | プロンプト発行 `~/ruisuishiki-refs/prompts/round2_math3c_ch4_impl_codex.txt`／報告先 `~/ruisuishiki-refs/audit_math3c_ch4_impl_codex.md` | 2026-09-30 |
 
 ### 次にやること（1 行）
 
