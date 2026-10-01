@@ -2798,6 +2798,344 @@ $x^3\\cos x$ を素直に巻き戻すには部分積分が $3$ 回いるが、�
 どちらも、符号つきの面積という見方から出てくる。巻き戻す前に、グラフの形を見る。`,
 };
 
+/** M3INT9: 定積分の置換——区間も一緒にすり替える。
+ *  step2 の提出値は付けかえた t の区間の上の端（R1 A7：値を問うと step1 の答えを写して当たる。値の一致は L3 で見せる）。
+ *  山場 step3（C12 ②）：∫₁² 2x/(x²+1)² dx＝3/10。区間を付けかえ忘れると ∫₁² t⁻² dt＝1/2 で外れる（D6：偶然一致しない組を sympy で確認）。
+ *  区間 0〜1 と g = x^k の組（付けかえ忘れが一致する）は使わない（R1 A7）。step4 は初め cos x (1+sin x)² にしたが、(1+sin x)² が原典 練17 の式そのものだったので替えた。
+ *  step5 の逆は a > 0 を問題文に書き、solveset の解 1 個（12）（R1 B6）。
+ *  step6 の L3 に「ここで新しいのは、g が減少すると t の区間が逆向きになること」（R1 C2）。
+ *  原典の族：練18（x√(x−1)・sin x/(1+cos x)・x log(x²+1)）と形をずらした。step7 は sin 2x/(3+cos²x)（1+cos x を分母にしない）。 */
+export const M3INT_DSUBST_SERIES: LearnerSeries = {
+  id: "math3_int_dsubst_01",
+  title: "定積分の置換——区間も一緒にすり替える",
+  subtitle:
+    "数Ⅲ・C 積分法より — 変数をすり替えたら、区間も $t$ の目盛りに読み替える。$x$ に戻さずに済む代わりに、端を付けかえ忘れると外れる。$10$ 問で、区間ごとすり替える手つきと、向きが逆になる場合を確かめる。",
+  patternId: "M3INT9",
+  unit: "math_3",
+  revelationLabel:
+    "**区間は $x$ の目盛りで書かれている。$t$ に替えるなら、端の値を $t = g(x)$ に通して $t$ の目盛りに読み替える**——向きが逆になっても、そのまま書けばよい",
+  drivingQuestion:
+    "変数をすり替えたら、区間も一緒にすり替えなければならない。**すり替えた先で、区間はどう変わる？——向きが逆になったら？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^2 x(x^2 - 1)^3\\,dx$ の値を求めましょう。",
+      answer: 81 / 8,
+      answerDisplay: "81/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^2 x(x^2 - 1)^3\\,dx$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "この積分の中に、かたまりと、その微分に近いものが見つからない？" },
+        {
+          layer: 2,
+          text: "系列5 で、すり替えたあと最後に $t$ を何に戻した？（[置換積分]）",
+        },
+        {
+          layer: 3,
+          text: "$t = x^2 - 1$ と置くと $dt = 2x\\,dx$。$\\displaystyle\\int x(x^2-1)^3\\,dx = \\frac12\\int t^3\\,dt = \\frac18t^4 + C = \\frac18(x^2-1)^4 + C$。$x$ に戻してから端を入れる：$\\dfrac18\\cdot 3^4 - \\dfrac18\\cdot 0^4 = \\dfrac{81}{8}$。中心の問いへの最初の部分回答：**系列5 の手つき（すり替え → 巻き戻す → $x$ に戻す）のあと、$x$ の端を入れれば定積分になる**——ただし、$x$ に戻す手間がかかる。",
+        },
+      ],
+      formulaPreview: "t = x² − 1 → (1/8)(x² − 1)⁴ → x = 2 と x = 1 で 81/8 − 0 = 81/8",
+      figureMarker: "<<M3INT_SCALES>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前の問題の定積分を、$t = x^2 - 1$ と置いて $x$ に戻さずに計算します。$\\displaystyle\\int_1^2 x(x^2 - 1)^3\\,dx = \\frac12\\int_0^{b} t^3\\,dt$ と書けるとき、$t$ の区間の上の端 $b$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$t$ の区間の上の端 $b$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は $x$ に戻してから端を入れた。$x$ に戻さないなら、端のほうをどうする？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$x$ に戻さず、$t$ のまま端を入れること。",
+        },
+        {
+          layer: 3,
+          text: "区間の $1$ と $2$ は $x$ の目盛りで書かれた端。$t$ の積分に入れるなら、$t$ の目盛りに読み替える：$x = 1$ のとき $t = 1 - 1 = 0$、$x = 2$ のとき $t = 4 - 1 = 3$。$b = 3$。$\\dfrac12\\displaystyle\\int_0^3 t^3\\,dt = \\frac12\\cdot\\frac{81}{4} = \\frac{81}{8}$——前題と同じ値になる。中心の問いへ：**区間の端を $t = g(x)$ に通して $t$ の目盛りに読み替えれば、$x$ に戻さずに済む**。",
+        },
+      ],
+      formulaPreview: "x = 1 → t = 0、x = 2 → t = 3 → b = 3（(1/2)∫₀³ t³ dt = 81/8 で前題と一致）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^2\\frac{2x}{(x^2 + 1)^2}\\,dx$ の値を求めましょう。",
+      answer: 3 / 10,
+      answerDisplay: "3/10",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^2\\frac{2x}{(x^2 + 1)^2}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で、区間の端をどう扱った？ 今度も同じことが必要？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、かたまりが分母にあって、$2$ 乗されていること。",
+        },
+        {
+          layer: 3,
+          text: "$t = x^2 + 1$ と置くと $dt = 2x\\,dx$。端は $x = 1$ で $t = 2$、$x = 2$ で $t = 5$。$\\displaystyle\\int_2^5\\frac{dt}{t^2} = \\Big[-\\frac1t\\Big]_2^5 = -\\frac15 + \\frac12 = \\frac{3}{10}$。区間を付けかえ忘れて $x$ の $1$ と $2$ のまま $t$ に入れると $\\displaystyle\\int_1^2\\frac{dt}{t^2} = \\frac12$ になって外れる。中心の問いへ：**すり替えたら、端も必ず $t$ の目盛りに読み替える。読み替え忘れは値を変える**。",
+        },
+      ],
+      formulaPreview: "t = x² + 1、端は 2 と 5 → ∫₂⁵ t⁻² dt = 1/2 − 1/5 = 3/10（付けかえ忘れは 1/2）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{6}}\\cos x\\,(1 + 2\\sin x)^3\\,dx$ の値を求めましょう。",
+      answer: 15 / 8,
+      answerDisplay: "15/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{6}}\\cos x\\,(1 + 2\\sin x)^3\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。かたまりと、その微分に近いものはどこにある？ 端の読み替えは同じ？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、かたまりの中身が三角関数であること。",
+        },
+        {
+          layer: 3,
+          text: "$t = 1 + 2\\sin x$ と置くと $dt = 2\\cos x\\,dx$。端は $x = 0$ で $t = 1$、$x = \\dfrac{\\pi}{6}$ で $t = 2$。$\\dfrac12\\displaystyle\\int_1^2 t^3\\,dt = \\frac12\\cdot\\frac{16 - 1}{4} = \\frac{15}{8}$。$x$ の端 $\\dfrac{\\pi}{6}$ が、$t$ の目盛りでは $2$ という整数になった。中心の問いへ：**三角関数のかたまりでも、端を $t = g(x)$ に通せば $t$ の区間が決まる**。",
+        },
+      ],
+      formulaPreview: "t = 1 + 2sin x、端は 1 と 2 → (1/2)∫₁² t³ dt = (1/2)(15/4) = 15/8",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$a > 0$ とします。定積分 $\\displaystyle\\int_0^a\\frac{dx}{\\sqrt{2x + 1}}$ を $t = \\sqrt{2x + 1}$ と置くと、$\\displaystyle\\int_1^5 dt$ になりました。$a$ を求めましょう。",
+      answer: 12,
+      answerDisplay: "12",
+      unit: "",
+      unknownLabel: "$x$ の区間の上の端 $a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "step2 と向きが逆。step2 は $x$ の端から $t$ の端を出した。今度は $t$ の端が先にあって、$x$ の端を探す。",
+        },
+        {
+          layer: 3,
+          text: "$x$ の端を $t = \\sqrt{2x+1}$ に通すと $t$ の端になる。下の端は $x = 0$ で $t = 1$（合っている）。上の端は $\\sqrt{2a + 1} = 5$、$2a + 1 = 25$、$a = 12$。確かめ：$t^2 = 2x + 1$ より $2t\\,dt = 2\\,dx$、$\\dfrac{dx}{\\sqrt{2x+1}} = \\dfrac{t\\,dt}{t} = dt$。中心の問いへ：**端の読み替えは、$t$ から $x$ へ逆にたどることもできる**。",
+        },
+      ],
+      formulaPreview: "√(2a + 1) = 5 → 2a + 1 = 25 → a = 12",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^2 x(4 - x^2)^2\\,dx$ の値を求めましょう。",
+      answer: 32 / 3,
+      answerDisplay: "32/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^2 x(4 - x^2)^2\\,dx$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。端を $t$ の目盛りに読み替えるのは同じ。読み替えた端の大小は、step3 と同じ並び？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、かたまり $4 - x^2$ が、$x$ が増えると減ること。",
+        },
+        {
+          layer: 3,
+          text: "$t = 4 - x^2$ と置くと $dt = -2x\\,dx$、つまり $x\\,dx = -\\dfrac12dt$。端は $x = 0$ で $t = 4$、$x = 2$ で $t = 0$——下の端が大きく、上の端が小さい。そのまま書く：$\\displaystyle\\int_4^0 t^2\\cdot\\left(-\\frac12\\right)dt = \\frac12\\int_0^4 t^2\\,dt = \\frac12\\cdot\\frac{64}{3} = \\frac{32}{3}$。上下を入れかえると符号が反転する（数Ⅱの定積分の性質）ので、$-\\dfrac12$ の負号と打ち消し合って正になる。ここで新しいのは、**$g$ が減少すると $t$ の区間が逆向きになる**こと。端を大小の順に並べ直して負号だけ残すと $-\\dfrac{32}{3}$ になって外れる。中心の問いへ：**向きが逆になっても、読み替えた端をそのままの順で書けばよい。符号は $dt$ と上下の入れかえが面倒を見る**。",
+        },
+      ],
+      formulaPreview: "t = 4 − x²、端は 4 から 0 → ∫₄⁰ t²(−1/2)dt = (1/2)∫₀⁴ t² dt = 32/3",
+      figureMarker: "<<M3INT_FLIP>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{3 + \\cos^2 x}\\,dx$ の値を求めましょう。",
+      answer: Math.log(4 / 3),
+      answerDisplay: "log4-log3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{3 + \\cos^2 x}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。かたまりは $x$ が増えると増える？ 減る？ 端の並びはどうなる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、かたまりが三角関数で、分母にあること。",
+        },
+        {
+          layer: 3,
+          text: "$t = 3 + \\cos^2 x$ と置くと $dt = -2\\sin x\\cos x\\,dx = -\\sin 2x\\,dx$。端は $x = 0$ で $t = 4$、$x = \\dfrac{\\pi}{2}$ で $t = 3$——やはり逆向き。$\\displaystyle\\int_4^3\\frac{-dt}{t} = \\int_3^4\\frac{dt}{t} = \\log 4 - \\log 3$。中心の問いへ：**三角関数でも、かたまりが減少なら区間は逆向き。そのまま書いて、符号は $dt$ と入れかえに任せる**。",
+        },
+      ],
+      formulaPreview: "t = 3 + cos²x、端は 4 から 3、dt = −sin 2x dx → ∫₃⁴ dt/t = log 4 − log 3",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^5\\frac{x}{\\sqrt{2x - 1}}\\,dx$ の値を求めましょう。",
+      answer: 16 / 3,
+      answerDisplay: "16/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^5\\frac{x}{\\sqrt{2x - 1}}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。根号ごと $t$ と置くのは同じ。分子に残った $x$ は、どうする？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、分子に $x$ が残っていること。",
+        },
+        {
+          layer: 3,
+          text: "$t = \\sqrt{2x - 1}$ と置くと $x = \\dfrac{t^2 + 1}{2}$、$dx = t\\,dt$。端は $x = 1$ で $t = 1$、$x = 5$ で $t = 3$。$\\displaystyle\\int_1^3\\frac{\\frac{t^2+1}{2}}{t}\\cdot t\\,dt = \\frac12\\int_1^3(t^2 + 1)\\,dt = \\frac12\\left(\\frac{26}{3} + 2\\right) = \\frac{16}{3}$。残った $x$ も $t$ で書き直す（系列5）。中心の問いへ：**$x$ を $t$ で表す向きのすり替えでも、端は $t = g(x)$ に通して読み替える**。",
+        },
+      ],
+      formulaPreview: "t = √(2x − 1)、x = (t² + 1)/2、dx = t dt、端は 1 と 3 → (1/2)∫₁³(t² + 1)dt = 16/3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^2\\frac{2x + 1}{x^2 + x + 1}\\,dx$ の値を求めましょう。",
+      answer: Math.log(7 / 3),
+      answerDisplay: "log7-log3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^2\\frac{2x + 1}{x^2 + x + 1}\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      inputAffordances: ["log"],
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。step3 は置いて端を読み替えた。この積分は、置かずに巻き戻せる形をしていない？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、分子が分母のちょうど微分になっていること。",
+        },
+        {
+          layer: 3,
+          text: "置かない道：分子は分母の微分なので（系列4）、$\\displaystyle\\int\\frac{2x+1}{x^2+x+1}\\,dx = \\log(x^2+x+1) + C$。$x$ の端をそのまま入れて $\\log 7 - \\log 3$。置く道：$t = x^2 + x + 1$、端は $3$ と $7$、$\\displaystyle\\int_3^7\\frac{dt}{t} = \\log 7 - \\log 3$。同じ値になる。置かない道では端の読み替えが要らない——$x$ のまま巻き戻したから。中心の問いへ：**端を読み替えるのは、$t$ のまま計算するときだけ。$x$ のまま巻き戻せるなら、端も $x$ のまま**。",
+        },
+      ],
+      formulaPreview: "置かずに log(x² + x + 1) の差 = log 7 − log 3。置いて ∫₃⁷ dt/t でも同じ",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^9\\frac{\\log x}{\\sqrt{x}}\\,dx$ の値を求めましょう。",
+      answer: 12 * Math.log(3) - 8,
+      answerDisplay: "12log3-8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^9\\frac{\\log x}{\\sqrt{x}}\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "step8 と比べてみよう。根号ごと $t$ と置くのは同じ。置いたあとに現れる形は、巻き戻せる？" },
+        {
+          layer: 2,
+          text: "step8 と変わったのは、根号の他に $\\log x$ が入っていること。系列6 で、$\\log$ をどう巻き戻した？（[部分積分]）",
+        },
+        {
+          layer: 3,
+          text: "$t = \\sqrt{x}$ と置くと $x = t^2$、$dx = 2t\\,dt$、$\\log x = 2\\log t$。端は $x = 1$ で $t = 1$、$x = 9$ で $t = 3$。$\\displaystyle\\int_1^3\\frac{2\\log t}{t}\\cdot 2t\\,dt = 4\\int_1^3\\log t\\,dt$。$\\log t = 1\\times\\log t$ と見て部分積分（系列6）：$4\\Big[t\\log t - t\\Big]_1^3 = 4\\left\\{(3\\log 3 - 3) - (0 - 1)\\right\\} = 12\\log 3 - 8$。置かずに $\\dfrac{1}{\\sqrt x}$ の側を巻き戻す部分積分でも、$\\Big[2\\sqrt{x}\\log x - 4\\sqrt{x}\\Big]_1^9 = 12\\log 3 - 8$ と同じ値になる。中心の問いへ：**区間ごとすり替えてから片方だけ巻き戻す。道具を組み合わせても、端は $t$ の目盛りで一度読み替えればよい**。",
+        },
+      ],
+      formulaPreview: "t = √x、端は 1 と 3 → 4∫₁³ log t dt：4 × ((3log 3 − 3) − (0 − 1)) = 12log 3 − 8",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 変数をすり替えたら、区間も一緒にすり替えなければならない。**すり替えた先で、区間はどう変わる？——向きが逆になったら？**
+
+────────
+
+## $x$ に戻す道と、$t$ のまま行く道
+
+系列5 の [置換積分] は、すり替えて巻き戻したあと $x$ に戻した。定積分なら、$x$ に戻してから $x$ の端を入れればよい（step1）。
+
+もう $1$ つの道がある。**$x$ に戻さず、端のほうを $t$ の目盛りに読み替える**（step2）。
+
+<<M3INT_SCALES>>
+
+## ここが胚細胞：区間は $x$ の目盛りで書かれている
+
+$\\displaystyle\\int_a^b$ の $a$・$b$ は、$x$ の目盛りで書かれた端である。$t = g(x)$ に替えるなら、端も $g$ に通す。
+
+$$\\int_a^b f(g(x))\\,g'(x)\\,dx = \\int_{g(a)}^{g(b)} f(t)\\,dt$$
+
+読み替え忘れて $x$ の端のまま $t$ に入れると、値が変わる（step3）。
+
+## 向きが逆になるとき
+
+$g$ が減少すると、$g(a) > g(b)$——$t$ の区間は逆向きになる（step6）。
+
+<<M3INT_FLIP>>
+
+**並べ直さずに、そのまま書けばよい。** $dt$ にも負号が出る（$g' < 0$）ので、上下を入れかえたときの符号反転（数Ⅱの定積分の性質）と打ち消し合う。端だけを大小の順に並べ直して負号を残すと、符号が逆になって外れる。
+
+## Step の道筋
+
+- **step1**（事例）：$x$ に戻してから端を入れる
+- **step2**：端を $t$ の目盛りに読み替える
+- **step3（山場）**：読み替え忘れは値を変える
+- **step4**：三角関数のかたまり
+- **step5**：$t$ の端から $x$ の端へ
+- **step6・7**：減少する $g$ で区間が逆向き
+- **step8**：$x$ を $t$ で表す向き
+- **step9**：置かずに巻き戻せば、端は $x$ のまま
+- **step10**：区間ごとすり替えてから部分積分
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 迷ったら、$x$ に戻してから $x$ の端を入れる（step1 の道）。手間は増えるが、端の読み替えは要らない。$t$ のまま行く道と同じ値になるので、片方を検算に使える。
+
+**どちら向きのすり替えかで、気をつけることが違う。** $\\displaystyle\\int f(g(x))\\,g'(x)\\,dx$ の形を $t = g(x)$ で読み替えるとき（step3・6）は、端を $g$ に通すだけでよい。$x$ を $t$ で表す向き（step8・10）では、$t$ が動く範囲で $x$ が $x$ の区間をちょうど $1$ 回なぞるように置く。この系列の置き方は、どれも区間の中で増えるだけ、または減るだけだった。
+
+**この先の景色。** 大学では、$2$ 変数・$3$ 変数の積分でも変数を替える（極座標・球座標）。そのときは区間の代わりに**領域**を読み替え、$dt = g'(x)\\,dx$ の代わりに「面積の伸び縮み率（ヤコビアン）」が掛かる。確率では、確率変数を変換したときの分布の式がこれである。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「定積分の置換積分」の構成（区間の付けかえ／$x$ に戻さずに済むこと／減少する置換で区間が逆向きになること）を参考。問題の値・関数・区間はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+区間の端を $t = g(x)$ に通して、$t$ の目盛りに読み替える。読み替え忘れると値が変わる。
+
+向きが逆になったら、逆向きのままそのまま書く。符号は $dt$ の負号と上下の入れかえが打ち消し合って、正しく出る。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
@@ -2807,4 +3145,5 @@ export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_PARTS_SERIES,
   M3INT_CYCLE_SERIES,
   M3INT_DEFINITE_SERIES,
+  M3INT_DSUBST_SERIES,
 ];

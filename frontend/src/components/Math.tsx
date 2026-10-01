@@ -15941,6 +15941,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_SCALES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intScales />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_FLIP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intFlip />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41266,6 +41280,79 @@ function M3intEvenOdd() {
       <text x="240" y="130" fontSize="11" fill={stroke} textAnchor="middle">左右で符号が逆の形</text>
       <text x="160" y="166" fontSize="11" fill={accent} textAnchor="middle">
         対称な区間で足すと、どちらが残る？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列9 step1: x の数直線と t の数直線。区間の端を t = g(x) に通して、t の目盛りに読み替える。
+ *  ★図に答えを描かない★ 具体的な置き方・端の値は書かない。t の側の端は「?」。
+ *  この図から読めてしまうもの：「x の区間の端は、t の目盛りでは別の数になる」という見方だけ。 */
+function M3intScales() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上に x の数直線、下に t の数直線。x の区間の両端から、t イコール g of x の矢印で t の数直線に移す図。t の側の端は疑問符"
+    >
+      <line x1="30" y1="50" x2="290" y2="50" stroke={stroke} strokeWidth="1.3" />
+      <text x="300" y="54" fontSize="12" fill={stroke}>x</text>
+      <line x1="90" y1="50" x2="180" y2="50" stroke={stroke} strokeWidth="4" opacity="0.5" />
+      <circle cx="90" cy="50" r="3.5" fill={stroke} />
+      <circle cx="180" cy="50" r="3.5" fill={stroke} />
+      <text x="90" y="38" fontSize="11" fill={stroke} textAnchor="middle">下の端</text>
+      <text x="180" y="38" fontSize="11" fill={stroke} textAnchor="middle">上の端</text>
+      <line x1="30" y1="125" x2="290" y2="125" stroke={stroke} strokeWidth="1.3" />
+      <text x="300" y="129" fontSize="12" fill={stroke}>t</text>
+      <path d="M 90 56 L 70 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 180 56 L 240 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <text x="70" y="146" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="240" y="146" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="168" y="92" fontSize="10" fill={muted} textAnchor="middle">t = g(x)</text>
+      <text x="160" y="172" fontSize="11" fill={accent} textAnchor="middle">
+        t の目盛りで読むと、端はいくつになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列9 step6: 減少する g ですり替えると、x の下の端が t では大きい側に来る（端が入れかわる）。
+ *  ★図に答えを描かない★ 具体的な置き方・値は書かない。どちらが上の端になるかは「?」。
+ *  この図から読めてしまうもの：「矢印が交差する＝端の左右が入れかわる」ことだけ（符号の扱いは読めない）。 */
+function M3intFlip() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上の x の数直線の左の端と右の端から、減少する関数 g で t の数直線へ移すと、矢印が交差して左右が入れかわる図。t でどちらが上の端になるかは疑問符"
+    >
+      <line x1="30" y1="50" x2="290" y2="50" stroke={stroke} strokeWidth="1.3" />
+      <text x="300" y="54" fontSize="12" fill={stroke}>x</text>
+      <line x1="100" y1="50" x2="200" y2="50" stroke={stroke} strokeWidth="4" opacity="0.5" />
+      <circle cx="100" cy="50" r="3.5" fill={stroke} />
+      <circle cx="200" cy="50" r="3.5" fill={stroke} />
+      <text x="100" y="38" fontSize="11" fill={stroke} textAnchor="middle">下の端</text>
+      <text x="200" y="38" fontSize="11" fill={stroke} textAnchor="middle">上の端</text>
+      <line x1="30" y1="125" x2="290" y2="125" stroke={stroke} strokeWidth="1.3" />
+      <text x="300" y="129" fontSize="12" fill={stroke}>t</text>
+      <path d="M 100 56 L 230 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 200 56 L 70 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <circle cx="70" cy="125" r="3.5" fill={accent} />
+      <circle cx="230" cy="125" r="3.5" fill={accent} />
+      <text x="150" y="146" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="230" y="100" fontSize="10" fill={muted} textAnchor="middle">t = g(x)（減少）</text>
+      <text x="160" y="172" fontSize="11" fill={accent} textAnchor="middle">
+        矢印が交差したら、t の積分はどう書く？
       </text>
     </svg>
   );

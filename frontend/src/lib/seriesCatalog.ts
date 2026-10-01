@@ -107,6 +107,7 @@ import {
   M3INT_PARTS_SERIES,
   M3INT_CYCLE_SERIES,
   M3INT_DEFINITE_SERIES,
+  M3INT_DSUBST_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2243,6 +2244,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "定積分（巻き戻さずに値が分かるとき）— 下の端が 0 でも項は消えない。対称な区間では奇関数の部分が 0、くり返す山は 1 個分を数える",
+  },
+  {
+    series: M3INT_DSUBST_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "定積分の置換（区間も一緒にすり替える）— 端を t の目盛りに読み替えれば x に戻さずに済む。減少する置き方では区間が逆向き——そのまま書けばよい",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
