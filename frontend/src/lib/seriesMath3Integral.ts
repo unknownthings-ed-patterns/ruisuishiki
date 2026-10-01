@@ -3490,6 +3490,353 @@ $\\sqrt{a^2 - x^2}$ のグラフが半円だから、その定積分は円の一
 $\\dfrac{1}{x^2 + a^2}$ に三角関数が効くのは、円があるからではなく、相互関係が「$1 +$ 何かの $2$ 乗」を $1$ つの $2$ 乗に変えるから。円は、その関係の $1$ つの姿だった。`,
 };
 
+/** M3INT11: 定積分の部分積分と漸化式。
+ *  山場 step3（C12 ②）：∫_{π/12}^{π/4} x cos 2x dx。境界の項（x sin 2x / 2 の差）は両端とも 0 にならない区間（R1 B7）。
+ *  境界の項を落とすと −√3/8 で外れる（正答 5π/48 − √3/8＝sympy）。
+ *  I_n = ∫₀^{π/2} sinⁿx dx：step5 は n=6 の係数 5/6、step6 は I₆ = 5π/32（I₂ = π/4 は答えにしない＝D6）、step7 は I₅、step8（逆）は I₇ から n=7、
+ *  step9 は step5〜8 で使っていない n=4（R1 B7）で cos⁴ と sin⁴ が同じ値（x → π/2 − x の対称＝系列8）。
+ *  step10 は J_n = ∫₁^e (log x)ⁿ dx の J₃ = 6 − 2e（R1 A4：e の 1 次式）。原典 応用2 の (log x)²（不定積分）に近い族——
+ *  定積分の漸化式で問いは別と判断して残した（R1 B12・Round 2 に見てもらう）。
+ *  原典の族：練20（xe^{−x}・x² sin x の 0〜π/2・log x / x² の 1〜e）・応用3（∫₀¹ xⁿeˣ）・応用4 と形と区間をずらした。
+ *  π² の入力は使わない（答えに π² が出ない）。step2 は初め x² sin(x/2) にしたが、途中の sin(x/2) の巻き戻しが原典 練1(6) そのもの（系列6 step7 と同じ当たり方）だったので x² sin(x/3) に替えた。 */
+export const M3INT_DPARTS_SERIES: LearnerSeries = {
+  id: "math3_int_dparts_01",
+  title: "定積分の部分積分と漸化式——1 段ずつ下りて、下から積み上げる",
+  subtitle:
+    "数Ⅲ・C 積分法より — 片方だけ巻き戻すと、積分は $1$ 段易しい積分に送られる。定積分では、端の値の項も忘れずに。番号のついた積分は漸化式で結ばれ、いちばん下から積み上げられる。$10$ 問で確かめる。",
+  patternId: "M3INT11",
+  unit: "math_3",
+  revelationLabel:
+    "**部分積分は、次数を下げた同じ形の積分へ送る。だから番号のついた積分の列は漸化式で結ばれ、いちばん下（直接計算できる積分）から積み上げられる**",
+  drivingQuestion:
+    "片方だけ巻き戻すと、積分は $1$ 段易しい積分に送られる。**送り続けたら、どこに着く？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{3}}x\\sin 3x\\,dx$ の値を求めましょう。",
+      answer: Math.PI / 9,
+      answerDisplay: "π/9",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{3}}x\\sin 3x\\,dx$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "この積分は $2$ つの関数の積。どちらを巻き戻すと、残りが易しくなる？" },
+        {
+          layer: 2,
+          text: "系列6 で、多項式 × 三角の積をどう巻き戻した？（[部分積分]）",
+        },
+        {
+          layer: 3,
+          text: "$\\sin 3x$ を巻き戻し（$-\\dfrac13\\cos 3x$）、$x$ を残す：$\\displaystyle\\int_0^{\\frac{\\pi}{3}}x\\sin 3x\\,dx = \\Big[-\\frac{x}{3}\\cos 3x\\Big]_0^{\\frac{\\pi}{3}} + \\frac13\\int_0^{\\frac{\\pi}{3}}\\cos 3x\\,dx$。前の項は $-\\dfrac{\\pi}{9}\\cos\\pi - 0 = \\dfrac{\\pi}{9}$、後の積分は $\\dfrac19\\Big[\\sin 3x\\Big]_0^{\\frac{\\pi}{3}} = 0$。合わせて $\\dfrac{\\pi}{9}$。定積分の部分積分では、$Fg$ の項にも端を入れて差を取る：$\\displaystyle\\int_a^b f g\\,dx = \\Big[F g\\Big]_a^b - \\int_a^b F g'\\,dx$。中心の問いへの最初の部分回答：**部分積分 $1$ 回で、$x$ の次数が $1$ つ下がった積分（ここでは $\\cos 3x$ だけ）に送られた**。",
+        },
+      ],
+      formulaPreview: "−(x/3)cos 3x の差 π/9 ＋ (1/3)∫cos 3x dx（＝0）＝ π/9",
+      figureMarker: "<<M3INT_STAIRS>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{3\\pi}{2}}x^2\\sin\\frac{x}{3}\\,dx$ の値を求めましょう。",
+      answer: 27 * Math.PI - 54,
+      answerDisplay: "27π-54",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{3\\pi}{2}}x^2\\sin\\frac{x}{3}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。$1$ 回送ったら、前題ではもう巻き戻せた。今度も $1$ 回で着く？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、多項式が $x^2$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin\\dfrac{x}{3}$ を巻き戻すと $-3\\cos\\dfrac{x}{3}$。$1$ 回目：$\\Big[-3x^2\\cos\\dfrac{x}{3}\\Big]_0^{\\frac{3\\pi}{2}} + \\displaystyle\\int_0^{\\frac{3\\pi}{2}}6x\\cos\\frac{x}{3}\\,dx$。前の項は $\\cos\\dfrac{\\pi}{2} = 0$ で $0$。$2$ 回目：$\\displaystyle\\int_0^{\\frac{3\\pi}{2}}6x\\cos\\frac x3\\,dx = \\Big[18x\\sin\\frac x3\\Big]_0^{\\frac{3\\pi}{2}} - \\int_0^{\\frac{3\\pi}{2}}18\\sin\\frac x3\\,dx = 27\\pi - \\Big[-54\\cos\\frac x3\\Big]_0^{\\frac{3\\pi}{2}} = 27\\pi - 54$。$x^2 \\to x \\to 1$ と $2$ 段下りた。中心の問いへ：**次数が $2$ なら $2$ 段。$1$ 段ずつ下りて、直接巻き戻せる段に着く**。",
+        },
+      ],
+      formulaPreview: "1 回目の端の項は 0 → ∫6x cos(x/3)dx = 27π − ∫18sin(x/3)dx = 27π − 54",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "定積分 $\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}x\\cos 2x\\,dx$ の値を求めましょう。",
+      answer: (5 * Math.PI) / 48 - Math.sqrt(3) / 8,
+      answerDisplay: "5π/48-sqrt(3)/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}x\\cos 2x\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      inputAffordances: ["pi", "sqrt"],
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。step1 では端の項がきれいな値になった。今度の端でも、そうなる？" },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、区間の端が $0$ でも、三角関数が $0$ になる点でもないこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos 2x$ を巻き戻し（$\\dfrac12\\sin 2x$）、$x$ を残す：$\\Big[\\dfrac{x}{2}\\sin 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} - \\dfrac12\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}\\sin 2x\\,dx$。端の項は $\\dfrac{\\pi}{8}\\cdot 1 - \\dfrac{\\pi}{24}\\cdot\\dfrac12 = \\dfrac{\\pi}{8} - \\dfrac{\\pi}{48} = \\dfrac{5\\pi}{48}$。後の積分は $\\dfrac12\\Big[-\\dfrac12\\cos 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} = \\dfrac14\\cdot\\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{8}$。合わせて $\\dfrac{5\\pi}{48} - \\dfrac{\\sqrt3}{8}$。端の項を「どうせ $0$」と落とすと $-\\dfrac{\\sqrt3}{8}$ になって外れる——step1・2 で端の項が $0$ になったのは、端で $x$ や $\\cos$ が $0$ になったからだった。中心の問いへ：**定積分の部分積分では、端の項が残る。送った先の積分だけでなく、端の項も足す**。",
+        },
+      ],
+      formulaPreview: "(x/2)sin 2x の差 5π/48 − (1/2)∫sin 2x dx（＝√3/8）→ 5π/48 − √3/8",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^1(2x + 1)e^x\\,dx$ の値を求めましょう。",
+      answer: Math.E + 1,
+      answerDisplay: "e+1",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^1(2x + 1)e^x\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      inputAffordances: ["e"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。片方だけ巻き戻して、端の項を残す手つきは同じ。何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、相手が三角関数でなく指数関数であること。",
+        },
+        {
+          layer: 3,
+          text: "$e^x$ を巻き戻し（$e^x$）、$2x + 1$ を残す：$\\Big[(2x+1)e^x\\Big]_0^1 - \\displaystyle\\int_0^1 2e^x\\,dx = (3e - 1) - 2(e - 1) = e + 1$。端の項 $3e - 1$ は下の端でも $1$ が残る（系列8 の $e^0 = 1$）。中心の問いへ：**指数関数でも、$1$ 段下りれば直接巻き戻せる。端の項は下の端でも残りうる**。",
+        },
+      ],
+      formulaPreview: "(2x + 1)e^x の差 3e − 1 − ∫2e^x dx（＝2e − 2）→ e + 1",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$I_n = \\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin^n x\\,dx$（$n = 0, 1, 2, \\ldots$）とします。$n \\ge 2$ のとき $I_n = c\\,I_{n-2}$ の形の関係が成り立ちます。$n = 6$ のときの係数 $c$（$I_6 = c\\,I_4$ の $c$）を求めましょう。",
+      answer: 5 / 6,
+      answerDisplay: "5/6",
+      unit: "",
+      unknownLabel: "$I_6 = c\\,I_4$ の $c$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は $x$ の次数を $1$ 段ずつ下げた。今度は $\\sin$ の何乗かを下げられる？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、下げていくのが多項式の次数でなく、$\\sin$ の指数であること。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin^n x = \\sin^{n-1}x\\cdot\\sin x$ と分け、$\\sin x$ を巻き戻し（$-\\cos x$）、$\\sin^{n-1}x$ を残す：$I_n = \\Big[-\\sin^{n-1}x\\cos x\\Big]_0^{\\frac{\\pi}{2}} + (n-1)\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin^{n-2}x\\cos^2 x\\,dx$。端の項は両端で $0$。$\\cos^2 x = 1 - \\sin^2 x$ で $I_n = (n-1)(I_{n-2} - I_n)$、$n I_n = (n-1)I_{n-2}$。$I_n = \\dfrac{n-1}{n}I_{n-2}$。$n = 6$ で $c = \\dfrac56$。出発点 $I_n$ が右辺にもう一度現れた——系列7 の方程式で閉じる手つき。中心の問いへ：**$\\sin$ の $n$ 乗は、部分積分 $1$ 回で $2$ 段下の $I_{n-2}$ に送られる。番号の列が漸化式で結ばれた**。",
+        },
+      ],
+      formulaPreview: "I_n = (n − 1)(I_(n−2) − I_n) → I_n = ((n − 1)/n)·I_(n−2) → n = 6 で 5/6",
+      figureMarker: "<<M3INT_STAIRS_TWO>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "前の問題の $I_n = \\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin^n x\\,dx$ について、$I_6$ の値を求めましょう。",
+      answer: (5 * Math.PI) / 32,
+      answerDisplay: "5π/32",
+      unit: "",
+      unknownLabel: "$I_6$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の関係を、何回くり返せばいちばん下に着く？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、係数を $1$ つ出すのでなく、いちばん下まで下りて値を出すこと。",
+        },
+        {
+          layer: 3,
+          text: "$I_6 = \\dfrac56I_4 = \\dfrac56\\cdot\\dfrac34I_2 = \\dfrac56\\cdot\\dfrac34\\cdot\\dfrac12I_0$。いちばん下は $I_0 = \\displaystyle\\int_0^{\\frac{\\pi}{2}}dx = \\frac{\\pi}{2}$。$I_6 = \\dfrac{5\\cdot 3\\cdot 1}{6\\cdot 4\\cdot 2}\\cdot\\dfrac{\\pi}{2} = \\dfrac{15}{48}\\cdot\\dfrac{\\pi}{2} = \\dfrac{5\\pi}{32}$。係数を $\\dfrac{n}{n-1}$ と逆に覚えると $\\dfrac65\\cdot\\dfrac43\\cdot 2\\cdot\\dfrac{\\pi}{2}$ となって $1$ より大きくなる——$0 \\le \\sin^6 x \\le 1$ の積分が $\\dfrac{\\pi}{2}$ を超えるはずがないので、すぐ気づける。中心の問いへ：**下りきったら、いちばん下の直接計算できる積分から積み上げる**。",
+        },
+      ],
+      formulaPreview: "I₆ = (5/6)(3/4)(1/2)·I₀、I₀ = π/2 → 5π/32",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "同じ $I_n = \\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin^n x\\,dx$ について、$I_5$ の値を求めましょう。",
+      answer: 8 / 15,
+      answerDisplay: "8/15",
+      unit: "",
+      unknownLabel: "$I_5$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。$2$ 段ずつ下りると、奇数の番号はどこに着く？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、番号が奇数であること。",
+        },
+        {
+          layer: 3,
+          text: "$I_5 = \\dfrac45I_3 = \\dfrac45\\cdot\\dfrac23I_1$。奇数は $I_0$ でなく $I_1$ に着く：$I_1 = \\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin x\\,dx = \\Big[-\\cos x\\Big]_0^{\\frac{\\pi}{2}} = 1$。$I_5 = \\dfrac{4\\cdot 2}{5\\cdot 3}\\cdot 1 = \\dfrac{8}{15}$。$\\pi$ が出てこない。中心の問いへ：**$2$ 段ずつ下りる階段は、偶数と奇数で別の段に着く。いちばん下の値が違うので、答えの形も違う**。",
+        },
+      ],
+      formulaPreview: "I₅ = (4/5)(2/3)·I₁、I₁ = 1 → 8/15",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "同じ $I_n = \\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin^n x\\,dx$ について、$I_n = \\dfrac{16}{35}$ となる番号 $n$ を求めましょう。",
+      answer: 7,
+      answerDisplay: "7",
+      unit: "",
+      unknownLabel: "$I_n = \\dfrac{16}{35}$ となる $n$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は番号から値を出した。今度は値が先にあって、番号を探す。",
+        },
+        {
+          layer: 3,
+          text: "$\\pi$ が入っていないので奇数番。前題の $I_5 = \\dfrac{8}{15}$ から $1$ 段上がると $I_7 = \\dfrac67I_5 = \\dfrac67\\cdot\\dfrac{8}{15} = \\dfrac{48}{105} = \\dfrac{16}{35}$。$n = 7$。奇数番の $I_n$ は $n$ が大きくなるほど小さくなる（$0 \\le \\sin x \\le 1$ なので $\\sin^{n+2}x \\le \\sin^n x$）ので、他の奇数番が同じ値になることはない。中心の問いへ：**漸化式の階段は、上りにも使える。値の形（$\\pi$ の有無）から、偶数か奇数かも読める**。",
+        },
+      ],
+      formulaPreview: "π が無い → 奇数番。I₇ = (6/7)·I₅ = (6/7)(8/15) = 16/35 → n = 7",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^4 x\\,dx$ の値を求めましょう。",
+      answer: (3 * Math.PI) / 16,
+      answerDisplay: "3π/16",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^4 x\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      inputAffordances: ["pi"],
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。区間は同じ。$\\cos$ の $4$ 乗の積分は、$\\sin$ の $4$ 乗と比べてどうなりそう？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、$\\sin$ でなく $\\cos$ であること。",
+        },
+        {
+          layer: 3,
+          text: "漸化式の道：$\\cos$ でも同じ部分積分で $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^n x\\,dx = \\frac{n-1}{n}\\int_0^{\\frac{\\pi}{2}}\\cos^{n-2}x\\,dx$ が出て、$\\dfrac34\\cdot\\dfrac12\\cdot\\dfrac{\\pi}{2} = \\dfrac{3\\pi}{16}$。対称性の道（系列8）：$x = \\dfrac{\\pi}{2} - t$ とすり替えると $\\cos x = \\sin t$、区間は $\\dfrac{\\pi}{2}$ から $0$ に逆向き、$dx = -dt$ で、$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^4 x\\,dx = \\int_0^{\\frac{\\pi}{2}}\\sin^4 t\\,dt = I_4 = \\frac{3\\pi}{16}$。グラフで見れば、$\\cos^4 x$ と $\\sin^4 x$ は $x = \\dfrac{\\pi}{4}$ を軸に左右を入れかえた形。中心の問いへ：**漸化式の道と、対称性の道が同じ値に着く**。",
+        },
+      ],
+      formulaPreview: "x = π/2 − t で ∫cos⁴x dx = I₄ = (3/4)(1/2)(π/2) = 3π/16",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$J_n = \\displaystyle\\int_1^e(\\log x)^n\\,dx$（$n = 0, 1, 2, \\ldots$）とします。$J_3$ の値を求めましょう。",
+      answer: 6 - 2 * Math.E,
+      answerDisplay: "6-2e",
+      unit: "",
+      unknownLabel: "$J_3$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      inputAffordances: ["e"],
+      hints: [
+        {
+          layer: 1,
+          text: "step5 と比べてみよう。番号のついた積分を、部分積分で $1$ つ下の番号に送るのは同じ。今度は何段ずつ下りる？",
+        },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、$\\sin$ でなく $\\log$ の $n$ 乗であること。系列6 で、$\\log x$ だけの積分をどう見た？（[部分積分]）",
+        },
+        {
+          layer: 3,
+          text: "$(\\log x)^n = 1\\times(\\log x)^n$ と見て、$1$ を巻き戻し（$x$）、$(\\log x)^n$ を残す：$J_n = \\Big[x(\\log x)^n\\Big]_1^e - \\displaystyle\\int_1^e x\\cdot\\frac{n(\\log x)^{n-1}}{x}\\,dx = e - nJ_{n-1}$（$\\log e = 1$、$\\log 1 = 0$）。いちばん下は $J_0 = \\displaystyle\\int_1^e dx = e - 1$。$J_1 = e - (e - 1) = 1$、$J_2 = e - 2\\cdot 1 = e - 2$、$J_3 = e - 3(e - 2) = 6 - 2e$。今度は $1$ 段ずつ下りた。中心の問いへ：**送り先の段数は関数によって違う（$\\sin$ は $2$ 段、$\\log$ は $1$ 段）。どちらも、いちばん下から積み上げれば着く**。",
+        },
+      ],
+      formulaPreview: "J_n = e − n·J_(n−1)、J₀ = e − 1 → J₁ = 1、J₂ = e − 2、J₃ = 6 − 2e",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 片方だけ巻き戻すと、積分は $1$ 段易しい積分に送られる。**送り続けたら、どこに着く？**
+
+────────
+
+## 定積分の部分積分：端の項も差を取る
+
+系列6 の [部分積分] を定積分にすると、$Fg$ の項にも端を入れる（step1）。
+
+$$\\int_a^b f g\\,dx = \\Big[F g\\Big]_a^b - \\int_a^b F g'\\,dx$$
+
+step1・2 で端の項が $0$ になったのは、端で $x$ や $\\cos$ が $0$ になったからである。いつも $0$ だと思って落とすと外れる（step3）。
+
+<<M3INT_STAIRS>>
+
+## ここが胚細胞：1 段ずつ下りて、下から積み上げる
+
+多項式 × 三角・指数では、部分積分 $1$ 回で多項式の次数が $1$ つ下がる。次数が $2$ なら $2$ 回で着く（step2）。
+
+$\\sin$ の $n$ 乗では、部分積分 $1$ 回と $\\cos^2 = 1 - \\sin^2$ で、$2$ 段下の積分に送られる（step5）。
+
+$$I_n = \\frac{n-1}{n}I_{n-2}$$
+
+番号のついた積分の列が、数列の [漸化式] で結ばれた。下りきったいちばん下（$I_0 = \\dfrac{\\pi}{2}$ か $I_1 = 1$）は直接計算できるので、そこから積み上げれば、どの番号の値も出る（step6・7）。
+
+<<M3INT_STAIRS_TWO>>
+
+## 送り先の段数は関数ごとに違う
+
+- 多項式 × 三角・指数：$1$ 段（次数が $1$ 下がる）
+- $\\sin^n$・$\\cos^n$：$2$ 段（偶数は $I_0$、奇数は $I_1$ に着く）
+- $(\\log x)^n$：$1$ 段（$J_n = e - nJ_{n-1}$。step10）
+
+## Step の道筋
+
+- **step1・2**（事例）：$1$ 段・$2$ 段下りて着く
+- **step3（山場）**：端の項は、いつも $0$ とは限らない
+- **step4**：指数でも同じ
+- **step5**：$\\sin$ の $n$ 乗の漸化式
+- **step6・7**：偶数番・奇数番を下から積み上げる
+- **step8**：値から番号へ
+- **step9**：漸化式の道と対称性の道
+- **step10**：$\\log$ の $n$ 乗——$1$ 段ずつ
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 漸化式を忘れたら、$\\sin^n x = \\sin^{n-1}x\\cdot\\sin x$ と分けて部分積分を $1$ 回すればよい。係数の向き（$\\dfrac{n-1}{n}$ か $\\dfrac{n}{n-1}$ か）に迷ったら、$0 \\le \\sin^n x \\le 1$ なので $I_n$ は $\\dfrac{\\pi}{2}$ を超えず、番号が上がるほど小さくなる、と確かめる。
+
+**漸化式は数列の道具だった。** 数Bで、前の項から次の項を決める式を [漸化式] と呼んだ。積分の番号の列も、同じ道具で扱える。いちばん下を直接計算するのは、数列の初項を決めることにあたる。
+
+**この先の景色。** $I_n$ の偶数番と奇数番を掛け合わせて比べると、$\\dfrac{\\pi}{2}$ を分数の無限の積で表す式（ウォリスの公式）が出てくる。また、$\\displaystyle\\int_0^\\infty x^n e^{-x}\\,dx$ を部分積分で $1$ 段ずつ下りると $n!$ になり、これを $n$ が整数でないときにまで広げたのがガンマ関数である。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「定積分の部分積分」の構成（定積分の部分積分の式／くり返しの部分積分／番号のついた定積分の漸化式）を参考。問題の値・関数・区間はすべてオリジナル（原典の漸化式の例とは別の関数を使った）。
+
+────────
+
+**問いに戻ると**
+
+送り続けると、直接計算できるいちばん下の積分に着く。番号のついた積分の列は漸化式で結ばれるので、いちばん下から積み上げればどの番号の値も出る。
+
+定積分では、送るたびに端の項が出る。$0$ になるとは限らないので、端の項も足していく。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
@@ -3501,4 +3848,5 @@ export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_DEFINITE_SERIES,
   M3INT_DSUBST_SERIES,
   M3INT_TRIGSUB_SERIES,
+  M3INT_DPARTS_SERIES,
 ];

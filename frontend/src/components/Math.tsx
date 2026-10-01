@@ -15976,6 +15976,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_STAIRS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intStairs />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_STAIRS_TWO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intStairsTwo />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41480,6 +41494,83 @@ function M3intTanAngle() {
       <text x="242" y="94" fontSize="12" fill={stroke}>x</text>
       <text x="160" y="180" fontSize="11" fill={accent} textAnchor="middle">
         高さ x が区間の端のとき、角 θ はいくつ？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列11 step1: 部分積分 1 回で、番号（次数）が 1 段下の同じ形の積分へ送られる階段。
+ *  ★図に答えを描かない★ 具体的な関数・係数は書かない。いちばん下の段の値は「?」。
+ *  この図から読めてしまうもの：「1 段ずつ下りて、いちばん下から積み上げる」という見通しだけ。 */
+function M3intStairs() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const steps = [
+    { x: 30, y: 30, label: "n 番" },
+    { x: 100, y: 65, label: "n − 1 番" },
+    { x: 170, y: 100, label: "…" },
+    { x: 240, y: 135, label: "いちばん下" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="n 番の積分から、部分積分 1 回ごとに 1 段ずつ下の番号の積分へ下りていく階段の図。いちばん下の段の値は疑問符"
+    >
+      {steps.map((s, i) => (
+        <g key={i}>
+          <rect x={s.x} y={s.y} width="66" height="26" rx="5" fill="none" stroke={i === 3 ? accent : stroke} strokeWidth="1.3" strokeDasharray={i === 3 ? "5 4" : undefined} />
+          <text x={s.x + 33} y={s.y + 17} fontSize="11" fill={i === 3 ? accent : stroke} textAnchor="middle">{s.label}</text>
+          {i < 3 && <path d={`M ${s.x + 66} ${s.y + 13} L ${s.x + 84} ${s.y + 13} L ${s.x + 84} ${s.y + 33}`} fill="none" stroke={muted} strokeWidth="1.2" />}
+        </g>
+      ))}
+      <text x="273" y="182" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="120" y="182" fontSize="11" fill={accent} textAnchor="middle">
+        下りきったら、何から積み上げる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列11 step5: 三角の n 乗の積分 I_n が、2 段下の I_{n−2} に係数つきで送られる階段。偶数番と奇数番で行き先が分かれる。
+ *  ★図に答えを描かない★ 係数・いちばん下の値は書かない（「?」）。
+ *  この図から読めてしまうもの：「2 段ずつ下りる」（問題文にも書いてある）「偶数と奇数で別の段に着く」ことだけ。 */
+function M3intStairsTwo() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const even = [6, 4, 2, 0];
+  const odd = [7, 5, 3, 1];
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上の列は I6 から I4、I2、I0 へ 2 段ずつ下りる。下の列は I7 から I5、I3、I1 へ下りる。各矢印の係数と、いちばん下の値は疑問符"
+    >
+      {[even, odd].map((row, r) => (
+        <g key={r}>
+          {row.map((n, i) => (
+            <g key={n}>
+              <text x={40 + i * 80} y={50 + r * 70} fontSize="13" fill={i === 3 ? accent : stroke} textAnchor="middle">{`I${n}`}</text>
+              {i < 3 && (
+                <>
+                  <path d={`M ${55 + i * 80} ${46 + r * 70} L ${100 + i * 80} ${46 + r * 70}`} fill="none" stroke={muted} strokeWidth="1.2" />
+                  <path d={`M ${95 + i * 80} ${42 + r * 70} L ${101 + i * 80} ${46 + r * 70} L ${95 + i * 80} ${50 + r * 70}`} fill="none" stroke={muted} strokeWidth="1.2" />
+                  <text x={78 + i * 80} y={38 + r * 70} fontSize="10" fill={accent} textAnchor="middle">× ?</text>
+                </>
+              )}
+            </g>
+          ))}
+          <text x={280} y={66 + r * 70} fontSize="10" fill={accent} textAnchor="middle">値は ?</text>
+        </g>
+      ))}
+      <text x="160" y="170" fontSize="11" fill={accent} textAnchor="middle">
+        いちばん下の値は、偶数の列と奇数の列で同じ？
       </text>
     </svg>
   );

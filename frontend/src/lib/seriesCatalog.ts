@@ -109,6 +109,7 @@ import {
   M3INT_DEFINITE_SERIES,
   M3INT_DSUBST_SERIES,
   M3INT_TRIGSUB_SERIES,
+  M3INT_DPARTS_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2261,6 +2262,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "半円の積分（三角関数で置き換える）— √(a² − x²) は x = a sin θ で根号が外れ、θ は中心から見た角。円の出てこない 1/(x² + a²) にも tan が効く",
+  },
+  {
+    series: M3INT_DPARTS_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "定積分の部分積分と漸化式（1 段ずつ下りて、下から積み上げる）— 端の項は 0 とは限らない。番号のついた積分は漸化式で結ばれ、いちばん下から積み上げる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
