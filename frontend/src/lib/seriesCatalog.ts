@@ -106,6 +106,7 @@ import {
   M3INT_SUBST_SERIES,
   M3INT_PARTS_SERIES,
   M3INT_CYCLE_SERIES,
+  M3INT_DEFINITE_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2234,6 +2235,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "循環と組み合わせ（終わらない道を方程式で閉じる）— 指数 × 三角は 2 回で出発点の積分が戻る。それを未知数と見て 1 次方程式で閉じる。すり替え・分ける・面積とも組み合わせる",
+  },
+  {
+    series: M3INT_DEFINITE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "定積分（巻き戻さずに値が分かるとき）— 下の端が 0 でも項は消えない。対称な区間では奇関数の部分が 0、くり返す山は 1 個分を数える",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

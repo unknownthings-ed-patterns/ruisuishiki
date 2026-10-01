@@ -15927,6 +15927,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_SIGNED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intSigned />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_EVEN_ODD>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intEvenOdd />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41150,6 +41164,108 @@ function M3intTwoStage() {
       <text x="160" y="82" fontSize="14" fill={accent} textAnchor="middle">?</text>
       <text x="160" y="158" fontSize="11" fill={accent} textAnchor="middle">
         どちらの道具を先に使えば、見覚えのある形になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列8 step1: 定積分は「符号つきの面積」——x 軸の上は正、下は負として足す。
+ *  ★図に答えを描かない★ 具体的な関数・区間・値は書かない。全体の値は「?」。
+ *  この図から読めてしまうもの：「上の部分と下の部分が打ち消し合う」という読み方だけ。 */
+function M3intSigned() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60;
+    const xx = 40 + 240 * t;
+    const yy = 90 - 50 * Math.sin(Math.PI * 1.4 * t);
+    pts.push(`${xx.toFixed(1)},${yy.toFixed(1)}`);
+  }
+  const up: string[] = ["40,90"];
+  const down: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60;
+    const xx = 40 + 240 * t;
+    const yy = 90 - 50 * Math.sin(Math.PI * 1.4 * t);
+    if (t <= 1 / 1.4) up.push(`${xx.toFixed(1)},${yy.toFixed(1)}`);
+    else down.push(`${xx.toFixed(1)},${yy.toFixed(1)}`);
+  }
+  const xMid = 40 + 240 / 1.4;
+  up.push(`${xMid.toFixed(1)},90`);
+  const downPoly = [`${xMid.toFixed(1)},90`, ...down, "280,90"];
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="曲線と x 軸の間で、x 軸より上の部分には正、下の部分には負の符号をつけて足すと定積分になる、という図。全体の値は疑問符"
+    >
+      <line x1="20" y1="90" x2="300" y2="90" stroke={muted} strokeWidth="1" />
+      <polygon points={up.join(" ")} fill={accent} opacity="0.18" />
+      <polygon points={downPoly.join(" ")} fill={muted} opacity="0.25" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <line x1="40" y1="84" x2="40" y2="96" stroke={stroke} strokeWidth="1.2" />
+      <line x1="280" y1="84" x2="280" y2="96" stroke={stroke} strokeWidth="1.2" />
+      <text x="40" y="110" fontSize="11" fill={stroke} textAnchor="middle">a</text>
+      <text x="280" y="110" fontSize="11" fill={stroke} textAnchor="middle">b</text>
+      <text x="120" y="72" fontSize="16" fill={accent} textAnchor="middle">＋</text>
+      <text x="252" y="106" fontSize="16" fill={stroke} textAnchor="middle">−</text>
+      <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
+        上と下を、符号つきで足すと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列8 step6: 対称な区間で、関数を偶関数の部分と奇関数の部分に分ける。
+ *  ★図に答えを描かない★ 具体的な関数・値は書かない。どちらの部分が残るかは「?」。
+ *  この図から読めてしまうもの：「左右で同じ形」と「左右で符号が逆の形」の 2 つに分けて見る、という見方だけ（2 つの塗りは同じ色＝残るほうを色で示さない）。 */
+function M3intEvenOdd() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const even: string[] = [];
+  const odd: string[] = [];
+  for (let i = 0; i <= 40; i++) {
+    const u = -1 + (2 * i) / 40;
+    even.push(`${(80 + 55 * u).toFixed(1)},${(95 - 40 * Math.cos(1.3 * u)).toFixed(1)}`);
+    odd.push(`${(240 + 55 * u).toFixed(1)},${(75 - 35 * u * u * u).toFixed(1)}`);
+  }
+  const evenFill = ["25,95", ...even, "135,95"];
+  const oddL: string[] = ["185,75"];
+  const oddR: string[] = ["240,75"];
+  for (let i = 0; i <= 20; i++) {
+    const u = -1 + i / 20;
+    oddL.push(`${(240 + 55 * u).toFixed(1)},${(75 - 35 * u * u * u).toFixed(1)}`);
+    const v = i / 20;
+    oddR.push(`${(240 + 55 * v).toFixed(1)},${(75 - 35 * v * v * v).toFixed(1)}`);
+  }
+  oddL.push("240,75");
+  oddR.push("295,75");
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左は y 軸に関して左右対称な部分のグラフ、右は原点に関して対称な部分のグラフ。対称な区間で積分したとき、どちらの部分が残るかは疑問符"
+    >
+      <line x1="20" y1="95" x2="140" y2="95" stroke={muted} strokeWidth="1" />
+      <line x1="80" y1="40" x2="80" y2="110" stroke={muted} strokeWidth="1" />
+      <polygon points={evenFill.join(" ")} fill={muted} opacity="0.25" />
+      <polyline points={even.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="80" y="130" fontSize="11" fill={stroke} textAnchor="middle">左右で同じ形</text>
+      <line x1="180" y1="75" x2="300" y2="75" stroke={muted} strokeWidth="1" />
+      <line x1="240" y1="30" x2="240" y2="120" stroke={muted} strokeWidth="1" />
+      <polygon points={oddL.join(" ")} fill={muted} opacity="0.25" />
+      <polygon points={oddR.join(" ")} fill={muted} opacity="0.25" />
+      <polyline points={odd.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="240" y="130" fontSize="11" fill={stroke} textAnchor="middle">左右で符号が逆の形</text>
+      <text x="160" y="166" fontSize="11" fill={accent} textAnchor="middle">
+        対称な区間で足すと、どちらが残る？
       </text>
     </svg>
   );

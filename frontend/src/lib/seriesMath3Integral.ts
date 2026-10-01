@@ -2455,6 +2455,349 @@ $e^{ax}\\sin bx$ と $e^{ax}\\cos bx$ を微分すると、互いに相手を含
 指数 × 三角は、片方だけ巻き戻しても易しくならない。だからこそ、易しくするのではなく、方程式で閉じる。`,
 };
 
+/** M3INT8: 定積分——巻き戻さずに値が分かるとき。
+ *  山場 step3（C12 ②）：∫₀^{log3} e^{2x}dx＝4。下端 0 の項を「多項式の癖」で無視すると 9/2 で外れる。
+ *  R1 B7：下端 0 で外れるのは cos でなく sin・指数（cos の巻き戻し sin は 0 で 0 なので外れない）→ 指数を使う。
+ *  step5 の逆は区間 (0, π/2) を問題文に書き、解は π/3 の 1 個（sympy の solveset で確認＝R1 B6）。
+ *  step6 より前に [偶関数]・[奇関数] をリンクしない（R1 B11）。step6 の L3 に「ここで新しいのは分けること」（R1 C2）。
+ *  原典の族：練16・練17・練21（|sin x| の 0〜nπ）・練20(2)（x² sin x）と区間・形をずらした（cos 2x・sin 3x・e^{2x}・(x³+1)cos x・(1+x³)/cos²x・|sin 2x|・|cos 2x|＋x⁴ sin x）。step10 の奇関数の項は初め x² sin x にしたが、練20(2) の式そのものだったので替えた。 */
+export const M3INT_DEFINITE_SERIES: LearnerSeries = {
+  id: "math3_int_definite_01",
+  title: "定積分——巻き戻さずに値が分かるとき",
+  subtitle:
+    "数Ⅲ・C 積分法より — 定積分は、巻き戻した関数の差だった。三角・指数・$\\log$ でも同じ。では、グラフの形（対称・くり返し）だけで値が分かるのはどんなとき？ $10$ 問で確かめる。",
+  patternId: "M3INT8",
+  unit: "math_3",
+  revelationLabel:
+    "**グラフの形（対称・くり返し）が、巻き戻しの手間を消す**——符号つきの面積が打ち消し合ったり、同じ形がくり返したりする",
+  drivingQuestion:
+    "定積分は、巻き戻した関数の差だった。では、**巻き戻さなくても値が分かるのはどんなとき？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "定積分 $\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}\\cos 2x\\,dx$ の値を求めましょう。",
+      answer: 1 / 4,
+      answerDisplay: "1/4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}\\cos 2x\\,dx$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        { layer: 1, text: "定積分の値は、どんな手順で出した？ 関数が三角関数になっても、その手順は変わる？" },
+        {
+          layer: 2,
+          text: "数Ⅱで、定積分を計算するとき、最後に何と何を引いた？（[定積分]）",
+        },
+        {
+          layer: 3,
+          text: "巻き戻すと $\\dfrac12\\sin 2x$（系列1）。上の端での値から下の端での値を引く：$\\dfrac12\\sin\\dfrac{\\pi}{2} - \\dfrac12\\sin\\dfrac{\\pi}{6} = \\dfrac12 - \\dfrac14 = \\dfrac14$。区間で $\\cos 2x \\ge 0$ なので、これはグラフと $x$ 軸の間の面積でもある。中心の問いへの最初の部分回答：**三角関数でも、定積分は「巻き戻して、端の値の差」**——数Ⅱと同じ手順である。",
+        },
+      ],
+      formulaPreview: "(1/2)sin 2x の差：(1/2)sin(π/2) − (1/2)sin(π/6) = 1/2 − 1/4 = 1/4",
+      figureMarker: "<<M3INT_SIGNED>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "定積分 $\\displaystyle\\int_{\\frac{\\pi}{4}}^{\\frac{\\pi}{2}}\\sin 3x\\,dx$ の値を求めましょう。",
+      answer: -Math.SQRT2 / 6,
+      answerDisplay: "-sqrt(2)/6",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{\\frac{\\pi}{4}}^{\\frac{\\pi}{2}}\\sin 3x\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      inputAffordances: ["sqrt"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の手順はそのまま使える？ 答えの符号はどうなる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、区間の途中で関数が $x$ 軸より下にもぐること。",
+        },
+        {
+          layer: 3,
+          text: "巻き戻すと $-\\dfrac13\\cos 3x$。$-\\dfrac13\\cos\\dfrac{3\\pi}{2} - \\left(-\\dfrac13\\cos\\dfrac{3\\pi}{4}\\right) = 0 + \\dfrac13\\cdot\\left(-\\dfrac{\\sqrt2}{2}\\right) = -\\dfrac{\\sqrt2}{6}$。負になった。$\\sin 3x$ は $x = \\dfrac{\\pi}{3}$ で $0$ になり、そこから先は負——下にもぐった部分のほうが大きいので、符号つきで足すと負になる。中心の問いへ：**定積分は面積ではなく、符号つきの面積。上と下は打ち消し合う**。",
+        },
+      ],
+      formulaPreview: "−(1/3)cos 3x の差：0 − (1/3)(√2/2) = −√2/6",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\log 3}e^{2x}\\,dx$ の値を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\log 3}e^{2x}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。端の値の差を取るのは同じ。下の端での値は、いつも省いてよい？" },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、下の端が $0$ であること。",
+        },
+        {
+          layer: 3,
+          text: "巻き戻すと $\\dfrac12e^{2x}$。$\\dfrac12e^{2\\log 3} - \\dfrac12e^{0} = \\dfrac12\\cdot 9 - \\dfrac12 = 4$。数Ⅱの多項式では、下の端が $0$ なら下の端の値はいつも $0$ だった（どの項にも $x$ が掛かっているから）。その癖で下の端を省くと $\\dfrac92$ になって外れる。$e^0 = 1$ で、$0$ ではない（$\\sin$ の巻き戻し $-\\cos$ でも、$-\\cos 0 = -1$ が残る）。中心の問いへ：**下の端が $0$ でも、下の端の値は $0$ とは限らない。巻き戻した関数に、端を正直に入れる**。",
+        },
+      ],
+      formulaPreview: "(1/2)e^(2x) の差：9/2 − 1/2 = 4（下の端の 1/2 を省くと 9/2）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-3}^{-1}\\frac{1}{2x+1}\\,dx$ の値を求めましょう。",
+      answer: -Math.log(5) / 2,
+      answerDisplay: "-log5/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-3}^{-1}\\frac{1}{2x+1}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。端の値の差を取るのは同じ。区間の中で、分母はどんな値をとる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、区間の全体で分母 $2x + 1$ が負になっていること。系列2 で、負の側をどう扱った？（[自然対数]）",
+        },
+        {
+          layer: 3,
+          text: "系列2 のとおり、$\\displaystyle\\int\\frac{1}{2x+1}\\,dx = \\frac12\\log\\lvert 2x+1\\rvert + C$。$x = -1$ で $\\lvert -1\\rvert = 1$、$x = -3$ で $\\lvert -5\\rvert = 5$。$\\dfrac12\\log 1 - \\dfrac12\\log 5 = -\\dfrac12\\log 5$。絶対値を付けずに $\\log(2x+1)$ と書くと、どちらの端でも中身が負で値が定まらない。区間は $x = -\\dfrac12$（分母が $0$）をまたいでいないので、この計算ができる。中心の問いへ：**定積分でも、巻き戻した関数がその区間で使える形かを先に見る**。",
+        },
+      ],
+      formulaPreview: "(1/2)log|2x+1| の差：(1/2)log 1 − (1/2)log 5 = −(log 5)/2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$0 < a < \\dfrac{\\pi}{2}$ の範囲で、$\\displaystyle\\int_0^a\\sin 2x\\,dx = \\frac34$ となる $a$ を求めましょう。",
+      answer: Math.PI / 3,
+      answerDisplay: "π/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^a\\sin 2x\\,dx = \\frac34$ となる $a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "step3 と向きが逆。step3 は端から値を出した。今度は値が先にあって、上の端を探す。",
+        },
+        {
+          layer: 3,
+          text: "巻き戻すと $-\\dfrac12\\cos 2x$。$-\\dfrac12\\cos 2a - \\left(-\\dfrac12\\cos 0\\right) = \\dfrac{1 - \\cos 2a}{2} = \\dfrac34$ より $\\cos 2a = -\\dfrac12$。$0 < 2a < \\pi$ なので $2a = \\dfrac{2\\pi}{3}$、$a = \\dfrac{\\pi}{3}$（この範囲ではこの $1$ つだけ）。下の端の $\\cos 0 = 1$ を省くと $\\cos 2a = -\\dfrac32$ となって解がなくなる——step3 の取りこぼしが、ここでは「解なし」として現れる。中心の問いへ：**値から端を探すときも、巻き戻した関数の差の式を立てる**。",
+        },
+      ],
+      formulaPreview: "(1 − cos 2a)/2 = 3/4 → cos 2a = −1/2 → 0 < 2a < π で 2a = 2π/3 → a = π/3",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}(x^3 + 1)\\cos x\\,dx$ の値を求めましょう。",
+      answer: Math.sqrt(3),
+      answerDisplay: "sqrt(3)",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}(x^3 + 1)\\cos x\\,dx$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 では、上の部分と下の部分が打ち消し合った。今度の区間と関数に、打ち消し合う部分は無い？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、区間が $0$ をはさんで左右対称になったこと。",
+        },
+        {
+          layer: 3,
+          text: "展開すると $x^3\\cos x + \\cos x$。$x^3\\cos x$ は $x$ を $-x$ にすると符号が逆になる [奇関数] で、左右対称な区間では上と下がちょうど打ち消し合って $0$。$\\cos x$ は左右で同じ形の [偶関数] で、$0$ から $\\dfrac{\\pi}{3}$ の $2$ 倍：$2\\Big[\\sin x\\Big]_0^{\\frac{\\pi}{3}} = 2\\cdot\\dfrac{\\sqrt3}{2} = \\sqrt3$。$x^3\\cos x$ を素直に巻き戻すには部分積分が $3$ 回いる——その手間がまるごと消えた。数Ⅱでも対称な区間で多項式の奇数次の項を消したが、ここで新しいのは、**関数を偶関数の部分と奇関数の部分に分けてから**消すこと。$x^3\\cos x$ を「面積だから正」と読むと外れる。中心の問いへ：**左右対称な区間では、奇関数の部分は巻き戻さずに $0$ と分かる**。",
+        },
+      ],
+      formulaPreview: "x³cos x（奇）は 0、cos x（偶）は 2 × (sin(π/3) − sin 0) = √3",
+      figureMarker: "<<M3INT_EVEN_ODD>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$ の値を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。区間はやはり左右対称。前題で分けたように、この関数も分けられる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\cos$ が分母に $2$ 乗で入っていること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{1}{\\cos^2 x}$ は $x$ を $-x$ にしても同じ（偶関数）、$\\dfrac{x^3}{\\cos^2 x}$ は符号が逆（奇関数）。奇関数の部分は $0$。偶関数の部分は $\\tan x$ の微分なので、$2\\Big[\\tan x\\Big]_0^{\\frac{\\pi}{4}} = 2$。中心の問いへ：**分母に三角関数があっても、偶奇は $x \\to -x$ で確かめられる。奇関数の部分は巻き戻さずに消える**。",
+        },
+      ],
+      formulaPreview: "x³/cos²x（奇）は 0、1/cos²x（偶）は 2 × tan(π/4) = 2",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{7\\pi}{6}}\\lvert\\sin 2x\\rvert\\,dx$ の値を求めましょう。",
+      answer: 9 / 4,
+      answerDisplay: "9/4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{7\\pi}{6}}\\lvert\\sin 2x\\rvert\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。step2 では上と下が打ち消し合った。絶対値が付くと、どうなる？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、絶対値が付いたこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\lvert\\sin 2x\\rvert$ は、幅 $\\dfrac{\\pi}{2}$ の同じ形の山をくり返す。山 $1$ 個分は $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\sin 2x\\,dx = \\Big[-\\frac12\\cos 2x\\Big]_0^{\\frac{\\pi}{2}} = 1$。$\\dfrac{7\\pi}{6} = 2\\cdot\\dfrac{\\pi}{2} + \\dfrac{\\pi}{6}$ なので、山がまるごと $2$ 個と、半端が $\\displaystyle\\int_0^{\\frac{\\pi}{6}}\\sin 2x\\,dx = \\frac12 - \\frac14 = \\frac14$（山の左端からの半端は、どの山でも同じ値）。合計 $2 + \\dfrac14 = \\dfrac94$。中心の問いへ：**同じ形がくり返すなら、$1$ 個分を求めて数えればよい。半端だけを別に巻き戻す**。",
+        },
+      ],
+      formulaPreview: "山 1 個分 = 1、7π/6 = 2 × (π/2) + π/6 → 2 + 1/4 = 9/4",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-\\log 2}^{\\log 2}e^x\\,dx$ の値を求めましょう。",
+      answer: 3 / 2,
+      answerDisplay: "3/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-\\log 2}^{\\log 2}e^x\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      inputAffordances: ["log"],
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。区間は左右対称。$e^x$ は偶関数でも奇関数でもない。それでも step6 の見方は使える？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、関数そのものが偶関数でも奇関数でもないこと。",
+        },
+        {
+          layer: 3,
+          text: "素直な道：$\\Big[e^x\\Big]_{-\\log 2}^{\\log 2} = 2 - \\dfrac12 = \\dfrac32$。対称性の道：$e^x = \\dfrac{e^x + e^{-x}}{2} + \\dfrac{e^x - e^{-x}}{2}$ と分けると、前は偶関数、後は奇関数。奇関数の部分は $0$、偶関数の部分は $2\\displaystyle\\int_0^{\\log 2}\\frac{e^x + e^{-x}}{2}\\,dx = \\Big[e^x - e^{-x}\\Big]_0^{\\log 2} = 2 - \\frac12 = \\frac32$。同じ値になる。中心の問いへ：**偶関数でも奇関数でもない関数も、偶の部分と奇の部分に分けられる。対称な区間で残るのは偶の部分だけ**。",
+        },
+      ],
+      formulaPreview: "素直に：2 − 1/2 = 3/2。分けて：奇の部分 0 ＋ 偶の部分 2 − 1/2 = 3/2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-\\frac{5\\pi}{6}}^{\\frac{5\\pi}{6}}\\left(x^4\\sin x + \\lvert\\cos 2x\\rvert\\right)dx$ の値を求めましょう。",
+      answer: 4 - Math.sqrt(3) / 2,
+      answerDisplay: "4-sqrt(3)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-\\frac{5\\pi}{6}}^{\\frac{5\\pi}{6}}\\left(x^4\\sin x + \\lvert\\cos 2x\\rvert\\right)dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      inputAffordances: ["sqrt"],
+      hints: [
+        { layer: 1, text: "step8 と比べてみよう。同じ形の山を数えるのは同じ。区間と関数の形から、先に消せる部分は無い？" },
+        {
+          layer: 2,
+          text: "step8 と変わったのは、区間が $0$ をはさんで左右対称になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$x^4\\sin x$ は奇関数（$x^4$ は偶、$\\sin x$ は奇で、積は奇）なので $0$。$\\lvert\\cos 2x\\rvert$ は偶関数で、幅 $\\dfrac{\\pi}{2}$ の山をくり返す。山 $1$ 個分は $\\displaystyle\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}\\cos 2x\\,dx = 1$。偶関数なので $0$ から $\\dfrac{5\\pi}{6}$ の $2$ 倍：$0$ から $\\dfrac{3\\pi}{4}$ は山の半分 $+$ 山 $1$ 個 $= \\dfrac32$、$\\dfrac{3\\pi}{4}$ から $\\dfrac{5\\pi}{6}$ は $\\displaystyle\\int_{\\frac{3\\pi}{4}}^{\\frac{5\\pi}{6}}\\cos 2x\\,dx = \\frac12\\left(\\sin\\frac{5\\pi}{3} - \\sin\\frac{3\\pi}{2}\\right) = \\frac12 - \\frac{\\sqrt3}{4}$。合わせて $2\\left(\\dfrac32 + \\dfrac12 - \\dfrac{\\sqrt3}{4}\\right) = 4 - \\dfrac{\\sqrt3}{2}$。中心の問いへ：**偶奇で半分を消し、くり返しで残りを数える——グラフの形を $2$ つ重ねて使うと、巻き戻す部分は半端だけになる**。",
+        },
+      ],
+      formulaPreview: "x⁴sin x（奇）は 0。|cos 2x| は 2 × (3/2 + 1/2 − √3/4) = 4 − √3/2",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 定積分は、巻き戻した関数の差だった。では、**巻き戻さなくても値が分かるのはどんなとき？**
+
+────────
+
+## 巻き戻して、端の値の差
+
+[定積分] は数Ⅱと同じく、巻き戻した関数 $F$ の端の値の差である（step1）。
+
+$$\\int_a^b f(x)\\,dx = F(b) - F(a)$$
+
+三角・指数・$\\log$ でも変わらない。ただし数Ⅱの多項式にあった癖が $2$ つ通用しなくなる。
+
+- **下の端が $0$ でも、$F(0)$ は $0$ とは限らない**（$e^0 = 1$、$-\\cos 0 = -1$。step3）
+- **$\\log$ は区間の中身の符号を見る**（負の側は絶対値。step4）
+
+<<M3INT_SIGNED>>
+
+定積分は**符号つきの面積**である。$x$ 軸の上の部分は正、下の部分は負として足される（step2）。
+
+## ここが胚細胞：グラフの形が、巻き戻しの手間を消す
+
+**対称**：左右対称な区間 $[-a, a]$ では、関数を偶関数の部分と奇関数の部分に分ける。
+
+- [奇関数] の部分は、左と右で符号つきの面積がちょうど打ち消し合って $0$
+- [偶関数] の部分は、$0$ から $a$ までの $2$ 倍
+
+$x^3\\cos x$ を素直に巻き戻すには部分積分が $3$ 回いるが、対称な区間なら巻き戻さずに $0$ と分かる（step6）。偶関数でも奇関数でもない関数も、$f(x) = \\dfrac{f(x) + f(-x)}{2} + \\dfrac{f(x) - f(-x)}{2}$ と偶の部分と奇の部分に分けられる（step9）。
+
+<<M3INT_EVEN_ODD>>
+
+**くり返し**：同じ形の山がくり返すなら、山 $1$ 個分を求めて数える。半端だけを別に巻き戻す（step8）。
+
+対称とくり返しを重ねると、巻き戻す部分は半端だけになる（step10）。
+
+## Step の道筋
+
+- **step1・2**（事例）：巻き戻して端の値の差／符号つきの面積
+- **step3（山場）**：下の端が $0$ でも、下の端の値は $0$ とは限らない
+- **step4**：負の区間の $\\log$
+- **step5**：値から端を探す
+- **step6・7**：対称な区間で、奇関数の部分は $0$
+- **step8**：くり返す山を数える
+- **step9**：素直な道と対称性の道で同じ値
+- **step10**：対称とくり返しを重ねる
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 奇関数の部分が $0$ になるのは、左半分の符号つきの面積が右半分のちょうど $-1$ 倍だから。$x \\to -x$ と置きかえる（系列5 のすり替え）と、式でも確かめられる。迷ったら、グラフを思い描いて「左右で同じ形か、符号が逆の形か」を見ればよい。
+
+**対称性は手間を消すが、値を変えない。** step9 のように、素直に巻き戻しても対称性を使っても同じ値になる。対称性は近道であって、別の答えを出す道具ではない。
+
+**この先の景色。** 物理では、対称性があるとき「計算しなくても $0$ と分かる」量がたくさんある（電荷が左右対称に並んでいれば、真ん中での横向きの力は $0$）。大学では、$\\sin mx$ と $\\cos nx$ の積を $1$ 周期にわたって積分すると、ほとんどの組み合わせで $0$ になる（直交性）。これがフーリエ級数——どんな波も $\\sin$ と $\\cos$ の和に分ける道具——の土台になる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「定積分」の構成（三角・指数・$\\log$ の定積分／下の端が $0$ でも消えない項の注意／偶関数・奇関数の定積分／周期関数の絶対値の定積分）を参考。問題の値・関数・区間はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+グラフに対称があるとき、奇関数の部分は打ち消し合って $0$、偶関数の部分は半分の $2$ 倍。同じ形がくり返すとき、$1$ 個分を数える。
+
+どちらも、符号つきの面積という見方から出てくる。巻き戻す前に、グラフの形を見る。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
@@ -2463,4 +2806,5 @@ export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_SUBST_SERIES,
   M3INT_PARTS_SERIES,
   M3INT_CYCLE_SERIES,
+  M3INT_DEFINITE_SERIES,
 ];
