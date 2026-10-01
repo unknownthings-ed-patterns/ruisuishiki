@@ -93,6 +93,9 @@ import {
   M3DA_SQUEEZE_SERIES,
   M3DA_IVT_SERIES,
   M3DA_MVT_SERIES,
+  M3DA_PARAM_SERIES,
+  M3DA_VELOCITY_SERIES,
+  M3DA_IMPLICIT_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2140,6 +2143,30 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "平均値の定理（1 点の傾きと 2 点の差）— 2 点を結ぶ直線と平行な接線が、あいだのどこかにある。「f' > 0 なら増加」の根拠と、その前提",
+  },
+  {
+    series: M3DA_PARAM_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "パラメータ表示の曲線（t を消さずに形を読む）— x と y を別々に t で微分して、点の進む向きを読む。1 つの点に t が 2 つ対応する所で、曲線は自分自身と交わる",
+  },
+  {
+    series: M3DA_VELOCITY_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "速度と接線の傾き（2 つの変化率の比）— 速度の向きが接線の向き。t を消せない曲線でも傾きが出て、同じ点を 2 回通れば接線は 2 本",
+  },
+  {
+    series: M3DA_IMPLICIT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "陰関数の微分（y を解かずに微分する）— 関係式の両辺を x で微分すれば、円も上下に分けずに傾きが出る。傾きは x と y の式なので、同じ x でも点ごとに違う",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

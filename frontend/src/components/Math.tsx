@@ -15773,6 +15773,48 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_PARAM_DOTS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daParamDots />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_SELF_CROSS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daSelfCross />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_VELOCITY_ARROW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daVelocityArrow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_VELOCITY_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daVelocityTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_CIRCLE_HALVES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daCircleHalves />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_IMPLICIT_WINDOW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daImplicitWindow />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40148,6 +40190,281 @@ function M3daGapSlopes() {
       <text x={qx - 4} y={qy - 9} fontSize="11" fill={accent}>Q</text>
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
         どこでも右下がり。それでも Q のほうが高いのはなぜ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列9 step1: t を 1 刻みで変えて点をとり、t の順につないだ図（傾いた放物線の模式）。
+ *  ★図に答えを描かない★ 点の座標・t の値・切りかわる点の位置は書かない。点には t の順を表す矢印だけをつける。
+ *  曲線は step1 の曲線そのものではなく、形の似た模式（座標軸の目盛りなし）。
+ *  この図から読めてしまうもの：「t の順に点を並べると曲線が浮かび、点は向きをもって進む」という仕組みだけ。 */
+function M3daParamDots() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const P = (u: number) => ({ x: 90 + 7 * (u * u - 2 * u), y: 140 - 6 * (u * u + u) });
+  const ts = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
+  const pts: string[] = [];
+  for (let k = 0; k <= 80; k++) {
+    const u = -4.2 + (8.4 * k) / 80;
+    const p = P(u);
+    pts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="t を 1 ずつ変えてとった点を、t の順に細い線でつないだ図。点は傾いた放物線の形に並び、矢印が進む向きを示す。座標の値は書かれていない"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={muted} strokeWidth="1.1" />
+      {ts.map((u) => {
+        const p = P(u);
+        return <circle key={u} cx={p.x} cy={p.y} r="3" fill={stroke} />;
+      })}
+      {[-2.5, 1.5].map((u) => {
+        const a = P(u);
+        const b = P(u + 0.35);
+        const ang = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+        return (
+          <path
+            key={u}
+            d="M -6 -4 L 2 0 L -6 4"
+            transform={`translate(${b.x} ${b.y}) rotate(${ang})`}
+            fill="none"
+            stroke={accent}
+            strokeWidth="1.6"
+          />
+        );
+      })}
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        t が増えると点はどちらへ進む？ 上下が切りかわるのはどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列9 step6: 自分自身と 1 点で交わる曲線（x = t² + 2t, y = t³ − 9t の形を縮めて描く）。交わる点に「?」。
+ *  ★図に答えを描かない★ 交点の座標・対応する t の値は書かない。座標軸の目盛りも書かない（交点の x を読ませない）。
+ *  この図から読めてしまうもの：「曲線が同じ点を 2 回通る」という形だけ。 */
+function M3daSelfCross() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const P = (u: number) => ({ x: 150 + 9 * (u * u + 2 * u), y: 100 - 2.2 * (u * u * u - 9 * u) });
+  const pts: string[] = [];
+  for (let k = 0; k <= 160; k++) {
+    const u = -3.8 + (7.1 * k) / 160;
+    const p = P(u);
+    pts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+  }
+  const c = P(-1 + Math.sqrt(6));
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="輪をつくって、自分自身と 1 点で交わる曲線。交わる点は疑問符。座標の値は書かれていない"
+    >
+      <path d="M 20 100 L 304 100" fill="none" stroke={muted} strokeWidth="0.8" />
+      <path d="M 150 10 L 150 172" fill="none" stroke={muted} strokeWidth="0.8" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx={c.x} cy={c.y} r="3.6" fill={accent} />
+      <text x={c.x + 7} y={c.y + 4} fontSize="12" fill={accent}>?</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        曲線はこの点を 2 回通る。2 回の t は、どんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列10 step1: 曲線上の点 P と、P から伸びる速度の矢印。矢印の横の成分（右へ）と縦の成分（上へ）を点線で分けて示す。
+ *  ★図に答えを描かない★ 成分の値・傾きの値・曲線の式は書かない（成分は「x の変化率」「y の変化率」とことばで置く）。
+ *  この図から読めてしまうもの：「速度は 2 つの変化率の組で、その向きが曲線に沿っている」という仕組みだけ。 */
+function M3daVelocityArrow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${(30 + u * 260).toFixed(1)},${(160 - 120 * Math.pow(u, 1.6)).toFixed(1)}`);
+  }
+  const u0 = 0.45;
+  const px = 30 + u0 * 260;
+  const py = 160 - 120 * Math.pow(u0, 1.6);
+  const slope = (120 * 1.6 * Math.pow(u0, 0.6)) / 260;
+  const dx = 90;
+  const dy = dx * slope;
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="右上がりの曲線上の点 P から、曲線に沿う向きに速度の矢印が伸びている。矢印は、右へ進む成分と上へ進む成分に点線で分けられている。値は書かれていない"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path d={`M ${px} ${py} L ${px + dx} ${py}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="3 3" />
+      <path d={`M ${px + dx} ${py} L ${px + dx} ${py - dy}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="3 3" />
+      <path d={`M ${px} ${py} L ${px + dx} ${py - dy}`} fill="none" stroke={accent} strokeWidth="2" />
+      <path
+        d="M -8 -4 L 0 0 L -8 4"
+        transform={`translate(${px + dx} ${py - dy}) rotate(${(-Math.atan2(dy, dx) * 180) / Math.PI})`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="2"
+      />
+      <circle cx={px} cy={py} r="3.4" fill={stroke} />
+      <text x={px - 14} y={py + 4} fontSize="11" fill={stroke}>P</text>
+      <text x={px + dx / 2} y={py + 15} fontSize="10" fill={muted} textAnchor="middle">x の変化率</text>
+      <text x={px + dx + 6} y={py - dy / 2 + 4} fontSize="10" fill={muted}>y の変化率</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        2 つの変化率をどう組み合わせると、傾きになる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列10 step4: t を消しにくい曲線（x = t³ − 5t, y = 2t² の形の模式）と、その上の点 P での速度の矢印を、そのまま延ばした直線（接線）。
+ *  ★図に答えを描かない★ 傾きの値・P の座標・t の値は書かない。座標軸の目盛りもない。
+ *  この図から読めてしまうもの：「速度の矢印を延ばすと接線になる」という仕組みだけ。 */
+function M3daVelocityTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const S = 12;
+  const X = (u: number) => 160 + S * (u * u * u - 5 * u);
+  const Y = (u: number) => 168 - S * 2 * u * u;
+  const pts: string[] = [];
+  for (let k = 0; k <= 120; k++) {
+    const u = -2.45 + (4.9 * k) / 120;
+    pts.push(`${X(u).toFixed(1)},${Y(u).toFixed(1)}`);
+  }
+  const u0 = Math.SQRT2;
+  const px = X(u0);
+  const py = Y(u0);
+  const vx = S * (3 * u0 * u0 - 5);
+  const vy = S * 4 * u0;
+  const n = Math.hypot(vx, vy);
+  const ex = vx / n;
+  const ey = vy / n;
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="自分自身と交わる輪をもつ曲線。その上の点 P から速度の矢印が伸び、矢印を前後に延ばした破線の直線が曲線に接している。傾きの値は書かれていない"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.6" />
+      <path
+        d={`M ${px - 45 * ex} ${py + 45 * ey} L ${px + 95 * ex} ${py - 95 * ey}`}
+        fill="none"
+        stroke={muted}
+        strokeWidth="1.2"
+        strokeDasharray="5 4"
+      />
+      <path d={`M ${px} ${py} L ${px + 46 * ex} ${py - 46 * ey}`} fill="none" stroke={accent} strokeWidth="2.2" />
+      <path
+        d="M -8 -4 L 0 0 L -8 4"
+        transform={`translate(${px + 46 * ex} ${py - 46 * ey}) rotate(${(-Math.atan2(ey, ex) * 180) / Math.PI})`}
+        fill="none"
+        stroke={accent}
+        strokeWidth="2.2"
+      />
+      <circle cx={px} cy={py} r="3.4" fill={stroke} />
+      <text x={px - 18} y={py + 8} fontSize="11" fill={stroke}>P</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        矢印の向きを延ばすと、何になる？ その傾きは？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列11 step1: 円を上半分（実線）と下半分（別の色の実線）に分けた図。上半分の点 A と下半分の点 B に接線の破線。
+ *  ★図に答えを描かない★ 半径・点の座標・傾きの値は書かない（傾きは「?」）。
+ *  この図から読めてしまうもの：「円は上下 2 本の関数に分けられ、それぞれの上で接線が引ける」という仕組みだけ。 */
+function M3daCircleHalves() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160;
+  const cy = 92;
+  const r = 70;
+  const a = (67 * Math.PI) / 180;
+  const b = (-157 * Math.PI) / 180;
+  const pa = { x: cx + r * Math.cos(a), y: cy - r * Math.sin(a) };
+  const pb = { x: cx + r * Math.cos(b), y: cy - r * Math.sin(b) };
+  const tan = (th: number, p: { x: number; y: number }) => {
+    const dx = -Math.sin(th);
+    const dy = Math.cos(th);
+    return `M ${p.x - 45 * dx} ${p.y + 45 * dy} L ${p.x + 45 * dx} ${p.y - 45 * dy}`;
+  };
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="円を上半分と下半分の 2 本の曲線に分けた図。上半分の点 A と、下半分の点 B に、それぞれ接線の破線が引かれている。傾きは疑問符"
+    >
+      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 0 ${cx + r} ${cy}`} fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d={tan(a, pa)} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d={tan(b, pb)} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <circle cx={pa.x} cy={pa.y} r="3.4" fill={stroke} />
+      <circle cx={pb.x} cy={pb.y} r="3.4" fill={accent} />
+      <text x={pa.x + 8} y={pa.y - 6} fontSize="11" fill={stroke}>A（傾き ?）</text>
+      <text x={pb.x - 70} y={pb.y + 18} fontSize="11" fill={accent}>B（傾き ?）</text>
+      <text x={cx + r + 6} y={cy - 22} fontSize="10" fill={stroke}>上半分</text>
+      <text x={cx + r + 6} y={cy + 30} fontSize="10" fill={accent}>下半分</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        上と下で別々に出した傾きは、1 本の式にまとまる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列11 step4: 円全体（細い線）と、点 P のまわりの小さな窓（枠）。窓の中だけを見ると、曲線は 1 本の関数のグラフに見える。
+ *  縦の接線になる左右の端には「窓が作れない」印。
+ *  ★図に答えを描かない★ 点の座標・傾きの値は書かない。
+ *  この図から読めてしまうもの：「範囲を絞れば、関係式の曲線も y が x の関数になる」という仕組みだけ。 */
+function M3daImplicitWindow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 150;
+  const cy = 95;
+  const r = 70;
+  const th = (113 * Math.PI) / 180;
+  const p = { x: cx + r * Math.cos(th), y: cy - r * Math.sin(th) };
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="円全体と、その上の点 P を囲む小さな四角い窓。窓の中では曲線が 1 本の関数のグラフに見える。円の左右の端では、縦の線に接するため窓が作れないことを、×印で示している"
+    >
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={muted} strokeWidth="1.2" />
+      <rect x={p.x - 28} y={p.y - 18} width="56" height="36" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path
+        d={`M ${cx + r * Math.cos(th + 0.38)} ${cy - r * Math.sin(th + 0.38)} A ${r} ${r} 0 0 1 ${cx + r * Math.cos(th - 0.38)} ${cy - r * Math.sin(th - 0.38)}`}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2.2"
+      />
+      <circle cx={p.x} cy={p.y} r="3.4" fill={stroke} />
+      <text x={p.x - 6} y={p.y + 15} fontSize="11" fill={stroke}>P</text>
+      <text x={p.x + 32} y={p.y - 8} fontSize="10.5" fill={accent}>窓の中では 1 本の関数</text>
+      <text x={cx - r - 5} y={cy + 4} fontSize="12" fill={accent} textAnchor="end">×</text>
+      <text x={cx + r + 5} y={cy + 4} fontSize="12" fill={accent}>×</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        窓の中なら y は x の関数。そのまま両辺を x で微分すると？
       </text>
     </svg>
   );

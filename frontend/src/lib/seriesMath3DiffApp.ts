@@ -2683,6 +2683,998 @@ export const M3DA_MVT_SERIES: LearnerSeries = {
 そして、その橋が架かるのは、あいだがなめらかにつながっているときだけ。当たり前に見えた一文には、「区間でつながっている」という前提が隠れていた。`,
 };
 
+/** M3DA9: パラメータ表示の曲線——t を消さずに形を読む。
+ *  曲線A（step1〜5）：x = t² − 4t + 1, y = t² + 2t − 15（t を消去できる・傾いた放物線）。
+ *  曲線B（step6・7）：x = t² + 2t, y = t³ − 9t（t を消去しにくい・ただ 1 点で自分自身と交わる・x 偶 y 奇の対称ではない＝R1 I4）。
+ *  曲線C（step8）：x = t² + 2, y = t³ − 5t（x 偶・y 奇＝交点が x 軸上に固定される型を、対称性で読む step としてだけ使う）。
+ *  曲線D（step9・10）：x = sin 2t, y = 3cos t + sin t（0 ≦ t ≦ π）。
+ *  山場 step6：素朴な読み「曲線上の点に t は 1 つ」が外れる。交点を与える t は −1 ± √6（2 つの t の和と積から出す）。 */
+export const M3DA_PARAM_SERIES: LearnerSeries = {
+  id: "math3_da_param_01",
+  title: "パラメータ表示の曲線——t を消さずに形を読む",
+  subtitle:
+    "数Ⅲ・C 微分法の応用より — $x$ と $y$ を、それぞれ $t$ の式で書いた曲線。$t$ を消せないときも、$x$ と $y$ を別々に $t$ で微分すれば、点の進む向きが分かる。$10$ 問で、$t$ を通して曲線の形を読む。",
+  patternId: "M3DA9",
+  unit: "math_3",
+  revelationLabel:
+    "**曲線の上の 1 つの点に、$t$ が 2 つ対応することがある**——そこで曲線は自分自身と交わる。$t$ を通して見れば、関数のグラフにならない曲線も読める",
+  drivingQuestion:
+    "$t$ を消せば $y = f(x)$ に戻る曲線もあった。消せない曲線の形は、どうやって読む？——自分自身と交わる曲線は、$y = f(x)$ で書ける？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$t$ を媒介変数とする曲線（[媒介変数表示]） $x = t^2 - 4t + 1,\\ y = t^2 + 2t - 15$ を考えます。$t$ が増えていくとき、点が上り（$y$ が増える）から下り（$y$ が減る）へ、または下りから上りへ切りかわる点があります。その点の **$y$ 座標**を求めましょう。",
+      answer: -16,
+      answerDisplay: "-16",
+      unit: "",
+      unknownLabel: "その点の $y$ 座標",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$t$ が増えるとき、$y$ は増えている？ 減っている？ それは何を調べれば分かる？",
+        },
+        {
+          layer: 2,
+          text: "$y$ を $x$ ではなく **$t$ の関数**と見る。$y$ の増減は、$t$ についての[増減表]で分かる。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dy}{dt} = 2t + 2$。$t < -1$ で負（下り）、$t > -1$ で正（上り）なので、$t = -1$ で切りかわる。そのとき $y = 1 - 2 - 15 = -16$（$x = 1 + 4 + 1 = 6$）。中心の問いへの最初の部分回答：**$x$ と $y$ を、それぞれ $t$ の関数と見て微分すれば、点の進む向きが分かる**。",
+        },
+      ],
+      formulaPreview: "dy/dt = 2t + 2 = 0 → t = −1 → y = 1 − 2 − 15 = −16",
+      figureMarker: "<<M3DA_PARAM_DOTS>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "同じ曲線 $x = t^2 - 4t + 1,\\ y = t^2 + 2t - 15$ で、点が右へ進む（$x$ が増える）から左へ進む（$x$ が減る）へ、または左から右へ切りかわる点の **$x$ 座標**を求めましょう。",
+      answer: -3,
+      answerDisplay: "-3",
+      unit: "",
+      unknownLabel: "その点の $x$ 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、上下ではなく**左右**の切りかわりを見ること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2t - 4$。$t < 2$ で負（左へ）、$t > 2$ で正（右へ）なので、$t = 2$ で切りかわる。$x = 4 - 8 + 1 = -3$。この点は曲線のいちばん左の点。中心の問いへ：**左右の向きは $\\dfrac{dx}{dt}$、上下の向きは $\\dfrac{dy}{dt}$ が別々に教える**。",
+        },
+      ],
+      formulaPreview: "dx/dt = 2t − 4 = 0 → t = 2 → x = 4 − 8 + 1 = −3",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "同じ曲線で、点が**左上**に向かって進む（$x$ が減り、$y$ が増える）あいだに、$x$ 座標はどれだけ減るでしょう。",
+      answer: 9,
+      answerDisplay: "9",
+      unit: "",
+      unknownLabel: "$x$ の減る量",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step1 と step2 で見つけた 2 つの切りかわりを、$t$ の数直線の上に並べてみよう。" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、$\\dfrac{dx}{dt}$ と $\\dfrac{dy}{dt}$ の符号を**同時に**見ること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} < 0 \\iff t < 2$、$\\dfrac{dy}{dt} > 0 \\iff t > -1$。両方そろうのは $-1 < t < 2$。この間 $x$ は $t = -1$ での $6$ から $t = 2$ での $-3$ まで減り続けるので、減る量は $6 - (-3) = 9$。表にすると、$y = f(x)$ の[増減表]と同じ読み方で、$\\dfrac{dx}{dt}$ と $\\dfrac{dy}{dt}$ の $2$ 段の符号が向きを決める。中心の問いへ：**$2$ つの符号を並べた表が、曲線のどの部分をどちら向きに進むかを教える**。",
+        },
+      ],
+      formulaPreview: "dx/dt < 0（t < 2）かつ dy/dt > 0（t > −1）→ −1 < t < 2、x は 6 → −3 で 9 減る",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "こんどは向きが逆です。点 $(1,\\ 9)$ は同じ曲線 $x = t^2 - 4t + 1,\\ y = t^2 + 2t - 15$ の上にあります。この点を与える $t$ の値を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$t$ の値",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。何が分かっていて、何を探している？" },
+        {
+          layer: 2,
+          text: "step1 と向きが逆。step1 は $t$ から点を出した。今度は点が先に分かっていて、$t$ を探す。",
+        },
+        {
+          layer: 3,
+          text: "$x = 1$ から $t^2 - 4t = 0$、$t = 0,\\ 4$。$y = 9$ から $t^2 + 2t - 24 = 0$、$t = 4,\\ -6$。**両方を満たす**のは $t = 4$ だけ。片方の式だけで決めると、$t = 0$ や $t = -6$ を拾ってしまう（$t = 0$ の点は $(1,\\ -15)$）。中心の問いへ：**点から $t$ を探すときは、$x$ と $y$ の両方の条件を合わせる**。",
+        },
+      ],
+      formulaPreview: "x = 1 → t = 0, 4。y = 9 → t = 4, −6。共通 → t = 4",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "同じ曲線が $x$ 軸と交わる点のうち、$t < 0$ の範囲にある点の **$x$ 座標**を求めましょう。",
+      answer: 46,
+      answerDisplay: "46",
+      unit: "",
+      unknownLabel: "その点の $x$ 座標",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。条件から $t$ を探すのは同じ。今度の条件は？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、条件が「$x$ 軸の上」、つまり $y$ についての $1$ つだけになったこと。",
+        },
+        {
+          layer: 3,
+          text: "$y = t^2 + 2t - 15 = (t + 5)(t - 3) = 0$ より $t = -5,\\ 3$。$t < 0$ なのは $t = -5$ で、$x = 25 + 20 + 1 = 46$。もう $1$ つの交点は $t = 3$ の $(-2,\\ 0)$。中心の問いへ：**交点も、$t$ を探してから点に戻せばよい**。",
+        },
+      ],
+      formulaPreview: "y = (t + 5)(t − 3) = 0 → t = −5（t < 0）→ x = 25 + 20 + 1 = 46",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "曲線 $x = t^2 + 2t,\\ y = t^3 - 9t$ は、$1$ つの点で自分自身と交わります（曲線がその点を $2$ 回通る）。その交わる点の **$x$ 座標**を求めましょう。",
+      answer: 5,
+      answerDisplay: "5",
+      unit: "",
+      unknownLabel: "交わる点の $x$ 座標",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。step4 では、$1$ つの点に対応する $t$ は $1$ つだった。曲線が同じ点を $2$ 回通るとき、その点に対応する $t$ はいくつ？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、点が分かっていないこと。その代わりに分かっているのは、**異なる $2$ つの $t$** が同じ点を与えること。",
+        },
+        {
+          layer: 3,
+          text: "異なる $t = p,\\ q$ が同じ点を与えるとする。$x$ が等しい：$p^2 + 2p = q^2 + 2q$ から $(p - q)(p + q + 2) = 0$、$p \\ne q$ なので $p + q = -2$。$y$ が等しい：$p^3 - 9p = q^3 - 9q$ から $(p - q)(p^2 + pq + q^2 - 9) = 0$、なので $p^2 + pq + q^2 = 9$。$p^2 + pq + q^2 = (p + q)^2 - pq = 4 - pq$ なので $pq = -5$。$p,\\ q$ は $u^2 + 2u - 5 = 0$ の $2$ つの解 $-1 \\pm \\sqrt6$。どちらも $u^2 = 5 - 2u$ を満たすので、$x = u^2 + 2u = 5$（$y = -10$）。$1$ つの点 $(5,\\ -10)$ に $t$ が $2$ つ。だからこの曲線は、$x = 5$ の近くで $1$ つの $x$ に $y$ が $2$ つ以上対応し、$1$ 本の関数 $y = f(x)$ のグラフとしては書けない。中心の問いへ：**『$1$ つの点に $t$ は $1$ つ』という素朴な読みが外れる所で、曲線は自分自身と交わる**。",
+        },
+      ],
+      formulaPreview: "p + q = −2、p² + pq + q² = 9 → pq = −5 → p, q = −1 ± √6 → x = 5（y = −10）",
+      figureMarker: "<<M3DA_SELF_CROSS>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "同じ曲線 $x = t^2 + 2t,\\ y = t^3 - 9t$ が $x$ 軸と交わる点の **$x$ 座標をすべて**求めましょう。カンマで区切って答えましょう（順番は自由）。",
+      answer: 15,
+      answerDisplay: "0, 3, 15",
+      solutionSet: [0, 3, 15],
+      inputAffordances: ["multi"],
+      unit: "",
+      unknownLabel: "$x$ 座標（すべて）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。$x$ 軸との交点を、$t$ を探してから点に戻すのは同じ。今度は $t$ がいくつ見つかる？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、$y$ が $t$ の $3$ 次式になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$y = t^3 - 9t = t(t + 3)(t - 3) = 0$ より $t = 0,\\ -3,\\ 3$。$x = t^2 + 2t$ に戻すと、$0,\\ 9 - 6 = 3,\\ 9 + 6 = 15$。$3$ つの $t$ が $3$ つの別々の点を与えた（step6 の交点 $(5,\\ -10)$ は $x$ 軸の上にない）。中心の問いへ：**$t$ ごとに点に戻せば、消去しにくい曲線でも軸との交わり方が読める**。",
+        },
+      ],
+      formulaPreview: "y = t(t + 3)(t − 3) = 0 → t = 0, −3, 3 → x = 0, 3, 15",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "曲線 $x = t^2 + 2,\\ y = t^3 - 5t$ も、$1$ つの点で自分自身と交わります。$x$ は $t$ の[偶関数]、$y$ は $t$ の[奇関数]であることを使って、交わる点の **$x$ 座標**を求めましょう。",
+      answer: 7,
+      answerDisplay: "7",
+      unit: "",
+      unknownLabel: "交わる点の $x$ 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "step6 と比べてみよう。交わる点を探すのは同じ。今度の曲線は、$t$ と $-t$ でどんな点を与える？" },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、$x$ が偶関数・$y$ が奇関数であること。$t$ と $-t$ の点は、どんな位置関係にある？",
+        },
+        {
+          layer: 3,
+          text: "$t$ と $-t$ では、$x$ は同じで $y$ は符号だけ変わる——$2$ つの点は $x$ 軸について対称。異なる $2$ つの $t$ で $x = t^2 + 2$ が等しいなら、その $2$ つは $t$ と $-t$ の組しかない。$t$ と $-t$ の点が重なるのは $y = 0$ のとき。$t^3 - 5t = 0$、$t \\ne 0$ から $t = \\pm\\sqrt5$。$x = 5 + 2 = 7$。step6 のように和と積を立てなくても、対称性が交わる場所を $x$ 軸の上に決めてくれた。中心の問いへ：**$t$ と $-t$ の関係が見えれば、曲線の形の一部がまるごと読める**。",
+        },
+      ],
+      formulaPreview: "x 偶・y 奇 → x 軸について対称 → 交点は y = 0：t = ±√5 → x = 7",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "曲線 $x = \\sin 2t,\\ y = 3\\cos t + \\sin t$（$0 \\le t \\le \\pi$）で、$x$ が最大になる点の **$y$ 座標**を求めましょう。",
+      answer: 2 * Math.SQRT2,
+      answerDisplay: "2√2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "その点の $y$ 座標",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。左右の向きが切りかわる点を探すのは同じ。今度は、切りかわる点がいくつある？ そのどれが最大？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、$x$ も $y$ も三角関数で、$t$ の範囲が決まっていること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2\\cos 2t$ は $0 \\le t \\le \\pi$ で $t = \\dfrac\\pi4,\\ \\dfrac{3\\pi}4$ のとき $0$。$t = \\dfrac\\pi4$ で $x = 1$（最大）、$t = \\dfrac{3\\pi}4$ で $x = -1$（最小）。$x = \\sin 2t \\le 1$ からも最大は $1$ と確かめられる。$y = 3 \\cdot \\dfrac{\\sqrt2}2 + \\dfrac{\\sqrt2}2 = 2\\sqrt2$。中心の問いへ：**三角関数のパラメータでも、$x$ の増減を $t$ で調べる読み方は同じ**。",
+        },
+      ],
+      formulaPreview: "dx/dt = 2cos 2t = 0 → t = π/4（x = 1 で最大）→ y = 3·√2/2 + √2/2 = 2√2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "同じ曲線 $x = \\sin 2t,\\ y = 3\\cos t + \\sin t$ で、$0 < t < \\pi$ の範囲を考えます。点の進む向きが**左右で入れかわる**（$\\dfrac{dx}{dt}$ の符号が変わる）$t$ と、**上下で入れかわる**（$\\dfrac{dy}{dt}$ の符号が変わる）$t$ は、合わせていくつあるでしょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$t$ の個数",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。$2$ つの符号を並べて表にするのは同じ。今度は、それぞれの符号が何回入れかわる？" },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、$\\dfrac{dy}{dt}$ が三角関数の和になったこと。$0$ になる $t$ は、$\\tan$ を使うと探しやすい。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2\\cos 2t$ は $t = \\dfrac\\pi4,\\ \\dfrac{3\\pi}4$ で符号が変わる（$2$ 個）。$\\dfrac{dy}{dt} = -3\\sin t + \\cos t = 0 \\iff \\tan t = \\dfrac13$（$\\cos t = 0$ となる $t = \\dfrac\\pi2$ では $\\dfrac{dy}{dt} = -3 \\ne 0$ なので、$\\cos t$ で割ってよい）。$0 < t < \\pi$ で $\\tan t = \\dfrac13$ となる $t$ は $1$ つで、そこで符号が正から負へ変わる（$1$ 個）。$\\tan t = \\dfrac13 < 1$ なのでその $t$ は $\\dfrac\\pi4$ より小さく、$3$ つの $t$ は重ならない。合わせて $3$ 個。中心の問いへ：**$t$ を消さないまま、向きの入れかわりを数えれば、曲線のおおまかな形が組み立てられる**。",
+        },
+      ],
+      formulaPreview: "dx/dt = 2cos 2t：t = π/4, 3π/4。dy/dt = −3sin t + cos t：tan t = 1/3 の 1 つ → 3 個",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $t$ を消せば $y = f(x)$ に戻る曲線もあった。消せない曲線の形は、どうやって読む？——自分自身と交わる曲線は、$y = f(x)$ で書ける？
+
+────────
+
+## $x$ と $y$ を、別々に $t$ で見る
+
+[媒介変数表示] $x = f(t),\\ y = g(t)$ は、時刻 $t$ に点 $(f(t),\\ g(t))$ がいる、と読める。$t$ を消して $y = F(x)$ に直せることもあるが、直せないことも多い。
+
+直せなくても、$x$ と $y$ を**別々に** $t$ の関数と見て微分すれば、
+
+- $\\dfrac{dx}{dt} > 0$ なら右へ、$< 0$ なら左へ
+- $\\dfrac{dy}{dt} > 0$ なら上へ、$< 0$ なら下へ
+
+と、各時刻での点の向きが分かる。$2$ つの符号を $t$ の表に並べれば、$y = f(x)$ の[増減表]と同じ読み方で、曲線のどの部分をどちら向きに進むかが組み立てられる（step3・10）。
+
+## ここが胚細胞：1 つの点に、$t$ が 2 つ対応することがある
+
+関数のグラフでは、$1$ つの $x$ に点は $1$ つ。パラメータ表示の曲線では、**同じ点を $2$ 回通る**ことがある——異なる $2$ つの $t$ が同じ点を与えるとき、曲線は自分自身と交わる（step6）。
+
+そういう点の近くでは、$1$ つの $x$ に $y$ が $2$ つ以上対応するので、曲線全体を $1$ 本の関数 $y = f(x)$ のグラフとしては書けない。それでも $t$ を通して見れば、向き・交点・軸との交わりを読める。
+
+$x$ が偶関数・$y$ が奇関数の曲線は $x$ 軸について対称で、$t$ と $-t$ の $2$ つが同じ点を与えるなら、その点は $x$ 軸の上に来る（step8）。step6 の曲線はこの対称性をもたないので、$2$ つの $t$ の和と積から探した。
+
+## Step の道筋
+
+- **step1・2**：上下・左右の切りかわりを、$\\dfrac{dy}{dt}$・$\\dfrac{dx}{dt}$ で別々に見る
+- **step3**：$2$ つの符号を並べて、向きの区間を読む
+- **step4**：点から $t$ へ戻る（$x$ と $y$ の両方の条件）
+- **step5・7**：軸との交点を、$t$ を探してから点に戻す
+- **step6（山場）**：$1$ つの点に $t$ が $2$ つ——自分自身と交わる点
+- **step8**：対称性で、交わる点を読む
+- **step9・10**：三角関数のパラメータで、最大の点と向きの入れかわり
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 曲線の形が分からなくなったら、$t = -2,\\ -1,\\ 0,\\ 1,\\ 2$ と点をとって並べてみればよい。点のあいだを $t$ の順につなげば、おおまかな形が見え、$\\dfrac{dx}{dt}$・$\\dfrac{dy}{dt}$ の符号表と照らし合わせられる。
+
+**「曲線の上の点には、$t$ が $1$ つずつ対応する」は誤り。** step6 の点 $(5,\\ -10)$ には $t = -1 + \\sqrt6$ と $t = -1 - \\sqrt6$ の $2$ つが対応する——**数で確かめれば、同じ点を $2$ 回通る瞬間が姿を現す**。
+
+**「$\\dfrac{dx}{dt} = 0$ の点で、曲線は山か谷になる」も誤り**。$\\dfrac{dx}{dt} = 0$ の点で起きうるのは左右の向きの入れかわりで、上下の山や谷とは別。$y$ の山や谷を見るのは $\\dfrac{dy}{dt}$ のほう（step1 と step2 は別の点だった）。
+
+**この先の景色。** 次の系列10 では、$\\dfrac{dx}{dt}$ と $\\dfrac{dy}{dt}$ を組にしたもの——速度——の向きが、接線の向きになることを見る。step6 の交わる点では、曲線が $2$ 回通るので、接線も $2$ 本ありうる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第5章「媒介変数で表された関数のグラフ」の構成（$x$ と $y$ をそれぞれ $t$ で微分して点の進む向きを読む／$x$ が偶関数・$y$ が奇関数の曲線の対称性）を参考。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$t$ を消せない曲線の形は、**$x$ と $y$ を別々に $t$ で微分して、点の進む向きを読む**ことで組み立てられた。
+
+自分自身と交わる曲線は、交わる点の近くで $1$ つの $x$ に $y$ が $2$ つ以上対応するので、$1$ 本の関数 $y = f(x)$ のグラフとしては書けない。それでも $t$ を通して見れば、その曲線も読める——$1$ つの点に $t$ が $2$ つ対応する、という形で。`,
+};
+
+/** M3DA10: 速度と接線の傾き——dy/dx = (dy/dt)/(dx/dt)。★三段★
+ *  段1＝step1〜2（x = t², y = t³ + t（t > 0）で、t を消去してからの dy/dx〔重いほう〕と、変化率の比〔軽いほう〕が一致する）
+ *  段2＝step3（合成関数の微分 dy/dt = dy/dx · dx/dt から比を出す関節）
+ *  段3＝step4〜10。質的変化 step4（t を消去しにくい曲線 x = t³ − 5t, y = 2t²。原典 p.190 の例 x = t² − 1, y = t³ − 3t の x と y を入れかえた形になっていたので係数を替えた）。
+ *  山場 step10：系列9 step6 の交点 (5, −10) での接線の傾きを「すべて」（本数は問題文に書かない＝R1 I14）。
+ *  傾きは √6 − 3 と −√6 − 3 で、± の組にならない（R1 I4）。素朴な読み「1 点に接線は 1 本」が外れる。 */
+export const M3DA_VELOCITY_SERIES: LearnerSeries = {
+  id: "math3_da_velocity_01",
+  title: "速度と接線の傾き——2 つの変化率の比",
+  subtitle:
+    "数Ⅲ・C 微分法の応用より — $t$ ごとに動く点の速度は、$x$ の変化率と $y$ の変化率の組。その向きが、接線の向きになる。$10$ 問で、$t$ を消さずに接線の傾きを出し、$1$ つの点に接線が $2$ 本ある場面まで行く。",
+  patternId: "M3DA10",
+  unit: "math_3",
+  revelationLabel:
+    "**接線の傾きは、$y$ の変化率を $x$ の変化率で割った比**。曲線が同じ点を $2$ 回通れば、その点には速度が $2$ つあり、接線も $2$ 本ある",
+  drivingQuestion:
+    "$t$ を消せない曲線でも、接線の傾きは求められる？——$1$ つの点に、接線が $2$ 本あることはある？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "曲線 $x = t^2,\\ y = t^3 + t$（$t > 0$）は、$t = \\sqrt x$ と $t$ を消去すると $y = x\\sqrt x + \\sqrt x$ と書けます。この式を $x$ で微分して、$t = 2$ の点（$x = 4$）での接線の傾き $\\dfrac{dy}{dx}$ を求めましょう。",
+      answer: 13 / 4,
+      answerDisplay: "13/4",
+      unit: "",
+      unknownLabel: "$\\dfrac{dy}{dx}$ の値",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$t$ を消した式は、ふつうの $y = f(x)$。その[接線]の傾きは、どう求めた？",
+        },
+        {
+          layer: 2,
+          text: "$x\\sqrt x = x^{\\frac32}$、$\\sqrt x = x^{\\frac12}$ と、累乗の形に直してから微分する。",
+        },
+        {
+          layer: 3,
+          text: "$y = x^{\\frac32} + x^{\\frac12}$ なので $\\dfrac{dy}{dx} = \\dfrac32 x^{\\frac12} + \\dfrac12 x^{-\\frac12} = \\dfrac32\\sqrt x + \\dfrac{1}{2\\sqrt x}$。$x = 4$ で $\\dfrac32 \\cdot 2 + \\dfrac14 = \\dfrac{13}4$。中心の問いへの最初の部分回答：**$t$ を消せれば、接線の傾きはいつもの微分で出る——ただし、消すのに手間がかかった**。",
+        },
+      ],
+      formulaPreview: "y = x^(3/2) + x^(1/2) → dy/dx = (3/2)√x + 1/(2√x) → x = 4 で 3 + 1/4 = 13/4",
+      figureMarker: "<<M3DA_VELOCITY_ARROW>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "同じ曲線 $x = t^2,\\ y = t^3 + t$ で、こんどは $t$ を消さずに、$\\dfrac{dx}{dt}$ と $\\dfrac{dy}{dt}$ を求めます。$t = 2$ での $\\dfrac{dy}{dt} \\div \\dfrac{dx}{dt}$ の値を求めましょう。",
+      answer: 13 / 4,
+      answerDisplay: "13/4",
+      unit: "",
+      unknownLabel: "$\\dfrac{dy}{dt} \\div \\dfrac{dx}{dt}$ の値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$t$ を消さずに、$x$ と $y$ を別々に $t$ で微分すること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2t = 4$、$\\dfrac{dy}{dt} = 3t^2 + 1 = 13$。比は $\\dfrac{13}4$——step1 で $t$ を消してから出した傾きと、ぴったり同じ。しかも計算はずっと短い。中心の問いへ：**$2$ つの変化率の比が、接線の傾きと一致した。$t$ を消さなくても傾きが出るかもしれない**。",
+        },
+      ],
+      formulaPreview: "dx/dt = 2t = 4、dy/dt = 3t² + 1 = 13 → 13/4（step1 と一致）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "なぜ一致したのかを確かめます。同じ曲線で、$y$ を $x$ の関数と見ると、[合成関数の微分法]により $\\dfrac{dy}{dt} = \\dfrac{dy}{dx} \\cdot \\dfrac{dx}{dt}$ が成り立ちます。$t = 3$ での $\\dfrac{dy}{dt}$ と $\\dfrac{dx}{dt}$ をこの式に入れて、$t = 3$ の点での $\\dfrac{dy}{dx}$ を求めましょう。",
+      answer: 14 / 3,
+      answerDisplay: "14/3",
+      unit: "",
+      unknownLabel: "$\\dfrac{dy}{dx}$ の値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。step2 では比を計算しただけだった。その比が接線の傾きになる理由は、どの式に隠れている？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、$\\dfrac{dy}{dx}$ が**式の中の未知数**として現れていること。",
+        },
+        {
+          layer: 3,
+          text: "$t = 3$ で $\\dfrac{dy}{dt} = 3 \\cdot 9 + 1 = 28$、$\\dfrac{dx}{dt} = 6$。$28 = \\dfrac{dy}{dx} \\cdot 6$ より $\\dfrac{dy}{dx} = \\dfrac{28}6 = \\dfrac{14}3$。一般に $\\dfrac{dx}{dt} \\ne 0$ なら両辺を割って $\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt}$。分数の約分に見えるが、約分したのではなく、合成関数の微分の式を割り算で解いた結果である。中心の問いへ：**比が傾きになる理由は、合成関数の微分の中にあった**。",
+        },
+      ],
+      formulaPreview: "dy/dt = (dy/dx)(dx/dt)：28 = (dy/dx)·6 → dy/dx = 14/3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "曲線 $x = t^3 - 5t,\\ y = 2t^2$ は、$t$ を消して $y = f(x)$ の形にするのが難しい曲線です。$t = \\sqrt2$ の点での接線の傾きを求めましょう。",
+      answer: 4 * Math.SQRT2,
+      answerDisplay: "4√2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 では、$t$ を消す道と消さない道の両方があった。今度、使える道はどちら？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、$t$ を消す道が（ほぼ）閉じていること。$t$ を消さない道の手順は、曲線が替わっても同じ？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 3t^2 - 5 = 6 - 5 = 1$、$\\dfrac{dy}{dt} = 4t = 4\\sqrt2$。傾きは $\\dfrac{4\\sqrt2}{1} = 4\\sqrt2$。点 $P$ の速度 $\\left(\\dfrac{dx}{dt},\\ \\dfrac{dy}{dt}\\right) = (1,\\ 4\\sqrt2)$ は、右へ $1$ 進むあいだに上へ $4\\sqrt2$ 進む向き——その向きが接線の向き。中心の問いへ：**$t$ を消せなくても、速度の向き（$2$ つの変化率の比）が接線の傾きを教える**。",
+        },
+      ],
+      formulaPreview: "dx/dt = 3t² − 5 = 1、dy/dt = 4t = 4√2 → 傾き 4√2",
+      figureMarker: "<<M3DA_VELOCITY_TANGENT>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "同じ曲線 $x = t^3 - 5t,\\ y = 2t^2$ の、$t = \\sqrt2$ の点での接線の **$y$ 切片**を求めましょう。",
+      answer: 28,
+      answerDisplay: "28",
+      unit: "",
+      unknownLabel: "接線の $y$ 切片",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。傾きは分かった。直線を $1$ 本に決めるには、あと何が要る？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、傾きだけでなく、接点の**座標**も要ること。",
+        },
+        {
+          layer: 3,
+          text: "接点は $x = 2\\sqrt2 - 5\\sqrt2 = -3\\sqrt2$、$y = 4$。接線は $y - 4 = 4\\sqrt2\\,(x + 3\\sqrt2)$。$x = 0$ を入れると $y = 4 + 4\\sqrt2 \\cdot 3\\sqrt2 = 4 + 24 = 28$。中心の問いへ：**接点は $t$ から、傾きは速度から——$t$ を消さないまま接線が $1$ 本に決まる**。",
+        },
+      ],
+      formulaPreview: "接点 (−3√2, 4)、傾き 4√2 → y 切片 4 + 24 = 28",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "こんどは向きが逆です。楕円 $x = 2\\cos t,\\ y = \\sin t$（$0 < t < \\pi$）の上で、接線の傾きが $-\\dfrac{\\sqrt3}{2}$ になる点の $t$ を求めましょう。",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6",
+      inputAffordances: ["pi"],
+      unit: "",
+      unknownLabel: "$t$ の値",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。何が分かっていて、何を探している？" },
+        {
+          layer: 2,
+          text: "step4 と向きが逆。step4 は $t$ から傾きを出した。今度は傾きが先に分かっていて、$t$ を探す。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = -2\\sin t$、$\\dfrac{dy}{dt} = \\cos t$ なので、傾きは $\\dfrac{\\cos t}{-2\\sin t} = -\\dfrac{1}{2\\tan t}$（$0 < t < \\pi$ では $\\sin t > 0$）。$-\\dfrac{1}{2\\tan t} = -\\dfrac{\\sqrt3}2$ から $\\tan t = \\dfrac{1}{\\sqrt3}$。$0 < t < \\pi$ でこれを満たすのは $t = \\dfrac\\pi6$ の $1$ つ。中心の問いへ：**傾きから $t$ に戻るときも、比の式を $t$ について解けばよい**。",
+        },
+      ],
+      formulaPreview: "傾き cos t/(−2 sin t) = −√3/2 → tan t = 1/√3 → t = π/6",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "step4 の曲線 $x = t^3 - 5t,\\ y = 2t^2$ の上を、時刻 $t$ に点 $(x,\\ y)$ が動くとします。$t = \\sqrt2$ での点の**速さ**（[速度ベクトル]の大きさ）を求めましょう。",
+      answer: Math.sqrt(33),
+      answerDisplay: "√33",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "速さ",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。step4 では速度の 2 つの成分の**比**を使った。今度は、その成分の何を使う？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、向きではなく**大きさ**を問われていること。成分が分かったベクトルの大きさは、どう出した？",
+        },
+        {
+          layer: 3,
+          text: "速度は $(1,\\ 4\\sqrt2)$（step4）。大きさは $\\sqrt{1^2 + (4\\sqrt2)^2} = \\sqrt{1 + 32} = \\sqrt{33}$。[ベクトルの大きさ]と同じ計算。中心の問いへ：**速度の比が接線の傾き、速度の大きさが速さ——同じ $2$ つの変化率から、向きと速さが両方読める**。",
+        },
+      ],
+      formulaPreview: "速度 (1, 4√2) → 速さ √(1 + 32) = √33",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "点が円 $x = 3\\cos 2t,\\ y = 3\\sin 2t$ の上を回っています。速度を $t$ でもう一度微分したものが**加速度**です。$t = \\dfrac{\\pi}{12}$ での加速度の **$x$ 成分** $\\dfrac{d^2x}{dt^2}$ を求めましょう。",
+      answer: -6 * Math.sqrt(3),
+      answerDisplay: "-6√3",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "加速度の $x$ 成分",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。成分を $t$ で微分するのは同じ。今度は何回微分する？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、速度ではなく加速度——$x$ を $t$ で**$2$ 回**微分すること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = -6\\sin 2t$、$\\dfrac{d^2x}{dt^2} = -12\\cos 2t$。$t = \\dfrac\\pi{12}$ で $-12\\cos\\dfrac\\pi6 = -12 \\cdot \\dfrac{\\sqrt3}2 = -6\\sqrt3$。$y$ 成分も同じように $-12\\sin 2t$ で、加速度は $(-12\\cos 2t,\\ -12\\sin 2t) = -4(x,\\ y)$——いつも円の中心を向いている。中心の問いへ：**位置を $t$ で微分すると速度、もう一度で加速度。どれも成分ごとに $t$ で微分すればよい**。",
+        },
+      ],
+      formulaPreview: "d²x/dt² = −12 cos 2t → t = π/12 で −12·√3/2 = −6√3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "半径 $2$ の円が直線の上を転がるとき、円周上の $1$ 点は $x = 2(t - \\sin t),\\ y = 2(1 - \\cos t)$ と動きます（サイクロイド）。$t = \\dfrac{2\\pi}{3}$ での点の速さを求めましょう。",
+      answer: 2 * Math.sqrt(3),
+      answerDisplay: "2√3",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "速さ",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。速さを出す手順は同じ。今度は、成分が三角関数になると何が変わる？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、曲線が転がる円の点で、成分が三角関数であること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2(1 - \\cos t)$、$\\dfrac{dy}{dt} = 2\\sin t$。$t = \\dfrac{2\\pi}3$ で $\\dfrac{dx}{dt} = 2\\left(1 + \\dfrac12\\right) = 3$、$\\dfrac{dy}{dt} = 2 \\cdot \\dfrac{\\sqrt3}2 = \\sqrt3$。速さは $\\sqrt{9 + 3} = \\sqrt{12} = 2\\sqrt3$。中心の問いへ：**速度の成分を $t$ で出せれば、速さが読め、速度が $\\vec 0$ でない点では接線の向きも読める**（転がる円の点が地面に触れる瞬間は、速度が $\\vec 0$ になる）。",
+        },
+      ],
+      formulaPreview: "速度 (2(1 − cos t), 2 sin t) = (3, √3) → 速さ √12 = 2√3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "系列9 で見た曲線 $x = t^2 + 2t,\\ y = t^3 - 9t$ は、点 $(5,\\ -10)$ を通ります。この点での接線の傾きを**すべて**求めましょう。カンマで区切って答えましょう（順番は自由）。",
+      answer: Math.sqrt(6) - 3,
+      answerDisplay: "√6-3, -√6-3",
+      solutionSet: [Math.sqrt(6) - 3, -Math.sqrt(6) - 3],
+      inputAffordances: ["sqrt", "multi"],
+      unit: "",
+      unknownLabel: "接線の傾き（すべて）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。$t$ から接点と傾きを出すのは同じ。今度は、この点を与える $t$ がいくつある？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、接点が $t$ ではなく**座標**で与えられていること。",
+        },
+        {
+          layer: 3,
+          text: "$x = 5$ から $t^2 + 2t - 5 = 0$、$t = -1 \\pm \\sqrt6$。どちらも $y = t^3 - 9t = -10$ を満たす（$t^2 = 5 - 2t$ を使うと $t^3 = 9t - 10$）——曲線はこの点を $2$ 回通る。傾きは $\\dfrac{3t^2 - 9}{2t + 2}$ で、$t^2 = 5 - 2t$ を入れると $\\dfrac{6 - 6t}{2t + 2} = \\dfrac{3(1 - t)}{1 + t}$。$t = -1 + \\sqrt6$ で $\\dfrac{3(2 - \\sqrt6)}{\\sqrt6} = \\sqrt6 - 3$、$t = -1 - \\sqrt6$ で $\\dfrac{3(2 + \\sqrt6)}{-\\sqrt6} = -\\sqrt6 - 3$。$1$ つの点に接線が $2$ 本。中心の問いへ：**曲線が同じ点を $2$ 回通れば、速度も $2$ つ、接線も $2$ 本——『$1$ 点に接線は $1$ 本』は、$y = f(x)$ のグラフでの話だった**。",
+        },
+      ],
+      formulaPreview: "t = −1 ± √6 の 2 つ → 傾き 3(1 − t)/(1 + t) = √6 − 3、−√6 − 3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $t$ を消せない曲線でも、接線の傾きは求められる？——$1$ つの点に、接線が $2$ 本あることはある？
+
+────────
+
+## 2 つの道が、同じ値に着いた
+
+$x = t^2,\\ y = t^3 + t$ で、$t$ を消して $y = x^{\\frac32} + x^{\\frac12}$ にしてから微分した傾き（step1）と、$t$ を消さずに $\\dfrac{dy}{dt} \\div \\dfrac{dx}{dt}$ を計算した値（step2）が、ぴったり一致した。しかも後者のほうがずっと短い。
+
+## ここが胚細胞：速度の向きが、接線の向き
+
+$t$ に点 $(x,\\ y)$ がいるとき、$\\left(\\dfrac{dx}{dt},\\ \\dfrac{dy}{dt}\\right)$ を [速度ベクトル] という。点はその瞬間、右へ $\\dfrac{dx}{dt}$ 進むあいだに上へ $\\dfrac{dy}{dt}$ 進む向きに動いている——**その向きが接線の向き**で、傾きは
+
+$$\\frac{dy}{dx} = \\frac{dy/dt}{dx/dt} \\quad \\left(\\frac{dx}{dt} \\ne 0\\right)$$
+
+となる。理由は [合成関数の微分法] $\\dfrac{dy}{dt} = \\dfrac{dy}{dx} \\cdot \\dfrac{dx}{dt}$ を、$\\dfrac{dy}{dx}$ について解いたこと（step3）。
+
+同じ $2$ つの変化率から、**比**で接線の傾き、**大きさ** $\\sqrt{\\left(\\dfrac{dx}{dt}\\right)^2 + \\left(\\dfrac{dy}{dt}\\right)^2}$ で速さが出る（step7・9）。もう一度 $t$ で微分すれば加速度（step8）。
+
+そして、曲線が同じ点を $2$ 回通るなら、その点には速度が $2$ つあり、接線も $2$ 本ある（step10）。
+
+## Step の道筋
+
+- **step1・2（段1）**：$t$ を消す道と消さない道が、同じ傾きに着く
+- **step3（段2）**：一致する理由——合成関数の微分の式を解く
+- **step4（質的変化）**：$t$ を消せない曲線で、速度の向きから傾きを出す
+- **step5・6**：接線の $y$ 切片、傾きから $t$ に戻る
+- **step7〜9**：速さ・加速度・転がる円
+- **step10（山場）**：$1$ つの点に接線が $2$ 本
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 公式を忘れたら、「$t$ がほんの少し $\\Delta t$ 進むと、$x$ は約 $\\dfrac{dx}{dt}\\Delta t$、$y$ は約 $\\dfrac{dy}{dt}\\Delta t$ 進む。傾きは $y$ の進みを $x$ の進みで割ったもの」と考えればよい。$\\Delta t$ が消えて $\\dfrac{dy/dt}{dx/dt}$ が残る。
+
+**「$\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt}$ は $dt$ を約分しただけ」は誤り**。記号の形は約分に見えるので覚え方としては便利だが、$\\dfrac{dy}{dx}$ は $1$ つの記号で、分数そのものではない。根拠は合成関数の微分である（step3）。
+
+**「$1$ つの点に接線は $1$ 本」も誤り**——$y = f(x)$ のグラフでは正しいが、パラメータ表示の曲線では、同じ点を $2$ 回通れば $2$ 本ある。step10 の傾き $\\sqrt6 - 3$ と $-\\sqrt6 - 3$ は、**数で確かめると、符号を変えただけの組でもない**ことが姿を現す。
+
+**$\\dfrac{dx}{dt} = 0$ のとき。** 比が作れない。$\\dfrac{dy}{dt} \\ne 0$ なら点は真上か真下へ進んでいて、接線は縦になる。
+
+**この先の景色。** 物理では、位置を時間で微分したものが速度、速度を微分したものが加速度で、ニュートンの運動方程式は加速度と力を結ぶ。step8 の「円運動の加速度は中心を向く」は、月が地球のまわりを回り続ける理由の入口になる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第5章「媒介変数で表された関数の微分」「速度と加速度」の構成（$\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt}$ を合成関数の微分から導く／速度ベクトルの向きが接線の向き／等速円運動の加速度）を参考。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$t$ を消せない曲線でも、接線の傾きは**$y$ の変化率を $x$ の変化率で割った比**として求められた。その比は、点の速度の向きそのものだった。
+
+そして、$1$ つの点に接線が $2$ 本あることも、ある——曲線が同じ点を $2$ 回通るとき、点はその場所を $2$ つの速度で通り過ぎる。`,
+};
+
+/** M3DA11: 陰関数の微分——y を解かずに微分する。★三段★
+ *  段1＝step1〜2（円 x² + y² = 169 を上下に分け、2 点での傾きを陽関数で出す。同じ式 −x/y が両方に合う）
+ *  段2＝step3〜4（y² を x で微分すると 2y·y'〔合成関数の微分の関節〕→ 関係式の両辺を x で微分）
+ *  段3＝step5〜10。曲線 E：x² + xy + 2y² = 28（原典 練14 x² + xy + y² = 3 と別の係数）。
+ *  山場 step8：y² + xy = x³ + 5 の x = 1 の 2 点（y = 2, −3）での傾き {1/5, −6/5}。± の組でも、和が係数で固定される 2 次曲線でもない（R1 I2）。
+ *  素朴な読み「x を 1 つ決めれば傾きが 1 つ決まる」が外れる。y について解く道（2 次方程式の解の公式）も開いているので「解けない」とは書かない（追補18-c）。
+ *  step3 の検算：y' のかけ忘れの値 2y = 24 と、正答 −10 は別の数。 */
+export const M3DA_IMPLICIT_SERIES: LearnerSeries = {
+  id: "math3_da_implicit_01",
+  title: "陰関数の微分——y を解かずに微分する",
+  subtitle:
+    "数Ⅲ・C 微分法の応用より — 円は、$1$ つの $x$ に $y$ が $2$ つ。$y = f(x)$ の形に直さずに、$x$ と $y$ の関係式のまま微分できる。$10$ 問で、$y$ を解かずに接線の傾きを出す。",
+  patternId: "M3DA11",
+  unit: "math_3",
+  revelationLabel:
+    "**陰関数の傾きは $x$ と $y$ の両方の式**。だから同じ $x$ でも、$y$ が違えば傾きも違う",
+  drivingQuestion:
+    "円は、$1$ つの $x$ に $y$ が $2$ つ。それでも、円の上の点での接線の傾きを、上下に分けずに $1$ 本の式で出せる？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "円 $x^2 + y^2 = 169$ の上半分は $y = \\sqrt{169 - x^2}$ と書けます。この関数を微分して、点 $(5,\\ 12)$ での接線の傾きを求めましょう。",
+      answer: -5 / 12,
+      answerDisplay: "-5/12",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "円を上半分と下半分に分ければ、それぞれは $y = f(x)$ の形。上半分の[無理関数]の微分は、どうやった？",
+        },
+        {
+          layer: 2,
+          text: "$\\sqrt{169 - x^2}$ は、中身 $169 - x^2$ を $\\sqrt{\\ }$ に入れた形。",
+        },
+        {
+          layer: 3,
+          text: "[合成関数の微分法]で $y' = \\dfrac{1}{2\\sqrt{169 - x^2}} \\cdot (-2x) = -\\dfrac{x}{\\sqrt{169 - x^2}}$。$x = 5$ で $-\\dfrac{5}{\\sqrt{144}} = -\\dfrac{5}{12}$。中心の問いへの最初の部分回答：**上半分だけを取り出せば、いつもの微分で傾きが出る**。",
+        },
+      ],
+      formulaPreview: "y' = −x/√(169 − x²) → x = 5 で −5/12",
+      figureMarker: "<<M3DA_CIRCLE_HALVES>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "同じ円の下半分は $y = -\\sqrt{169 - x^2}$ です。点 $(-12,\\ -5)$ での接線の傾きを求めましょう。",
+      answer: -12 / 5,
+      answerDisplay: "-12/5",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、下半分の式（前に $-$ がつく）と点だけ。",
+        },
+        {
+          layer: 3,
+          text: "$y' = \\dfrac{x}{\\sqrt{169 - x^2}}$。$x = -12$ で $\\dfrac{-12}{\\sqrt{25}} = -\\dfrac{12}{5}$。ここで、step1 と step2 の答えを $-\\dfrac{x}{y}$ と比べてみる：$(5,\\ 12)$ では $-\\dfrac{5}{12}$、$(-12,\\ -5)$ では $-\\dfrac{-12}{-5} = -\\dfrac{12}{5}$——**上半分でも下半分でも、同じ $1$ 本の式 $-\\dfrac{x}{y}$ に合っている**。中心の問いへ：**分けて出した $2$ つの傾きが、分けない $1$ 本の式にそろった**。",
+        },
+      ],
+      formulaPreview: "y' = x/√(169 − x²) → x = −12 で −12/5（= −x/y）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "なぜ $-\\dfrac{x}{y}$ になるのかを確かめます。$y$ を $x$ の関数と見ると、$y^2$ を $x$ で微分したものは $x$ と $y$ と $y'$ の式になります。点 $(5,\\ 12)$ で、$y = 12,\\ y' = -\\dfrac{5}{12}$ として、$\\dfrac{d}{dx}(y^2)$ の値を求めましょう。",
+      answer: -10,
+      answerDisplay: "-10",
+      unit: "",
+      unknownLabel: "$\\dfrac{d}{dx}(y^2)$ の値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。step1 では、中身を根号に入れた形を微分した。今度の $2$ 乗の項も、何かを $2$ 乗に入れた形と見られない？" },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、入れ物が $\\sqrt{\\ }$ から $2$ 乗になり、中身が $y$（$x$ の関数）になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$y^2$ は「中身 $y$ を $2$ 乗に入れた形」なので、[合成関数の微分法]で $\\dfrac{d}{dx}(y^2) = 2y \\cdot y'$。$2 \\cdot 12 \\cdot \\left(-\\dfrac{5}{12}\\right) = -10$。$y'$ をかけ忘れて $2y = 24$ としてしまうのが、よくある誤り——$x$ で微分しているのに、$y$ で微分したことになってしまう。中心の問いへ：**$y$ のかたまりを $x$ で微分するときは、最後に $y'$ がつく**。",
+        },
+      ],
+      formulaPreview: "d/dx (y²) = 2y·y' = 2·12·(−5/12) = −10（2y = 24 ではない）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "円の関係式 $x^2 + y^2 = 169$ の両辺を、$y$ を $x$ の関数と見て $x$ で微分します。そこから $y'$ を求めて、点 $(-5,\\ 12)$ での接線の傾きを求めましょう。",
+      answer: 5 / 12,
+      answerDisplay: "5/12",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 では、円を上下に分けてから微分した。今度は、分けずに関係式のまま微分できる？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、$y$ を $\\pm\\sqrt{\\ }$ の式に直さないこと。関係式のどの項に、step3 で見た形が出てくる？",
+        },
+        {
+          layer: 3,
+          text: "両辺を $x$ で微分すると $2x + 2y \\cdot y' = 0$（右辺の $169$ は定数なので $0$）。$y \\ne 0$ のとき $y' = -\\dfrac{x}{y}$。点 $(-5,\\ 12)$ で $y' = -\\dfrac{-5}{12} = \\dfrac{5}{12}$。上半分か下半分かを決めずに、$1$ 本の式で出せた——$y$ の値が、どちらの半分の点かを教えてくれる。中心の問いへ：**関係式のまま両辺を $x$ で微分すれば、上下に分けずに傾きが出る**。",
+        },
+      ],
+      formulaPreview: "2x + 2y·y' = 0 → y' = −x/y → (−5, 12) で 5/12",
+      figureMarker: "<<M3DA_IMPLICIT_WINDOW>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "曲線 $x^2 + xy + 2y^2 = 28$ の上の点 $\\left(5,\\ \\dfrac12\\right)$ での接線の傾きを求めましょう。",
+      answer: -3 / 2,
+      answerDisplay: "-3/2",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。関係式の両辺を $x$ で微分するのは同じ。今度の式には、円になかった項がある？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、$xy$ の項——$x$ と $y$（$x$ の関数）の**積**——があること。",
+        },
+        {
+          layer: 3,
+          text: "$xy$ は[積の微分]で $(xy)' = 1 \\cdot y + x \\cdot y'$。両辺を微分して $2x + y + xy' + 4y\\,y' = 0$、$y' = -\\dfrac{2x + y}{x + 4y}$。点 $\\left(5,\\ \\dfrac12\\right)$ で $-\\dfrac{10 + \\frac12}{5 + 2} = -\\dfrac{21/2}{7} = -\\dfrac32$。中心の問いへ：**積の項があっても、項ごとに $x$ で微分すればよい**。",
+        },
+      ],
+      formulaPreview: "2x + y + xy' + 4y·y' = 0 → y' = −(2x + y)/(x + 4y) → −(21/2)/7 = −3/2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "同じ曲線 $x^2 + xy + 2y^2 = 28$ の、点 $\\left(5,\\ \\dfrac12\\right)$ での接線の **$y$ 切片**を求めましょう。",
+      answer: 8,
+      answerDisplay: "8",
+      unit: "",
+      unknownLabel: "接線の $y$ 切片",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。傾きは分かった。直線を $1$ 本に決めるには、あと何が要る？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、傾きではなく、その直線が $y$ 軸と交わる高さを問われていること。",
+        },
+        {
+          layer: 3,
+          text: "接線は $y - \\dfrac12 = -\\dfrac32(x - 5)$。$x = 0$ を入れると $y = \\dfrac12 + \\dfrac{15}2 = 8$。中心の問いへ：**関係式のまま出した傾きでも、接線は $y = f(x)$ のときと同じ手順で $1$ 本に決まる**。",
+        },
+      ],
+      formulaPreview: "y − 1/2 = −(3/2)(x − 5) → x = 0 で y = 1/2 + 15/2 = 8",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "こんどは向きが逆です。同じ曲線 $x^2 + xy + 2y^2 = 28$ の上で、接線の傾きが $0$（接線が横）になる点のうち、$x > 0$ のものの **$x$ 座標**を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "その点の $x$ 座標",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。何が分かっていて、何を探している？" },
+        {
+          layer: 2,
+          text: "step5 と向きが逆。step5 は点から傾きを出した。今度は傾きが先に分かっていて、点を探す。探した点が曲線の上にあることも要る。",
+        },
+        {
+          layer: 3,
+          text: "$y' = -\\dfrac{2x + y}{x + 4y} = 0$ から $2x + y = 0$、$y = -2x$。これだけでは直線で、曲線の上の点とは限らない。曲線の式に入れると $x^2 - 2x^2 + 8x^2 = 7x^2 = 28$、$x = \\pm2$。$x > 0$ なのは $x = 2$（点 $(2,\\ -4)$。分母 $x + 4y = -14 \\ne 0$ も確かめる）。中心の問いへ：**陰関数では、『傾きの条件』と『曲線の式』の $2$ つを合わせて、はじめて点が決まる**。",
+        },
+      ],
+      formulaPreview: "2x + y = 0 → y = −2x を曲線に：7x² = 28 → x = ±2 → x = 2",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "曲線 $y^2 + xy = x^3 + 5$ の上で、$x = 1$ となる点での接線の傾きを**すべて**求めましょう。カンマで区切って答えましょう（順番は自由）。",
+      answer: 1 / 5,
+      answerDisplay: "1/5, -6/5",
+      solutionSet: [1 / 5, -6 / 5],
+      inputAffordances: ["multi"],
+      unit: "",
+      unknownLabel: "接線の傾き（すべて）",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "step5 と比べてみよう。step5 では、点が座標で与えられていた。今度は $x$ だけ。$x$ を $1$ つ決めれば、傾きも $1$ つに決まる？",
+        },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、$y$ が与えられていないこと。$y'$ の式には $x$ と $y$ の両方が入っていた。",
+        },
+        {
+          layer: 3,
+          text: "$x = 1$ を入れると $y^2 + y = 6$、$y = 2,\\ -3$——$x = 1$ の点は $2$ つある。両辺を $x$ で微分すると $2y\\,y' + y + xy' = 3x^2$、$y' = \\dfrac{3x^2 - y}{2y + x}$。$(1,\\ 2)$ で $\\dfrac{3 - 2}{5} = \\dfrac15$、$(1,\\ -3)$ で $\\dfrac{3 + 3}{-5} = -\\dfrac65$。同じ $x$ でも、$y$ が違えば傾きが違う（符号を変えただけの組でもない）。$y$ について解いて $y = \\dfrac{-x \\pm \\sqrt{x^2 + 4x^3 + 20}}{2}$ と $2$ 本に分けてから微分しても同じ値になるが、根号の中の微分を $2$ 回やることになる。中心の問いへ：**陰関数の傾きは $x$ と $y$ の両方の式——$x$ を決めただけでは、傾きは $1$ つに決まらない**。",
+        },
+      ],
+      formulaPreview: "x = 1 で y = 2, −3。y' = (3x² − y)/(2y + x) → 1/5、−6/5",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "曲線 $x^2 + xy + 2y^2 = 28$ の上で、接線が**縦**になる点が $2$ つあります。そのうち $y > 0$ の点の **$y$ 座標**を求めましょう。",
+      answer: Math.SQRT2,
+      answerDisplay: "√2",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "その点の $y$ 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。step7 では接線が横になる点を探した。縦になるのは、$y'$ の式のどこがどうなるとき？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、注目するのが $y'$ の**分母**のほうであること。",
+        },
+        {
+          layer: 3,
+          text: "$y' = -\\dfrac{2x + y}{x + 4y}$ の分母が $0$（分子は $0$ でない）のとき、傾きの絶対値が限りなく大きくなり、接線は縦になる。$x + 4y = 0$、$x = -4y$ を曲線に入れると $16y^2 - 4y^2 + 2y^2 = 14y^2 = 28$、$y = \\pm\\sqrt2$。$y > 0$ なのは $y = \\sqrt2$（点 $(-4\\sqrt2,\\ \\sqrt2)$。分子 $2x + y = -7\\sqrt2 \\ne 0$）。中心の問いへ：**横の接線は分子、縦の接線は分母——$y = f(x)$ では描けなかった縦の接線も、陰関数なら同じ式から出る**。",
+        },
+      ],
+      formulaPreview: "分母 x + 4y = 0 → x = −4y を曲線に：14y² = 28 → y = √2（y > 0）",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "楕円 $\\dfrac{x^2}{9} + \\dfrac{y^2}{4} = 1$ の上の点 $\\left(\\dfrac32,\\ \\sqrt3\\right)$ での接線の傾きを、陰関数の微分で求めましょう。この楕円は $x = 3\\cos t,\\ y = 2\\sin t$ とも書け、この点は $t = \\dfrac\\pi3$ にあたります。系列10 の方法（$\\dfrac{dy/dt}{dx/dt}$）でも同じ値になるか確かめましょう。",
+      answer: (-2 * Math.sqrt(3)) / 9,
+      answerDisplay: "-2√3/9",
+      inputAffordances: ["sqrt"],
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。関係式の両辺を $x$ で微分するのは同じ。今度は、同じ傾きを出す別の道もある。" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、曲線が楕円で、パラメータ表示も与えられていること。$2$ つの道で出した値を突き合わせる。",
+        },
+        {
+          layer: 3,
+          text: "陰関数：$\\dfrac{2x}{9} + \\dfrac{2y\\,y'}{4} = 0$ から $y' = -\\dfrac{4x}{9y}$。点で $-\\dfrac{4 \\cdot \\frac32}{9\\sqrt3} = -\\dfrac{6}{9\\sqrt3} = -\\dfrac{2}{3\\sqrt3} = -\\dfrac{2\\sqrt3}{9}$。パラメータ：$\\dfrac{dx}{dt} = -3\\sin t = -\\dfrac{3\\sqrt3}2$、$\\dfrac{dy}{dt} = 2\\cos t = 1$、比は $-\\dfrac{2}{3\\sqrt3} = -\\dfrac{2\\sqrt3}{9}$。$2$ つの道が同じ値に着いた。中心の問いへ：**$y = f(x)$ に直せない曲線の傾きには、$t$ を通す道と、関係式のまま微分する道がある。どちらも同じ接線を指す**。",
+        },
+      ],
+      formulaPreview: "陰関数 y' = −4x/(9y) → −2√3/9。パラメータ 1/(−3√3/2) も −2√3/9",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 円は、$1$ つの $x$ に $y$ が $2$ つ。それでも、円の上の点での接線の傾きを、上下に分けずに $1$ 本の式で出せる？
+
+────────
+
+## 分けて出した 2 つが、1 本の式にそろった
+
+円 $x^2 + y^2 = 169$ を上半分 $y = \\sqrt{169 - x^2}$ と下半分 $y = -\\sqrt{169 - x^2}$ に分けて微分すると、$(5,\\ 12)$ では $-\\dfrac5{12}$、$(-12,\\ -5)$ では $-\\dfrac{12}5$。どちらも $-\\dfrac{x}{y}$ に合っていた（step1・2）。
+
+## ここが胚細胞：$y$ を $x$ の関数と見たまま、関係式の両辺を微分する
+
+円全体は $y = f(x)$ ではないが、点の近くの小さな範囲に限れば、上半分か下半分のどちらか——つまり $x$ の関数——になっている。だから、**$y$ を $x$ の関数と見なしたまま**、関係式 $x^2 + y^2 = 169$ の両辺を $x$ で微分してよい。
+
+そのとき、$y$ を含む項には合成関数の微分が効く：
+
+$$\\frac{d}{dx}(y^2) = 2y \\cdot y'$$
+
+（$y'$ をかけ忘れないこと＝step3）。$2x + 2y\\,y' = 0$ から $y' = -\\dfrac{x}{y}$——上下に分けずに $1$ 本の式で出た（step4）。このように、関係式で決まる $y$ を **[陰関数]** という。
+
+陰関数の $y'$ は $x$ と $y$ の両方の式になる。だから、**同じ $x$ でも $y$ が違えば傾きも違う**（step8）。
+
+## Step の道筋
+
+- **step1・2（段1）**：円を上下に分けて、陽関数で傾きを出す——同じ $1$ 本の式にそろう
+- **step3・4（段2）**：$y^2$ の微分に $y'$ がつく（関節）→ 関係式のまま微分する
+- **step5・6**：積の項 $xy$ があっても、項ごとに微分して接線を出す
+- **step7・9**：傾きが $0$ の点（分子）・縦の接線の点（分母）を、曲線の式と合わせて探す
+- **step8（山場）**：同じ $x$ に $2$ 点——傾きも $2$ つ
+- **step10**：陰関数とパラメータ（系列10）、$2$ つの道が同じ傾きに着く
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 陰関数の微分を忘れたら、「$y$ の代わりに $x$ の関数 $f(x)$ を書きこんでみる」とよい。$x^2 + \\{f(x)\\}^2 = 169$ の両辺を微分すれば、$2x + 2f(x)f'(x) = 0$——$y$ のところに $y'$ がつく理由が見える。
+
+**「$y^2$ を $x$ で微分すると $2y$」は誤り。** step3 で $2y = 24$ としてしまうと、正しい $-10$ とまるで違う値になる——**数で確かめれば、$y'$ のかけ忘れは姿を現す**。$2y$ は $y^2$ を $y$ で微分したもの。
+
+**「$x$ を $1$ つ決めれば傾きが $1$ つ決まる」も誤り**——$y = f(x)$ では正しいが、陰関数では step8 のように同じ $x$ に点が $2$ つあれば、傾きも $2$ つある。
+
+**$y$ について解く道も、閉じてはいない。** step8 の曲線も、$y$ の $2$ 次方程式として解の公式で $2$ 本に分けられる。ただ、分けてから微分すると根号の中の微分を $2$ 回やることになり、関係式のまま微分するほうが手間が少ない。陰関数の微分が消すのは「解けないこと」ではなく、「解いてから微分する手間」である。
+
+**この先の景色。** 「関係式で決まる $y$ は、点の近くでは $x$ の関数になっている」ことがいつ保証されるかは、大学で学ぶ**陰関数定理**が答える（step9 の縦の接線の点が、その保証が切れる場所にあたる）。また、$2$ つの量が関係式で結ばれているとき、片方の変化率からもう片方の変化率を出す計算（風船の半径と体積など）にも、同じ「両辺を時間で微分する」考え方が使われる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第5章「陰関数の微分」の構成（円を上下に分けた微分と、両辺を $x$ で微分する方法の比較／$y^2$ の微分に $y'$ がつく注意／$xy$ の項を含む曲線の接線）を参考。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+円の接線の傾きは、上下に分けずに $1$ 本の式 $-\\dfrac{x}{y}$ で出せた。**$y$ を $x$ の関数と見たまま、関係式の両辺を $x$ で微分する**——$y$ の項に $y'$ がつくことだけを忘れなければよい。
+
+その $1$ 本の式は $x$ と $y$ の両方を含む。だから同じ $x$ でも、上の点と下の点では傾きが違い、$y$ の値が「どちらの点か」を式の中で教えてくれる。`,
+};
+
 /** 「微分法の応用」ユニットの系列一覧（数Ⅲ・C 第5章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_DIFF_APP_SERIES_LIST: LearnerSeries[] = [
@@ -2694,4 +3686,7 @@ export const MATH3_DIFF_APP_SERIES_LIST: LearnerSeries[] = [
   M3DA_SQUEEZE_SERIES,
   M3DA_IVT_SERIES,
   M3DA_MVT_SERIES,
+  M3DA_PARAM_SERIES,
+  M3DA_VELOCITY_SERIES,
+  M3DA_IMPLICIT_SERIES,
 ];
