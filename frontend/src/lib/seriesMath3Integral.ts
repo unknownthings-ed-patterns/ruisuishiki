@@ -729,4 +729,343 @@ $$(\\log\\lvert x\\rvert)' = \\frac1x, \\qquad \\int\\frac{dx}{x} = \\log\\lvert
 $2$ 本を貼り合わせたのが $\\log\\lvert x\\rvert$ で、かたまりの中身が負になる区間でも、同じ $1$ 本の式で巻き戻せる。`,
 };
 
-export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [M3INT_BASIC_SERIES, M3INT_LOG_SERIES];
+/** M3INT3: 作り替えて巻き戻す——展開・次数下げ・分数関数。
+ *  step1〜3：和・定数倍は巻き戻しを通り抜ける（展開してから）／山場 step3：かたまりの冪 (x²+3)² を「かたまりで」巻き戻す候補は
+ *  関数倍のずれで外れる。提出値は経路に依らない F(1)（正答 56/5・誤概念の候補 (x²+3)³/3 − 9 では 37/3＝sympy・R1 A3）。
+ *  step4〜6：三角の 2 次を 1 次へ（半角・倍角・積和）。区間は半周期の整数倍にしない（R1 B13）。
+ *  step7〜10：分数関数（割り算・部分分数）。step8 と step9 は別の分母で作った（R1 B4）。
+ *  答えの形は問題文で指定する（R1 B1：sin3x cos3x の原始関数は 2 通り以上に書ける）。
+ *  原典の族（(e^x+1)^n・(x+1/√x)²・1/((x+1)(x+2))・1/((2x−1)(x+3))・(x²+1)/(x−1)・sin2x cos3x）は使わない。
+ *  系列4 への預け：step3 の L3（ずれの関数はかたまりの微分そのもの＝R1 A1）。 */
+export const M3INT_RESHAPE_SERIES: LearnerSeries = {
+  id: "math3_int_reshape_01",
+  title: "作り替えて巻き戻す——展開・次数下げ・分数を分ける",
+  subtitle:
+    "数Ⅲ・C 積分法より — そのままでは逆から読めない形も、和と定数倍に分ければ巻き戻せる。$10$ 問で、展開・次数下げ・割り算・部分分数の作り替えを確かめ、作り替えずに直そうとすると外れる形にも出会う。",
+  patternId: "M3INT3",
+  unit: "math_3",
+  revelationLabel:
+    "**和と定数倍は巻き戻しを通り抜ける**。だから読めない形は「巻き戻せる形の和」に作り替える。かたまりのまま割って直そうとすると、割った式まで微分されて外れる",
+  drivingQuestion:
+    "そのままでは逆から読めない形を、読める形に作り替えるには何を変える？——**作り替えずに、ずれを割って直そうとすると外れるのはなぜ？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$\\displaystyle\\int(4\\cos x - 6\\sin x)\\,dx = a\\sin x + b\\cos x + C$ と書けます。$b$ を求めましょう。",
+      answer: 6,
+      answerDisplay: "6",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int(4\\cos x - 6\\sin x)\\,dx = a\\sin x + b\\cos x + C$ の $b$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$2$ つの関数の和を巻き戻すとき、$1$ つずつ巻き戻してから足してよいだろうか？",
+        },
+        {
+          layer: 2,
+          text: "数Ⅱの積分で、和や定数倍はどう扱った？（[不定積分]）",
+        },
+        {
+          layer: 3,
+          text: "和と定数倍は、微分でも巻き戻しでも項ごとに扱える。$4\\cos x$ の候補は $4\\sin x$、$-6\\sin x$ の候補は $-6\\cdot(-\\cos x) = 6\\cos x$（$(\\cos x)' = -\\sin x$ の符号に注意）。$\\displaystyle\\int(4\\cos x - 6\\sin x)\\,dx = 4\\sin x + 6\\cos x + C$ なので $b = 6$。微分すると $4\\cos x - 6\\sin x$ に戻る。中心の問いへの最初の部分回答：**和と定数倍は巻き戻しを通り抜ける。だから「巻き戻せる形の和」なら巻き戻せる**。",
+        },
+      ],
+      formulaPreview: "4cos x → 4sin x、−6sin x → 6cos x → b = 6",
+      figureMarker: "<<M3INT_STOCK>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$\\displaystyle\\int\\left(\\sqrt{x} + 2\\right)^2 dx = a x^2 + b\\,x\\sqrt{x} + c x + C$ と書けます。$b$ を求めましょう。",
+      answer: 8 / 3,
+      answerDisplay: "8/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int(\\sqrt{x}+2)^2\\,dx = a x^2 + b\\,x\\sqrt{x} + c x + C$ の $b$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は和の形をしていない。和の形にできる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、被積分関数が和でなく「和の $2$ 乗」になっていること。",
+        },
+        {
+          layer: 3,
+          text: "展開すると $(\\sqrt{x}+2)^2 = x + 4\\sqrt{x} + 4$ で、巻き戻せる形の和になる。$4\\sqrt{x} = 4x^{\\frac12}$ の候補は $x^{\\frac32}$ で、微分すると $\\dfrac32$ 倍ずれるので $4\\cdot\\dfrac23 x^{\\frac32} = \\dfrac83 x\\sqrt{x}$。全体は $\\dfrac12x^2 + \\dfrac83 x\\sqrt{x} + 4x + C$ で、$b = \\dfrac83$。中心の問いへ：**和でない形は、展開して和に作り替える**。",
+        },
+      ],
+      formulaPreview: "展開 x + 4√x + 4 → (1/2)x² + (8/3)x√x + 4x → b = 8/3",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "関数 $F(x)$ は、微分すると $(x^2 + 3)^2$ になり、$F(0) = 0$ を満たします。$F(1)$ を求めましょう。",
+      answer: 56 / 5,
+      answerDisplay: "56/5",
+      unit: "",
+      unknownLabel: "$F(1)$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$2$ 乗の中身が $x^2 + 3$ になったこと。系列1 でかたまりの冪 $(3x+2)^4$ を巻き戻したときの手つきは、ここでもそのまま効く？",
+        },
+        {
+          layer: 3,
+          text: "かたまり $x^2+3$ の冪だから、系列1 のように候補 $\\dfrac13(x^2+3)^3$ を作りたくなる。微分すると $(x^2+3)^2\\cdot(x^2+3)' = 2x\\,(x^2+3)^2$ で、ほしいものの「$2x$ 倍」——ずれが数でなく $x$ の式になる。$2x$ で割った $\\dfrac{(x^2+3)^3}{6x}$ を微分すると、割った $x$ まで微分されて元に戻らない。だからこの候補は使えない（使うと $F(1) = \\dfrac{37}{3}$ になり外れる）。前題と同じく展開する：$(x^2+3)^2 = x^4 + 6x^2 + 9$、$F(x) = \\dfrac15x^5 + 2x^3 + 9x$（$F(0)=0$ で $C = 0$）。$F(1) = \\dfrac15 + 2 + 9 = \\dfrac{56}{5}$。中心の問いへ：**ずれが $x$ の式のときは、割っても直らない。作り替えてから巻き戻す**。系列1 の $(3x+2)^4$ では、かたまりの微分が $3$（数）だった。ここではかたまりの微分が $2x$ で、候補を微分するとそれが余分に掛かって出てくる。**被積分関数のほうに、かたまりの微分がはじめから掛かっていたら？**——次の系列の問いである。",
+        },
+      ],
+      formulaPreview: "展開 x⁴ + 6x² + 9 → F(x) = x⁵/5 + 2x³ + 9x → F(1) = 56/5",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{3}}\\cos^2 x\\,dx$ の値を求めましょう。",
+      answer: Math.PI / 6 + Math.sqrt(3) / 8,
+      answerDisplay: "π/6+√3/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{3}}\\cos^2 x\\,dx$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      inputAffordances: ["pi", "sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。$2$ 乗の形であることは同じ。展開して和にする手つきは、三角関数の $2$ 乗にも使える？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$2$ 乗されているのが三角関数であること。$\\cos^2 x$ を、$2$ 乗の無い形で書き表す式を、数Ⅱで見なかった？（[2倍角の公式]）",
+        },
+        {
+          layer: 3,
+          text: "$\\cos 2x = 2\\cos^2 x - 1$ を $\\cos^2 x$ について解くと $\\cos^2 x = \\dfrac{1 + \\cos 2x}{2}$（[半角の公式]）。$2$ 次の三角が、定数と $1$ 次の三角の和に作り替わった。$\\displaystyle\\int_0^{\\frac{\\pi}{3}}\\frac{1+\\cos 2x}{2}\\,dx = \\Big[\\frac x2 + \\frac{\\sin 2x}{4}\\Big]_0^{\\frac{\\pi}{3}} = \\frac{\\pi}{6} + \\frac{\\sqrt3}{8}$。前題のように「かたまりで巻き戻す」候補 $\\dfrac13\\cos^3 x$ は、微分すると $-\\cos^2 x\\sin x$ になり、ずれが $\\sin x$ という関数になる——同じ理由で使えない。中心の問いへ：**三角の $2$ 乗は、展開の代わりに 2 倍角の公式を逆から読んで $1$ 次に下げる**。",
+        },
+      ],
+      formulaPreview: "cos²x = (1 + cos 2x)/2 → x/2 + sin 2x/4 に π/3 と 0 → π/6 + √3/8",
+      figureMarker: "<<M3INT_HALF_ANGLE>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$\\displaystyle\\int\\sin 3x\\cos 3x\\,dx = k\\cos 6x + C$ と書けます。$k$ を求めましょう。",
+      answer: -1 / 12,
+      answerDisplay: "-1/12",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int\\sin 3x\\cos 3x\\,dx = k\\cos 6x + C$ の $k$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$2$ 次の三角が「$\\cos$ の $2$ 乗」でなく「$\\sin$ と $\\cos$ の積」になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ を逆から読むと $\\sin 3x\\cos 3x = \\dfrac12\\sin 6x$。$\\sin 6x$ の候補は $-\\cos 6x$ で、微分すると $6\\sin 6x$ なので $6$ で割る：$\\displaystyle\\int\\frac12\\sin 6x\\,dx = -\\frac{1}{12}\\cos 6x + C$。$k = -\\dfrac{1}{12}$。答えの形を $\\cos 6x$ で指定したのは、同じ関数が $\\dfrac16\\sin^2 3x$ のようにも書けて、形によって係数が変わるからである（どれも定数だけ違う）。中心の問いへ：**積の形も、2 倍角の公式を逆から読めば $1$ 次の三角に作り替えられる**。",
+        },
+      ],
+      formulaPreview: "sin 3x cos 3x = (1/2)sin 6x → −(1/12)cos 6x → k = −1/12",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$\\displaystyle\\int\\sin 5x\\cos 2x\\,dx = a\\cos 7x + b\\cos 3x + C$ と書けます。$a$ を求めましょう。",
+      answer: -1 / 14,
+      answerDisplay: "-1/14",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int\\sin 5x\\cos 2x\\,dx = a\\cos 7x + b\\cos 3x + C$ の $a$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。$\\sin$ と $\\cos$ の積であることは同じ。何が加わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\sin$ と $\\cos$ の中の角が違うこと（$5x$ と $2x$）。第4章で、三角関数の積と和を行き来する式を扱わなかった？（[和積の公式]）",
+        },
+        {
+          layer: 3,
+          text: "加法定理の $\\sin(\\alpha+\\beta)$ と $\\sin(\\alpha-\\beta)$ を足すと $2\\sin\\alpha\\cos\\beta$ なので、$\\sin 5x\\cos 2x = \\dfrac12(\\sin 7x + \\sin 3x)$。$\\sin 7x$ の候補 $-\\cos 7x$ は微分すると $7$ 倍ずれるので $\\dfrac12\\cdot\\left(-\\dfrac17\\cos 7x\\right) = -\\dfrac{1}{14}\\cos 7x$。$a = -\\dfrac{1}{14}$（$b = -\\dfrac16$）。中心の問いへ：**角の違う積は、積を和に直す公式で $1$ 次の三角の和に作り替える**。",
+        },
+      ],
+      formulaPreview: "sin 5x cos 2x = (1/2)(sin 7x + sin 3x) → −(1/14)cos 7x − (1/6)cos 3x → a = −1/14",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\int\\frac{x^2 + 4x + 1}{x + 3}\\,dx = \\frac12x^2 + x + k\\log\\lvert x + 3\\rvert + C$ と書けます。$k$ を求めましょう。",
+      answer: -2,
+      answerDisplay: "-2",
+      unit: "",
+      unknownLabel: "$\\log\\lvert x+3\\rvert$ の係数 $k$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。巻き戻せる形の和に作り替えたいのは同じ。分数の形のままで、和にできる？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、被積分関数が分数で、分子の次数が分母より大きいこと。数Ⅱで、整式を $1$ 次式で割ったとき、何と何に分けて書けた？（[除法の基本式]）",
+        },
+        {
+          layer: 3,
+          text: "$x^2 + 4x + 1$ を $x + 3$ で割ると、商 $x + 1$、余り $-2$。だから $\\dfrac{x^2+4x+1}{x+3} = x + 1 - \\dfrac{2}{x+3}$。多項式の部分は $\\dfrac12x^2 + x$、$-\\dfrac{2}{x+3}$ は系列2 の $\\log\\lvert\\ \\rvert$ で $-2\\log\\lvert x+3\\rvert$。$k = -2$。中心の問いへ：**分数は、割り算で「多項式 ＋ 余り ÷ $1$ 次式」の和に作り替える**。",
+        },
+      ],
+      formulaPreview: "(x² + 4x + 1)/(x + 3) = x + 1 − 2/(x + 3) → k = −2",
+      figureMarker: "<<M3INT_DIVIDE>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\displaystyle\\int\\frac{1}{(x - 1)(x + 7)}\\,dx = k\\Big(\\log\\lvert x - 1\\rvert - \\log\\lvert x + 7\\rvert\\Big) + C$ と書けます。$k$ を求めましょう。",
+      answer: 1 / 8,
+      answerDisplay: "1/8",
+      unit: "",
+      unknownLabel: "$k$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。分数を和に作り替えたいのは同じ。今度は割り算が使える？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、分子の次数が分母より小さく、分母が $2$ つの $1$ 次式の積になっていること。$\\dfrac{1}{x-1} - \\dfrac{1}{x+7}$ を通分すると、どんな分数になる？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{1}{x-1} - \\dfrac{1}{x+7} = \\dfrac{(x+7) - (x-1)}{(x-1)(x+7)} = \\dfrac{8}{(x-1)(x+7)}$。ほしいものの $8$ 倍なので、$8$ で割って $\\dfrac{1}{(x-1)(x+7)} = \\dfrac18\\left(\\dfrac{1}{x-1} - \\dfrac{1}{x+7}\\right)$。それぞれ $\\log\\lvert\\ \\rvert$ に巻き戻して $k = \\dfrac18$。中心の問いへ：**積の分母は、$1$ 次式の分数の差に分けて作り替える。分けたときのずれも、数なら割れば直る**。",
+        },
+      ],
+      formulaPreview: "1/(x−1) − 1/(x+7) = 8/((x−1)(x+7)) → 8 で割って k = 1/8",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$\\dfrac{1}{(3x + 1)(x - 2)} = \\dfrac{a}{3x + 1} + \\dfrac{b}{x - 2}$ がどんな $x$ についても成り立つように、定数 $a$、$b$ を決めます。$a$ を求めましょう。",
+      answer: -3 / 7,
+      answerDisplay: "-3/7",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。分け方の形が先に与えられている。何を探す問題になった？" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は差を作ってから倍率を合わせた。今度は分けた形が先にあって、係数を探す。数Ⅱで、どんな $x$ でも成り立つ等式から係数を決める問題を何と呼んだ？（[恒等式]）",
+        },
+        {
+          layer: 3,
+          text: "両辺に $(3x+1)(x-2)$ を掛けると $1 = a(x-2) + b(3x+1)$。どんな $x$ でも成り立つので、$x = -\\dfrac13$ を入れると $1 = a\\left(-\\dfrac73\\right)$、$a = -\\dfrac37$（$x = 2$ を入れると $b = \\dfrac17$）。前題のように差を作る道では、$3x+1$ と $x-2$ の $x$ の係数がそろっていないので、倍率をそろえる手間がかかる。中心の問いへ：**分け方は、[部分分数分解] の係数を恒等式で決めれば、係数がそろっていなくても作れる**。",
+        },
+      ],
+      formulaPreview: "1 = a(x − 2) + b(3x + 1)、x = −1/3 → a = −3/7（x = 2 → b = 1/7）",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_2^4\\frac{x^2 + x + 4}{x^2 + x - 2}\\,dx$ の値を求めましょう。",
+      answer: 2 + 2 * Math.log(2),
+      answerDisplay: "2+2log2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_2^4\\frac{x^2+x+4}{x^2+x-2}\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。分数を作り替えるのは同じ。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、割り算をしたあとの余りの分母が、$1$ 次式でなく $2$ 次式であること。",
+        },
+        {
+          layer: 3,
+          text: "分子 $= $ 分母 $+ 6$ なので、割ると $1 + \\dfrac{6}{x^2+x-2} = 1 + \\dfrac{6}{(x-1)(x+2)}$。step8 のように差を作ると $\\dfrac{1}{x-1} - \\dfrac{1}{x+2} = \\dfrac{3}{(x-1)(x+2)}$ なので、$\\dfrac{6}{(x-1)(x+2)} = 2\\left(\\dfrac{1}{x-1} - \\dfrac{1}{x+2}\\right)$。$\\displaystyle\\int_2^4 = \\Big[x + 2\\log(x-1) - 2\\log(x+2)\\Big]_2^4 = (4 + 2\\log 3 - 2\\log 6) - (2 + 0 - 2\\log 4) = 2 + 2\\log\\frac{3\\cdot 4}{6} = 2 + 2\\log 2$。中心の問いへ：**割り算と部分分数を重ねれば、分数を「巻き戻せる形の和」に作り替えられる**。",
+        },
+      ],
+      formulaPreview: "1 + 2(1/(x−1) − 1/(x+2)) → x + 2log(x−1) − 2log(x+2) に 4 と 2 → 2 + 2log 2",
+    },
+  ],
+  derivation: `**中心の問い** ｜ そのままでは逆から読めない形を、読める形に作り替えるには何を変える？——**作り替えずに、ずれを割って直そうとすると外れるのはなぜ？**
+
+────────
+
+## 巻き戻せる形の在庫
+
+系列1・2 で、微分の公式を逆から読んで巻き戻せる形がそろった。冪 $x^{\\alpha}$、三角関数 $\\sin$・$\\cos$・$\\dfrac{1}{\\cos^2}$、指数 $e^x$・$a^x$、そして $\\dfrac1x$。中にかたまり $ax+b$ が入っていても、ずれは数なので割れば直る。
+
+## ここが胚細胞：和と定数倍は、巻き戻しを通り抜ける
+
+微分は、和を項ごとに、定数倍は外に出したまま扱えた。だから巻き戻しも同じである（step1）。すると方針が立つ——**読めない形は、在庫の形の和に作り替えればよい**。
+
+| 読めない形 | 作り替え | step |
+|---|---|---|
+| 和の $2$ 乗・かたまりの $2$ 乗 | 展開する | 2・3 |
+| 三角の $2$ 乗・積 | 2 倍角の公式を逆から読む（[半角の公式]）／積を和に直す | 4〜6 |
+| 分子の次数が大きい分数 | 割り算で「多項式 ＋ 余り ÷ $1$ 次式」に | 7 |
+| $1$ 次式の積が分母 | $1$ 次式の分数の差に分ける（[部分分数分解]） | 8〜10 |
+
+<<M3INT_STOCK>>
+
+## 作り替えずに直そうとすると、なぜ外れるか
+
+$(x^2+3)^2$ を「$x^2+3$ のかたまりの $2$ 乗」と見て、系列1 のように候補 $\\dfrac13(x^2+3)^3$ を作ると、微分して $2x\\,(x^2+3)^2$ が出てくる（step3）。ずれが $2x$ という**関数**である。
+
+系列1 のずれは数だった。数は微分の外に出せるので、割っておけば微分のあとも割ったままでいる。ところが $2x$ で割った式を微分すると、**割った $2x$ も一緒に微分される**（[商の微分]）。だから割っても元に戻らない。
+
+この区別は池田（2024）が言葉にしている——「簡単に補正ができるのは『定数倍のズレ』であるときに限る」「『関数倍のズレ』が生じたときは補正しようとしてもうまくいかない」（p.214）。**関数のずれは、割り算では直らない。** だからこの系列では、ずれが出ない形に作り替えてから巻き戻した。
+
+## Step の道筋
+
+- **step1・2**：和と定数倍・展開
+- **step3（山場）**：かたまりの冪。かたまりで巻き戻すと関数のずれが出て外れる。展開が正しい道
+- **step4〜6**：三角の $2$ 次を $1$ 次の和へ（2 倍角の逆読み・積和）
+- **step7**：割り算で分数を分ける
+- **step8・9**：部分分数（差を作る道・恒等式の道）
+- **step10**：割り算と部分分数を重ねる
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** [半角の公式] は覚えなくてよい。$\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$ を $\\cos^2 x$・$\\sin^2 x$ について解けば出てくる。積を和に直す式も、加法定理を $2$ 本並べて足すか引けば出てくる。部分分数の係数も、差を通分して倍率を見るか、恒等式に代入すれば出る。
+
+**$\\sin^2 x$ を $\\dfrac13\\sin^3 x$ と巻き戻すのは、よくある取りこぼし**（池田 2024 も同じ例を挙げている）。微分すると $\\sin^2 x\\cos x$ で、ずれが $\\cos x$ という関数になる。微分して確かめれば、その場で食い違いが見える。
+
+**答えの形は $1$ つとは限らない。** $\\sin 3x\\cos 3x$ の巻き戻しは $-\\dfrac{1}{12}\\cos 6x$ とも $\\dfrac16\\sin^2 3x$ とも書ける（微分すればどちらも同じ）。$2$ つの式の差は定数で、$+C$ に吸い込まれる。だから係数を問うときは、答えの形を先に決めておく。
+
+**この先の景色。** 分数関数を $1$ 次式の分数の和に分ける操作は、分母が因数分解できる限り、どこまでも続けられる（分母に $2$ 次式が残るときは、系列10 の三角関数の置き換えがそこを受け持つ）。大学では、微分方程式を解く道具（ラプラス変換）の最後の一歩として、同じ部分分数分解が何度も現れる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「1/x の不定積分」の節にある練習（展開・次数下げ・積和・割り算・部分分数）の構成と、「定数倍のズレ」「関数倍のズレ」の区別（p.214・引用）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+和と定数倍は巻き戻しを通り抜ける。だから読めない形は、展開・2 倍角の逆読み・積を和に直す式・割り算・部分分数で、**巻き戻せる形の和**に作り替えればよい。
+
+作り替えずに、かたまりのまま巻き戻した候補を割って直そうとすると、ずれが $x$ の式になっているので、割った式まで微分されて元に戻らない。直せるのは数のずれだけである。`,
+};
+
+export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [M3INT_BASIC_SERIES, M3INT_LOG_SERIES, M3INT_RESHAPE_SERIES];

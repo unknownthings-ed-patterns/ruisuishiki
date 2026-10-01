@@ -101,6 +101,7 @@ import {
 import {
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
+  M3INT_RESHAPE_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2189,6 +2190,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "1/x の巻き戻し（負の側をどう覆うか）— log x が届かない x<0 の側は、折り返した log(−x) が受け持つ。2 本を貼り合わせると log|x|",
+  },
+  {
+    series: M3INT_RESHAPE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "作り替えて巻き戻す（展開・次数下げ・分数を分ける）— 和と定数倍は巻き戻しを通り抜ける。読めない形は巻き戻せる形の和に作り替える。ずれが x の式なら、割っても直らない",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

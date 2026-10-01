@@ -15843,6 +15843,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_STOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intStock />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_HALF_ANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intHalfAngle />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_DIVIDE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intDivide />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40656,6 +40677,115 @@ function M3intLogNeg() {
       <text x={X(-6.2)} y={Y(Math.log(5.6)) - 26} fontSize="11" fill={accent} fontStyle="italic">y = log(−x)</text>
       <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
         左の枝の傾きは、右の枝の傾きとどんな関係？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列3 step1: 「巻き戻せる形の在庫」（冪・三角・指数・1/x）と、そこへ作り替える矢印。
+ *  ★図に答えを描かない★ 作り替えの中身（展開・次数下げ・割り算・分ける）は「?」。具体的な式は書かない。
+ *  この図から読めてしまうもの：「和と定数倍は通り抜ける」「在庫の形にすれば巻き戻せる」という方針だけ。 */
+function M3intStock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const items = ["xⁿ", "sin・cos", "eˣ・aˣ", "1/x"];
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に、そのままでは逆から読めない形の箱。右に、巻き戻せる形の在庫として、冪、サインとコサイン、指数、x 分の 1 の 4 つの箱。左から右へ作り替える矢印があり、作り替えの中身は疑問符"
+    >
+      <rect x="16" y="70" width="96" height="56" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="64" y="94" fontSize="11" fill={stroke} textAnchor="middle">そのままでは</text>
+      <text x="64" y="110" fontSize="11" fill={stroke} textAnchor="middle">逆から読めない形</text>
+      {items.map((t, k) => (
+        <g key={t}>
+          <rect x="214" y={24 + k * 38} width="90" height="28" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+          <text x="259" y={42 + k * 38} fontSize="12" fill={stroke} textAnchor="middle">{t}</text>
+        </g>
+      ))}
+      <text x="259" y="16" fontSize="10" fill={muted} textAnchor="middle">巻き戻せる形（の和）</text>
+      <path d="M 116 98 L 206 98" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 200 93 L 208 98 L 200 103" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="161" y="90" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        和と定数倍は、巻き戻しをそのまま通り抜ける？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列3 step4: 2 次の三角（cos² の波）を、1 次の三角（倍の角の cos）と定数の和に作り替える仕組み。
+ *  ★図に答えを描かない★ 波の高さの値・定数の値は書かない。区間 0〜π/3 も描かない。
+ *  この図から読めてしまうもの：「cos² の波は、ある高さを中心に上下する、周期が半分の波」という形だけ
+ *  （中心の高さの値と、波の大きさの値は「?」。2 倍角の公式を逆から読むと決まる）。 */
+function M3intHalfAngle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 24 + u * 44;
+  const Y = (v: number) => 150 - v * 100;
+  const pts: string[] = [];
+  for (let k = 0; k <= 100; k++) {
+    const u = (2 * Math.PI * k) / 100;
+    pts.push(`${X(u).toFixed(1)},${Y(Math.cos(u) ** 2).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="コサイン 2 乗の波の図。波はある高さを中心に上下している。中心の高さには横の破線が引かれ、疑問符がついている。波の大きさも疑問符"
+    >
+      <path d={`M 14 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 166 L ${X(0)} 30`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={`M 14 ${Y(0.5)} L 306 ${Y(0.5)}`} fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="5 4" />
+      <text x="300" y="24" fontSize="11" fill={accent} textAnchor="end">破線＝波の中心の高さ ?</text>
+      <text x={X(0) + 8} y={Y(1) - 8} fontSize="11" fill={stroke} fontStyle="italic">y = cos²x</text>
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        2 乗の波を、倍の角の波と定数の和に書き直せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列3 step7: 分子の次数が分母以上の分数を、割り算で「多項式 ＋ 余り/1 次式」に分ける仕組み。
+ *  ★図に答えを描かない★ 商と余りの中身は「?」。式は書かない。
+ *  この図から読めてしまうもの：「分数を 2 つの部分に分けると、それぞれ在庫の形になる」という方針だけ。 */
+function M3intDivide() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に、分子の次数が分母以上の分数の箱。右に、多項式の箱と、余りを 1 次式で割った箱の 2 つ。中身はどちらも疑問符で、矢印に割り算と書いてある"
+    >
+      <rect x="14" y="52" width="92" height="56" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="60" y="76" fontSize="11" fill={stroke} textAnchor="middle">（2 次式）</text>
+      <path d="M 30 82 L 90 82" stroke={stroke} strokeWidth="1" />
+      <text x="60" y="98" fontSize="11" fill={stroke} textAnchor="middle">（1 次式）</text>
+      <path d="M 110 80 L 150 80" fill="none" stroke={accent} strokeWidth="1.6" />
+      <path d="M 144 75 L 152 80 L 144 85" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x="130" y="70" fontSize="10" fill={accent} textAnchor="middle">割り算</text>
+      <rect x="158" y="56" width="60" height="48" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="188" y="78" fontSize="12" fill={accent} textAnchor="middle">?</text>
+      <text x="188" y="96" fontSize="9" fill={muted} textAnchor="middle">多項式</text>
+      <text x="226" y="84" fontSize="14" fill={stroke} textAnchor="middle">＋</text>
+      <rect x="236" y="56" width="70" height="48" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="271" y="74" fontSize="12" fill={accent} textAnchor="middle">?</text>
+      <path d="M 252 80 L 290 80" stroke={stroke} strokeWidth="1" />
+      <text x="271" y="96" fontSize="9" fill={muted} textAnchor="middle">1 次式</text>
+      <text x="160" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        分けた 2 つは、それぞれ何に巻き戻せる？
       </text>
     </svg>
   );
