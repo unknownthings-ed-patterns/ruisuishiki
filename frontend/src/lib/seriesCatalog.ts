@@ -88,6 +88,7 @@ import {
   M3DA_TANGENT_SERIES,
   M3DA_EXTREMUM_SERIES,
   M3DA_GRAPH_SERIES,
+  M3DA_CONCAVE_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2095,6 +2096,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "グラフの両端と抜け（多項式の感覚が外れるところ）— 分数関数は増減表だけでは形が決まらない。両端の行き先と抜けの前後を書き足すと、極大値が極小値より小さいことさえ起きる",
+  },
+  {
+    series: M3DA_CONCAVE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "凹凸と変曲点（傾きの変わり方を読む）— 第2次導関数の符号がふくらみ方を決める。f''=0 も候補を出すだけで、前後で符号が変わる点だけが変曲点",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

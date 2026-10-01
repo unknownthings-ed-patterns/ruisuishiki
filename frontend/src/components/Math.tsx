@@ -15703,6 +15703,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_SLOPES_RISE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daSlopesRise />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_INFLECT_TWO_TYPES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daInflectTwoTypes />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39623,6 +39637,107 @@ function M3daTwoBranches() {
       {branch(184, "valley")}
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
         山と谷、どちらが高い？——別々の枝どうしを比べられる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列4 step1: 曲線の上の 3 点に引いた接線。左から右へ、傾きが大きくなっていく。
+ *  ★図に答えを描かない★ 傾きの値・f'' の値は書かない。どちらにふくらむかも言葉では書かない（問いで終える）。
+ *  この図から読めてしまうもの：「傾きが増えている」ことだけ（これは step1 の f''(5) の値ではなく、f'' の意味の絵）。 */
+function M3daSlopesRise() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 55;
+  const Y = (v: number) => 172 - v * 19;
+  const g = (u: number) => 0.45 * u * u + 0.4;
+  const pts: string[] = [];
+  for (let k = 0; k <= 50; k++) {
+    const u = -0.6 + (4.6 * k) / 50;
+    pts.push(`${X(u).toFixed(1)},${Y(g(u)).toFixed(1)}`);
+  }
+  const ts = [0.6, 2, 3.4];
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="曲線の上の 3 つの点に接線を引いた図。左の点から右の点へ、接線の傾きがだんだん大きくなっている。傾きの値は書かれていない"
+    >
+      <path d={`M 20 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      {ts.map((t, i) => {
+        const m = 0.9 * t;
+        const x1 = t - 0.42;
+        const x2 = t + 0.42;
+        return (
+          <g key={i}>
+            <path
+              d={`M ${X(x1).toFixed(1)} ${Y(g(t) + m * (x1 - t)).toFixed(1)} L ${X(x2).toFixed(1)} ${Y(g(t) + m * (x2 - t)).toFixed(1)}`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="1.5"
+            />
+            <circle cx={X(t)} cy={Y(g(t))} r="3" fill={accent} />
+            <text x={X(t) + 4} y={Y(g(t)) + 16} fontSize="10.5" fill={accent}>
+              {["傾き ?", "傾き ?", "傾き ?"][i]}
+            </text>
+          </g>
+        );
+      })}
+      <text x="20" y="22" fontSize="11" fill={muted}>左から右へ、接線の傾きが</text>
+      <text x="20" y="37" fontSize="11" fill={muted}>大きくなっていく</text>
+      <text x="160" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        傾きが増えていくとき、曲線はどちら側にふくらむ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列4 step7: f''=0 になる点の 2 つの型を並べる。左＝前後で f'' の符号が変わる型、右＝変わらない型。
+ *  ★図に答えを描かない★ step7 のどの点がどちらの型かは描かない（点の座標・個数は書かない）。上段は f'' の符号の帯、下段は曲線のふくらみ方。
+ *  この図から読めてしまうもの：「f''=0 でも曲がり方が変わらない型がある」という仕組みだけ（Round 1 F12：型を並べて、どちらが今の問題かは ?）。 */
+function M3daInflectTwoTypes() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panel = (ox: number, change: boolean) => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const u = -1 + (2 * k) / 40;
+      const v = change ? 0.7 * u * u * u : 0.7 * u * u * u * u;
+      pts.push(`${(ox + 60 + u * 48).toFixed(1)},${(118 - v * 44).toFixed(1)}`);
+    }
+    return (
+      <g>
+        <rect x={ox + 4} y="20" width="112" height="132" fill="none" stroke={muted} strokeWidth="0.8" rx="4" />
+        <text x={ox + 34} y="40" fontSize="12" fill={accent} textAnchor="middle">{change ? "−" : "+"}</text>
+        <text x={ox + 60} y="40" fontSize="11" fill={muted} textAnchor="middle">0</text>
+        <text x={ox + 86} y="40" fontSize="12" fill={accent} textAnchor="middle">+</text>
+        <text x={ox + 60} y="56" fontSize="9.5" fill={muted} textAnchor="middle">f'' の符号</text>
+        <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+        <circle cx={ox + 60} cy="118" r="3" fill={accent} />
+        <text x={ox + 60} y="168" fontSize="10.5" fill={stroke} textAnchor="middle">
+          {change ? "前後で符号が変わる" : "前後で符号が同じ"}
+        </text>
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="第2次導関数が 0 になる点の 2 つの型を並べた図。左は前後で第2次導関数の符号が変わり、曲がり方が入れかわる型。右は前後とも正のままで、曲がり方が変わらない型。問題の点がどちらの型かは書かれていない"
+    >
+      {panel(34, true)}
+      {panel(170, false)}
+      <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも f'' = 0 になる点</text>
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        f'' = 0 の点は、それぞれどちらの型？
       </text>
     </svg>
   );
