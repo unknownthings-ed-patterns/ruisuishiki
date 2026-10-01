@@ -15717,6 +15717,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_CURVE_AND_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daCurveAndLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_END_TOWARD_ZERO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daEndTowardZero />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39738,6 +39752,101 @@ function M3daInflectTwoTypes() {
       <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも f'' = 0 になる点</text>
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
         f'' = 0 の点は、それぞれどちらの型？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列5 step1: 下に凸の曲線と、傾きの決まった直線を平行に動かすと 1 回だけ接する位置がある、という仕組み。
+ *  ★図に答えを描かない★ 接点の位置・定数 k・直線の式は書かない。直線は 3 本の平行線（離れる・接する・2 回出会う）を模式で描き、接するものの接点は ?。
+ *  この図から読めてしまうもの：「同じ傾きの直線を動かすと、出会う回数が 0・1・2 と変わる」という見方だけ。 */
+function M3daCurveAndLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 40 + u * 46;
+  const Y = (v: number) => 170 - v * 26;
+  const g = (u: number) => Math.exp(u - 2.6);
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = -0.4 + (4.55 * k) / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(g(u)).toFixed(1)}`);
+  }
+  const m = 1;
+  const t = 2.6;
+  const line = (c: number, col: string, dash?: string) => (
+    <path
+      d={`M ${X(2.2).toFixed(1)} ${Y(m * (2.2 - t) + g(t) + c).toFixed(1)} L ${X(4.6).toFixed(1)} ${Y(m * (4.6 - t) + g(t) + c).toFixed(1)}`}
+      fill="none"
+      stroke={col}
+      strokeWidth="1.3"
+      strokeDasharray={dash}
+    />
+  );
+  return (
+    <svg
+      viewBox="0 0 320 214"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="下に凸の指数関数のような曲線と、同じ傾きの 3 本の平行な直線。上の 1 本は曲線と 2 回出会い、まんなかの 1 本は 1 点で接し、下の 1 本は出会わない。接点の位置は疑問符"
+    >
+      <path d={`M 18 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      {line(0.9, muted, "4 3")}
+      {line(0, accent)}
+      {line(-0.9, muted, "4 3")}
+      <circle cx={X(t)} cy={Y(g(t))} r="3.6" fill="none" stroke={accent} strokeWidth="1.6" />
+      <text x={X(t) + 8} y={Y(g(t)) + 14} fontSize="12" fill={accent}>?</text>
+      <text x="160" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        同じ傾きの直線を平行に動かす。
+      </text>
+      <text x="160" y="211" fontSize="11" fill={accent} textAnchor="middle">
+        ちょうど 1 回だけ出会うのは、どこで接するとき？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列5 step7: 山と谷を 1 つずつもつ 2 つのグラフ。左は右の端が下へ（−∞）行く型、右は右の端が 0 に近づくだけの型。
+ *  負の高さの水平な線（破線）と出会う点は描かない（数えさせる）。step7 の関数がどちらの型かも書かない。
+ *  この図から読めてしまうもの：「右の端の行き先が違うと、同じ高さの線と出会う回数が違いうる」という仕組みだけ。 */
+function M3daEndTowardZero() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const panel = (ox: number, kind: "down" | "zero") => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 80; k++) {
+      const u = kind === "down" ? -1.6 + (3.2 * k) / 80 : -1.6 + (5.6 * k) / 80;
+      const v = kind === "down" ? -(u * u * u) + 1.4 * u : 0.6 * (u * u - 1) * Math.exp(-0.8 * u);
+      const px = kind === "down" ? ox + 60 + u * 32 : ox + 30 + (u + 1.6) * 14.8;
+      pts.push(`${px.toFixed(1)},${(96 - v * 16).toFixed(1)}`);
+    }
+    return (
+      <g>
+        <rect x={ox + 2} y="20" width="116" height="128" fill="none" stroke={muted} strokeWidth="0.8" rx="4" />
+        <path d={`M ${ox + 6} 96 L ${ox + 114} 96`} fill="none" stroke={muted} strokeWidth="0.8" />
+        <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.7" />
+        <text x={ox + 60} y="164" fontSize="10.5" fill={stroke} textAnchor="middle">
+          {kind === "down" ? "右の端は下へ行く" : "右の端は 0 に近づく"}
+        </text>
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 320 202"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="山と谷を 1 つずつもつ 2 つのグラフを並べた図。左は右の端が下へ行き、右は右の端が高さ 0 に近づくだけ。水平な線との出会う点は描かれていない"
+    >
+      {panel(34, "down")}
+      {panel(170, "zero")}
+      <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも山と谷を 1 つずつもつ（灰色の横線は高さ 0）</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        負の高さの水平な線と出会う回数に、差はつく？
       </text>
     </svg>
   );

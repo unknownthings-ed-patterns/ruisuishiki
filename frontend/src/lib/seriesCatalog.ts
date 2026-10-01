@@ -89,6 +89,7 @@ import {
   M3DA_EXTREMUM_SERIES,
   M3DA_GRAPH_SERIES,
   M3DA_CONCAVE_SERIES,
+  M3DA_EQUATION_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2104,6 +2105,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "凹凸と変曲点（傾きの変わり方を読む）— 第2次導関数の符号がふくらみ方を決める。f''=0 も候補を出すだけで、前後で符号が変わる点だけが変曲点",
+  },
+  {
+    series: M3DA_EQUATION_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "方程式と不等式（両端が解の個数を決める）— 方程式をグラフの高さに翻訳して解の個数を数える。相手が指数・対数なら、極値だけでなく両端の行き先まで見る",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
