@@ -15731,6 +15731,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_TWO_WALLS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daTwoWalls />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_WALLS_MEET>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daWallsMeet />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39847,6 +39861,86 @@ function M3daEndTowardZero() {
       <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも山と谷を 1 つずつもつ（灰色の横線は高さ 0）</text>
       <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
         負の高さの水平な線と出会う回数に、差はつく？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列6 step1: 扱いにくい関数（くねった線）を、上の壁と下の壁ではさむ模式。
+ *  ★図に答えを描かない★ 壁の式・差の関数の最小の場所（16/9）は書かない。壁は「?」。
+ *  この図から読めてしまうもの：「はさむ」という形だけ（どの関数で壁を作るかは読めない）。 */
+function M3daTwoWalls() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 30 + u * 27;
+  const up = (u: number) => 150 - 34 * Math.sqrt(u + 0.2);
+  const mid = (u: number) => 152 - 22 * Math.log(1 + u) - 4 * Math.sin(u * 2.2);
+  const lo = (u: number) => 158;
+  const path = (fn: (u: number) => number) => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 60; k++) {
+      const u = 0.1 + (9.6 * k) / 60;
+      pts.push(`${X(u).toFixed(1)},${fn(u).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="扱いにくい関数のグラフを、上の壁と下の壁の 2 本ではさんでいる模式の図。壁の式は疑問符になっている"
+    >
+      <polyline points={path(up)} fill="none" stroke={accent} strokeWidth="1.5" strokeDasharray="5 3" />
+      <polyline points={path(mid)} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <polyline points={path(lo)} fill="none" stroke={accent} strokeWidth="1.5" strokeDasharray="5 3" />
+      <text x={X(9.8)} y={up(9.6) - 6} fontSize="11" fill={accent} textAnchor="end">上の壁 ?</text>
+      <text x={X(9.8)} y={lo(9.6) + 16} fontSize="11" fill={accent} textAnchor="end">下の壁 ?</text>
+      <text x={X(4)} y={mid(4) + 18} fontSize="11" fill={stroke}>扱いにくい関数</text>
+      <text x="160" y="22" fontSize="11" fill={accent} textAnchor="middle">
+        扱いやすい関数で上から押さえる壁は、どうやって作る？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列6 step4: x を大きくすると、上の壁と下の壁が同じ高さへ寄っていく模式。間の関数もそこへ向かう。
+ *  ★図に答えを描かない★ 寄っていく先の高さは「?」（step4 の答え 5 も、消える部分の 0 も書かない）。
+ *  この図から読めてしまうもの：「2 枚の壁が同じ所へ向かえば、間も同じ所へ向かう」という仕組みだけ。 */
+function M3daWallsMeet() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 26 + u * 26;
+  const L = 98;
+  const up = (u: number) => L - 60 / (u + 1);
+  const lo = (u: number) => L + 54 / (u + 1);
+  const mid = (u: number) => L + (20 * Math.sin(u * 1.7)) / (u + 1);
+  const path = (fn: (u: number) => number) => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 80; k++) {
+      const u = (10.4 * k) / 80;
+      pts.push(`${X(u).toFixed(1)},${fn(u).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  return (
+    <svg
+      viewBox="0 0 320 196"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="右へ進むにつれて、上の壁と下の壁が同じ高さへ寄っていき、その間にはさまれた関数も同じ高さへ向かう模式の図。寄っていく先の高さは疑問符"
+    >
+      <path d={`M 20 ${L} L 306 ${L}`} fill="none" stroke={muted} strokeWidth="0.8" strokeDasharray="2 3" />
+      <polyline points={path(up)} fill="none" stroke={accent} strokeWidth="1.5" />
+      <polyline points={path(lo)} fill="none" stroke={accent} strokeWidth="1.5" />
+      <polyline points={path(mid)} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <text x="300" y={L - 6} fontSize="12" fill={accent} textAnchor="end">?</text>
+      <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        2 枚の壁が同じ高さへ向かうとき、間の関数はどこへ？
       </text>
     </svg>
   );

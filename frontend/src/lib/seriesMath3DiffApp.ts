@@ -1695,6 +1695,335 @@ $e^{-x}$ を含む関数では、端が **$0$ に近づくだけ**のことが�
 だから解の個数は、**極値の高さ**と**両端の行き先**の両方で決まる。そして接線の本数のように、もともと方程式に見えないものも、$t$ の方程式からグラフの高さへと翻訳すれば、同じ道具で数えられる。`,
 };
 
+/** M3DA6: 関数のはさみうち——預けた極限を返す。
+ *  系列5 で「借りて使った」 lim x e^{−x} = 0（指数は多項式より速く大きくなる）と、log は多項式に負けることを、壁を自分で作って返す。
+ *  ★追補10 の最大の警戒★ 放っておくと提出値がほぼ全部 0 になる → 0 に行く部分を非零の主要項に足し、主要項の値を答えにする（全 step 非零を確認）。
+ *  step1・2・3・6：壁づくり（差の関数の最小・割った壁の値・微分を重ねる回数）＝採点の主役（O6）
+ *  山場 step7：x⁴ と e^x の綱引き。素朴な読み「次数の高い x⁴ が勝って ∞」が外れ、答えは e^x の係数どうしの比。 */
+export const M3DA_SQUEEZE_SERIES: LearnerSeries = {
+  id: "math3_da_squeeze_01",
+  title: "関数のはさみうち——預けた極限を返す",
+  subtitle:
+    "数Ⅲ・C 微分法の応用より — 「指数関数はどんな多項式よりも速く大きくなる」は、借りて使ったままだった。形の違う関数の比は、約分も有理化も効かない。微分で壁を作って、はさんで返す。$10$ 問で確かめる。",
+  patternId: "M3DA6",
+  unit: "math_3",
+  revelationLabel:
+    "**扱いにくい関数を、微分で作った壁ではさむ**。壁が両方とも同じ所へ向かえば、間の関数の行き先も決まる",
+  drivingQuestion:
+    "指数関数はどんな多項式よりも速く大きくなる——その感覚は、**借りて使ったまま**だった。形の違う $2$ つの関数の比は、約分も有理化も効かない。では、どうやって確かめる？",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$x > 0$ で $2\\log x < 3\\sqrt{x}$ が成り立つことを確かめたいと思います。差の関数 $F(x) = 3\\sqrt{x} - 2\\log x$ が**最小値をとる $x$** を求めましょう。",
+      answer: 16 / 9,
+      answerDisplay: "16/9",
+      unit: "",
+      unknownLabel: "$F(x)$ が最小値をとる $x$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "「つねに $A < B$」を確かめるには、差 $B - A$ のどこを見ればよかった？（系列5）",
+        },
+        {
+          layer: 2,
+          text: "差の関数のいちばん低い所が正なら、不等式はつねに成り立つ。まず、いちばん低い所の場所を探す。",
+        },
+        {
+          layer: 3,
+          text: "$F'(x) = \\dfrac{3}{2\\sqrt x} - \\dfrac2x = \\dfrac{3\\sqrt x - 4}{2x}$。$x > 0$ で符号を決めるのは $3\\sqrt x - 4$ で、$\\sqrt x = \\dfrac43$、つまり $x = \\dfrac{16}{9}$ の前後で $-$ から $+$——最小。最小値は $F\\left(\\dfrac{16}9\\right) = 4 - 2\\log\\dfrac{16}{9} = 4 - 4\\log\\dfrac43 > 0$（$\\log\\dfrac43 < 1$）。だから $x > 0$ でつねに $2\\log x < 3\\sqrt x$。中心の問いへの最初の部分回答：**$\\log x$ を、扱いやすい $\\sqrt x$ で上から押さえる壁ができた**。",
+        },
+      ],
+      formulaPreview: "F'(x) = (3√x − 4)/(2x) → x = 16/9 で最小。最小値 4 − 4log(4/3) > 0",
+      figureMarker: "<<M3DA_TWO_WALLS>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "別の壁を作ります。$x > 0$ で $\\log x < \\dfrac{x}{2}$ を確かめるために、差の関数 $G(x) = x - 2\\log x$ が**最小値をとる $x$** を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$G(x)$ が最小値をとる $x$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\log x$ を押さえる相手が $\\sqrt x$ から $x$ の $1$ 次式になったことだけ。",
+        },
+        {
+          layer: 3,
+          text: "$G'(x) = 1 - \\dfrac2x = \\dfrac{x - 2}{x}$。$x = 2$ の前後で $-$ から $+$——最小。最小値は $G(2) = 2 - 2\\log 2 > 0$（$\\log 2 < 1$）。だから $x > 0$ でつねに $\\log x < \\dfrac x2$。中心の問いへ：**同じ手つきで、壁はいくつでも作れる**。",
+        },
+      ],
+      formulaPreview: "G'(x) = (x − 2)/x → x = 2 で最小。最小値 2 − 2log 2 > 0",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "step1 の不等式 $2\\log x < 3\\sqrt x$ から、$x > 1$ では\n\n$$0 < \\frac{\\log x}{x} < \\frac{3}{2\\sqrt x}$$\n\nが成り立ちます。右側の壁 $\\dfrac{3}{2\\sqrt x}$ の、$x = 9$ での値を求めましょう。",
+      answer: 1 / 2,
+      answerDisplay: "1/2",
+      unit: "",
+      unknownLabel: "$x = 9$ での右側の壁の値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。step1 で作った不等式が、どんな形に変わった？" },
+        {
+          layer: 2,
+          text: "step1 と変わったのは、不等式の各辺を $x$ で割って、$\\dfrac{\\log x}{x}$ を真ん中にはさんだこと。",
+        },
+        {
+          layer: 3,
+          text: "$x > 1$ では $\\log x > 0$。step1 の $2\\log x < 3\\sqrt x$ を $2x$ で割ると $\\dfrac{\\log x}{x} < \\dfrac{3\\sqrt x}{2x} = \\dfrac{3}{2\\sqrt x}$。$x = 9$ では $\\dfrac{3}{2 \\cdot 3} = \\dfrac12$。$x$ を大きくすると右の壁は $0$ に近づき、左の壁は $0$ のまま——**$2$ 枚の壁が同じ $0$ へ向かう**。中心の問いへ：**真ん中の $\\dfrac{\\log x}{x}$ を、行き先の分かる $2$ 枚の壁ではさんだ**。",
+        },
+      ],
+      formulaPreview: "0 < (log x)/x < 3/(2√x)。x = 9 で 3/(2·3) = 1/2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$\\displaystyle\\lim_{x \\to \\infty} \\frac{5x + 3\\log x}{x + 1}$ を求めましょう。",
+      answer: 5,
+      answerDisplay: "5",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題で作った $2$ 枚の壁は、どこへ向かっていた？ その壁が、この極限のどこで使えそう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\dfrac{\\log x}{x}$ がそのまま問われるのではなく、式の**一部**として入っていること。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $x$ で割ると $\\dfrac{5 + 3 \\cdot \\frac{\\log x}{x}}{1 + \\frac1x}$。前題の壁 $0 < \\dfrac{\\log x}{x} < \\dfrac{3}{2\\sqrt x}$ と [はさみうちの原理] より $\\dfrac{\\log x}{x} \\to 0$。だから全体は $\\dfrac{5 + 0}{1 + 0} = 5$。分母・分子の形が違う（$\\log$ と多項式）ので、約分や有理化では消えない。消えない部分を壁ではさんで $0$ と決め、残った主要な部分が行き先を決めた。中心の問いへ：**はさみうちで決めた $0$ は、ほかの極限を計算する部品になる**。",
+        },
+      ],
+      formulaPreview: "(5 + 3·(log x)/x)/(1 + 1/x)、(log x)/x → 0（はさみうち）→ 5",
+      figureMarker: "<<M3DA_WALLS_MEET>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "こんどは向きが逆です。$a$ を定数とし、$\\displaystyle\\lim_{x \\to \\infty} \\frac{ax - 4\\log x}{2x + \\log x} = 3$ となるようにしたいと思います。$a$ の値を求めましょう。",
+      answer: 6,
+      answerDisplay: "6",
+      unit: "",
+      unknownLabel: "$a$ の値",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が分かっていて、何を探している？" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は式から行き先を出した。今度は行き先が先にあって、係数を探す。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $x$ で割ると $\\dfrac{a - 4\\cdot\\frac{\\log x}{x}}{2 + \\frac{\\log x}{x}} \\to \\dfrac{a - 0}{2 + 0} = \\dfrac a2$。これが $3$ なので $a = 6$。$\\log x$ の項は行き先に効かず、$x$ の係数どうしの比だけが残る。中心の問いへ：**$\\log x$ は $x$ に負けて消える——だから行き先を決めるのは $x$ の係数だけ**。",
+        },
+      ],
+      formulaPreview: "(a − 4(log x)/x)/(2 + (log x)/x) → a/2 = 3 → a = 6",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$x > 0$ で $e^x > 1 + x + \\dfrac{x^2}{2} + \\dfrac{x^3}{6}$ を確かめたいと思います。差 $H(x) = e^x - \\left(1 + x + \\dfrac{x^2}{2} + \\dfrac{x^3}{6}\\right)$ を何回か微分すると、$x > 0$ で符号がすぐ分かる形になります。**何回**微分すればよいでしょう（$1$ 回目・$2$ 回目…と数えて、最初に符号がすぐ分かるのは何回目か）。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "微分する回数",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。壁を作るのは同じ。今度の差は、$1$ 回微分しただけで符号が分かる形だろうか。" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、押さえる側が $\\log x$ ではなく $e^x$ で、相手が $3$ 次式になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$H'(x) = e^x - \\left(1 + x + \\dfrac{x^2}{2}\\right)$、$H''(x) = e^x - (1 + x)$、$H'''(x) = e^x - 1$。$3$ 回目の $H'''(x) = e^x - 1$ は $x > 0$ で正。$H''(0) = 0$ なので $H''$ は $x > 0$ で正、すると $H'(0) = 0$ から $H'$ も正、$H(0) = 0$ から $H$ も正——下から順に積み上がる。答えは $3$ 回。こうして $e^x > \\dfrac{x^3}{6}$（$x > 0$）という壁が手に入る。中心の問いへ：**微分を重ねて段を下り、いちばん下の段の符号から積み上げると、$e^x$ を多項式で下から押さえる壁が作れる**。",
+        },
+      ],
+      formulaPreview: "H''' = eˣ − 1 > 0、H''(0) = H'(0) = H(0) = 0 から順に正 → 3 回",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\lim_{x \\to \\infty} \\frac{x^4 + 4e^x}{e^x + x^2}$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。主要な部分と、消える部分に分けたのは同じ。今度は、どちらが主要な部分だろう？ 次数のいちばん高い $x^4$？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、綱引きの相手が $\\log x$ と $x$ ではなく、多項式と $e^x$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $e^x$ で割ると $\\dfrac{\\frac{x^4}{e^x} + 4}{1 + \\frac{x^2}{e^x}}$。step6 の段の下り方を $5$ 回まで続けると $e^x > \\dfrac{x^5}{120}$（$x > 0$）が作れるので、$0 < \\dfrac{x^4}{e^x} < \\dfrac{120}{x} \\to 0$。同じように $\\dfrac{x^2}{e^x} \\to 0$。全体は $\\dfrac{0 + 4}{1 + 0} = 4$。「次数の高い $x^4$ が勝って $\\infty$」と読むと誤る——**$x^4$ は $e^x$ に負けて消える**。中心の問いへ：**どんなに次数の高い多項式も、$e^x$ との綱引きには負ける。それを壁が確かめた**。",
+        },
+      ],
+      formulaPreview: "(x⁴/eˣ + 4)/(1 + x²/eˣ)、eˣ > x⁵/120 より x⁴/eˣ < 120/x → 0 → 4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\displaystyle\\lim_{x \\to \\infty} \\frac{5\\sqrt x - (\\log x)^2}{2\\sqrt x + 1}$ を求めましょう。",
+      answer: 5 / 2,
+      answerDisplay: "5/2",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。$\\log$ の部分が消えて、主要な部分の係数の比が残る——今度もそうなりそう？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、相手が $(\\log x)^2$ と $\\sqrt x$ になったこと。$\\log$ が $2$ 乗され、相手は $x$ より弱い $\\sqrt x$。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $\\sqrt x$ で割ると $\\dfrac{5 - \\frac{(\\log x)^2}{\\sqrt x}}{2 + \\frac{1}{\\sqrt x}}$。step1 の壁 $2\\log u < 3\\sqrt u$ に $u = x^{\\frac14}$ を入れると $2 \\cdot \\dfrac14\\log x < 3x^{\\frac18}$、つまり $\\log x < 6x^{\\frac18}$（$x > 1$）。$2$ 乗して $\\sqrt x$ で割ると $0 < \\dfrac{(\\log x)^2}{\\sqrt x} < \\dfrac{36x^{\\frac14}}{x^{\\frac12}} = \\dfrac{36}{x^{\\frac14}} \\to 0$。全体は $\\dfrac{5}{2}$。中心の問いへ：**$\\log$ は $2$ 乗しても、どんなに弱い累乗（$\\sqrt x$）にも負ける。壁の中身を取りかえれば、それも確かめられる**。",
+        },
+      ],
+      formulaPreview: "(5 − (log x)²/√x)/(2 + 1/√x)、log x < 6x^{1/8} より (log x)²/√x < 36/x^{1/4} → 0 → 5/2",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$\\displaystyle\\lim_{x \\to +0} \\frac{7 + x\\log x}{2 + x}$ を求めましょう。",
+      answer: 7 / 2,
+      answerDisplay: "7/2",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。今度は $x$ がどこへ向かっている？ 消える部分は、step4 の形に直せないだろうか。" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、$x$ が $\\infty$ ではなく $+0$ へ向かうこと。",
+        },
+        {
+          layer: 3,
+          text: "$x = \\dfrac1u$ と置くと、$x \\to +0$ は $u \\to \\infty$ で、$x\\log x = \\dfrac1u\\log\\dfrac1u = -\\dfrac{\\log u}{u} \\to 0$（step3・4 の壁）。全体は $\\dfrac{7 + 0}{2 + 0} = \\dfrac72$。$x \\to +0$ で $\\log x \\to -\\infty$ だが、$x$ が $0$ に近づく勢いのほうが勝つ。中心の問いへ：**向きが逆の極限も、置きかえで、すでに作った壁に持ちこめる**。",
+        },
+      ],
+      formulaPreview: "x = 1/u：x log x = −(log u)/u → 0 → (7 + 0)/(2 + 0) = 7/2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$\\displaystyle\\lim_{x \\to \\infty} \\frac{x^3 + 2e^x}{5e^x - (\\log x)^4}$ を求めましょう。",
+      answer: 2 / 5,
+      answerDisplay: "2/5",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。今度は、綱引きが式の中にいくつある？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、分子に「多項式と $e^x$」、分母に「$\\log$ と $e^x$」と、$2$ つの綱引きが同時に入っていること。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $e^x$ で割ると $\\dfrac{\\frac{x^3}{e^x} + 2}{5 - \\frac{(\\log x)^4}{e^x}}$。step6 の段の下り方を $4$ 回まで続けると $e^x > \\dfrac{x^4}{24}$ が作れるので $\\dfrac{x^3}{e^x} < \\dfrac{24}{x} \\to 0$。また $x > 1$ では $0 < \\log x < x$（step2 の壁 $\\log x < \\dfrac x2$ より）なので $0 < \\dfrac{(\\log x)^4}{e^x} < \\dfrac{x^4}{e^x} \\to 0$（$e^x > \\dfrac{x^5}{120}$ から）。全体は $\\dfrac{0 + 2}{5 - 0} = \\dfrac25$。力関係は $\\log$ ≪ 多項式 ≪ 指数。中心の問いへ：**$2$ つの綱引きも、壁を $2$ つ用意すれば、同じ手つきで決着する**。",
+        },
+      ],
+      formulaPreview: "(x³/eˣ + 2)/(5 − (log x)⁴/eˣ)、どちらの分数も壁ではさんで 0 → 2/5",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 指数関数はどんな多項式よりも速く大きくなる——その感覚は、**借りて使ったまま**だった。形の違う $2$ つの関数の比は、約分も有理化も効かない。では、どうやって確かめる？
+
+────────
+
+## 約分も有理化も効かない極限
+
+第3章では、$\\dfrac00$ や $\\dfrac\\infty\\infty$ の形を、約分・有理化・分母分子を割ることで消してきた。ところが $\\dfrac{\\log x}{x}$ や $\\dfrac{x^4}{e^x}$ は、分母と分子で**関数の種類が違う**。共通の因数もなく、有理化する根号もない。系列5 で「右の端は $0$ に近づく」と書いたとき、この極限は借りたままだった。
+
+## ここが胚細胞：扱いにくい関数を、微分で作った壁ではさむ
+
+[はさみうちの原理] は数列で学んだ。関数でも同じで、$m(x) \\le f(x) \\le M(x)$ のとき、$2$ 枚の壁 $m,\\ M$ が同じ値に向かえば、間の $f$ も同じ値に向かう。
+
+問題は、**壁をどこから持ってくるか**である。ここで系列5 の道具が効く。「つねに $A < B$」は、差 $B - A$ の最小値が正であることを確かめれば示せた。
+
+1. $\\log x < \\dfrac32\\sqrt x$（step1）を $x$ で割れば、$0 < \\dfrac{\\log x}{x} < \\dfrac{3}{2\\sqrt x}$ という壁になる（step3）
+2. $e^x > \\dfrac{x^3}{6}$ は、差を何回も微分して段を下り、いちばん下の段の符号から積み上げて作る（step6）。段の数を増やせば $e^x > \\dfrac{x^{n}}{n!}$ も作れる
+
+**微分で壁を作り、はさみうちで行き先を決める**——微分の応用が、極限の計算に戻ってくる。
+
+## 消える部分と、残る部分
+
+はさみうちで $0$ と決めた部分は、ほかの極限の**部品**になる（step4・5・7〜10）。分母・分子をいちばん強い項で割り、壁で $0$ と決めた部分を消すと、残った主要な部分の係数の比が行き先になる。
+
+この単元の問題では、力関係はいつも同じ順に並んだ：**$\\log x$ ≪ $x^a$（$a > 0$）≪ $e^x$**。$\\log$ は $2$ 乗しても $\\sqrt x$ に負け（step8）、多項式は次数をいくら上げても $e^x$ に負ける（step7）。
+
+## Step の道筋
+
+- **step1・2**：差の関数の最小値で、$\\log x$ を上から押さえる壁を作る
+- **step3**：不等式を割って、$\\dfrac{\\log x}{x}$ を $2$ 枚の壁ではさむ
+- **step4・5**：はさみうちで決めた $0$ を部品にして、極限を計算する（とその逆）
+- **step6**：微分を重ねて段を下り、$e^x$ を多項式で下から押さえる壁を作る
+- **step7（山場）**：$x^4$ と $e^x$ の綱引き。次数の高い $x^4$ は勝たない
+- **step8**：壁の中身を取りかえて、$(\\log x)^2$ と $\\sqrt x$ の綱引きを決める
+- **step9**：$x \\to +0$ の極限を、置きかえで $\\infty$ の極限に持ちこむ
+- **step10**：$2$ つの綱引きが同時に入った式
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 「指数は多項式より強い」を忘れたら、$e^x$ を微分しても $e^x$ のまま、多項式は微分するたびに次数が $1$ つ下がる——という違いを思い出せばよい。差を何回も微分すると多項式の部分は定数になり、$e^x$ はそのまま残る。それが step6 の「段を下りる」作り方の芯である。
+
+**「次数の高い多項式なら指数に勝てる」は誤り。** step7 を「分子の $x^4$ がいちばん強い」と読むと $\\infty$ と答えたくなるが、正しくは $4$——**数で確かめると、$x^4$ が $e^x$ に負けて消えることが姿を現す**。$x$ を $20$ や $30$ に取って $\\dfrac{x^4}{e^x}$ を計算してみると、はじめは大きくても、やがて急に小さくなっていく。
+
+**この先の景色。** step6 の $1 + x + \\dfrac{x^2}{2} + \\dfrac{x^3}{6}$ は、$e^x$ を多項式で近づけていく**テイラー展開**の最初の $4$ 項である。項を増やすほど $e^x$ に近づき、その差を壁ではさむのが、大学で学ぶ「剰余項の評価」である。複雑な関数を多項式ではさむ——その考え方は、数値計算の誤差の見積もりにもそのまま使われる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第5章「関数のはさみうちの原理」の構成（不等式を微分で示して壁にし、$\\dfrac{\\log x}{x}$ や $\\dfrac{x}{e^x}$ の極限をはさみうちで示す／指数関数を多項式で下から押さえる）を参考。問題の値・関数・壁はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+形の違う関数の比は、約分も有理化も効かなかった。代わりに、**扱いやすい関数で両側からはさむ**。はさむ壁は、系列5 の「差の最小値で不等式を示す」道具が作った。
+
+壁を作るのは微分、行き先を決めるのははさみうち。こうして「指数関数はどんな多項式よりも速く大きくなる」は、借りたままの感覚ではなく、自分で確かめた事実になった。`,
+};
+
 /** 「微分法の応用」ユニットの系列一覧（数Ⅲ・C 第5章・背骨の順）。
  *  実装が進むごとに追加する。 */
 export const MATH3_DIFF_APP_SERIES_LIST: LearnerSeries[] = [
@@ -1703,4 +2032,5 @@ export const MATH3_DIFF_APP_SERIES_LIST: LearnerSeries[] = [
   M3DA_GRAPH_SERIES,
   M3DA_CONCAVE_SERIES,
   M3DA_EQUATION_SERIES,
+  M3DA_SQUEEZE_SERIES,
 ];

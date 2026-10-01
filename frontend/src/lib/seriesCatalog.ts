@@ -90,6 +90,7 @@ import {
   M3DA_GRAPH_SERIES,
   M3DA_CONCAVE_SERIES,
   M3DA_EQUATION_SERIES,
+  M3DA_SQUEEZE_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2113,6 +2114,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "方程式と不等式（両端が解の個数を決める）— 方程式をグラフの高さに翻訳して解の個数を数える。相手が指数・対数なら、極値だけでなく両端の行き先まで見る",
+  },
+  {
+    series: M3DA_SQUEEZE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "関数のはさみうち（預けた極限を返す）— 約分も有理化も効かない極限を、微分で作った壁ではさむ。log ≪ 多項式 ≪ 指数の力関係を、自分で確かめる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
