@@ -15864,6 +15864,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_CHAIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intChain />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_FPRIME_F>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intFprimeF />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40786,6 +40800,69 @@ function M3intDivide() {
       <text x="271" y="96" fontSize="9" fill={muted} textAnchor="middle">1 次式</text>
       <text x="160" y="150" fontSize="11" fill={accent} textAnchor="middle">
         分けた 2 つは、それぞれ何に巻き戻せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列4 step1: 合成関数の微分の 2 段——かたまり □ について外側を微分し、□ の微分を掛ける。
+ *  ★図に答えを描かない★ 具体的な式・係数は書かない。掛ける位置は「?」。
+ *  この図から読めてしまうもの：「合成関数の微分は 2 つの部品の積になる」という第3章の仕組みだけ（step1 の係数 12 は読めない）。 */
+function M3intChain() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="かたまりを四角で表した図。上の段は、四角の式をそのまま四角について微分した部品。下の段に、もう 1 つ掛ける部品があり、それは疑問符"
+    >
+      <rect x="20" y="30" width="110" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="75" y="55" fontSize="12" fill={stroke} textAnchor="middle">（□ の式）</text>
+      <path d="M 134 50 L 182 50" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <path d="M 176 45 L 184 50 L 176 55" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="158" y="42" fontSize="10" fill={muted} textAnchor="middle">x で微分</text>
+      <rect x="190" y="30" width="110" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="245" y="49" fontSize="11" fill={stroke} textAnchor="middle">□ について</text>
+      <text x="245" y="63" fontSize="11" fill={stroke} textAnchor="middle">微分した式</text>
+      <text x="245" y="96" fontSize="16" fill={stroke} textAnchor="middle">×</text>
+      <rect x="190" y="106" width="110" height="36" rx="8" fill="none" stroke={accent} strokeWidth="1.5" strokeDasharray="5 4" />
+      <text x="245" y="129" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="176" fontSize="11" fill={accent} textAnchor="middle">
+        もう 1 つ掛かる部品は何だった？——逆から読むと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列4 step5: 分数を見て「分母をかたまり t と見ると、分子はその微分（の何倍か）」に気づく仕組み。
+ *  ★図に答えを描かない★ 具体的な式は書かない。分子と分母の関係（何倍か）は「?」。
+ *  この図から読めてしまうもの：「分母をかたまりと見ると 1/t が見える」という見方だけ。 */
+function M3intFprimeF() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="分数の図。分母の箱をかたまり t とみなし、分子の箱はその t の微分の何倍か、という関係が疑問符になっている。右に、かたまりを t と見ると t 分の 1 が見える、という矢印"
+    >
+      <rect x="40" y="26" width="110" height="34" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="95" y="48" fontSize="11" fill={stroke} textAnchor="middle">分子</text>
+      <path d="M 30 72 L 160 72" stroke={stroke} strokeWidth="1.4" />
+      <rect x="40" y="84" width="110" height="34" rx="6" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="95" y="106" fontSize="11" fill={accent} textAnchor="middle">分母 ＝ かたまり t</text>
+      <path d="M 156 43 C 196 43, 196 101, 156 101" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      <text x="210" y="70" fontSize="11" fill={accent}>t の微分の</text>
+      <text x="210" y="86" fontSize="11" fill={accent}>? 倍</text>
+      <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
+        分母をかたまりと見ると、何が見える？
       </text>
     </svg>
   );
