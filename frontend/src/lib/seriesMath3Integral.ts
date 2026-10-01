@@ -2097,6 +2097,364 @@ $$\\int f g\\,dx = F g - \\int F g'\\,dx$$
 どちらを巻き戻すかは、はみ出しが元より易しくなるほう——多項式は微分すれば次数が下がり、$\\log$ は微分すれば多項式と打ち消し合う。`,
 };
 
+/** M3INT7: 循環と組み合わせ——終わらない道を方程式で閉じる。
+ *  山場 step3（C12 ②の変種）：∫e^{3x} sin2x は指数の側を 2 回巻き戻すと出発点 I が係数 −4/9 で戻る（step2）。
+ *  素朴な読み「堂々巡りで終わらない」が、I の 1 次方程式を解くと有限の係数 3/13 で外れる。
+ *  胚細胞は「係数が 1 でなければ」（R1 A8）。巻き戻す側は 2 回とも指数に固定（R1 A5）。step2 は step1 と別の a,b（R1 B4）。
+ *  step5 は微分の 2 本の式を連立する別の道（原典 p.244 のコメントの道・出典明記）＝「部分積分でしか解けない」と書かない。
+ *  step7 は F(0) の条件で C（R1 A4：区間つきは e^{kπ} が残る）。step10 は p(1+e^{−2π})² の p（R1 A4）。
+ *  原典の族：練15 e^x sin x は指数の係数・角の倍率をずらした。応用4 e^{−x}|sin x| の族（山を無限に足す）は使わず、
+ *  step10 は e^{−2x} sin x の山 2 つ（0〜2π）だけ——指数の係数を替え、和の極限を問わない。step8 x cos(log x) は原典に無い。 */
+export const M3INT_CYCLE_SERIES: LearnerSeries = {
+  id: "math3_int_cycle_01",
+  title: "循環と組み合わせ——終わらない道を方程式で閉じる",
+  subtitle:
+    "数Ⅲ・C 積分法より — 指数 × 三角は、片方だけ巻き戻すのを $2$ 回くり返すと、出発点の積分がもう一度現れる。$10$ 問で、それを未知数と見て方程式で閉じる手つきと、ここまでの道具の組み合わせを確かめる。",
+  patternId: "M3INT7",
+  unit: "math_3",
+  revelationLabel:
+    "**同じ積分が式の中にもう一度現れ、その係数が $1$ でなければ、それを未知数と見て方程式を解ける**——堂々巡りは、行き止まりではなく方程式",
+  drivingQuestion:
+    "片方だけ巻き戻すのを $2$ 回くり返したら、出発点の積分がもう一度現れた。**それは行き止まりか、それとも答えへの近道か？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$\\displaystyle\\int e^{2x}\\sin 3x\\,dx$ で、指数の側 $e^{2x}$ を巻き戻し、$\\sin 3x$ を残します。$\\displaystyle\\int e^{2x}\\sin 3x\\,dx = \\frac12e^{2x}\\sin 3x + k\\int e^{2x}\\cos 3x\\,dx$ と書けます。$k$ を求めましょう。",
+      answer: -3 / 2,
+      answerDisplay: "-3/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int e^{2x}\\cos 3x\\,dx$ の係数 $k$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "片方だけ巻き戻したとき、はみ出した項には何が入っている？",
+        },
+        {
+          layer: 2,
+          text: "系列6 で、片方だけ巻き戻したとき、はみ出した項はどんな積分の形で残った？（[部分積分]）",
+        },
+        {
+          layer: 3,
+          text: "$e^{2x}$ を巻き戻すと $\\dfrac12e^{2x}$。残した $\\sin 3x$ を微分すると $3\\cos 3x$。部分積分で $\\displaystyle\\int e^{2x}\\sin 3x\\,dx = \\frac12e^{2x}\\sin 3x - \\int\\frac12e^{2x}\\cdot 3\\cos 3x\\,dx = \\frac12e^{2x}\\sin 3x - \\frac32\\int e^{2x}\\cos 3x\\,dx$。$k = -\\dfrac32$。はみ出しは $e^{2x}\\cos 3x$——元と同じくらいの手ごわさで、易しくはなっていない。中心の問いへの最初の部分回答：**指数 × 三角は、片方だけ巻き戻しても、相手が $\\sin$ から $\\cos$ に替わるだけで易しくならない**。",
+        },
+      ],
+      formulaPreview: "e^(2x) を巻き戻す → (1/2)e^(2x)sin 3x − (3/2)∫e^(2x)cos 3x dx → k = −3/2",
+      figureMarker: "<<M3INT_LOOP>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$I = \\displaystyle\\int e^{3x}\\sin 2x\\,dx$ とします。指数の側を巻き戻すのを $2$ 回くり返す（$2$ 回目も指数の側を巻き戻す）と、$I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x + m\\,I$ の形になります。$m$ を求めましょう。",
+      answer: -4 / 9,
+      answerDisplay: "-4/9",
+      unit: "",
+      unknownLabel: "右辺に現れた $I$ の係数 $m$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題のはみ出しに、同じ手つきをもう一度当てると、何が出てくる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、巻き戻しを $2$ 回くり返すこと。",
+        },
+        {
+          layer: 3,
+          text: "$1$ 回目：$I = \\dfrac13e^{3x}\\sin 2x - \\dfrac23\\displaystyle\\int e^{3x}\\cos 2x\\,dx$。$2$ 回目（はみ出しの $e^{3x}$ を巻き戻す）：$\\displaystyle\\int e^{3x}\\cos 2x\\,dx = \\frac13e^{3x}\\cos 2x + \\frac23\\int e^{3x}\\sin 2x\\,dx = \\frac13e^{3x}\\cos 2x + \\frac23I$。代入して $I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x - \\dfrac49I$。$m = -\\dfrac49$。$2$ 回目で $\\sin$ の側を巻き戻すと、$1$ 回目をちょうど逆にたどって $I = I$ になってしまう（何も分からない）。中心の問いへ：**$2$ 回くり返すと、出発点の積分 $I$ がもう一度現れる**——ただし、係数は $1$ ではない。",
+        },
+      ],
+      formulaPreview: "I = (1/3)e^(3x)sin 2x − (2/3){(1/3)e^(3x)cos 2x + (2/3)I} → m = −4/9",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "前の問題の $I = \\displaystyle\\int e^{3x}\\sin 2x\\,dx$ は、$I = e^{3x}(p\\sin 2x + q\\cos 2x) + C$ の形に書けます。$p$ を求めましょう。",
+      answer: 3 / 13,
+      answerDisplay: "3/13",
+      unit: "",
+      unknownLabel: "$e^{3x}\\sin 2x$ の係数 $p$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題の式の右辺に、求めたい $I$ そのものが入っていた。それは行き止まり？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$I$ を求めきること。数Ⅱで、定積分が式の中に入っていたとき、それを何と見た？（[微分と積分の関係]）",
+        },
+        {
+          layer: 3,
+          text: "前題の式 $I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x - \\dfrac49I$ を、$I$ を未知数とする $1$ 次方程式と見る。$-\\dfrac49I$ を左に移すと $\\dfrac{13}{9}I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x$、$I = \\dfrac{3}{13}e^{3x}\\sin 2x - \\dfrac{2}{13}e^{3x}\\cos 2x + C$。$p = \\dfrac{3}{13}$。微分すると $e^{3x}\\sin 2x$ に戻る。数Ⅱで、式の中の定積分を $k$ と置いて解いたのと同じ形である。中心の問いへ：**堂々巡りは行き止まりではない。もう一度現れた $I$ を未知数と見れば、$1$ 次方程式で閉じる**——係数が $1$ でない限り。",
+        },
+      ],
+      formulaPreview: "(1 + 4/9)I = (1/3)e^(3x)sin 2x − (2/9)e^(3x)cos 2x → p = 3/13",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$\\displaystyle\\int e^{-x}\\cos 3x\\,dx = e^{-x}(p\\sin 3x + q\\cos 3x) + C$ と書けます。$q$ を求めましょう。",
+      answer: -1 / 10,
+      answerDisplay: "-1/10",
+      unit: "",
+      unknownLabel: "$e^{-x}\\cos 3x$ の係数 $q$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で $I$ を閉じた手つきは、そのまま使える？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、指数が $e^{-x}$ で、出発点が $\\cos$ であること。",
+        },
+        {
+          layer: 3,
+          text: "$J = \\displaystyle\\int e^{-x}\\cos 3x\\,dx$。$e^{-x}$ を巻き戻すと $-e^{-x}$。$1$ 回目：$J = -e^{-x}\\cos 3x - 3\\displaystyle\\int e^{-x}\\sin 3x\\,dx$。$2$ 回目：$\\displaystyle\\int e^{-x}\\sin 3x\\,dx = -e^{-x}\\sin 3x + 3J$。代入して $J = -e^{-x}\\cos 3x + 3e^{-x}\\sin 3x - 9J$、$10J = e^{-x}(3\\sin 3x - \\cos 3x)$。$J = e^{-x}\\left(\\dfrac{3}{10}\\sin 3x - \\dfrac{1}{10}\\cos 3x\\right) + C$。$q = -\\dfrac{1}{10}$。中心の問いへ：**$\\cos$ から出発しても、指数が減っていても、$2$ 回で出発点に戻り、方程式で閉じる**。",
+        },
+      ],
+      formulaPreview: "J = −e^(−x)cos 3x + 3e^(−x)sin 3x − 9J → 10J = e^(−x)(3sin 3x − cos 3x) → q = −1/10",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$\\left(e^{4x}\\sin x\\right)' = 4e^{4x}\\sin x + e^{4x}\\cos x$、$\\left(e^{4x}\\cos x\\right)' = 4e^{4x}\\cos x - e^{4x}\\sin x$ です。この $2$ 本の式を使うと、$\\displaystyle\\int e^{4x}\\sin x\\,dx = e^{4x}(p\\sin x + q\\cos x) + C$ と書けます。$p$ を求めましょう。",
+      answer: 4 / 17,
+      answerDisplay: "4/17",
+      unit: "",
+      unknownLabel: "$e^{4x}\\sin x$ の係数 $p$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        {
+          layer: 1,
+          text: "step3 と比べてみよう。step3 は巻き戻しを $2$ 回くり返した。今度は微分の式が $2$ 本与えられている。それで同じ係数に届く？",
+        },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、部分積分を使わずに、与えられた $2$ 本の微分の式から出発すること。",
+        },
+        {
+          layer: 3,
+          text: "$1$ 本目を $4$ 倍して $2$ 本目を引くと、$\\cos$ の項が消える：$\\left(4e^{4x}\\sin x - e^{4x}\\cos x\\right)' = 16e^{4x}\\sin x + e^{4x}\\sin x = 17e^{4x}\\sin x$。だから $\\displaystyle\\int e^{4x}\\sin x\\,dx = \\frac{1}{17}\\left(4e^{4x}\\sin x - e^{4x}\\cos x\\right) + C$。$p = \\dfrac{4}{17}$。部分積分を $2$ 回くり返しても同じ式になる。中心の問いへ：**閉じ方は $1$ つではない。微分の $2$ 本の式を連立方程式と見ても、同じ答えに届く**。",
+        },
+      ],
+      formulaPreview: "4(e^(4x)sin x)′ − (e^(4x)cos x)′ = 17e^(4x)sin x → p = 4/17",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "正の定数 $a$ について、$\\displaystyle\\int e^{ax}\\sin x\\,dx = e^{ax}\\left(\\frac{3}{10}\\sin x - \\frac{1}{10}\\cos x\\right) + C$ が成り立ちます。$a$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "指数の係数 $a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は指数の係数から積分の係数を出した。今度は積分の係数から指数の係数を探す。",
+        },
+        {
+          layer: 3,
+          text: "右辺を微分して $e^{ax}\\sin x$ に戻ればよい。$\\left\\{e^{ax}\\left(\\dfrac{3}{10}\\sin x - \\dfrac{1}{10}\\cos x\\right)\\right\\}' = e^{ax}\\left\\{\\left(\\dfrac{3a}{10} + \\dfrac{1}{10}\\right)\\sin x + \\left(\\dfrac{3}{10} - \\dfrac{a}{10}\\right)\\cos x\\right\\}$。$\\cos x$ の係数が $0$ になるには $a = 3$。このとき $\\sin x$ の係数は $\\dfrac{9}{10} + \\dfrac{1}{10} = 1$ で、確かに戻る。一般に $\\displaystyle\\int e^{ax}\\sin x\\,dx = \\frac{e^{ax}(a\\sin x - \\cos x)}{a^2 + 1} + C$——$a = 3$ で分母は $10$。中心の問いへ：**閉じた結果も、微分すれば確かめられる。係数の比から、もとの指数も読み戻せる**。",
+        },
+      ],
+      formulaPreview: "微分して cos x の係数 3/10 − a/10 = 0 → a = 3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "関数 $F(x)$ は、微分すると $e^{-x}\\cos 3x$ になり、$F(0) = 1$ を満たします。$F(x) = e^{-x}(p\\sin 3x + q\\cos 3x) + C$ と書くとき、定数 $C$ を求めましょう。",
+      answer: 11 / 10,
+      answerDisplay: "11/10",
+      unit: "",
+      unknownLabel: "$F(0) = 1$ を満たす定数 $C$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。巻き戻す関数は同じ。何が増えた？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、$x = 0$ での値という条件が $1$ つ増えたこと。",
+        },
+        {
+          layer: 3,
+          text: "step4 より $F(x) = e^{-x}\\left(\\dfrac{3}{10}\\sin 3x - \\dfrac{1}{10}\\cos 3x\\right) + C$。$x = 0$ では $e^0 = 1$、$\\sin 0 = 0$、$\\cos 0 = 1$ なので $F(0) = -\\dfrac{1}{10} + C = 1$、$C = \\dfrac{11}{10}$。$C = 1$ と答えると、括弧の中が $x = 0$ で $0$ にならないことを見落としている。中心の問いへ：**方程式で閉じた原始関数にも、$+C$ はつく。条件が $1$ つあれば決まる**。",
+        },
+      ],
+      formulaPreview: "F(0) = −1/10 + C = 1 → C = 11/10",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$x > 0$ で $\\displaystyle\\int x\\cos(\\log x)\\,dx = x^2\\left\\{a\\cos(\\log x) + b\\sin(\\log x)\\right\\} + C$ と書けます。$a$ を求めましょう。",
+      answer: 2 / 5,
+      answerDisplay: "2/5",
+      unit: "",
+      unknownLabel: "$x^2\\cos(\\log x)$ の係数 $a$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。step4 は指数 × 三角だった。この積分のどこかに、指数 × 三角が隠れていない？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、三角関数の中身が $\\log x$ になっていること。系列5 で、中身の込み入った関数をどう扱った？（[置換積分]）",
+        },
+        {
+          layer: 3,
+          text: "$t = \\log x$ と置くと $x = e^t$、$dx = e^t\\,dt$。$\\displaystyle\\int x\\cos(\\log x)\\,dx = \\int e^t\\cos t\\cdot e^t\\,dt = \\int e^{2t}\\cos t\\,dt$——すり替えたら、指数 × 三角になった。step4 の手つきで $\\displaystyle\\int e^{2t}\\cos t\\,dt = \\frac{e^{2t}(2\\cos t + \\sin t)}{5} + C$。$e^{2t} = x^2$ に戻して $\\dfrac{x^2}{5}\\left\\{2\\cos(\\log x) + \\sin(\\log x)\\right\\} + C$。$a = \\dfrac25$。中心の問いへ：**すり替えで指数 × 三角を作れば、循環の手つきが使える。道具は組み合わせて使う**。",
+        },
+      ],
+      formulaPreview: "t = log x → ∫e^(2t)cos t dt = e^(2t)(2cos t + sin t)/5 → a = 2/5",
+      figureMarker: "<<M3INT_TWO_STAGE>>",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_{\\log 2}^{\\log 3}\\frac{e^x}{e^{2x} - 1}\\,dx$ の値を求めましょう。",
+      answer: (Math.log(3) - Math.log(2)) / 2,
+      answerDisplay: "(log3-log2)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{\\log 2}^{\\log 3}\\frac{e^x}{e^{2x} - 1}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step8",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。すり替えで見覚えのある形を作るのは同じ。今度は何が現れる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、指数関数が分数の分母と分子に入っていること。",
+        },
+        {
+          layer: 3,
+          text: "$t = e^x$ と置くと $dt = e^x\\,dx$、$t$ は $2$ から $3$。$\\displaystyle\\int_2^3\\frac{dt}{t^2 - 1}$——系列3 の分ける形になった。$\\dfrac{1}{t^2 - 1} = \\dfrac12\\left(\\dfrac{1}{t-1} - \\dfrac{1}{t+1}\\right)$ で、$\\dfrac12\\Big[\\log(t-1) - \\log(t+1)\\Big]_2^3 = \\dfrac12\\left\\{(\\log 2 - \\log 4) - (0 - \\log 3)\\right\\} = \\dfrac12(\\log 3 - \\log 2)$。中心の問いへ：**すり替えのあとに現れる形は、指数 × 三角とは限らない。現れた形に合った道具を、在庫から選ぶ**。",
+        },
+      ],
+      formulaPreview: "t = e^x → ∫₂³ dt/(t²−1) = (1/2)∫₂³ (1/(t−1) − 1/(t+1))dt = (log 3 − log 2)/2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "曲線 $y = e^{-2x}\\sin x$（$0 \\le x \\le 2\\pi$）と $x$ 軸で囲まれた部分の面積は、$p\\left(1 + e^{-2\\pi}\\right)^2$ の形になります。$p$ を求めましょう。",
+      answer: 1 / 5,
+      answerDisplay: "1/5",
+      unit: "",
+      unknownLabel: "面積 $= p\\left(1 + e^{-2\\pi}\\right)^2$ の $p$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。指数 × 三角を巻き戻すのは同じ。面積にするとき、気をつけることは？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、求めるのが面積で、$\\sin x$ が区間の途中で負になること。",
+        },
+        {
+          layer: 3,
+          text: "step4 の手つきで $\\displaystyle\\int e^{-2x}\\sin x\\,dx = -\\frac{e^{-2x}(2\\sin x + \\cos x)}{5} + C$。$0 \\le x \\le \\pi$ では $y \\ge 0$、$\\pi \\le x \\le 2\\pi$ では $y \\le 0$ なので、面積は区間を $\\pi$ で割って、後半の符号を反転する（数Ⅱの面積と同じ）。前半 $= \\dfrac{1 + e^{-2\\pi}}{5}$、後半の大きさ $= \\dfrac{e^{-2\\pi} + e^{-4\\pi}}{5}$。合計 $\\dfrac{1 + 2e^{-2\\pi} + e^{-4\\pi}}{5} = \\dfrac15\\left(1 + e^{-2\\pi}\\right)^2$。$p = \\dfrac15$。そのまま $0$ から $2\\pi$ まで積分すると $\\dfrac{1 - e^{-4\\pi}}{5}$ になり、面積ではない。中心の問いへ：**循環で閉じた原始関数は、面積の計算にもそのまま使える——符号の変わり目で区間を割ることだけは、別に気をつける**。",
+        },
+      ],
+      formulaPreview: "原始関数 −e^(−2x)(2sin x + cos x)/5、π で割る → (1/5)(1 + e^(−2π))² → p = 1/5",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 片方だけ巻き戻すのを $2$ 回くり返したら、出発点の積分がもう一度現れた。**それは行き止まりか、それとも答えへの近道か？**
+
+────────
+
+## 片方だけ巻き戻しても、易しくならない積
+
+系列6 の [部分積分] は、はみ出しが元より易しくなる側を巻き戻した。指数 × 三角では、どちらを巻き戻しても、はみ出しは「指数 × 三角」のまま——$\\sin$ が $\\cos$ に替わるだけである（step1）。
+
+<<M3INT_LOOP>>
+
+## ここが胚細胞：同じ積分がもう一度現れたら、方程式で閉じる
+
+指数の側を $2$ 回巻き戻すと、出発点の $I$ がもう一度現れる（step2）。
+
+$$I = (\\text{はっきり分かった式}) + m\\,I$$
+
+**$m \\ne 1$ なら**、$I$ を未知数とする $1$ 次方程式として解ける（step3）：
+
+$$I = \\frac{\\text{はっきり分かった式}}{1 - m}$$
+
+数Ⅱで、式の中に入った定積分を $k$ と置いて解いたのと同じ形である。堂々巡りは行き止まりではなく、**方程式**である。
+
+$m = 1$ だと $I$ が両辺で消えて何も分からない。$2$ 回目に、$1$ 回目と逆の側を巻き戻すとこれが起きる（$1$ 回目をちょうど逆にたどる）。だから $2$ 回とも同じ側を巻き戻す。
+
+一般に
+
+$$\\int e^{ax}\\sin bx\\,dx = \\frac{e^{ax}(a\\sin bx - b\\cos bx)}{a^2 + b^2} + C$$
+
+を、覚えなくても導ける。
+
+## もう $1$ つの閉じ方：微分の連立
+
+$e^{ax}\\sin bx$ と $e^{ax}\\cos bx$ を微分すると、互いに相手を含む $2$ 本の式になる。この $2$ 本から片方の項を消去すれば、積分の答えが直接出る（step5）。部分積分を使わない道で、同じ答えに届く。
+
+## 組み合わせる
+
+- **すり替え → 循環**：$t = \\log x$ で $x\\cos(\\log x)$ が $e^{2t}\\cos t$ になる（step8）
+- **すり替え → 分ける**：$t = e^x$ で指数の分数が $\\dfrac{1}{t^2 - 1}$ になる（step9）
+- **循環 → 面積**：符号の変わり目で区間を割る（step10）
+
+<<M3INT_TWO_STAGE>>
+
+## Step の道筋
+
+- **step1**（事例）：$1$ 回では易しくならない
+- **step2**：$2$ 回で出発点が戻る
+- **step3（山場）**：方程式で閉じる
+- **step4**：$\\cos$ から・指数が減っていても同じ
+- **step5**：微分の連立という別の道
+- **step6**：結果から指数を読み戻す
+- **step7**：条件で $C$ を決める
+- **step8〜10**：すり替え・分ける・面積と組み合わせる
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 公式を忘れたら、指数の側を $2$ 回巻き戻して $I$ を出し、方程式を解く。あるいは $e^{ax}\\sin bx$ と $e^{ax}\\cos bx$ を微分して連立する。どちらの道でも、最後に微分して戻れば確かめられる。
+
+**係数が $1$ のとき何が起きるか。** $2$ 回目に逆の側を巻き戻すと $I = I$ という恒等式になる。間違いではないが、何も分からない。この $1$ 次方程式で $I$ が求まるのは、戻ってきた $I$ の係数が $1$ でないときである。
+
+**自分自身を含む式。** 「求めたいものが、それ自身を含む式で表される」形は、数学のいろいろな所に出てくる。数列の漸化式の極限、行列の固有値、確率の「もう一度最初から」の問題。どれも、未知のものを未知数と見て方程式を立てる。
+
+**この先の景色。** 大学では、$e^{ax}\\sin bx$ と $e^{ax}\\cos bx$ を複素数の指数 $e^{(a + bi)x}$ $1$ つにまとめると、循環は消えて、普通の指数関数の巻き戻しになる。$\\sin$ と $\\cos$ が $2$ 回で戻ってくるのは、複素数の世界で $i^2 = -1$ が働いているからである。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「部分積分」の、部分積分を $2$ 回くり返して出発点の積分が戻る指数 × 三角の扱いと、それを微分の $2$ 本の式から求める別の道（同書のコメント）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+行き止まりではなく、近道だった。戻ってきた積分を未知数と見れば、$1$ 次方程式で閉じる——係数が $1$ でない限り。
+
+指数 × 三角は、片方だけ巻き戻しても易しくならない。だからこそ、易しくするのではなく、方程式で閉じる。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
@@ -2104,4 +2462,5 @@ export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_TRACE_SERIES,
   M3INT_SUBST_SERIES,
   M3INT_PARTS_SERIES,
+  M3INT_CYCLE_SERIES,
 ];

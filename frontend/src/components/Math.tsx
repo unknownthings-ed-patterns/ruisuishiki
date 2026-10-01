@@ -15913,6 +15913,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_LOOP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intLoop />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_TWO_STAGE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intTwoStage />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41067,6 +41081,75 @@ function M3intRoles() {
       </text>
       <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
         はみ出しが易しくなるのは、どちらの割り当て？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列7 step1: 指数 × 三角を片方だけ巻き戻すのを 2 回くり返すと、出発点の積分にもどってくる輪。
+ *  ★図に答えを描かない★ 具体的な関数・係数は書かない。もどってきたときの係数は「?」。
+ *  この図から読めてしまうもの：「2 回で sin の積分 → cos の積分 → sin の積分にもどる」という形だけ。 */
+function M3intLoop() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="指数とサインの積の積分から、片方だけ巻き戻すと指数とコサインの積の積分が出て、もう一度巻き戻すと出発点の指数とサインの積の積分にもどる輪の図。もどってきたときの係数は疑問符"
+    >
+      <rect x="20" y="64" width="110" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="75" y="82" fontSize="11" fill={stroke} textAnchor="middle">指数 × sin</text>
+      <text x="75" y="97" fontSize="10" fill={muted} textAnchor="middle">（出発点）</text>
+      <rect x="190" y="64" width="110" height="40" rx="8" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="245" y="89" fontSize="11" fill={stroke} textAnchor="middle">指数 × cos</text>
+      <path d="M 100 60 C 140 20, 190 20, 225 58" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d="M 216 54 L 226 60 L 224 48" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="160" y="26" fontSize="10" fill={muted} textAnchor="middle">1 回目の巻き戻し</text>
+      <path d="M 225 108 C 190 150, 140 150, 100 110" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 4" />
+      <path d="M 110 114 L 99 109 L 101 121" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="160" y="152" fontSize="10" fill={accent} textAnchor="middle">2 回目の巻き戻し</text>
+      <text x="60" y="130" fontSize="14" fill={accent} textAnchor="middle">× ?</text>
+      <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        もどってきた出発点は、行き止まり？ それとも手がかり？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列7 step8: すり替え（系列5）と片方だけ巻き戻す（系列6）を、どの順に使うかの 2 段。
+ *  ★図に答えを描かない★ 具体的な関数・置き方・係数は書かない。どちらを先にするかは「?」。
+ *  この図から読めてしまうもの：「2 つの道具を順に使う」という見通しだけ。 */
+function M3intTwoStage() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="もとの積分から、すり替えと片方だけ巻き戻すの 2 つの道具を順に使って、巻き戻せる形にたどりつく図。どちらを先に使うかは疑問符"
+    >
+      <rect x="10" y="56" width="78" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="49" y="80" fontSize="11" fill={stroke} textAnchor="middle">もとの積分</text>
+      <rect x="121" y="26" width="78" height="30" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="160" y="45" fontSize="11" fill={stroke} textAnchor="middle">すり替え</text>
+      <rect x="113" y="96" width="94" height="30" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="160" y="115" fontSize="9.5" fill={stroke} textAnchor="middle">片方だけ巻き戻す</text>
+      <path d="M 92 70 L 118 44" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 92 84 L 118 108" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 202 44 L 228 70" fill="none" stroke={muted} strokeWidth="1.1" />
+      <path d="M 202 108 L 228 84" fill="none" stroke={muted} strokeWidth="1.1" />
+      <rect x="232" y="56" width="78" height="40" rx="8" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 4" />
+      <text x="271" y="80" fontSize="11" fill={accent} textAnchor="middle">巻き戻せる形</text>
+      <text x="160" y="82" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="158" fontSize="11" fill={accent} textAnchor="middle">
+        どちらの道具を先に使えば、見覚えのある形になる？
       </text>
     </svg>
   );

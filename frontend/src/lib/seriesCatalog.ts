@@ -105,6 +105,7 @@ import {
   M3INT_TRACE_SERIES,
   M3INT_SUBST_SERIES,
   M3INT_PARTS_SERIES,
+  M3INT_CYCLE_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2225,6 +2226,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "積の微分を逆に読む（片方だけ巻き戻して、はみ出しを打ち消す）— 両方巻き戻すと外れる。片方だけ巻き戻すと、はみ出しが 1 つ出る。はみ出しが易しくなる側を巻き戻す",
+  },
+  {
+    series: M3INT_CYCLE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "循環と組み合わせ（終わらない道を方程式で閉じる）— 指数 × 三角は 2 回で出発点の積分が戻る。それを未知数と見て 1 次方程式で閉じる。すり替え・分ける・面積とも組み合わせる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
