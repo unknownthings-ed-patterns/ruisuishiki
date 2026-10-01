@@ -310,12 +310,19 @@ class Parser {
     if (t.kind === "pi") return { value: Math.PI, symbolic: true };
     if (t.kind === "e") return { value: Math.E, symbolic: true };
     if (t.kind === "lparen") {
+      const start = this.pos;
       const value = this.parseExpression();
       const close = this.next();
       if (!close || close.kind !== "rparen") {
         throw new Error("missing closing paren");
       }
-      return { value, symbolic: false };
+      // 括弧の中に π・√・log・e があれば、その括弧は記号を含む factor として扱う。
+      // 「2(e+1)」「3(√3−1)」のような係数×括弧を暗黙の積として受けるため
+      // （2026-10-01・数Ⅲ・C 積分法の背骨 Round 1 B10）。中が素の数だけの「2(3)」は従来どおり禁止。
+      const symbolic = this.tokens
+        .slice(start, this.pos - 1)
+        .some((k) => k.kind === "pi" || k.kind === "sqrt" || k.kind === "log" || k.kind === "e");
+      return { value, symbolic };
     }
     throw new Error("unexpected token in primary");
   }

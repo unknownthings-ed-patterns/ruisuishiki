@@ -80,6 +80,12 @@ assert.equal(evaluateAnswer("lg3"), null, "unknown word lg is invalid");
 assert.equal(judgeSingle("log 4/3", Math.log(4) / 3), true);
 assert.equal(judgeSingle("log(4/3)", Math.log(4 / 3)), true);
 assert.equal(judgeSingle("1.0986", Math.log(3)), false);
+close(evaluateAnswer("2(e+1)"), 2 * (Math.E + 1), "number times symbolic group");
+close(evaluateAnswer("3(e-1)"), 3 * (Math.E - 1), "number times symbolic group 2");
+close(evaluateAnswer("2(√3+1)"), 2 * (Math.sqrt(3) + 1), "number times sqrt group");
+close(evaluateAnswer("(e+1)(e-1)"), Math.E * Math.E - 1, "symbolic group times symbolic group");
+close(evaluateAnswer("1/2(1+log3)"), (1 + Math.log(3)) / 2, "half of a log group");
+assert.equal(evaluateAnswer("2(3)"), null, "number times numeric group stays invalid");
 
 // 複数解：順不同・多重集合一致・過不足拒否。
 assert.equal(judgeSolutionSet("5pi/6, pi/6", [Math.PI / 6, (5 * Math.PI) / 6]), true);
