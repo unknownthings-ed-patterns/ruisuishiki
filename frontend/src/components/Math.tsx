@@ -15815,6 +15815,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_ROUNDTRIP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intRoundtrip />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_SLOPE_SIN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intSlopeSin />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40456,6 +40470,86 @@ function M3daImplicitWindow() {
       <text x={cx + r + 5} y={cy + 4} fontSize="12" fill={accent}>×</text>
       <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
         窓の中なら y は x の関数。そのまま両辺を x で微分すると？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列1 step1: 巻き戻しの往復——候補を作る → 微分して確かめる → ずれの倍率の逆数をかける。
+ *  ★図に答えを描かない★ 倍率は「?」。関数の具体的な式も書かない（step1 の x√x も描かない）。
+ *  この図から読めてしまうもの：「候補を微分すると、ほしい関数の何倍かになって出てくる」という手順の形だけ（倍率の値は読めない）。 */
+function M3intRoundtrip() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に巻き戻した候補の箱、右に微分した結果の箱。右の箱は「ほしい関数」に倍率がかかった形で、倍率は疑問符。下の矢印は、倍率を打ち消して候補を直す向きを示している"
+    >
+      <rect x="18" y="40" width="96" height="44" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="66" y="67" fontSize="12" fill={stroke} textAnchor="middle">巻き戻した候補</text>
+      <rect x="206" y="40" width="96" height="44" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="254" y="60" fontSize="12" fill={stroke} textAnchor="middle">? × ほしい関数</text>
+      <text x="254" y="76" fontSize="10" fill={muted} textAnchor="middle">（微分した結果）</text>
+      <path d="M 118 54 L 200 54" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 194 49 L 202 54 L 194 59" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="159" y="46" fontSize="11" fill={stroke} textAnchor="middle">微分して確かめる</text>
+      <path d="M 254 90 C 254 132, 66 132, 66 92" fill="none" stroke={accent} strokeWidth="1.5" strokeDasharray="5 4" />
+      <path d="M 61 99 L 66 90 L 71 99" fill="none" stroke={accent} strokeWidth="1.5" />
+      <text x="160" y="140" fontSize="11" fill={accent} textAnchor="middle">? を打ち消すには、候補に何をかける？</text>
+      <text x="160" y="176" fontSize="11" fill={accent} textAnchor="middle">
+        ずれが「数をかけただけ」なら、どう直せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列1 step3: 傾きが sin x になる曲線 F(x) を探す——0 から 2π/3 までの sin x の符号。
+ *  ★図に答えを描かない★ F(x) のグラフは描かない（描くと −cos x の形と値が読める）。描くのは y = sin x の山だけ。
+ *  目盛りは 0 と π/3・2π/3 の位置の印だけで、高さの値は書かない。
+ *  この図から読めてしまうもの：「0 から 2π/3 まで sin x は正」＝F(x) は増える、ということだけ（F(2π/3) の値は読めない）。
+ *  符号の検算の足場として意図して残した（誤って cos x を候補にすると減る向きになり、ここで食い違いに気づける）。
+ *  ★波の下を塗らない★（塗ると面積＝F(2π/3)−F(0) の大きさが目で比べられてしまう。高さの目盛りも書かない＝層8）。 */
+function M3intSlopeSin() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 30 + u * 62;
+  const Y = (v: number) => 120 - v * 60;
+  const pts: string[] = [];
+  for (let k = 0; k <= 80; k++) {
+    const u = (2 * Math.PI * k) / 80;
+    pts.push(`${X(u).toFixed(1)},${Y(Math.sin(u)).toFixed(1)}`);
+  }
+  const hi: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const u = ((2 * Math.PI) / 3) * (k / 40);
+    hi.push(`${X(u).toFixed(1)},${Y(Math.sin(u)).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 440 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 440 }}
+      role="img"
+      aria-label="y イコール sin x の波の図。0 から 3 分の 2 パイまでの部分が強調されている。高さの値は書かれていない。探している関数の傾きがこの波の高さになる"
+    >
+      <path d={`M 18 ${Y(0)} L 430 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 196 L ${X(0)} 30`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.4" />
+      <polyline points={hi.join(" ")} fill="none" stroke={accent} strokeWidth="3" />
+      <path d={`M ${X(Math.PI / 3)} ${Y(0) - 4} L ${X(Math.PI / 3)} ${Y(0) + 4}`} stroke={muted} strokeWidth="1" />
+      <path d={`M ${X((2 * Math.PI) / 3)} ${Y(0) - 4} L ${X((2 * Math.PI) / 3)} ${Y(0) + 4}`} stroke={muted} strokeWidth="1" />
+      <text x={X(0) - 4} y={Y(0) + 16} fontSize="11" fill={stroke} textAnchor="end">0</text>
+      <text x={X(Math.PI / 3)} y={Y(0) + 18} fontSize="11" fill={stroke} textAnchor="middle">π/3</text>
+      <text x={X((2 * Math.PI) / 3)} y={Y(0) + 18} fontSize="11" fill={stroke} textAnchor="middle">2π/3</text>
+      <text x={X(3.3)} y={Y(-1) + 22} fontSize="11" fill={stroke} fontStyle="italic">y = sin x（＝ F(x) の傾き）</text>
+      <text x="224" y="22" fontSize="11" fill={accent} textAnchor="middle">
+        傾きがずっとこの高さなら、F(x) は 0 から 2π/3 まで増える？ 減る？
       </text>
     </svg>
   );

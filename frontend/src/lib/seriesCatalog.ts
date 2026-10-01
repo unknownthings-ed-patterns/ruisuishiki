@@ -99,6 +99,10 @@ import {
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
+  M3INT_BASIC_SERIES,
+  MATH3_INTEGRAL_SERIES_LIST,
+} from "./seriesMath3Integral";
+import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
   M3V_TRANSFORM_SERIES,
@@ -2168,6 +2172,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "陰関数の微分（y を解かずに微分する）— 関係式の両辺を x で微分すれば、円も上下に分けずに傾きが出る。傾きは x と y の式なので、同じ x でも点ごとに違う",
   },
+  /* 第6章 積分法（背骨：docs/math3c_integral_design.md・2026-10-01 凍結） */
+  {
+    series: M3INT_BASIC_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "巻き戻しと倍率のずれ（候補を微分して、ずれた倍率で割る）— 微分の公式を逆から読んで候補を作り、微分して確かめる。ずれが数をかけただけなら、その数で割れば直る",
+  },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
    * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
@@ -2445,6 +2458,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_DIFF_SERIES_LIST,
   ...MATH3_VARIOUS_DIFF_SERIES_LIST,
   ...MATH3_DIFF_APP_SERIES_LIST,
+  ...MATH3_INTEGRAL_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,
