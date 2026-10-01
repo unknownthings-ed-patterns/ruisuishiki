@@ -15745,6 +15745,34 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_CROSS_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daCrossLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_JUMP_STEPS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daJumpSteps />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_PARALLEL_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daParallelTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_GAP_SLOPES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daGapSlopes />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39941,6 +39969,185 @@ function M3daWallsMeet() {
       <text x="300" y={L - 6} fontSize="12" fill={accent} textAnchor="end">?</text>
       <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
         2 枚の壁が同じ高さへ向かうとき、間の関数はどこへ？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列7 step1: 横線の下の点 A と上の点 B を、ペンを離さずにつなぐ線。横線を横切る場所は「?」。
+ *  ★図に答えを描かない★ 区間の端の値・解の位置（n = 2）は書かない。
+ *  この図から読めてしまうもの：「途切れずにつなぐと、どこかで横線を横切る」という仕組みだけ。 */
+function M3daCrossLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    const y = 150 - 110 * u + 26 * Math.sin(u * 7);
+    pts.push(`${(50 + u * 220).toFixed(1)},${y.toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="高さ 0 の横線より下にある点 A と、上にある点 B を、途切れない線でつないだ図。線が横線を横切る場所は疑問符"
+    >
+      <path d="M 20 100 L 300 100" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="304" y="104" fontSize="10" fill={muted}>0</text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <circle cx="50" cy="150" r="3.4" fill={accent} />
+      <text x="40" y="168" fontSize="11" fill={accent}>A（負）</text>
+      <circle cx="270" cy={150 - 110 + 26 * Math.sin(7)} r="3.4" fill={accent} />
+      <text x="252" y={150 - 110 + 26 * Math.sin(7) - 10} fontSize="11" fill={accent}>B（正）</text>
+      <text x="150" y="92" fontSize="12" fill={accent}>?</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        ペンを離さずに A から B へ。どこかで必ず何が起きる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列7 step6: 整数のところで跳ぶ、のこぎりの歯の形のグラフ（[x] − x + 1/2 の形の模式）。
+ *  ★図に答えを描かない★ 表の点（0.25 など）・跳ぶ位置の数値・解の個数は書かない。どの組が跳ぶ所をまたぐかも描かない。
+ *  ●（その点を含む）と○（含まない）で、跳ぶことだけを示す。
+ *  この図から読めてしまうもの：「線は跳ぶ所で途切れていて、そこでは横切らずに符号が変わる」という仕組みだけ。 */
+function M3daJumpSteps() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 110;
+  const Y = (v: number) => 100 - v * 100;
+  const segs = [0, 1];
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="のこぎりの歯の形のグラフを 2 区間だけ描いた模式の図。各区間の中では右下がりに高さ 0 を横切り、区間の切れ目では下から上へ跳ぶ。跳ぶ所では、線は途切れている"
+    >
+      <path d="M 20 100 L 304 100" fill="none" stroke={muted} strokeWidth="1" />
+      {segs.map((n) => (
+        <g key={n}>
+          <path d={`M ${X(n)} ${Y(0.5)} L ${X(n + 1) - 3} ${Y(-0.47)}`} fill="none" stroke={stroke} strokeWidth="1.8" />
+          <circle cx={X(n)} cy={Y(0.5)} r="3" fill={stroke} />
+          <circle cx={X(n + 1)} cy={Y(-0.5)} r="3" fill="var(--background)" stroke={stroke} strokeWidth="1.3" />
+        </g>
+      ))}
+      {[1].map((n) => (
+        <path key={n} d={`M ${X(n)} ${Y(-0.5) - 6} L ${X(n)} ${Y(0.5) + 6}`} fill="none" stroke={accent} strokeWidth="1" strokeDasharray="2 3" />
+      ))}
+      <text x={X(1) + 4} y="26" fontSize="10.5" fill={accent}>跳ぶ</text>
+      <text x="160" y="176" fontSize="11" fill={accent} textAnchor="middle">
+        跳ぶ所をまたぐと、横切らずに符号が変わる。
+      </text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        表のどの組がそう？（図は 2 区間だけの模式）
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列8 step1: 曲線上の 2 点 A, B を結ぶ直線（弦）と、それを平行に動かしたときに曲線に接する破線。
+ *  ★図に答えを描かない★ 関数・区間の数値・c の値は書かない。曲線は step1 の 2 次関数ではない模式（上に凸の一般の曲線）。
+ *  接点の位置もラベルで名指さず「?」とだけ置く。
+ *  この図から読めてしまうもの：「弦を平行に動かすと、あいだのどこかで曲線に接する」という仕組みだけ。 */
+function M3daParallelTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const fx = (u: number) => 150 - 95 * Math.sin(u * 2.2) - 10 * u;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${(40 + u * 240).toFixed(1)},${fx(u).toFixed(1)}`);
+  }
+  const ua = 0.08;
+  const ub = 0.92;
+  const ax = 40 + ua * 240;
+  const bx = 40 + ub * 240;
+  const ay = fx(ua);
+  const by = fx(ub);
+  const m = (by - ay) / (bx - ax);
+  let best = 0.5;
+  let bestv = -Infinity;
+  for (let k = 0; k <= 1000; k++) {
+    const u = k / 1000;
+    const v = -(fx(u) - m * (40 + u * 240));
+    if (v > bestv) {
+      bestv = v;
+      best = u;
+    }
+  }
+  const cx = 40 + best * 240;
+  const cy = fx(best);
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上に凸の曲線上の 2 点 A と B を結ぶ直線と、それと平行で、あいだのどこかで曲線に接する破線の直線。接点は疑問符"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={`M ${ax - 20} ${ay - 20 * m} L ${bx + 20} ${by + 20 * m}`} fill="none" stroke={muted} strokeWidth="1.3" />
+      <path d={`M ${cx - 120} ${cy - 120 * m} L ${cx + 120} ${cy + 120 * m}`} fill="none" stroke={accent} strokeWidth="1.3" strokeDasharray="5 4" />
+      <circle cx={ax} cy={ay} r="3.4" fill={stroke} />
+      <circle cx={bx} cy={by} r="3.4" fill={stroke} />
+      <text x={ax - 4} y={ay + 18} fontSize="11" fill={stroke}>A</text>
+      <text x={bx - 4} y={by + 18} fontSize="11" fill={stroke}>B</text>
+      <circle cx={cx} cy={cy} r="3.4" fill={accent} />
+      <text x={cx - 4} y={cy - 10} fontSize="12" fill={accent}>?</text>
+      <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        A と B を結ぶ直線を平行に動かすと、どこで曲線に接する？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列8 step6: 縦の破線（抜け）の左右に分かれた 2 本の右下がりの曲線。左の点 P と右の点 Q を結ぶ直線は右上がり。
+ *  ★図に答えを描かない★ 関数・抜けの位置・P, Q の座標・差の値は書かない。
+ *  この図から読めてしまうもの：「どの点でも右下がりなのに、抜けをまたぐと右の点のほうが高い」ことが起こりうる、という形だけ。 */
+function M3daGapSlopes() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const gx = 140;
+  const left: string[] = [];
+  const right: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const t = k / 40;
+    const xl = 30 + t * 95;
+    left.push(`${xl.toFixed(1)},${(115 + 900 / (gx + 6 - xl)).toFixed(1)}`);
+    const xr = 155 + t * 135;
+    right.push(`${xr.toFixed(1)},${(85 - 900 / (xr - gx + 6)).toFixed(1)}`);
+  }
+  const px = 40;
+  const py = 115 + 900 / (gx + 6 - px);
+  const qx = 270;
+  const qy = 85 - 900 / (qx - gx + 6);
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="縦の破線で示した抜けの左右に、右下がりの曲線が 1 本ずつある。左の曲線上の点 P と右の曲線上の点 Q を結ぶ直線は右上がりになっている"
+    >
+      <path d={`M ${gx} 14 L ${gx} 168`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
+      <text x={gx + 4} y="24" fontSize="10.5" fill={muted}>抜け</text>
+      <polyline points={left.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <polyline points={right.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={`M ${px} ${py} L ${qx} ${qy}`} fill="none" stroke={accent} strokeWidth="1.3" />
+      <circle cx={px} cy={py} r="3.4" fill={accent} />
+      <circle cx={qx} cy={qy} r="3.4" fill={accent} />
+      <text x={px - 4} y={py - 9} fontSize="11" fill={accent}>P</text>
+      <text x={qx - 4} y={qy - 9} fontSize="11" fill={accent}>Q</text>
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        どこでも右下がり。それでも Q のほうが高いのはなぜ？
       </text>
     </svg>
   );

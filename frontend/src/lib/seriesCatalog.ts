@@ -91,6 +91,8 @@ import {
   M3DA_CONCAVE_SERIES,
   M3DA_EQUATION_SERIES,
   M3DA_SQUEEZE_SERIES,
+  M3DA_IVT_SERIES,
+  M3DA_MVT_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2122,6 +2124,22 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "関数のはさみうち（預けた極限を返す）— 約分も有理化も効かない極限を、微分で作った壁ではさむ。log ≪ 多項式 ≪ 指数の力関係を、自分で確かめる",
+  },
+  {
+    series: M3DA_IVT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "中間値の定理（途切れない線は、必ず横切る）— 解けなくても「どこかに必ず解がある」と言える。言えるのは連続な区間の中だけで、しかも「少なくとも」まで",
+  },
+  {
+    series: M3DA_MVT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "平均値の定理（1 点の傾きと 2 点の差）— 2 点を結ぶ直線と平行な接線が、あいだのどこかにある。「f' > 0 なら増加」の根拠と、その前提",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
