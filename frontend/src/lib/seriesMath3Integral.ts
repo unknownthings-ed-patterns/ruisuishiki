@@ -547,7 +547,7 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step4 と変わったのは、分母が $6x+5$ のかたまりになったこと。step1 の正の側（$\\log x$）と step4 の負の側（$\\log(-x)$）は、絶対値の記号でどう $1$ つにまとめられる？",
+          text: "step4 と変わったのは、$x$ が正の側でも負の側でも使える $1$ 本の式で答えること。",
         },
         {
           layer: 3,
@@ -844,7 +844,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題と変わったのは、$2$ 乗されているのが三角関数であること。$\\cos^2 x$ を、$2$ 乗の無い形で書き表す式を、数Ⅱで見なかった？（[2倍角の公式]）",
+          text: "前題と変わったのは、$2$ 乗されているのが三角関数であること。数Ⅱの [2倍角の公式] を思い出せる？",
         },
         {
           layer: 3,
@@ -945,7 +945,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。分数を和に作り替えたいのは同じ。今度は割り算が使える？" },
         {
           layer: 2,
-          text: "前題と変わったのは、分子の次数が分母より小さく、分母が $2$ つの $1$ 次式の積になっていること。$\\dfrac{1}{x-1} - \\dfrac{1}{x+7}$ を通分すると、どんな分数になる？",
+          text: "前題と変わったのは、分母が $2$ つの $1$ 次式の積になっていること（分子の次数は分母より小さいので、割り算はできない）。",
         },
         {
           layer: 3,
@@ -1131,7 +1131,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。向きが入れかわった。前題で見た形と、この被積分関数の形は似ている？" },
         {
           layer: 2,
-          text: "前題と変わったのは向き。前題は合成関数を微分した。今度は「かたまりの冪 × 何か」を巻き戻す。被積分関数の中の $x^3$ は、かたまり $x^4+1$ にとって何にあたる？",
+          text: "前題と変わったのは向き。前題は合成関数を微分した。今度は、前題の答えに似た形をした関数を巻き戻す。",
         },
         {
           layer: 3,
@@ -1206,7 +1206,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題と変わったのは、かたまりが冪でなく分母にあること。分母をひとかたまり $t$ と見ると、外側はどんな関数？",
+          text: "前題と変わったのは、かたまりが冪の中でなく、分母にあること。",
         },
         {
           layer: 3,
@@ -1255,7 +1255,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         { layer: 1, text: "step4 と比べてみよう。かたまりに $x$ が掛かっているのは同じ。何が加わった？" },
         {
           layer: 2,
-          text: "step4 と変わったのは、外側がかたまりの $4$ 乗でなく、かたまりの平方根であること。答えの形 $(4x^2+1)\\sqrt{4x^2+1}$ は、かたまりの何乗？",
+          text: "step4 と変わったのは、外側がかたまりの $4$ 乗でなく、かたまりの平方根であること。",
         },
         {
           layer: 3,
@@ -1282,7 +1282,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、値を求める定積分になったことと、冪が $6$ と大きいこと。$(x^3+1)^6$ を展開すると、項はいくつ並ぶ？",
+          text: "step2 と変わったのは、冪が $6$ と大きく、展開するとたくさんの項に広がること。",
         },
         {
           layer: 3,
@@ -1331,7 +1331,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         { layer: 1, text: "step5 と比べてみよう。$\\tan x$ をどう書き直すと、step5 と同じ形が見えてくる？" },
         {
           layer: 2,
-          text: "step5 と変わったのは、分数の形で書かれていないこと。$\\tan x$ を $\\sin$ と $\\cos$ で書く式を、数Ⅰで見なかった？（[相互関係]）",
+          text: "step5 と変わったのは、分数の形で書かれていないこと。数Ⅰの [相互関係] を思い出せる？",
         },
         {
           layer: 3,
@@ -1409,9 +1409,348 @@ $x^2(x^3+1)^6$ は、展開すれば系列3 の道でも巻き戻せる。ただ
 系列3 で直らなかった関数のずれは、その関数が内側の微分そのものだったからだった。被積分関数がその因子を先に持っていれば、ずれは消える。`,
 };
 
+/** M3INT5: 置換積分——変数をすり替える（三段）。
+ *  段1＝step1〜2：系列4 で巻き戻せる積分を、まず跡で（重いほう）、次に t の積分に書き換えた形の係数で（R1 B3：step2 は step1 と別の数）
+ *  段2＝step3〜4：関節「( ) dx = □ dt」／段3＝step5〜10
+ *  山場 step5（②・R1 A2 で③手間型から変更）：∫₁⁵ (2x+1)√(x−1) dx を t=x−1 で。2x+1 を定数のように扱う候補は 176/3、正答 208/5（sympy・数値積分 41.6 と一致）。
+ *  step6（Q3）：同じ積分を t=√(x−1) で。提出値は t の被積分関数の t⁴ の係数 4（step5 と別の数）。
+ *  step8：cos⁵x は答えの形（sin の多項式）を指定（R1 A3：倍角の和でも書けて係数が変わる）。手間型の山場にはしない（R1 A2）。
+ *  原典の族（x√(x+1)・x/√(1−x)・x/√(1−x²)・tan x・cos³x・1/cos x・1/(e^x+1)）と形を変えた。
+ *  「置換でしか解けない」とは書かない（系列4 の跡で同じ道が通る）。 */
+export const M3INT_SUBST_SERIES: LearnerSeries = {
+  id: "math3_int_subst_01",
+  title: "置換積分——変数をすり替える",
+  subtitle:
+    "数Ⅲ・C 積分法より — 系列4 で見つけた「内側の微分が掛かっている形」を、かたまりを $t$ と名づけて記号の上で整える。$10$ 問で、何を一緒にすり替えなければならないかを確かめる。",
+  patternId: "M3INT5",
+  unit: "math_3",
+  revelationLabel:
+    "**かたまりを $t$ と名づけると、「残りの部分 $\\times\\,dx$」がまとめて $dt$ の何倍かに置き換わる**。$x$ を $t$ の式で表す向きなら、残った $x$ も $t$ に直せる",
+  drivingQuestion:
+    "$dx$ が約分されたように見えるのはなぜ？——**変数をすり替えるとき、何を一緒にすり替えなければならない？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$\\displaystyle\\int x^2(x^3 - 1)^5\\,dx = k\\,(x^3 - 1)^6 + C$ と書けます。$k$ を求めましょう。",
+      answer: 1 / 18,
+      answerDisplay: "1/18",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int x^2(x^3-1)^5\\,dx = k(x^3-1)^6 + C$ の $k$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "この被積分関数の中に、どこかのかたまりの微分が掛かっていないだろうか？",
+        },
+        {
+          layer: 2,
+          text: "系列4 で、どの部分をひとかたまりと見た？（[合成関数の微分法]）",
+        },
+        {
+          layer: 3,
+          text: "かたまり $x^3 - 1$ の微分は $3x^2$ で、被積分関数の $x^2$ はその $\\dfrac13$ 倍。候補 $(x^3-1)^6$ を微分すると $6(x^3-1)^5\\cdot 3x^2 = 18x^2(x^3-1)^5$。$18$ で割って $k = \\dfrac{1}{18}$。中心の問いへの最初の部分回答：**内側の微分が掛かっている形は、かたまりを $1$ つの文字と見れば巻き戻せる**——この見方を、記号で整えるのがこの系列。",
+        },
+      ],
+      formulaPreview: "((x³−1)⁶)′ = 18x²(x³−1)⁵ → k = 1/18",
+      figureMarker: "<<M3INT_SWAP>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題の積分で、かたまりを $t = x^3 - 1$ と名づけると、$\\displaystyle\\int x^2(x^3 - 1)^5\\,dx = \\int c\\,t^5\\,dt$ と書き換えられます。$c$ を求めましょう。",
+      answer: 1 / 3,
+      answerDisplay: "1/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int x^2(x^3-1)^5\\,dx = \\int c\\,t^5\\,dt$ の $c$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。同じ積分を、別の書き方で見ている。名前がついた部分のほかは、どこへ行く？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、かたまりに $t$ という名前がついたこと。$t$ と $x$ の変わり方の関係は、何で表せた？",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dt}{dx} = 3x^2$。分数のように見て $dt = 3x^2\\,dx$、つまり $x^2\\,dx = \\dfrac13\\,dt$。だから $\\displaystyle\\int x^2(x^3-1)^5\\,dx = \\int (x^3-1)^5\\cdot x^2\\,dx = \\int t^5\\cdot\\frac13\\,dt$ で、$c = \\dfrac13$。巻き戻すと $\\dfrac13\\cdot\\dfrac{t^6}{6} = \\dfrac{t^6}{18}$ で、前題の $\\dfrac{1}{18}$ と一致する。このように変数をすり替えて積分するやり方を [置換積分] という。中心の問いへ：**「残りの部分 $\\times\\,dx$」が、まとめて $dt$ の $\\dfrac13$ 倍に置き換わった**。",
+        },
+      ],
+      formulaPreview: "dt = 3x² dx → x² dx = (1/3)dt → c = 1/3（巻き戻すと t⁶/18）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$t = 5x^2 - 1$ と置くと、$x\\,dx = \\square\\,dt$ と書けます。$\\square$ に入る数を求めましょう。",
+      answer: 1 / 10,
+      answerDisplay: "1/10",
+      unit: "",
+      unknownLabel: "$x\\,dx = \\square\\,dt$ の $\\square$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の書き換えで、かたまり以外の部分は何に変わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、積分の全体ではなく、すり替えの「つなぎ目」だけを取り出して問われていること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dt}{dx} = 10x$ なので $dt = 10x\\,dx$、$x\\,dx = \\dfrac{1}{10}\\,dt$。$\\square = \\dfrac{1}{10}$。$dx$ を書き換えるのを忘れて、$t$ の式の中に $dx$ を残したままにすると、$t$ で巻き戻せない。中心の問いへ：**すり替えるのは、かたまりだけでなく「残りの部分 $\\times\\,dx$」もいっしょ**。",
+        },
+      ],
+      formulaPreview: "dt/dx = 10x → x dx = (1/10)dt",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$t = \\sqrt{x}$ と置くと、$\\dfrac{1}{\\sqrt{x}}\\,dx = \\square\\,dt$ と書けます。$\\square$ に入る数を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$\\dfrac{1}{\\sqrt{x}}\\,dx = \\square\\,dt$ の $\\square$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、かたまりが根号 $\\sqrt{x}$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dt}{dx} = \\dfrac{1}{2\\sqrt{x}}$ なので $dt = \\dfrac{1}{2\\sqrt{x}}\\,dx$、つまり $\\dfrac{1}{\\sqrt{x}}\\,dx = 2\\,dt$。$\\square = 2$。中心の問いへ：**かたまりが何であっても、つなぎ目は $\\dfrac{dt}{dx}$ から作れる**。",
+        },
+      ],
+      formulaPreview: "dt/dx = 1/(2√x) → (1/√x)dx = 2dt",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^5(2x + 1)\\sqrt{x - 1}\\,dx$ の値を求めましょう。",
+      answer: 208 / 5,
+      answerDisplay: "208/5",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^5(2x+1)\\sqrt{x-1}\\,dx$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。かたまり $x-1$ に $t$ と名前をつけたとき、step2 のように「残りの部分」は $dt$ にまとまるだろうか？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、かたまり $x - 1$ の外に掛かっている $2x+1$ が、かたまりの微分（の数倍）ではないこと。",
+        },
+        {
+          layer: 3,
+          text: "$t = x - 1$ と置くと $x = t + 1$、$dx = dt$。$2x + 1 = 2t + 3$ も $t$ で書ける。$x$ が $1$ から $5$ まで動くとき $t$ は $0$ から $4$。$\\displaystyle\\int_0^4(2t+3)\\sqrt{t}\\,dt = \\int_0^4\\left(2t^{\\frac32} + 3t^{\\frac12}\\right)dt = \\Big[\\frac45t^{\\frac52} + 2t^{\\frac32}\\Big]_0^4 = \\frac{128}{5} + 16 = \\frac{208}{5}$。$2x + 1$ を数のように外に出して $\\sqrt{x-1}$ だけ巻き戻すと $\\dfrac{176}{3}$ になり外れる——$2x+1$ は $x$ で変わるので、外には出せない。中心の問いへ：**残った $x$ は、$x$ を $t$ の式で表してすり替える。すり替えるのは $x$ と $dx$ の両方**。",
+        },
+      ],
+      formulaPreview: "t = x − 1、x = t + 1、dx = dt → ∫₀⁴ (2t + 3)√t dt = 128/5 + 16 = 208/5",
+      figureMarker: "<<M3INT_TWO_WAYS>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "前題の積分を、こんどは根号ごと $t = \\sqrt{x - 1}$ と置いて書き換えます。$x = t^2 + 1$ となり、$\\displaystyle\\int(2x+1)\\sqrt{x-1}\\,dx = \\int(a\\,t^4 + b\\,t^2)\\,dt$ の形になります。$a$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int(a\\,t^4 + b\\,t^2)\\,dt$ の $a$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。同じ積分を、別の名前のつけ方ですり替える。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$t$ と名づける部分が $x - 1$ から $\\sqrt{x-1}$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$t = \\sqrt{x-1}$ なら $x = t^2 + 1$、$dx = 2t\\,dt$。$2x + 1 = 2t^2 + 3$、$\\sqrt{x-1} = t$ なので、$(2t^2 + 3)\\cdot t\\cdot 2t\\,dt = (4t^4 + 6t^2)\\,dt$。$a = 4$。区間は $t$ が $0$ から $2$ で、$\\Big[\\dfrac45t^5 + 2t^3\\Big]_0^2 = \\dfrac{128}{5} + 16 = \\dfrac{208}{5}$——前題と同じ値に着く（交差検算）。中心の問いへ：**名前のつけ方は $1$ つとは限らない。どう名づけても、$x$ と $dx$ を両方すり替えれば同じ値になる**。",
+        },
+      ],
+      formulaPreview: "x = t² + 1、dx = 2t dt → (2t² + 3)·t·2t = 4t⁴ + 6t² → a = 4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\int\\sin^3 3x\\,dx = a\\cos 3x + b\\cos^3 3x + C$ と書けます。$b$ を求めましょう。",
+      answer: 1 / 9,
+      answerDisplay: "1/9",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int\\sin^3 3x\\,dx = a\\cos 3x + b\\cos^3 3x + C$ の $b$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は「かたまりの式 × かたまりの微分」の形だった。$\\sin^3 3x$ を、その形に作り替えられる？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、被積分関数がそのままでは「かたまりの微分」を持っていないこと。数Ⅰの三角比の関係式（[相互関係]）で、形を変えられないだろうか？",
+        },
+        {
+          layer: 3,
+          text: "$\\sin^3 3x = (1 - \\cos^2 3x)\\sin 3x$。$t = \\cos 3x$ と置くと $dt = -3\\sin 3x\\,dx$、$\\sin 3x\\,dx = -\\dfrac13\\,dt$。$\\displaystyle\\int(1 - t^2)\\cdot\\left(-\\frac13\\right)dt = -\\frac13t + \\frac19t^3 + C = -\\frac13\\cos 3x + \\frac19\\cos^3 3x + C$。$b = \\dfrac19$。中心の問いへ：**すり替えが使える形は、作り替えて自分で作ることもできる**。",
+        },
+      ],
+      formulaPreview: "sin³3x = (1 − cos²3x)sin 3x、t = cos 3x → −t/3 + t³/9 → b = 1/9",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\displaystyle\\int\\cos^5 x\\,dx = a\\sin x + b\\sin^3 x + c\\sin^5 x + C$ と書けます。$b$ を求めましょう。",
+      answer: -2 / 3,
+      answerDisplay: "-2/3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int\\cos^5 x\\,dx = a\\sin x + b\\sin^3 x + c\\sin^5 x + C$ の $b$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、奇数乗の数が $3$ から $5$ に上がり、関数が $\\cos$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos^5 x = (\\cos^2 x)^2\\cos x = (1 - \\sin^2 x)^2\\cos x$。$t = \\sin x$ と置くと $\\cos x\\,dx = dt$。$\\displaystyle\\int(1 - t^2)^2\\,dt = \\int(1 - 2t^2 + t^4)\\,dt = t - \\frac23t^3 + \\frac15t^5 + C$。$b = -\\dfrac23$。答えの形を指定したのは、同じ関数を倍の角の $\\sin$（$\\sin x$・$\\sin 3x$・$\\sin 5x$）の和でも書けて、形によって係数が変わるから。$t$ を使わずに、系列4 のように $(1-\\sin^2x)^2\\cos x$ を展開して項ごとに「$\\sin x$ の式 × その微分」と見ても同じ結果になる。中心の問いへ：**$t$ と名づけるのは、系列4 の見方を記号で整えたもの**。",
+        },
+      ],
+      formulaPreview: "cos⁵x = (1 − sin²x)²cos x、t = sin x → t − (2/3)t³ + (1/5)t⁵ → b = −2/3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$t$ の積分 $\\displaystyle\\int\\cos t\\,dt$ に $t = x^3$ を入れて $x$ の積分に戻すと、$\\displaystyle\\int k\\,x^2\\cos(x^3)\\,dx$ になります。$k$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int k\\,x^2\\cos(x^3)\\,dx$ の $k$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。すり替えの向きが入れかわった。" },
+        {
+          layer: 2,
+          text: "step3 と向きが逆。step3 は $x$ の式から $dt$ に書き換えた。今度は $t$ の積分から $x$ の積分へ戻す。",
+        },
+        {
+          layer: 3,
+          text: "$t = x^3$ なら $dt = 3x^2\\,dx$。$\\displaystyle\\int\\cos t\\,dt = \\int\\cos(x^3)\\cdot 3x^2\\,dx$ で、$k = 3$。戻した $x$ の積分には、かたまり $x^3$ の微分 $3x^2$ がちょうど掛かっている——系列4 の形そのもの。中心の問いへ：**すり替えは両方向に読める。$t$ の積分を $x$ に戻すと、内側の微分が掛かった形が現れる**。",
+        },
+      ],
+      formulaPreview: "t = x³、dt = 3x² dx → ∫cos t dt = ∫3x²cos(x³) dx → k = 3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\log 2}\\frac{e^x}{(e^x + 1)(e^x + 3)}\\,dx$ の値を求めましょう。",
+      answer: Math.log(6 / 5) / 2,
+      answerDisplay: "log(6/5)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\log 2}\\frac{e^x\\,dx}{(e^x+1)(e^x+3)}$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。すり替えて区間も $t$ に読み替えるのは同じ。すり替えたあとの $t$ の積分は、どんな形になりそう？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、すり替えたあとの $t$ の積分が、$1$ 次式の積を分母にもつ分数になること。系列3 で、そういう分数をどう作り替えた？（[部分分数分解]）",
+        },
+        {
+          layer: 3,
+          text: "$t = e^x$ と置くと $dt = e^x\\,dx$。$x$ が $0$ から $\\log 2$ まで動くとき $t$ は $1$ から $2$。$\\displaystyle\\int_1^2\\frac{dt}{(t+1)(t+3)}$。$\\dfrac{1}{t+1} - \\dfrac{1}{t+3} = \\dfrac{2}{(t+1)(t+3)}$ なので $\\dfrac12\\Big[\\log(t+1) - \\log(t+3)\\Big]_1^2 = \\dfrac12\\left(\\log\\dfrac35 - \\log\\dfrac24\\right) = \\dfrac12\\log\\dfrac65$。入力は「log(6/5)/2」。中心の問いへ：**すり替えたあとが読めない形でも、系列3 の作り替えにつなげば巻き戻せる**。",
+        },
+      ],
+      formulaPreview: "t = eˣ、dt = eˣdx、t: 1 → 2 → ∫₁² dt/((t+1)(t+3)) = (1/2)log(6/5)",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $dx$ が約分されたように見えるのはなぜ？——**変数をすり替えるとき、何を一緒にすり替えなければならない？**
+
+────────
+
+## 系列4 の見方を、記号で整える
+
+系列4 では、「かたまりの式 × かたまりの微分」の形を見つけて、かたまりを $1$ つの文字と見て巻き戻した。その文字に $t$ と名前をつけて、記号の上でやり直すのがこの系列である（step1・2）。
+
+$t = g(x)$ と置くと $\\dfrac{dt}{dx} = g'(x)$。これを分数のように見て $dt = g'(x)\\,dx$ と書くと、
+
+$$\\int f(g(x))\\,g'(x)\\,dx = \\int f(t)\\,dt$$
+
+左辺の「かたまりの微分 $\\times\\,dx$」が、右辺でまとめて $dt$ に置き換わる。
+
+## ここが胚細胞：何を一緒にすり替えるか
+
+$dt = g'(x)\\,dx$ は、本当は分数の約分ではない（$dx$ や $dt$ は数ではない）。それでも約分のように見えるのは、**合成関数の微分 $\\{F(g(x))\\}' = F'(g(x))\\,g'(x)$ を逆から読んだ結果を、ちょうどそう書けるから**である。巻き戻した $F(t)$ を $x$ で微分すれば、いつでも確かめられる。
+
+すり替えるときは、次を全部 $t$ に直す。
+
+| すり替えるもの | step |
+|---|---|
+| かたまり → $t$ | 1・2 |
+| 「残りの部分 $\\times\\,dx$」→ $dt$ の何倍か | 2〜4 |
+| 残った $x$ → $t$ の式（$x$ を $t$ で表す向き） | 5・6 |
+| 区間の端 → $t$ の値（定積分のとき） | 5・6・10 |
+
+<<M3INT_TWO_WAYS>>
+
+## Step の道筋
+
+- **step1・2**（事例）：系列4 で解ける積分を、跡で解いてから、$t$ の積分に書き換える
+- **step3・4**（なぜ）：つなぎ目「$(\\ )\\,dx = \\square\\,dt$」を取り出す
+- **step5（山場）**：かたまりの外に、かたまりの微分でない $x$ の式が残る。$x$ を $t$ で表してすり替える
+- **step6**：同じ積分を、根号ごと $t$ と置いて（交差検算）
+- **step7・8**：三角の奇数乗を「$\\sin$（$\\cos$）の式 × その微分」に作り替えて
+- **step9**：$t$ の積分を $x$ に戻す向き
+- **step10**：すり替えたあとを部分分数で（系列3 と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 置換積分の公式は覚えなくてよい。かたまりを $t$ と置き、$\\dfrac{dt}{dx}$ を計算して、$x$ と $dx$ と区間を全部 $t$ に直す。巻き戻したら $x$ に戻し、微分して確かめる。
+
+**残った $x$ を数のように外に出すのは、よくある取りこぼし。** step5 で $2x + 1$ を外に出して $\\sqrt{x-1}$ だけ巻き戻すと、値が $\\dfrac{208}{5}$ でなく $\\dfrac{176}{3}$ になる。微分して確かめれば、外に出した $2x+1$ も微分されて食い違いが見える。
+
+**すり替え方は $1$ つとは限らない**（step5・6）。どう名づけても、全部をすり替えれば同じ値になる。手間は名づけ方で変わるが、どちらが軽いかは式しだいで、いつも決まっているわけではない。
+
+**この先の景色。** 系列9 では、定積分ですり替えるとき、区間の向きが逆になる場合（減少する $g$）を扱う。系列10 では、$x$ を三角関数で表す向きのすり替え（$x = a\\sin\\theta$）が、円の面積を連れてくる。大学では、何変数でも同じ考え方で変数をすり替える（ヤコビアン）。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「置換積分」の構成（跡を見抜いて解いた積分を $t$ で定式化してやり直す・$x$ の式の一部が $dx$ とくっつく向きと $x$ を $t$ で表す向きの 2 つ・三角の奇数乗）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$dx$ が約分されたように見えるのは、合成関数の微分を逆から読んだ結果が、ちょうどそう書けるからである。
+
+すり替えるときは、かたまりだけでなく、**「残りの部分 $\\times\\,dx$」、残った $x$、そして区間の端**まで、全部を $t$ に直す。$1$ つでも $x$ のまま残すと、巻き戻した値が外れる。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
   M3INT_RESHAPE_SERIES,
   M3INT_TRACE_SERIES,
+  M3INT_SUBST_SERIES,
 ];

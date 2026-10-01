@@ -15878,6 +15878,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_SWAP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intSwap />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_TWO_WAYS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intTwoWays />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40863,6 +40877,77 @@ function M3intFprimeF() {
       <text x="210" y="86" fontSize="11" fill={accent}>? 倍</text>
       <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
         分母をかたまりと見ると、何が見える？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列5 step1: x の積分と t の積分の 2 段。かたまりを t と名づけると、どの部分が dt に置き換わるか。
+ *  ★図に答えを描かない★ 具体的な式・係数は書かない。dt に置き換わる部分と倍率は「?」。
+ *  この図から読めてしまうもの：「かたまりを t と書くと、残りの一部が dt に変わる」という仕組みだけ。 */
+function M3intSwap() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上の段は x の積分で、かたまりの式と、残りの部分と、dx が並ぶ。下の段は t の積分で、かたまりは t に、残りの部分と dx はまとめて疑問符倍の dt に置き換わる"
+    >
+      <text x="16" y="52" fontSize="20" fill={stroke}>∫</text>
+      <rect x="34" y="30" width="96" height="32" rx="6" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="82" y="51" fontSize="11" fill={stroke} textAnchor="middle">かたまりの式</text>
+      <rect x="136" y="30" width="100" height="32" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="186" y="51" fontSize="11" fill={stroke} textAnchor="middle">残りの部分 dx</text>
+      <path d="M 82 66 L 82 112" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 77 106 L 82 114 L 87 106" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 186 66 L 186 112" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+      <path d="M 181 106 L 186 114 L 191 106" fill="none" stroke={accent} strokeWidth="1.4" />
+      <text x="96" y="94" fontSize="10" fill={accent}>t と名づける</text>
+      <text x="16" y="142" fontSize="20" fill={stroke}>∫</text>
+      <rect x="34" y="120" width="96" height="32" rx="6" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="82" y="141" fontSize="11" fill={stroke} textAnchor="middle">t の式</text>
+      <rect x="136" y="120" width="100" height="32" rx="6" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 4" />
+      <text x="186" y="141" fontSize="12" fill={accent} textAnchor="middle">? dt</text>
+      <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
+        残りの部分と dx は、まとめて dt の何倍になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列5 step5: すり替えの 2 つの向き。①x の式の一部が dx とくっついて dt になる／②x を t の式で表し、dx は単独で消える。
+ *  ★図に答えを描かない★ 具体的な式は書かない。どちらの向きがこの問題に合うかは「?」。
+ *  この図から読めてしまうもの：「すり替えには 2 つの向きがある」ことだけ。 */
+function M3intTwoWays() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="すり替えの 2 つの向きを左右に並べた図。左は、x の式の一部が dx とくっついて dt になる向き。右は、x を t の式で書き表して、dx が t の式をともなった dt に変わる向き。この問題に合うのはどちらか、が疑問符"
+    >
+      <rect x="10" y="20" width="142" height="120" rx="10" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="81" y="42" fontSize="11" fill={stroke} textAnchor="middle">向き ①</text>
+      <text x="81" y="66" fontSize="10" fill={stroke} textAnchor="middle">t = （x の式）</text>
+      <text x="81" y="90" fontSize="10" fill={stroke} textAnchor="middle">（x の式の一部）dx</text>
+      <text x="81" y="110" fontSize="10" fill={stroke} textAnchor="middle">↓</text>
+      <text x="81" y="128" fontSize="10" fill={stroke} textAnchor="middle">（数）× dt</text>
+      <rect x="168" y="20" width="142" height="120" rx="10" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="239" y="42" fontSize="11" fill={stroke} textAnchor="middle">向き ②</text>
+      <text x="239" y="66" fontSize="10" fill={stroke} textAnchor="middle">x = （t の式）</text>
+      <text x="239" y="90" fontSize="10" fill={stroke} textAnchor="middle">dx だけ</text>
+      <text x="239" y="110" fontSize="10" fill={stroke} textAnchor="middle">↓</text>
+      <text x="239" y="128" fontSize="10" fill={stroke} textAnchor="middle">（t の式）× dt</text>
+      <text x="160" y="170" fontSize="11" fill={accent} textAnchor="middle">
+        被積分関数に残った x は、どちらの向きなら消せる？
       </text>
     </svg>
   );

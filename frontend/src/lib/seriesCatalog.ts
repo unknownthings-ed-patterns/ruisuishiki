@@ -103,6 +103,7 @@ import {
   M3INT_LOG_SERIES,
   M3INT_RESHAPE_SERIES,
   M3INT_TRACE_SERIES,
+  M3INT_SUBST_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2207,6 +2208,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "合成関数の微分を逆に読む（内側の微分が掛かっていたら）— かたまりの微分がはじめから掛かっている形は、外側だけ巻き戻せる。f′f^n・f′/f・f′e^f",
+  },
+  {
+    series: M3INT_SUBST_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "置換積分（変数をすり替える）— かたまりを t と名づけ、残りの部分 × dx を dt に。x を t で表す向きもある。x・dx・区間を全部すり替える",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
