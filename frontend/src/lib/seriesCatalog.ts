@@ -104,6 +104,7 @@ import {
   M3INT_RESHAPE_SERIES,
   M3INT_TRACE_SERIES,
   M3INT_SUBST_SERIES,
+  M3INT_PARTS_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2216,6 +2217,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "置換積分（変数をすり替える）— かたまりを t と名づけ、残りの部分 × dx を dt に。x を t で表す向きもある。x・dx・区間を全部すり替える",
+  },
+  {
+    series: M3INT_PARTS_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "積の微分を逆に読む（片方だけ巻き戻して、はみ出しを打ち消す）— 両方巻き戻すと外れる。片方だけ巻き戻すと、はみ出しが 1 つ出る。はみ出しが易しくなる側を巻き戻す",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

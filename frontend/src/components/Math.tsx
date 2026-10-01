@@ -15892,6 +15892,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intProduct />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_OVERFLOW>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intOverflow />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_ROLES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intRoles />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40948,6 +40969,104 @@ function M3intTwoWays() {
       <text x="239" y="128" fontSize="10" fill={stroke} textAnchor="middle">（t の式）× dt</text>
       <text x="160" y="170" fontSize="11" fill={accent} textAnchor="middle">
         被積分関数に残った x は、どちらの向きなら消せる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列6 step1: 積の微分の 2 項（第3章の確認）。片方を微分してもう片方はそのまま、を 2 通り足す。
+ *  ★図に答えを描かない★ 具体的な式・係数は書かない。2 項に「目的の項」「はみ出し」のラベルは付けない（step3 の発見＝R1 B8）。
+ *  この図から読めてしまうもの：「積の微分は 2 つの項の和」という第3章の仕組みだけ。 */
+function M3intProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="2 つの関数 f と g の積を微分すると、f を微分して g はそのままの項と、f はそのままで g を微分した項の 2 つの和になる、という図"
+    >
+      <rect x="110" y="16" width="100" height="34" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="160" y="38" fontSize="13" fill={stroke} textAnchor="middle">f × g</text>
+      <path d="M 140 54 L 80 92" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <path d="M 180 54 L 240 92" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="160" y="80" fontSize="10" fill={muted} textAnchor="middle">微分すると</text>
+      <rect x="22" y="96" width="116" height="34" rx="8" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="80" y="118" fontSize="12" fill={stroke} textAnchor="middle">f′ × g</text>
+      <text x="160" y="118" fontSize="16" fill={stroke} textAnchor="middle">＋</text>
+      <rect x="182" y="96" width="116" height="34" rx="8" fill="none" stroke={muted} strokeWidth="1.3" />
+      <text x="240" y="118" fontSize="12" fill={stroke} textAnchor="middle">f × g′</text>
+      <text x="160" y="164" fontSize="11" fill={accent} textAnchor="middle">
+        ほしいのが 2 つの項の片方だけだったら、逆から読める？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列6 step3: 片方だけ巻き戻した候補を微分すると、ほしい項と「はみ出した項」の 2 つが出る仕組み。
+ *  ★図に答えを描かない★ 具体的な式・係数は書かない。はみ出した項をどう打ち消すかは「?」。
+ *  この図から読めてしまうもの：「はみ出した項を、別に巻き戻して引けばよい」という方針だけ（係数は読めない）。 */
+function M3intOverflow() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="片方だけ巻き戻した候補を微分すると、ほしい項と、はみ出した項の 2 つが出てくる図。はみ出した項の打ち消し方は疑問符"
+    >
+      <rect x="14" y="20" width="120" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="74" y="38" fontSize="11" fill={stroke} textAnchor="middle">片方だけ</text>
+      <text x="74" y="52" fontSize="11" fill={stroke} textAnchor="middle">巻き戻した候補</text>
+      <path d="M 138 40 L 176 40" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <path d="M 170 35 L 178 40 L 170 45" fill="none" stroke={stroke} strokeWidth="1.4" />
+      <text x="157" y="32" fontSize="9" fill={muted} textAnchor="middle">微分</text>
+      <rect x="184" y="14" width="122" height="26" rx="6" fill="none" stroke={stroke} strokeWidth="1.3" />
+      <text x="245" y="31" fontSize="11" fill={stroke} textAnchor="middle">ほしい項</text>
+      <text x="245" y="54" fontSize="13" fill={stroke} textAnchor="middle">＋</text>
+      <rect x="184" y="60" width="122" height="26" rx="6" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 4" />
+      <text x="245" y="77" fontSize="11" fill={accent} textAnchor="middle">はみ出した項</text>
+      <path d="M 245 90 L 245 120" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="245" y="138" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="176" fontSize="11" fill={accent} textAnchor="middle">
+        はみ出した項を消すには、候補から何を引けばいい？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列6 step8: 2 つの関数の役割（巻き戻す側／微分する側）を選び直す仕組み。
+ *  ★図に答えを描かない★ どちらの関数をどちらの役にするかは「?」。具体的な関数（x³・log x）も描かない。
+ *  この図から読めてしまうもの：「役割は入れかえられる。巻き戻しにくい側は微分する側に回せる」という選択肢があることだけ。 */
+function M3intRoles() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="2 つの関数 A と B の積。上は A を巻き戻す側、B を微分する側にした割り当て。下はその逆の割り当て。どちらにするかは疑問符"
+    >
+      <text x="20" y="40" fontSize="12" fill={stroke}>A × B</text>
+      <rect x="90" y="20" width="210" height="34" rx="8" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="195" y="42" fontSize="11" fill={stroke} textAnchor="middle">A を巻き戻す ／ B を微分する</text>
+      <rect x="90" y="70" width="210" height="34" rx="8" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="195" y="92" fontSize="11" fill={stroke} textAnchor="middle">A を微分する ／ B を巻き戻す</text>
+      <text x="60" y="76" fontSize="16" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="140" fontSize="11" fill={accent} textAnchor="middle">
+        巻き戻しにくい関数は、どちらの役に回せばいい？
+      </text>
+      <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
+        はみ出しが易しくなるのは、どちらの割り当て？
       </text>
     </svg>
   );

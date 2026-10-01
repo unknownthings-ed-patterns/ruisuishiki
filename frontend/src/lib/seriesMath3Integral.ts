@@ -1747,10 +1747,361 @@ $dx$ が約分されたように見えるのは、合成関数の微分を逆か
 すり替えるときは、かたまりだけでなく、**「残りの部分 $\\times\\,dx$」、残った $x$、そして区間の端**まで、全部を $t$ に直す。$1$ つでも $x$ のまま残すと、巻き戻した値が外れる。`,
 };
 
+/** M3INT6: 積の微分を逆に読む——片方だけ巻き戻して、はみ出しを打ち消す（三段）。
+ *  段1＝step1〜4（素朴な巻き戻し：積の微分の確認 → 両方巻き戻す候補が外れる → 片方だけ巻き戻すとはみ出しが出る → 打ち消して完成）
+ *  段2＝step5〜6（公式 ∫fg = Fg − ∫Fg′ の関節・微分して戻す）／段3＝step7〜10
+ *  山場 step2（②・R1 A6）：∫x cos3x の「両方巻き戻して掛けた」候補 x² sin3x / 6 を問題文で明示し、
+ *  x=π/6 での「候補の微分 − 被積分関数」＝π/18（被積分関数は 0 なのに候補の微分は π/18＝食い違いの零点ではない点を sympy で確認）。
+ *  step3 と step5 は別の関数（R1 B4）。step8 に図（役割の選び直し＝R1 B8）。
+ *  原典の造語（「余分な関数」にあたる語・「片側だけ積分」にあたる語）は使わない（裁定 Q5）。「この選び方しかない」と書かない（原典も手間の言い方）。
+ *  原典の族：x cos x・x sin x・x e^x・x² e^x・x log x は定番だが定数をずらした（x cos3x・x e^{x/2}・x² cos(x/3)・x³ log x）。step7 は初め x² cos(x/2) にしたが、途中の sin(x/2) の巻き戻しが原典 練1(6) そのものだったので替えた。
+ *  step10 の sin√x は原典 応用2(3) e^{√x} と同じ構造（t=√x＋部分積分）で関数が違う＝「定番の道具」側と判断（Round 2 に見てもらう＝R1 B12）。 */
+export const M3INT_PARTS_SERIES: LearnerSeries = {
+  id: "math3_int_parts_01",
+  title: "積の微分を逆に読む——片方だけ巻き戻して、はみ出しを打ち消す",
+  subtitle:
+    "数Ⅲ・C 積分法より — 積の微分は $2$ つの項の和だった。$2$ つの関数を両方巻き戻すと外れる。片方だけ巻き戻すと、はみ出した項が $1$ つ出る。$10$ 問で、それを打ち消す手つきと、どちらを巻き戻すかの選び方を確かめる。",
+  patternId: "M3INT6",
+  unit: "math_3",
+  revelationLabel:
+    "**片方だけ巻き戻した候補を微分すると、ほしい項とはみ出した項が出る。はみ出しを巻き戻して引けば完成**。だから、はみ出しが元より易しくなる側を巻き戻す",
+  drivingQuestion:
+    "積の微分は $2$ つの項の和だった。逆から読むなら、$2$ つの関数の**どちらを巻き戻せばいい？——はみ出した項は、どう打ち消す？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "関数 $x\\sin 3x$ を微分すると、$a\\sin 3x + b\\,x\\cos 3x$ の形になります。$b$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$(x\\sin 3x)' = a\\sin 3x + b\\,x\\cos 3x$ の $b$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$2$ つの関数の積を微分するとき、それぞれの関数はどう扱った？",
+        },
+        {
+          layer: 2,
+          text: "第3章で、$2$ つの関数の積を微分したとき、項はいくつ出た？（[積の微分]）",
+        },
+        {
+          layer: 3,
+          text: "積の微分は「片方を微分して、もう片方はそのまま」を $2$ 通り足す：$(x\\sin 3x)' = (x)'\\sin 3x + x(\\sin 3x)' = \\sin 3x + 3x\\cos 3x$。$b = 3$。微分すると、**項が $2$ つ**に分かれる。中心の問いへの最初の部分回答：**積を微分すると $2$ つの項の和になる。逆から読むときも、$2$ つの項を相手にすることになる**。",
+        },
+      ],
+      formulaPreview: "(x sin 3x)′ = sin 3x + 3x cos 3x → b = 3",
+      figureMarker: "<<M3INT_PRODUCT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$\\displaystyle\\int x\\cos 3x\\,dx$ を求めようとして、ある人が $x$ と $\\cos 3x$ をそれぞれ巻き戻して掛け、候補 $\\dfrac{x^2}{2}\\cdot\\dfrac{\\sin 3x}{3} = \\dfrac{x^2\\sin 3x}{6}$ を作りました。この候補を微分した式から、もとの $x\\cos 3x$ を引いた差の、$x = \\dfrac{\\pi}{6}$ での値を求めましょう。",
+      answer: Math.PI / 18,
+      answerDisplay: "π/18",
+      unit: "",
+      unknownLabel: "$x = \\dfrac{\\pi}{6}$ での（候補の微分）−（$x\\cos 3x$）",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で見た積の微分の形を、この候補にも当てると、何が出てくる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、微分する相手が「$2$ つをそれぞれ巻き戻して掛けた」候補であること。",
+        },
+        {
+          layer: 3,
+          text: "積の微分で $\\left(\\dfrac{x^2}{2}\\cdot\\dfrac{\\sin 3x}{3}\\right)' = x\\cdot\\dfrac{\\sin 3x}{3} + \\dfrac{x^2}{2}\\cos 3x$。ほしい $x\\cos 3x$ はどちらの項にも出てこない。$x = \\dfrac{\\pi}{6}$ では $\\sin\\dfrac{\\pi}{2} = 1$、$\\cos\\dfrac{\\pi}{2} = 0$ なので、候補の微分は $\\dfrac{\\pi}{6}\\cdot\\dfrac13 = \\dfrac{\\pi}{18}$、もとの $x\\cos 3x$ は $0$。差は $\\dfrac{\\pi}{18}$——$0$ になるはずの差が $0$ にならない。数Ⅱで「積を項ごとに積分してかけてはいけない」と見たのと同じことが、三角関数でも起きる。中心の問いへ：**両方を巻き戻して掛けても、積の微分の $2$ 項は元に戻らない**。",
+        },
+      ],
+      formulaPreview: "候補の微分 = x·sin 3x/3 + (x²/2)cos 3x → x = π/6 で π/18、x cos 3x は 0 → 差 π/18",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "こんどは $\\cos 3x$ の側だけを巻き戻し、$x$ はそのまま残した候補 $\\dfrac{x\\sin 3x}{3}$ を作ります。これを微分すると $x\\cos 3x + k\\sin 3x$ の形になります。はみ出した項の係数 $k$ を求めましょう。",
+      answer: 1 / 3,
+      answerDisplay: "1/3",
+      unit: "",
+      unknownLabel: "$\\left(\\dfrac{x\\sin 3x}{3}\\right)' = x\\cos 3x + k\\sin 3x$ の $k$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の候補は、ほしい項がどちらにも出てこなかった。今度の候補はどうだろう？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、巻き戻すのが $2$ つの関数のうち片方だけになったこと。",
+        },
+        {
+          layer: 3,
+          text: "積の微分で $\\left(x\\cdot\\dfrac{\\sin 3x}{3}\\right)' = (x)'\\cdot\\dfrac{\\sin 3x}{3} + x\\cdot\\cos 3x = x\\cos 3x + \\dfrac13\\sin 3x$。**ほしい $x\\cos 3x$ がそのまま出てきた**。そのかわり、もう $1$ つの項 $\\dfrac13\\sin 3x$ がはみ出した。$k = \\dfrac13$。逆に $x$ の側を巻き戻した候補 $\\dfrac{x^2}{2}\\cos 3x$ を微分すると、はみ出しは $-\\dfrac32x^2\\sin 3x$ で、$x$ の次数が上がってしまう。中心の問いへ：**片方だけ巻き戻すと、ほしい項が出る。代わりに、はみ出した項が $1$ つ残る**。",
+        },
+      ],
+      formulaPreview: "(x·sin 3x/3)′ = sin 3x/3 + x cos 3x → はみ出し (1/3)sin 3x → k = 1/3",
+      figureMarker: "<<M3INT_OVERFLOW>>",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "関数 $F(x)$ は、微分すると $x\\cos 3x$ になり、$F(0) = 0$ を満たします。$F\\left(\\dfrac{\\pi}{3}\\right)$ を求めましょう。",
+      answer: -2 / 9,
+      answerDisplay: "-2/9",
+      unit: "",
+      unknownLabel: "$F\\left(\\dfrac{\\pi}{3}\\right)$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の候補は、ほしい項にはみ出しが付いていた。そのはみ出しをどうすれば消える？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、はみ出しを消して完成させ、値まで出すこと。",
+        },
+        {
+          layer: 3,
+          text: "はみ出し $\\dfrac13\\sin 3x$ を巻き戻すと $-\\dfrac19\\cos 3x$。これを候補から引けば、微分したときはみ出しが打ち消される：$\\left(\\dfrac{x\\sin 3x}{3} + \\dfrac{\\cos 3x}{9}\\right)' = x\\cos 3x + \\dfrac13\\sin 3x - \\dfrac13\\sin 3x = x\\cos 3x$。$F(x) = \\dfrac{x\\sin 3x}{3} + \\dfrac{\\cos 3x}{9} + C$、$F(0) = \\dfrac19 + C = 0$ より $C = -\\dfrac19$。$F\\left(\\dfrac{\\pi}{3}\\right) = 0 + \\dfrac{-1}{9} - \\dfrac19 = -\\dfrac29$。中心の問いへ：**はみ出した項は、それを巻き戻して引けば打ち消せる**——はみ出しが元より易しければ、この手つきで完成する。",
+        },
+      ],
+      formulaPreview: "F(x) = x sin 3x/3 + cos 3x/9 − 1/9 → F(π/3) = −1/9 − 1/9 = −2/9",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$\\displaystyle\\int x\\,e^{\\frac{x}{2}}\\,dx$ で、$e^{\\frac{x}{2}}$ の側を巻き戻すと、$\\displaystyle\\int x\\,e^{\\frac{x}{2}}\\,dx = 2x\\,e^{\\frac{x}{2}} - \\int c\\,e^{\\frac{x}{2}}\\,dx$ と書けます。$c$ を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int c\\,e^{\\frac{x}{2}}\\,dx$ の $c$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で、はみ出しを打ち消すために「引いた」ものは何だった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、「引くもの」を巻き戻さず、積分の形のまま残して書くこと。",
+        },
+        {
+          layer: 3,
+          text: "$e^{\\frac{x}{2}}$ を巻き戻すと $2e^{\\frac{x}{2}}$。候補 $x\\cdot 2e^{\\frac{x}{2}}$ を微分すると $2e^{\\frac{x}{2}} + x e^{\\frac{x}{2}}$ で、はみ出しは $2e^{\\frac{x}{2}}$。だから $\\displaystyle\\int x e^{\\frac{x}{2}}\\,dx = 2xe^{\\frac{x}{2}} - \\int 2e^{\\frac{x}{2}}\\,dx$、$c = 2$。一般に、$f$ を巻き戻したものを $F$ として $\\displaystyle\\int f(x)g(x)\\,dx = F(x)g(x) - \\int F(x)g'(x)\\,dx$——引く積分の中身は「巻き戻したほう × 残したほうの微分」。このやり方を [部分積分] という。中心の問いへ：**はみ出しを打ち消す手つきは、$1$ 本の式にまとめられる**。",
+        },
+      ],
+      formulaPreview: "F = 2e^(x/2)、g = x、g′ = 1 → ∫xe^(x/2)dx = 2xe^(x/2) − ∫2e^(x/2)dx → c = 2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "ある関数 $f(x)$ について、$\\displaystyle\\int f(x)\\,dx = (2x - 1)e^{2x} + C$ と分かっています。$f(x) = k\\,x\\,e^{2x}$ の形になります。$k$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$f(x) = k\\,x\\,e^{2x}$ の $k$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は積を巻き戻した。今度は巻き戻した結果が先にあって、もとの関数を探す。",
+        },
+        {
+          layer: 3,
+          text: "巻き戻した結果を微分すれば、もとの関数に戻る。積の微分で $\\{(2x-1)e^{2x}\\}' = 2e^{2x} + (2x-1)\\cdot 2e^{2x} = (2 + 4x - 2)e^{2x} = 4xe^{2x}$。$k = 4$。$2e^{2x}$ と $-2e^{2x}$ が打ち消し合っている——部分積分ではみ出しを打ち消した跡が、ここに見える。中心の問いへ：**部分積分の結果も、微分すれば確かめられる。打ち消し合った項が見える**。",
+        },
+      ],
+      formulaPreview: "((2x−1)e^(2x))′ = 2e^(2x) + 2(2x−1)e^(2x) = 4xe^(2x) → k = 4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\int x^2\\cos\\frac{x}{3}\\,dx = a\\,x^2\\sin\\frac{x}{3} + b\\,x\\cos\\frac{x}{3} + c\\sin\\frac{x}{3} + C$ と書けます。$c$ を求めましょう。",
+      answer: -54,
+      answerDisplay: "-54",
+      unit: "",
+      unknownLabel: "$\\sin\\dfrac{x}{3}$ の係数 $c$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。三角関数の側を巻き戻すのは同じ。はみ出した項は、step4 と同じくすぐ巻き戻せる？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、残す側が $x$ でなく $x^2$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\cos\\dfrac{x}{3}$ を巻き戻すと $3\\sin\\dfrac{x}{3}$。$\\displaystyle\\int x^2\\cos\\frac x3\\,dx = 3x^2\\sin\\frac x3 - \\int 6x\\sin\\frac x3\\,dx$。はみ出し $6x\\sin\\dfrac{x}{3}$ はまだ積なので、もう一度：$\\sin\\dfrac{x}{3}$ を巻き戻すと $-3\\cos\\dfrac{x}{3}$ で、$\\displaystyle\\int 6x\\sin\\frac x3\\,dx = -18x\\cos\\frac x3 + \\int 18\\cos\\frac x3\\,dx = -18x\\cos\\frac x3 + 54\\sin\\frac x3$。合わせて $3x^2\\sin\\dfrac{x}{3} + 18x\\cos\\dfrac{x}{3} - 54\\sin\\dfrac{x}{3} + C$。$c = -54$。$x^2 \\to x \\to 1$ と、はみ出しのたびに多項式の次数が $1$ つずつ下がる。中心の問いへ：**はみ出しがまだ積なら、もう一度片方だけ巻き戻す。易しくなる向きに選んでいれば、いつか終わる**。",
+        },
+      ],
+      formulaPreview: "3x²sin(x/3) − ∫6x sin(x/3)dx → 3x²sin(x/3) + 18x cos(x/3) − 54sin(x/3) → c = −54",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\displaystyle\\int x^3\\log x\\,dx = a\\,x^4\\log x + b\\,x^4 + C$ と書けます。$b$ を求めましょう。",
+      answer: -1 / 16,
+      answerDisplay: "-1/16",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int x^3\\log x\\,dx = a\\,x^4\\log x + b\\,x^4 + C$ の $b$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        {
+          layer: 1,
+          text: "step5 と比べてみよう。step5 では多項式の側を残して、相手を巻き戻した。今度も同じ選び方で進める？",
+        },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、相手が $\\log x$ になったこと。$\\log x$ は、ここまでの在庫で巻き戻せる？",
+        },
+        {
+          layer: 3,
+          text: "$\\log x$ の巻き戻しはまだ手元に無い。そこで役割を入れかえ、$x^3$ を巻き戻して（$\\dfrac{x^4}{4}$）、$\\log x$ は残す：$\\displaystyle\\int x^3\\log x\\,dx = \\frac{x^4}{4}\\log x - \\int\\frac{x^4}{4}\\cdot\\frac1x\\,dx = \\frac{x^4}{4}\\log x - \\int\\frac{x^3}{4}\\,dx = \\frac{x^4}{4}\\log x - \\frac{x^4}{16} + C$。$b = -\\dfrac{1}{16}$。$\\log x$ を微分すると $\\dfrac1x$ になり、$x^4$ と打ち消し合ってはみ出しが多項式になった。中心の問いへ：**どちらを巻き戻すかは、はみ出しが易しくなるほうを選ぶ——巻き戻しにくい関数は、微分する側に回す**。",
+        },
+      ],
+      formulaPreview: "x³ を巻き戻し log x を残す → (x⁴/4)log x − ∫x³/4 dx → b = −1/16",
+      figureMarker: "<<M3INT_ROLES>>",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^4\\log x\\,dx$ の値を求めましょう。",
+      answer: 8 * Math.log(2) - 3,
+      answerDisplay: "8log2-3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^4\\log x\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の $x^3$ が無くなった。それでも前題の選び方は使える？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\log x$ に掛かっている多項式が見当たらないこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\log x = 1\\times\\log x$ と見て、$1$ を巻き戻し（$x$）、$\\log x$ を残す：$\\displaystyle\\int\\log x\\,dx = x\\log x - \\int x\\cdot\\frac1x\\,dx = x\\log x - x + C$。$\\Big[x\\log x - x\\Big]_1^4 = (4\\log 4 - 4) - (0 - 1) = 8\\log 2 - 3$。別の道：$x = e^t$ と置くと $dx = e^t\\,dt$、$t$ は $0$ から $\\log 4$ で、$\\displaystyle\\int_0^{\\log 4} t\\,e^t\\,dt = \\Big[(t-1)e^t\\Big]_0^{\\log 4} = 4(\\log 4 - 1) + 1 = 8\\log 2 - 3$。同じ値になる（系列5 のすり替え）。中心の問いへ：**掛かっている相手が見えなくても、$1$ を掛けて巻き戻す側にできる**。",
+        },
+      ],
+      formulaPreview: "log x = 1 × log x → x log x − x → 1 から 4 で 8log 2 − 3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\pi^2}\\sin\\sqrt{x}\\,dx$ の値を求めましょう。",
+      answer: 2 * Math.PI,
+      answerDisplay: "2π",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\pi^2}\\sin\\sqrt{x}\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。三角関数を含む積分であることは同じ。今度は積の形をしていない。積の形にできる？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、三角関数の中身が $\\sqrt{x}$ になっていること。系列5 で、根号をどう扱った？（[置換積分]）",
+        },
+        {
+          layer: 3,
+          text: "$t = \\sqrt{x}$ と置くと $x = t^2$、$dx = 2t\\,dt$、$t$ は $0$ から $\\pi$。$\\displaystyle\\int_0^{\\pi}2t\\sin t\\,dt$——すり替えたら、多項式 × 三角の積になった。$\\sin t$ を巻き戻し、$2t$ を残す：$\\Big[-2t\\cos t\\Big]_0^{\\pi} + \\displaystyle\\int_0^{\\pi}2\\cos t\\,dt = 2\\pi + \\Big[2\\sin t\\Big]_0^{\\pi} = 2\\pi$。中心の問いへ：**すり替えで積の形を作り、片方だけ巻き戻す——系列5 と系列6 の道具は組み合わせて使える**。",
+        },
+      ],
+      formulaPreview: "t = √x → ∫₀^π 2t sin t dt：−2t cos t の差 2π ＋ ∫₀^π 2cos t dt（＝0）＝ 2π",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 積の微分は $2$ つの項の和だった。逆から読むなら、$2$ つの関数の**どちらを巻き戻せばいい？——はみ出した項は、どう打ち消す？**
+
+────────
+
+## 両方を巻き戻すと、なぜ外れるか
+
+[積の微分] は「片方を微分して、もう片方はそのまま」を $2$ 通り足したものだった（step1）。
+
+$$(F g)' = F' g + F g'$$
+
+$2$ つの関数をそれぞれ巻き戻して掛けた候補を微分しても、この $2$ 項はほしい関数に戻らない（step2）。数Ⅱで「積を項ごとに積分してかけてはいけない」と見たことの、三角関数・指数関数版である。
+
+<<M3INT_PRODUCT>>
+
+## ここが胚細胞：片方だけ巻き戻して、はみ出しを打ち消す
+
+片方 $f$ だけを巻き戻して $F$ にし、もう片方 $g$ は残した候補 $F g$ を微分すると
+
+$$(F g)' = f g + F g'$$
+
+**ほしい $f g$ がそのまま出てくる**。代わりに $F g'$ がはみ出す（step3）。はみ出しを巻き戻して引けば完成する（step4）：
+
+$$\\int f g\\,dx = F g - \\int F g'\\,dx$$
+
+これが [部分積分] である。**覚える式ではない。** 片方だけ巻き戻した候補を微分して、はみ出しを見つけ、それを引くという手つきを $1$ 行に書いたものである。
+
+<<M3INT_OVERFLOW>>
+
+## どちらを巻き戻すか
+
+はみ出し $F g'$ が、元の積 $f g$ より易しくなる側を選ぶ。
+
+- 多項式 × 三角・指数：**三角・指数の側を巻き戻す**。残した多項式を微分すると次数が下がる（step3・7）。逆に多項式の側を巻き戻すと、はみ出しの次数が上がる（step3 の L3）
+- 多項式 × $\\log$：**多項式の側を巻き戻す**。$\\log x$ の巻き戻しはまだ手元に無いが、微分すると $\\dfrac1x$ になって多項式と打ち消し合う（step8）
+- $\\log x$ だけ：$1\\times\\log x$ と見る（step9）
+
+これは決まりではなく、**はみ出しを易しくするための選び方**である。逆を選んでも式は正しいが、はみ出しが重くなって先へ進みにくい。
+
+## Step の道筋
+
+- **step1**（事例）：積の微分の確認
+- **step2（山場）**：両方巻き戻した候補は、微分しても元に戻らない
+- **step3・4**（事例）：片方だけ巻き戻す → はみ出しが出る → 打ち消して完成
+- **step5・6**（なぜ）：$1$ 本の式にまとめる／微分して戻す
+- **step7**：はみ出しがまだ積なら、もう一度
+- **step8**：巻き戻しにくい側を残す
+- **step9**：$1\\times\\log x$／$x = e^t$ と置く道と一致
+- **step10**：すり替え（系列5）と組み合わせる
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 部分積分の公式は覚えなくてよい。片方だけ巻き戻した候補を作り、[積の微分] で微分してみる。ほしい項とはみ出しが出るので、はみ出しを巻き戻して引く。符号を迷ったら、もう一度微分して確かめればよい。
+
+**両方を巻き戻して掛けるのは、よくある取りこぼし。** step2 の候補は、$x = \\dfrac{\\pi}{6}$ でもとの関数が $0$ なのに、候補の微分は $\\dfrac{\\pi}{18}$ だった。候補を微分して、いくつかの点でもとの関数と比べれば、こういう食い違いが見つかる（たまたま食い違いが $0$ になる点もあるので、$1$ 点だけで安心しない）。
+
+**選び方を逆にすると、どうなるか。** $x\\cos 3x$ で $x$ の側を巻き戻すと、はみ出しは $-\\dfrac32x^2\\sin 3x$。元より次数が上がって、同じ手つきをくり返すほど重くなる。間違いではないが、**易しくならない向き**である。
+
+**この先の景色。** 系列7 では、はみ出しを巻き戻し続けると出発点の積分がもう一度現れる形（指数 × 三角）を扱う。系列11 では、はみ出しのたびに次数が $1$ つ下がることを、番号のついた積分の漸化式として使う。大学では、部分積分は「微分を相手に移す」道具として、フーリエ解析や微分方程式のあらゆる場所に現れる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「積の微分を巻き戻す」「部分積分」の構成（両方巻き戻す反射的なやり方が外れる → 片方だけ巻き戻して余分な項を打ち消す → 公式に定式化／多項式 × 三角・指数・対数の選び方）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+両方を巻き戻すと、積の微分の $2$ 項は元に戻らない。片方だけを巻き戻した候補を微分すると、ほしい項がそのまま出て、はみ出した項が $1$ つ残る。それを巻き戻して引けば完成する。
+
+どちらを巻き戻すかは、はみ出しが元より易しくなるほう——多項式は微分すれば次数が下がり、$\\log$ は微分すれば多項式と打ち消し合う。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
   M3INT_RESHAPE_SERIES,
   M3INT_TRACE_SERIES,
   M3INT_SUBST_SERIES,
+  M3INT_PARTS_SERIES,
 ];
