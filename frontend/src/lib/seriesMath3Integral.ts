@@ -3136,6 +3136,360 @@ $g$ が減少すると、$g(a) > g(b)$——$t$ の区間は逆向きになる�
 向きが逆になったら、逆向きのままそのまま書く。符号は $dt$ の負号と上下の入れかえが打ち消し合って、正しく出る。`,
 };
 
+/** M3INT10: 半円の積分——三角関数で置き換える。
+ *  π/4 を答えにしない（原典 p.254・p.255 の 2 つがどちらも π/4）。この系列は log・e が出ない。
+ *  step3 は step2 と同じ値を写させない（Q3 は「残りの区間を図形で」＝四分円 − step2）。
+ *  山場 step9（R1 B5 の裁定＝誤概念を採点に入れる設計）：√(4−x²) をかたまりで巻き戻し、内側の微分 −2x で割った候補
+ *  F(x) = −(4−x²)^{3/2}/(3x) を問題文で明示し、x=1 での「F′ − √(4−x²)」＝√3（食い違いの零点は x=±2 だけ＝sympy で確認）。
+ *  幾何で値が出る定積分を山場にすると弱い（B5）ので、値ではなく「候補が外れる量」を問う。
+ *  step5 は「θ の区間から x の端」の向き（R1 B6）。−π/2 ≤ θ ≤ π/2 で sin は 1 対 1 なので解は 1 個。
+ *  原典の族：練19（√(1−x²) の 1/2〜1/√2・1/√(4−x²)・1/(x²+3)）と半径・区間をずらした。1/√(4−x²) は区間 −1〜√2 で別の値。
+ *  言い回し：原典 p.254・p.255 の決め台詞（円との関わりの言い方・「うまくいくから」・手順が進む様子のたとえ）は使わない。 */
+export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
+  id: "math3_int_trigsub_01",
+  title: "半円の積分——三角関数で置き換える",
+  subtitle:
+    "数Ⅲ・C 積分法より — $\\sqrt{a^2 - x^2}$ の定積分は、円の一部の面積になる。$x = a\\sin\\theta$ とすり替えると根号が外れる。円の出てこない $\\dfrac{1}{x^2 + a^2}$ にも三角関数が効く。$10$ 問で、その理由を確かめる。",
+  patternId: "M3INT10",
+  unit: "math_3",
+  revelationLabel:
+    "**$x = a\\sin\\theta$ とすり替えると、$\\sqrt{a^2 - x^2}$ が $a\\cos\\theta$ に変わる——円周上の点を角で読むのと同じ**。$\\dfrac{1}{x^2 + a^2}$ には $x = a\\tan\\theta$ で $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ が効く",
+  drivingQuestion:
+    "$\\sqrt{a^2 - x^2}$ を積分すると、**なぜ円の面積が出てくる？——円の出てこない $\\dfrac{1}{x^2 + a^2}$ にも三角関数が効くのはなぜ？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^3\\sqrt{9 - x^2}\\,dx$ の値を求めましょう。",
+      answer: (9 * Math.PI) / 4,
+      answerDisplay: "9π/4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^3\\sqrt{9 - x^2}\\,dx$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "積分する関数のグラフを描くと、どんな形をしている？" },
+        {
+          layer: 2,
+          text: "$y = \\sqrt{9 - x^2}$ の両辺を $2$ 乗すると、どんな図形の式になる？（[円の方程式]）",
+        },
+        {
+          layer: 3,
+          text: "$y = \\sqrt{9 - x^2}$ を $2$ 乗すると $x^2 + y^2 = 9$（$y \\ge 0$）——原点を中心とする半径 $3$ の円の上半分。$0$ から $3$ までの定積分は、その右半分＝円の $\\dfrac14$ の面積。$\\dfrac14\\cdot\\pi\\cdot 3^2 = \\dfrac{9\\pi}{4}$。巻き戻さずに、小学校の円の面積で値が出た。中心の問いへの最初の部分回答：**$\\sqrt{a^2 - x^2}$ のグラフは半円。だから、その定積分は円の一部の面積になる**。",
+        },
+      ],
+      formulaPreview: "y = √(9 − x²) は半径 3 の上半円 → 0 から 3 は円の 1/4 → (1/4)π·3² = 9π/4",
+      figureMarker: "<<M3INT_SEMI>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^1\\sqrt{4 - x^2}\\,dx$ の値を求めましょう。",
+      answer: Math.PI / 3 + Math.sqrt(3) / 2,
+      answerDisplay: "π/3+sqrt(3)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^1\\sqrt{4 - x^2}\\,dx$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      inputAffordances: ["pi", "sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は円のちょうど $4$ 分の $1$ だった。今度の区間は、円のきりのいい部分になっている？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、区間が半径の途中で止まっていること。",
+        },
+        {
+          layer: 3,
+          text: "$x = 2\\sin\\theta$ と置くと $dx = 2\\cos\\theta\\,d\\theta$、$\\sqrt{4 - x^2} = \\sqrt{4 - 4\\sin^2\\theta} = \\sqrt{4\\cos^2\\theta} = 2\\cos\\theta$（$\\theta$ を $0$ から $\\dfrac{\\pi}{6}$ に取ると $\\cos\\theta \\ge 0$ なので、そのまま外せる）。端は $x = 0$ で $\\theta = 0$、$x = 1$ で $\\theta = \\dfrac{\\pi}{6}$。$\\displaystyle\\int_0^{\\frac{\\pi}{6}}4\\cos^2\\theta\\,d\\theta = 2\\Big[\\theta + \\frac{\\sin 2\\theta}{2}\\Big]_0^{\\frac{\\pi}{6}} = \\frac{\\pi}{3} + \\frac{\\sqrt3}{2}$（$\\cos^2$ は系列3 の半角の公式で次数を下げた）。根号が [相互関係] $1 - \\sin^2\\theta = \\cos^2\\theta$ で外れた。中心の問いへ：**$x = a\\sin\\theta$ と置くと、$\\sqrt{a^2 - x^2}$ が $a\\cos\\theta$ に変わって根号が外れる**。",
+        },
+      ],
+      formulaPreview: "x = 2sin θ、√(4 − x²) = 2cos θ、θ は 0 から π/6 → ∫4cos²θ dθ = π/3 + √3/2",
+      figureMarker: "<<M3INT_ANGLE>>",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^2\\sqrt{4 - x^2}\\,dx$ の値を求めましょう。",
+      answer: (2 * Math.PI) / 3 - Math.sqrt(3) / 2,
+      answerDisplay: "2π/3-sqrt(3)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^2\\sqrt{4 - x^2}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      inputAffordances: ["pi", "sqrt"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。同じ半円の、残りの区間。前題の値と step1 の見方を合わせると、何が分かる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、区間が $1$ から $2$ で、前題の区間と合わせると $0$ から $2$ になること。",
+        },
+        {
+          layer: 3,
+          text: "$0$ から $2$ は半径 $2$ の円の $\\dfrac14$ で $\\pi$。前題の $0$ から $1$ を引いて $\\pi - \\left(\\dfrac{\\pi}{3} + \\dfrac{\\sqrt3}{2}\\right) = \\dfrac{2\\pi}{3} - \\dfrac{\\sqrt3}{2}$。$x = 2\\sin\\theta$ で計算しても、$\\theta$ は $\\dfrac{\\pi}{6}$ から $\\dfrac{\\pi}{2}$ で $2\\Big[\\theta + \\dfrac{\\sin 2\\theta}{2}\\Big]_{\\frac{\\pi}{6}}^{\\frac{\\pi}{2}} = \\pi - \\dfrac{\\pi}{3} - \\dfrac{\\sqrt3}{2}$ と同じ値。図形で読むと、これは角 $\\dfrac{\\pi}{3}$ の扇形（$\\dfrac{2\\pi}{3}$）から、底辺 $1$・高さ $\\sqrt3$ の三角形（$\\dfrac{\\sqrt3}{2}$）を除いた形。中心の問いへ：**$\\theta$ の区間は、円の中心から見た角そのもの。だから置換の計算と、扇形と三角形の図形の計算が一致する**。",
+        },
+      ],
+      formulaPreview: "0 から 2 は円の 1/4 で π → π − (π/3 + √3/2) = 2π/3 − √3/2",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{\\frac{3\\sqrt3}{2}}\\sqrt{9 - x^2}\\,dx$ の値を求めましょう。",
+      answer: (3 * Math.PI) / 2 + (9 * Math.sqrt(3)) / 8,
+      answerDisplay: "3π/2+9sqrt(3)/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{3\\sqrt3}{2}}\\sqrt{9 - x^2}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      inputAffordances: ["pi", "sqrt"],
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。同じ置き方が使える？ 半径と端が変わると、どこが変わる？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、半径が $3$ になり、上の端が $\\dfrac{3\\sqrt3}{2}$ になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$x = 3\\sin\\theta$ と置くと $\\sqrt{9 - x^2} = 3\\cos\\theta$、$dx = 3\\cos\\theta\\,d\\theta$。端は $\\theta = 0$ と $\\theta = \\dfrac{\\pi}{3}$（$3\\sin\\dfrac{\\pi}{3} = \\dfrac{3\\sqrt3}{2}$）。$\\displaystyle\\int_0^{\\frac{\\pi}{3}}9\\cos^2\\theta\\,d\\theta = \\frac92\\Big[\\theta + \\frac{\\sin 2\\theta}{2}\\Big]_0^{\\frac{\\pi}{3}} = \\frac92\\left(\\frac{\\pi}{3} + \\frac{\\sqrt3}{4}\\right) = \\frac{3\\pi}{2} + \\frac{9\\sqrt3}{8}$。扇形 $\\dfrac12\\cdot 9\\cdot\\dfrac{\\pi}{3}$ と三角形 $\\dfrac12\\cdot\\dfrac{3\\sqrt3}{2}\\cdot\\dfrac32$ の和でも同じ。中心の問いへ：**半径 $a$ の円なら $x = a\\sin\\theta$。端を $\\theta$ に読み替えれば、根号はいつも $a\\cos\\theta$ に変わる**。",
+        },
+      ],
+      formulaPreview: "x = 3sin θ、θ は 0 から π/3 → (9/2)(π/3 + √3/4) = 3π/2 + 9√3/8",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$-3 \\le a < 3$ とします。定積分 $\\displaystyle\\int_a^3\\sqrt{9 - x^2}\\,dx$ を $x = 3\\sin\\theta$（$-\\dfrac{\\pi}{2} \\le \\theta \\le \\dfrac{\\pi}{2}$）と置くと、$\\displaystyle\\int_{\\frac{\\pi}{6}}^{\\frac{\\pi}{2}}9\\cos^2\\theta\\,d\\theta$ になりました。$a$ を求めましょう。",
+      answer: 3 / 2,
+      answerDisplay: "3/2",
+      unit: "",
+      unknownLabel: "$x$ の区間の下の端 $a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。分かっているものと、探しているものが入れかわった。" },
+        {
+          layer: 2,
+          text: "step4 と向きが逆。step4 は $x$ の端から $\\theta$ の端を出した。今度は $\\theta$ の端が先にあって、$x$ の端を探す。",
+        },
+        {
+          layer: 3,
+          text: "$x = 3\\sin\\theta$ に $\\theta$ の端を入れれば $x$ の端になる。下の端は $a = 3\\sin\\dfrac{\\pi}{6} = \\dfrac32$。上の端は $3\\sin\\dfrac{\\pi}{2} = 3$ で、合っている。$-\\dfrac{\\pi}{2} \\le \\theta \\le \\dfrac{\\pi}{2}$ では $\\sin\\theta$ は増えるだけなので、$\\theta$ と $x$ は $1$ 対 $1$ に対応する。中心の問いへ：**$\\theta$ の端から $x$ の端へは、$x = a\\sin\\theta$ に入れるだけで戻れる**。",
+        },
+      ],
+      formulaPreview: "a = 3sin(π/6) = 3/2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-1}^{\\sqrt2}\\frac{dx}{\\sqrt{4 - x^2}}$ の値を求めましょう。",
+      answer: (5 * Math.PI) / 12,
+      answerDisplay: "5π/12",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-1}^{\\sqrt2}\\frac{dx}{\\sqrt{4 - x^2}}$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。同じ置き方をすると、根号はどう変わる？ それが分母にあると？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、根号が分母にあること。",
+        },
+        {
+          layer: 3,
+          text: "$x = 2\\sin\\theta$ と置くと $\\sqrt{4 - x^2} = 2\\cos\\theta$、$dx = 2\\cos\\theta\\,d\\theta$。$\\dfrac{dx}{\\sqrt{4 - x^2}} = \\dfrac{2\\cos\\theta\\,d\\theta}{2\\cos\\theta} = d\\theta$——被積分関数がまるごと消えた。端は $x = -1$ で $\\theta = -\\dfrac{\\pi}{6}$、$x = \\sqrt2$ で $\\theta = \\dfrac{\\pi}{4}$。$\\displaystyle\\int_{-\\frac{\\pi}{6}}^{\\frac{\\pi}{4}}d\\theta = \\frac{\\pi}{4} + \\frac{\\pi}{6} = \\frac{5\\pi}{12}$。値は $\\theta$ の区間の長さ＝円の中心から見た角の大きさ。中心の問いへ：**$\\dfrac{1}{\\sqrt{a^2 - x^2}}$ の定積分は、$\\theta$ の区間の長さ——角度そのもの**。",
+        },
+      ],
+      formulaPreview: "x = 2sin θ → dx/√(4 − x²) = dθ、θ は −π/6 から π/4 → 5π/12",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^{2\\sqrt3}\\frac{dx}{x^2 + 4}$ の値を求めましょう。",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^{2\\sqrt3}\\frac{dx}{x^2 + 4}$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      inputAffordances: ["pi"],
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。前題は分母の根号を、三角関数で置いて消した。今度の分母に、円は見えている？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、分母が $a^2 - x^2$ の根号でなく、$x^2 + a^2$ であること。",
+        },
+        {
+          layer: 3,
+          text: "$x = 2\\tan\\theta$ と置くと $dx = \\dfrac{2}{\\cos^2\\theta}\\,d\\theta$、$x^2 + 4 = 4(\\tan^2\\theta + 1) = \\dfrac{4}{\\cos^2\\theta}$（[相互関係] $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$）。$\\dfrac{dx}{x^2 + 4} = \\dfrac{2/\\cos^2\\theta}{4/\\cos^2\\theta}\\,d\\theta = \\dfrac12\\,d\\theta$。端は $x = 0$ で $\\theta = 0$、$x = 2\\sqrt3$ で $\\tan\\theta = \\sqrt3$ より $\\theta = \\dfrac{\\pi}{3}$。$\\dfrac12\\cdot\\dfrac{\\pi}{3} = \\dfrac{\\pi}{6}$。円はどこにも出てこないのに、三角関数の相互関係で分母がまるごと消えた。中心の問いへ：**円がなくても、三角関数の相互関係が効く形なら置き換えられる。$a^2 + x^2$ には $\\tan$ が効く**。",
+        },
+      ],
+      formulaPreview: "x = 2tan θ → dx/(x² + 4) = (1/2)dθ、θ は 0 から π/3 → π/6",
+      figureMarker: "<<M3INT_TAN_ANGLE>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-3}^{3\\sqrt3}\\frac{dx}{x^2 + 9}$ の値を求めましょう。",
+      answer: (7 * Math.PI) / 36,
+      answerDisplay: "7π/36",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-3}^{3\\sqrt3}\\frac{dx}{x^2 + 9}$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step7",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。同じ置き方が使える？ 何が変わる？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$a$ が $3$ になり、下の端が負になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$x = 3\\tan\\theta$ と置くと $\\dfrac{dx}{x^2 + 9} = \\dfrac13\\,d\\theta$。端は $x = -3$ で $\\tan\\theta = -1$ より $\\theta = -\\dfrac{\\pi}{4}$、$x = 3\\sqrt3$ で $\\theta = \\dfrac{\\pi}{3}$（$-\\dfrac{\\pi}{2} < \\theta < \\dfrac{\\pi}{2}$ で取る）。$\\dfrac13\\left(\\dfrac{\\pi}{3} + \\dfrac{\\pi}{4}\\right) = \\dfrac13\\cdot\\dfrac{7\\pi}{12} = \\dfrac{7\\pi}{36}$。前題の $\\dfrac12$ が $\\dfrac13$ になった——$\\dfrac1a$ がつく。中心の問いへ：**$\\dfrac{1}{x^2 + a^2}$ の定積分は、$\\theta$ の区間の長さの $\\dfrac1a$ 倍**。",
+        },
+      ],
+      formulaPreview: "x = 3tan θ → (1/3)dθ、θ は −π/4 から π/3 → (1/3)(7π/12) = 7π/36",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$\\displaystyle\\int\\sqrt{4 - x^2}\\,dx$ を求めようとして、ある人がかたまり $4 - x^2$ の $\\dfrac32$ 乗を作り、かたまりの微分 $-2x$ で割って、候補 $F(x) = -\\dfrac{(4 - x^2)\\sqrt{4 - x^2}}{3x}$ を作りました。$x = 1$ での「$F'(x) - \\sqrt{4 - x^2}$」の値を求めましょう。",
+      answer: Math.sqrt(3),
+      answerDisplay: "sqrt(3)",
+      unit: "",
+      unknownLabel: "$x = 1$ での $F'(x) - \\sqrt{4 - x^2}$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step2",
+      inputAffordances: ["sqrt"],
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。step2 は三角関数で置いた。この人はかたまりのまま巻き戻した。候補を微分すると、元に戻る？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、かたまりの外に、かたまりの微分 $-2x$ が掛かっていないこと。",
+        },
+        {
+          layer: 3,
+          text: "商の微分で $F'(x) = -\\dfrac{\\frac32(4 - x^2)^{\\frac12}(-2x)\\cdot 3x - (4 - x^2)^{\\frac32}\\cdot 3}{9x^2} = \\sqrt{4 - x^2} + \\dfrac{(4 - x^2)\\sqrt{4 - x^2}}{3x^2}$。$x = 1$ では $F'(1) = \\sqrt3 + \\dfrac{3\\sqrt3}{3} = 2\\sqrt3$、差は $2\\sqrt3 - \\sqrt3 = \\sqrt3$。$0$ にならない。かたまりの外に $-2x$ が無いのに $-2x$ で割ったのが原因——系列3 で見たとおり、関数のずれは割り算では直らない（関数で割ると、商の微分が余分な項を出す）。正しい巻き戻しは step2 のとおり $2\\theta + \\sin 2\\theta$ で、$x$ に戻すと $\\dfrac{x\\sqrt{4 - x^2}}{2}$ に「$\\sin\\theta = \\dfrac{x}{2}$ となる角 $\\theta$ の $2$ 倍」が足された形になる——円の中心から見た角が残る。かたまりの冪で作った候補には、その角が入っていない。中心の問いへ：**$\\sqrt{a^2 - x^2}$ の巻き戻しには角が入る。かたまりのまま巻き戻した候補には、角が入っていない**。",
+        },
+      ],
+      formulaPreview: "F′(x) = √(4 − x²) + (4 − x²)√(4 − x²)/(3x²) → x = 1 で 2√3 − √3 = √3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_1^3\\frac{dx}{x^2 - 2x + 5}$ の値を求めましょう。",
+      answer: Math.PI / 8,
+      answerDisplay: "π/8",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_1^3\\frac{dx}{x^2 - 2x + 5}$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      inputAffordances: ["pi"],
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。分母を、step7 と同じ「何かの $2$ 乗 ＋ 数」の形に書き直せない？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、分母に $1$ 次の項 $-2x$ があること。数Ⅰで、$2$ 次式をどう書き直した？（[平方完成]）",
+        },
+        {
+          layer: 3,
+          text: "平方完成で $x^2 - 2x + 5 = (x - 1)^2 + 4$。$x - 1 = 2\\tan\\theta$ と置くと、step7 と同じく $\\dfrac{dx}{(x-1)^2 + 4} = \\dfrac12\\,d\\theta$。端は $x = 1$ で $\\theta = 0$、$x = 3$ で $\\tan\\theta = 1$ より $\\theta = \\dfrac{\\pi}{4}$。$\\dfrac12\\cdot\\dfrac{\\pi}{4} = \\dfrac{\\pi}{8}$。中心の問いへ：**平方完成で「$2$ 乗 ＋ 数」の形を作れば、$\\tan$ の置き換えが効く。数Ⅰの道具が、積分の入口を開く**。",
+        },
+      ],
+      formulaPreview: "x² − 2x + 5 = (x − 1)² + 4、x − 1 = 2tan θ → (1/2)·(π/4) = π/8",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $\\sqrt{a^2 - x^2}$ を積分すると、**なぜ円の面積が出てくる？——円の出てこない $\\dfrac{1}{x^2 + a^2}$ にも三角関数が効くのはなぜ？**
+
+────────
+
+## $\\sqrt{a^2 - x^2}$ のグラフは半円
+
+$y = \\sqrt{a^2 - x^2}$ を $2$ 乗すると $x^2 + y^2 = a^2$——半径 $a$ の円の上半分である（step1）。だから、その定積分は円の一部の面積になる。
+
+<<M3INT_SEMI>>
+
+## ここが胚細胞：円周上の点を角で読む
+
+$x = a\\sin\\theta$ とすり替えると、[相互関係] $1 - \\sin^2\\theta = \\cos^2\\theta$ で根号が外れる（step2）。
+
+$$\\sqrt{a^2 - x^2} = \\sqrt{a^2\\cos^2\\theta} = a\\cos\\theta \\quad \\left(-\\frac{\\pi}{2} \\le \\theta \\le \\frac{\\pi}{2}\\right)$$
+
+これは、円周上の点を、中心から見た角 $\\theta$ で読んだのと同じである。横の位置が $a\\sin\\theta$、高さが $a\\cos\\theta$（角は縦の軸から測っている）。
+
+<<M3INT_ANGLE>>
+
+だから $\\theta$ の区間は**中心から見た角そのもの**で、置換の計算は「扇形 ± 三角形」の図形の計算と一致する（step3・4）。$\\dfrac{1}{\\sqrt{a^2 - x^2}}$ なら被積分関数が $d\\theta$ だけになり、値は角の大きさになる（step6）。
+
+## 円が出てこなくても：$x = a\\tan\\theta$
+
+$\\dfrac{1}{x^2 + a^2}$ には円が見えない。それでも $x = a\\tan\\theta$ と置けば、もう $1$ つの相互関係 $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ で分母がまるごと消える（step7）。
+
+$$\\int\\frac{dx}{x^2 + a^2} = \\int\\frac{1}{a}\\,d\\theta$$
+
+<<M3INT_TAN_ANGLE>>
+
+三角関数が効くのは、円があるからというより、**相互関係が「$1 \\pm$ 何かの $2$ 乗」を $1$ つの $2$ 乗に変えるから**である。円は、その相互関係の $1$ つの姿（$\\sin^2 + \\cos^2 = 1$）にすぎない。
+
+## かたまりのまま巻き戻すと、なぜ外れるか
+
+$\\sqrt{4 - x^2}$ をかたまりの冪として巻き戻し、内側の微分 $-2x$ で割っても、微分すると元に戻らない（step9）。かたまりの外に $-2x$ が掛かっていないからである（系列3：関数のずれは割り算では直らない）。正しい巻き戻しには円の中心から見た角が入るが、かたまりの冪で作った候補には角が入っていない。
+
+## Step の道筋
+
+- **step1**（事例）：図形で——円の $\\dfrac14$
+- **step2**：$x = a\\sin\\theta$ で根号が外れる
+- **step3・4**：置換と図形（扇形と三角形）が一致
+- **step5**：$\\theta$ の端から $x$ の端へ
+- **step6**：$\\dfrac{1}{\\sqrt{a^2 - x^2}}$ は角そのもの
+- **step7・8**：円が出てこない $\\dfrac{1}{x^2 + a^2}$ に $\\tan$
+- **step9（山場）**：かたまりのまま巻き戻すと外れる
+- **step10**：平方完成してから $\\tan$
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 置き方を忘れたら、根号や分母の中を見る。$a^2 - x^2$ なら $1 - \\sin^2 = \\cos^2$、$a^2 + x^2$ なら $1 + \\tan^2 = \\dfrac{1}{\\cos^2}$ が使えるように置く。迷ったら、図形（扇形と三角形）で値を確かめればよい。
+
+**$\\theta$ の区間の取り方。** $\\sqrt{\\cos^2\\theta} = \\cos\\theta$ と外せるのは $\\cos\\theta \\ge 0$ のときである。この系列では $\\theta$ を $-\\dfrac{\\pi}{2}$ から $\\dfrac{\\pi}{2}$ の中に取った。別の範囲に取ってもよいが、そのときは $\\cos\\theta$ の符号を見て絶対値を外す。
+
+**この先の景色。** $\\dfrac{1}{x^2 + 1}$ を $0$ から $x$ まで積分した関数は、$\\tan$ の逆関数（角を返す関数）になる。大学では、これを使って $\\pi$ を無限級数で表す（$\\dfrac{\\pi}{4} = 1 - \\dfrac13 + \\dfrac15 - \\cdots$）。円の出てこない式から $\\pi$ が出てくるのは、ここでも相互関係が働いているからである。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「三角関数による置換」の構成（$\\sqrt{a^2 - x^2}$ の定積分を図形で読む／$x = a\\sin\\theta$ の置換と図形の一致／$\\dfrac{1}{x^2 + a^2}$ の $x = a\\tan\\theta$ の置換）を参考。問題の値・関数・区間はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$\\sqrt{a^2 - x^2}$ のグラフが半円だから、その定積分は円の一部の面積になる。$x = a\\sin\\theta$ と置くのは、円周上の点を中心から見た角で読むことで、$\\theta$ の区間は角そのものになる。
+
+$\\dfrac{1}{x^2 + a^2}$ に三角関数が効くのは、円があるからではなく、相互関係が「$1 +$ 何かの $2$ 乗」を $1$ つの $2$ 乗に変えるから。円は、その関係の $1$ つの姿だった。`,
+};
+
 export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_BASIC_SERIES,
   M3INT_LOG_SERIES,
@@ -3146,4 +3500,5 @@ export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [
   M3INT_CYCLE_SERIES,
   M3INT_DEFINITE_SERIES,
   M3INT_DSUBST_SERIES,
+  M3INT_TRIGSUB_SERIES,
 ];

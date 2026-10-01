@@ -15955,6 +15955,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_SEMI>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intSemi />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_ANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intAngle />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_TAN_ANGLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intTanAngle />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41353,6 +41374,112 @@ function M3intFlip() {
       <text x="230" y="100" fontSize="10" fill={muted} textAnchor="middle">t = g(x)（減少）</text>
       <text x="160" y="172" fontSize="11" fill={accent} textAnchor="middle">
         矢印が交差したら、t の積分はどう書く？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列10 step1: 半円 y = √(a² − x²) の下の、塗られた区間。
+ *  ★図に答えを描かない★ 目盛りなし・半径の値を書かない（R1）。面積は「?」。
+ *  この図から読めてしまうもの：「この定積分は円の一部の面積」という見方だけ。 */
+function M3intSemi() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 130, r = 100;
+  const arc: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = Math.PI - (Math.PI * i) / 60;
+    arc.push(`${(cx + r * Math.cos(t)).toFixed(1)},${(cy - r * Math.sin(t)).toFixed(1)}`);
+  }
+  const fill: string[] = [`${cx},${cy}`];
+  for (let i = 0; i <= 30; i++) {
+    const t = Math.PI / 2 - (Math.PI / 2) * (i / 30);
+    fill.push(`${(cx + r * Math.cos(t)).toFixed(1)},${(cy - r * Math.sin(t)).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 320 175"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="x 軸の上の半円のグラフ。原点から右端までの、半円の下の部分が塗られている。面積は疑問符"
+    >
+      <line x1="40" y1={cy} x2="290" y2={cy} stroke={muted} strokeWidth="1" />
+      <line x1={cx} y1="18" x2={cx} y2={cy + 8} stroke={muted} strokeWidth="1" />
+      <polygon points={fill.join(" ")} fill={accent} opacity="0.18" />
+      <polyline points={arc.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="205" y="105" fontSize="15" fill={accent} textAnchor="middle">?</text>
+      <text x="160" y="160" fontSize="11" fill={accent} textAnchor="middle">
+        塗った部分は、どんな図形の何分のいくつ？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列10 step2: 円周上の点を角 θ で読む。x = a sin θ と置くと、高さ √(a² − x²) は a cos θ。
+ *  ★図に答えを描かない★ 具体的な半径・角・区間の値は書かない。区間の端がどの角に対応するかは「?」。
+ *  この図から読めてしまうもの：「x と高さを、角 θ 1 つで同時に表せる」という見方だけ（角は縦軸から測る）。 */
+function M3intAngle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 140, r = 105;
+  const arc: string[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = Math.PI - (Math.PI * i) / 60;
+    arc.push(`${(cx + r * Math.cos(t)).toFixed(1)},${(cy - r * Math.sin(t)).toFixed(1)}`);
+  }
+  const th = 0.62;
+  const px = cx + r * Math.sin(th), py = cy - r * Math.cos(th);
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="半円の上の 1 点と原点を結ぶ半径。縦軸からその半径までの角が θ。点の横の位置が x、高さが根号の値。区間の端がどの角に対応するかは疑問符"
+    >
+      <line x1="40" y1={cy} x2="290" y2={cy} stroke={muted} strokeWidth="1" />
+      <line x1={cx} y1="22" x2={cx} y2={cy + 6} stroke={muted} strokeWidth="1" />
+      <polyline points={arc.join(" ")} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <line x1={cx} y1={cy} x2={px} y2={py} stroke={stroke} strokeWidth="1.4" />
+      <line x1={px} y1={py} x2={px} y2={cy} stroke={accent} strokeWidth="1.4" strokeDasharray="4 3" />
+      <circle cx={px} cy={py} r="3.5" fill={stroke} />
+      <path d={`M ${cx} ${cy - 30} A 30 30 0 0 1 ${(cx + 30 * Math.sin(th)).toFixed(1)} ${(cy - 30 * Math.cos(th)).toFixed(1)}`} fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x={cx + 12} y={cy - 36} fontSize="12" fill={accent}>θ</text>
+      <text x={(cx + px) / 2} y={cy + 16} fontSize="11" fill={stroke} textAnchor="middle">x</text>
+      <text x={px + 8} y={(py + cy) / 2} fontSize="11" fill={accent}>高さ</text>
+      <text x="160" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        区間の端は、それぞれどの角 θ にあたる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列10 step7: x = a tan θ。底辺 a の直角三角形で、高さ x と角 θ を対応させる（円は出てこない）。
+ *  ★図に答えを描かない★ 具体的な a・x・角の値は書かない。区間の端がどの角に対応するかは「?」。
+ *  この図から読めてしまうもの：「x を角 θ の tan で読める」という見方だけ。 */
+function M3intTanAngle() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="底辺が a の直角三角形。高さが x、底辺と斜辺のなす角が θ。区間の端がどの角に対応するかは疑問符"
+    >
+      <polygon points="60,140 230,140 230,40" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <rect x="220" y="130" width="10" height="10" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 100 140 A 40 40 0 0 0 94.5 120.5" fill="none" stroke={accent} strokeWidth="1.2" />
+      <text x="106" y="130" fontSize="12" fill={accent}>θ</text>
+      <text x="145" y="155" fontSize="12" fill={stroke} textAnchor="middle">a</text>
+      <text x="242" y="94" fontSize="12" fill={stroke}>x</text>
+      <text x="160" y="180" fontSize="11" fill={accent} textAnchor="middle">
+        高さ x が区間の端のとき、角 θ はいくつ？
       </text>
     </svg>
   );
