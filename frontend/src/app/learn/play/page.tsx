@@ -330,10 +330,12 @@ export default function Play() {
 
   // 入力補助 UI の出し分け（無指定＝従来の素の数値入力・ローフロア維持）。
   const affordances = step.inputAffordances ?? [];
-  const showPalette =
-    affordances.includes("pi") || affordances.includes("sqrt");
   const showPiButton = affordances.includes("pi");
   const showSqrtButton = affordances.includes("sqrt");
+  const showLogButton = affordances.includes("log");
+  const showEButton = affordances.includes("e");
+  const showPalette =
+    showPiButton || showSqrtButton || showLogButton || showEButton;
   const showMultiHint = affordances.includes("multi");
 
   // 「比較せよ」のヒント表示用に、前題を取得
@@ -1298,7 +1300,11 @@ export default function Play() {
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xl tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
                   aria-label={step.unknownLabel}
                   placeholder={
-                    showPalette ? "例：√3/2, pi/6" : "例：3 / 0.5 / 1/2"
+                    showLogButton || showEButton
+                      ? "例：log 3, 1-2/e"
+                      : showPalette
+                        ? "例：√3/2, pi/6"
+                        : "例：3 / 0.5 / 1/2"
                   }
                 />
                 <span
@@ -1335,11 +1341,60 @@ export default function Play() {
                       √
                     </button>
                   )}
+                  {showLogButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("log")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="log（自然対数）を挿入"
+                    >
+                      log
+                    </button>
+                  )}
+                  {showEButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("e")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="e（自然対数の底）を挿入"
+                    >
+                      e
+                    </button>
+                  )}
                 </div>
               )}
 
               {/* 記法ヘルプ：素の step は分数の書き方だけ。π/√ step は記号ヘルプに差し替え。 */}
-              {showPalette ? (
+              {showLogButton || showEButton ? (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  {showLogButton && (
+                    <>
+                      自然対数は <span className="tnum">log</span>（
+                      <span className="tnum">log 3</span>・
+                      <span className="tnum">log(3/2)</span>・
+                      <span className="tnum">2log3</span>）。
+                    </>
+                  )}
+                  {showEButton && (
+                    <>
+                      e はそのまま <span className="tnum">e</span>（
+                      <span className="tnum">e-1</span>・
+                      <span className="tnum">1-2/e</span>）。
+                    </>
+                  )}
+                  {(showPiButton || showSqrtButton) && (
+                    <>
+                      π は <span className="tnum">pi</span>、√ は{" "}
+                      <span className="tnum">sqrt</span> でも書けます。
+                    </>
+                  )}
+                </p>
+              ) : showPalette ? (
                 <p
                   className="text-muted"
                   style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}

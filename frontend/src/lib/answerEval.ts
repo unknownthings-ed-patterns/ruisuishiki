@@ -8,6 +8,9 @@
  * - 後方互換が最重要：整数・小数・分数 `a/b` は従来の `parseAnswer`（parseFloat ベース）
  *   とビット同一の結果を返す。パース不能は `null`。
  * - 拡張：π（`π`/`pi`）・根号（`√3`/`√(3)`/`sqrt(3)`）・`+ - * /`・括弧・暗黙の積。
+ * - 拡張（2026-10-01・数Ⅲ・C 第6章「積分法」の裁定 Q2）：自然対数 `log`（別名 `ln`）と
+ *   ネイピア数 `e`。`log` は √ と同じく次の factor に束縛（`log3/2` は log(3)/2）。
+ *   累乗 `^` は足さない（e の累乗は問題の値の設計で避ける）。
  *
  * 静的配信（バックエンド無し）の制約下では、記号代数の厳密同値判定は使えないので、
  * 数値評価＋許容誤差で根号値も π 角も同じ仕組みで扱う（設計 §1〜2）。
@@ -49,15 +52,26 @@ type Token =
   | { kind: "num"; value: number }
   | { kind: "pi" }
   | { kind: "sqrt" }
+  | { kind: "log" }
+  | { kind: "e" }
   | { kind: "op"; value: "+" | "-" | "*" | "/" }
   | { kind: "lparen" }
   | { kind: "rparen" };
 
 type FactorValue = {
   value: number;
-  /** π・√ を含む factor か。暗黙積を num×num に広げないために使う。 */
+  /** π・√・log・e を含む factor か。暗黙積を num×num に広げないために使う。 */
   symbolic: boolean;
 };
+
+/** 英字の語（長いものから照合する）。 */
+const WORDS: [string, Token][] = [
+  ["sqrt", { kind: "sqrt" }],
+  ["log", { kind: "log" }],
+  ["pi", { kind: "pi" }],
+  ["ln", { kind: "log" }],
+  ["e", { kind: "e" }],
+];
 
 /**
  * 文字列をトークン列に分解する。未知の文字に当たったら null（＝パース不能）。
@@ -112,7 +126,9 @@ function tokenize(s: string): Token[] | null {
       continue;
     }
 
-    // 英字の並び（pi / sqrt）。大文字小文字は無視。
+    // 英字の並び（sqrt / log / ln / pi / e）。大文字小文字は無視。
+    // 「2elog3」「pie」のように語が続けて書かれても読めるよう、
+    // 既知の語を長いものから順に前から切り出す。切り出せない文字が残れば null。
     if ((c >= "a" && c <= "z") || (c >= "A" && c <= "Z")) {
       let j = i;
       while (j < s.length) {
@@ -120,10 +136,14 @@ function tokenize(s: string): Token[] | null {
         if ((d >= "a" && d <= "z") || (d >= "A" && d <= "Z")) j++;
         else break;
       }
-      const word = s.slice(i, j).toLowerCase();
-      if (word === "pi") tokens.push({ kind: "pi" });
-      else if (word === "sqrt") tokens.push({ kind: "sqrt" });
-      else return null; // 未知の英単語
+      const run = s.slice(i, j).toLowerCase();
+      let k = 0;
+      while (k < run.length) {
+        const w = WORDS.find(([word]) => run.startsWith(word, k));
+        if (!w) return null; // 未知の英単語
+        tokens.push(w[1]);
+        k += w[0].length;
+      }
       i = j;
       continue;
     }
@@ -158,9 +178,10 @@ function tokenize(s: string): Token[] | null {
 //   expression := ('+'|'-')? term ( ('+'|'-') term )*
 //   term       := factor ( ('*'|'/')? factor )*     // 演算子省略＝暗黙の積
 //   factor     := ('√'|'sqrt') factor               // 根号は次の factor に束縛
+//               | ('log'|'ln') factor                // 自然対数も次の factor に束縛
 //               | ('-'|'+') factor                   // 単項符号
 //               | primary
-//   primary    := number | π | '(' expression ')'
+//   primary    := number | π | e | '(' expression ')'
 //
 // √ が primary でなく factor に効くので、√3/2 は (√3)/2 ではなく √(3) を作ったあと
 // term 側で /2 される（= sqrt(3)/2 ≈ 0.866）。一方 2√3 は term で 2 と √3 が隣接 →
@@ -248,6 +269,8 @@ class Parser {
       t.kind === "num" ||
       t.kind === "pi" ||
       t.kind === "sqrt" ||
+      t.kind === "log" ||
+      t.kind === "e" ||
       t.kind === "lparen"
     );
     // 注意：op('-'/'+') は暗黙の積の連結に含めない（"2-3" を 2*(-3) にしないため）。
@@ -262,6 +285,12 @@ class Parser {
       const inner = this.parseFactor();
       if (inner.value < 0) throw new Error("sqrt of negative");
       return { value: Math.sqrt(inner.value), symbolic: true };
+    }
+    if (t.kind === "log") {
+      this.next();
+      const inner = this.parseFactor();
+      if (!(inner.value > 0)) throw new Error("log of non-positive");
+      return { value: Math.log(inner.value), symbolic: true };
     }
     if (t.kind === "op" && (t.value === "-" || t.value === "+")) {
       this.next();
@@ -279,6 +308,7 @@ class Parser {
     if (!t) throw new Error("unexpected end of input");
     if (t.kind === "num") return { value: t.value, symbolic: false };
     if (t.kind === "pi") return { value: Math.PI, symbolic: true };
+    if (t.kind === "e") return { value: Math.E, symbolic: true };
     if (t.kind === "lparen") {
       const value = this.parseExpression();
       const close = this.next();
@@ -299,6 +329,7 @@ class Parser {
  * - 分数 / 四則：「1/2」「3+4」「(1+2)*3」
  * - π：「π」「pi」「5π」「pi/6」
  * - 根号：「√3」「√(3)」「sqrt(3)」「2√3」「√3/2」
+ * - 自然対数・e：「log3」「log 3」「log(3/2)」「2log3」「ln3」「e」「e-1」「1-2/e」「3e」
  *
  * 後方互換：整数・小数・`a/b` は従来の parseFloat ベースと同値。
  * パース不能・空文字・不正な構文は null。
