@@ -87,6 +87,7 @@ import {
 import {
   M3DA_TANGENT_SERIES,
   M3DA_EXTREMUM_SERIES,
+  M3DA_GRAPH_SERIES,
   MATH3_DIFF_APP_SERIES_LIST,
 } from "./seriesMath3DiffApp";
 import {
@@ -2086,6 +2087,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "微分法の応用",
     shortDescription:
       "増減と最大最小（符号を決める因子を取り出す）— いつも正の因子をよけると、上り下りを決める因子が残る。f'(p)=0 は候補を出すだけで、前後の符号が答えを決める",
+  },
+  {
+    series: M3DA_GRAPH_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "微分法の応用",
+    shortDescription:
+      "グラフの両端と抜け（多項式の感覚が外れるところ）— 分数関数は増減表だけでは形が決まらない。両端の行き先と抜けの前後を書き足すと、極大値が極小値より小さいことさえ起きる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

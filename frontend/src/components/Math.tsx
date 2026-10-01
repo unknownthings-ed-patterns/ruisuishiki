@@ -15689,6 +15689,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3DA_ENDS_TABLE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daEndsTable />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3DA_TWO_BRANCHES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3daTwoBranches />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -39518,6 +39532,97 @@ function M3daDropCandidate() {
       <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも x = p で傾きが 0</text>
       <text x="160" y="186" fontSize="11" fill={accent} textAnchor="middle">
         候補の係数は、どちらの形になる？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列3 step1: 増減表に「左の端」「抜け」「右の端」の列を足した骨組み。
+ *  ★図に答えを描かない★ 極値をとる x・極値・両端の行き先・抜けの位置は、すべて空欄（?）。
+ *  この図から読めてしまうもの：「増減表には両端と抜けの列が要る」という見方だけ。 */
+function M3daEndsTable() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cols = ["左の端", "…", "?", "…", "抜け", "…", "?", "…", "右の端"];
+  const x0 = 58;
+  const w = 28.5;
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="増減表の骨組み。x の行の左端に「左の端」、右端に「右の端」、まんなかに「抜け」の列があり、極値の場所や値、両端の行き先はすべて空欄になっている"
+    >
+      <text x={x0 - 8} y="46" fontSize="11" fill={stroke} textAnchor="end">x</text>
+      <text x={x0 - 8} y="80" fontSize="11" fill={stroke} textAnchor="end">f&apos;(x)</text>
+      <text x={x0 - 8} y="114" fontSize="11" fill={stroke} textAnchor="end">f(x)</text>
+      {cols.map((c, j) => {
+        const special = c === "左の端" || c === "右の端" || c === "抜け";
+        return (
+          <g key={j}>
+            <text x={x0 + w * j + w / 2} y="46" fontSize={special ? "9.5" : "11"} fill={special ? accent : stroke} textAnchor="middle">
+              {c}
+            </text>
+            <text x={x0 + w * j + w / 2} y="80" fontSize="11" fill={muted} textAnchor="middle">
+              {c === "抜け" ? "×" : "?"}
+            </text>
+            <text x={x0 + w * j + w / 2} y="114" fontSize="11" fill={special ? accent : muted} textAnchor="middle">
+              {c === "抜け" ? "×" : "?"}
+            </text>
+          </g>
+        );
+      })}
+      <path d={`M ${x0} 56 L ${x0 + w * 9} 56`} fill="none" stroke={muted} strokeWidth="0.8" />
+      <path d={`M ${x0} 90 L ${x0 + w * 9} 90`} fill="none" stroke={muted} strokeWidth="0.8" />
+      <path d={`M ${x0} 30 L ${x0} 124`} fill="none" stroke={muted} strokeWidth="0.8" />
+      <text x="160" y="152" fontSize="11" fill={accent} textAnchor="middle">
+        両端の行き先と、抜けの前後——増減表のどこに書き足す？
+      </text>
+    </svg>
+  );
+}
+
+/** 微分法の応用 系列3 step8: 抜け（縦の破線）をはさむ 2 つの枝。左の枝に山、右の枝に谷がある仕組みだけ。
+ *  ★図に答えを描かない★ 山と谷の「高さの関係」は描かない（Round 1 F12）：2 つの枝を別々の枠に入れ、縦の目盛りを揃えずに描く。
+ *  極値の値も x 座標も書かない。
+ *  この図から読めてしまうもの：「抜けの左右に別々の枝があり、片方に山、片方に谷」という仕組みだけ（どちらが高いかは読めない）。 */
+function M3daTwoBranches() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const branch = (ox: number, kind: "peak" | "valley") => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const u = -1 + (2 * k) / 40;
+      const v = kind === "peak" ? -u * u : u * u;
+      pts.push(`${(ox + 56 + u * 46).toFixed(1)},${88 - v * 40}`);
+    }
+    return (
+      <g>
+        <rect x={ox} y="20" width="112" height="128" fill="none" stroke={muted} strokeWidth="0.8" rx="4" strokeDasharray="2 3" />
+        <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+        <text x={ox + 56} y="164" fontSize="11" fill={stroke} textAnchor="middle">
+          {kind === "peak" ? "左の枝：山（極大）" : "右の枝：谷（極小）"}
+        </text>
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="縦の破線の抜けをはさんで、左の枠に山のある枝、右の枠に谷のある枝が描かれた図。2 つの枠は縦の目盛りがそろっておらず、山と谷のどちらが高いかは描かれていない"
+    >
+      {branch(24, "peak")}
+      <path d="M 160 14 L 160 154" fill="none" stroke={accent} strokeWidth="1.4" strokeDasharray="5 4" />
+      <text x="160" y="12" fontSize="10.5" fill={accent} textAnchor="middle">抜け</text>
+      {branch(184, "valley")}
+      <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
+        山と谷、どちらが高い？——別々の枝どうしを比べられる？
       </text>
     </svg>
   );
