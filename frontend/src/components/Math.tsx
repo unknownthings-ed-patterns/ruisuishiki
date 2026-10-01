@@ -15829,6 +15829,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3INT_LOG_PAIR>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intLogPair />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3INT_LOG_NEG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3intLogNeg />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -40550,6 +40564,98 @@ function M3intSlopeSin() {
       <text x={X(3.3)} y={Y(-1) + 22} fontSize="11" fill={stroke} fontStyle="italic">y = sin x（＝ F(x) の傾き）</text>
       <text x="224" y="22" fontSize="11" fill={accent} textAnchor="middle">
         傾きがずっとこの高さなら、F(x) は 0 から 2π/3 まで増える？ 減る？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列2 step1: 上に y = log x、下に y = 1/x を縦に並べ、x > 0 の側だけを描く。
+ *  ★図に答えを描かない★ 目盛りの数値は書かない（x = 7 も描かない）。x < 0 の側は空けて「?」。
+ *  この図から読めてしまうもの：「log x の接線の傾きが、下の 1/x の高さになっている」という対応の仕組みだけ
+ *  （step1 の傾きの値は読めない。下の曲線に目盛りが無いので高さは測れない）。 */
+function M3intLogPair() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 160 + u * 26;
+  const Yt = (v: number) => 70 - v * 22;
+  const Yb = (v: number) => 190 - v * 30;
+  const top: string[] = [];
+  const bot: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = 0.15 + (5.6 * k) / 60;
+    top.push(`${X(u).toFixed(1)},${Yt(Math.log(u)).toFixed(1)}`);
+    const v = 1 / u;
+    if (v <= 2.6) bot.push(`${X(u).toFixed(1)},${Yb(v).toFixed(1)}`);
+  }
+  const t = 2;
+  const L = (u: number) => Math.log(t) + (u - t) / t;
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上に y イコール log x のグラフ、下に y イコール x 分の 1 のグラフを、x が正の側だけ縦に並べた図。上の曲線の 1 点に接線が引かれ、その点の真下の、下の曲線の高さが印で結ばれている。x が負の側は空いていて疑問符"
+    >
+      <path d={`M 14 ${Yt(0)} L 306 ${Yt(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M 14 ${Yb(0)} L 306 ${Yb(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 14 L ${X(0)} 236`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={top.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <polyline points={bot.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <path d={`M ${X(0.6).toFixed(1)} ${Yt(L(0.6)).toFixed(1)} L ${X(4.6).toFixed(1)} ${Yt(L(4.6)).toFixed(1)}`} fill="none" stroke={accent} strokeWidth="1.4" />
+      <circle cx={X(t)} cy={Yt(Math.log(t))} r="3" fill={accent} />
+      <circle cx={X(t)} cy={Yb(1 / t)} r="3" fill={accent} />
+      <path d={`M ${X(t)} ${Yt(Math.log(t)) + 4} L ${X(t)} ${Yb(1 / t) - 4}`} fill="none" stroke={accent} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={X(4.2)} y={Yt(Math.log(4.2)) + 18} fontSize="11" fill={stroke} fontStyle="italic">y = log x</text>
+      <text x={X(3.8)} y={Yb(1 / 3.8) - 8} fontSize="11" fill={stroke} fontStyle="italic">y = 1/x</text>
+      <text x={X(-3.3)} y={Yt(0) + 4} fontSize="16" fill={accent} textAnchor="middle">?</text>
+      <text x={X(-3.3)} y={Yb(0) - 30} fontSize="11" fill={muted} textAnchor="middle">（x &lt; 0 の側）</text>
+      <text x="160" y="246" fontSize="11" fill={accent} textAnchor="middle">
+        接線の傾きは、下のどの高さ？ 左半分には何がいる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法 系列2 step2: y = log x の枝に、y 軸で折り返した y = log(−x) の枝を足した絵。
+ *  ★図に答えを描かない★ 左の枝の 1 点の接線の傾きは「?」。目盛りの数値は書かない（x = −6 も描かない）。
+ *  この図から読めてしまうもの：「左の枝の接線は右下がり（傾きは負）」ということだけ（傾きの値は読めない）。
+ *  1/x のグラフは描かない（描くと「左の枝の傾き＝1/x の高さ」という発見を先に見せてしまう＝層8 の補足）。 */
+function M3intLogNeg() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 160 + u * 24;
+  const Y = (v: number) => 110 - v * 28;
+  const right: string[] = [];
+  const left: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = 0.12 + (5.8 * k) / 60;
+    right.push(`${X(u).toFixed(1)},${Y(Math.log(u)).toFixed(1)}`);
+    left.push(`${X(-u).toFixed(1)},${Y(Math.log(u)).toFixed(1)}`);
+  }
+  const t = -2.4;
+  const L = (u: number) => Math.log(-t) + (u - t) / t;
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="y イコール log x の枝と、それを y 軸で折り返した y イコール log マイナス x の枝。左の枝の 1 点に接線が引かれていて、その傾きは疑問符"
+    >
+      <path d={`M 14 ${Y(0)} L 306 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 14 L ${X(0)} 206`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={right.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
+      <polyline points={left.join(" ")} fill="none" stroke={accent} strokeWidth="1.8" />
+      <path d={`M ${X(-5.2).toFixed(1)} ${Y(L(-5.2)).toFixed(1)} L ${X(-0.6).toFixed(1)} ${Y(L(-0.6)).toFixed(1)}`} fill="none" stroke={accent} strokeWidth="1.3" />
+      <circle cx={X(t)} cy={Y(Math.log(-t))} r="3" fill={accent} />
+      <text x={X(-5.2)} y={Y(L(-5.2)) + 34} fontSize="11" fill={accent}>傾き ?</text>
+      <text x={X(3.6)} y={Y(Math.log(3.6)) - 8} fontSize="11" fill={stroke} fontStyle="italic">y = log x</text>
+      <text x={X(-6.2)} y={Y(Math.log(5.6)) - 26} fontSize="11" fill={accent} fontStyle="italic">y = log(−x)</text>
+      <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        左の枝の傾きは、右の枝の傾きとどんな関係？
       </text>
     </svg>
   );

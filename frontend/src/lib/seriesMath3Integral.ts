@@ -378,4 +378,355 @@ $$\\int f(ax+b)\\,dx = \\frac{1}{a}F(ax+b) + C \\qquad (F' = f,\\ a \\ne 0)$$
 ずれが数でなく関数になったときは、この直し方は効かない。そこから先が、この章の残りの仕事である。`,
 };
 
-export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [M3INT_BASIC_SERIES];
+/** M3INT2: 1/x の巻き戻し——負の側をどう覆うか（三段）。
+ *  段1＝step1〜3（log(−x) を微分すると 1/x が現れる）／段2＝step4〜5（log(−x) を原始関数にして負の区間を計算）／段3＝step6〜10
+ *  ★系列2 の核（log x では x<0 を覆えない）は値では検出できない★（負の区間で符号を落としても 1/x が奇関数なので同じ値＝背骨 D6・R1 A9）。
+ *  核の発見は step2・3 と L3・derivation に置く。step3 は log(2−x) で、ラベル「1/x」だけでは届かない（解は x=−3 の 1 つ＝sympy の solve で 1 個）。
+ *  山場 step9：∫_2^3 dx/(3−2x)。内側の負の係数を落とすと +log3/2、正答 −log3/2（数値積分 −0.5493 と一致）。
+ *  入力：log と e（2026-10-01 拡張）。step8 の 8/log3 は「8/log 3」と打てば 8÷(log 3) と読まれる。 */
+export const M3INT_LOG_SERIES: LearnerSeries = {
+  id: "math3_int_log_01",
+  title: "1/x の巻き戻し——負の側をどう覆うか",
+  subtitle:
+    "数Ⅲ・C 積分法より — $\\dfrac1x$ は負の $x$ でも生きているのに、$\\log x$ は正の $x$ でしか生きていない。$10$ 問で、逆から読んだ公式が届かない側を埋め、$\\log\\lvert x\\rvert$ を自分で組み立てる。",
+  patternId: "M3INT2",
+  unit: "math_3",
+  revelationLabel:
+    "**$\\log(-x)$ を微分しても $\\dfrac1x$ が出てくる**。だから $x<0$ の側は $\\log(-x)$ で覆え、両側をまとめて $\\log\\lvert x\\rvert$ と書ける",
+  drivingQuestion:
+    "$\\dfrac1x$ は $x<0$ でも生きているのに、$\\log x$ は $x>0$ でしか生きていない。**逆から読んだ公式が届かない場所を、どう埋める？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "曲線 $y = \\log x$ の、$x = 7$ の点における接線の**傾き**を求めましょう。",
+      answer: 1 / 7,
+      answerDisplay: "1/7",
+      unit: "",
+      unknownLabel: "$x = 7$ の点での接線の傾き",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "接線の傾きは、何を計算すれば手に入る量だった？",
+        },
+        {
+          layer: 2,
+          text: "$\\log x$ を微分すると何になったか、第4章を思い出せる？（[自然対数]）",
+        },
+        {
+          layer: 3,
+          text: "$(\\log x)' = \\dfrac1x$ なので、$x = 7$ での傾きは $\\dfrac17$。逆から読めば「微分すると $\\dfrac1x$ になる関数の候補は $\\log x$」。ただし $\\log x$ は $x > 0$ でしか定義されない。$\\dfrac1x$ のほうは $x < 0$ でも値をもつのに。中心の問いへの最初の部分回答：**$x>0$ の側は、$\\log x$ が $\\dfrac1x$ を受け持っている**。",
+        },
+      ],
+      formulaPreview: "(log x)′ = 1/x → x = 7 で 1/7",
+      figureMarker: "<<M3INT_LOG_PAIR>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$x < 0$ で定義された曲線 $y = \\log(-x)$ の、$x = -6$ の点における接線の**傾き**を求めましょう。",
+      answer: -1 / 6,
+      answerDisplay: "-1/6",
+      unit: "",
+      unknownLabel: "$x = -6$ の点での接線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        {
+          layer: 1,
+          text: "前題と比べてみよう。曲線は前題のものを $y$ 軸で折り返した形。傾きはどうなるだろう？",
+        },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$\\log$ の中身が $x$ から $-x$ になったこと。中身が $x$ でない $\\log$ を微分するとき、第3章で何を掛けた？（[合成関数の微分法]）",
+        },
+        {
+          layer: 3,
+          text: "合成関数の微分で $\\{\\log(-x)\\}' = \\dfrac{1}{-x}\\cdot(-x)' = \\dfrac{1}{-x}\\cdot(-1) = \\dfrac1x$。$x = -6$ で $-\\dfrac16$。**前題と同じ $\\dfrac1x$ が、負の側にも出てきた**。折り返すと傾きの符号が逆になるので、右の枝の傾き（正）を折り返した左の枝の傾きは負——それがちょうど $x<0$ での $\\dfrac1x$ の値になっている。中心の問いへ：**$x<0$ の側で $\\dfrac1x$ を受け持てるのは $\\log(-x)$**。",
+        },
+      ],
+      formulaPreview: "{log(−x)}′ = (1/(−x))·(−1) = 1/x → x = −6 で −1/6",
+      figureMarker: "<<M3INT_LOG_NEG>>",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$x < 2$ で定義された曲線 $y = \\log(2 - x)$ の上で、接線の傾きが $-\\dfrac15$ になる点を探します。その点の **$x$ 座標**を求めましょう。",
+      answer: -3,
+      answerDisplay: "-3",
+      unit: "",
+      unknownLabel: "傾きが $-\\dfrac15$ になる点の $x$ 座標",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が分かっていて、何を探している？" },
+        {
+          layer: 2,
+          text: "前題と向きが逆。前題は点が先にあって傾きを出した。今度は傾きが先にあって、点を探す。",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく合成関数の微分で $\\{\\log(2-x)\\}' = \\dfrac{1}{2-x}\\cdot(-1) = \\dfrac{1}{x-2}$。$\\dfrac{1}{x-2} = -\\dfrac15$ より $x - 2 = -5$、$x = -3$（$x < 2$ を満たす。解はこの $1$ つ）。グラフは $y = \\log(-x)$ を右へ $2$ ずらした形なので、傾きも「$x$ から $2$ を引いた数の逆数」になる。中心の問いへ：**中身が負の向きの $\\log$ でも、微分すると「中身の逆数」が符号ごと出てくる**。",
+        },
+      ],
+      formulaPreview: "{log(2−x)}′ = 1/(x−2) = −1/5 → x − 2 = −5 → x = −3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-8}^{-2}\\frac{1}{x}\\,dx$ の値を求めましょう。$\\log$ を使ったまま答えてかまいません（例：$\\log 5$、$-3\\log 2$）。",
+      answer: -Math.log(4),
+      answerDisplay: "-2log2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-8}^{-2}\\frac{1}{x}\\,dx$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      inputAffordances: ["log"],
+      hints: [
+        {
+          layer: 1,
+          text: "step2 と比べてみよう。扱っている側（$x$ が負の側）は同じ。今度は何を求めている？",
+        },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、傾きを出すのでなく、$\\dfrac1x$ を区間で積分すること。区間は全部 $x<0$ の側にある。$\\log x$ にこの区間の数を入れられる？",
+        },
+        {
+          layer: 3,
+          text: "区間 $-8 \\le x \\le -2$ では $\\log x$ が定義されない（負の数の $\\log$ は無い）。step2 で、$x<0$ では $\\log(-x)$ を微分すると $\\dfrac1x$ になると分かったので、これを原始関数にする：$\\displaystyle\\int_{-8}^{-2}\\frac{dx}{x} = \\Big[\\log(-x)\\Big]_{-8}^{-2} = \\log 2 - \\log 8 = -\\log 4 = -2\\log 2$。値が負なのは、$x<0$ で $\\dfrac1x$ が負だから。中心の問いへ：**$\\log x$ が届かない区間でも、$\\log(-x)$ を使えば巻き戻せる**。",
+        },
+      ],
+      formulaPreview: "log(−x) に −2 と −8 を入れて引く → log 2 − log 8 = −2log 2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "定積分 $\\displaystyle\\int_{-e^3}^{-e}\\frac{1}{x}\\,dx$ の値を求めましょう。",
+      answer: -2,
+      answerDisplay: "-2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_{-e^3}^{-e}\\frac{1}{x}\\,dx$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      inputAffordances: ["log", "e"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、区間の端が $e$ を使って書かれていること。",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく $\\log(-x)$ を原始関数にして $\\Big[\\log(-x)\\Big]_{-e^3}^{-e} = \\log e - \\log e^3 = 1 - 3 = -2$。別の道で確かめると：$x = -t$ と置き換えれば、$x$ が $-e^3$ から $-e$ へ動くとき $t$ は $e^3$ から $e$ へ動き、$\\dfrac{dx}{x} = \\dfrac{-dt}{-t} = \\dfrac{dt}{t}$ なので $\\displaystyle\\int_{e^3}^{e}\\frac{dt}{t} = \\log e - \\log e^3 = -2$。同じ値になる。中心の問いへ：**負の側の積分は、折り返した正の側の積分で確かめられる**。",
+        },
+      ],
+      formulaPreview: "log(−x) に −e と −e³ を入れて引く → log e − log e³ = 1 − 3 = −2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$x$ が正でも負でも使える形で、$\\displaystyle\\int\\frac{1}{6x + 5}\\,dx = k\\log\\lvert 6x + 5\\rvert + C$ と書けます。$k$ を求めましょう。",
+      answer: 1 / 6,
+      answerDisplay: "1/6",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int\\frac{dx}{6x+5} = k\\log\\lvert 6x+5\\rvert + C$ の $k$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        {
+          layer: 1,
+          text: "step4 と比べてみよう。分母の $x$ が $1$ 次式のかたまりになった。系列1 でかたまりを巻き戻したときの手つきは、ここでも使える？",
+        },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、分母が $6x+5$ のかたまりになったこと。step1 の正の側（$\\log x$）と step4 の負の側（$\\log(-x)$）は、絶対値の記号でどう $1$ つにまとめられる？",
+        },
+        {
+          layer: 3,
+          text: "$x>0$ では $\\log x$、$x<0$ では $\\log(-x)$ が $\\dfrac1x$ の原始関数だった。$\\lvert x\\rvert$ は $x>0$ で $x$、$x<0$ で $-x$ なので、両方まとめて $(\\log\\lvert x\\rvert)' = \\dfrac1x$（[対数関数の微分]）。かたまり $6x+5$ について候補 $\\log\\lvert 6x+5\\rvert$ を微分すると $\\dfrac{6}{6x+5}$ で $6$ 倍ずれる（系列1 と同じずれ）。$6$ で割って $k = \\dfrac16$。中心の問いへ：**正の側と負の側を貼り合わせると、$\\log\\lvert\\ \\rvert$ の $1$ 本の式になる**。",
+        },
+      ],
+      formulaPreview: "(log|6x+5|)′ = 6/(6x+5) → 6 で割って k = 1/6",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\int e^{1 - 4x}\\,dx = k\\,e^{1-4x} + C$ と書けます。$k$ を求めましょう。",
+      answer: -1 / 4,
+      answerDisplay: "-1/4",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int e^{1-4x}\\,dx = k\\,e^{1-4x} + C$ の $k$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。かたまりの巻き戻しであることは同じ。外側の関数はどう変わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、外側の関数が $\\dfrac1x$ から $e^x$ になったこと。$e^x$ を微分すると何になったか、第4章を思い出せる？",
+        },
+        {
+          layer: 3,
+          text: "$(e^x)' = e^x$ なので、$e^x$ の候補は $e^x$ 自身。かたまり $1-4x$ について候補 $e^{1-4x}$ を微分すると $e^{1-4x}\\cdot(-4)$ で、$-4$ 倍ずれる。$-4$ で割って $k = -\\dfrac14$。中心の問いへ：**指数関数も、逆から読んだ候補のずれを割れば巻き戻せる。$e^x$ は自分自身が候補**。",
+        },
+      ],
+      formulaPreview: "(e^(1−4x))′ = −4e^(1−4x) → −4 で割って k = −1/4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^2 3^x\\,dx$ の値を求めましょう。$\\log$ を使ったまま答えてかまいません。",
+      answer: 8 / Math.log(3),
+      answerDisplay: "8/log3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^2 3^x\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      inputAffordances: ["log"],
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。指数関数であることは同じ。何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、底が $e$ でなく $3$ になったこと。$a^x$ を微分すると何が出てきたか、第4章を思い出せる？",
+        },
+        {
+          layer: 3,
+          text: "$(3^x)' = (\\log 3)\\,3^x$ だったので、候補 $3^x$ を微分すると $\\log 3$ 倍ずれる。$\\log 3$ で割って $\\displaystyle\\int 3^x\\,dx = \\frac{3^x}{\\log 3} + C$。$\\displaystyle\\int_0^2 3^x\\,dx = \\frac{9 - 1}{\\log 3} = \\frac{8}{\\log 3}$。入力は「8/log3」（$8 \\div \\log 3$ と読まれる）。中心の問いへ：**ずれの倍率は $\\log 3$ のような数のこともある。$0$ でない数であるかぎり、割れば直る**。",
+        },
+      ],
+      formulaPreview: "(3^x)′ = (log 3)·3^x → ∫ = 3^x / log 3 → 0 から 2 で 8/log 3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "定積分 $\\displaystyle\\int_2^3\\frac{1}{3 - 2x}\\,dx$ の値を求めましょう。この区間では $3 - 2x$ が負であることに注意しましょう。",
+      answer: -Math.log(3) / 2,
+      answerDisplay: "-(log3)/2",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_2^3\\frac{dx}{3-2x}$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      inputAffordances: ["log"],
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。分母が $1$ 次式のかたまりであることは同じ。何が重なっている？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、かたまりの $x$ の係数が負で、しかも区間全体でかたまりが負になっていること。",
+        },
+        {
+          layer: 3,
+          text: "候補 $\\log\\lvert 3-2x\\rvert$ を微分すると $\\dfrac{-2}{3-2x}$ で、$-2$ 倍ずれる。$-2$ で割って $\\displaystyle\\int\\frac{dx}{3-2x} = -\\frac12\\log\\lvert 3-2x\\rvert + C$。区間 $2 \\le x \\le 3$ では $3-2x$ は $-1$ から $-3$ で負なので、絶対値を外すと $\\log(2x-3)$。$\\displaystyle\\Big[-\\frac12\\log(2x-3)\\Big]_2^3 = -\\frac12(\\log 3 - \\log 1) = -\\frac{\\log 3}{2}$。内側の係数 $-2$ を落として $\\dfrac12$ で割ると $+\\dfrac{\\log 3}{2}$ になり、符号が逆。被積分関数はこの区間でずっと負なので、正の値が出たら食い違いに気づける。入力は「-(log3)/2」。中心の問いへ：**負の側を覆う絶対値と、内側の負の係数は、別々に確かめる**。",
+        },
+      ],
+      formulaPreview: "∫ = −(1/2)log|3−2x| → 2 から 3 で −(1/2)(log 3 − log 1) = −(log 3)/2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "定積分 $\\displaystyle\\int_0^2\\frac{x^2 + 3x + 1}{x + 1}\\,dx$ の値を求めましょう。",
+      answer: 6 - Math.log(3),
+      answerDisplay: "6-log3",
+      unit: "",
+      unknownLabel: "$\\displaystyle\\int_0^2\\frac{x^2+3x+1}{x+1}\\,dx$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      inputAffordances: ["log"],
+      hints: [
+        {
+          layer: 1,
+          text: "step6 と比べてみよう。分母が $1$ 次式であることは同じ。分子はどうなった？",
+        },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、分子の次数が分母より大きいこと。数Ⅱで、整式を $1$ 次式で割ったとき、商と余りで何が書けた？（[除法の基本式]）",
+        },
+        {
+          layer: 3,
+          text: "$x^2 + 3x + 1$ を $x+1$ で割ると、商 $x+2$、余り $-1$。だから $\\dfrac{x^2+3x+1}{x+1} = x + 2 - \\dfrac{1}{x+1}$。多項式の部分は数Ⅱの巻き戻し、$\\dfrac{1}{x+1}$ は $\\log\\lvert x+1\\rvert$。$\\displaystyle\\Big[\\frac{x^2}{2} + 2x - \\log(x+1)\\Big]_0^2 = (2 + 4 - \\log 3) - 0 = 6 - \\log 3$。中心の問いへ：**読めない形も、割り算で「多項式 ＋ $\\dfrac{1}{1次式}$」に作り替えれば、$\\log$ の在庫で巻き戻せる**。",
+        },
+      ],
+      formulaPreview: "(x²+3x+1)/(x+1) = x + 2 − 1/(x+1) → x²/2 + 2x − log(x+1) に 2 と 0 を入れて引く → 6 − log 3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $\\dfrac1x$ は $x<0$ でも生きているのに、$\\log x$ は $x>0$ でしか生きていない。**逆から読んだ公式が届かない場所を、どう埋める？**
+
+────────
+
+## 逆から読んだ公式の、届かない場所
+
+第4章で $(\\log x)' = \\dfrac1x$ を手に入れた。逆から読めば、「微分すると $\\dfrac1x$ になる関数の候補は $\\log x$」になる（step1）。
+
+ところが、この逆読みは半分しか覆っていない。$\\dfrac1x$ は $x = 0$ 以外のすべての実数で値をもつのに、$\\log x$ は $x>0$ でしか定義されない。$x<0$ の側では、$\\dfrac1x$ を受け持つ関数がまだ無い。
+
+（数Ⅱでは $\\displaystyle\\int x^n\\,dx = \\frac{x^{n+1}}{n+1}$ を使った。$n = -1$ のときだけ分母が $0$ になってこの式は使えない。その穴を埋めるのが $\\log$ で、しかも $\\log$ は半分しか埋めていない——これがこの系列の出発点である。）
+
+## ここが胚細胞：覆えていない側を、別の関数で貼り合わせる
+
+$y = \\log x$ を $y$ 軸で折り返した $y = \\log(-x)$ は、$x<0$ で定義される。合成関数の微分で
+
+$$\\{\\log(-x)\\}' = \\frac{1}{-x}\\cdot(-1) = \\frac1x$$
+
+**同じ $\\dfrac1x$ が出てくる**（step2）。だから $x<0$ の側は $\\log(-x)$ が受け持てる。両側をまとめると、$\\lvert x\\rvert$ が $x>0$ で $x$、$x<0$ で $-x$ であることを使って
+
+$$(\\log\\lvert x\\rvert)' = \\frac1x, \\qquad \\int\\frac{dx}{x} = \\log\\lvert x\\rvert + C$$
+
+と $1$ 本に書ける（step6）。**覚える式ではない。** $\\log x$ と、それを折り返した $\\log(-x)$ の $2$ 本を、$y$ 軸をはさんで貼り合わせたものである。
+
+<<M3INT_LOG_NEG>>
+
+## 値では見えにくい発見
+
+負の区間の積分（step4・5）で、うっかり「$\\log x$ に負の数を入れてしまう」ことはできない。負の数の $\\log$ は定義されないからである。では「符号を無視して正の区間で計算する」とどうなるか——**同じ値になる**。$\\dfrac1x$ は原点について対称（奇関数）なので、$-8$ から $-2$ までの積分は、$2$ から $8$ までの積分の符号を変えたものに等しい（step5 の L3 で、$x = -t$ と置き換えて確かめた）。
+
+だからこの系列の発見（負の側は $\\log(-x)$ が受け持つ）は、答えの値だけでは確かめにくい。**確かめる場所は、step2 の微分そのもの**である。
+
+## Step の道筋
+
+- **step1〜3**（事例）：$\\log x$ と $\\log(-x)$、$\\log(2-x)$ の接線の傾き。負の側にも $\\dfrac1x$（と、その仲間）が出てくる
+- **step4・5**（なぜ）：$x<0$ の区間の $\\dfrac1x$ を、$\\log(-x)$ を原始関数にして積分する
+- **step6**：$\\log\\lvert\\ \\rvert$ に貼り合わせ、$1$ 次式のかたまりへ
+- **step7・8**：指数関数の巻き戻し（ずれは $-4$ や $\\log 3$）
+- **step9（山場）**：かたまりが区間全体で負、しかも内側の係数が負
+- **step10**：割り算で「多項式 ＋ $\\dfrac1{1次式}$」に作り替える
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $\\displaystyle\\int\\frac{dx}{x}$ を忘れたら、$\\log x$ の微分を思い出し、「$x<0$ の側は？」と自分に問う。$\\log(-x)$ を微分すれば答えが出る。絶対値は、その $2$ つを $1$ 本にまとめた書き方にすぎない。
+
+**$\\displaystyle\\int\\frac{dx}{x} = \\log x + C$ と書いてしまうのは、よくある取りこぼしである。** $x>0$ の区間で使うかぎり値は合うが、$x<0$ の区間では $\\log x$ そのものが定義されず、式が使えない。絶対値を書いておけば、区間がどちら側にあっても同じ $1$ 本の式で計算できる。
+
+**「中身の微分分の中身」。** 合成関数の微分で $\\{\\log\\lvert f(x)\\rvert\\}' = \\dfrac{f'(x)}{f(x)}$ になる。step3 の $\\log(2-x)$ も step6 の $\\log\\lvert 6x+5\\rvert$ もこの形で、逆から読むと「分子が分母の微分になっている分数」は $\\log\\lvert\\text{分母}\\rvert$ に巻き戻せる。この見方は、系列4（合成関数の微分を逆に読む）で広がる。
+
+**この先の景色。** $0$ をはさむ区間（たとえば $-1$ から $1$）で $\\dfrac1x$ を積分することは、ここまでの道具ではできない。$x = 0$ で $\\dfrac1x$ が値をもたず、どちらの原始関数も $0$ をまたいでつながっていないからである。大学では、こうした「途中で値が無限に大きくなる」積分を、極限を使って扱う（広義積分）。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第6章「1/x の不定積分」の構成（$\\log x$ の定義域が $x<0$ を覆わないことから $\\log(-x)$ の微分へ進み、$\\log\\lvert x\\rvert$ にまとめる）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+逆から読んだ $\\log x$ は、$\\dfrac1x$ の正の側しか覆っていなかった。届かない負の側は、$y$ 軸で折り返した $\\log(-x)$ が埋める——微分すると同じ $\\dfrac1x$ が出てくるからである。
+
+$2$ 本を貼り合わせたのが $\\log\\lvert x\\rvert$ で、かたまりの中身が負になる区間でも、同じ $1$ 本の式で巻き戻せる。`,
+};
+
+export const MATH3_INTEGRAL_SERIES_LIST: LearnerSeries[] = [M3INT_BASIC_SERIES, M3INT_LOG_SERIES];

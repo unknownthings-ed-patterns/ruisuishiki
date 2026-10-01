@@ -100,6 +100,7 @@ import {
 } from "./seriesMath3DiffApp";
 import {
   M3INT_BASIC_SERIES,
+  M3INT_LOG_SERIES,
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
@@ -2180,6 +2181,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法",
     shortDescription:
       "巻き戻しと倍率のずれ（候補を微分して、ずれた倍率で割る）— 微分の公式を逆から読んで候補を作り、微分して確かめる。ずれが数をかけただけなら、その数で割れば直る",
+  },
+  {
+    series: M3INT_LOG_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法",
+    shortDescription:
+      "1/x の巻き戻し（負の側をどう覆うか）— log x が届かない x<0 の側は、折り返した log(−x) が受け持つ。2 本を貼り合わせると log|x|",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
