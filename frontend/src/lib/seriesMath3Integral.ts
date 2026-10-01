@@ -103,7 +103,6 @@ export const M3INT_BASIC_SERIES: LearnerSeries = {
       unknownLabel: "$F\\left(\\dfrac{2\\pi}{3}\\right)$",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step2",
-      inputAffordances: ["pi"],
       hints: [
         {
           layer: 1,
@@ -214,7 +213,7 @@ export const M3INT_BASIC_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step4 と変わったのは、外側が三角関数から冪になったこと。step1 で見たずれと step4 で見たずれは、ここではそれぞれどこから出てくる？",
+          text: "step4 と変わったのは、外側が三角関数から冪になったこと。",
         },
         {
           layer: 3,
@@ -438,11 +437,11 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。曲線は前題のものを $y$ 軸で折り返した形。傾きはどうなるだろう？",
+          text: "前題と比べてみよう。曲線の式は何が違う？ 接線の傾きはどうなるだろう？",
         },
         {
           layer: 2,
-          text: "前題と変わったのは、$\\log$ の中身が $x$ から $-x$ になったこと。中身が $x$ でない $\\log$ を微分するとき、第3章で何を掛けた？（[合成関数の微分法]）",
+          text: "前題と変わったのは、$\\log$ の中身が $x$ から $-x$ になったこと。",
         },
         {
           layer: 3,
@@ -495,7 +494,7 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、傾きを出すのでなく、$\\dfrac1x$ を区間で積分すること。区間は全部 $x<0$ の側にある。$\\log x$ にこの区間の数を入れられる？",
+          text: "step2 と変わったのは、傾きでなく、区間で積分した値を求めること。",
         },
         {
           layer: 3,
@@ -515,7 +514,6 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
       unknownLabel: "$\\displaystyle\\int_{-e^3}^{-e}\\frac{1}{x}\\,dx$",
       variationFromPrevious: "same",
       compareWithStepId: "step4",
-      inputAffordances: ["log", "e"],
       hints: [
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
         {
@@ -624,7 +622,7 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step6 と変わったのは、かたまりの $x$ の係数が負で、しかも区間全体でかたまりが負になっていること。",
+          text: "step6 と変わったのは、かたまりの $x$ の係数が負であること。",
         },
         {
           layer: 3,
@@ -652,7 +650,7 @@ export const M3INT_LOG_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step6 と変わったのは、分子の次数が分母より大きいこと。数Ⅱで、整式を $1$ 次式で割ったとき、商と余りで何が書けた？（[除法の基本式]）",
+          text: "step6 と変わったのは、分子の次数が分母より大きいこと。",
         },
         {
           layer: 3,
@@ -690,7 +688,7 @@ $$(\\log\\lvert x\\rvert)' = \\frac1x, \\qquad \\int\\frac{dx}{x} = \\log\\lvert
 
 ## 値では見えにくい発見
 
-負の区間の積分（step4・5）で、うっかり「$\\log x$ に負の数を入れてしまう」ことはできない。負の数の $\\log$ は定義されないからである。では「符号を無視して正の区間で計算する」とどうなるか——**同じ値になる**。$\\dfrac1x$ は原点について対称（奇関数）なので、$-8$ から $-2$ までの積分は、$2$ から $8$ までの積分の符号を変えたものに等しい（step5 の L3 で、$x = -t$ と置き換えて確かめた）。
+負の区間の積分（step4・5）で、うっかり「$\\log x$ に負の数を入れてしまう」ことはできない。負の数の $\\log$ は定義されないからである。では、$\\log$ の中の負号を黙って外して $\\log 2 - \\log 8$ のように計算するとどうなるか——**同じ値になる**。$\\dfrac1x$ は原点について対称（奇関数）なので、$-8$ から $-2$ までの積分は、$2$ から $8$ までの積分の符号を変えたものに等しく、$\\log 2 - \\log 8$ はちょうどその値だからである（step5 の L3 で、$x = -t$ と置き換えて確かめた）。
 
 だからこの系列の発見（負の側は $\\log(-x)$ が受け持つ）は、答えの値だけでは確かめにくい。**確かめる場所は、step2 の微分そのもの**である。
 
@@ -763,7 +761,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "$2$ つの関数の和を巻き戻すとき、$1$ つずつ巻き戻してから足してよいだろうか？",
+          text: "$2$ つの関数の和を巻き戻した結果が正しいかどうかは、どうすれば確かめられる？",
         },
         {
           layer: 2,
@@ -789,7 +787,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。今度は和の形をしていない。和の形にできる？" },
+        { layer: 1, text: "前題と比べてみよう。前題は和の形だった。今度の被積分関数は、どんな形をしている？" },
         {
           layer: 2,
           text: "前題と変わったのは、被積分関数が和でなく「和の $2$ 乗」になっていること。",
@@ -820,7 +818,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "かたまり $x^2+3$ の冪だから、系列1 のように候補 $\\dfrac13(x^2+3)^3$ を作りたくなる。微分すると $(x^2+3)^2\\cdot(x^2+3)' = 2x\\,(x^2+3)^2$ で、ほしいものの「$2x$ 倍」——ずれが数でなく $x$ の式になる。$2x$ で割った $\\dfrac{(x^2+3)^3}{6x}$ を微分すると、割った $x$ まで微分されて元に戻らない。だからこの候補は使えない（使うと $F(1) = \\dfrac{37}{3}$ になり外れる）。前題と同じく展開する：$(x^2+3)^2 = x^4 + 6x^2 + 9$、$F(x) = \\dfrac15x^5 + 2x^3 + 9x$（$F(0)=0$ で $C = 0$）。$F(1) = \\dfrac15 + 2 + 9 = \\dfrac{56}{5}$。中心の問いへ：**ずれが $x$ の式のときは、割っても直らない。作り替えてから巻き戻す**。系列1 の $(3x+2)^4$ では、かたまりの微分が $3$（数）だった。ここではかたまりの微分が $2x$ で、候補を微分するとそれが余分に掛かって出てくる。**被積分関数のほうに、かたまりの微分がはじめから掛かっていたら？**——次の系列の問いである。",
+          text: "かたまり $x^2+3$ の冪だから、系列1 のように候補 $\\dfrac13(x^2+3)^3$ を作りたくなる。微分すると $(x^2+3)^2\\cdot(x^2+3)' = 2x\\,(x^2+3)^2$ で、ほしいものの「$2x$ 倍」——ずれが数でなく $x$ の式になる。$2x$ で割った $\\dfrac{(x^2+3)^3}{6x}$ を微分すると、割った $x$ まで微分されて元に戻らない。だからこの候補は使えない（はじめの候補 $\\dfrac13(x^2+3)^3$ のまま $F(0) = 0$ に合わせると $F(1) = \\dfrac{37}{3}$ になり外れる）。前題と同じく展開する：$(x^2+3)^2 = x^4 + 6x^2 + 9$、$F(x) = \\dfrac15x^5 + 2x^3 + 9x$（$F(0)=0$ で $C = 0$）。$F(1) = \\dfrac15 + 2 + 9 = \\dfrac{56}{5}$。中心の問いへ：**ずれが $x$ の式のときは、割っても直らない。作り替えてから巻き戻す**。系列1 の $(3x+2)^4$ では、かたまりの微分が $3$（数）だった。ここではかたまりの微分が $2x$ で、候補を微分するとそれが余分に掛かって出てくる。**被積分関数のほうに、かたまりの微分がはじめから掛かっていたら？**——次の系列の問いである。",
         },
       ],
       formulaPreview: "展開 x⁴ + 6x² + 9 → F(x) = x⁵/5 + 2x³ + 9x → F(1) = 56/5",
@@ -840,11 +838,11 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。$2$ 乗の形であることは同じ。展開して和にする手つきは、三角関数の $2$ 乗にも使える？",
+          text: "前題と比べてみよう。$2$ 乗の形であることは同じ。何が違う？",
         },
         {
           layer: 2,
-          text: "前題と変わったのは、$2$ 乗されているのが三角関数であること。数Ⅱの [2倍角の公式] を思い出せる？",
+          text: "前題と変わったのは、$2$ 乗されているのが三角関数であること。",
         },
         {
           layer: 3,
@@ -893,7 +891,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。$\\sin$ と $\\cos$ の積であることは同じ。何が加わった？" },
         {
           layer: 2,
-          text: "前題と変わったのは、$\\sin$ と $\\cos$ の中の角が違うこと（$5x$ と $2x$）。第4章で、三角関数の積と和を行き来する式を扱わなかった？（[和積の公式]）",
+          text: "前題と変わったのは、$\\sin$ と $\\cos$ の中の角が違うこと（$5x$ と $2x$）。",
         },
         {
           layer: 3,
@@ -916,11 +914,11 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "step2 と比べてみよう。巻き戻せる形の和に作り替えたいのは同じ。分数の形のままで、和にできる？",
+          text: "step2 と比べてみよう。巻き戻せる形の和に作り替えたいのは同じ。今度の被積分関数は、どこが違う？",
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、被積分関数が分数で、分子の次数が分母より大きいこと。数Ⅱで、整式を $1$ 次式で割ったとき、何と何に分けて書けた？（[除法の基本式]）",
+          text: "step2 と変わったのは、被積分関数が、分子の次数が分母より大きい分数であること。",
         },
         {
           layer: 3,
@@ -942,10 +940,10 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。分数を和に作り替えたいのは同じ。今度は割り算が使える？" },
+        { layer: 1, text: "前題と比べてみよう。分数を和に作り替えたいのは同じ。分母と分子は、どう変わった？" },
         {
           layer: 2,
-          text: "前題と変わったのは、分母が $2$ つの $1$ 次式の積になっていること（分子の次数は分母より小さいので、割り算はできない）。",
+          text: "前題と変わったのは、分母が $2$ つの $1$ 次式の積になっていること。",
         },
         {
           layer: 3,
@@ -958,7 +956,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "$\\dfrac{1}{(3x + 1)(x - 2)} = \\dfrac{a}{3x + 1} + \\dfrac{b}{x - 2}$ がどんな $x$ についても成り立つように、定数 $a$、$b$ を決めます。$a$ を求めましょう。",
+        "$\\dfrac{1}{(3x + 1)(x - 2)} = \\dfrac{a}{3x + 1} + \\dfrac{b}{x - 2}$ が、$x = -\\dfrac13$、$x = 2$ 以外のどんな $x$ についても成り立つように、定数 $a$、$b$ を決めます。$a$ を求めましょう。",
       answer: -3 / 7,
       answerDisplay: "-3/7",
       unit: "",
@@ -969,7 +967,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。分け方の形が先に与えられている。何を探す問題になった？" },
         {
           layer: 2,
-          text: "前題と向きが逆。前題は差を作ってから倍率を合わせた。今度は分けた形が先にあって、係数を探す。数Ⅱで、どんな $x$ でも成り立つ等式から係数を決める問題を何と呼んだ？（[恒等式]）",
+          text: "前題と向きが逆。前題は差を作ってから倍率を合わせた。今度は分けた形が先にあって、係数を探す。",
         },
         {
           layer: 3,
@@ -994,7 +992,7 @@ export const M3INT_RESHAPE_SERIES: LearnerSeries = {
         { layer: 1, text: "step7 と比べてみよう。分数を作り替えるのは同じ。何が組み合わさっている？" },
         {
           layer: 2,
-          text: "step7 と変わったのは、割り算をしたあとの余りの分母が、$1$ 次式でなく $2$ 次式であること。",
+          text: "step7 と変わったのは、分母が $2$ 次式であること。",
         },
         {
           layer: 3,
@@ -1052,7 +1050,7 @@ $(x^2+3)^2$ を「$x^2+3$ のかたまりの $2$ 乗」と見て、系列1 の�
 
 **答えの形は $1$ つとは限らない。** $\\sin 3x\\cos 3x$ の巻き戻しは $-\\dfrac{1}{12}\\cos 6x$ とも $\\dfrac16\\sin^2 3x$ とも書ける（微分すればどちらも同じ）。$2$ つの式の差は定数で、$+C$ に吸い込まれる。だから係数を問うときは、答えの形を先に決めておく。
 
-**この先の景色。** 分数関数を $1$ 次式の分数の和に分ける操作は、分母が因数分解できる限り、どこまでも続けられる（分母に $2$ 次式が残るときは、系列10 の三角関数の置き換えがそこを受け持つ）。大学では、微分方程式を解く道具（ラプラス変換）の最後の一歩として、同じ部分分数分解が何度も現れる。
+**この先の景色。** 分母が異なる $1$ 次式の積に因数分解できれば、分数関数は $1$ 次式の分数の和に分けられる（同じ $1$ 次式が重なるときや、因数分解できない $2$ 次式が残るときは、分け方に別の形が要る。$x^2 + a^2$ の形が残ったときの一例が系列10 の三角関数の置き換え）。大学では、微分方程式を解く道具（ラプラス変換）の最後の一歩として、同じ部分分数分解が何度も現れる。
 
 **出典**
 
@@ -1065,17 +1063,17 @@ $(x^2+3)^2$ を「$x^2+3$ のかたまりの $2$ 乗」と見て、系列1 の�
 
 和と定数倍は巻き戻しを通り抜ける。だから読めない形は、展開・2 倍角の逆読み・積を和に直す式・割り算・部分分数で、**巻き戻せる形の和**に作り替えればよい。
 
-作り替えずに、かたまりのまま巻き戻した候補を割って直そうとすると、ずれが $x$ の式になっているので、割った式まで微分されて元に戻らない。直せるのは数のずれだけである。`,
+作り替えずに、かたまりのまま巻き戻した候補を割って直そうとすると、ずれが $x$ の式になっているので、割った式まで微分されて元に戻らない。割って直せるのは数のずれだけである。`,
 };
 
 /** M3INT4: 合成関数の微分を逆に読む——内側の微分がはじめから掛かっている形。
  *  胚細胞（背骨・R1 A1）：被積分関数に「かたまりの微分」（の定数倍）がはじめから掛かっていれば、
  *  候補（外側だけ巻き戻したもの）を微分してもずれは出ないか数だけ。系列3 step3 の預けの返済。
  *  step1：第3章の確認（微分）／step2（逆）：別の関数を巻き戻す（R1 B2：step1 の式をそのまま戻さない）
- *  山場 step8（③手間型）：∫₀¹ x²(x³+1)⁶ dx。展開すると 7 項、跡を見れば 1 行。提出値は経路に依らない定積分（R1 A3）。
+ *  山場 step8（③手間型）：∫₀¹ x²(x³+1)¹⁰ dx。展開すると 11 項（初めは冪 6・7 項だったが、手で数分で足せて手間型として弱い＝Round 2 A の S1）、跡を見れば 1 行。提出値は経路に依らない定積分（R1 A3）。
  *  「跡でしか解けない」とは書かない（展開の道は開いている＝追補18-b）。
  *  原典の族（2x(x²+1)⁵・sin³x cos x・e^{2x}/(e^{2x}+1)・x e^{x²}・2x/(x²+1)・x²√(x³+1)）と定数違いにならない形を選んだ。
- *  答え：12・1/24・−1/5・1/30・2/3・−1/2・1/12・127/21・2・log 2（相異なる。系列1〜3 の同じ型の値と重ならない）。 */
+ *  答え：12・1/24・−1/5・1/30・2/3・−1/2・1/12・2047/33・2・(1/2)log 2（相異なる。系列1〜3 の同じ型の値と重ならない）。 */
 export const M3INT_TRACE_SERIES: LearnerSeries = {
   id: "math3_int_trace_01",
   title: "合成関数の微分を逆に読む——内側の微分が掛かっていたら",
@@ -1128,10 +1126,10 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
       variationFromPrevious: "inverse",
       compareWithStepId: "step1",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。向きが入れかわった。前題で見た形と、この被積分関数の形は似ている？" },
+        { layer: 1, text: "前題と比べてみよう。前題は微分した。今度は巻き戻す。何が同じで、何が違う？" },
         {
           layer: 2,
-          text: "前題と変わったのは向き。前題は合成関数を微分した。今度は、前題の答えに似た形をした関数を巻き戻す。",
+          text: "前題と変わったのは向き。前題は合成関数を微分した。今度は巻き戻す。",
         },
         {
           layer: 3,
@@ -1179,7 +1177,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         { layer: 1, text: "step2 と比べてみよう。かたまりの冪に $x$ の式が掛かっているのは同じ。何が加わった？" },
         {
           layer: 2,
-          text: "step2 と変わったのは、掛かっている $x$ と、かたまりの微分との「倍率」が $1$ よりかなり小さいこと。",
+          text: "step2 と変わったのは、かたまりの中の $x$ の項に係数 $3$ がついたこと。",
         },
         {
           layer: 3,
@@ -1202,7 +1200,7 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "前題と比べてみよう。前題は「かたまりの冪 × 内側の微分」だった。分数の形の中に、同じような組み合わせが見えないだろうか？",
+          text: "前題と比べてみよう。前題は「かたまりの冪」だった。今度のかたまりは、どこにある？",
         },
         {
           layer: 2,
@@ -1214,13 +1212,12 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "(log|x³+3x+4|)′ = (3x²+3)/(x³+3x+4) → 分子は 2/3 倍 → k = 2/3",
-      figureMarker: "<<M3INT_FPRIME_F>>",
     },
     {
       id: "step6",
       position: 6,
       questionText:
-        "$\\displaystyle\\int\\sin 2x\;e^{\\cos 2x}\\,dx = k\\,e^{\\cos 2x} + C$ と書けます。$k$ を求めましょう。",
+        "$\\displaystyle\\int\\sin 2x\\,e^{\\cos 2x}\\,dx = k\\,e^{\\cos 2x} + C$ と書けます。$k$ を求めましょう。",
       answer: -1 / 2,
       answerDisplay: "-1/2",
       unit: "",
@@ -1268,11 +1265,11 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "定積分 $\\displaystyle\\int_0^1 x^2(x^3 + 1)^6\\,dx$ の値を求めましょう。",
-      answer: 127 / 21,
-      answerDisplay: "127/21",
+        "定積分 $\\displaystyle\\int_0^1 x^2(x^3 + 1)^{10}\\,dx$ の値を求めましょう。",
+      answer: 2047 / 33,
+      answerDisplay: "2047/33",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_0^1 x^2(x^3+1)^6\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_0^1 x^2(x^3+1)^{10}\\,dx$",
       variationFromPrevious: "composite",
       compareWithStepId: "step2",
       hints: [
@@ -1282,20 +1279,20 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、冪が $6$ と大きく、展開するとたくさんの項に広がること。",
+          text: "step2 と変わったのは、冪が $10$ と大きく、展開するとたくさんの項に広がること。",
         },
         {
           layer: 3,
-          text: "かたまり $x^3 + 1$ の微分は $3x^2$ で、被積分関数の $x^2$ はその $\\dfrac13$ 倍。候補 $(x^3+1)^7$ を微分すると $21x^2(x^3+1)^6$ なので、$\\displaystyle\\int x^2(x^3+1)^6\\,dx = \\frac{(x^3+1)^7}{21} + C$。$\\displaystyle\\Big[\\frac{(x^3+1)^7}{21}\\Big]_0^1 = \\frac{2^7 - 1}{21} = \\frac{127}{21}$。系列3 のように展開する道でも同じ値に着くが、$(x^3+1)^6$ は $7$ 項に広がり、$x^2$ を掛けて $7$ 項を $1$ つずつ巻き戻して $1$ を代入することになる。**内側の微分が見えれば、その手間が $1$ 行に縮む**。中心の問いへ：**この見方が消すのは「解けないこと」ではなく「展開する手間」**。",
+          text: "かたまり $x^3 + 1$ の微分は $3x^2$ で、被積分関数の $x^2$ はその $\\dfrac13$ 倍。候補 $(x^3+1)^{11}$ を微分すると $33x^2(x^3+1)^{10}$ なので、$\\displaystyle\\int x^2(x^3+1)^{10}\\,dx = \\frac{(x^3+1)^{11}}{33} + C$。$\\displaystyle\\Big[\\frac{(x^3+1)^{11}}{33}\\Big]_0^1 = \\frac{2^{11} - 1}{33} = \\frac{2047}{33}$。系列3 のように展開する道でも同じ値に着くが、$(x^3+1)^{10}$ は $11$ 項に広がり、$x^2$ を掛けて $11$ 項を $1$ つずつ巻き戻して $1$ を代入することになる。**内側の微分が見えれば、その手間が $1$ 行に縮む**。中心の問いへ：**この見方が消すのは「解けないこと」ではなく「展開する手間」**。",
         },
       ],
-      formulaPreview: "∫ x²(x³+1)⁶ dx = (x³+1)⁷/21 → 0 から 1 で (128 − 1)/21 = 127/21",
+      formulaPreview: "∫ x²(x³+1)¹⁰ dx = (x³+1)¹¹/33 → 0 から 1 で (2048 − 1)/33 = 2047/33",
     },
     {
       id: "step9",
       position: 9,
       questionText:
-        "定数 $a$ をうまく選ぶと、$\\displaystyle\\int(ax + 3)(x^2 + 3x)^4\\,dx$ が $k\\,(x^2 + 3x)^5 + C$（$k$ は定数）の形に書けます。$a$ を求めましょう。",
+        "定数 $a$ をうまく選ぶと、$\\displaystyle\\int(ax + 3)(x^2 + 3x)^4\\,dx$ が $k\\,(x^2 + 3x)^5 + C$（$k$ は $0$ でない定数）の形に書けます。$a$ を求めましょう。",
       answer: 2,
       answerDisplay: "2",
       unit: "",
@@ -1319,26 +1316,26 @@ export const M3INT_TRACE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{3}}\\tan x\\,dx$ の値を求めましょう。",
-      answer: Math.log(2),
-      answerDisplay: "log2",
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{6}}\\tan 2x\\,dx$ の値を求めましょう。",
+      answer: Math.log(2) / 2,
+      answerDisplay: "log2/2",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{3}}\\tan x\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{6}}\\tan 2x\\,dx$",
       variationFromPrevious: "composite",
       compareWithStepId: "step5",
       inputAffordances: ["log"],
       hints: [
-        { layer: 1, text: "step5 と比べてみよう。$\\tan x$ をどう書き直すと、step5 と同じ形が見えてくる？" },
+        { layer: 1, text: "step5 と比べてみよう。step5 は分数の形だった。今度の関数は、どんな形で書かれている？" },
         {
           layer: 2,
-          text: "step5 と変わったのは、分数の形で書かれていないこと。数Ⅰの [相互関係] を思い出せる？",
+          text: "step5 と変わったのは、分数の形で書かれていないこと。",
         },
         {
           layer: 3,
-          text: "$\\tan x = \\dfrac{\\sin x}{\\cos x}$。分母 $\\cos x$ をかたまりと見ると、その微分は $-\\sin x$ で、分子 $\\sin x$ はその $-1$ 倍。だから $\\displaystyle\\int\\tan x\\,dx = -\\log\\lvert\\cos x\\rvert + C$。$\\displaystyle\\Big[-\\log\\cos x\\Big]_0^{\\frac{\\pi}{3}} = -\\log\\frac12 + \\log 1 = \\log 2$。系列1 で $\\tan$ が出てきたのは $\\dfrac{1}{\\cos^2 x}$ の候補としてだった。$\\tan x$ そのものの巻き戻しは、この見方でようやく手に入る。中心の問いへ：**分数の形に書き直すと、内側の微分が分子に隠れていたことが見える**。",
+          text: "$\\tan x = \\dfrac{\\sin x}{\\cos x}$。分母 $\\cos x$ をかたまりと見ると、その微分は $-\\sin x$ で、分子 $\\sin x$ はその $-1$ 倍。だから $\\displaystyle\\int\\tan x\\,dx = -\\log\\lvert\\cos x\\rvert + C$。$\\tan 2x$ なら、内側の $2x$ の微分 $2$ で割って（系列1）$-\\dfrac12\\log\\lvert\\cos 2x\\rvert + C$。$\\displaystyle\\Big[-\\frac12\\log\\cos 2x\\Big]_0^{\\frac{\\pi}{6}} = -\\frac12\\log\\frac12 + \\frac12\\log 1 = \\frac12\\log 2$。系列1 で $\\tan$ が出てきたのは $\\dfrac{1}{\\cos^2 x}$ の候補としてだった。$\\tan x$ そのものの巻き戻しは、この見方でようやく手に入る。中心の問いへ：**分数の形に書き直すと、内側の微分が分子に隠れていたことが見える**。",
         },
       ],
-      formulaPreview: "tan x = sin x/cos x → −log|cos x| → 0 から π/3 で −log(1/2) = log 2",
+      formulaPreview: "tan x = sin x/cos x → −log|cos x|。tan 2x は −(1/2)log|cos 2x| → 0 から π/6 で (1/2)log 2",
     },
   ],
   derivation: `**中心の問い** ｜ 合成関数の微分は「外側の微分 × 内側の微分」だった。**積分する関数に内側の微分がはじめから掛かっていたら、なぜ一気に巻き戻せる？**
@@ -1359,7 +1356,7 @@ $$\\{F(\\square)\\}' = F'(\\square)\\times(\\square)'$$
 
 掛かっているのが内側の微分の**数倍**なら、ずれは数なので割れば直る（step2〜7）。
 
-系列3 では $(x^2+3)^2$ を「かたまりの $2$ 乗」と見て巻き戻そうとして、候補を微分すると $2x$ という関数が**余分に**出てきた。$2x$ は、かたまり $x^2+3$ の微分そのものである。**同じ因子が、はじめから被積分関数に掛かっていれば**——たとえば $x(x^2+3)^2$ なら——候補 $\\dfrac16(x^2+3)^3$ を微分してちょうど元に戻る。ずれは出ないか、数だけになる。
+系列3 では $(x^2+3)^2$ を「かたまりの $2$ 乗」と見て巻き戻そうとして、候補を微分すると $2x$ という関数が**掛かって**出てきた。$2x$ は、かたまり $x^2+3$ の微分そのものである。**同じ因子が、はじめから被積分関数に掛かっていれば**——たとえば $x(x^2+3)^2$ なら——候補 $\\dfrac16(x^2+3)^3$ を微分してちょうど元に戻る。ずれは出ないか、数だけになる。
 
 <<M3INT_CHAIN>>
 
@@ -1369,9 +1366,11 @@ $$\\{F(\\square)\\}' = F'(\\square)\\times(\\square)'$$
 | $\\dfrac1t$ | $\\dfrac{f'(x)}{f(x)}$ | $\\log\\lvert f(x)\\rvert$ | 5・10 |
 | $e^t$ | $f'(x)\\,e^{f(x)}$ | $e^{f(x)}$ | 6 |
 
+<<M3INT_FPRIME_F>>
+
 ## 展開できる形でも、この見方が手間を消す
 
-$x^2(x^3+1)^6$ は、展開すれば系列3 の道でも巻き戻せる。ただし $7$ 項に広がる（step8）。内側の微分 $3x^2$ の $\\dfrac13$ 倍が掛かっていると見れば、$1$ 行で済む。**この見方が消すのは「解けないこと」ではなく「展開する手間」**である。
+$x^2(x^3+1)^{10}$ は、展開すれば系列3 の道でも巻き戻せる。ただし $11$ 項に広がる（step8）。内側の微分 $3x^2$ の $\\dfrac13$ 倍が掛かっていると見れば、$1$ 行で済む。**この見方が消すのは「解けないこと」ではなく「展開する手間」**である。
 
 ## Step の道筋
 
@@ -1379,7 +1378,7 @@ $x^2(x^3+1)^6$ は、展開すれば系列3 の道でも巻き戻せる。ただ
 - **step2〜4**：かたまりの冪 × 内側の微分（の数倍）
 - **step5・6**：外側が $\\dfrac1t$・$e^t$
 - **step7**：外側が平方根
-- **step8（山場）**：展開すると $7$ 項になる形を $1$ 行で
+- **step8（山場）**：展開すると $11$ 項になる形を $1$ 行で
 - **step9**：外側だけで巻き戻せるように、掛かっている式を決める
 - **step10**：$\\tan x$ を分数に書き直して、隠れていた内側の微分を見つける
 
@@ -1595,11 +1594,11 @@ export const M3INT_SUBST_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "step2 と比べてみよう。step2 は「かたまりの式 × かたまりの微分」の形だった。$\\sin^3 3x$ を、その形に作り替えられる？",
+          text: "step2 と比べてみよう。step2 にはかたまりとその微分がそろっていた。今度はどうだろう？",
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、被積分関数がそのままでは「かたまりの微分」を持っていないこと。数Ⅰの三角比の関係式（[相互関係]）で、形を変えられないだろうか？",
+          text: "step2 と変わったのは、被積分関数がそのままでは「かたまりの微分」を持っていないこと。",
         },
         {
           layer: 3,
@@ -1623,7 +1622,7 @@ export const M3INT_SUBST_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
         {
           layer: 2,
-          text: "前題と変わったのは、奇数乗の数が $3$ から $5$ に上がり、関数が $\\cos$ になったこと。",
+          text: "前題と変わったのは、奇数乗の数が $3$ から $5$ に上がったこと。",
         },
         {
           layer: 3,
@@ -1672,7 +1671,7 @@ export const M3INT_SUBST_SERIES: LearnerSeries = {
         { layer: 1, text: "step5 と比べてみよう。すり替えて区間も $t$ に読み替えるのは同じ。すり替えたあとの $t$ の積分は、どんな形になりそう？" },
         {
           layer: 2,
-          text: "step5 と変わったのは、すり替えたあとの $t$ の積分が、$1$ 次式の積を分母にもつ分数になること。系列3 で、そういう分数をどう作り替えた？（[部分分数分解]）",
+          text: "step5 と変わったのは、指数関数が分母に、$2$ つの式の積として入っていること。",
         },
         {
           layer: 3,
@@ -1713,7 +1712,7 @@ $dt = g'(x)\\,dx$ は、本当は分数の約分ではない（$dx$ や $dt$ は
 
 ## Step の道筋
 
-- **step1・2**（事例）：系列4 で解ける積分を、跡で解いてから、$t$ の積分に書き換える
+- **step1・2**（事例）：系列4 で解ける積分を、内側の微分を見つけるやり方で解いてから、$t$ の積分に書き換える
 - **step3・4**（なぜ）：つなぎ目「$(\\ )\\,dx = \\square\\,dt$」を取り出す
 - **step5（山場）**：かたまりの外に、かたまりの微分でない $x$ の式が残る。$x$ を $t$ で表してすり替える
 - **step6**：同じ積分を、根号ごと $t$ と置いて（交差検算）
@@ -2009,10 +2008,10 @@ export const M3INT_PARTS_SERIES: LearnerSeries = {
       compareWithStepId: "step4",
       inputAffordances: ["pi"],
       hints: [
-        { layer: 1, text: "step4 と比べてみよう。三角関数を含む積分であることは同じ。今度は積の形をしていない。積の形にできる？" },
+        { layer: 1, text: "step4 と比べてみよう。三角関数を含むのは同じ。今度の三角関数の中身は？" },
         {
           layer: 2,
-          text: "step4 と変わったのは、三角関数の中身が $\\sqrt{x}$ になっていること。系列5 で、根号をどう扱った？（[置換積分]）",
+          text: "step4 と変わったのは、三角関数の中身が $\\sqrt{x}$ になっていること。",
         },
         {
           layer: 3,
@@ -2099,12 +2098,12 @@ $$\\int f g\\,dx = F g - \\int F g'\\,dx$$
 
 /** M3INT7: 循環と組み合わせ——終わらない道を方程式で閉じる。
  *  山場 step3（C12 ②の変種）：∫e^{3x} sin2x は指数の側を 2 回巻き戻すと出発点 I が係数 −4/9 で戻る（step2）。
- *  素朴な読み「堂々巡りで終わらない」が、I の 1 次方程式を解くと有限の係数 3/13 で外れる。
+ *  素朴な読み「くり返しても終わらない」が、I の 1 次方程式を解くと有限の係数 3/13 で外れる。
  *  胚細胞は「係数が 1 でなければ」（R1 A8）。巻き戻す側は 2 回とも指数に固定（R1 A5）。step2 は step1 と別の a,b（R1 B4）。
  *  step5 は微分の 2 本の式を連立する別の道（原典 p.244 のコメントの道・出典明記）＝「部分積分でしか解けない」と書かない。
- *  step7 は F(0) の条件で C（R1 A4：区間つきは e^{kπ} が残る）。step10 は p(1+e^{−2π})² の p（R1 A4）。
+ *  step7 は F(0) の条件で C（R1 A4：区間つきは e^{kπ} が残る）。step10 は面積を p + q e^{−π/2} + r e^{−π} と書いたときの q（R1 A4）。
  *  原典の族：練15 e^x sin x は指数の係数・角の倍率をずらした。応用4 e^{−x}|sin x| の族（山を無限に足す）は使わず、
- *  step10 は e^{−2x} sin x の山 2 つ（0〜2π）だけ——指数の係数を替え、和の極限を問わない。step8 x cos(log x) は原典に無い。 */
+ *  step10 は初め e^{−2x} sin x の 0〜2π にしたが、応4（e^{−x}|sin x| の 0〜2π）と区間が同じで指数の係数だけ違う族だった（Round 2 B）。さらに問題文の p(1+e^{−2π})² の形が「符号の変わり目で割る」ことを漏らしていた。→ e^{−x} sin 2x の 0〜π・q を問う（そのまま積分すると q = 0 で外れる）。減衰振動の面積という問いそのものは背骨の指定（第5章の合流）なので残した。step8 x cos(log x) は原典に無い。 */
 export const M3INT_CYCLE_SERIES: LearnerSeries = {
   id: "math3_int_cycle_01",
   title: "循環と組み合わせ——終わらない道を方程式で閉じる",
@@ -2113,7 +2112,7 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
   patternId: "M3INT7",
   unit: "math_3",
   revelationLabel:
-    "**同じ積分が式の中にもう一度現れ、その係数が $1$ でなければ、それを未知数と見て方程式を解ける**——堂々巡りは、行き止まりではなく方程式",
+    "**同じ積分が式の中にもう一度現れ、その係数が $1$ でなければ、それを未知数と見て方程式を解ける**——出発点に戻っても、そこで止まらずに方程式として解く",
   drivingQuestion:
     "片方だけ巻き戻すのを $2$ 回くり返したら、出発点の積分がもう一度現れた。**それは行き止まりか、それとも答えへの近道か？**",
   steps: [
@@ -2187,11 +2186,11 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "前題と変わったのは、$I$ を求めきること。数Ⅱで、定積分が式の中に入っていたとき、それを何と見た？（[微分と積分の関係]）",
+          text: "前題と変わったのは、$I$ の値を、前題の式から求めきること。",
         },
         {
           layer: 3,
-          text: "前題の式 $I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x - \\dfrac49I$ を、$I$ を未知数とする $1$ 次方程式と見る。$-\\dfrac49I$ を左に移すと $\\dfrac{13}{9}I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x$、$I = \\dfrac{3}{13}e^{3x}\\sin 2x - \\dfrac{2}{13}e^{3x}\\cos 2x + C$。$p = \\dfrac{3}{13}$。微分すると $e^{3x}\\sin 2x$ に戻る。数Ⅱで、式の中の定積分を $k$ と置いて解いたのと同じ形である。中心の問いへ：**堂々巡りは行き止まりではない。もう一度現れた $I$ を未知数と見れば、$1$ 次方程式で閉じる**——係数が $1$ でない限り。",
+          text: "前題の式 $I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x - \\dfrac49I$ を、$I$ を未知数とする $1$ 次方程式と見る。$-\\dfrac49I$ を左に移すと $\\dfrac{13}{9}I = \\dfrac13e^{3x}\\sin 2x - \\dfrac29e^{3x}\\cos 2x$、$I = \\dfrac{3}{13}e^{3x}\\sin 2x - \\dfrac{2}{13}e^{3x}\\cos 2x + C$。$p = \\dfrac{3}{13}$。微分すると $e^{3x}\\sin 2x$ に戻る。数Ⅱで、式の中の定積分を $k$ と置いて解いたのと同じ形である。中心の問いへ：**もう一度現れた $I$ を未知数と見れば、$1$ 次方程式で閉じる**——係数が $1$ でない限り。",
         },
       ],
       formulaPreview: "(1 + 4/9)I = (1/3)e^(3x)sin 2x − (2/9)e^(3x)cos 2x → p = 3/13",
@@ -2211,7 +2210,7 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。前題で $I$ を閉じた手つきは、そのまま使える？" },
         {
           layer: 2,
-          text: "前題と変わったのは、指数が $e^{-x}$ で、出発点が $\\cos$ であること。",
+          text: "前題と変わったのは、出発点が $\\cos$ であること。",
         },
         {
           layer: 3,
@@ -2251,9 +2250,9 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "正の定数 $a$ について、$\\displaystyle\\int e^{ax}\\sin x\\,dx = e^{ax}\\left(\\frac{3}{10}\\sin x - \\frac{1}{10}\\cos x\\right) + C$ が成り立ちます。$a$ を求めましょう。",
-      answer: 3,
-      answerDisplay: "3",
+        "正の定数 $a$ について、$\\displaystyle\\int e^{ax}\\sin x\\,dx = e^{ax}\\left(\\frac{2}{5}\\sin x - \\frac{1}{5}\\cos x\\right) + C$ が成り立ちます。$a$ を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
       unit: "",
       unknownLabel: "指数の係数 $a$",
       variationFromPrevious: "inverse",
@@ -2266,10 +2265,10 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "右辺を微分して $e^{ax}\\sin x$ に戻ればよい。$\\left\\{e^{ax}\\left(\\dfrac{3}{10}\\sin x - \\dfrac{1}{10}\\cos x\\right)\\right\\}' = e^{ax}\\left\\{\\left(\\dfrac{3a}{10} + \\dfrac{1}{10}\\right)\\sin x + \\left(\\dfrac{3}{10} - \\dfrac{a}{10}\\right)\\cos x\\right\\}$。$\\cos x$ の係数が $0$ になるには $a = 3$。このとき $\\sin x$ の係数は $\\dfrac{9}{10} + \\dfrac{1}{10} = 1$ で、確かに戻る。一般に $\\displaystyle\\int e^{ax}\\sin x\\,dx = \\frac{e^{ax}(a\\sin x - \\cos x)}{a^2 + 1} + C$——$a = 3$ で分母は $10$。中心の問いへ：**閉じた結果も、微分すれば確かめられる。係数の比から、もとの指数も読み戻せる**。",
+          text: "右辺を微分して $e^{ax}\\sin x$ に戻ればよい。$\\left\\{e^{ax}\\left(\\dfrac{2}{5}\\sin x - \\dfrac{1}{5}\\cos x\\right)\\right\\}' = e^{ax}\\left\\{\\left(\\dfrac{2a}{5} + \\dfrac{1}{5}\\right)\\sin x + \\left(\\dfrac{2}{5} - \\dfrac{a}{5}\\right)\\cos x\\right\\}$。$\\cos x$ の係数が $0$ になるには $a = 2$。このとき $\\sin x$ の係数は $\\dfrac{4}{5} + \\dfrac{1}{5} = 1$ で、確かに戻る。一般に $\\displaystyle\\int e^{ax}\\sin x\\,dx = \\frac{e^{ax}(a\\sin x - \\cos x)}{a^2 + 1} + C$——$a = 2$ で分母は $5$。中心の問いへ：**閉じた結果も、微分すれば確かめられる。係数の比から、もとの指数も読み戻せる**。",
         },
       ],
-      formulaPreview: "微分して cos x の係数 3/10 − a/10 = 0 → a = 3",
+      formulaPreview: "微分して cos x の係数 2/5 − a/5 = 0 → a = 2",
     },
     {
       id: "step7",
@@ -2309,11 +2308,11 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "step4 と比べてみよう。step4 は指数 × 三角だった。この積分のどこかに、指数 × 三角が隠れていない？",
+          text: "step4 と比べてみよう。step4 は指数 × 三角だった。今度の三角関数の中身は？",
         },
         {
           layer: 2,
-          text: "step4 と変わったのは、三角関数の中身が $\\log x$ になっていること。系列5 で、中身の込み入った関数をどう扱った？（[置換積分]）",
+          text: "step4 と変わったのは、三角関数の中身が $\\log x$ になっていること。",
         },
         {
           layer: 3,
@@ -2352,11 +2351,11 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "曲線 $y = e^{-2x}\\sin x$（$0 \\le x \\le 2\\pi$）と $x$ 軸で囲まれた部分の面積は、$p\\left(1 + e^{-2\\pi}\\right)^2$ の形になります。$p$ を求めましょう。",
-      answer: 1 / 5,
-      answerDisplay: "1/5",
+        "曲線 $y = e^{-x}\\sin 2x$（$0 \\le x \\le \\pi$）と $x$ 軸で囲まれた部分の面積は、$p + q\\,e^{-\\frac{\\pi}{2}} + r\\,e^{-\\pi}$（$p, q, r$ は有理数）の形に書けます。$q$ を求めましょう。",
+      answer: 4 / 5,
+      answerDisplay: "4/5",
       unit: "",
-      unknownLabel: "面積 $= p\\left(1 + e^{-2\\pi}\\right)^2$ の $p$",
+      unknownLabel: "面積 $= p + q\\,e^{-\\frac{\\pi}{2}} + r\\,e^{-\\pi}$ の $q$",
       variationFromPrevious: "composite",
       compareWithStepId: "step4",
       hints: [
@@ -2366,14 +2365,14 @@ export const M3INT_CYCLE_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step4 と変わったのは、求めるのが面積で、$\\sin x$ が区間の途中で負になること。",
+          text: "step4 と変わったのは、求めるのが積分の値でなく面積であること。",
         },
         {
           layer: 3,
-          text: "step4 の手つきで $\\displaystyle\\int e^{-2x}\\sin x\\,dx = -\\frac{e^{-2x}(2\\sin x + \\cos x)}{5} + C$。$0 \\le x \\le \\pi$ では $y \\ge 0$、$\\pi \\le x \\le 2\\pi$ では $y \\le 0$ なので、面積は区間を $\\pi$ で割って、後半の符号を反転する（数Ⅱの面積と同じ）。前半 $= \\dfrac{1 + e^{-2\\pi}}{5}$、後半の大きさ $= \\dfrac{e^{-2\\pi} + e^{-4\\pi}}{5}$。合計 $\\dfrac{1 + 2e^{-2\\pi} + e^{-4\\pi}}{5} = \\dfrac15\\left(1 + e^{-2\\pi}\\right)^2$。$p = \\dfrac15$。そのまま $0$ から $2\\pi$ まで積分すると $\\dfrac{1 - e^{-4\\pi}}{5}$ になり、面積ではない。中心の問いへ：**循環で閉じた原始関数は、面積の計算にもそのまま使える——符号の変わり目で区間を割ることだけは、別に気をつける**。",
+          text: "step4 の手つきで $\\displaystyle\\int e^{-x}\\sin 2x\\,dx = -\\frac{e^{-x}(\\sin 2x + 2\\cos 2x)}{5} + C$。これを $F(x)$ とすると $F(0) = -\\dfrac25$、$F\\left(\\dfrac{\\pi}{2}\\right) = \\dfrac25e^{-\\frac{\\pi}{2}}$、$F(\\pi) = -\\dfrac25e^{-\\pi}$。$0 \\le x \\le \\dfrac{\\pi}{2}$ では $y \\ge 0$、$\\dfrac{\\pi}{2} \\le x \\le \\pi$ では $y \\le 0$ なので、面積は区間を $\\dfrac{\\pi}{2}$ で割って、後半の符号を反転する（数Ⅱの面積と同じ）。前半 $= \\dfrac25 + \\dfrac25e^{-\\frac{\\pi}{2}}$、後半の大きさ $= \\dfrac25e^{-\\frac{\\pi}{2}} + \\dfrac25e^{-\\pi}$。合計 $\\dfrac25 + \\dfrac45e^{-\\frac{\\pi}{2}} + \\dfrac25e^{-\\pi}$。$q = \\dfrac45$。そのまま $0$ から $\\pi$ まで積分すると $\\dfrac25 - \\dfrac25e^{-\\pi}$ で、$e^{-\\frac{\\pi}{2}}$ の項が消える（$q = 0$）——面積ではない。中心の問いへ：**循環で閉じた原始関数は、面積の計算にもそのまま使える——符号の変わり目で区間を割ることだけは、別に気をつける**。",
         },
       ],
-      formulaPreview: "原始関数 −e^(−2x)(2sin x + cos x)/5、π で割る → (1/5)(1 + e^(−2π))² → p = 1/5",
+      formulaPreview: "F(x) = −e^(−x)(sin 2x + 2cos 2x)/5、π/2 で割る → 2/5 + (4/5)e^(−π/2) + (2/5)e^(−π) → q = 4/5",
     },
   ],
   derivation: `**中心の問い** ｜ 片方だけ巻き戻すのを $2$ 回くり返したら、出発点の積分がもう一度現れた。**それは行き止まりか、それとも答えへの近道か？**
@@ -2396,7 +2395,7 @@ $$I = (\\text{はっきり分かった式}) + m\\,I$$
 
 $$I = \\frac{\\text{はっきり分かった式}}{1 - m}$$
 
-数Ⅱで、式の中に入った定積分を $k$ と置いて解いたのと同じ形である。堂々巡りは行き止まりではなく、**方程式**である。
+数Ⅱで、式の中に入った定積分を $k$ と置いて解いたのと同じ形である。出発点に戻ってきた式は、**$I$ についての方程式**として読める。
 
 $m = 1$ だと $I$ が両辺で消えて何も分からない。$2$ 回目に、$1$ 回目と逆の側を巻き戻すとこれが起きる（$1$ 回目をちょうど逆にたどる）。だから $2$ 回とも同じ側を巻き戻す。
 
@@ -2450,13 +2449,13 @@ $e^{ax}\\sin bx$ と $e^{ax}\\cos bx$ を微分すると、互いに相手を含
 
 **問いに戻ると**
 
-行き止まりではなく、近道だった。戻ってきた積分を未知数と見れば、$1$ 次方程式で閉じる——係数が $1$ でない限り。
+答えへの近道だった。戻ってきた積分を未知数と見れば、$1$ 次方程式で閉じる——係数が $1$ でない限り。
 
 指数 × 三角は、片方だけ巻き戻しても易しくならない。だからこそ、易しくするのではなく、方程式で閉じる。`,
 };
 
 /** M3INT8: 定積分——巻き戻さずに値が分かるとき。
- *  山場 step3（C12 ②）：∫₀^{log3} e^{2x}dx＝4。下端 0 の項を「多項式の癖」で無視すると 9/2 で外れる。
+ *  山場 step3（C12 ②）：∫₀^{log3} e^{2x}dx＝4。下端 0 の項を数Ⅱの多項式の経験から無視すると 9/2 で外れる。
  *  R1 B7：下端 0 で外れるのは cos でなく sin・指数（cos の巻き戻し sin は 0 で 0 なので外れない）→ 指数を使う。
  *  step5 の逆は区間 (0, π/2) を問題文に書き、解は π/3 の 1 個（sympy の solveset で確認＝R1 B6）。
  *  step6 より前に [偶関数]・[奇関数] をリンクしない（R1 B11）。step6 の L3 に「ここで新しいのは分けること」（R1 C2）。
@@ -2534,16 +2533,15 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
       unknownLabel: "$\\displaystyle\\int_0^{\\log 3}e^{2x}\\,dx$",
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step1",
-      inputAffordances: ["log"],
       hints: [
-        { layer: 1, text: "step1 と比べてみよう。端の値の差を取るのは同じ。下の端での値は、いつも省いてよい？" },
+        { layer: 1, text: "step1 と比べてみよう。端の値の差を取るのは同じ。区間と関数は、何が変わった？" },
         {
           layer: 2,
           text: "step1 と変わったのは、下の端が $0$ であること。",
         },
         {
           layer: 3,
-          text: "巻き戻すと $\\dfrac12e^{2x}$。$\\dfrac12e^{2\\log 3} - \\dfrac12e^{0} = \\dfrac12\\cdot 9 - \\dfrac12 = 4$。数Ⅱの多項式では、下の端が $0$ なら下の端の値はいつも $0$ だった（どの項にも $x$ が掛かっているから）。その癖で下の端を省くと $\\dfrac92$ になって外れる。$e^0 = 1$ で、$0$ ではない（$\\sin$ の巻き戻し $-\\cos$ でも、$-\\cos 0 = -1$ が残る）。中心の問いへ：**下の端が $0$ でも、下の端の値は $0$ とは限らない。巻き戻した関数に、端を正直に入れる**。",
+          text: "巻き戻すと $\\dfrac12e^{2x}$。$\\dfrac12e^{2\\log 3} - \\dfrac12e^{0} = \\dfrac12\\cdot 9 - \\dfrac12 = 4$。数Ⅱの多項式では、下の端が $0$ なら下の端の値はいつも $0$ だった（どの項にも $x$ が掛かっているから）。その経験のまま下の端を省くと $\\dfrac92$ になって外れる。$e^0 = 1$ で、$0$ ではない（$\\sin$ の巻き戻し $-\\cos$ でも、$-\\cos 0 = -1$ が残る）。中心の問いへ：**下の端が $0$ でも、下の端の値は $0$ とは限らない。巻き戻した関数に、端を正直に入れる**。",
         },
       ],
       formulaPreview: "(1/2)e^(2x) の差：9/2 − 1/2 = 4（下の端の 1/2 を省くと 9/2）",
@@ -2564,7 +2562,7 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
         { layer: 1, text: "前題と比べてみよう。端の値の差を取るのは同じ。区間の中で、分母はどんな値をとる？" },
         {
           layer: 2,
-          text: "前題と変わったのは、区間の全体で分母 $2x + 1$ が負になっていること。系列2 で、負の側をどう扱った？（[自然対数]）",
+          text: "前題と変わったのは、区間の全体で分母 $2x + 1$ が負になっていること。",
         },
         {
           layer: 3,
@@ -2602,11 +2600,11 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "定積分 $\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}(x^3 + 1)\\cos x\\,dx$ の値を求めましょう。",
+        "定積分 $\\displaystyle\\int_{-\\frac{2\\pi}{3}}^{\\frac{2\\pi}{3}}(x^3 + 1)\\cos x\\,dx$ の値を求めましょう。",
       answer: Math.sqrt(3),
       answerDisplay: "sqrt(3)",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}(x^3 + 1)\\cos x\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_{-\\frac{2\\pi}{3}}^{\\frac{2\\pi}{3}}(x^3 + 1)\\cos x\\,dx$",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step2",
       inputAffordances: ["sqrt"],
@@ -2621,35 +2619,36 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "展開すると $x^3\\cos x + \\cos x$。$x^3\\cos x$ は $x$ を $-x$ にすると符号が逆になる [奇関数] で、左右対称な区間では上と下がちょうど打ち消し合って $0$。$\\cos x$ は左右で同じ形の [偶関数] で、$0$ から $\\dfrac{\\pi}{3}$ の $2$ 倍：$2\\Big[\\sin x\\Big]_0^{\\frac{\\pi}{3}} = 2\\cdot\\dfrac{\\sqrt3}{2} = \\sqrt3$。$x^3\\cos x$ を素直に巻き戻すには部分積分が $3$ 回いる——その手間がまるごと消えた。数Ⅱでも対称な区間で多項式の奇数次の項を消したが、ここで新しいのは、**関数を偶関数の部分と奇関数の部分に分けてから**消すこと。$x^3\\cos x$ を「面積だから正」と読むと外れる。中心の問いへ：**左右対称な区間では、奇関数の部分は巻き戻さずに $0$ と分かる**。",
+          text: "展開すると $x^3\\cos x + \\cos x$。$x^3\\cos x$ は $x$ を $-x$ にすると符号が逆になる [奇関数] で、左右対称な区間では上と下がちょうど打ち消し合って $0$。$\\cos x$ は左右で同じ形の [偶関数] で、$0$ から $\\dfrac{2\\pi}{3}$ の $2$ 倍：$2\\Big[\\sin x\\Big]_0^{\\frac{2\\pi}{3}} = 2\\cdot\\dfrac{\\sqrt3}{2} = \\sqrt3$。$x^3\\cos x$ を素直に巻き戻すには部分積分が $3$ 回いる——その手間がまるごと消えた。数Ⅱでも対称な区間で多項式の奇数次の項を消したが、ここで新しいのは、**関数を偶関数の部分と奇関数の部分に分けてから**消すこと。$x^3\\cos x$ を「面積だから正」と読むと外れる。中心の問いへ：**左右対称な区間では、奇関数の部分は巻き戻さずに $0$ と分かる**。",
         },
       ],
-      formulaPreview: "x³cos x（奇）は 0、cos x（偶）は 2 × (sin(π/3) − sin 0) = √3",
+      formulaPreview: "x³cos x（奇）は 0、cos x（偶）は 2 × (sin(2π/3) − sin 0) = √3",
       figureMarker: "<<M3INT_EVEN_ODD>>",
     },
     {
       id: "step7",
       position: 7,
       questionText:
-        "定積分 $\\displaystyle\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$ の値を求めましょう。",
-      answer: 2,
-      answerDisplay: "2",
+        "定積分 $\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$ の値を求めましょう。",
+      answer: 2 * Math.sqrt(3),
+      answerDisplay: "2sqrt(3)",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_{-\\frac{\\pi}{4}}^{\\frac{\\pi}{4}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}\\frac{1 + x^3}{\\cos^2 x}\\,dx$",
       variationFromPrevious: "same",
       compareWithStepId: "step6",
+      inputAffordances: ["sqrt"],
       hints: [
-        { layer: 1, text: "前題と比べてみよう。区間はやはり左右対称。前題で分けたように、この関数も分けられる？" },
+        { layer: 1, text: "前題と比べてみよう。区間はやはり左右対称。関数は何が違う？" },
         {
           layer: 2,
           text: "前題と変わったのは、$\\cos$ が分母に $2$ 乗で入っていること。",
         },
         {
           layer: 3,
-          text: "$\\dfrac{1}{\\cos^2 x}$ は $x$ を $-x$ にしても同じ（偶関数）、$\\dfrac{x^3}{\\cos^2 x}$ は符号が逆（奇関数）。奇関数の部分は $0$。偶関数の部分は $\\tan x$ の微分なので、$2\\Big[\\tan x\\Big]_0^{\\frac{\\pi}{4}} = 2$。中心の問いへ：**分母に三角関数があっても、偶奇は $x \\to -x$ で確かめられる。奇関数の部分は巻き戻さずに消える**。",
+          text: "$\\dfrac{1}{\\cos^2 x}$ は $x$ を $-x$ にしても同じ（偶関数）、$\\dfrac{x^3}{\\cos^2 x}$ は符号が逆（奇関数）。奇関数の部分は $0$。偶関数の部分は $\\tan x$ の微分なので、$2\\Big[\\tan x\\Big]_0^{\\frac{\\pi}{3}} = 2\\sqrt3$。中心の問いへ：**分母に三角関数があっても、偶奇は $x \\to -x$ で確かめられる。奇関数の部分は巻き戻さずに消える**。",
         },
       ],
-      formulaPreview: "x³/cos²x（奇）は 0、1/cos²x（偶）は 2 × tan(π/4) = 2",
+      formulaPreview: "x³/cos²x（奇）は 0、1/cos²x（偶）は 2 × tan(π/3) = 2√3",
     },
     {
       id: "step8",
@@ -2686,7 +2685,6 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
       unknownLabel: "$\\displaystyle\\int_{-\\log 2}^{\\log 2}e^x\\,dx$",
       variationFromPrevious: "composite",
       compareWithStepId: "step6",
-      inputAffordances: ["log"],
       hints: [
         {
           layer: 1,
@@ -2739,7 +2737,7 @@ export const M3INT_DEFINITE_SERIES: LearnerSeries = {
 
 $$\\int_a^b f(x)\\,dx = F(b) - F(a)$$
 
-三角・指数・$\\log$ でも変わらない。ただし数Ⅱの多項式にあった癖が $2$ つ通用しなくなる。
+三角・指数・$\\log$ でも変わらない。ただし、数Ⅱの多項式では気にしなくてよかったことが $2$ つ出てくる。
 
 - **下の端が $0$ でも、$F(0)$ は $0$ とは限らない**（$e^0 = 1$、$-\\cos 0 = -1$。step3）
 - **$\\log$ は区間の中身の符号を見る**（負の側は絶対値。step4）
@@ -2973,11 +2971,11 @@ export const M3INT_DSUBST_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{3 + \\cos^2 x}\\,dx$ の値を求めましょう。",
-      answer: Math.log(4 / 3),
-      answerDisplay: "log4-log3",
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{4 + \\cos^2 x}\\,dx$ の値を求めましょう。",
+      answer: Math.log(5 / 4),
+      answerDisplay: "log5-log4",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{3 + \\cos^2 x}\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\frac{\\sin 2x}{4 + \\cos^2 x}\\,dx$",
       variationFromPrevious: "same",
       compareWithStepId: "step6",
       inputAffordances: ["log"],
@@ -2989,10 +2987,10 @@ export const M3INT_DSUBST_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$t = 3 + \\cos^2 x$ と置くと $dt = -2\\sin x\\cos x\\,dx = -\\sin 2x\\,dx$。端は $x = 0$ で $t = 4$、$x = \\dfrac{\\pi}{2}$ で $t = 3$——やはり逆向き。$\\displaystyle\\int_4^3\\frac{-dt}{t} = \\int_3^4\\frac{dt}{t} = \\log 4 - \\log 3$。中心の問いへ：**三角関数でも、かたまりが減少なら区間は逆向き。そのまま書いて、符号は $dt$ と入れかえに任せる**。",
+          text: "$t = 4 + \\cos^2 x$ と置くと $dt = -2\\sin x\\cos x\\,dx = -\\sin 2x\\,dx$。端は $x = 0$ で $t = 5$、$x = \\dfrac{\\pi}{2}$ で $t = 4$——やはり逆向き。$\\displaystyle\\int_5^4\\frac{-dt}{t} = \\int_4^5\\frac{dt}{t} = \\log 5 - \\log 4$。中心の問いへ：**三角関数でも、かたまりが減少なら区間は逆向き。そのまま書いて、符号は $dt$ と入れかえに任せる**。",
         },
       ],
-      formulaPreview: "t = 3 + cos²x、端は 4 から 3、dt = −sin 2x dx → ∫₃⁴ dt/t = log 4 − log 3",
+      formulaPreview: "t = 4 + cos²x、端は 5 から 4、dt = −sin 2x dx → ∫₄⁵ dt/t = log 5 − log 4",
     },
     {
       id: "step8",
@@ -3033,11 +3031,11 @@ export const M3INT_DSUBST_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "step3 と比べてみよう。step3 は置いて端を読み替えた。この積分は、置かずに巻き戻せる形をしていない？",
+          text: "step3 と比べてみよう。分母に $2$ 次式のかたまりがあるのは似ている。分子はどうなっている？",
         },
         {
           layer: 2,
-          text: "step3 と変わったのは、分子が分母のちょうど微分になっていること。",
+          text: "step3 と変わったのは、かたまりが $x^2 + x + 1$ で、$1$ 次の項を含むこと。",
         },
         {
           layer: 3,
@@ -3050,11 +3048,11 @@ export const M3INT_DSUBST_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "定積分 $\\displaystyle\\int_1^9\\frac{\\log x}{\\sqrt{x}}\\,dx$ の値を求めましょう。",
-      answer: 12 * Math.log(3) - 8,
-      answerDisplay: "12log3-8",
+        "定積分 $\\displaystyle\\int_1^{25}\\frac{\\log x}{\\sqrt{x}}\\,dx$ の値を求めましょう。",
+      answer: 20 * Math.log(5) - 16,
+      answerDisplay: "20log5-16",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_1^9\\frac{\\log x}{\\sqrt{x}}\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_1^{25}\\frac{\\log x}{\\sqrt{x}}\\,dx$",
       variationFromPrevious: "composite",
       compareWithStepId: "step8",
       inputAffordances: ["log"],
@@ -3062,14 +3060,14 @@ export const M3INT_DSUBST_SERIES: LearnerSeries = {
         { layer: 1, text: "step8 と比べてみよう。根号ごと $t$ と置くのは同じ。置いたあとに現れる形は、巻き戻せる？" },
         {
           layer: 2,
-          text: "step8 と変わったのは、根号の他に $\\log x$ が入っていること。系列6 で、$\\log$ をどう巻き戻した？（[部分積分]）",
+          text: "step8 と変わったのは、分子が $\\log x$ になっていること。",
         },
         {
           layer: 3,
-          text: "$t = \\sqrt{x}$ と置くと $x = t^2$、$dx = 2t\\,dt$、$\\log x = 2\\log t$。端は $x = 1$ で $t = 1$、$x = 9$ で $t = 3$。$\\displaystyle\\int_1^3\\frac{2\\log t}{t}\\cdot 2t\\,dt = 4\\int_1^3\\log t\\,dt$。$\\log t = 1\\times\\log t$ と見て部分積分（系列6）：$4\\Big[t\\log t - t\\Big]_1^3 = 4\\left\\{(3\\log 3 - 3) - (0 - 1)\\right\\} = 12\\log 3 - 8$。置かずに $\\dfrac{1}{\\sqrt x}$ の側を巻き戻す部分積分でも、$\\Big[2\\sqrt{x}\\log x - 4\\sqrt{x}\\Big]_1^9 = 12\\log 3 - 8$ と同じ値になる。中心の問いへ：**区間ごとすり替えてから片方だけ巻き戻す。道具を組み合わせても、端は $t$ の目盛りで一度読み替えればよい**。",
+          text: "$t = \\sqrt{x}$ と置くと $x = t^2$、$dx = 2t\\,dt$、$\\log x = 2\\log t$。端は $x = 1$ で $t = 1$、$x = 25$ で $t = 5$。$\\displaystyle\\int_1^5\\frac{2\\log t}{t}\\cdot 2t\\,dt = 4\\int_1^5\\log t\\,dt$。$\\log t = 1\\times\\log t$ と見て部分積分（系列6）：$4\\Big[t\\log t - t\\Big]_1^5 = 4\\left\\{(5\\log 5 - 5) - (0 - 1)\\right\\} = 20\\log 5 - 16$。置かずに $\\dfrac{1}{\\sqrt x}$ の側を巻き戻す部分積分でも、$\\Big[2\\sqrt{x}\\log x - 4\\sqrt{x}\\Big]_1^{25} = 20\\log 5 - 16$ と同じ値になる。中心の問いへ：**区間ごとすり替えてから片方だけ巻き戻す。道具を組み合わせても、端は $t$ の目盛りで一度読み替えればよい**。",
         },
       ],
-      formulaPreview: "t = √x、端は 1 と 3 → 4∫₁³ log t dt：4 × ((3log 3 − 3) − (0 − 1)) = 12log 3 − 8",
+      formulaPreview: "t = √x、端は 1 と 5 → 4∫₁⁵ log t dt：4 × ((5log 5 − 5) − (0 − 1)) = 20log 5 − 16",
     },
   ],
   derivation: `**中心の問い** ｜ 変数をすり替えたら、区間も一緒にすり替えなければならない。**すり替えた先で、区間はどう変わる？——向きが逆になったら？**
@@ -3143,7 +3141,7 @@ $g$ が減少すると、$g(a) > g(b)$——$t$ の区間は逆向きになる�
  *  F(x) = −(4−x²)^{3/2}/(3x) を問題文で明示し、x=1 での「F′ − √(4−x²)」＝√3（食い違いの零点は x=±2 だけ＝sympy で確認）。
  *  幾何で値が出る定積分を山場にすると弱い（B5）ので、値ではなく「候補が外れる量」を問う。
  *  step5 は「θ の区間から x の端」の向き（R1 B6）。−π/2 ≤ θ ≤ π/2 で sin は 1 対 1 なので解は 1 個。
- *  原典の族：練19（√(1−x²) の 1/2〜1/√2・1/√(4−x²)・1/(x²+3)）と半径・区間をずらした。1/√(4−x²) は区間 −1〜√2 で別の値。
+ *  原典の族：練19（√(1−x²) の 1/2〜1/√2・1/√(4−x²)・1/(x²+3)）と半径・区間をずらした。1/√(4−x²) は初め区間 −1〜√2 にしていたが、それは練19(2) と式・区間・答え（5π/12）まで同じだった（Round 2 B の Major・collide.txt は区間を畳まないので当たらなかった）→ 区間 −√3〜√3（−√2〜√3 は θ の区間が step8 と同じになり、step8 の途中の値が答えと重なった）。
  *  言い回し：原典 p.254・p.255 の決め台詞（円との関わりの言い方・「うまくいくから」・手順が進む様子のたとえ）は使わない。 */
 export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
   id: "math3_int_trigsub_01",
@@ -3173,7 +3171,7 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
         { layer: 1, text: "積分する関数のグラフを描くと、どんな形をしている？" },
         {
           layer: 2,
-          text: "$y = \\sqrt{9 - x^2}$ の両辺を $2$ 乗すると、どんな図形の式になる？（[円の方程式]）",
+          text: "$y = \\sqrt{9 - x^2}$ のグラフの上の点 $(x, y)$ は、原点からどれだけ離れている？（[円の方程式]）",
         },
         {
           layer: 3,
@@ -3225,10 +3223,10 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
       compareWithStepId: "step2",
       inputAffordances: ["pi", "sqrt"],
       hints: [
-        { layer: 1, text: "前題と比べてみよう。同じ半円の、残りの区間。前題の値と step1 の見方を合わせると、何が分かる？" },
+        { layer: 1, text: "前題と比べてみよう。同じ半円の、残りの区間。何が使えそう？" },
         {
           layer: 2,
-          text: "前題と変わったのは、区間が $1$ から $2$ で、前題の区間と合わせると $0$ から $2$ になること。",
+          text: "前題と変わったのは、区間が $1$ から $2$ になったこと。",
         },
         {
           layer: 3,
@@ -3250,10 +3248,10 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
       compareWithStepId: "step2",
       inputAffordances: ["pi", "sqrt"],
       hints: [
-        { layer: 1, text: "step2 と比べてみよう。同じ置き方が使える？ 半径と端が変わると、どこが変わる？" },
+        { layer: 1, text: "step2 と比べてみよう。何が同じで、何が違う？" },
         {
           layer: 2,
-          text: "step2 と変わったのは、半径が $3$ になり、上の端が $\\dfrac{3\\sqrt3}{2}$ になったこと。",
+          text: "step2 と変わったのは、半径が $3$ になったこと。",
         },
         {
           layer: 3,
@@ -3290,11 +3288,11 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
       id: "step6",
       position: 6,
       questionText:
-        "定積分 $\\displaystyle\\int_{-1}^{\\sqrt2}\\frac{dx}{\\sqrt{4 - x^2}}$ の値を求めましょう。",
-      answer: (5 * Math.PI) / 12,
-      answerDisplay: "5π/12",
+        "定積分 $\\displaystyle\\int_{-\\sqrt3}^{\\sqrt3}\\frac{dx}{\\sqrt{4 - x^2}}$ の値を求めましょう。",
+      answer: (2 * Math.PI) / 3,
+      answerDisplay: "2π/3",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_{-1}^{\\sqrt2}\\frac{dx}{\\sqrt{4 - x^2}}$",
+      unknownLabel: "$\\displaystyle\\int_{-\\sqrt3}^{\\sqrt3}\\frac{dx}{\\sqrt{4 - x^2}}$",
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step2",
       inputAffordances: ["pi"],
@@ -3306,10 +3304,10 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$x = 2\\sin\\theta$ と置くと $\\sqrt{4 - x^2} = 2\\cos\\theta$、$dx = 2\\cos\\theta\\,d\\theta$。$\\dfrac{dx}{\\sqrt{4 - x^2}} = \\dfrac{2\\cos\\theta\\,d\\theta}{2\\cos\\theta} = d\\theta$——被積分関数がまるごと消えた。端は $x = -1$ で $\\theta = -\\dfrac{\\pi}{6}$、$x = \\sqrt2$ で $\\theta = \\dfrac{\\pi}{4}$。$\\displaystyle\\int_{-\\frac{\\pi}{6}}^{\\frac{\\pi}{4}}d\\theta = \\frac{\\pi}{4} + \\frac{\\pi}{6} = \\frac{5\\pi}{12}$。値は $\\theta$ の区間の長さ＝円の中心から見た角の大きさ。中心の問いへ：**$\\dfrac{1}{\\sqrt{a^2 - x^2}}$ の定積分は、$\\theta$ の区間の長さ——角度そのもの**。",
+          text: "$x = 2\\sin\\theta$ と置くと $\\sqrt{4 - x^2} = 2\\cos\\theta$、$dx = 2\\cos\\theta\\,d\\theta$。$\\dfrac{dx}{\\sqrt{4 - x^2}} = \\dfrac{2\\cos\\theta\\,d\\theta}{2\\cos\\theta} = d\\theta$——被積分関数がまるごと消えた。端は $x = -\\sqrt3$ で $\\theta = -\\dfrac{\\pi}{3}$、$x = \\sqrt3$ で $\\theta = \\dfrac{\\pi}{3}$。$\\displaystyle\\int_{-\\frac{\\pi}{3}}^{\\frac{\\pi}{3}}d\\theta = \\frac{2\\pi}{3}$。値は $\\theta$ の区間の長さ＝円の中心から見た角の大きさ。中心の問いへ：**$\\dfrac{1}{\\sqrt{a^2 - x^2}}$ の定積分は、$\\theta$ の区間の長さ——角度そのもの**。",
         },
       ],
-      formulaPreview: "x = 2sin θ → dx/√(4 − x²) = dθ、θ は −π/6 から π/4 → 5π/12",
+      formulaPreview: "x = 2sin θ → dx/√(4 − x²) = dθ、θ は −π/3 から π/3 → 2π/3",
     },
     {
       id: "step7",
@@ -3338,7 +3336,6 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "x = 2tan θ → dx/(x² + 4) = (1/2)dθ、θ は 0 から π/3 → π/6",
-      figureMarker: "<<M3INT_TAN_ANGLE>>",
     },
     {
       id: "step8",
@@ -3353,10 +3350,10 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
       compareWithStepId: "step7",
       inputAffordances: ["pi"],
       hints: [
-        { layer: 1, text: "前題と比べてみよう。同じ置き方が使える？ 何が変わる？" },
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
         {
           layer: 2,
-          text: "前題と変わったのは、$a$ が $3$ になり、下の端が負になったこと。",
+          text: "前題と変わったのは、下の端が負になったこと。",
         },
         {
           layer: 3,
@@ -3384,7 +3381,7 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "step2 と変わったのは、かたまりの外に、かたまりの微分 $-2x$ が掛かっていないこと。",
+          text: "step2 と変わったのは、三角関数で置かずに、かたまりのまま巻き戻した候補であること。",
         },
         {
           layer: 3,
@@ -3406,10 +3403,10 @@ export const M3INT_TRIGSUB_SERIES: LearnerSeries = {
       compareWithStepId: "step7",
       inputAffordances: ["pi"],
       hints: [
-        { layer: 1, text: "step7 と比べてみよう。分母を、step7 と同じ「何かの $2$ 乗 ＋ 数」の形に書き直せない？" },
+        { layer: 1, text: "step7 と比べてみよう。分母が $2$ 次式であるのは同じ。何が違う？" },
         {
           layer: 2,
-          text: "step7 と変わったのは、分母に $1$ 次の項 $-2x$ があること。数Ⅰで、$2$ 次式をどう書き直した？（[平方完成]）",
+          text: "step7 と変わったのは、分母に $1$ 次の項 $-2x$ があること。",
         },
         {
           layer: 3,
@@ -3495,10 +3492,11 @@ $\\dfrac{1}{x^2 + a^2}$ に三角関数が効くのは、円があるからで�
  *  境界の項を落とすと −√3/8 で外れる（正答 5π/48 − √3/8＝sympy）。
  *  I_n = ∫₀^{π/2} sinⁿx dx：step5 は n=6 の係数 5/6、step6 は I₆ = 5π/32（I₂ = π/4 は答えにしない＝D6）、step7 は I₅、step8（逆）は I₇ から n=7、
  *  step9 は step5〜8 で使っていない n=4（R1 B7）で cos⁴ と sin⁴ が同じ値（x → π/2 − x の対称＝系列8）。
- *  step10 は J_n = ∫₁^e (log x)ⁿ dx の J₃ = 6 − 2e（R1 A4：e の 1 次式）。原典 応用2 の (log x)²（不定積分）に近い族——
- *  定積分の漸化式で問いは別と判断して残した（R1 B12・Round 2 に見てもらう）。
+ *  step10 は J_n = ∫₁^e x²(log x)ⁿ dx の J₃ = (4e³ + 2)/27 の e³ の係数（指定係数）。初めは ∫₁^e (log x)ⁿ dx にしていたが、
+ *  x = e^t で原典 応用3 の ∫₀¹ tⁿ e^t dt と漸化式・初期値・答え（6 − 2e）まで同じだった（Round 2 C）。x² を掛けると ∫₀¹ tⁿ e^{3t} dt で、
+ *  漸化式も値も原典と別になる——ただし指数の係数だけ違う族ではあるので、その判断を §9 に書いて先生に見てもらう。
  *  原典の族：練20（xe^{−x}・x² sin x の 0〜π/2・log x / x² の 1〜e）・応用3（∫₀¹ xⁿeˣ）・応用4 と形と区間をずらした。
- *  π² の入力は使わない（答えに π² が出ない）。step2 は初め x² sin(x/2) にしたが、途中の sin(x/2) の巻き戻しが原典 練1(6) そのもの（系列6 step7 と同じ当たり方）だったので x² sin(x/3) に替えた。 */
+ *  π² の入力は使わない（答えに π² が出ない）。step2 は初め x² sin(x/2) にしたが、途中の sin(x/2) の巻き戻しが原典 練1(6) そのもの（系列6 step7 と同じ当たり方）だったので x² sin(x/3)（0〜3π/2）に替え、それが練20(2) の x = 3u の拡大（答え 27 倍）だった（Round 2 B）ので x² cos 2x（0〜π/2）にした。 */
 export const M3INT_DPARTS_SERIES: LearnerSeries = {
   id: "math3_int_dparts_01",
   title: "定積分の部分積分と漸化式——1 段ずつ下りて、下から積み上げる",
@@ -3541,11 +3539,11 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
       id: "step2",
       position: 2,
       questionText:
-        "定積分 $\\displaystyle\\int_0^{\\frac{3\\pi}{2}}x^2\\sin\\frac{x}{3}\\,dx$ の値を求めましょう。",
-      answer: 27 * Math.PI - 54,
-      answerDisplay: "27π-54",
+        "定積分 $\\displaystyle\\int_0^{\\frac{\\pi}{2}}x^2\\cos 2x\\,dx$ の値を求めましょう。",
+      answer: -Math.PI / 4,
+      answerDisplay: "-π/4",
       unit: "",
-      unknownLabel: "$\\displaystyle\\int_0^{\\frac{3\\pi}{2}}x^2\\sin\\frac{x}{3}\\,dx$",
+      unknownLabel: "$\\displaystyle\\int_0^{\\frac{\\pi}{2}}x^2\\cos 2x\\,dx$",
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step1",
       inputAffordances: ["pi"],
@@ -3557,10 +3555,10 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$\\sin\\dfrac{x}{3}$ を巻き戻すと $-3\\cos\\dfrac{x}{3}$。$1$ 回目：$\\Big[-3x^2\\cos\\dfrac{x}{3}\\Big]_0^{\\frac{3\\pi}{2}} + \\displaystyle\\int_0^{\\frac{3\\pi}{2}}6x\\cos\\frac{x}{3}\\,dx$。前の項は $\\cos\\dfrac{\\pi}{2} = 0$ で $0$。$2$ 回目：$\\displaystyle\\int_0^{\\frac{3\\pi}{2}}6x\\cos\\frac x3\\,dx = \\Big[18x\\sin\\frac x3\\Big]_0^{\\frac{3\\pi}{2}} - \\int_0^{\\frac{3\\pi}{2}}18\\sin\\frac x3\\,dx = 27\\pi - \\Big[-54\\cos\\frac x3\\Big]_0^{\\frac{3\\pi}{2}} = 27\\pi - 54$。$x^2 \\to x \\to 1$ と $2$ 段下りた。中心の問いへ：**次数が $2$ なら $2$ 段。$1$ 段ずつ下りて、直接巻き戻せる段に着く**。",
+          text: "$\\cos 2x$ を巻き戻すと $\\dfrac12\\sin 2x$。$1$ 回目：$\\Big[\\dfrac{x^2}{2}\\sin 2x\\Big]_0^{\\frac{\\pi}{2}} - \\displaystyle\\int_0^{\\frac{\\pi}{2}}x\\sin 2x\\,dx$。前の項は $\\sin\\pi = 0$ で $0$。$2$ 回目：$\\displaystyle\\int_0^{\\frac{\\pi}{2}}x\\sin 2x\\,dx = \\Big[-\\frac{x}{2}\\cos 2x\\Big]_0^{\\frac{\\pi}{2}} + \\int_0^{\\frac{\\pi}{2}}\\frac12\\cos 2x\\,dx = \\frac{\\pi}{4} + \\Big[\\frac14\\sin 2x\\Big]_0^{\\frac{\\pi}{2}} = \\frac{\\pi}{4}$。合わせて $0 - \\dfrac{\\pi}{4} = -\\dfrac{\\pi}{4}$。$x^2 \\to x \\to 1$ と $2$ 段下りた。中心の問いへ：**次数が $2$ なら $2$ 段。$1$ 段ずつ下りて、直接巻き戻せる段に着く**。",
         },
       ],
-      formulaPreview: "1 回目の端の項は 0 → ∫6x cos(x/3)dx = 27π − ∫18sin(x/3)dx = 27π − 54",
+      formulaPreview: "1 回目の端の項は 0 → −∫x sin 2x dx、∫x sin 2x dx = π/4 + 0 → −π/4",
     },
     {
       id: "step3",
@@ -3578,11 +3576,11 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
         { layer: 1, text: "step1 と比べてみよう。step1 では端の項がきれいな値になった。今度の端でも、そうなる？" },
         {
           layer: 2,
-          text: "step1 と変わったのは、区間の端が $0$ でも、三角関数が $0$ になる点でもないこと。",
+          text: "step1 と変わったのは、区間の下の端が $0$ でなくなったこと。",
         },
         {
           layer: 3,
-          text: "$\\cos 2x$ を巻き戻し（$\\dfrac12\\sin 2x$）、$x$ を残す：$\\Big[\\dfrac{x}{2}\\sin 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} - \\dfrac12\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}\\sin 2x\\,dx$。端の項は $\\dfrac{\\pi}{8}\\cdot 1 - \\dfrac{\\pi}{24}\\cdot\\dfrac12 = \\dfrac{\\pi}{8} - \\dfrac{\\pi}{48} = \\dfrac{5\\pi}{48}$。後の積分は $\\dfrac12\\Big[-\\dfrac12\\cos 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} = \\dfrac14\\cdot\\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{8}$。合わせて $\\dfrac{5\\pi}{48} - \\dfrac{\\sqrt3}{8}$。端の項を「どうせ $0$」と落とすと $-\\dfrac{\\sqrt3}{8}$ になって外れる——step1・2 で端の項が $0$ になったのは、端で $x$ や $\\cos$ が $0$ になったからだった。中心の問いへ：**定積分の部分積分では、端の項が残る。送った先の積分だけでなく、端の項も足す**。",
+          text: "$\\cos 2x$ を巻き戻し（$\\dfrac12\\sin 2x$）、$x$ を残す：$\\Big[\\dfrac{x}{2}\\sin 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} - \\dfrac12\\displaystyle\\int_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}}\\sin 2x\\,dx$。端の項は $\\dfrac{\\pi}{8}\\cdot 1 - \\dfrac{\\pi}{24}\\cdot\\dfrac12 = \\dfrac{\\pi}{8} - \\dfrac{\\pi}{48} = \\dfrac{5\\pi}{48}$。後の積分は $\\dfrac12\\Big[-\\dfrac12\\cos 2x\\Big]_{\\frac{\\pi}{12}}^{\\frac{\\pi}{4}} = \\dfrac14\\cdot\\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{8}$。合わせて $\\dfrac{5\\pi}{48} - \\dfrac{\\sqrt3}{8}$。端の項を「どうせ $0$」と落とすと $-\\dfrac{\\sqrt3}{8}$ になって外れる。step1 でも端の項は $\\dfrac{\\pi}{9}$ で、答えのすべてだった——端の項は、端の値しだいで $0$ にも、$0$ でない数にもなる。中心の問いへ：**定積分の部分積分では、端の項が残る。送った先の積分だけでなく、端の項も足す**。",
         },
       ],
       formulaPreview: "(x/2)sin 2x の差 5π/48 − (1/2)∫sin 2x dx（＝√3/8）→ 5π/48 − √3/8",
@@ -3728,7 +3726,7 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "step6 と比べてみよう。区間は同じ。$\\cos$ の $4$ 乗の積分は、$\\sin$ の $4$ 乗と比べてどうなりそう？",
+          text: "step6 と比べてみよう。区間は同じ。被積分関数の何が違う？",
         },
         {
           layer: 2,
@@ -3736,7 +3734,7 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "漸化式の道：$\\cos$ でも同じ部分積分で $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^n x\\,dx = \\frac{n-1}{n}\\int_0^{\\frac{\\pi}{2}}\\cos^{n-2}x\\,dx$ が出て、$\\dfrac34\\cdot\\dfrac12\\cdot\\dfrac{\\pi}{2} = \\dfrac{3\\pi}{16}$。対称性の道（系列8）：$x = \\dfrac{\\pi}{2} - t$ とすり替えると $\\cos x = \\sin t$、区間は $\\dfrac{\\pi}{2}$ から $0$ に逆向き、$dx = -dt$ で、$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^4 x\\,dx = \\int_0^{\\frac{\\pi}{2}}\\sin^4 t\\,dt = I_4 = \\frac{3\\pi}{16}$。グラフで見れば、$\\cos^4 x$ と $\\sin^4 x$ は $x = \\dfrac{\\pi}{4}$ を軸に左右を入れかえた形。中心の問いへ：**漸化式の道と、対称性の道が同じ値に着く**。",
+          text: "漸化式の道：$\\cos$ でも同じ部分積分で $\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^n x\\,dx = \\frac{n-1}{n}\\int_0^{\\frac{\\pi}{2}}\\cos^{n-2}x\\,dx$ が出て、$\\dfrac34\\cdot\\dfrac12\\cdot\\dfrac{\\pi}{2} = \\dfrac{3\\pi}{16}$。対称性の道（系列9 の区間ごとのすり替え）：$x = \\dfrac{\\pi}{2} - t$ とすり替えると $\\cos x = \\sin t$、区間は $\\dfrac{\\pi}{2}$ から $0$ に逆向き、$dx = -dt$ で、$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\cos^4 x\\,dx = \\int_0^{\\frac{\\pi}{2}}\\sin^4 t\\,dt = I_4 = \\frac{3\\pi}{16}$。グラフで見れば、$\\cos^4 x$ と $\\sin^4 x$ は $x = \\dfrac{\\pi}{4}$ を軸に左右を入れかえた形。中心の問いへ：**漸化式の道と、対称性の道が同じ値に着く**。",
         },
       ],
       formulaPreview: "x = π/2 − t で ∫cos⁴x dx = I₄ = (3/4)(1/2)(π/2) = 3π/16",
@@ -3745,29 +3743,28 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
       id: "step10",
       position: 10,
       questionText:
-        "$J_n = \\displaystyle\\int_1^e(\\log x)^n\\,dx$（$n = 0, 1, 2, \\ldots$）とします。$J_3$ の値を求めましょう。",
-      answer: 6 - 2 * Math.E,
-      answerDisplay: "6-2e",
+        "$J_n = \\displaystyle\\int_1^e x^2(\\log x)^n\\,dx$（$n = 0, 1, 2, \\ldots$）とします。$J_3$ は $a\\,e^3 + b$（$a$、$b$ は有理数）の形に書けます。$a$ を求めましょう。",
+      answer: 4 / 27,
+      answerDisplay: "4/27",
       unit: "",
-      unknownLabel: "$J_3$",
+      unknownLabel: "$J_3 = a\\,e^3 + b$ の $a$",
       variationFromPrevious: "composite",
       compareWithStepId: "step5",
-      inputAffordances: ["e"],
       hints: [
         {
           layer: 1,
-          text: "step5 と比べてみよう。番号のついた積分を、部分積分で $1$ つ下の番号に送るのは同じ。今度は何段ずつ下りる？",
+          text: "step5 と比べてみよう。番号のついた積分を、部分積分で下の番号に送るのは同じ。今度は何段ずつ下りる？",
         },
         {
           layer: 2,
-          text: "step5 と変わったのは、$\\sin$ でなく $\\log$ の $n$ 乗であること。系列6 で、$\\log x$ だけの積分をどう見た？（[部分積分]）",
+          text: "step5 と変わったのは、$\\sin$ の $n$ 乗でなく、$\\log x$ の $n$ 乗が入っていること。",
         },
         {
           layer: 3,
-          text: "$(\\log x)^n = 1\\times(\\log x)^n$ と見て、$1$ を巻き戻し（$x$）、$(\\log x)^n$ を残す：$J_n = \\Big[x(\\log x)^n\\Big]_1^e - \\displaystyle\\int_1^e x\\cdot\\frac{n(\\log x)^{n-1}}{x}\\,dx = e - nJ_{n-1}$（$\\log e = 1$、$\\log 1 = 0$）。いちばん下は $J_0 = \\displaystyle\\int_1^e dx = e - 1$。$J_1 = e - (e - 1) = 1$、$J_2 = e - 2\\cdot 1 = e - 2$、$J_3 = e - 3(e - 2) = 6 - 2e$。今度は $1$ 段ずつ下りた。中心の問いへ：**送り先の段数は関数によって違う（$\\sin$ は $2$ 段、$\\log$ は $1$ 段）。どちらも、いちばん下から積み上げれば着く**。",
+          text: "$x^2$ を巻き戻し（$\\dfrac{x^3}{3}$）、$(\\log x)^n$ を残す（系列6 step8 の選び方。[部分積分]）：$J_n = \\Big[\\dfrac{x^3}{3}(\\log x)^n\\Big]_1^e - \\displaystyle\\int_1^e\\frac{x^3}{3}\\cdot\\frac{n(\\log x)^{n-1}}{x}\\,dx = \\frac{e^3}{3} - \\frac{n}{3}J_{n-1}$（$\\log e = 1$、$\\log 1 = 0$）。いちばん下は $J_0 = \\displaystyle\\int_1^e x^2\\,dx = \\frac{e^3 - 1}{3}$。$J_1 = \\dfrac{e^3}{3} - \\dfrac{e^3 - 1}{9} = \\dfrac{2e^3 + 1}{9}$、$J_2 = \\dfrac{e^3}{3} - \\dfrac23J_1 = \\dfrac{5e^3 - 2}{27}$、$J_3 = \\dfrac{e^3}{3} - J_2 = \\dfrac{4e^3 + 2}{27}$。$a = \\dfrac{4}{27}$。今度は $1$ 段ずつ下りた。中心の問いへ：**送り先の段数は関数によって違う（$\\sin$ は $2$ 段、$\\log$ は $1$ 段）。どちらも、いちばん下から積み上げれば着く**。",
         },
       ],
-      formulaPreview: "J_n = e − n·J_(n−1)、J₀ = e − 1 → J₁ = 1、J₂ = e − 2、J₃ = 6 − 2e",
+      formulaPreview: "J_n = e³/3 − (n/3)·J_(n−1)、J₀ = (e³ − 1)/3 → J₃ = (4e³ + 2)/27 → a = 4/27",
     },
   ],
   derivation: `**中心の問い** ｜ 片方だけ巻き戻すと、積分は $1$ 段易しい積分に送られる。**送り続けたら、どこに着く？**
@@ -3780,7 +3777,7 @@ export const M3INT_DPARTS_SERIES: LearnerSeries = {
 
 $$\\int_a^b f g\\,dx = \\Big[F g\\Big]_a^b - \\int_a^b F g'\\,dx$$
 
-step1・2 で端の項が $0$ になったのは、端で $x$ や $\\cos$ が $0$ になったからである。いつも $0$ だと思って落とすと外れる（step3）。
+step2 の $1$ 回目のように、端で $x$ や $\\sin$ が $0$ になって端の項が消えることもある。けれども step1 では端の項 $\\dfrac{\\pi}{9}$ が答えのすべてだった。いつも $0$ だと思って落とすと外れる（step3）。
 
 <<M3INT_STAIRS>>
 
@@ -3800,7 +3797,7 @@ $$I_n = \\frac{n-1}{n}I_{n-2}$$
 
 - 多項式 × 三角・指数：$1$ 段（次数が $1$ 下がる）
 - $\\sin^n$・$\\cos^n$：$2$ 段（偶数は $I_0$、奇数は $I_1$ に着く）
-- $(\\log x)^n$：$1$ 段（$J_n = e - nJ_{n-1}$。step10）
+- $x^2(\\log x)^n$：$1$ 段（$J_n = \\dfrac{e^3}{3} - \\dfrac{n}{3}J_{n-1}$。step10）
 
 ## Step の道筋
 
@@ -3826,7 +3823,7 @@ $$I_n = \\frac{n-1}{n}I_{n-2}$$
 **出典**
 
 - 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
-  — 第6章「定積分の部分積分」の構成（定積分の部分積分の式／くり返しの部分積分／番号のついた定積分の漸化式）を参考。問題の値・関数・区間はすべてオリジナル（原典の漸化式の例とは別の関数を使った）。
+  — 第6章「定積分の部分積分」の構成（定積分の部分積分の式／くり返しの部分積分／番号のついた定積分の漸化式）を参考。問題の値・関数・区間はすべてオリジナル（step10 は $t = \\log x$ と置くと原典の漸化式の例に近い族になる。係数を替えて、漸化式と値を別にした）。
 
 ────────
 

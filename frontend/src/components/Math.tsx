@@ -40874,7 +40874,7 @@ function M3intHalfAngle() {
       <text x="300" y="24" fontSize="11" fill={accent} textAnchor="end">破線＝波の中心の高さ ?</text>
       <text x={X(0) + 8} y={Y(1) - 8} fontSize="11" fill={stroke} fontStyle="italic">y = cos²x</text>
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
-        2 乗の波を、倍の角の波と定数の和に書き直せる？
+        2 乗した波は、もとの波と比べて、どこが変わった？
       </text>
     </svg>
   );
@@ -40893,7 +40893,7 @@ function M3intDivide() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="左に、分子の次数が分母以上の分数の箱。右に、多項式の箱と、余りを 1 次式で割った箱の 2 つ。中身はどちらも疑問符で、矢印に割り算と書いてある"
+      aria-label="左に、分子の次数が分母以上の分数の箱。右に、多項式の箱と、余りを 1 次式で割った箱の 2 つ。中身はどちらも疑問符で、矢印の操作も疑問符"
     >
       <rect x="14" y="52" width="92" height="56" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
       <text x="60" y="76" fontSize="11" fill={stroke} textAnchor="middle">（2 次式）</text>
@@ -40901,7 +40901,7 @@ function M3intDivide() {
       <text x="60" y="98" fontSize="11" fill={stroke} textAnchor="middle">（1 次式）</text>
       <path d="M 110 80 L 150 80" fill="none" stroke={accent} strokeWidth="1.6" />
       <path d="M 144 75 L 152 80 L 144 85" fill="none" stroke={accent} strokeWidth="1.6" />
-      <text x="130" y="70" fontSize="10" fill={accent} textAnchor="middle">割り算</text>
+      <text x="130" y="70" fontSize="12" fill={accent} textAnchor="middle">?</text>
       <rect x="158" y="56" width="60" height="48" rx="6" fill="none" stroke={muted} strokeWidth="1.2" />
       <text x="188" y="78" fontSize="12" fill={accent} textAnchor="middle">?</text>
       <text x="188" y="96" fontSize="9" fill={muted} textAnchor="middle">多項式</text>
@@ -41356,9 +41356,10 @@ function M3intScales() {
   );
 }
 
-/** 積分法 系列9 step6: 減少する g ですり替えると、x の下の端が t では大きい側に来る（端が入れかわる）。
- *  ★図に答えを描かない★ 具体的な置き方・値は書かない。どちらが上の端になるかは「?」。
- *  この図から読めてしまうもの：「矢印が交差する＝端の左右が入れかわる」ことだけ（符号の扱いは読めない）。 */
+/** 積分法 系列9 step6: x の区間の両端を t = g(x) に通して、t の目盛りでの大小を問う。
+ *  ★図に答えを描かない★ 移った先の位置は「?」。初めは矢印を交差させて描いていたが、それが step6 の発見（減少する g で端が入れかわる）
+ *  そのものだった（Round 2 C）ので、真下に下ろして位置を伏せた。
+ *  この図から読めてしまうもの：「端を g に通す」という手順だけ（step2 で既習）。 */
 function M3intFlip() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
@@ -41369,7 +41370,7 @@ function M3intFlip() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="上の x の数直線の左の端と右の端から、減少する関数 g で t の数直線へ移すと、矢印が交差して左右が入れかわる図。t でどちらが上の端になるかは疑問符"
+      aria-label="上の x の数直線に区間の下の端と上の端。それぞれを t イコール g of x で下の t の数直線へ移すが、移った先の位置は疑問符"
     >
       <line x1="30" y1="50" x2="290" y2="50" stroke={stroke} strokeWidth="1.3" />
       <text x="300" y="54" fontSize="12" fill={stroke}>x</text>
@@ -41380,14 +41381,13 @@ function M3intFlip() {
       <text x="200" y="38" fontSize="11" fill={stroke} textAnchor="middle">上の端</text>
       <line x1="30" y1="125" x2="290" y2="125" stroke={stroke} strokeWidth="1.3" />
       <text x="300" y="129" fontSize="12" fill={stroke}>t</text>
-      <path d="M 100 56 L 230 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
-      <path d="M 200 56 L 70 118" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
-      <circle cx="70" cy="125" r="3.5" fill={accent} />
-      <circle cx="230" cy="125" r="3.5" fill={accent} />
-      <text x="150" y="146" fontSize="13" fill={accent} textAnchor="middle">?</text>
-      <text x="230" y="100" fontSize="10" fill={muted} textAnchor="middle">t = g(x)（減少）</text>
-      <text x="160" y="172" fontSize="11" fill={accent} textAnchor="middle">
-        矢印が交差したら、t の積分はどう書く？
+      <path d="M 100 56 L 100 108" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 200 56 L 200 108" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <text x="100" y="122" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="200" y="122" fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="150" y="92" fontSize="10" fill={muted} textAnchor="middle">t = g(x)</text>
+      <text x="160" y="164" fontSize="11" fill={accent} textAnchor="middle">
+        t の目盛りでは、どちらの端が大きい？
       </text>
     </svg>
   );
