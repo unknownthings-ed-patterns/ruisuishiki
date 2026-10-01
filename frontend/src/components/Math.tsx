@@ -39690,7 +39690,7 @@ function M3daEndsTable() {
       <path d={`M ${x0} 90 L ${x0 + w * 9} 90`} fill="none" stroke={muted} strokeWidth="0.8" />
       <path d={`M ${x0} 30 L ${x0} 124`} fill="none" stroke={muted} strokeWidth="0.8" />
       <text x="160" y="152" fontSize="11" fill={accent} textAnchor="middle">
-        両端の行き先と、抜けの前後——増減表のどこに書き足す？
+        増減表のほかに、何を確かめればグラフが決まる？
       </text>
     </svg>
   );
@@ -40002,7 +40002,7 @@ function M3daWallsMeet() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="右へ進むにつれて、上の壁と下の壁が同じ高さへ寄っていき、その間にはさまれた関数も同じ高さへ向かう模式の図。寄っていく先の高さは疑問符"
+      aria-label="右へ進むにつれて、上の壁と下の壁が同じ高さへ寄っていき、そのあいだに関数がはさまれている模式の図。寄っていく先の高さは疑問符"
     >
       <path d={`M 20 ${L} L 306 ${L}`} fill="none" stroke={muted} strokeWidth="0.8" strokeDasharray="2 3" />
       <polyline points={path(up)} fill="none" stroke={accent} strokeWidth="1.5" />
@@ -40084,10 +40084,10 @@ function M3daJumpSteps() {
       ))}
       <text x={X(1) + 4} y="26" fontSize="10.5" fill={accent}>跳ぶ</text>
       <text x="160" y="176" fontSize="11" fill={accent} textAnchor="middle">
-        跳ぶ所をまたぐと、横切らずに符号が変わる。
+        跳ぶ所では、線が途切れている。
       </text>
       <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
-        表のどの組がそう？（図は 2 区間だけの模式）
+        符号の変わり方は、どうなる？（図は 2 区間だけの模式）
       </text>
     </svg>
   );
@@ -40167,29 +40167,20 @@ function M3daGapSlopes() {
     const xr = 155 + t * 135;
     right.push(`${xr.toFixed(1)},${(85 - 900 / (xr - gx + 6)).toFixed(1)}`);
   }
-  const px = 40;
-  const py = 115 + 900 / (gx + 6 - px);
-  const qx = 270;
-  const qy = 85 - 900 / (qx - gx + 6);
   return (
     <svg
       viewBox="0 0 320 200"
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="縦の破線で示した抜けの左右に、右下がりの曲線が 1 本ずつある。左の曲線上の点 P と右の曲線上の点 Q を結ぶ直線は右上がりになっている"
+      aria-label="縦の破線で示した抜けの左右に、右下がりの曲線が 1 本ずつある"
     >
       <path d={`M ${gx} 14 L ${gx} 168`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 4" />
       <text x={gx + 4} y="24" fontSize="10.5" fill={muted}>抜け</text>
       <polyline points={left.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
       <polyline points={right.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
-      <path d={`M ${px} ${py} L ${qx} ${qy}`} fill="none" stroke={accent} strokeWidth="1.3" />
-      <circle cx={px} cy={py} r="3.4" fill={accent} />
-      <circle cx={qx} cy={qy} r="3.4" fill={accent} />
-      <text x={px - 4} y={py - 9} fontSize="11" fill={accent}>P</text>
-      <text x={qx - 4} y={qy - 9} fontSize="11" fill={accent}>Q</text>
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
-        どこでも右下がり。それでも Q のほうが高いのはなぜ？
+        どこでも右下がり。抜けをまたいで 2 点を比べると？
       </text>
     </svg>
   );
@@ -40323,7 +40314,7 @@ function M3daVelocityArrow() {
       <text x={px + dx / 2} y={py + 15} fontSize="10" fill={muted} textAnchor="middle">x の変化率</text>
       <text x={px + dx + 6} y={py - dy / 2 + 4} fontSize="10" fill={muted}>y の変化率</text>
       <text x="160" y="192" fontSize="11" fill={accent} textAnchor="middle">
-        2 つの変化率をどう組み合わせると、傾きになる？
+        点 P は、右へも上へも動いている
       </text>
     </svg>
   );
