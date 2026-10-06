@@ -15990,6 +15990,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_HUMP_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaHumpSlice />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_REGION_CHOOSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaRegionChoose />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41571,6 +41585,88 @@ function M3intStairsTwo() {
       ))}
       <text x="160" y="170" fontSize="11" fill={accent} textAnchor="middle">
         いちばん下の値は、偶数の列と奇数の列で同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列1 step1: 曲線 y = 2 sin 3x の 1 つ目の山と、縦の切り口 1 本。
+ *  ★図に答えを描かない★ 高さ・右のはしの x の値は書かない（右のはしは「?」）。切り口の長さも「?」。
+ *  山の中は塗らない（塗ると面積の大きさが目で比べられる＝層8）。目盛りは 0 だけ。
+ *  この図から読めるもの：山の形と、縦の切り口が「曲線 − x 軸」であること（step1 の入口の見取り図）。 */
+function M3iaHumpSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 40 + u * 230;
+  const Y = (v: number) => 150 - v * 50;
+  const pts: string[] = [];
+  for (let k = 0; k <= 90; k++) {
+    const u = -0.15 + (1.3 * k) / 90;
+    pts.push(`${X(u).toFixed(1)},${Y(2 * Math.sin(3 * u)).toFixed(1)}`);
+  }
+  const xs = 0.42;
+  return (
+    <svg
+      viewBox="0 0 400 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="曲線 y イコール 2 sin 3x のグラフ。原点から右へ、x 軸の上に山を 1 つ作ってから x 軸にもどる。山の途中の位置 x で、縦に 1 本の切り口が引かれていて、その長さは疑問符。山の右のはしの x の値も疑問符で、高さの目盛りは書かれていない"
+    >
+      <path d={`M 20 ${Y(0)} L 390 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 190 L ${X(0)} 26`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={X(0) - 12} y={Y(0) + 16} fontSize="12" fill={stroke}>O</text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${X(xs)} ${Y(0)} L ${X(xs)} ${Y(2 * Math.sin(3 * xs))}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <text x={X(xs) + 8} y={Y(Math.sin(3 * xs))} fontSize="13" fill={accent}>?</text>
+      <text x={X(xs) - 4} y={Y(0) + 16} fontSize="12" fill={accent}>x</text>
+      <text x={X(Math.PI / 3) - 4} y={Y(0) + 16} fontSize="12" fill={stroke}>?</text>
+      <text x="200" y="16" fontSize="11" fill={accent} textAnchor="middle">
+        この 1 本の長さを、左のはしから右のはしまで足すと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列1 step5: 放物線 x = y² と直線 x = 2y + 3 で囲まれた図形。
+ *  ★切り口は描かない★ 縦の切り口も横の切り口も描かない（描くと「どちらの向きが 1 本で済むか」という
+ *  この step の発見を図が先に決めてしまう＝R1 B-14・層8 の補足）。交点の座標・目盛りも書かない。
+ *  図形は模式（縦横の縮尺は同じだが目盛りが無いので面積は読めない）。キャプションは問いで終える。 */
+function M3iaRegionChoose() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (x: number) => 60 + x * 26;
+  const Y = (y: number) => 140 - y * 26;
+  const par: string[] = [];
+  for (let k = 0; k <= 80; k++) {
+    const y = -1.6 + (4.85 * k) / 80;
+    par.push(`${X(y * y).toFixed(1)},${Y(y).toFixed(1)}`);
+  }
+  const reg: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const y = -1 + (4 * k) / 60;
+    reg.push(`${X(y * y).toFixed(1)},${Y(y).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 340 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="右に開いた放物線と、右上がりの直線。2 本で囲まれた部分が薄く塗られている。目盛りと交点の座標は書かれておらず、切り口も描かれていない。どの向きに切れば切り口の両はしが 1 本ずつの式で書けるか、を問う図"
+    >
+      <path d={`M 20 ${Y(0)} L 330 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 215 L ${X(0)} 20`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={X(0) - 14} y={Y(0) + 14} fontSize="12" fill={stroke}>O</text>
+      <text x="322" y={Y(0) - 6} fontSize="12" fill={stroke}>x</text>
+      <text x={X(0) + 6} y="30" fontSize="12" fill={stroke}>y</text>
+      <polygon points={`${reg.join(" ")} ${X(1).toFixed(1)},${Y(-1).toFixed(1)}`} fill={accent} fillOpacity="0.12" stroke="none" />
+      <polyline points={par.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${X(-0.2)} ${Y(-1.6)} L ${X(10.2)} ${Y(3.6)}`} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="170" y="222" fontSize="11" fill={accent} textAnchor="middle">
+        どの向きに切れば、切り口の両はしが 1 本ずつの式で書ける？
       </text>
     </svg>
   );

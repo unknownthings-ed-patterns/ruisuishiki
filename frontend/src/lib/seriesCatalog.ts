@@ -113,6 +113,10 @@ import {
   MATH3_INTEGRAL_SERIES_LIST,
 } from "./seriesMath3Integral";
 import {
+  M3IA_AREA_SERIES,
+  MATH3_INTEGRAL_APP_SERIES_LIST,
+} from "./seriesMath3IntegralApp";
+import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
   M3V_TRANSFORM_SERIES,
@@ -2271,6 +2275,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "定積分の部分積分と漸化式（1 段ずつ下りて、下から積み上げる）— 端の項は 0 とは限らない。番号のついた積分は漸化式で結ばれ、いちばん下から積み上げる",
   },
+  /* 第7章 積分法の応用（背骨：docs/math3c_integral_app_design.md・2026-10-07 凍結） */
+  {
+    series: M3IA_AREA_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "面積（縦にも横にも切れる）— 曲線が三角・指数・対数になっても縦に切って「上 − 下」。縦だと式が途中で変わる・書けないときは、横に切って「右 − 左」を y で足す",
+  },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
    * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
@@ -2549,6 +2562,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_VARIOUS_DIFF_SERIES_LIST,
   ...MATH3_DIFF_APP_SERIES_LIST,
   ...MATH3_INTEGRAL_SERIES_LIST,
+  ...MATH3_INTEGRAL_APP_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,
