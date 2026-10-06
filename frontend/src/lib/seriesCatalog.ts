@@ -118,6 +118,7 @@ import {
   M3IA_VOLUME_SERIES,
   M3IA_SLICE_SERIES,
   M3IA_DISTANCE_SERIES,
+  M3IA_ARC_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2319,6 +2320,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "速さを足す（変位と道のり）— 速度を足すと位置の変化、速さを足すと道のり。向きが変わる時刻で区間を割る。平面の上では速さは速度ベクトルの大きさ",
+  },
+  {
+    series: M3IA_ARC_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "曲線の長さ（小さな斜辺を足す）— 1 片は三平方の定理で √((Δx)² + (Δy)²)。t で測れば速さ、x で測れば √(1 + (y′)²) を足す。根号を外すときは符号を見る",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

@@ -1612,10 +1612,330 @@ $$\\int_{t_1}^{t_2} v(t)\\,dt = (\\text{位置の変化}) \\qquad \\int_{t_1}^{t
 行って戻る動きで、速度（向きつき）を足すと、戻った分が打ち消し合って位置の変化（変位）になる。道のりがほしければ、向きを捨てた速さを足す。平面の上なら、速さは速度ベクトルの大きさである。`,
 };
 
+/** M3IA6: 曲線の長さ——小さな斜辺を足す（三段）。原典（速さの積分から導く）と逆に、三平方で 1 片を作ってから速さへ。
+ *  段1＝step1・2（線分 2√5＝2 点間の距離／円弧 2π＝弧度法の rθ）
+ *  段2＝step3・4（2 点の距離 ÷ h の行き先＝速さ 4√3／√(1 + (y′)²) の指定点の値 √5）
+ *  段3＝step5（質）(2/3)x^{3/2} 14/3・step6 x²/8 − log x 15/8 + 2log2
+ *  山場 step7（C12 ②）：半径 3 の転がる円の軌跡、t は π〜5π/2（符号の変わり目 2π をまたぎ、長さは 2π でない＝R1 B-8）。
+ *    正答 24 − 6√2、√(sin²) を符号を見ずに外すと 6√2
+ *  step8（逆）：(2/3)((1 + b)^{3/2} − 1) = 52/3 → b = 8／step9：対数らせん型（速さ √2 eᵗ）2√2
+ *  step10（複合・C13 第3章 合成・第6章 2 倍角）：x = 2cos³t, y = 2sin³t, t は 0〜2π/3（π/2 で絶対値の中の符号が変わる）15/4
+ *  族（R1 A-5）：5 族＝x^{3/2}・2 次と対数・サイクロイド・対数らせん・三角の 3 乗。カテナリー（原典 練7）は使っていない。原典 練6（半径 1・0〜2π）・第5章（半径 2）と半径・区間を替えた。
+ *  答え 10 個はすべて相異なる（sympy と数値積分で一致）。 */
+export const M3IA_ARC_SERIES: LearnerSeries = {
+  id: "math3_ia_arc_01",
+  title: "曲線の長さ——小さな斜辺を足す",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 曲がった線には定規が当てられない。小さく区切った 1 片をまっすぐな斜辺とみれば、何を足せば長さになるか。線分・円弧の長さとの一致から始めて、根号が外れる曲線まで $10$ 問。",
+  patternId: "M3IA6",
+  unit: "math_3",
+  revelationLabel:
+    "**1 片の長さは $\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$——三平方の定理**。$t$ で測れば速さ、$x$ で測れば $\\sqrt{1 + (y')^2}$ を足すことになる",
+  drivingQuestion:
+    "曲がった線の長さには定規が当てられない。**小さく区切った 1 片をまっすぐな斜辺とみなせば、何を足せば長さになる？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "直線 $y = 2x + 1$ の $0 \\le x \\le 2$ の部分を小さく区切り、$1$ 片の長さを $\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$ として足し集めます。この部分の長さを求めましょう。",
+      answer: 2 * Math.sqrt(5),
+      answerDisplay: "2√5",
+      unit: "",
+      unknownLabel: "長さ",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "まっすぐな線なら、両はしの $2$ 点の距離で長さが出せる。小さく区切った $1$ 片の長さを足しても、同じ値になりそう？",
+        },
+        {
+          layer: 2,
+          text: "中学で、座標平面の $2$ 点の間のまっすぐな距離はどうやって出した？（[三平方の定理]）",
+        },
+        {
+          layer: 3,
+          text: "$x$ が $\\Delta x$ 進むと $y$ は $2\\Delta x$ 進むので、$1$ 片の長さは $\\sqrt{(\\Delta x)^2 + (2\\Delta x)^2} = \\sqrt5\\,\\Delta x$。足し集めると $\\displaystyle\\int_0^2\\sqrt5\\,dx = 2\\sqrt5$。両はし $(0,\\ 1)$ と $(2,\\ 5)$ の距離 $\\sqrt{2^2 + 4^2} = \\sqrt{20} = 2\\sqrt5$ と一致する。中心の問いへの最初の部分回答：**1 片の長さは三平方の定理で作れる。まっすぐな線なら、足し集めた長さは $2$ 点の距離と同じ**。",
+        },
+      ],
+      formulaPreview: "1 片 √5 Δx → ∫₀² √5 dx = 2√5（2 点の距離と一致）",
+      figureMarker: "<<M3IA_ARC_PIECE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$x = 3\\cos t$、$y = 3\\sin t$（$0 \\le t \\le \\dfrac{2\\pi}{3}$）で表される円弧を小さく区切り、$1$ 片の長さを $\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$ として足し集めます。この円弧の長さを求めましょう。",
+      answer: 2 * Math.PI,
+      answerDisplay: "2π",
+      unit: "",
+      unknownLabel: "円弧の長さ",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、線がまっすぐでなく、$t$ で表された円弧になったこと。" },
+        {
+          layer: 3,
+          text: "$t$ が $\\Delta t$ 進むと、$\\Delta x \\approx -3\\sin t\\,\\Delta t$、$\\Delta y \\approx 3\\cos t\\,\\Delta t$。$1$ 片の長さは $\\sqrt{9\\sin^2 t + 9\\cos^2 t}\\,\\Delta t = 3\\,\\Delta t$。足し集めると $\\displaystyle\\int_0^{\\frac{2\\pi}{3}}3\\,dt = 2\\pi$。半径 $3$・中心角 $\\dfrac{2\\pi}{3}$ の扇形の弧の長さ $3\\times\\dfrac{2\\pi}{3}$（[弧度法]）と一致する。中心の問いへ：**曲がった線でも、1 片の斜辺を足し集めれば、知っている長さと同じ値になる**。",
+        },
+      ],
+      formulaPreview: "1 片 3 Δt → ∫₀^(2π/3) 3 dt = 2π（弧の長さ rθ と一致）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "曲線 $x = t^2$、$y = \\dfrac23t^3$ の上で、$t$ と $t + h$ に対応する $2$ 点の距離を $h$ で割った量は、$h$ を $0$ に近づけるとある値に近づきます。$t = \\sqrt3$ のときのその値を求めましょう。",
+      answer: 4 * Math.sqrt(3),
+      answerDisplay: "4√3",
+      unit: "",
+      unknownLabel: "$h \\to 0$ のときの行き先",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、$1$ 片の長さそのものでなく、それを $t$ の幅で割った量を問われていること。",
+        },
+        {
+          layer: 3,
+          text: "$2$ 点の距離は $\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$、$h$ で割ると $\\sqrt{\\left(\\dfrac{\\Delta x}{h}\\right)^2 + \\left(\\dfrac{\\Delta y}{h}\\right)^2}$。$h \\to 0$ で $\\dfrac{\\Delta x}{h} \\to \\dfrac{dx}{dt} = 2t$、$\\dfrac{\\Delta y}{h} \\to \\dfrac{dy}{dt} = 2t^2$ なので、行き先は $\\sqrt{4t^2 + 4t^4} = 2t\\sqrt{1 + t^2}$。$t = \\sqrt3$ で $2\\sqrt3\\cdot 2 = 4\\sqrt3$。これは第5章の[速度ベクトル]の大きさ（速さ）そのもの。中心の問いへ：**1 片の長さを $t$ の幅で割った行き先は速さ。だから曲線の長さは、速さを $t$ で足したもの**。",
+        },
+      ],
+      formulaPreview: "√((dx/dt)² + (dy/dt)²) = 2t√(1 + t²) → t = √3 で 4√3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "曲線 $y = \\dfrac{x^2}{4}$ を $x$ の目盛りで小さく区切ると、$x$ が $\\Delta x$ 進むときの $1$ 片の長さは、およそ $\\left(\\cdots\\right)\\times\\Delta x$ と書けます。$x = 4$ のときの $\\left(\\cdots\\right)$ の値を求めましょう。",
+      answer: Math.sqrt(5),
+      answerDisplay: "√5",
+      unit: "",
+      unknownLabel: "$x = 4$ での $(\\cdots)$ の値",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、曲線が $t$ でなく $y = (x \\text{ の式})$ で表され、$x$ の目盛りで区切ること。" },
+        {
+          layer: 3,
+          text: "$x$ が $\\Delta x$ 進むと $y$ はおよそ $y'\\,\\Delta x$ 進むので、$1$ 片は $\\sqrt{(\\Delta x)^2 + (y'\\Delta x)^2} = \\sqrt{1 + (y')^2}\\,\\Delta x$。$y' = \\dfrac{x}{2}$、$x = 4$ で $y' = 2$、$\\sqrt{1 + 4} = \\sqrt5$。前題の速さの式で $t$ の代わりに $x$ を目盛りにした（$x = t$ とおいた）形と同じ。中心の問いへ：**$x$ の目盛りで測れば、足すものは $\\sqrt{1 + (y')^2}$**。",
+        },
+      ],
+      formulaPreview: "1 片 √(1 + (y′)²) Δx、y′ = x/2 → x = 4 で √5",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "曲線 $y = \\dfrac23x^{\\frac32}$ の $0 \\le x \\le 3$ の部分の長さを求めましょう。",
+      answer: 14 / 3,
+      answerDisplay: "14/3",
+      unit: "",
+      unknownLabel: "曲線の長さ",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$1$ 片の長さを $1$ 点で測るのでなく、区間全体で足し集めること。" },
+        {
+          layer: 3,
+          text: "$y' = x^{\\frac12}$ なので $\\sqrt{1 + (y')^2} = \\sqrt{1 + x}$。根号の中が $x$ の $1$ 次式になって、巻き戻せる。$\\displaystyle\\int_0^3\\sqrt{1 + x}\\,dx = \\Big[\\dfrac23(1 + x)^{\\frac32}\\Big]_0^3 = \\dfrac23(8 - 1) = \\dfrac{14}{3}$。中心の問いへ：**$1$ 片の長さの式 $\\sqrt{1 + (y')^2}$ が巻き戻せる形なら、曲線の長さが出る**。",
+        },
+      ],
+      formulaPreview: "√(1 + x) → ∫₀³ √(1 + x) dx = (2/3)(8 − 1) = 14/3",
+      figureMarker: "<<M3IA_ARC_SUM>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "曲線 $y = \\dfrac{x^2}{8} - \\log x$ の $1 \\le x \\le 4$ の部分の長さを求めましょう。",
+      answer: 15 / 8 + 2 * Math.log(2),
+      answerDisplay: "15/8+2log2",
+      unit: "",
+      unknownLabel: "曲線の長さ",
+      inputAffordances: ["log"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、曲線が $2$ 次式と対数の差になったこと。" },
+        {
+          layer: 3,
+          text: "$y' = \\dfrac{x}{4} - \\dfrac1x$。$1 + (y')^2 = 1 + \\dfrac{x^2}{16} - \\dfrac12 + \\dfrac{1}{x^2} = \\left(\\dfrac{x}{4} + \\dfrac1x\\right)^2$。$1 \\le x \\le 4$ で $\\dfrac{x}{4} + \\dfrac1x > 0$ なので、根号がそのまま外れる。$\\displaystyle\\int_1^4\\left(\\dfrac{x}{4} + \\dfrac1x\\right)dx = \\Big[\\dfrac{x^2}{8} + \\log x\\Big]_1^4 = \\dfrac{15}{8} + \\log 4 = \\dfrac{15}{8} + 2\\log 2$。中心の問いへ：**根号の中が「何かの $2$ 乗」にまとまれば、根号が外れて足せる**。",
+        },
+      ],
+      formulaPreview: "1 + (y′)² = (x/4 + 1/x)² → ∫₁⁴ (x/4 + 1/x) dx = 15/8 + 2 log 2",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "半径 $3$ の円が $x$ 軸の上を滑らずに転がるとき、円周上の $1$ 点は $x = 3(t - \\sin t)$、$y = 3(1 - \\cos t)$ と動きます。$\\pi \\le t \\le \\dfrac{5\\pi}{2}$ のあいだにこの点が描く曲線の長さを求めましょう。",
+      answer: 24 - 6 * Math.sqrt(2),
+      answerDisplay: "24-6√2",
+      unit: "",
+      unknownLabel: "曲線の長さ",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、$x$ と $y$ が三角関数を含む式で、$t$ の区間が $2\\pi$ をまたぐこと。",
+        },
+        {
+          layer: 3,
+          text: "速さは $\\sqrt{9(1 - \\cos t)^2 + 9\\sin^2 t} = 3\\sqrt{2(1 - \\cos t)}$。[半角の公式] で $1 - \\cos t = 2\\sin^2\\dfrac t2$ なので、$3\\sqrt{4\\sin^2\\dfrac t2} = 6\\left|\\sin\\dfrac t2\\right|$。**$\\sin\\dfrac t2$ は $t = 2\\pi$ で符号が変わる**（$\\pi < t < 2\\pi$ で正、$2\\pi < t < \\dfrac{5\\pi}{2}$ で負）。$\\displaystyle\\int_{\\pi}^{2\\pi}6\\sin\\dfrac t2\\,dt = 12$、$\\displaystyle\\int_{2\\pi}^{\\frac{5\\pi}{2}}\\left(-6\\sin\\dfrac t2\\right)dt = 12 - 6\\sqrt2$。合わせて $24 - 6\\sqrt2$。絶対値を見ずに $6\\sin\\dfrac t2$ のまま足すと $12 - (12 - 6\\sqrt2) = 6\\sqrt2$ になり、外れる。中心の問いへ：**速さは長さなのでいつも $0$ 以上。根号を外すときは、絶対値の中の符号を見て区間を割る**。",
+        },
+      ],
+      formulaPreview: "速さ 6|sin(t/2)| → 12 + (12 − 6√2) = 24 − 6√2（符号を見ないと 6√2）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "曲線 $y = \\dfrac23x^{\\frac32}$ の $0 \\le x \\le b$ の部分の長さが $\\dfrac{52}{3}$ になりました。$b$ を求めましょう。",
+      answer: 8,
+      answerDisplay: "8",
+      unit: "",
+      unknownLabel: "$b$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。今度は何が分かっていて、何を求める？" },
+        { layer: 2, text: "step5 と変わったのは、長さが分かっていて、区間の右のはし $b$ が分からないこと。" },
+        {
+          layer: 3,
+          text: "step5 と同じく、長さは $\\displaystyle\\int_0^b\\sqrt{1 + x}\\,dx = \\dfrac23\\left\\{(1 + b)^{\\frac32} - 1\\right\\}$。これが $\\dfrac{52}{3}$ なので $(1 + b)^{\\frac32} = 27$、$1 + b = 9$、$b = 8$。長さは $b$ とともに増え続けるので、解は $1$ つ。中心の問いへ：**長さを区間のはしの式にしておけば、長さから逆にはしも読める**。",
+        },
+      ],
+      formulaPreview: "(2/3){(1 + b)^(3/2) − 1} = 52/3 → (1 + b)^(3/2) = 27 → b = 8",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$x = e^t\\cos t$、$y = e^t\\sin t$（$0 \\le t \\le \\log 3$）で表される曲線の長さを求めましょう。",
+      answer: 2 * Math.SQRT2,
+      answerDisplay: "2√2",
+      unit: "",
+      unknownLabel: "曲線の長さ",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。何が加わった？" },
+        { layer: 2, text: "step7 と変わったのは、$x$ と $y$ が指数関数と三角関数の積になっていること。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = e^t(\\cos t - \\sin t)$、$\\dfrac{dy}{dt} = e^t(\\sin t + \\cos t)$。$2$ 乗して足すと $e^{2t}\\left\\{(\\cos t - \\sin t)^2 + (\\sin t + \\cos t)^2\\right\\} = 2e^{2t}$。速さは $\\sqrt2\\,e^t$。$\\displaystyle\\int_0^{\\log 3}\\sqrt2\\,e^t\\,dt = \\sqrt2(3 - 1) = 2\\sqrt2$。中心の問いへ：**$2$ 乗して足すと交ざった項が打ち消し合い、根号が外れる形になることがある**。",
+        },
+      ],
+      formulaPreview: "速さ √2 eᵗ → ∫₀^(log 3) √2 eᵗ dt = 2√2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$x = 2\\cos^3 t$、$y = 2\\sin^3 t$（$0 \\le t \\le \\dfrac{2\\pi}{3}$）で表される曲線の長さを求めましょう。",
+      answer: 15 / 4,
+      answerDisplay: "15/4",
+      unit: "",
+      unknownLabel: "曲線の長さ",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、$x$ と $y$ が三角関数の $3$ 乗で表されていること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = -6\\cos^2 t\\sin t$、$\\dfrac{dy}{dt} = 6\\sin^2 t\\cos t$（[合成関数の微分法]）。$2$ 乗して足すと $36\\sin^2 t\\cos^2 t(\\cos^2 t + \\sin^2 t) = 36\\sin^2 t\\cos^2 t$、速さは $6|\\sin t\\cos t| = 3|\\sin 2t|$。$\\sin 2t$ は $t = \\dfrac{\\pi}{2}$ で符号が変わる。$\\displaystyle\\int_0^{\\frac{\\pi}{2}}3\\sin 2t\\,dt = 3$、$\\displaystyle\\int_{\\frac{\\pi}{2}}^{\\frac{2\\pi}{3}}(-3\\sin 2t)\\,dt = \\dfrac32\\left(\\cos\\dfrac{4\\pi}{3} - \\cos\\pi\\right) = \\dfrac34$。合わせて $\\dfrac{15}{4}$。中心の問いへ：**速さの式をまとめる道具（合成関数の微分・倍角）と、符号を見て区間を割る手つきを組み合わせれば、長さが出る**。",
+        },
+      ],
+      formulaPreview: "速さ 3|sin 2t| → 3 + 3/4 = 15/4",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 曲がった線の長さには定規が当てられない。**小さく区切った 1 片をまっすぐな斜辺とみなせば、何を足せば長さになる？**
+
+────────
+
+## 1 片は、三平方の定理で作る
+
+曲線を小さく区切ると、$1$ 片はほとんどまっすぐな線分になる。$x$ が $\\Delta x$、$y$ が $\\Delta y$ 進む $1$ 片の長さは、[三平方の定理] で
+
+$$\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$$
+
+これを足し集めたものが[曲線の長さ]である。まっすぐな線なら、足した長さは両はしの距離と同じになり（step1）、円弧なら扇形の弧の長さと同じになる（step2）。
+
+## ここが胚細胞：どの目盛りで区切るか
+
+**$t$ の目盛りで区切る**と、$1$ 片の長さを $\\Delta t$ で割った行き先は
+
+$$\\sqrt{\\left(\\frac{dx}{dt}\\right)^2 + \\left(\\frac{dy}{dt}\\right)^2}$$
+
+——[速度ベクトル]の大きさ（速さ）である（step3）。だから曲線の長さは、速さを $t$ で足したもの。
+
+**$x$ の目盛りで区切る**と、$\\Delta y \\approx y'\\Delta x$ なので $1$ 片は $\\sqrt{1 + (y')^2}\\,\\Delta x$（step4）。
+
+$$L = \\int_a^b\\sqrt{1 + (y')^2}\\,dx$$
+
+どちらも同じ $1$ 片の長さを、別の目盛りで書いただけである。
+
+**根号を外すときは符号に注意する。** 長さ（速さ）はいつも $0$ 以上。$\\sqrt{(\\cdots)^2}$ を外すと絶対値が出る。符号が変わる場所で区間を割る（step7・10）。
+
+## Step の道筋
+
+- **step1・2**：線分と円弧。足し集めた長さが、知っている長さと一致する
+- **step3・4**：$1$ 片を $t$ の幅で割ると速さ、$x$ の目盛りなら $\\sqrt{1 + (y')^2}$
+- **step5（質的変化）・6**：根号が外れる曲線の長さ
+- **step7（山場）**：転がる円の軌跡。絶対値の中の符号が変わる区間
+- **step8**：長さから区間のはしを逆に読む
+- **step9**：$2$ 乗して足すと交ざった項が消える曲線
+- **step10**：速さの式をまとめ、符号を見て区間を割る（第3章・第6章と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 曲線の長さの公式は覚えなくてよい。小さな $1$ 片を斜辺とする直角三角形を描き、三平方の定理を書けば、$t$ でも $x$ でも足すものが出てくる。
+
+**長さが出る曲線は多くない。** $\\sqrt{1 + (y')^2}$ は、多くの曲線で巻き戻しが込み入る（たとえば放物線 $y = x^2$ の長さは、置換をくり返せば $\\log$ と根号で書けるが、計算はかなり長い）。根号の中が「何かの $2$ 乗」にまとまる曲線（step5・6・9）や、三角関数の公式で $2$ 乗にできる曲線（step7・10）が、高校で長さを求められる代表である。
+
+**この先の景色。** 長さを求められない曲線でも、長さそのものは決まっている。数値で近似して計算する方法（数値積分）や、新しい関数を定義して表す方法（楕円の周の長さを表す「楕円積分」）が、大学で現れる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「速さと弧長」の構成（パラメータ曲線の長さは速さの積分・$y = f(x)$ の長さ・根号の外し方）を参考。この系列は原典と逆に、三平方の定理で $1$ 片を作ってから速さに行く。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$1$ 片の長さは $\\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$——三平方の定理で作れる。それを足し集めれば曲線の長さになる。
+
+$t$ の目盛りで区切れば、足すものは速さ $\\sqrt{(x')^2 + (y')^2}$。$x$ の目盛りなら $\\sqrt{1 + (y')^2}$。根号を外すときは、長さがいつも $0$ 以上であることを忘れずに、符号を見て区間を割る。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
   M3IA_VOLUME_SERIES,
   M3IA_SLICE_SERIES,
   M3IA_DISTANCE_SERIES,
+  M3IA_ARC_SERIES,
 ];

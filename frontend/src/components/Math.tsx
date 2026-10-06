@@ -16060,6 +16060,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_ARC_PIECE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaArcPiece />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_ARC_SUM>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaArcSum />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42019,3 +42033,74 @@ function M3iaVtArea() {
   );
 }
 
+/** 積分法の応用 系列6 step1（辞書「曲線の長さ」にも使う）: 曲線の 1 片と、Δx・Δy を 2 辺とする直角三角形。
+ *  ★図に答えを描かない★ 斜辺の長さは「?」。曲線は模式で、step の直線や円弧の形を写していない。目盛りなし。 */
+function M3iaArcPiece() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${(40 + u * 300).toFixed(1)},${(170 - 120 * Math.pow(u, 1.6)).toFixed(1)}`);
+  }
+  const A = [190, 170 - 120 * Math.pow(0.5, 1.6)];
+  const B = [250, 170 - 120 * Math.pow(0.7, 1.6)];
+  return (
+    <svg
+      viewBox="0 0 380 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="右上がりの曲線の一部を小さく区切った 1 片が強調され、その下に、横の辺がデルタ x、縦の辺がデルタ y の直角三角形が描かれている。斜辺の長さは疑問符"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${A[0]} ${A[1]} L ${B[0]} ${B[1]}`} fill="none" stroke={accent} strokeWidth="3" />
+      <path d={`M ${A[0]} ${A[1]} L ${B[0]} ${A[1]} L ${B[0]} ${B[1]}`} fill="none" stroke={muted} strokeWidth="1.4" strokeDasharray="4 3" />
+      <text x={(A[0] + B[0]) / 2} y={A[1] + 16} fontSize="12" fill={stroke} textAnchor="middle">Δx</text>
+      <text x={B[0] + 8} y={(A[1] + B[1]) / 2 + 4} fontSize="12" fill={stroke}>Δy</text>
+      <text x={(A[0] + B[0]) / 2 - 12} y={(A[1] + B[1]) / 2 - 6} fontSize="13" fill={accent}>?</text>
+      <text x="190" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        この 1 片の長さを Δx と Δy で書くと？ それを足し集めると？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列6 step5: 曲線を小さな線分の折れ線で近似する図（区切りが細かいほど曲線に近づく）。
+ *  ★図に答えを描かない★ 目盛り・曲線の式・長さの値は書かない。折れ線の本数に意味を持たせない（模式）。 */
+function M3iaArcSum() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const f = (u: number) => 170 - 140 * Math.pow(u, 3);
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${(40 + u * 300).toFixed(1)},${f(u).toFixed(1)}`);
+  }
+  const poly: string[] = [];
+  for (let k = 0; k <= 4; k++) {
+    const u = k / 4;
+    poly.push(`${(40 + u * 300).toFixed(1)},${f(u).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 380 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="右上がりの曲線と、その上の点を結んだ折れ線。折れ線の各線分は曲線をまっすぐに近似している。目盛りと長さの値は書かれていない"
+    >
+      <polyline points={pts.join(" ")} fill="none" stroke={muted} strokeWidth="2" />
+      <polyline points={poly.join(" ")} fill="none" stroke={accent} strokeWidth="2" />
+      {poly.map((p, i) => {
+        const [x, y] = p.split(",").map(Number);
+        return <circle key={i} cx={x} cy={y} r="3" fill={accent} />;
+      })}
+      <text x="190" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        区切りを細かくすると、折れ線の長さの合計はどこへ近づく？
+      </text>
+    </svg>
+  );
+}
