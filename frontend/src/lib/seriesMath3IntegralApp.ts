@@ -357,4 +357,317 @@ $$S = \\int_c^d \\big(\\text{右} - \\text{左}\\big)\\,dy$$
 だから、切り口の式が途中で変わったり書けなかったりする向きを避け、$1$ 片が素直に式に書ける向きを選べばよい。曲線が $x = (y$ の式$)$ で与えられているなら、横に切るのが近道になることが多い。`,
 };
 
-export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [M3IA_AREA_SERIES];
+/** M3IA2: パラメータ曲線の面積——幅を t の目盛りで測り直す。
+ *  step1：t を消して y = (x の式) にしてから面積（9）／step2：同じ面積を t のまま書いたときの t² の係数（−2＝step1 の写しにならない）
+ *  step3：x が t の 2 次（t を消すと根号）。当初の y = t(2 − t) は t を消すと 2√x − x（[0,4]）で、x = 4u で原典 練1(1) の √x − x の 16 倍だった（原典照合で検出）→ y = t²(2 − t)。step6 も同族だったので替えた／step4（質）：t が増えると x が減る（素朴に t の小→大で足すと −16、面積 16）
+ *  step5：三角のパラメータで向きが逆（曲線は x 軸に戻らないので、直線 x = −2 で閉じる）／step6（逆）：a⁵/10 = 243/10 → a = 3（5 乗は実数で解が 1 つ）
+ *  山場 step7（C12 ①・範囲つき）：半径 3 の転がる円の軌跡のアーチの下の面積 27π。x = 3(t − sin t) は高校で使う記号では t = (x の式) に書き直せない
+ *    （第5章の転がる円は半径 2。原典の練6〔半径 1〕は長さで、原典にアーチの面積は無い）
+ *  step8：閉じた曲線（x 軸について対称・上半分の 2 倍）／step9（複合・C13 第5章）：接線が水平になる t で区間を決める／step10（複合・C13 第6章 積和）
+ *  答え 10 個はすべて相異なる（9・−2・16/5・16・8・3・27π・8/15・8/5・9√3/16＝sympy と、t を消した積分・数値積分で一致）。
+ *  原典の曲線（(sin t, sin 2t)・(2cos t, sin t)・それらの t ↦ π/2 − t と x・y の入れかえ）と楕円の族は使っていない。 */
+export const M3IA_PARAM_SERIES: LearnerSeries = {
+  id: "math3_ia_param_01",
+  title: "パラメータ曲線の面積——幅を t の目盛りで測り直す",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — $y$ が $x$ の式で書けない曲線でも、縦に切って足せば面積のはず。切り口の幅を $t$ の目盛りで測り直すと何が掛かり、$t$ と $x$ の向きが逆だと何が入れかわるか。$10$ 問で確かめる。",
+  patternId: "M3IA2",
+  unit: "math_3",
+  revelationLabel:
+    "**幅を $t$ の目盛りで測り直すと $\\dfrac{dx}{dt}$ が掛かる**。$t$ が進む向きと $x$ が進む向きが逆なら、足す区間の上と下も入れかわる",
+  drivingQuestion:
+    "$y$ が $x$ の式で書けない曲線でも、縦の切り口を足せば面積のはず。**切り口の幅を $x$ でなく $t$ の目盛りで測ると、何が掛かり、何が入れかわる？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$t$ を使って $x = 2t$、$y = t(3 - t)$（$0 \\le t \\le 3$）と表される曲線があります。この曲線と $x$ 軸で囲まれた部分の面積を求めましょう。",
+      answer: 9,
+      answerDisplay: "9",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$t$ を決めると、曲線の上の点が $1$ つ決まる。この曲線を $y = (x \\text{ の式})$ に直せたら、数Ⅱと同じように面積が出せそう？",
+        },
+        {
+          layer: 2,
+          text: "第5章で、$t$ で表された曲線の上の点は、$t$ を決めるとどう決まった？（[媒介変数表示]）",
+        },
+        {
+          layer: 3,
+          text: "$x = 2t$ から $t = \\dfrac{x}{2}$。代入すると $y = \\dfrac{x}{2}\\left(3 - \\dfrac{x}{2}\\right)$。$t$ が $0$ から $3$ まで動くと、$x$ は $0$ から $6$ まで動く。$\\displaystyle\\int_0^6 \\dfrac{x}{2}\\left(3 - \\dfrac{x}{2}\\right)dx = \\Big[\\dfrac34x^2 - \\dfrac{1}{12}x^3\\Big]_0^6 = 27 - 18 = 9$。中心の問いへの最初の部分回答：**$t$ を消して $y = (x \\text{ の式})$ に直せれば、面積はこれまでどおり縦に切って出せる**。",
+        },
+      ],
+      formulaPreview: "t = x/2 を代入 → y = (x/2)(3 − x/2) → ∫₀⁶ y dx = 9",
+      figureMarker: "<<M3IA_PARAM_POINT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題と同じ面積を、$t$ を消さずに $\\displaystyle\\int_0^3 (at^2 + bt)\\,dt$ の形で書きます。$a$ を求めましょう。",
+      answer: -2,
+      answerDisplay: "-2",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。求める面積は同じ。何が違う？" },
+        { layer: 2, text: "前題と変わったのは、足す目盛りが $x$ でなく $t$ になったこと。" },
+        {
+          layer: 3,
+          text: "縦の切り口の長さは $y = t(3 - t)$、幅は $dx$。$x = 2t$ なので、$t$ が少し進むと $x$ はその $2$ 倍進む（$\\dfrac{dx}{dt} = 2$）。だから $\\displaystyle\\int_0^6 y\\,dx = \\int_0^3 t(3 - t)\\cdot 2\\,dt = \\int_0^3(-2t^2 + 6t)\\,dt$。$a = -2$。計算すると $\\Big[-\\dfrac23t^3 + 3t^2\\Big]_0^3 = -18 + 27 = 9$ で、前題と同じ。中心の問いへ：**幅を $t$ の目盛りで測り直すと $\\dfrac{dx}{dt}$ が掛かる。$t$ を消さなくても面積が出る**。",
+        },
+      ],
+      formulaPreview: "∫₀⁶ y dx = ∫₀³ t(3 − t)·2 dt = ∫₀³ (−2t² + 6t) dt → a = −2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "曲線 $x = t^2$、$y = t^2(2 - t)$（$0 \\le t \\le 2$）と $x$ 軸で囲まれた部分の面積を求めましょう。",
+      answer: 16 / 5,
+      answerDisplay: "16/5",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、$x$ が $t$ の $1$ 次式でなく $2$ 次式になったこと。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2t$。$t$ が $0 \\to 2$ のとき、$x$ は $0 \\to 4$（増える向き）。$\\displaystyle\\int_0^4 y\\,dx = \\int_0^2 t^2(2 - t)\\cdot 2t\\,dt = \\int_0^2(4t^3 - 2t^4)\\,dt = 16 - \\dfrac{64}{5} = \\dfrac{16}{5}$。$t$ を消すと $y = x(2 - \\sqrt x) = 2x - x\\sqrt x$ で、$\\displaystyle\\int_0^4\\left(2x - x^{\\frac32}\\right)dx = 16 - \\dfrac{64}{5}$ と同じになる。中心の問いへ：**$t$ を消すと根号が出る曲線でも、$t$ のまま足せば多項式の積分で済む**。",
+        },
+      ],
+      formulaPreview: "∫₀² t²(2 − t)·2t dt = 16 − 64/5 = 16/5",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "曲線 $x = 4 - t^2$、$y = 3t$（$0 \\le t \\le 2$）と $x$ 軸、$y$ 軸で囲まれた部分の面積を求めましょう。",
+      answer: 16,
+      answerDisplay: "16",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$t$ が増えると $x$ が減っていくこと。" },
+        {
+          layer: 3,
+          text: "$t = 0$ で点 $(4,\\ 0)$、$t = 2$ で点 $(0,\\ 6)$。面積は $x$ の小さい方から $\\displaystyle\\int_0^4 y\\,dx$。$x$ が $0$ から $4$ へ進むとき、$t$ は $2$ から $0$ へ戻る。$\\dfrac{dx}{dt} = -2t$ なので $\\displaystyle\\int_0^4 y\\,dx = \\int_2^0 3t\\cdot(-2t)\\,dt = \\int_0^2 6t^2\\,dt = 16$。$t$ の小さい方から機械的に $\\displaystyle\\int_0^2 3t\\cdot(-2t)\\,dt$ とすると $-16$——面積が負になるのは、足す向きを $x$ と逆に取ったしるし。中心の問いへ：**$t$ が進む向きと $x$ が進む向きが逆なら、区間の上と下も入れかわる**。",
+        },
+      ],
+      formulaPreview: "x: 0 → 4 のとき t: 2 → 0 → ∫₂⁰ 3t·(−2t) dt = 16",
+      figureMarker: "<<M3IA_PARAM_DIRECTION>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "曲線 $x = 2\\cos 2t$、$y = 3\\sin t$（$0 \\le t \\le \\dfrac{\\pi}{2}$）と $x$ 軸、直線 $x = -2$ で囲まれた部分の面積を求めましょう。",
+      answer: 8,
+      answerDisplay: "8",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$x$ と $y$ が三角関数で表されていること。" },
+        {
+          layer: 3,
+          text: "$t = 0$ で点 $(2,\\ 0)$、$t = \\dfrac{\\pi}{2}$ で点 $(-2,\\ 3)$。$\\dfrac{dx}{dt} = -4\\sin 2t \\le 0$ なので、$t$ が進むと $x$ は減る。$\\displaystyle\\int_{-2}^{2} y\\,dx = \\int_{\\frac{\\pi}{2}}^{0} 3\\sin t\\cdot(-4\\sin 2t)\\,dt = \\int_0^{\\frac{\\pi}{2}} 12\\sin t\\sin 2t\\,dt = \\int_0^{\\frac{\\pi}{2}} 24\\sin^2 t\\cos t\\,dt = \\Big[8\\sin^3 t\\Big]_0^{\\frac{\\pi}{2}} = 8$。中心の問いへ：**三角関数のパラメータでも、$t$ と $x$ の向きを見て区間を決める手つきは同じ**。",
+        },
+      ],
+      formulaPreview: "x: −2 → 2 のとき t: π/2 → 0 → ∫₀^(π/2) 24 sin² t cos t dt = 8",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$a$ を正の定数とします。曲線 $x = t^2$、$y = t^2(a - t)$（$0 \\le t \\le a$）と $x$ 軸で囲まれた部分の面積が $\\dfrac{243}{10}$ になりました。$a$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。今度は何が分かっていて、何を求める？" },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、面積が分かっていて、曲線の中の定数 $a$ が分からないこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 2t$ で、$t$ が $0 \\to a$ のとき $x$ は増える向き。$\\displaystyle\\int_0^a t^2(a - t)\\cdot 2t\\,dt = \\Big[\\dfrac{a}{2}t^4 - \\dfrac25t^5\\Big]_0^a = \\dfrac{a^5}{10}$。$\\dfrac{a^5}{10} = \\dfrac{243}{10}$ より $a^5 = 243$、$a = 3$（$5$ 乗して $243$ になる実数は $3$ だけ）。中心の問いへ：**$t$ のまま面積を式にしておけば、面積から曲線の定数も逆に読める**。",
+        },
+      ],
+      formulaPreview: "面積 = a⁵/10 = 243/10 → a⁵ = 243 → a = 3",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "半径 $3$ の円が $x$ 軸の上を滑らずに $1$ 回転するとき、円周上の $1$ 点は $x = 3(t - \\sin t)$、$y = 3(1 - \\cos t)$（$0 \\le t \\le 2\\pi$）と動きます。この曲線と $x$ 軸で囲まれた部分の面積を求めましょう。",
+      answer: 27 * Math.PI,
+      answerDisplay: "27π",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題までと比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、$x$ の式が $t$ と三角関数の差になっていること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 3(1 - \\cos t) \\ge 0$ で、$x$ は増える向き（$0 \\to 6\\pi$）。$\\displaystyle\\int_0^{6\\pi} y\\,dx = \\int_0^{2\\pi} 3(1 - \\cos t)\\cdot 3(1 - \\cos t)\\,dt = 9\\int_0^{2\\pi}\\left(1 - 2\\cos t + \\cos^2 t\\right)dt = 9(2\\pi - 0 + \\pi) = 27\\pi$（$\\cos^2 t = \\dfrac{1 + \\cos 2t}{2}$）。$t$ を消して $y = (x \\text{ の式})$ にしようとすると、$x = 3(t - \\sin t)$ を $t$ について解くことになるが、**高校で使う記号では、この式を $t = (x \\text{ の式})$ に書き直せない**。$t$ を消す道は入口が無く、$t$ のまま足す道なら届く。中心の問いへ：**$t$ を消せない曲線でも、幅を $t$ の目盛りで測り直せば面積が出る**。",
+        },
+      ],
+      formulaPreview: "∫₀^(2π) 9(1 − cos t)² dt = 9(2π + π) = 27π（t を消す道は高校の記号では書けない）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "曲線 $x = 1 - t^2$、$y = t - t^3$（$-1 \\le t \\le 1$）は、原点を出て点 $(1,\\ 0)$ を通り、原点にもどる閉じた曲線です。この曲線で囲まれた部分の面積を求めましょう。",
+      answer: 8 / 15,
+      answerDisplay: "8/15",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、曲線が閉じていて、$x$ 軸の上と下の両方にあること。",
+        },
+        {
+          layer: 3,
+          text: "$t$ を $-t$ にすると、$x$ は同じで $y$ は符号だけ変わる。だから曲線は $x$ 軸について対称で、面積は上半分（$0 \\le t \\le 1$、$y \\ge 0$）の $2$ 倍。上半分では $t$ が $0 \\to 1$ で $x$ は $1 \\to 0$（減る向き）。$\\displaystyle\\int_0^1 y\\,dx = \\int_1^0(t - t^3)(-2t)\\,dt = \\int_0^1(2t^2 - 2t^4)\\,dt = \\dfrac23 - \\dfrac25 = \\dfrac{4}{15}$。$2$ 倍して $\\dfrac{8}{15}$。中心の問いへ：**閉じた曲線でも、上と下に分けて、それぞれ $t$ と $x$ の向きを見れば足せる**。",
+        },
+      ],
+      formulaPreview: "上半分 ∫₁⁰ (t − t³)(−2t) dt = 4/15 → 2 倍して 8/15",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "曲線 $x = t^2$、$y = 3t - t^3$（$t \\ge 0$）の上で、接線が $x$ 軸に平行になる点を $\\mathrm{P}$ とします。原点から $\\mathrm{P}$ までの曲線と、$x$ 軸、$\\mathrm{P}$ を通り $y$ 軸に平行な直線で囲まれた部分の面積を求めましょう。",
+      answer: 8 / 5,
+      answerDisplay: "8/5",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、足す区間のはしが、接線の向きの条件で決まること。",
+        },
+        {
+          layer: 3,
+          text: "接線が $x$ 軸に平行になるのは $\\dfrac{dy}{dt} = 3 - 3t^2 = 0$（かつ $\\dfrac{dx}{dt} = 2t \\ne 0$）のとき。$t \\ge 0$ では $t = 1$ で、$\\mathrm{P}(1,\\ 2)$。$\\displaystyle\\int_0^1 y\\,dx = \\int_0^1(3t - t^3)\\cdot 2t\\,dt = \\int_0^1(6t^2 - 2t^4)\\,dt = 2 - \\dfrac25 = \\dfrac85$。中心の問いへ：**区間のはしの $t$ を[媒介変数表示]の微分で決めれば、あとは $t$ のまま足すだけ**。",
+        },
+      ],
+      formulaPreview: "dy/dt = 0 → t = 1 → ∫₀¹ (3t − t³)·2t dt = 8/5",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "曲線 $x = \\sin 3t$、$y = \\cos t$（$0 \\le t \\le \\dfrac{\\pi}{6}$）と $x$ 軸、$y$ 軸、直線 $x = 1$ で囲まれた部分の面積を求めましょう。",
+      answer: (9 * Math.sqrt(3)) / 16,
+      answerDisplay: "9√3/16",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。何が違う？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、$x$ の中の角が $3t$、$y$ の中の角が $t$ で、角がそろっていないこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{dx}{dt} = 3\\cos 3t \\ge 0$（$0 \\le t \\le \\dfrac{\\pi}{6}$）なので、$x$ は $0 \\to 1$ と増える向き。$\\displaystyle\\int_0^1 y\\,dx = \\int_0^{\\frac{\\pi}{6}}\\cos t\\cdot 3\\cos 3t\\,dt$。積を和に直す（[和積の公式]）：$\\cos 3t\\cos t = \\dfrac12(\\cos 4t + \\cos 2t)$。$\\dfrac32\\Big[\\dfrac{\\sin 4t}{4} + \\dfrac{\\sin 2t}{2}\\Big]_0^{\\frac{\\pi}{6}} = \\dfrac32\\left(\\dfrac{\\sqrt3}{8} + \\dfrac{\\sqrt3}{4}\\right) = \\dfrac{9\\sqrt3}{16}$。中心の問いへ：**$t$ のまま足すと三角関数の積が残ることがある。第6章の積を和に直す手つきで届く**。",
+        },
+      ],
+      formulaPreview: "∫₀^(π/6) 3 cos t cos 3t dt = (3/2)∫ (cos 4t + cos 2t) dt = 9√3/16",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $y$ が $x$ の式で書けない曲線でも、縦の切り口を足せば面積のはず。**切り口の幅を $x$ でなく $t$ の目盛りで測ると、何が掛かり、何が入れかわる？**
+
+────────
+
+## $t$ を消せれば、これまでどおり
+
+[媒介変数表示]の曲線でも、$t$ を消して $y = (x$ の式$)$ に直せれば、縦に切って $\\displaystyle\\int y\\,dx$ を計算すればよい（step1）。ところが $t$ を消すと根号が出たり（step3）、そもそも消せなかったり（step7）する。
+
+## ここが胚細胞：幅を $t$ の目盛りで測り直す
+
+縦の切り口の長さは $y$、幅は $x$ の小さな増え方 $dx$ である。$t$ が少し進んだとき $x$ がどれだけ進むかは $\\dfrac{dx}{dt}$ なので、幅を $t$ の目盛りで測り直すと
+
+$$\\int_{x_1}^{x_2} y\\,dx = \\int_{t_1}^{t_2} y\\,\\frac{dx}{dt}\\,dt$$
+
+になる。$t$ を消さなくても、$t$ のまま足せる（step2・3）。これは第6章の[置換積分]そのもので、パラメータ曲線では置き換えの式がはじめから与えられている。
+
+**向きに注意する。** 左の積分は $x$ の小さい方から大きい方へ足す。$t$ が増えると $x$ が減る曲線では、$x_1 \\to x_2$ に対応する $t$ は**大きい方から小さい方へ**動く（step4・5）。$t$ の小さい方から機械的に足すと、符号が逆の値になる。
+
+## Step の道筋
+
+- **step1・2**：同じ面積を、$t$ を消す道と $t$ のまま足す道で（交差検算）
+- **step3**：$t$ を消すと根号が出る曲線
+- **step4（質的変化）・5**：$t$ と $x$ の向きが逆。区間の上と下が入れかわる
+- **step6**：面積から曲線の定数を逆に読む
+- **step7（山場）**：転がる円の上の点の軌跡。$t$ を消す道は高校で使う記号では入口が無い
+- **step8**：閉じた曲線。上と下に分けて、それぞれの向きで足す
+- **step9**：区間のはしを、接線が水平になる条件で決める（第5章と合流）
+- **step10**：$t$ のまま足すと三角関数の積が残る（第6章の積を和に直す手つきと合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 公式 $\\displaystyle\\int y\\frac{dx}{dt}dt$ を覚えなくてよい。「縦の切り口の長さ × 幅」の幅 $dx$ を、$t$ の小さな進みで書き直すだけである。向きに迷ったら、区間の両はしで $x$ がいくつになるかを書き出し、$x$ の小さい方に対応する $t$ を下に置く。
+
+**$t$ を消す道が閉じても、面積は出る。** step7 の曲線は、$x$ を $t$ の式からもとに戻せないので $y = (x$ の式$)$ に直せない。それでも $t$ のまま足す道は開いている。$y$ が $x$ の関数として書けるかどうかと、面積が求まるかどうかは別のことである。
+
+**この先の景色。** 閉じた曲線の囲む面積を、曲線を $1$ 周たどる積分で表す考え方は、大学で「グリーンの定理」として整理される。$t$ の向き（どちら回りにたどるか）で符号が変わるのは、step4・8 で見た「向きと符号」の話と同じである。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「パラメータ曲線と面積」の構成（$t$ のまま積分するために置換積分で変数を $t$ に置き換える・$t$ が増えると $x$ が減るときの区間の上下）を参考。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+切り口の幅を $t$ の目盛りで測り直すと、$\\dfrac{dx}{dt}$ が掛かる。だから $t$ を消さなくても、$\\displaystyle\\int y\\frac{dx}{dt}dt$ で面積が足せる。
+
+そして、$t$ が進む向きと $x$ が進む向きが逆なら、足す区間の上と下も入れかわる。向きをそろえて足せば、$t$ を消せない曲線でも面積に届く。`,
+};
+
+export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
+  M3IA_AREA_SERIES,
+  M3IA_PARAM_SERIES,
+];

@@ -114,6 +114,7 @@ import {
 } from "./seriesMath3Integral";
 import {
   M3IA_AREA_SERIES,
+  M3IA_PARAM_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2283,6 +2284,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "面積（縦にも横にも切れる）— 曲線が三角・指数・対数になっても縦に切って「上 − 下」。縦だと式が途中で変わる・書けないときは、横に切って「右 − 左」を y で足す",
+  },
+  {
+    series: M3IA_PARAM_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "パラメータ曲線の面積（幅を t の目盛りで測り直す）— y dx の幅を t で測り直すと dx/dt が掛かる。t と x の向きが逆なら区間の上下も入れかわる。t を消せない曲線でも面積は出る",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

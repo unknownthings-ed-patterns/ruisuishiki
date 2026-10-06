@@ -16004,6 +16004,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_PARAM_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaParamPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_PARAM_DIRECTION>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaParamDirection />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41667,6 +41681,75 @@ function M3iaRegionChoose() {
       <path d={`M ${X(-0.2)} ${Y(-1.6)} L ${X(10.2)} ${Y(3.6)}`} fill="none" stroke={stroke} strokeWidth="2" />
       <text x="170" y="222" fontSize="11" fill={accent} textAnchor="middle">
         どの向きに切れば、切り口の両はしが 1 本ずつの式で書ける？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列2 step1: パラメータ曲線 x = 2t, y = t(3 − t) の上の点と、縦の切り口 1 本。
+ *  ★図に答えを描かない★ 目盛り・t の値・端の x の値は書かない。点のラベルは (x(t), y(t)) という形だけ。
+ *  山の中は塗らない（面積の大きさを目で比べさせない＝層8）。 */
+function M3iaParamPoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (x: number) => 40 + x * 52;
+  const Y = (y: number) => 170 - y * 52;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const t = (3 * k) / 60;
+    pts.push(`${X(2 * t).toFixed(1)},${Y(t * (3 - t)).toFixed(1)}`);
+  }
+  const t0 = 1.0;
+  const px = X(2 * t0);
+  const py = Y(t0 * (3 - t0));
+  return (
+    <svg
+      viewBox="0 0 400 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="t を使って表された曲線が、原点から山なりに進んで x 軸にもどる。曲線の上に点が 1 つあり、その座標は x(t) と y(t) と書かれている。その点から x 軸へ縦の切り口が下ろされている。目盛りと t の値は書かれていない"
+    >
+      <path d={`M 20 ${Y(0)} L 390 ${Y(0)}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 200 L ${X(0)} 26`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={X(0) - 14} y={Y(0) + 16} fontSize="12" fill={stroke}>O</text>
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${px} ${Y(0)} L ${px} ${py}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={px - 104} y={py - 10} fontSize="12" fill={accent}>(x(t), y(t))</text>
+      <text x="200" y="18" fontSize="11" fill={accent} textAnchor="middle">
+        t を動かすと点が動く。この切り口を足していくには？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列2 step4: t の目盛りと x の目盛りの向き。
+ *  ★向きの答えを描かない★ t の目盛りは左から右へ進む矢印を描くが、x の目盛りは矢印の向きを描かず「?」にする
+ *  （t と x の向きが逆、というこの step の発見そのものを図が先に描かない＝第6章 Round 2 の Flip の型）。
+ *  端の値（0・2・4）は書かない。 */
+function M3iaParamDirection() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="上に t の目盛り、下に x の目盛りが並んでいる。t の目盛りには左から右へ進む矢印が描かれている。x の目盛りには矢印が無く、どちら向きに進むかは疑問符になっている"
+    >
+      <text x="24" y="52" fontSize="14" fill={stroke}>t</text>
+      <path d="M 50 48 L 310 48" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <path d="M 302 43 L 312 48 L 302 53" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="180" y="34" fontSize="11" fill={muted} textAnchor="middle">t が増える向き</text>
+      <text x="24" y="112" fontSize="14" fill={stroke}>x</text>
+      <path d="M 50 108 L 310 108" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <text x="180" y="96" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="180" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        t が増えるとき、x はどちら向きに進む？
       </text>
     </svg>
   );
