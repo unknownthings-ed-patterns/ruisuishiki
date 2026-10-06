@@ -16074,6 +16074,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_STRIPS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaStrips />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_STRIPS_DOWN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaStripsDown />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42100,6 +42114,77 @@ function M3iaArcSum() {
       })}
       <text x="190" y="204" fontSize="11" fill={accent} textAnchor="middle">
         区切りを細かくすると、折れ線の長さの合計はどこへ近づく？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列7 step1（辞書「区分求積法」にも使う）: 右上がりの曲線の下を 4 本の帯に区切った図。
+ *  ★長方形の上の辺は描かない★（描くと「はみ出す・足りない」が step1・2 の発見として先に見える＝層8 の補足）。
+ *  帯の区切りの縦線と、1 本の帯の高さ「?」だけ。目盛り・関数の式は書かない。色で大小を漏らさない（帯は塗らない）。 */
+function M3iaStrips() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 280;
+  const Y = (v: number) => 170 - v * 110;
+  const f = (u: number) => 0.2 + 0.8 * u * u;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(f(u)).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 380 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="右上がりの曲線の下が、縦の線で 4 本の帯に区切られている。帯の 1 本に、長方形の高さを表す疑問符がある。長方形の上の辺は描かれておらず、目盛りと関数の式は書かれていない"
+    >
+      <path d="M 30 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      {[0, 1, 2, 3, 4].map((j) => (
+        <path key={j} d={`M ${X(j / 4)} 170 L ${X(j / 4)} ${Y(f(j / 4))}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      ))}
+      <text x={X(0.625)} y={Y(f(0.625)) - 10} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="190" y="202" fontSize="11" fill={accent} textAnchor="middle">
+        帯を長方形にするとき、高さをどこで測ると、はみ出す？ 足りない？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列7 step6: 右下がりの曲線の下を 3 本の帯に区切った図。
+ *  ★長方形の上の辺・どちらの端が外側かは描かない★（それがこの step の発見）。帯の区切りと、高さ「?」だけ。 */
+function M3iaStripsDown() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 280;
+  const Y = (v: number) => 170 - v * 120;
+  const f = (u: number) => 1 / (1 + 3 * u);
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(f(u)).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 380 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="右下がりの曲線の下が、縦の線で 3 本の帯に区切られている。帯の 1 本に、長方形の高さを表す疑問符がある。長方形の上の辺は描かれておらず、目盛りは書かれていない"
+    >
+      <path d="M 30 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      {[0, 1, 2, 3].map((j) => (
+        <path key={j} d={`M ${X(j / 3)} 170 L ${X(j / 3)} ${Y(f(j / 3))}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      ))}
+      <text x={X(0.5)} y={Y(f(0.5)) - 12} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="190" y="202" fontSize="11" fill={accent} textAnchor="middle">
+        曲線が下がるとき、はみ出す長方形の高さはどちらの端？
       </text>
     </svg>
   );

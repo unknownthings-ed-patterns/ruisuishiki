@@ -119,6 +119,7 @@ import {
   M3IA_SLICE_SERIES,
   M3IA_DISTANCE_SERIES,
   M3IA_ARC_SERIES,
+  M3IA_RIEMANN_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2328,6 +2329,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "曲線の長さ（小さな斜辺を足す）— 1 片は三平方の定理で √((Δx)² + (Δy)²)。t で測れば速さ、x で測れば √(1 + (y′)²) を足す。根号を外すときは符号を見る",
+  },
+  {
+    series: M3IA_RIEMANN_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "長方形ではさむ（面積を長方形の和の行き先で定め直す）— はみ出す長方形と足りない長方形で面積をはさみ、差が 0 に近づくので面積は 1 つに決まる。外側は端の名前でなく、曲線の上がり下がりで決まる",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
