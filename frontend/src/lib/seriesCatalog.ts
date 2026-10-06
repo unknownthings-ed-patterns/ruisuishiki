@@ -122,6 +122,7 @@ import {
   M3IA_RIEMANN_SERIES,
   M3IA_SUMLIM_SERIES,
   M3IA_INEQ_SERIES,
+  M3IA_FTC_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2355,6 +2356,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "値を求めずにはさむ（定積分と不等式）— 関数の大小は積分しても保たれる。原始関数が書けない積分も、和も、はさめば大きさが言える。評価が保証する n と実際の境目は違う",
+  },
+  {
+    series: M3IA_FTC_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "上端が動く定積分（微積分の基本定理のその先）— 上端が x の式なら、中身に上端を入れた値に上端の導関数が掛かる。中に x があれば外へ出してから微分する",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

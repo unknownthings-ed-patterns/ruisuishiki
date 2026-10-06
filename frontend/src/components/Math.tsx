@@ -16123,6 +16123,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_UPPER_MOVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaUpperMove />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_X_AND_T>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaXAndT />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42397,6 +42411,79 @@ function M3iaStairs1x() {
       <polyline points={p.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
       <text x="190" y="205" fontSize="11" fill={accent} textAnchor="middle">
         長方形の面積の和と、曲線の下の面積。どちらが大きい？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列10 step1: 上端が x から x + h に動いたとき、増える細い帯。
+ *  ★図に答えを描かない★ 帯の高さ・幅の値は「?」。曲線は模式で、cos² の形を写していない。目盛りなし。 */
+function M3iaUpperMove() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 290;
+  const Y = (v: number) => 170 - v * 120;
+  const f = (u: number) => 0.45 + 0.3 * Math.sin(3 * u + 0.4);
+  const p: string[] = [];
+  for (let k = 0; k <= 60; k++) p.push(`${X(k / 60).toFixed(1)},${Y(f(k / 60)).toFixed(1)}`);
+  const a = 0.62;
+  const b = 0.7;
+  const fill: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const u = (a * k) / 40;
+    fill.push(`${X(u).toFixed(1)},${Y(f(u)).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="曲線の下の面積が左のはしから x まで塗られ、x から x たす h までの細い帯が別の色で示されている。帯の高さに疑問符がある"
+    >
+      <path d="M 30 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 170 L ${fill.join(" L ")} L ${X(a)} 170 Z`} fill={accent} fillOpacity="0.12" stroke="none" />
+      <rect x={X(a)} y={Y(f(a))} width={X(b) - X(a)} height={170 - Y(f(a))} fill={accent} fillOpacity="0.4" stroke={accent} strokeWidth="1.2" />
+      <polyline points={p.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={X(a)} y="186" fontSize="12" fill={stroke} textAnchor="middle">x</text>
+      <text x={X(b) + 4} y="186" fontSize="12" fill={stroke}>x + h</text>
+      <text x={X(b) + 6} y={(Y(f(a)) + 170) / 2} fontSize="12" fill={accent}>?</text>
+      <text x="190" y="206" fontSize="11" fill={accent} textAnchor="middle">
+        上端が h だけ動くと、増える帯の面積はおよそ？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列10 step6: 積分の中の x と t の役割。t は 0 から x まで動き、x はそのあいだ止まっている。
+ *  ★図に答えを描かない★ 式の変形・導関数は書かない。 */
+function M3iaXAndT() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 380 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="横の線の上で、t が 0 から x まで動く矢印。x の位置には止まっている印がある。積分のあいだ、x は動かない"
+    >
+      <path d="M 40 100 L 340 100" fill="none" stroke={stroke} strokeWidth="1.5" />
+      <circle cx="60" cy="100" r="3" fill={stroke} />
+      <text x="60" y="122" fontSize="12" fill={stroke} textAnchor="middle">0</text>
+      <path d="M 270 84 L 270 116" fill="none" stroke={accent} strokeWidth="3" />
+      <text x="270" y="134" fontSize="13" fill={accent} textAnchor="middle">x</text>
+      <path d="M 64 80 L 262 80" fill="none" stroke={muted} strokeWidth="1.5" markerEnd="url(#m3iaXtArrow)" />
+      <defs>
+        <marker id="m3iaXtArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M 0 0 L 8 4 L 0 8 Z" fill={muted} />
+        </marker>
+      </defs>
+      <text x="160" y="72" fontSize="12" fill={stroke} textAnchor="middle">t が動く</text>
+      <text x="190" y="170" fontSize="11" fill={accent} textAnchor="middle">
+        t が動くあいだ、中の x はどう扱える？
       </text>
     </svg>
   );

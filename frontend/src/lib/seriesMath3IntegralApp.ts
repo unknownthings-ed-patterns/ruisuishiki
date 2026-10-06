@@ -2862,6 +2862,322 @@ $$\\log(n + 1) \\le \\sum_{k=1}^{n}\\frac1k \\le 1 + \\log n$$
 ただし、不等式が言えるのは「ここまで来れば必ず」まで——ぴったりの境目は言えない。`,
 };
 
+/** M3IA10: 上端が動く定積分——微積分の基本定理のその先。
+ *  橋：数Ⅱ・B algebra2_calc_fund_01（上端が x の定積分の微分）＋第3章 合成関数の微分法。
+ *  数Ⅱ・B 系列11 が歩かせたもの（下端を求める・循環する定積分を k と仮決め）は C12 に置かない。
+ *  step1：∫₀ˣ cos²t dt の導関数の x = π/6 での値 3/4
+ *  山場 step2（C12 ②）：∫₀^(x²) √(1 + t) dt の導関数の x = 3 での値 6√10。素朴に f(x²) と読むと √10（c = 3 ≠ 1/2）
+ *  step3：上端 sin x、(1 + t)²：9√3/8／step4：∫ₓ^(2x) cos t dt（被積分関数を 1/t にしない＝R1 B-2）x = π/3 で −3/2
+ *  step5（逆）：∫₀^(x² + a) t³ dt の導関数の x = 1 での値が 54 → (1 + a)³ = 27 → a = 2（未知が t³ の引数に線形に入り、3 乗は単射＝R1 B-3）
+ *  step6（質）：∫₀ˣ (x − t)t² dt の導関数の x = 2 での値 8/3（x を中に置いたまま微分すると 0）
+ *  step7：∫₀ˣ (x − t)²eᵗ dt の 2 回微分の x = log 3 での値 4
+ *  step8（複合・C13 数Ⅱ・B 系列11 の仮決め）：f(x) = eˣ + x∫₀¹ f(t) dt の f(1) = 3e − 2（原典 練12 の cos・sin・0〜π/3 の形は使っていない）
+ *  step9：∫₁ˣ f(t) dt = x f(x) − (x³ − 1) → x f′(x) = 3x² → f(3) = 12（R1 A-6：練11 と同じ方程式にならない型）
+ *  山場 step10（C12 ②）：∫₀⁴ |√t − x| dt を最小にする x = √2（t の中点 2 での √t の値）。素朴な平均値 4/3 は外れる（原典 応3 の eᵗ・0〜1 は使わない。単調を問題文に書く＝R1 B-3）
+ *  答え 10 個はすべて相異なる（sympy・数値積分で一致）。 */
+export const M3IA_FTC_SERIES: LearnerSeries = {
+  id: "math3_ia_ftc_01",
+  title: "上端が動く定積分——微積分の基本定理のその先",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 上端が $x$ の定積分を微分すると、中身が返る（数Ⅱ）。上端が $x$ の式になったら、中に $x$ が入っていたら、何が返る？ $10$ 問で確かめる。",
+  patternId: "M3IA10",
+  unit: "math_3",
+  revelationLabel:
+    "**上端が $x^2$ なら、上端は $x$ の $2x$ 倍の速さで動く**。中身の値に、上端の動く速さが掛かる",
+  drivingQuestion:
+    "上端が $x$ の定積分を微分すると中身が返る（数Ⅱ）。**上端が $x$ の式になったら、中に $x$ が入っていたら、何が返る？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^x\\cos^2 t\\,dt$ とします。$F'\\left(\\dfrac{\\pi}{6}\\right)$ を求めましょう。",
+      answer: 3 / 4,
+      answerDisplay: "3/4",
+      unit: "",
+      unknownLabel: "$F'\\left(\\frac{\\pi}{6}\\right)$",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "上端の $x$ を少しだけ動かすと、積分の値はどれだけ増える？ 増えた部分は、どんな形の細い帯？",
+        },
+        {
+          layer: 2,
+          text: "数Ⅱで、上端が $x$ の定積分を $x$ で微分すると、何が返ってきた？（[微分と積分の関係]）",
+        },
+        {
+          layer: 3,
+          text: "上端が $x$ から $x + h$ に動くと、増えるのは幅 $h$・高さおよそ $\\cos^2 x$ の細い帯。$h$ で割って $h \\to 0$ とすると $F'(x) = \\cos^2 x$——積分の中身に上端を入れたものが返る。$F'\\left(\\dfrac\\pi6\\right) = \\left(\\dfrac{\\sqrt3}{2}\\right)^2 = \\dfrac34$。中身が三角関数でも、数Ⅱの多項式と同じことが起きる。中心の問いへの最初の部分回答：**上端が $x$ なら、微分すると中身に上端を入れたものが返る**。",
+        },
+      ],
+      formulaPreview: "F′(x) = cos²x → F′(π/6) = 3/4",
+      figureMarker: "<<M3IA_UPPER_MOVE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^{x^2}\\sqrt{1 + t}\\,dt$ とします。$F'(3)$ を求めましょう。",
+      answer: 6 * Math.sqrt(10),
+      answerDisplay: "6√10",
+      unit: "",
+      unknownLabel: "$F'(3)$",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、上端が $x$ でなく $x^2$ になったこと。" },
+        {
+          layer: 3,
+          text: "$\\sqrt{1 + t}$ の原始関数を $G(t)$ とすると、$F(x) = G(x^2) - G(0)$。[合成関数の微分法] で $F'(x) = G'(x^2)\\cdot 2x = 2x\\sqrt{1 + x^2}$。$F'(3) = 6\\sqrt{10}$。前題と同じつもりで中身に上端を入れただけの $\\sqrt{1 + x^2}$ とすると $\\sqrt{10}$ になり、$2x = 6$ 倍が抜けて外れる。$x$ が少し動くと上端 $x^2$ は $2x$ 倍の幅で動き、帯の幅も $2x$ 倍になるから。中心の問いへ：**上端が $x$ の式なら、中身の値に、上端が動く速さ（上端の導関数）が掛かる**。",
+        },
+      ],
+      formulaPreview: "F′(x) = √(1 + x²)·2x → F′(3) = 6√10（2x を掛け忘れると √10）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^{\\sin x}(1 + t)^2\\,dt$ とします。$F'\\left(\\dfrac{\\pi}{6}\\right)$ を求めましょう。",
+      answer: (9 * Math.sqrt(3)) / 8,
+      answerDisplay: "9√3/8",
+      unit: "",
+      unknownLabel: "$F'\\left(\\frac{\\pi}{6}\\right)$",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、上端が三角関数 $\\sin x$ になったこと。" },
+        {
+          layer: 3,
+          text: "前題と同じく、中身に上端を入れ、上端の導関数を掛ける：$F'(x) = (1 + \\sin x)^2\\cos x$。$x = \\dfrac\\pi6$ で $\\left(\\dfrac32\\right)^2\\cdot\\dfrac{\\sqrt3}{2} = \\dfrac{9\\sqrt3}{8}$。中心の問いへ：**上端が微分できる式なら、どんな式でも、上端の導関数を掛ければよい**。",
+        },
+      ],
+      formulaPreview: "F′(x) = (1 + sin x)²·cos x → (3/2)²·(√3/2) = 9√3/8",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$F(x) = \\displaystyle\\int_x^{2x}\\cos t\\,dt$ とします。$F'\\left(\\dfrac{\\pi}{3}\\right)$ を求めましょう。",
+      answer: -3 / 2,
+      answerDisplay: "-3/2",
+      unit: "",
+      unknownLabel: "$F'\\left(\\frac{\\pi}{3}\\right)$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、上端だけでなく下端も $x$ とともに動くこと。" },
+        {
+          layer: 3,
+          text: "$\\cos t$ の原始関数 $\\sin t$ で $F(x) = \\sin 2x - \\sin x$ と書ける。微分すると $F'(x) = 2\\cos 2x - \\cos x$——上端からは「中身 × 上端の導関数」が足され、下端からは同じものが引かれる。$x = \\dfrac\\pi3$ で $2\\cos\\dfrac{2\\pi}{3} - \\cos\\dfrac\\pi3 = -1 - \\dfrac12 = -\\dfrac32$。中心の問いへ：**下端が動くと、その分が引かれる。上端と下端は、原始関数に入れて引く形で扱えばよい**。",
+        },
+      ],
+      formulaPreview: "F′(x) = 2cos 2x − cos x → −1 − 1/2 = −3/2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^{x^2 + a}t^3\\,dt$（$a$ は実数の定数）について、$F'(1) = 54$ となりました。$a$ を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。今度は何が分かっていて、何を求める？" },
+        { layer: 2, text: "step2 と変わったのは、導関数の値が分かっていて、上端の式の中の定数 $a$ が分からないこと。" },
+        {
+          layer: 3,
+          text: "step2 と同じく $F'(x) = (x^2 + a)^3\\cdot 2x$。$F'(1) = 2(1 + a)^3 = 54$ より $(1 + a)^3 = 27$。$3$ 乗して $27$ になる実数は $3$ だけなので $1 + a = 3$、$a = 2$。中心の問いへ：**上端の速さを掛ける形が分かっていれば、導関数の値から上端の式を逆に決められる**。",
+        },
+      ],
+      formulaPreview: "2(1 + a)³ = 54 → (1 + a)³ = 27 → a = 2",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^x(x - t)t^2\\,dt$ とします。$F'(2)$ を求めましょう。",
+      answer: 8 / 3,
+      answerDisplay: "8/3",
+      unit: "",
+      unknownLabel: "$F'(2)$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "step1 と変わったのは、積分の中身にも $x$ が入っていること。" },
+        {
+          layer: 3,
+          text: "積分は $t$ について行うので、中の $x$ は積分のあいだ定数。外に出すと $F(x) = x\\displaystyle\\int_0^x t^2\\,dt - \\int_0^x t^3\\,dt$。[積の微分] で $F'(x) = \\displaystyle\\int_0^x t^2\\,dt + x\\cdot x^2 - x^3 = \\int_0^x t^2\\,dt = \\dfrac{x^3}{3}$。$F'(2) = \\dfrac83$。step1 と同じつもりで中身に上端を入れると $(x - x)x^2 = 0$ になり、外れる。中心の問いへ：**中身に $x$ があれば、まず積分の外へ出す。それから上端の規則を使う**。",
+        },
+      ],
+      formulaPreview: "F = x∫₀ˣ t² dt − ∫₀ˣ t³ dt → F′ = ∫₀ˣ t² dt = x³/3 → 8/3",
+      figureMarker: "<<M3IA_X_AND_T>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$F(x) = \\displaystyle\\int_0^x(x - t)^2e^t\\,dt$ とします。$F''(\\log 3)$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$F''(\\log 3)$",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$x - t$ が $2$ 乗で、$2$ 回微分した値を問われていること。" },
+        {
+          layer: 3,
+          text: "$(x - t)^2 = x^2 - 2xt + t^2$ と展開して $x$ を外へ出す：$F(x) = x^2\\displaystyle\\int_0^x e^t\\,dt - 2x\\int_0^x te^t\\,dt + \\int_0^x t^2e^t\\,dt$。微分すると、上端から出る項 $x^2e^x - 2x^2e^x + x^2e^x = 0$ が打ち消し合い、$F'(x) = 2x\\displaystyle\\int_0^x e^t\\,dt - 2\\int_0^x te^t\\,dt = 2\\int_0^x(x - t)e^t\\,dt$。もう $1$ 回同じことをすると $F''(x) = 2\\displaystyle\\int_0^x e^t\\,dt = 2(e^x - 1)$。$F''(\\log 3) = 2(3 - 1) = 4$。中心の問いへ：**外に出してから微分する手つきは、何回でもくり返せる**。",
+        },
+      ],
+      formulaPreview: "F′ = 2∫₀ˣ (x − t)eᵗ dt → F″ = 2(eˣ − 1) → 2(3 − 1) = 4",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "関数 $f(x)$ が、すべての $x$ で $f(x) = e^x + x\\displaystyle\\int_0^1 f(t)\\,dt$ をみたしています。$f(1)$ を求めましょう。",
+      answer: 3 * Math.E - 2,
+      answerDisplay: "3e-2",
+      unit: "",
+      unknownLabel: "$f(1)$",
+      inputAffordances: ["e"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "step6 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、積分の区間が $0$ から $1$ に決まっていて、その積分の値そのものが分からないこと。",
+        },
+        {
+          layer: 3,
+          text: "区間が決まった定積分 $\\displaystyle\\int_0^1 f(t)\\,dt$ は $x$ によらない数なので、$c$ とおく（数Ⅱで、式に入った定積分を文字で仮に置いた手つき）。$f(x) = e^x + cx$。これを $c$ の定義に戻すと $c = \\displaystyle\\int_0^1(e^t + ct)\\,dt = e - 1 + \\dfrac c2$、$c = 2(e - 1)$。$f(1) = e + 2(e - 1) = 3e - 2$。中心の問いへ：**区間が決まった定積分はただの数。中の $x$ を外に出し、数を文字で置けば、関数が決まる**。",
+        },
+      ],
+      formulaPreview: "c = ∫₀¹ f(t) dt とおく → c = e − 1 + c/2 → c = 2(e − 1) → f(1) = 3e − 2",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "関数 $f(x)$ が、すべての $x$ で $\\displaystyle\\int_1^x f(t)\\,dt = xf(x) - (x^3 - 1)$ をみたしています。$f(3)$ を求めましょう。",
+      answer: 12,
+      answerDisplay: "12",
+      unit: "",
+      unknownLabel: "$f(3)$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "step8 と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "step8 と変わったのは、積分の上端が $x$ で、等式の両側に $f$ が現れること。",
+        },
+        {
+          layer: 3,
+          text: "両辺を $x$ で微分する。左辺は $f(x)$、右辺は[積の微分]で $f(x) + xf'(x) - 3x^2$。$f(x)$ が両辺から消えて $xf'(x) = 3x^2$、$f'(x) = 3x$（$x \\ne 0$）。$f(x) = \\dfrac32x^2 + C$。もとの等式に $x = 1$ を入れると左辺は $0$、右辺は $f(1)$ なので $f(1) = 0$、$C = -\\dfrac32$。$f(3) = \\dfrac32\\cdot 9 - \\dfrac32 = 12$。中心の問いへ：**上端が $x$ の積分は、微分すれば中身が返る。等式の両辺を微分すれば、積分が消えて $f$ の式になる**。",
+        },
+      ],
+      formulaPreview: "微分して f = f + xf′ − 3x² → f′ = 3x、f(1) = 0 → f(3) = 12",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$g(t) = \\sqrt t$ は $0 \\le t \\le 4$ で増加します。$G(x) = \\displaystyle\\int_0^4\\left|\\sqrt t - x\\right|dt$（$0 \\le x \\le 2$）を最小にする $x$ を求めましょう。",
+      answer: Math.SQRT2,
+      answerDisplay: "√2",
+      unit: "",
+      unknownLabel: "最小にする $x$",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、積分の区間は固定で、絶対値の中の符号が変わる位置が $x$ とともに動くこと。",
+        },
+        {
+          layer: 3,
+          text: "$\\sqrt t = x$ となる $t$ は $s = x^2$。$t < s$ では $\\sqrt t < x$、$t > s$ では $\\sqrt t > x$ なので $G(x) = \\displaystyle\\int_0^{s}(x - \\sqrt t)\\,dt + \\int_s^4(\\sqrt t - x)\\,dt$。$x$ で微分すると、区切り $s$ が動くことから出る項は、区切りで中身が $0$ なので消える。残るのは $G'(x) = s - (4 - s) = 2s - 4$。$G'(x) = 0$ より $s = 2$——$t$ の区間のちょうど中点。$x = \\sqrt2$。$\\sqrt t$ の平均値 $\\dfrac14\\displaystyle\\int_0^4\\sqrt t\\,dt = \\dfrac43$ にそろえると、$G\\left(\\dfrac43\\right) > G(\\sqrt2)$ で外れる。中心の問いへ：**区切りが $x$ とともに動いても、原始関数に入れて引く形で扱えば微分できる。最小は、区切りが $t$ の区間の中点に来るとき**。",
+        },
+      ],
+      formulaPreview: "G′(x) = s − (4 − s)、s = x² → s = 2 → x = √2（平均値 4/3 は外れる）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 上端が $x$ の定積分を微分すると中身が返る（数Ⅱ）。**上端が $x$ の式になったら、中に $x$ が入っていたら、何が返る？**
+
+────────
+
+## 上端が動く定積分は、原始関数に上端を入れたもの
+
+$f$ の原始関数を $G$ とすると
+
+$$\\int_a^{x} f(t)\\,dt = G(x) - G(a)$$
+
+だから微分すると $G'(x) = f(x)$——中身に上端を入れたものが返る（step1・[微分と積分の関係]）。
+
+## ここが胚細胞：上端の動く速さが掛かる
+
+上端が $x$ の式 $u(x)$ なら、$\\displaystyle\\int_a^{u(x)} f(t)\\,dt = G(u(x)) - G(a)$。[合成関数の微分法] で
+
+$$\\frac{d}{dx}\\int_a^{u(x)} f(t)\\,dt = f(u(x))\\,u'(x)$$
+
+上端が $x$ の $u'(x)$ 倍の速さで動くので、増える帯の幅も $u'(x)$ 倍になる（step2・3）。下端も動けば、その分が引かれる（step4）。
+
+**中身に $x$ があれば、まず外へ出す。** 積分は $t$ について行うので、中の $x$ は積分のあいだ定数。外に出してから[積の微分]を使う（step6・7）。
+
+**区間が決まった定積分はただの数**なので、文字で置ける（step8）。上端が $x$ の積分を含む等式は、両辺を微分すれば積分が消える（step9）。
+
+## Step の道筋
+
+- **step1**：上端が $x$（数Ⅱの関係を三角関数で）
+- **step2（質的変化・山場）・3**：上端が $x^2$・$\\sin x$。上端の導関数を掛ける
+- **step4**：下端も動く
+- **step5**：導関数の値から上端の式を逆に決める
+- **step6（質的変化）・7**：中身に $x$。外に出してから微分
+- **step8**：区間が決まった定積分を文字で置く（数Ⅱ・B と合流）
+- **step9**：両辺を微分して積分を消す
+- **step10（山場）**：絶対値の積分を最小にする $x$。区切りが中点に来るとき
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 上端が式のときの公式は覚えなくてよい。原始関数に上端を入れた形 $G(u(x)) - G(a)$ を書けば、合成関数の微分でその場で出る。
+
+**step10 は「中央値」の考え方。** $g$ が単調なとき、絶対値のずれの合計をいちばん小さくするのは、平均値ではなく、区間の真ん中の点での $g$ の値——統計でいう中央値である。$2$ 乗のずれの合計なら、平均値が最小を与える。
+
+**「長方形ではさむ」との出会い。** 長方形の和の行き先として定めた面積と、原始関数の差として出した定積分が同じ値になった（「長方形ではさむ」の系列）。上端を動かして微分すると中身が返るのは、その $2$ つが同じものだからである。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「定積分で表された関数」の構成（上端が $x$ の式の定積分の微分・積分の中の $x$ を外に出す・定積分を含む関数の決定・絶対値の積分の最小）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+上端が $x$ の式 $u(x)$ なら、中身に上端を入れた $f(u(x))$ に、上端の動く速さ $u'(x)$ が掛かる。下端が動けば、その分が引かれる。
+
+中に $x$ があれば、積分の外へ出してから微分する。どれも、原始関数に上端を入れた形を書けば、その場で導ける。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
@@ -2872,4 +3188,5 @@ export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_RIEMANN_SERIES,
   M3IA_SUMLIM_SERIES,
   M3IA_INEQ_SERIES,
+  M3IA_FTC_SERIES,
 ];
