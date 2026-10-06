@@ -31,7 +31,7 @@ import type { LearnerSeries } from "./types";
  *    ＝縦の切り口の長さを x の式で書く入口が無い（置換すれば横と同じ式になる＝「横でしか」とは書かない）
  *  step9（複合・C13 第5章 接線）・step10（複合・C13 第6章 部分積分）
  *  答え 10 個はすべて相異なる（4/3・4・1/4・3/2−2log2・32/3・5・log9・e−1/2・e/2−1・π/16＝sympy と数値積分で一致）。
- *  step10 は当初 x cos x（[0, π/2]）だったが、原典 応2 を解く途中の積分 2∫₀^(π/2) x cos x と区間ごと同じだったので替えた（自己監査・正規形の照合）。
+ *  step10 は当初 x cos x（0〜π/2）だったが、原典 応2 を解く途中の積分 2∫₀^(π/2) x cos x と区間ごと同じだったので替えた（自己監査・正規形の照合）。
  *  原典の族（√x と x／a cos x と b sin x／(x−a)e^{−x}／ax² と log x の接する 2 曲線／sin と cos の π/4〜5π/4）は使っていない。 */
 export const M3IA_AREA_SERIES: LearnerSeries = {
   id: "math3_ia_area_01",
@@ -224,7 +224,7 @@ export const M3IA_AREA_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前題までと比べてみよう。何が同じで、何が違う？" },
+        { layer: 1, text: "step6 と比べてみよう。何が加わった？" },
         {
           layer: 2,
           text: "step6 と変わったのは、$x = (y \\text{ の式})$ の右辺に、$y$ と $e^y$ が足し算で並んでいること。",
@@ -528,7 +528,7 @@ export const M3IA_PARAM_SERIES: LearnerSeries = {
       variationFromPrevious: "plus_alpha",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "前題までと比べてみよう。何が同じで、何が違う？" },
+        { layer: 1, text: "step5 と比べてみよう。何が加わった？" },
         {
           layer: 2,
           text: "step5 と変わったのは、$x$ の式が $t$ と三角関数の差になっていること。",
@@ -1166,7 +1166,7 @@ export const M3IA_SLICE_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前題までと比べてみよう。何が同じで、何が違う？" },
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
         {
           layer: 2,
           text: "前題と変わったのは、立体が、平面の図形を $y$ 軸のまわりに回してできていること。",
