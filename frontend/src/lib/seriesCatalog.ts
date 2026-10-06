@@ -117,6 +117,7 @@ import {
   M3IA_PARAM_SERIES,
   M3IA_VOLUME_SERIES,
   M3IA_SLICE_SERIES,
+  M3IA_DISTANCE_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2310,6 +2311,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "切る向きを選ぶ（回転体でない立体と y 軸のまわり）— 向きを変えると切り口の形は変わるが体積は同じ。式に書けない向きは、足す目盛りを取り替える",
+  },
+  {
+    series: M3IA_DISTANCE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "速さを足す（変位と道のり）— 速度を足すと位置の変化、速さを足すと道のり。向きが変わる時刻で区間を割る。平面の上では速さは速度ベクトルの大きさ",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

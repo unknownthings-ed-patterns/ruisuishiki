@@ -16053,6 +16053,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_VT_AREA>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaVtArea />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41983,3 +41990,32 @@ function M3iaYaxisSlice() {
     </svg>
   );
 }
+
+/** 積分法の応用 系列5 step1（辞書「道のり」にも使う）: 横軸に時刻 t、縦軸に速さ v をとったグラフと、その下の部分。
+ *  ★図に答えを描かない★ 目盛り・速さの式・面積の値は書かない。グラフは右上がりの直線の模式で、塗った部分の面積は読めない（目盛りなし）。 */
+function M3iaVtArea() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 380 }}
+      role="img"
+      aria-label="横軸が時刻 t、縦軸が速さ v のグラフ。右上がりの線の下の部分が、2 本の縦の線のあいだで塗られている。目盛りと値は書かれていない"
+    >
+      <path d="M 40 170 L 340 170" fill="none" stroke={muted} strokeWidth="1" />
+      <path d="M 40 170 L 40 20" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="344" y="174" fontSize="12" fill={stroke}>t</text>
+      <text x="30" y="20" fontSize="12" fill={stroke}>v</text>
+      <polygon points="70,170 70,130 280,60 280,170" fill={accent} fillOpacity="0.15" stroke="none" />
+      <path d="M 50 137 L 310 50" fill="none" stroke={stroke} strokeWidth="2" />
+      <path d="M 70 170 L 70 130 M 280 170 L 280 60" fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <text x="180" y="192" fontSize="11" fill={accent} textAnchor="middle">
+        この塗った部分の面積は、何を表している？
+      </text>
+    </svg>
+  );
+}
+
