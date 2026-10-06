@@ -359,12 +359,12 @@ $$S = \\int_c^d \\big(\\text{右} - \\text{左}\\big)\\,dy$$
 
 /** M3IA2: パラメータ曲線の面積——幅を t の目盛りで測り直す。
  *  step1：t を消して y = (x の式) にしてから面積（9）／step2：同じ面積を t のまま書いたときの t² の係数（−2＝step1 の写しにならない）
- *  step3：x が t の 2 次（t を消すと根号）。当初の y = t(2 − t) は t を消すと 2√x − x（[0,4]）で、x = 4u で原典 練1(1) の √x − x の 16 倍だった（原典照合で検出）→ y = t²(2 − t)。step6 も同族だったので替えた／step4（質）：t が増えると x が減る（素朴に t の小→大で足すと −16、面積 16）
+ *  step3：x が t の 2 次（t を消すと根号）。当初の y = t(2 − t) は t を消すと 2√x − x（0〜4）で、x = 4u で原典 練1(1) の √x − x の 16 倍だった（原典照合で検出）→ y = t²(2 − t)。step6 も同族だったので替えた／step4（質）：t が増えると x が減る（素朴に t の小→大で足すと −80/3、面積 80/3。当初の y = 3t は面積 16 が step3 の L3 の途中値「16」と重なった＝audit_cross_refs で検出して替えた）
  *  step5：三角のパラメータで向きが逆（曲線は x 軸に戻らないので、直線 x = −2 で閉じる）／step6（逆）：a⁵/10 = 243/10 → a = 3（5 乗は実数で解が 1 つ）
  *  山場 step7（C12 ①・範囲つき）：半径 3 の転がる円の軌跡のアーチの下の面積 27π。x = 3(t − sin t) は高校で使う記号では t = (x の式) に書き直せない
  *    （第5章の転がる円は半径 2。原典の練6〔半径 1〕は長さで、原典にアーチの面積は無い）
  *  step8：閉じた曲線（x 軸について対称・上半分の 2 倍）／step9（複合・C13 第5章）：接線が水平になる t で区間を決める／step10（複合・C13 第6章 積和）
- *  答え 10 個はすべて相異なる（9・−2・16/5・16・8・3・27π・8/15・8/5・9√3/16＝sympy と、t を消した積分・数値積分で一致）。
+ *  答え 10 個はすべて相異なる（9・−2・16/5・80/3・8・3・27π・8/15・8/5・9√3/16＝sympy と、t を消した積分・数値積分で一致）。
  *  原典の曲線（(sin t, sin 2t)・(2cos t, sin t)・それらの t ↦ π/2 − t と x・y の入れかえ）と楕円の族は使っていない。 */
 export const M3IA_PARAM_SERIES: LearnerSeries = {
   id: "math3_ia_param_01",
@@ -452,9 +452,9 @@ export const M3IA_PARAM_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "曲線 $x = 4 - t^2$、$y = 3t$（$0 \\le t \\le 2$）と $x$ 軸、$y$ 軸で囲まれた部分の面積を求めましょう。",
-      answer: 16,
-      answerDisplay: "16",
+        "曲線 $x = 4 - t^2$、$y = 5t$（$0 \\le t \\le 2$）と $x$ 軸、$y$ 軸で囲まれた部分の面積を求めましょう。",
+      answer: 80 / 3,
+      answerDisplay: "80/3",
       unit: "",
       unknownLabel: "囲まれた部分の面積",
       variationFromPrevious: "qualitative",
@@ -464,10 +464,10 @@ export const M3IA_PARAM_SERIES: LearnerSeries = {
         { layer: 2, text: "前題と変わったのは、$t$ が増えると $x$ が減っていくこと。" },
         {
           layer: 3,
-          text: "$t = 0$ で点 $(4,\\ 0)$、$t = 2$ で点 $(0,\\ 6)$。面積は $x$ の小さい方から $\\displaystyle\\int_0^4 y\\,dx$。$x$ が $0$ から $4$ へ進むとき、$t$ は $2$ から $0$ へ戻る。$\\dfrac{dx}{dt} = -2t$ なので $\\displaystyle\\int_0^4 y\\,dx = \\int_2^0 3t\\cdot(-2t)\\,dt = \\int_0^2 6t^2\\,dt = 16$。$t$ の小さい方から機械的に $\\displaystyle\\int_0^2 3t\\cdot(-2t)\\,dt$ とすると $-16$——面積が負になるのは、足す向きを $x$ と逆に取ったしるし。中心の問いへ：**$t$ が進む向きと $x$ が進む向きが逆なら、区間の上と下も入れかわる**。",
+          text: "$t = 0$ で点 $(4,\\ 0)$、$t = 2$ で点 $(0,\\ 10)$。面積は $x$ の小さい方から $\\displaystyle\\int_0^4 y\\,dx$。$x$ が $0$ から $4$ へ進むとき、$t$ は $2$ から $0$ へ戻る。$\\dfrac{dx}{dt} = -2t$ なので $\\displaystyle\\int_0^4 y\\,dx = \\int_2^0 5t\\cdot(-2t)\\,dt = \\int_0^2 10t^2\\,dt = \\dfrac{80}{3}$。$t$ の小さい方から機械的に $\\displaystyle\\int_0^2 5t\\cdot(-2t)\\,dt$ とすると $-\\dfrac{80}{3}$——面積が負になるのは、足す向きを $x$ と逆に取ったしるし。中心の問いへ：**$t$ が進む向きと $x$ が進む向きが逆なら、区間の上と下も入れかわる**。",
         },
       ],
-      formulaPreview: "x: 0 → 4 のとき t: 2 → 0 → ∫₂⁰ 3t·(−2t) dt = 16",
+      formulaPreview: "x: 0 → 4 のとき t: 2 → 0 → ∫₂⁰ 5t·(−2t) dt = 80/3",
       figureMarker: "<<M3IA_PARAM_DIRECTION>>",
     },
     {
@@ -667,7 +667,328 @@ $$\\int_{x_1}^{x_2} y\\,dx = \\int_{t_1}^{t_2} y\\,\\frac{dx}{dt}\\,dt$$
 そして、$t$ が進む向きと $x$ が進む向きが逆なら、足す区間の上と下も入れかわる。向きをそろえて足せば、$t$ を消せない曲線でも面積に届く。`,
 };
 
+/** M3IA3: 回転体の体積——切り口の円を足す（三段）。
+ *  段1＝step1・2（正四角錐 32＝中学の 1/3×底面積×高さ・半球 18π＝球の公式の半分）
+ *  段2＝step3・4（回した曲線から切り口の面積の式を作る：π(2x+3)² の x の係数 12／π(4−x) から f(2)=√2）
+ *  段3＝step5〜10：step5（質）sin 2x を回す π²/4（入力は π*π/4）／step6 e^x を 0〜log 2 で回す 3π/2
+ *  山場 step7（C12 ②・R1 A-2 で円環の初出に移した）：y=x と y=x² の間を回す。正答 2π/15、(f−g)² と読むと π/30
+ *  step8：回転軸が y=1（半径を作り直す）16π/15／step9（逆）：step6 の曲線で体積 4π → b = log 3（実数解は 1 つ）
+ *  step10（複合・C13 第6章 部分積分）：y = x e^{−x/2} を 0〜1 で回す π(2 − 5/e)（半径の 2 乗が x² e^{−x}＝e の 1 次で済む＝R1 B-6）
+ *  答え 10 個はすべて相異なる（sympy と数値積分で一致）。原典の族（tan x・x² と √x・e^x の y 軸回転・任意の r の球）は使っていない（半球は具体の半径＝定番の道具）。 */
+export const M3IA_VOLUME_SERIES: LearnerSeries = {
+  id: "math3_ia_volume_01",
+  title: "回転体の体積——切り口の円を足す",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 中学で覚えた錐や球の体積は、切り口の面積を足すと同じ値になる。平面の図形を回してできる立体は、どこで切れば切り口が描けるか。くり抜いた立体で何が起きるか。$10$ 問で確かめる。",
+  patternId: "M3IA3",
+  unit: "math_3",
+  revelationLabel:
+    "**回転体は、回転軸に垂直に切れば切り口が円になる**。曲線の高さが半径なので、切り口の面積は $\\pi \\times (\\text{高さ})^2$",
+  drivingQuestion:
+    "中学で覚えた錐や球の体積の式は、どこから来ていた？——**平面の図形を回してできる立体は、どこで切れば切り口が描けて、何を足せば体積になる？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "底面が $1$ 辺 $4$ の正方形で、高さが $6$ の正四角錐があります。頂点から測って $x$ のところで底面に平行に切ると、切り口は正方形になります。この切り口の面積を足し集めて、正四角錐の体積を求めましょう。",
+      answer: 32,
+      answerDisplay: "32",
+      unit: "",
+      unknownLabel: "正四角錐の体積",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "数Ⅱでは円すいを、切り口の円を足し集めて体積にした。切り口が正方形になっても、同じ見方は通りそう？",
+        },
+        {
+          layer: 2,
+          text: "数Ⅱの面積の系列の最後で、円すいの切り口の面積はどう作って、何で足した？（[切り口の長さ]）",
+        },
+        {
+          layer: 3,
+          text: "頂点から $x$ のところの切り口は、底面を $\\dfrac{x}{6}$ 倍に縮めた正方形で、$1$ 辺は $\\dfrac{4x}{6} = \\dfrac{2x}{3}$。面積は $\\dfrac{4x^2}{9}$。$\\displaystyle\\int_0^6 \\dfrac{4x^2}{9}\\,dx = \\Big[\\dfrac{4x^3}{27}\\Big]_0^6 = 32$。中学の公式 $\\dfrac13 \\times 16 \\times 6 = 32$ と一致する。中心の問いへの最初の部分回答：**体積は、切り口の面積を足し集めたもの。中学の $\\dfrac13$ は、切り口の面積が $x^2$ に比例することから出てくる**。",
+        },
+      ],
+      formulaPreview: "切り口の面積 4x²/9 → ∫₀⁶ (4x²/9) dx = 32（中学の 1/3 × 16 × 6 と一致）",
+      figureMarker: "<<M3IA_PYRAMID_SLICE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "半径 $3$ の半球があります。中心から測って $x$ のところで平らな面に平行に切ると、切り口は円になります。この切り口の面積を足し集めて、半球の体積を求めましょう。",
+      answer: 18 * Math.PI,
+      answerDisplay: "18π",
+      unit: "",
+      unknownLabel: "半球の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、切り口が正方形でなく円になったこと。" },
+        {
+          layer: 3,
+          text: "中心から $x$ のところの切り口の円の半径を $r$ とすると、半径 $3$ を斜辺とする直角三角形で $r^2 = 9 - x^2$（[三平方の定理]）。切り口の面積は $\\pi(9 - x^2)$。$\\displaystyle\\int_0^3 \\pi(9 - x^2)\\,dx = \\pi\\Big[9x - \\dfrac{x^3}{3}\\Big]_0^3 = 18\\pi$。中学の球の公式の半分 $\\dfrac12\\times\\dfrac43\\pi\\times 27 = 18\\pi$ と一致する。中心の問いへ：**丸い立体でも、切り口の円の面積を足し集めれば体積になる**。",
+        },
+      ],
+      formulaPreview: "切り口 π(9 − x²) → ∫₀³ π(9 − x²) dx = 18π（球の公式の半分と一致）",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "直線 $y = 2x + 3$ の $0 \\le x \\le 1$ の部分と $x$ 軸、$2$ 本の直線 $x = 0$、$x = 1$ で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させます。位置 $x$ で $x$ 軸に垂直に切った切り口の面積は $\\pi(ax^2 + bx + c)$ と書けます。$b$ を求めましょう。",
+      answer: 12,
+      answerDisplay: "12",
+      unit: "",
+      unknownLabel: "$b$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、立体が、平面の図形を $x$ 軸のまわりに回してできていること。",
+        },
+        {
+          layer: 3,
+          text: "$x$ 軸のまわりに回すと、位置 $x$ の切り口は、$x$ 軸を中心とする円。半径は回した図形の高さ $2x + 3$ なので、面積は $\\pi(2x + 3)^2 = \\pi(4x^2 + 12x + 9)$。$b = 12$。半径を $2$ 乗せずに $\\pi(2x + 3)$ とすると $x^2$ の項が無く、$x$ の係数も $2$ になってしまう。中心の問いへ：**回転体の切り口は円で、回した図形の高さがその半径。切り口の面積は $\\pi\\times(\\text{高さ})^2$**。",
+        },
+      ],
+      formulaPreview: "半径 2x + 3 → 切り口 π(2x + 3)² = π(4x² + 12x + 9) → b = 12",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "曲線 $y = f(x)$（$x$ 軸より上にある）の $0 \\le x \\le 4$ の部分と $x$ 軸で囲まれた部分を $x$ 軸のまわりに $1$ 回転させると、位置 $x$ の切り口の面積は $\\pi(4 - x)$ になりました。$f(2)$ を求めましょう。",
+      answer: Math.SQRT2,
+      answerDisplay: "√2",
+      unit: "",
+      unknownLabel: "$f(2)$",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は何が分かっていて、何を求める？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、切り口の面積が分かっていて、回した曲線の高さが分からないこと。",
+        },
+        {
+          layer: 3,
+          text: "切り口の面積は $\\pi\\{f(x)\\}^2$ なので、$\\pi\\{f(x)\\}^2 = \\pi(4 - x)$、$\\{f(x)\\}^2 = 4 - x$。$x = 2$ で $\\{f(2)\\}^2 = 2$。曲線は $x$ 軸より上にあるので $f(2) > 0$、$f(2) = \\sqrt2$。中心の問いへ：**切り口の面積から、回した曲線の高さが逆に読める。高さは面積の $\\pi$ を除いた部分の平方根**。",
+        },
+      ],
+      formulaPreview: "π{f(x)}² = π(4 − x) → {f(2)}² = 2 → f(2) = √2",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "曲線 $y = \\sin 2x$（$0 \\le x \\le \\dfrac{\\pi}{2}$）と $x$ 軸で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。（答えに $\\pi^2$ が出るときは、$\\pi^2$ を `π*π` と打ちます）",
+      answer: (Math.PI * Math.PI) / 4,
+      answerDisplay: "π*π/4",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "step3 と変わったのは、回す線が直線でなく三角関数の曲線になったこと。" },
+        {
+          layer: 3,
+          text: "切り口は半径 $\\sin 2x$ の円で、面積は $\\pi\\sin^2 2x$。$2$ 乗の三角関数は次数を下げる（[半角の公式]）：$\\sin^2 2x = \\dfrac{1 - \\cos 4x}{2}$。$\\displaystyle\\int_0^{\\frac{\\pi}{2}}\\pi\\sin^2 2x\\,dx = \\dfrac{\\pi}{2}\\Big[x - \\dfrac{\\sin 4x}{4}\\Big]_0^{\\frac{\\pi}{2}} = \\dfrac{\\pi}{2}\\cdot\\dfrac{\\pi}{2} = \\dfrac{\\pi^2}{4}$（`π*π/4`）。中心の問いへ：**回す曲線が三角関数でも、切り口の円の面積 $\\pi\\times(\\text{高さ})^2$ を足すことは同じ。$2$ 乗が出るぶん、巻き戻しに次数下げが要る**。",
+        },
+      ],
+      formulaPreview: "切り口 π sin² 2x → (π/2)∫₀^(π/2) (1 − cos 4x) dx = π²/4",
+      figureMarker: "<<M3IA_SOLID_SLICE>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "曲線 $y = e^x$ と $x$ 軸、$2$ 本の直線 $x = 0$、$x = \\log 2$ で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: (3 * Math.PI) / 2,
+      answerDisplay: "3π/2",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、回す曲線が指数関数になったこと。" },
+        {
+          layer: 3,
+          text: "切り口は半径 $e^x$ の円で、面積は $\\pi e^{2x}$。$\\displaystyle\\int_0^{\\log 2}\\pi e^{2x}\\,dx = \\dfrac{\\pi}{2}\\Big[e^{2x}\\Big]_0^{\\log 2} = \\dfrac{\\pi}{2}(4 - 1) = \\dfrac{3\\pi}{2}$。中心の問いへ：**指数関数を回しても、切り口の円の面積を足す手つきは同じ**。",
+        },
+      ],
+      formulaPreview: "切り口 π e^(2x) → ∫₀^(log 2) π e^(2x) dx = (π/2)(4 − 1) = 3π/2",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "直線 $y = x$ と放物線 $y = x^2$ で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: (2 * Math.PI) / 15,
+      answerDisplay: "2π/15",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、回す図形の下のふちが $x$ 軸でなく曲線になり、立体の真ん中が空洞になること。",
+        },
+        {
+          layer: 3,
+          text: "交点は $x = x^2$ より $x = 0,\\ 1$。$0 \\le x \\le 1$ では $x \\ge x^2$。位置 $x$ の切り口は、半径 $x$ の円から半径 $x^2$ の円をくり抜いた輪で、面積は $\\pi x^2 - \\pi x^4$。$\\displaystyle\\int_0^1\\pi(x^2 - x^4)\\,dx = \\pi\\left(\\dfrac13 - \\dfrac15\\right) = \\dfrac{2\\pi}{15}$。輪を「幅 $x - x^2$ の円」と読んで $\\pi\\displaystyle\\int_0^1(x - x^2)^2\\,dx$ とすると $\\dfrac{\\pi}{30}$ になり、外れる——外側の円の面積から内側の円の面積を引くのであって、半径の差を $2$ 乗するのではない。中心の問いへ：**くり抜いた立体の切り口は円の輪。面積は「外側の円 − 内側の円」**。",
+        },
+      ],
+      formulaPreview: "切り口 = πx² − πx⁴ → ∫₀¹ π(x² − x⁴) dx = 2π/15（(x − x²)² と読むと π/30）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "放物線 $y = x^2$ と直線 $y = 1$ で囲まれた部分を、直線 $y = 1$ のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: (16 * Math.PI) / 15,
+      answerDisplay: "16π/15",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、回転の軸が $x$ 軸でなく、直線 $y = 1$ になったこと。" },
+        {
+          layer: 3,
+          text: "軸 $y = 1$ に垂直に切ると、位置 $x$ の切り口は軸を中心とする円。半径は、曲線から軸までの距離 $1 - x^2$（$-1 \\le x \\le 1$）。面積は $\\pi(1 - x^2)^2$。$\\displaystyle\\int_{-1}^{1}\\pi(1 - x^2)^2\\,dx = \\pi\\left(2 - \\dfrac43 + \\dfrac25\\right) = \\dfrac{16\\pi}{15}$。中心の問いへ：**半径は「曲線の高さ」ではなく「曲線から回転の軸までの距離」。軸が変われば半径を作り直す**。",
+        },
+      ],
+      formulaPreview: "半径 1 − x² → ∫₋₁¹ π(1 − x²)² dx = 16π/15",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "曲線 $y = e^x$ と $x$ 軸、$2$ 本の直線 $x = 0$、$x = b$（$b > 0$）で囲まれた部分を $x$ 軸のまわりに $1$ 回転させると、体積が $4\\pi$ になりました。$b$ を求めましょう。",
+      answer: Math.log(3),
+      answerDisplay: "log3",
+      unit: "",
+      unknownLabel: "$b$",
+      inputAffordances: ["log"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "step6 と比べてみよう。今度は何が分かっていて、何を求める？" },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、体積が分かっていて、右のはし $b$ が分からないこと。",
+        },
+        {
+          layer: 3,
+          text: "step6 と同じく、体積は $\\displaystyle\\int_0^b\\pi e^{2x}\\,dx = \\dfrac{\\pi}{2}\\left(e^{2b} - 1\\right)$。これが $4\\pi$ なので $e^{2b} - 1 = 8$、$e^{2b} = 9$、$e^b = 3$、$b = \\log 3$。$e^{2b}$ は $b$ とともに増え続けるので、解は $1$ つだけ。中心の問いへ：**体積を区間の右のはしの式にしておけば、体積から逆にはしも読める**。",
+        },
+      ],
+      formulaPreview: "(π/2)(e^(2b) − 1) = 4π → e^(2b) = 9 → b = log 3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "曲線 $y = xe^{-\\frac{x}{2}}$（$0 \\le x \\le 1$）と $x$ 軸、直線 $x = 1$ で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: Math.PI * (2 - 5 / Math.E),
+      answerDisplay: "π(2-5/e)",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi", "e"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "step6 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step6 と変わったのは、半径が $x$ と指数関数の積になっていること。",
+        },
+        {
+          layer: 3,
+          text: "切り口の面積は $\\pi\\left(xe^{-\\frac{x}{2}}\\right)^2 = \\pi x^2e^{-x}$。[部分積分] を $2$ 回：$\\displaystyle\\int x^2e^{-x}\\,dx = -x^2e^{-x} + 2\\int xe^{-x}\\,dx = -x^2e^{-x} - 2xe^{-x} - 2e^{-x} + C$。$\\displaystyle\\int_0^1\\pi x^2e^{-x}\\,dx = \\pi\\Big[-(x^2 + 2x + 2)e^{-x}\\Big]_0^1 = \\pi\\left(2 - \\dfrac5e\\right)$。中心の問いへ：**半径の $2$ 乗の巻き戻しに第6章の道具が要っても、切り口の円を足す見方は変わらない**。",
+        },
+      ],
+      formulaPreview: "切り口 π x² e^(−x) → 部分積分 2 回 → π(2 − 5/e)",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 中学で覚えた錐や球の体積の式は、どこから来ていた？——**平面の図形を回してできる立体は、どこで切れば切り口が描けて、何を足せば体積になる？**
+
+────────
+
+## 体積は、切り口の面積を足したもの
+
+数Ⅱでは円すいを、頂点から測った位置で切り、切り口の円の面積を足し集めて体積にした。同じことは、切り口が正方形でも（step1）、半球でも（step2）できる。どちらも中学で覚えた公式と同じ値になる。
+
+$$V = \\int_a^b S(x)\\,dx \\qquad (S(x) \\text{ は位置 } x \\text{ の切り口の面積})$$
+
+## ここが胚細胞：回転体は、回転軸に垂直に切る
+
+平面の図形を軸のまわりに回してできる立体（[回転体]）は、**回転の軸に垂直に切れば、切り口が軸を中心とする円**になる。半径は、回した図形の「軸からの距離」。だから切り口の面積は
+
+$$S(x) = \\pi \\times (\\text{軸からの距離})^2$$
+
+と、曲線の式から書ける（step3・4）。あとは足すだけである。
+
+**くり抜いた立体に注意する。** $2$ 曲線ではさまれた部分を回すと、真ん中が空洞になり、切り口は円の輪になる（step7）。輪の面積は「外側の円 − 内側の円」で、
+
+$$\\pi f(x)^2 - \\pi g(x)^2 \\quad\\text{であって}\\quad \\pi\\{f(x) - g(x)\\}^2 \\text{ ではない}$$
+
+半径の差を $2$ 乗すると、輪の面積よりずっと小さな値になる。
+
+## Step の道筋
+
+- **step1・2**：正四角錐と半球。切り口の面積を足すと、中学の公式と一致する
+- **step3・4**：回した図形の高さから切り口の面積の式を作る（step4 は逆に、面積から高さを読む）
+- **step5（質的変化）・6**：三角関数・指数関数の曲線を回す
+- **step7（山場）**：くり抜いた立体。切り口は円の輪
+- **step8**：回転の軸が $x$ 軸でない。半径を「軸までの距離」で作り直す
+- **step9**：体積から区間のはしを逆に読む
+- **step10**：半径の $2$ 乗の巻き戻しに部分積分が要る（第6章と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 回転体の体積の公式 $\\pi\\displaystyle\\int y^2\\,dx$ を覚える必要はない。回転の軸に垂直に切った切り口を思い浮かべ、それが円（または輪）であること、半径が軸からの距離であることを確かめれば、面積は毎回作れる。軸が $y = c$ になっても、$y$ 軸になっても、同じ作り方で通る。
+
+**中学の公式の $\\dfrac13$ と $\\dfrac43$。** 錐の体積の $\\dfrac13$ は、切り口の面積が頂点からの距離の $2$ 乗に比例することから出る（$\\displaystyle\\int_0^h x^2\\,dx = \\dfrac{h^3}{3}$）。球の $\\dfrac43$ も、切り口の円の面積 $\\pi(r^2 - x^2)$ を足すと出てくる。覚えていた公式の理由が、切って足す見方で見える。
+
+**この先の景色。** 回転体でない立体も、切り口の形が分かれば同じように体積が出る。どの向きに切ると切り口が描けるかを選ぶ話は、次の系列で扱う。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「定積分と体積」の構成（断面積を積分すると体積・回転体は回転軸に垂直に切る・くり抜いた立体の断面）を参考。問題の値・図形はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+中学の錐や球の体積は、切り口の面積を足し集めたものだった。平面の図形を回してできる立体は、回転の軸に垂直に切れば、切り口が軸を中心とする円になる。半径は軸からの距離なので、面積は $\\pi \\times (\\text{距離})^2$。それを足せば体積になる。
+
+くり抜いた立体なら、切り口は輪。外側の円から内側の円を引いて足す。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
+  M3IA_VOLUME_SERIES,
 ];

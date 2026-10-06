@@ -16018,6 +16018,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_PYRAMID_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaPyramidSlice />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_SOLID_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaSolidSlice />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41750,6 +41764,86 @@ function M3iaParamDirection() {
       <text x="180" y="96" fontSize="14" fill={accent} textAnchor="middle">?</text>
       <text x="180" y="150" fontSize="11" fill={accent} textAnchor="middle">
         t が増えるとき、x はどちら向きに進む？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列3 step1: 正四角錐を、頂点から x のところで底面に平行に切った切り口（正方形）。
+ *  ★図に答えを描かない★ 底面の辺・高さ・切り口の辺の長さは書かない（切り口の辺は「?」）。
+ *  見取り図は模式（遠近は正確でない）。数Ⅱ・B の CalcConeSlice は円すい前提でハードコードされているので流用しない（R1 B-14）。 */
+function M3iaPyramidSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const apex = [200, 30];
+  const base = [
+    [110, 180],
+    [260, 180],
+    [300, 150],
+    [150, 150],
+  ];
+  const s = 0.55;
+  const cut = base.map(([x, y]) => [apex[0] + (x - apex[0]) * s, apex[1] + (y - apex[1]) * s]);
+  const poly = (pts: number[][]) => pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  return (
+    <svg
+      viewBox="0 0 400 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="正四角錐の見取り図。頂点から少し下がったところで底面に平行に切った切り口の正方形が色つきで描かれている。切り口の 1 辺の長さは疑問符で、底面の辺と高さの値は書かれていない"
+    >
+      <polygon points={poly(base)} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      {base.map(([x, y], i) => (
+        <path key={i} d={`M ${apex[0]} ${apex[1]} L ${x} ${y}`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      ))}
+      <path d={`M ${base[0][0]} ${base[0][1]} L ${base[1][0]} ${base[1][1]} L ${base[2][0]} ${base[2][1]}`} fill="none" stroke={stroke} strokeWidth="1.5" />
+      <polygon points={poly(cut)} fill={accent} fillOpacity="0.18" stroke={accent} strokeWidth="1.8" />
+      <text x={(cut[0][0] + cut[1][0]) / 2} y={cut[0][1] + 16} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <path d={`M 330 ${apex[1]} L 330 ${cut[0][1]}`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x="338" y={(apex[1] + cut[0][1]) / 2 + 4} fontSize="12" fill={stroke}>x</text>
+      <text x="200" y="204" fontSize="11" fill={accent} textAnchor="middle">
+        頂点から x のところの切り口の面積を、底面まで足すと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列3 step5（辞書「回転体」にも使う）: 曲線を x 軸のまわりに回した立体と、x 軸に垂直な切り口の円。
+ *  ★図に答えを描かない★ 曲線の式・目盛り・半径の値は書かない（半径は「?」）。曲線は模式の山形で、step5 の sin 2x の形を写していない。 */
+function M3iaSolidSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 300;
+  const H = (u: number) => 60 * Math.sin(Math.PI * u);
+  const top: string[] = [];
+  const bot: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    top.push(`${X(u).toFixed(1)},${(110 - H(u)).toFixed(1)}`);
+    bot.push(`${X(u).toFixed(1)},${(110 + H(u)).toFixed(1)}`);
+  }
+  const u0 = 0.4;
+  const r = H(u0);
+  return (
+    <svg
+      viewBox="0 0 400 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="x 軸の上にある曲線と、それを x 軸のまわりに回してできた立体の輪郭。立体を x 軸に垂直に切った切り口が楕円で描かれた円になっていて、半径は疑問符。目盛りと曲線の式は書かれていない"
+    >
+      <path d="M 20 110 L 385 110" fill="none" stroke={muted} strokeWidth="1" />
+      <text x="378" y="104" fontSize="12" fill={stroke}>x</text>
+      <polyline points={top.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <polyline points={bot.join(" ")} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <ellipse cx={X(u0)} cy="110" rx={r * 0.28} ry={r} fill={accent} fillOpacity="0.16" stroke={accent} strokeWidth="1.8" />
+      <path d={`M ${X(u0)} 110 L ${X(u0)} ${110 - r}`} fill="none" stroke={accent} strokeWidth="2" />
+      <text x={X(u0) + 8} y={110 - r / 2} fontSize="13" fill={accent}>?</text>
+      <text x="200" y="210" fontSize="11" fill={accent} textAnchor="middle">
+        切り口の円の半径は何？ その面積を x 軸に沿って足すと？
       </text>
     </svg>
   );
