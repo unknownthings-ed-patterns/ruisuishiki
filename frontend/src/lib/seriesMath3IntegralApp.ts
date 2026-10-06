@@ -987,8 +987,327 @@ $$\\pi f(x)^2 - \\pi g(x)^2 \\quad\\text{であって}\\quad \\pi\\{f(x) - g(x)\
 くり抜いた立体なら、切り口は輪。外側の円から内側の円を引いて足す。`,
 };
 
+/** M3IA4: 切る向きを選ぶ——回転体でない立体と、y 軸のまわり。
+ *  step1〜3：底面の上に立つ立体（切り口が正方形 π/2・正三角形 81√3/40・高さが変わる長方形 81/4）
+ *  step4（質）：同じ立体を 2 つの向きで切る（x で切ると三角形、y で切ると長方形）。y で切った切り口の面積 −k² + 3k の k² の係数 −1
+ *  step5：その向きで体積 9/2（L3 で x で切っても 9/2＝交差検算）／step6（逆）：4h − h²/2 = 6 は h = 2, 6 の 2 解 → 「h ≤ 4」で 1 つ（追補17）
+ *  step7（質）：y 軸のまわりに回す（x を y の式に書ける y = x²）8π
+ *  山場 step8（C12 ①・範囲つき）：y = xe^x は高校で使う記号では x = (y の式) に書き直せない → π∫x² dy を x の目盛りに置換 π(4 − e)（数値の逆解きでも一致）
+ *    ＝「置換でしか」とは書かない（円筒で切る道もある＝L3・derivation で 1 行）
+ *  step9（複合・C13 系列2）：パラメータ曲線を x 軸のまわりに 32π/15／step10（複合）：円柱とひし形の柱の共通部分 2π − 8/3
+ *  答え 10 個はすべて相異なる（sympy と数値積分で一致）。原典の練5（直径・45°）・応1（直交 2 円柱）・応2（cos x の y 軸回転）は使っていない。 */
+export const M3IA_SLICE_SERIES: LearnerSeries = {
+  id: "math3_ia_slice_01",
+  title: "切る向きを選ぶ——回転体でない立体と、y 軸のまわり",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 回転体でない立体は、どの向きに切れば切り口が描けるか。向きを変えても体積は同じか。$y$ 軸のまわりに回すとき、$x$ を $y$ の式に書けなかったらどうするか。$10$ 問で確かめる。",
+  patternId: "M3IA4",
+  unit: "math_3",
+  revelationLabel:
+    "**切る向きを変えると切り口の形が変わる。それでも体積は同じ**。切り口が描ける向き・式に書ける向きを選べばよい",
+  drivingQuestion:
+    "回転体でない立体は、どの向きに切れば切り口が描ける？——**向きを変えて切っても体積が同じなら、何を基準に向きを選ぶ？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$xy$ 平面上で、曲線 $y = \\sin x$（$0 \\le x \\le \\pi$）と $x$ 軸で囲まれた部分を底面とする立体があります。$x$ 軸に垂直な平面でこの立体を切ると、切り口はつねに、底面の上の線分を $1$ 辺とする正方形になります。立体の体積を求めましょう。",
+      answer: Math.PI / 2,
+      answerDisplay: "π/2",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "回転体では、回転の軸に垂直に切ると切り口が円になった。回していない立体でも、切り口の面積が分かれば同じように足せそう？",
+        },
+        {
+          layer: 2,
+          text: "系列3 で、切り口の面積を足し集めると体積になったのはなぜだった？（[回転体]）",
+        },
+        {
+          layer: 3,
+          text: "位置 $x$ で切ると、底面の上の線分の長さは $\\sin x$。切り口はその線分を $1$ 辺とする正方形で、面積は $\\sin^2 x$。$\\displaystyle\\int_0^{\\pi}\\sin^2 x\\,dx = \\int_0^{\\pi}\\dfrac{1 - \\cos 2x}{2}\\,dx = \\dfrac{\\pi}{2}$。中心の問いへの最初の部分回答：**回転体でなくても、切り口の形が分かれば、その面積を足して体積が出る**。",
+        },
+      ],
+      formulaPreview: "切り口 sin² x → ∫₀^π sin² x dx = π/2",
+      figureMarker: "<<M3IA_BASE_SQUARE>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$xy$ 平面上で、放物線 $y = x(3 - x)$ と $x$ 軸で囲まれた部分を底面とする立体があります。$x$ 軸に垂直な平面でこの立体を切ると、切り口はつねに、底面の上の線分を $1$ 辺とする正三角形になります。立体の体積を求めましょう。",
+      answer: (81 * Math.sqrt(3)) / 40,
+      answerDisplay: "81√3/40",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、切り口が正方形でなく正三角形になったこと。" },
+        {
+          layer: 3,
+          text: "位置 $x$ の線分の長さは $x(3 - x)$。$1$ 辺 $s$ の正三角形の面積は $\\dfrac{\\sqrt3}{4}s^2$ なので、切り口の面積は $\\dfrac{\\sqrt3}{4}x^2(3 - x)^2$。$\\displaystyle\\int_0^3 x^2(3 - x)^2\\,dx = \\int_0^3(9x^2 - 6x^3 + x^4)\\,dx = 81 - \\dfrac{243}{2} + \\dfrac{243}{5} = \\dfrac{81}{10}$。体積は $\\dfrac{\\sqrt3}{4}\\cdot\\dfrac{81}{10} = \\dfrac{81\\sqrt3}{40}$。中心の問いへ：**切り口の形が変わっても、その面積を位置の式で書ければ足せる**。",
+        },
+      ],
+      formulaPreview: "切り口 (√3/4)x²(3 − x)² → (√3/4)·(81/10) = 81√3/40",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$xy$ 平面上で、放物線 $y = 9 - x^2$ の $0 \\le x \\le 3$ の部分と $x$ 軸、$y$ 軸で囲まれた部分を底面とし、底面の上の点 $(x,\\ y)$ では高さが $x$ になる立体があります（真上から見た形が底面で、高さは $x$ だけで決まる）。立体の体積を求めましょう。",
+      answer: 81 / 4,
+      answerDisplay: "81/4",
+      unit: "",
+      unknownLabel: "立体の体積",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、切り口の高さが、底面の線分の長さでなく、位置 $x$ そのもので決まること。",
+        },
+        {
+          layer: 3,
+          text: "位置 $x$ で $x$ 軸に垂直に切ると、切り口は横 $9 - x^2$（底面の線分）、高さ $x$ の長方形。面積は $x(9 - x^2)$。$\\displaystyle\\int_0^3 x(9 - x^2)\\,dx = \\Big[\\dfrac92x^2 - \\dfrac14x^4\\Big]_0^3 = \\dfrac{81}{2} - \\dfrac{81}{4} = \\dfrac{81}{4}$。中心の問いへ：**切り口の形は向きで決まる。この向きなら長方形で、横と高さの $2$ つを位置の式で書けばよい**。",
+        },
+      ],
+      formulaPreview: "切り口 x(9 − x²) → ∫₀³ x(9 − x²) dx = 81/4",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$xyz$ 空間で、$0 \\le y \\le x \\le 3$ かつ $0 \\le z \\le y$ を満たす点全体の立体があります。この立体を平面 $y = k$（$0 \\le k \\le 3$）で切ると、切り口の面積は $ak^2 + bk$ と書けます。$a$ を求めましょう。",
+      answer: -1,
+      answerDisplay: "-1",
+      unit: "",
+      unknownLabel: "$a$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、切る向きが $x$ 軸に垂直でなく、$y$ 軸に垂直になったこと。",
+        },
+        {
+          layer: 3,
+          text: "平面 $y = k$ の上では、$x$ は $k \\le x \\le 3$、$z$ は $0 \\le z \\le k$ を動く。$x$ と $z$ が互いに関係なく動くので、切り口は横 $3 - k$、高さ $k$ の長方形。面積は $k(3 - k) = -k^2 + 3k$。$a = -1$。同じ立体を平面 $x = k$ で切ると、$0 \\le z \\le y \\le k$ の三角形になる——向きを変えると、切り口の形が変わる。中心の問いへ：**立体の切り口の形は、切る向きで決まる。向きを選べば、描きやすい形にできることがある**。",
+        },
+      ],
+      formulaPreview: "y = k の切り口は 横 (3 − k)・高さ k の長方形 → −k² + 3k → a = −1",
+      figureMarker: "<<M3IA_TWO_CUTS>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "前題の立体（$0 \\le y \\le x \\le 3$ かつ $0 \\le z \\le y$）の体積を、平面 $y = k$ で切った切り口の面積を足して求めましょう。",
+      answer: 9 / 2,
+      answerDisplay: "9/2",
+      unit: "",
+      unknownLabel: "立体の体積",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は何を求める？" },
+        { layer: 2, text: "前題と変わったのは、求めるものが切り口の面積から立体の体積になったこと。" },
+        {
+          layer: 3,
+          text: "$\\displaystyle\\int_0^3(-k^2 + 3k)\\,dk = -9 + \\dfrac{27}{2} = \\dfrac92$。平面 $x = k$ で切ると、切り口は直角をはさむ $2$ 辺が $k$ の直角二等辺三角形で面積 $\\dfrac{k^2}{2}$、$\\displaystyle\\int_0^3\\dfrac{k^2}{2}\\,dk = \\dfrac92$。同じ値。中心の問いへ：**向きを変えて切っても、体積は同じ。だから、切り口が描きやすい向き・式に書きやすい向きを選べばよい**。",
+        },
+      ],
+      formulaPreview: "∫₀³ (−k² + 3k) dk = 9/2（x = k で切って ∫₀³ k²/2 dk = 9/2 とも一致）",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "高さ $h$ の立体があり、底面から高さ $z$（$0 \\le z \\le h$）のところで底面に平行に切ると、切り口の面積は $4 - z$ になります（$h \\le 4$）。体積が $6$ のとき、$h$ を求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "$h$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は何が分かっていて、何を求める？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、体積が分かっていて、足す範囲のはし $h$ が分からないこと。",
+        },
+        {
+          layer: 3,
+          text: "体積は $\\displaystyle\\int_0^h(4 - z)\\,dz = 4h - \\dfrac{h^2}{2}$。$4h - \\dfrac{h^2}{2} = 6$ より $h^2 - 8h + 12 = 0$、$(h - 2)(h - 6) = 0$。$h = 6$ では $z = 5$ あたりで切り口の面積が負になってしまうので、条件 $h \\le 4$ に合うのは $h = 2$。中心の問いへ：**切り口の面積の式から体積を作れば、体積からはしの高さも逆に読める。式が意味をもつ範囲で答えを選ぶ**。",
+        },
+      ],
+      formulaPreview: "4h − h²/2 = 6 → h = 2, 6 → h ≤ 4 より h = 2",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "放物線 $y = x^2$（$x \\ge 0$）と $y$ 軸、直線 $y = 4$ で囲まれた部分を、$y$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: 8 * Math.PI,
+      answerDisplay: "8π",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題までと比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、立体が、平面の図形を $y$ 軸のまわりに回してできていること。",
+        },
+        {
+          layer: 3,
+          text: "$y$ 軸のまわりに回すので、$y$ 軸に垂直に（横に）切る。高さ $y$ の切り口は $y$ 軸を中心とする円で、半径は $y$ 軸からの距離 $x$。$y = x^2$（$x \\ge 0$）なら $x = \\sqrt y$ なので、面積は $\\pi(\\sqrt y)^2 = \\pi y$。$\\displaystyle\\int_0^4\\pi y\\,dy = 8\\pi$。$x$ 軸の回転と同じつもりで $\\pi\\displaystyle\\int y^2\\,dx$ とすると、別の立体の体積になる。中心の問いへ：**$y$ 軸のまわりなら $y$ 軸に垂直に切り、半径を $y$ の式で書いて $y$ で足す**。",
+        },
+      ],
+      formulaPreview: "半径 x = √y → ∫₀⁴ π y dy = 8π",
+      figureMarker: "<<M3IA_YAXIS_SLICE>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "曲線 $y = xe^x$（$0 \\le x \\le 1$）と $y$ 軸、直線 $y = e$ で囲まれた部分を、$y$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: Math.PI * (4 - Math.E),
+      answerDisplay: "π(4-e)",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi", "e"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、曲線が $x$ と指数関数の積で表されていること。",
+        },
+        {
+          layer: 3,
+          text: "前題と同じく、体積は $\\displaystyle\\pi\\int_0^e x^2\\,dy$。ところが $y = xe^x$ は、**高校で使う記号では $x = (y \\text{ の式})$ に書き直せない**——半径を $y$ の式で書く入口が無い。そこで足す目盛りを $x$ に取り替える（[置換積分]）：$y = xe^x$ より $dy = (1 + x)e^x\\,dx$、$y$ が $0 \\to e$ のとき $x$ は $0 \\to 1$。$\\displaystyle\\pi\\int_0^1 x^2(1 + x)e^x\\,dx = \\pi\\int_0^1(x^3 + x^2)e^x\\,dx$。部分積分をくり返すと $\\pi\\Big[(x^3 - 2x^2 + 4x - 4)e^x\\Big]_0^1 = \\pi(-e + 4) = \\pi(4 - e)$。中心の問いへ：**半径を足す向きの式に書けないときは、足す目盛りを書ける変数に取り替える。系列2 のパラメータと同じ手つき**。",
+        },
+      ],
+      formulaPreview: "π∫₀^e x² dy → dy = (1 + x)eˣ dx → π∫₀¹ (x³ + x²)eˣ dx = π(4 − e)",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "曲線 $x = t^2$、$y = 2t - t^2$（$0 \\le t \\le 2$）と $x$ 軸で囲まれた部分を、$x$ 軸のまわりに $1$ 回転させてできる立体の体積を求めましょう。",
+      answer: (32 * Math.PI) / 15,
+      answerDisplay: "32π/15",
+      unit: "",
+      unknownLabel: "立体の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "前題と変わったのは、曲線が $t$ で表されたパラメータ曲線で、回す軸が $x$ 軸であること。",
+        },
+        {
+          layer: 3,
+          text: "切り口は半径 $y$ の円で、体積は $\\displaystyle\\pi\\int_0^4 y^2\\,dx$。幅を $t$ の目盛りで測り直す：$\\dfrac{dx}{dt} = 2t$、$t$ が $0 \\to 2$ で $x$ は $0 \\to 4$。$\\displaystyle\\pi\\int_0^2(2t - t^2)^2\\cdot 2t\\,dt = 2\\pi\\int_0^2(4t^3 - 4t^4 + t^5)\\,dt = 2\\pi\\left(16 - \\dfrac{128}{5} + \\dfrac{32}{3}\\right) = \\dfrac{32\\pi}{15}$。中心の問いへ：**体積でも、足す目盛りを $t$ に取り替えれば、$t$ を消さずに足せる**。",
+        },
+      ],
+      formulaPreview: "π∫₀² (2t − t²)²·2t dt = 32π/15",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$xyz$ 空間で、$y$ 軸を中心とする半径 $1$ の円柱の内部（$x^2 + z^2 \\le 1$）と、$|x| + |y| \\le 1$ を満たす柱の内部の共通部分を考えます。この共通部分の体積を求めましょう。",
+      answer: 2 * Math.PI - 8 / 3,
+      answerDisplay: "2π-8/3",
+      unit: "",
+      unknownLabel: "共通部分の体積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step4 と変わったのは、立体が $2$ つの立体の共通部分になっていること。",
+        },
+        {
+          layer: 3,
+          text: "平面 $z = k$（$-1 \\le k \\le 1$）で切る。円柱の切り口は $|x| \\le \\sqrt{1 - k^2}$ の帯、柱の切り口は $|x| + |y| \\le 1$ のひし形。共通部分の切り口は、ひし形のうち帯に入る部分で、$a = \\sqrt{1 - k^2}$ とおくと面積は $\\displaystyle\\int_{-a}^{a}2(1 - |x|)\\,dx = 4a - 2a^2$。$\\displaystyle\\int_{-1}^{1}\\left(4\\sqrt{1 - k^2} - 2(1 - k^2)\\right)dk = 4\\cdot\\dfrac{\\pi}{2} - \\dfrac83 = 2\\pi - \\dfrac83$（$\\displaystyle\\int_{-1}^{1}\\sqrt{1 - k^2}\\,dk$ は半径 $1$ の半円の面積）。中心の問いへ：**共通部分の切り口は、切り口どうしの共通部分。全体の形が描けなくても、切り口が描ける向きを選べば体積が出る**。",
+        },
+      ],
+      formulaPreview: "z = k の切り口 4√(1 − k²) − 2(1 − k²) → ∫₋₁¹ … dk = 2π − 8/3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 回転体でない立体は、どの向きに切れば切り口が描ける？——**向きを変えて切っても体積が同じなら、何を基準に向きを選ぶ？**
+
+────────
+
+## 切り口が描ければ、どんな立体でも足せる
+
+体積は、切り口の面積を足したものだった。立体が回転体でなくても、切り口の形（正方形・正三角形・長方形）と、その大きさが位置でどう変わるかが分かれば、面積を位置の式にして足せる（step1〜3）。
+
+## ここが胚細胞：切る向きは選べる
+
+同じ立体でも、切る向きを変えると切り口の形が変わる。step4・5 の立体は、$x$ 軸に垂直に切ると三角形、$y$ 軸に垂直に切ると長方形になった。**どちらで足しても体積は同じ**だから、切り口が描きやすい向き・面積を式に書きやすい向きを選べばよい。
+
+**$y$ 軸のまわりに回した立体**は、$y$ 軸に垂直に切れば切り口が円になる（step7）。半径は $y$ 軸からの距離 $x$ なので、$x$ を $y$ の式に書いて $y$ で足す。
+
+**書けないときは、目盛りを取り替える。** step8 の曲線 $y = xe^x$ は、高校で使う記号では $x = (y$ の式$)$ に書き直せない。それでも $\\displaystyle\\pi\\int x^2\\,dy$ の幅 $dy$ を $x$ の目盛りで測り直せば（[置換積分]）、$x$ のまま足せる。系列2 で $t$ の目盛りに取り替えたのと同じ手つきである。
+
+## Step の道筋
+
+- **step1〜3**：底面の上に立つ立体。切り口は正方形・正三角形・長方形
+- **step4（質的変化）・5**：同じ立体を $2$ つの向きで切る。形は変わり、体積は同じ
+- **step6**：体積から足す範囲のはしを読む（$2$ つの解のうち、式が意味をもつほう）
+- **step7（質的変化）**：$y$ 軸のまわりに回す
+- **step8（山場）**：$x$ を $y$ の式に書けない曲線を $y$ 軸のまわりに回す。足す目盛りを $x$ に取り替える
+- **step9**：パラメータ曲線を回す（系列2 と合流）
+- **step10**：$2$ つの立体の共通部分。切り口の共通部分を足す
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 体積の公式を立体ごとに覚える必要はない。どの向きに切ると切り口が描けるかを探し、その面積を位置の式に書いて足す。それだけである。
+
+**ほかの切り方もある。** step8 の立体は、$y$ 軸を中心とする薄い円筒（中が空洞の筒）に切って足す道もある（筒の側面積 $2\\pi x\\cdot y$ を $x$ で足す）。高校では扱わないことも多いが、同じ立体なので同じ体積になる。**切り方は $1$ つではない**——どの向き・どの形で切るかを選べることが、この系列の中身である。
+
+**この先の景色。** 医療の CT スキャンは、体をいろいろな向きの断面で撮影し、断面の情報から立体を組み立てる。大学の重積分では、足す順序（どの向きに先に切るか）を替えて計算を楽にすることを学ぶ。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「定積分と体積」の構成（回転体でない立体は断面が簡単になる軸を選ぶ・別の軸で切っても体積は同じ・共通部分の断面・$y$ 軸のまわりの回転を置換で $x$ の積分にする）を参考。問題の値・立体はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+回転体でない立体でも、切り口の形が分かれば、その面積を足して体積が出る。切る向きを変えると切り口の形は変わるが、体積は同じ。だから、切り口が描きやすく、面積を位置の式に書きやすい向きを選べばよい。
+
+その向きの式に書けないときは、足す目盛りを書ける変数に取り替える。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
   M3IA_VOLUME_SERIES,
+  M3IA_SLICE_SERIES,
 ];

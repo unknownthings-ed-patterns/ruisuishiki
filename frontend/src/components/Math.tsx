@@ -16032,6 +16032,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_BASE_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaBaseSquare />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_TWO_CUTS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaTwoCuts />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_YAXIS_SLICE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaYaxisSlice />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -41844,6 +41865,120 @@ function M3iaSolidSlice() {
       <text x={X(u0) + 8} y={110 - r / 2} fontSize="13" fill={accent}>?</text>
       <text x="200" y="210" fontSize="11" fill={accent} textAnchor="middle">
         切り口の円の半径は何？ その面積を x 軸に沿って足すと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列4 step1: 底面（曲線と x 軸で囲まれた部分）の上に立つ立体と、x 軸に垂直な切り口（正方形）。
+ *  ★図に答えを描かない★ 目盛り・曲線の式・切り口の辺の長さは書かない（辺は「?」）。見取り図は模式。 */
+function M3iaBaseSquare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const P = (x: number, y: number, z: number) => [60 + x * 90 + y * 40, 170 - y * 22 - z * 60];
+  const base: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const x = (Math.PI * k) / 40;
+    const [px, py] = P(x, Math.sin(x) * 1.6, 0);
+    base.push(`${px.toFixed(1)},${py.toFixed(1)}`);
+  }
+  const x0 = 1.1;
+  const h = Math.sin(x0) * 1.6;
+  const q = [P(x0, 0, 0), P(x0, h, 0), P(x0, h, h * 0.62), P(x0, 0, h * 0.62)];
+  const poly = q.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(" ");
+  const [ax0, ay0] = P(-0.2, 0, 0);
+  const [ax1, ay1] = P(3.5, 0, 0);
+  return (
+    <svg
+      viewBox="0 0 400 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="xy 平面に、曲線と x 軸で囲まれた底面が描かれている。底面の上の 1 か所で x 軸に垂直に切った切り口の正方形が立っていて、その 1 辺の長さは疑問符。目盛りと曲線の式は書かれていない"
+    >
+      <path d={`M ${ax0} ${ay0} L ${ax1} ${ay1}`} fill="none" stroke={muted} strokeWidth="1" />
+      <text x={ax1 + 4} y={ay1 + 4} fontSize="12" fill={stroke}>x</text>
+      <polyline points={base.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <polygon points={poly} fill={accent} fillOpacity="0.18" stroke={accent} strokeWidth="1.8" />
+      <text x={(q[2][0] + q[3][0]) / 2} y={(q[2][1] + q[3][1]) / 2 - 6} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="200" y="194" fontSize="11" fill={accent} textAnchor="middle">
+        この切り口の面積を、x について足すと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列4 step4: 同じ立体を 2 つの向き（x 軸に垂直・y 軸に垂直）で切る。
+ *  ★切り口の形を描かない★ 2 枚の切断面は位置だけ破線の枠で示し、中の形は「?」（形が変わること自体がこの step の発見）。
+ *  立体の形も描かない（座標軸と切る面の向きだけ）。 */
+function M3iaTwoCuts() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 400 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="x 軸、y 軸、z 軸の見取り図に、x 軸に垂直な切断面と、y 軸に垂直な切断面が、それぞれ破線の枠で描かれている。どちらの枠の中も疑問符で、切り口の形は描かれていない"
+    >
+      <path d="M 120 160 L 330 160" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="336" y="164" fontSize="12" fill={stroke}>x</text>
+      <path d="M 120 160 L 200 100" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="204" y="98" fontSize="12" fill={stroke}>y</text>
+      <path d="M 120 160 L 120 30" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="112" y="26" fontSize="12" fill={stroke}>z</text>
+      <polygon points="240,170 280,140 280,70 240,100" fill="none" stroke={accent} strokeWidth="1.6" strokeDasharray="5 4" />
+      <text x="260" y="128" fontSize="14" fill={accent} textAnchor="middle">?</text>
+      <text x="262" y="190" fontSize="11" fill={stroke} textAnchor="middle">x = k で切る</text>
+      <polygon points="150,137 360,137 360,67 150,67" fill="none" stroke={stroke} strokeWidth="1.2" strokeDasharray="3 4" />
+      <text x="330" y="108" fontSize="14" fill={stroke} textAnchor="middle">?</text>
+      <text x="355" y="60" fontSize="11" fill={stroke} textAnchor="end">y = k で切る</text>
+      <text x="200" y="206" fontSize="11" fill={accent} textAnchor="middle">
+        向きを変えると、切り口の形はどう変わる？ 体積は？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列4 step7: y 軸のまわりに回した立体と、y 軸に垂直な（横の）切り口の円。
+ *  ★図に答えを描かない★ 半径・高さの値・曲線の式は書かない（半径は「?」）。曲線は模式。 */
+function M3iaYaxisSlice() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const right: string[] = [];
+  const left: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const u = k / 40;
+    const yv = 180 - u * 140;
+    const xr = 200 + 110 * Math.sqrt(u);
+    const xl = 200 - 110 * Math.sqrt(u);
+    right.push(`${xr.toFixed(1)},${yv.toFixed(1)}`);
+    left.push(`${xl.toFixed(1)},${yv.toFixed(1)}`);
+  }
+  const u0 = 0.5;
+  const yc = 180 - u0 * 140;
+  const rr = 110 * Math.sqrt(u0);
+  return (
+    <svg
+      viewBox="0 0 400 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="y 軸を中心に、曲線を回してできた器のような立体の輪郭。途中の高さで y 軸に垂直に切った切り口が横長の楕円で描かれた円になっていて、半径は疑問符。目盛りと曲線の式は書かれていない"
+    >
+      <path d="M 200 200 L 200 20" fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x="206" y="22" fontSize="12" fill={stroke}>y</text>
+      <polyline points={right.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <polyline points={left.join(" ")} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <ellipse cx="200" cy={yc} rx={rr} ry={rr * 0.22} fill={accent} fillOpacity="0.16" stroke={accent} strokeWidth="1.8" />
+      <path d={`M 200 ${yc} L ${200 + rr} ${yc}`} fill="none" stroke={accent} strokeWidth="2" />
+      <text x={200 + rr / 2} y={yc - 8} fontSize="13" fill={accent} textAnchor="middle">?</text>
+      <text x="200" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        この横の切り口の半径を、y の式で書くと？
       </text>
     </svg>
   );
