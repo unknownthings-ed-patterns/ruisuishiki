@@ -120,6 +120,7 @@ import {
   M3IA_DISTANCE_SERIES,
   M3IA_ARC_SERIES,
   M3IA_RIEMANN_SERIES,
+  M3IA_SUMLIM_SERIES,
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
@@ -2337,6 +2338,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "積分法の応用",
     shortDescription:
       "長方形ではさむ（面積を長方形の和の行き先で定め直す）— はみ出す長方形と足りない長方形で面積をはさみ、差が 0 に近づくので面積は 1 つに決まる。外側は端の名前でなく、曲線の上がり下がりで決まる",
+  },
+  {
+    series: M3IA_SUMLIM_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "積分法の応用",
+    shortDescription:
+      "長方形の和の行き先を定積分で読む — 1 項を幅 1/n と k/n の式の高さに分けて読む。積分の区間は、足す番号の範囲（k/n が動く範囲）から読む",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

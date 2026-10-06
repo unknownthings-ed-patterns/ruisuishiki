@@ -2244,6 +2244,313 @@ $$(\\text{内側の和}) \\le (\\text{面積}) \\le (\\text{外側の和})$$
 その値は、原始関数で出した定積分と一致する。`,
 };
 
+/** M3IA8: 和の極限を定積分に読み替える（向きは系列7 の逆＝和から積分へ）。
+ *  step1：(nk + k²)/n³ の和 → ∫₀¹(x + x²) = 5/6（和の公式でも出せる＝Q3。原典 p.290 の x²・練8(1) の x⁴・系列7 step10 の x³ と別）
+ *  step2：cos(kπ/(2n)) の和 → 2/π／step3：n²/(n + k)³ の和 → ∫₀¹ 1/(1 + x)³ = 3/8（1/n を外に出す。原典 練8(3) の 1/(n + k) は使わない）
+ *  山場 step4（C12 ②）：k = n + 1 〜 2n の (k/n)² → ∫₁² x² = 7/3。素朴に 0〜1 と読むと 1/3（高さを 1/x 系にしない＝R1 B-11）
+ *  step5：k = 1〜2n の k(2n − k)/n³ → ∫₀² x(2 − x) = 4/3／step6（逆）：k = 1〜cn の k/n² の極限が 8 → c = 4
+ *  step7：((3n)!/((2n)! nⁿ))^(1/n) の極限 L の log L = ∫₂³ log x = 3log3 − 2log2 − 1（原典 練8(4) の 1〜2 にしない＝R1 A-8。0 を端に含む広義積分も避けた）
+ *  step8：√(1 + 3k/n) の和 → 14/9（四分円の族は使わない）
+ *  step9（複合・C13 第6章 置換積分）：k/(n² + k²) の和 → log2/2
+ *  step10（複合・C13 第6章 部分積分）：k = 1〜2n の (k/n)sin(kπ/(2n)) → ∫₀² x sin(πx/2) = 4/π
+ *  答え 10 個はすべて相異なる（sympy と n = 20000 の数値和で一致）。 */
+export const M3IA_SUMLIM_SERIES: LearnerSeries = {
+  id: "math3_ia_sumlim_01",
+  title: "長方形の和の行き先を定積分で読む",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 和の公式で閉じられない和でも、細い長方形の面積の和に見えれば、行き先は定積分で出せる。和のどこを幅、どこを高さと読むか。$10$ 問で確かめる。",
+  patternId: "M3IA8",
+  unit: "math_3",
+  revelationLabel:
+    "**足す番号の範囲が、面積の区間を決める**。$k$ が $n + 1$ から $2n$ までなら、高さを測る点 $\\frac kn$ は $1$ から $2$ まで動く",
+  drivingQuestion:
+    "数列の単元の和の公式で閉じられない和でも、長方形の和に見えれば、$n \\to \\infty$ での行き先が出る？——**和のどこを幅、どこを高さと読めばよい？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\sum_{k=1}^{n}\\dfrac{nk + k^2}{n^3}$ を求めましょう。",
+      answer: 5 / 6,
+      answerDisplay: "5/6",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "足している $1$ つ $1$ つの項は、細い長方形の面積に見える？ 見えるなら、幅はどれで、高さはどれ？",
+        },
+        {
+          layer: 2,
+          text: "「長方形ではさむ」の系列で、$0$ から $1$ を $n$ 等分した長方形 $1$ 本の幅と高さは、どんな式だった？（[区分求積法]）",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac{nk + k^2}{n^3} = \\dfrac1n\\left\\{\\dfrac kn + \\left(\\dfrac kn\\right)^2\\right\\}$。幅 $\\dfrac1n$、右端 $\\dfrac kn$ での高さ $f\\left(\\dfrac kn\\right)$、$f(x) = x + x^2$ の長方形の和なので、行き先は $\\displaystyle\\int_0^1(x + x^2)\\,dx = \\dfrac12 + \\dfrac13 = \\dfrac56$。（[シグマ記号] の和の公式で $n$ の式に閉じても $\\dfrac56$ になる。）中心の問いへの最初の部分回答：**$\\frac1n$ を幅、$\\frac kn$ の式を高さと読めれば、和の行き先は定積分**。",
+        },
+      ],
+      formulaPreview: "(1/n){k/n + (k/n)²} → ∫₀¹ (x + x²) dx = 5/6",
+      figureMarker: "<<M3IA_SUM_STRIP>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\dfrac1n\\sum_{k=1}^{n}\\cos\\dfrac{k\\pi}{2n}$ を求めましょう。",
+      answer: 2 / Math.PI,
+      answerDisplay: "2/π",
+      unit: "",
+      unknownLabel: "極限値",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、高さが三角関数になったこと。" },
+        {
+          layer: 3,
+          text: "$\\cos\\dfrac{k\\pi}{2n} = \\cos\\left(\\dfrac\\pi2\\cdot\\dfrac kn\\right)$ なので、$f(x) = \\cos\\dfrac{\\pi x}{2}$ の高さ。行き先は $\\displaystyle\\int_0^1\\cos\\dfrac{\\pi x}{2}\\,dx = \\Big[\\dfrac2\\pi\\sin\\dfrac{\\pi x}{2}\\Big]_0^1 = \\dfrac2\\pi$。$\\cos$ の和は、数列の単元の和の公式の表には無い（積を和に直す手つきで閉じる道もあり、同じ値になる）。中心の問いへ：**和の公式で閉じられなくても、長方形の和と読めれば行き先が出る**。",
+        },
+      ],
+      formulaPreview: "高さ cos(πx/2) → ∫₀¹ cos(πx/2) dx = 2/π",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\sum_{k=1}^{n}\\dfrac{n^2}{(n + k)^3}$ を求めましょう。",
+      answer: 3 / 8,
+      answerDisplay: "3/8",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、項の形の中に幅 $\\dfrac1n$ がそのままの形では見えていないこと。" },
+        {
+          layer: 3,
+          text: "分母・分子を $n^3$ で割ると $\\dfrac{n^2}{(n + k)^3} = \\dfrac1n\\cdot\\dfrac{1}{\\left(1 + \\frac kn\\right)^3}$。幅 $\\dfrac1n$ と、$\\dfrac kn$ の式の高さ $f(x) = \\dfrac{1}{(1 + x)^3}$ が見える。行き先は $\\displaystyle\\int_0^1\\dfrac{dx}{(1 + x)^3} = \\Big[-\\dfrac{1}{2(1 + x)^2}\\Big]_0^1 = -\\dfrac18 + \\dfrac12 = \\dfrac38$。$k$ のまま $f(k) = \\dfrac{n^2}{(n + k)^3}$ と読むと、$n$ が混ざって関数が決まらない。中心の問いへ：**読み替えの仕事は、$\\frac1n$ をくくり出し、残りを $\\frac kn$ だけの式にすること**。",
+        },
+      ],
+      formulaPreview: "(1/n)·1/(1 + k/n)³ → ∫₀¹ dx/(1 + x)³ = 3/8",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\dfrac1n\\sum_{k=n+1}^{2n}\\left(\\dfrac kn\\right)^2$ を求めましょう。（足す番号は $k = n + 1$ から $k = 2n$ までです。）",
+      answer: 7 / 3,
+      answerDisplay: "7/3",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "step1 と変わったのは、足す番号 $k$ が $1$ からでなく $n + 1$ から始まり、$2n$ で終わること。" },
+        {
+          layer: 3,
+          text: "幅は $\\dfrac1n$、高さは $f\\left(\\dfrac kn\\right)$、$f(x) = x^2$。ただし高さを測る点 $\\dfrac kn$ は、$k = n + 1$ で $1 + \\dfrac1n$、$k = 2n$ で $2$——**$1$ から $2$ まで**動く。だから長方形が並ぶのは $1 \\le x \\le 2$ で、行き先は $\\displaystyle\\int_1^2 x^2\\,dx = \\dfrac{8 - 1}{3} = \\dfrac73$。いつもの $\\displaystyle\\int_0^1$ と読むと $\\dfrac13$ になり、外れる。中心の問いへ：**積分の区間は、高さを測る点 $\\frac kn$ が動く範囲で決まる。足す番号の範囲から読む**。",
+        },
+      ],
+      formulaPreview: "k/n は 1 から 2 まで → ∫₁² x² dx = 7/3（0〜1 と読むと 1/3）",
+      figureMarker: "<<M3IA_SUM_RANGE>>",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\sum_{k=1}^{2n}\\dfrac{k(2n - k)}{n^3}$ を求めましょう。（足す番号は $k = 1$ から $k = 2n$ までです。）",
+      answer: 4 / 3,
+      answerDisplay: "4/3",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、足す番号が $1$ から始まって $2n$ まで続くこと。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{k(2n - k)}{n^3} = \\dfrac1n\\cdot\\dfrac kn\\left(2 - \\dfrac kn\\right)$。高さを測る点 $\\dfrac kn$ は $\\dfrac1n$ から $2$ まで動くので、区間は $0 \\le x \\le 2$。行き先は $\\displaystyle\\int_0^2 x(2 - x)\\,dx = \\Big[x^2 - \\dfrac{x^3}{3}\\Big]_0^2 = \\dfrac43$。中心の問いへ：**番号が $2n$ まで伸びれば、区間も $2$ まで伸びる。幅はやはり $\\frac1n$**。",
+        },
+      ],
+      formulaPreview: "(1/n)(k/n)(2 − k/n)、k/n は 0〜2 → ∫₀² x(2 − x) dx = 4/3",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$c$ を正の整数とします。$\\displaystyle\\lim_{n \\to \\infty}\\sum_{k=1}^{cn}\\dfrac{k}{n^2}$ の値が $8$ になるとき、$c$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$c$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は何が分かっていて、何を求める？" },
+        { layer: 2, text: "前題と変わったのは、極限値が分かっていて、足す番号の終わり $cn$ の $c$ が分からないこと。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{k}{n^2} = \\dfrac1n\\cdot\\dfrac kn$、高さを測る点 $\\dfrac kn$ は $0$ から $c$ まで動くので、行き先は $\\displaystyle\\int_0^c x\\,dx = \\dfrac{c^2}{2}$。$\\dfrac{c^2}{2} = 8$ より $c^2 = 16$、$c$ は正なので $c = 4$。中心の問いへ：**区間の右のはしは番号の終わりから読める。だから逆に、値から番号の範囲も決められる**。",
+        },
+      ],
+      formulaPreview: "∫₀ᶜ x dx = c²/2 = 8 → c = 4",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$a_n = \\left\\{\\dfrac{(3n)!}{(2n)!\\,n^n}\\right\\}^{\\frac1n}$ とします。$n \\to \\infty$ のときの $a_n$ の極限を $L$ とするとき、$\\log L$ を求めましょう。",
+      answer: 3 * Math.log(3) - 2 * Math.log(2) - 1,
+      answerDisplay: "3log3-2log2-1",
+      unit: "",
+      unknownLabel: "$\\log L$",
+      inputAffordances: ["log"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。何が加わった？" },
+        { layer: 2, text: "step5 と変わったのは、和でなく積（の $n$ 乗根）の極限を問われていること。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{(3n)!}{(2n)!} = (2n + 1)(2n + 2)\\cdots(3n)$ は $n$ 個の積なので、$\\dfrac{(3n)!}{(2n)!\\,n^n} = \\displaystyle\\prod_{k=1}^{n}\\dfrac{2n + k}{n} = \\prod_{k=1}^{n}\\left(2 + \\dfrac kn\\right)$。[対数] をとると積が和になる：$\\log a_n = \\dfrac1n\\displaystyle\\sum_{k=1}^{n}\\log\\left(2 + \\dfrac kn\\right)$。高さを測る点 $2 + \\dfrac kn$ は $2$ から $3$ まで動くので、行き先は $\\displaystyle\\int_2^3\\log x\\,dx = \\Big[x\\log x - x\\Big]_2^3 = 3\\log 3 - 2\\log 2 - 1$。中心の問いへ：**積でも、対数をとれば和になり、長方形の和として読める**。",
+        },
+      ],
+      formulaPreview: "log aₙ = (1/n)Σ log(2 + k/n) → ∫₂³ log x dx = 3 log 3 − 2 log 2 − 1",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\dfrac1n\\sum_{k=1}^{n}\\sqrt{1 + \\dfrac{3k}{n}}$ を求めましょう。",
+      answer: 14 / 9,
+      answerDisplay: "14/9",
+      unit: "",
+      unknownLabel: "極限値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "step2 と変わったのは、高さが根号を含む式になったこと。" },
+        {
+          layer: 3,
+          text: "高さは $f\\left(\\dfrac kn\\right)$、$f(x) = \\sqrt{1 + 3x}$、区間は $0 \\le x \\le 1$。行き先は $\\displaystyle\\int_0^1\\sqrt{1 + 3x}\\,dx = \\Big[\\dfrac29(1 + 3x)^{\\frac32}\\Big]_0^1 = \\dfrac29(8 - 1) = \\dfrac{14}{9}$。中心の問いへ：**高さの式が何であっても、幅 $\\frac1n$ と $\\frac kn$ の式が見えれば読み替えられる**。",
+        },
+      ],
+      formulaPreview: "高さ √(1 + 3x) → ∫₀¹ √(1 + 3x) dx = 14/9",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\sum_{k=1}^{n}\\dfrac{k}{n^2 + k^2}$ を求めましょう。",
+      answer: Math.log(2) / 2,
+      answerDisplay: "log2/2",
+      unit: "",
+      unknownLabel: "極限値",
+      inputAffordances: ["log"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step3 と変わったのは、読み替えたあとの定積分が、そのままでは巻き戻しにくい形になること。",
+        },
+        {
+          layer: 3,
+          text: "分母・分子を $n^2$ で割ると $\\dfrac{k}{n^2 + k^2} = \\dfrac1n\\cdot\\dfrac{\\frac kn}{1 + \\left(\\frac kn\\right)^2}$。行き先は $\\displaystyle\\int_0^1\\dfrac{x}{1 + x^2}\\,dx$。分子 $x$ は分母 $1 + x^2$ の微分の半分なので、$u = 1 + x^2$ と[置換積分]すると $\\displaystyle\\dfrac12\\int_1^2\\dfrac{du}{u} = \\dfrac12\\log 2$。中心の問いへ：**読み替えた先の定積分には、これまでの積分の道具（置換）がそのまま使える**。",
+        },
+      ],
+      formulaPreview: "(1/n)·(k/n)/(1 + (k/n)²) → ∫₀¹ x/(1 + x²) dx = (1/2) log 2",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$\\displaystyle\\lim_{n \\to \\infty}\\dfrac1n\\sum_{k=1}^{2n}\\dfrac kn\\sin\\dfrac{k\\pi}{2n}$ を求めましょう。（足す番号は $k = 1$ から $k = 2n$ までです。）",
+      answer: 4 / Math.PI,
+      answerDisplay: "4/π",
+      unit: "",
+      unknownLabel: "極限値",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step5 と変わったのは、高さが $x$ と三角関数の積になっていること。",
+        },
+        {
+          layer: 3,
+          text: "高さを測る点 $\\dfrac kn$ は $0$ から $2$ まで動き、高さは $f(x) = x\\sin\\dfrac{\\pi x}{2}$。行き先は $\\displaystyle\\int_0^2 x\\sin\\dfrac{\\pi x}{2}\\,dx$。[部分積分] で $\\Big[-\\dfrac2\\pi x\\cos\\dfrac{\\pi x}{2}\\Big]_0^2 + \\dfrac2\\pi\\displaystyle\\int_0^2\\cos\\dfrac{\\pi x}{2}\\,dx = \\dfrac4\\pi + \\dfrac{4}{\\pi^2}\\Big[\\sin\\dfrac{\\pi x}{2}\\Big]_0^2 = \\dfrac4\\pi$。中心の問いへ：**番号の範囲から区間を読み、高さを関数に読めば、あとは定積分の計算になる**。",
+        },
+      ],
+      formulaPreview: "k/n は 0〜2・高さ x sin(πx/2) → ∫₀² x sin(πx/2) dx = 4/π",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 数列の単元の和の公式で閉じられない和でも、長方形の和に見えれば、$n \\to \\infty$ での行き先が出る？——**和のどこを幅、どこを高さと読めばよい？**
+
+────────
+
+## 和を、長方形の面積の和と読む
+
+「長方形ではさむ」の系列では、面積から出発して長方形の和を作った。ここでは向きが逆で、**和から出発して面積を見つける**。
+
+$0$ から $1$ を $n$ 等分した長方形は、幅 $\\dfrac1n$、右端 $\\dfrac kn$ での高さ $f\\left(\\dfrac kn\\right)$。だから
+
+$$\\lim_{n \\to \\infty}\\frac1n\\sum_{k=1}^{n} f\\left(\\frac kn\\right) = \\int_0^1 f(x)\\,dx$$
+
+和の形がこう見えれば、行き先は定積分で出せる（[区分求積法]）。和の公式の表に無い和（$\\cos$・根号・分数式）でもよい（step2・3・8）。
+
+## ここが胚細胞：読み替えの仕事は、$\\frac kn$ の式を作ること
+
+$1$ 項を「$\\frac1n \\times (\\frac kn$ だけの式$)$」の形に書き直せれば、幅と高さが見える（step3）。$k$ のまま読むと、$n$ が混ざって関数が決まらない。
+
+**区間は、高さを測る点 $\\frac kn$ が動く範囲で決まる。**
+
+- $k = 1$ から $n$ まで → $\\frac kn$ は $0$ から $1$
+- $k = n + 1$ から $2n$ まで → $1$ から $2$（step4）
+- $k = 1$ から $2n$ まで → $0$ から $2$（step5・10）
+
+積の極限は、[対数] をとって和に直す（step7）。
+
+## Step の道筋
+
+- **step1**：多項式の高さ（和の公式でも出せる＝交差検算）
+- **step2・3**：三角関数の高さ／$\\frac1n$ をくくり出す分数式
+- **step4（質的変化・山場）**：番号が $n + 1$ から $2n$。区間は $1$ から $2$
+- **step5・6**：番号が $2n$ まで／値から番号の範囲を逆に読む
+- **step7**：積の極限を対数で和に
+- **step8**：根号の高さ
+- **step9・10**：読み替えた先で置換・部分積分（第6章と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 区分求積の式を覚えなくてよい。和の $1$ 項を「幅 × 高さ」と見て、幅が $\\frac1n$、高さが $\\frac kn$ の式になるまで変形すれば、区間と関数はその場で読める。
+
+**幅を別の大きさにとる読み方もある。** たとえば step5 は、幅を $\\frac2n$・区間を $0$〜$2$ の $2n$ 等分と読んでも、同じ値になる。読み方は $1$ つではないが、どれも同じ面積を指している。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「区分求積法」の構成（和の行き先を定積分に読み替える・積の行き先を対数で和に直す）を参考。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+和の $1$ 項を、幅 $\\frac1n$ と、$\\frac kn$ の式の高さに分けて読む。そうすれば、和の公式で閉じられない和でも、行き先は定積分で出る。積分の区間は、足す番号の範囲から——高さを測る点 $\\frac kn$ が動く範囲から——読む。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
@@ -2252,4 +2559,5 @@ export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_DISTANCE_SERIES,
   M3IA_ARC_SERIES,
   M3IA_RIEMANN_SERIES,
+  M3IA_SUMLIM_SERIES,
 ];

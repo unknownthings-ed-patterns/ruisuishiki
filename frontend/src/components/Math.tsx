@@ -16088,6 +16088,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_SUM_STRIP>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaSumStrip />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_SUM_RANGE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaSumRange />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42185,6 +42199,83 @@ function M3iaStripsDown() {
       <text x={X(0.5)} y={Y(f(0.5)) - 12} fontSize="13" fill={accent} textAnchor="middle">?</text>
       <text x="190" y="202" fontSize="11" fill={accent} textAnchor="middle">
         曲線が下がるとき、はみ出す長方形の高さはどちらの端？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列8 step1: 和の 1 項を細い長方形 1 本と読む図。
+ *  ★図に答えを描かない★ 幅と高さは「?」、帯の本数も「?」。曲線は模式で、step の関数の形を写していない。目盛りなし。 */
+function M3iaSumStrip() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 50 + u * 280;
+  const Y = (v: number) => 170 - v * 120;
+  const f = (u: number) => 0.25 + 0.6 * u + 0.1 * Math.sin(5 * u);
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(f(u)).toFixed(1)}`);
+  }
+  const a = 0.55;
+  const b = 0.65;
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="曲線の下に細い長方形が 1 本だけ描かれ、その幅と高さに疑問符がついている。長方形の上の右の角が曲線に乗っている。帯の本数も疑問符"
+    >
+      <path d="M 30 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <rect x={X(a)} y={Y(f(b))} width={X(b) - X(a)} height={170 - Y(f(b))} fill="none" stroke={accent} strokeWidth="2" />
+      <text x={(X(a) + X(b)) / 2} y="186" fontSize="12" fill={accent} textAnchor="middle">幅 ?</text>
+      <text x={X(b) + 6} y={(Y(f(b)) + 170) / 2} fontSize="12" fill={accent}>高さ ?</text>
+      <text x="190" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        和の 1 項がこの 1 本の面積なら、何本並ぶ？ 並ぶ範囲は？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列8 step4: 細い帯が並ぶ区間の図。
+ *  ★図に答えを描かない★ 帯が並ぶ範囲の左右の端は「?」。原点・目盛りを描かない（帯の位置を原点からの距離で示さない＝R1 B-14）。 */
+function M3iaSumRange() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 40 + u * 300;
+  const Y = (v: number) => 170 - v * 120;
+  const f = (u: number) => 0.2 + 0.7 * u * u;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = k / 60;
+    pts.push(`${X(u).toFixed(1)},${Y(f(u)).toFixed(1)}`);
+  }
+  const lo = 0.4;
+  const hi = 0.9;
+  const N = 8;
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="横に伸びる軸と曲線。曲線の下の一部分にだけ細い長方形が並んでいる。並ぶ範囲の左の端と右の端に疑問符がある。原点と目盛りは描かれていない"
+    >
+      <path d="M 20 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      {Array.from({ length: N }, (_, i) => {
+        const a = lo + ((hi - lo) * i) / N;
+        const b = lo + ((hi - lo) * (i + 1)) / N;
+        return <rect key={i} x={X(a)} y={Y(f(b))} width={X(b) - X(a)} height={170 - Y(f(b))} fill="none" stroke={accent} strokeWidth="1.2" />;
+      })}
+      <text x={X(lo)} y="186" fontSize="12" fill={accent} textAnchor="middle">?</text>
+      <text x={X(hi)} y="186" fontSize="12" fill={accent} textAnchor="middle">?</text>
+      <text x="190" y="208" fontSize="11" fill={accent} textAnchor="middle">
+        足す番号の範囲から、帯が並ぶ範囲の両はしを読むと？
       </text>
     </svg>
   );
