@@ -16102,6 +16102,27 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3IA_TWO_CURVES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaTwoCurves />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_SQUEEZE_UNKNOWN>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaSqueezeUnknown />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3IA_STAIRS_1X>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3iaStairs1x />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42276,6 +42297,106 @@ function M3iaSumRange() {
       <text x={X(hi)} y="186" fontSize="12" fill={accent} textAnchor="middle">?</text>
       <text x="190" y="208" fontSize="11" fill={accent} textAnchor="middle">
         足す番号の範囲から、帯が並ぶ範囲の両はしを読むと？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列9 step1: 区間でいつも上にある曲線と下にある曲線、それぞれの下の面積。
+ *  ★図に答えを描かない★ 面積の値・関数の式・目盛りは書かない。曲線は模式で、step の関数の形を写していない。 */
+function M3iaTwoCurves() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 60 + u * 260;
+  const Y = (v: number) => 170 - v * 130;
+  const g = (u: number) => 0.15 + 0.75 * Math.pow(u, 1.6);
+  const f = (u: number) => 0.05 + 0.55 * Math.pow(u, 2.4);
+  const line = (h: (u: number) => number) => {
+    const p: string[] = [];
+    for (let k = 0; k <= 60; k++) p.push(`${X(k / 60).toFixed(1)},${Y(h(k / 60)).toFixed(1)}`);
+    return p.join(" ");
+  };
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="区間のどこでも一方が他方の上にある 2 本の曲線。上の曲線の下の面積と、下の曲線の下の面積が、色の濃さを変えて示されている。値と式は書かれていない"
+    >
+      <path d="M 40 170 L 350 170" fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 170 L ${line(g).split(" ").join(" L ")} L ${X(1)} 170 Z`} fill={accent} fillOpacity="0.12" stroke="none" />
+      <path d={`M ${X(0)} 170 L ${line(f).split(" ").join(" L ")} L ${X(1)} 170 Z`} fill={accent} fillOpacity="0.25" stroke="none" />
+      <polyline points={line(g)} fill="none" stroke={stroke} strokeWidth="2" />
+      <polyline points={line(f)} fill="none" stroke={stroke} strokeWidth="2" strokeDasharray="5 3" />
+      <path d={`M ${X(0)} 170 L ${X(0)} ${Y(g(0)) - 4}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <path d={`M ${X(1)} 170 L ${X(1)} ${Y(g(1)) - 4}`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="190" y="205" fontSize="11" fill={accent} textAnchor="middle">
+        上の曲線の下の面積と、下の曲線の下の面積。どちらが大きい？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列9 step3: 原始関数が書けない関数の下の面積（値は「?」）。
+ *  ★はさむ 2 本の上下関係は描かない（R1 B-14）★ 曲線は 1 本だけ。目盛り・式・値は書かない。 */
+function M3iaSqueezeUnknown() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (u: number) => 70 + u * 240;
+  const Y = (v: number) => 170 - v * 120;
+  const h = (u: number) => Math.exp(-1.2 * u * u);
+  const p: string[] = [];
+  for (let k = 0; k <= 60; k++) p.push(`${X(k / 60).toFixed(1)},${Y(h(k / 60)).toFixed(1)}`);
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="なだらかに下がる 1 本の曲線と、その下の面積が塗られている。面積には疑問符がある。目盛りと式は書かれていない"
+    >
+      <path d="M 40 170 L 350 170" fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${X(0)} 170 L ${p.join(" L ")} L ${X(1)} 170 Z`} fill={accent} fillOpacity="0.15" stroke="none" />
+      <polyline points={p.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={X(0.45)} y="140" fontSize="16" fill={accent} textAnchor="middle">?</text>
+      <text x="190" y="205" fontSize="11" fill={accent} textAnchor="middle">
+        原始関数が書けなくても、この面積を何かと比べられる？
+      </text>
+    </svg>
+  );
+}
+
+/** 積分法の応用 系列9 step6: 幅 1 の長方形の階段と、曲線 y = 1/x の模式。
+ *  ★図に答えを描かない★ 長方形の本数に意味を持たせない（模式の 5 本）。目盛りの数・面積の値・保証される n は書かない。 */
+function M3iaStairs1x() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (x: number) => 50 + (x - 1) * 55;
+  const Y = (v: number) => 170 - v * 130;
+  const p: string[] = [];
+  for (let k = 0; k <= 80; k++) {
+    const x = 1 + (5.4 * k) / 80;
+    p.push(`${X(x).toFixed(1)},${Y(1 / x).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 380 215"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="右下がりの曲線と、幅のそろった長方形が階段のように並んだ図。長方形の左上の角が曲線に乗り、曲線は長方形の中を通っている。値は書かれていない"
+    >
+      <path d="M 30 170 L 360 170" fill="none" stroke={muted} strokeWidth="1" />
+      {[1, 2, 3, 4, 5].map((k) => (
+        <rect key={k} x={X(k)} y={Y(1 / k)} width={X(k + 1) - X(k)} height={170 - Y(1 / k)} fill={accent} fillOpacity="0.1" stroke={accent} strokeWidth="1.2" />
+      ))}
+      <polyline points={p.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="190" y="205" fontSize="11" fill={accent} textAnchor="middle">
+        長方形の面積の和と、曲線の下の面積。どちらが大きい？
       </text>
     </svg>
   );

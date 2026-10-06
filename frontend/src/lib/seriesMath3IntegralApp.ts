@@ -2551,6 +2551,317 @@ $1$ 項を「$\\frac1n \\times (\\frac kn$ だけの式$)$」の形に書き直�
 和の $1$ 項を、幅 $\\frac1n$ と、$\\frac kn$ の式の高さに分けて読む。そうすれば、和の公式で閉じられない和でも、行き先は定積分で出る。積分の区間は、足す番号の範囲から——高さを測る点 $\\frac kn$ が動く範囲から——読む。`,
 };
 
+/** M3IA9: 値を求めずにはさむ——定積分と不等式（第2章の預け②＝調和級数の発散を面積との比較で返す）。
+ *  step1・2：∫₀¹ x³eˣ を x²eˣ（上）と x³（下）ではさむ：e − 2・1/4（上からの値を 1 にしない＝追補10）
+ *  step3（質）：∫₀¹ e^(−x²)（高校で学ぶ関数の範囲では原始関数が書けない。原典の e^(x²)・1/(1 + x⁴) と別）を e^(−x) で下から：1 − 1/e
+ *  step4：接線の不等式 eᵗ ≥ 1 + t で 1 − x² に取り替える：2/3（下からの値が上がる 0.632 → 0.667。真値 0.7468）
+ *  step5（逆）：上から 1 − x² + x⁴/2 で 23/30。5 倍の整数部分 3（5·2/3 = 3.33、5·23/30 = 3.83）。原典 p.296 の eˣ² ≥ 1 + x² と練9 の 1/(1 + x²) の組を避けた
+ *  山場 step6（C12 ②・Q8）：Σ1/k ≥ log(n + 1)（問題文に書く＝R1 B-10）。和が 5 を超えると「この評価で」保証される最小の n = 148（e⁵ = 148.41…）。
+ *    実際に初めて超えるのは n = 83（問わない。L3 で並べる）
+ *  step7：Σ1/k ≤ 1 + log n。4 以下と保証される最大の n = 20（e³ = 20.08…）。実際は 30 まで 4 以下
+ *  step8：Σ_{k=1}^{99} 1/√k ≥ ∫₁¹⁰⁰ = 18／step9：n = 80 で上下の整数部分が一致（16 と 16.89）＝16（実際 16.48。R1 A-4）
+ *  step10（C13 第2章 はさみうち）：∫₀¹ xⁿeˣ ≤ e/(n + 1) で 1/10 未満が保証される最小の n = 27（実際は 26 から）
+ *  答えはすべて相異なる。 */
+export const M3IA_INEQ_SERIES: LearnerSeries = {
+  id: "math3_ia_ineq_01",
+  title: "値を求めずにはさむ——定積分と不等式",
+  subtitle:
+    "数Ⅲ・C 積分法の応用より — 原始関数が書けない定積分でも、値のおおよそは言えるか。積分できる $2$ つの関数ではさみ、和と面積を比べる。言えることと言えないことの境目まで $10$ 問。",
+  patternId: "M3IA9",
+  unit: "math_3",
+  revelationLabel:
+    "**評価が保証する $n$ と、実際の境目の $n$ は違う**。不等式で言えるのは「ここまで来れば必ず」であって、「ここで初めて」ではない",
+  drivingQuestion:
+    "原始関数が書けない定積分でも、値のおおよそは言えるか？——**はさむ $2$ つの関数を取り替えると、何が良くなり、何が言えなくなる？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "$0 \\le x \\le 1$ では $x^3e^x \\le x^2e^x$ が成り立ちます。このことを使うと、$\\displaystyle\\int_0^1 x^3e^x\\,dx$ は $\\displaystyle\\int_0^1 x^2e^x\\,dx$ 以下だと言えます。$\\displaystyle\\int_0^1 x^2e^x\\,dx$ の値を求めましょう。",
+      answer: Math.E - 2,
+      answerDisplay: "e-2",
+      unit: "",
+      unknownLabel: "上からおさえる値",
+      inputAffordances: ["e"],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "いつも下にある曲線の下の面積と、いつも上にある曲線の下の面積。どちらが大きいと言える？",
+        },
+        {
+          layer: 2,
+          text: "「長方形ではさむ」の系列では、曲線の下の面積を何と何ではさんだ？（[区分求積法]）",
+        },
+        {
+          layer: 3,
+          text: "区間のどこでも $f(x) \\le g(x)$ なら、$f$ の下の面積は $g$ の下の面積に収まるので $\\displaystyle\\int_0^1 f \\le \\int_0^1 g$。上からおさえる値は [部分積分] を $2$ 回使って $\\displaystyle\\int_0^1 x^2e^x\\,dx = \\Big[x^2e^x\\Big]_0^1 - 2\\int_0^1 xe^x\\,dx = e - 2\\Big[(x - 1)e^x\\Big]_0^1 = e - 2$。中心の問いへの最初の部分回答：**関数の大小は、定積分しても保たれる。だから大きい関数の積分で、上からおさえられる**。",
+        },
+      ],
+      formulaPreview: "x³eˣ ≤ x²eˣ → ∫₀¹ x³eˣ dx ≤ ∫₀¹ x²eˣ dx = e − 2",
+      figureMarker: "<<M3IA_TWO_CURVES>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "$0 \\le x \\le 1$ では $e^x \\ge 1$ なので、$x^3e^x \\ge x^3$ が成り立ちます。このことを使って、$\\displaystyle\\int_0^1 x^3e^x\\,dx$ を下からおさえる値 $\\displaystyle\\int_0^1 x^3\\,dx$ を求めましょう。",
+      answer: 1 / 4,
+      answerDisplay: "1/4",
+      unit: "",
+      unknownLabel: "下からおさえる値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、はさむ相手が下にある関数になったこと。" },
+        {
+          layer: 3,
+          text: "$x^3 \\le x^3e^x$ なので $\\displaystyle\\int_0^1 x^3\\,dx \\le \\int_0^1 x^3e^x\\,dx$。$\\displaystyle\\int_0^1 x^3\\,dx = \\dfrac14$。前題と合わせて $\\dfrac14 \\le \\displaystyle\\int_0^1 x^3e^x\\,dx \\le e - 2$。（この積分は部分積分で求めることもでき、$6 - 2e \\fallingdotseq 0.56$。たしかに $0.25$ と $0.72$ の間にある。）中心の問いへ：**下と上から $2$ つの関数ではさめば、値の範囲が言える**。",
+        },
+      ],
+      formulaPreview: "x³ ≤ x³eˣ → 1/4 ≤ ∫₀¹ x³eˣ dx ≤ e − 2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "$\\displaystyle\\int_0^1 e^{-x^2}\\,dx$ の $e^{-x^2}$ は、高校で学ぶ関数の範囲では原始関数が書けません。$0 \\le x \\le 1$ では $x^2 \\le x$ なので $e^{-x^2} \\ge e^{-x}$ です。このことを使って、$\\displaystyle\\int_0^1 e^{-x^2}\\,dx$ を下からおさえる値 $\\displaystyle\\int_0^1 e^{-x}\\,dx$ を求めましょう。",
+      answer: 1 - 1 / Math.E,
+      answerDisplay: "1-1/e",
+      unit: "",
+      unknownLabel: "下からおさえる値",
+      inputAffordances: ["e"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、はさまれる側の定積分そのものは、原始関数で計算できないこと。" },
+        {
+          layer: 3,
+          text: "前題では、はさまれる積分も計算できたので、はさむのは確かめにすぎなかった。今度は $e^{-x^2}$ の原始関数が書けないので、**はさむことが値を知る手がかり**になる。下にある $e^{-x}$ は積分できて $\\displaystyle\\int_0^1 e^{-x}\\,dx = \\Big[-e^{-x}\\Big]_0^1 = 1 - \\dfrac1e$。だから $\\displaystyle\\int_0^1 e^{-x^2}\\,dx \\ge 1 - \\dfrac1e \\fallingdotseq 0.63$。中心の問いへ：**原始関数が書けなくても、積分できる関数ではさめば、値のおおよそが言える**。",
+        },
+      ],
+      formulaPreview: "e^(−x²) ≥ e^(−x) → ∫₀¹ e^(−x²) dx ≥ 1 − 1/e",
+      figureMarker: "<<M3IA_SQUEEZE_UNKNOWN>>",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "すべての実数 $t$ で $e^t \\ge 1 + t$ が成り立ちます（$y = e^t$ の $t = 0$ での接線が $y = 1 + t$）。$t = -x^2$ とすると $e^{-x^2} \\ge 1 - x^2$。このことを使って、$\\displaystyle\\int_0^1 e^{-x^2}\\,dx$ を下からおさえる値 $\\displaystyle\\int_0^1(1 - x^2)\\,dx$ を求めましょう。",
+      answer: 2 / 3,
+      answerDisplay: "2/3",
+      unit: "",
+      unknownLabel: "下からおさえる値",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、下からおさえる関数を、接線の不等式から作った別の関数に取り替えたこと。" },
+        {
+          layer: 3,
+          text: "$\\displaystyle\\int_0^1(1 - x^2)\\,dx = 1 - \\dfrac13 = \\dfrac23 \\fallingdotseq 0.667$。前題の $1 - \\dfrac1e \\fallingdotseq 0.632$ より大きい——下からおさえる値が上がり、範囲が狭くなった。（[接線] は接点の近くで曲線によく沿う直線なので、それを使った $1 - x^2$ は、$x$ が $0$ に近いところで $e^{-x^2}$ によく沿う。）中心の問いへ：**はさむ関数を、もとの関数に近いものに取り替えるほど、言える範囲は狭くなる**。",
+        },
+      ],
+      formulaPreview: "e^(−x²) ≥ 1 − x² → ∫₀¹ (1 − x²) dx = 2/3（前題の 0.632 より上）",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "$u \\ge 0$ では $e^{-u} \\le 1 - u + \\dfrac{u^2}{2}$ も成り立ちます。$u = x^2$ とすると $e^{-x^2} \\le 1 - x^2 + \\dfrac{x^4}{2}$。前題の値とあわせて $\\displaystyle\\int_0^1 e^{-x^2}\\,dx$ を上下からはさむと、$5\\displaystyle\\int_0^1 e^{-x^2}\\,dx$ の整数部分が $1$ つに決まります。その整数を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "整数部分",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。今度は何が分かっていて、何を求める？" },
+        { layer: 2, text: "前題と変わったのは、上からもおさえて、その範囲から整数を $1$ つ言い当てること。" },
+        {
+          layer: 3,
+          text: "上からおさえる値は $\\displaystyle\\int_0^1\\left(1 - x^2 + \\dfrac{x^4}{2}\\right)dx = 1 - \\dfrac13 + \\dfrac{1}{10} = \\dfrac{23}{30}$。だから $\\dfrac23 \\le \\displaystyle\\int_0^1 e^{-x^2}\\,dx \\le \\dfrac{23}{30}$。$5$ 倍すると $\\dfrac{10}{3} \\fallingdotseq 3.33$ 以上、$\\dfrac{23}{6} \\fallingdotseq 3.83$ 以下。どちらのはしも $3$ と $4$ の間にあるので、整数部分は $3$。中心の問いへ：**値そのものが分からなくても、はさんだ範囲が整数の間に収まれば、整数部分は決まる**。",
+        },
+      ],
+      formulaPreview: "2/3 ≤ ∫ ≤ 23/30 → 5 倍は 3.33〜3.83 → 整数部分 3",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "$k \\le x \\le k + 1$ では $\\dfrac1k \\ge \\dfrac1x$ なので、$\\displaystyle\\sum_{k=1}^{n}\\dfrac1k \\ge \\int_1^{n+1}\\dfrac{dx}{x} = \\log(n + 1)$ が成り立ちます。**この不等式だけを使って**、$\\displaystyle\\sum_{k=1}^{n}\\dfrac1k > 5$ が保証される最小の $n$ を求めましょう。$e^5 = 148.41\\cdots$ です。",
+      answer: 148,
+      answerDisplay: "148",
+      unit: "",
+      unknownLabel: "最小の $n$",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "step2 と比べてみよう。何が同じで、何が違う？" },
+        {
+          layer: 2,
+          text: "step2 と変わったのは、下からおさえるものが定積分でなく、項の数が増えていく和であること。",
+        },
+        {
+          layer: 3,
+          text: "$\\dfrac1k$ は、幅 $1$・高さ $\\dfrac1k$ の長方形の面積。$k \\le x \\le k + 1$ では曲線 $y = \\dfrac1x$ がその長方形の中に収まるので、長方形の和は曲線の下の面積 $\\log(n + 1)$ 以上。$\\log(n + 1) > 5$ なら和も $5$ を超える。$n + 1 > e^5 = 148.41\\cdots$ より $n \\ge 148$。**ただし、実際に和が初めて $5$ を超えるのは $n = 83$**——$148$ は「この評価で保証できる」最小の $n$ であって、「初めて超える」$n$ ではない。それでも、$\\log(n + 1)$ はどこまでも大きくなるので、和もどこまでも大きくなる（第2章で預けていた、$\\sum\\frac1k$ が発散することの証明）。中心の問いへ：**不等式が言えるのは「ここまで来れば必ず」まで。ぴったりの境目は、評価からは言えない**。",
+        },
+      ],
+      formulaPreview: "log(n + 1) > 5 → n + 1 > 148.41… → n = 148（実際に初めて超えるのは 83）",
+      figureMarker: "<<M3IA_STAIRS_1X>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "$\\displaystyle\\sum_{k=1}^{n}\\dfrac1k \\le 1 + \\int_1^{n}\\dfrac{dx}{x} = 1 + \\log n$ も成り立ちます。**この不等式だけを使って**、$\\displaystyle\\sum_{k=1}^{n}\\dfrac1k \\le 4$ が保証される最大の $n$ を求めましょう。$e^3 = 20.08\\cdots$ です。",
+      answer: 20,
+      answerDisplay: "20",
+      unit: "",
+      unknownLabel: "最大の $n$",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、和を上からおさえて、和が大きくなりすぎないと保証すること。" },
+        {
+          layer: 3,
+          text: "第 $2$ 項からの長方形（幅 $1$・高さ $\\dfrac1k$、$k \\ge 2$）は、$k - 1 \\le x \\le k$ で曲線 $y = \\dfrac1x$ の下に収まるので、その和は $\\displaystyle\\int_1^n\\dfrac{dx}{x} = \\log n$ 以下。第 $1$ 項の $1$ を足して $1 + \\log n$。$1 + \\log n \\le 4$ より $n \\le e^3 = 20.08\\cdots$、最大の $n$ は $20$。**実際には $n = 30$ まで和は $4$ 以下**——評価が保証できるのは $20$ まで。中心の問いへ：**上からの評価も、言えるのは「ここまでなら必ず」まで。下からと上からで、和をはさめる**。",
+        },
+      ],
+      formulaPreview: "1 + log n ≤ 4 → n ≤ e³ = 20.08… → n = 20（実際は 30 まで 4 以下）",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "$k \\le x \\le k + 1$ では $\\dfrac{1}{\\sqrt k} \\ge \\dfrac{1}{\\sqrt x}$ です。このことを使って、$\\displaystyle\\sum_{k=1}^{99}\\dfrac{1}{\\sqrt k}$ を下からおさえる値 $\\displaystyle\\int_1^{100}\\dfrac{dx}{\\sqrt x}$ を求めましょう。",
+      answer: 18,
+      answerDisplay: "18",
+      unit: "",
+      unknownLabel: "下からおさえる値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "step6 と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "step6 と変わったのは、足すものが $\\dfrac1k$ でなく、根号の逆数になったこと。" },
+        {
+          layer: 3,
+          text: "step6 と同じく、幅 $1$・高さ $\\dfrac{1}{\\sqrt k}$ の長方形は曲線 $y = \\dfrac{1}{\\sqrt x}$ の上にかぶさるので、和は面積以上。$\\displaystyle\\int_1^{100}x^{-\\frac12}\\,dx = \\Big[2\\sqrt x\\Big]_1^{100} = 2(10 - 1) = 18$。中心の問いへ：**足すものが変わっても、長方形の和と曲線の下の面積を比べれば、和を下からおさえられる**。",
+        },
+      ],
+      formulaPreview: "Σ 1/√k ≥ ∫₁¹⁰⁰ dx/√x = 2(10 − 1) = 18",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "$\\displaystyle\\sum_{k=1}^{n}\\dfrac{1}{\\sqrt k}$ は、下からは $\\displaystyle\\int_1^{n+1}\\dfrac{dx}{\\sqrt x}$ 以上、上からは $1 + \\displaystyle\\int_1^{n}\\dfrac{dx}{\\sqrt x}$ 以下とはさめます。$n = 80$ のとき、この $2$ つの評価から、和の整数部分を求めましょう。$\\sqrt{80} = 8.944\\cdots$ です。",
+      answer: 16,
+      answerDisplay: "16",
+      unit: "",
+      unknownLabel: "整数部分",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "step8 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step8 と変わったのは、上からの評価も合わせて、和の整数部分を $1$ つに決めること。",
+        },
+        {
+          layer: 3,
+          text: "下から：$\\Big[2\\sqrt x\\Big]_1^{81} = 2(9 - 1) = 16$。上から：$1 + \\Big[2\\sqrt x\\Big]_1^{80} = 2\\sqrt{80} - 1 = 16.88\\cdots$。和は $16$ 以上 $16.89$ 未満なので、整数部分は $16$（実際の和は $16.48\\cdots$）。上と下の差は $1 - 2(\\sqrt{n + 1} - \\sqrt n)$ で、$n$ を大きくすると $1$ に近づく。差が $1$ 近くあるので、両はしの整数部分がそろうとは限らない——そろう $n$ でだけ、整数部分が決まる。中心の問いへ：**下と上の評価を組み合わせれば、計算しきれない和の整数部分が言える——はさんだ範囲がそこまで狭いときには**。",
+        },
+      ],
+      formulaPreview: "2(√81 − 1) = 16 ≤ Σ ≤ 2√80 − 1 = 16.88… → 整数部分 16",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "$I_n = \\displaystyle\\int_0^1 x^ne^x\\,dx$（$n$ は正の整数）とします。$0 \\le x \\le 1$ では $1 \\le e^x \\le e$ なので、$I_n$ を上下からはさめます。**上からの評価だけを使って**、$I_n < \\dfrac{1}{10}$ が保証される最小の $n$ を求めましょう。$e = 2.718\\cdots$ です。",
+      answer: 27,
+      answerDisplay: "27",
+      unit: "",
+      unknownLabel: "最小の $n$",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。何が組み合わさっている？" },
+        {
+          layer: 2,
+          text: "step7 と変わったのは、はさむ相手が和でなく、$n$ を含む定積分になったこと。",
+        },
+        {
+          layer: 3,
+          text: "$x^n \\le x^ne^x \\le ex^n$ を積分すると $\\dfrac{1}{n + 1} \\le I_n \\le \\dfrac{e}{n + 1}$。上から：$\\dfrac{e}{n + 1} < \\dfrac{1}{10}$ より $n + 1 > 10e = 27.18\\cdots$、最小の $n$ は $27$。（実際には $n = 26$ ですでに $\\dfrac{1}{10}$ より小さい。）また、両側が $n \\to \\infty$ で $0$ に近づくので、[はさみうちの原理] で $I_n \\to 0$。中心の問いへ：**定積分でも、関数をはさんでおけば、値を求めずに大きさと行き先が言える**。",
+        },
+      ],
+      formulaPreview: "1/(n + 1) ≤ Iₙ ≤ e/(n + 1) → n + 1 > 27.18… → n = 27",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 原始関数が書けない定積分でも、値のおおよそは言えるか？——**はさむ $2$ つの関数を取り替えると、何が良くなり、何が言えなくなる？**
+
+────────
+
+## 関数の大小は、積分しても保たれる
+
+区間のどこでも $f(x) \\le g(x)$ なら、$f$ の下の面積は $g$ の下の面積に収まる。
+
+$$f(x) \\le g(x) \\quad\\Longrightarrow\\quad \\int_a^b f(x)\\,dx \\le \\int_a^b g(x)\\,dx \\qquad (a < b)$$
+
+だから、計算しにくい積分を、**積分できる $2$ つの関数ではさめば**、値の範囲が言える（step1・2）。$e^{-x^2}$ のように、高校で学ぶ関数の範囲では原始関数が書けない関数でもよい（step3）。
+
+## ここが胚細胞：はさむ相手を選び直すと、範囲が変わる
+
+はさむ関数がもとの関数に近いほど、範囲は狭くなる（step4：[接線] の不等式で取り替える）。範囲が整数の間に収まれば、整数部分まで決まる（step5）。
+
+**和と面積も、同じ大小で互いにはさめる。** 幅 $1$ の長方形の和と、曲線の下の面積を比べる（step6〜9）。
+
+$$\\log(n + 1) \\le \\sum_{k=1}^{n}\\frac1k \\le 1 + \\log n$$
+
+左の不等式から、$\\sum\\frac1k$ はどこまでも大きくなる——第2章で預けていた調和級数の発散の、面積による証明である。
+
+**ただし、評価が言えるのは「ここまで来れば必ず」まで。** 下からの評価で和が $5$ を超えると保証される $n$ は $148$ だが、実際に初めて超えるのは $83$（step6）。ぴったりの境目は、評価からは言えない。
+
+## Step の道筋
+
+- **step1・2**：計算できる積分を上下からはさむ（確かめ）
+- **step3（質的変化）・4**：原始関数が書けない積分を、はさむことで評価する／近い関数に取り替える
+- **step5**：はさんだ範囲から整数部分
+- **step6（質的変化・山場）・7**：和を面積ではさむ。保証される $n$ と、実際の境目の $n$
+- **step8・9**：根号の逆数の和を、上下からはさむ
+- **step10**：$n$ を含む定積分をはさみ、大きさと行き先を言う（第2章と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 評価の不等式は覚えなくてよい。幅 $1$ の長方形を曲線の上か下に描けば、どちらが大きいかは図から読める。
+
+**原始関数が書けない関数。** $e^{-x^2}$・$\\dfrac{\\sin x}{x}$ などは、高校で学ぶ関数（多項式・分数関数・無理関数・三角関数・指数関数・対数関数）を組み合わせた式では原始関数を書けないことが知られている。それでも、定積分の値そのものは決まっていて、はさむ・数値で近似するといった方法で調べられる。$e^{-x^2}$ は統計の正規分布の曲線の形で、その面積は確率の計算に使われる。
+
+**調和級数の発散は、項をまとめる方法でも示せる**（辞書 [無限級数] の「もっと深く」）。面積と比べる方法は、それに加えて「どのくらいの速さで大きくなるか」——$\\log n$ ほど——まで教えてくれる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第7章「定積分と不等式」の構成（関数の大小を定積分で保つ・原始関数が書けない関数の評価・和を面積と比べる）を参考。原典は不等式を「示せ」と問う。この系列は「その評価で保証される $n$」と「実際の境目」を並べる形に組み替えた。問題の値・関数はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+原始関数が書けなくても、積分できる $2$ つの関数ではさめば、値のおおよそが言える。はさむ関数をもとの関数に近づけるほど、範囲は狭くなる。和と面積も、同じ大小で互いにはさめる。
+
+ただし、不等式が言えるのは「ここまで来れば必ず」まで——ぴったりの境目は言えない。`,
+};
+
 export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_AREA_SERIES,
   M3IA_PARAM_SERIES,
@@ -2560,4 +2871,5 @@ export const MATH3_INTEGRAL_APP_SERIES_LIST: LearnerSeries[] = [
   M3IA_ARC_SERIES,
   M3IA_RIEMANN_SERIES,
   M3IA_SUMLIM_SERIES,
+  M3IA_INEQ_SERIES,
 ];
