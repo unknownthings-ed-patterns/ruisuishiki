@@ -2385,7 +2385,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "楕円（2 点からの距離の和を式にする）— 和の条件を 2 乗 2 回で式にすると、分母が和の半分と焦点の位置を語る。焦点は分母の大きいほうの軸の上",
+      "楕円（2 点からの距離の和を式にする）— 2 点からの距離の和が一定の点を集めると、どんな式になる？ 式の 2 つの分母は、和や焦点の位置の何を語っている？",
   },
   {
     series: M3CV_STRETCH_SERIES,
@@ -2393,7 +2393,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "楕円を円から読む（一方向に伸ばした円）— 伸ばすと式の文字が置きかわり、面積は倍率どおり。円の角 θ で点を (a cos θ, b sin θ) と表せるが、θ は原点から見た角ではない",
+      "楕円を円から読む（一方向に伸ばした円）— 円を一方向に伸ばすと、式と面積はどう変わる？ 円の上で測った角 θ は、楕円の上では何を指している？",
   },
   {
     series: M3CV_HYPERBOLA_SERIES,
@@ -2401,7 +2401,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "双曲線（2 点からの距離の差を式にする）— 和を差に替えると式の + が − に。焦点までの距離は √(a² + b²) で頂点より外。漸近線 y = ±(b/a)x。y = k/x も差が一定の双曲線",
+      "双曲線（2 点からの距離の差を式にする）— 和を差に取りかえると、式と曲線はどう変わる？ 焦点・頂点・漸近線は、式のどこから読める？",
   },
   {
     series: M3CV_PARABOLA_SERIES,
@@ -2409,7 +2409,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "放物線（点と直線から同じ距離）— 焦点と準線から等距離は y² = 4px。x と y を入れかえれば 2 次関数 y = ax² のグラフで、焦点は (0, 1/(4a))。焦点からの距離は準線までの距離 x + p に置きかえられる",
+      "放物線（点と直線から同じ距離）— 点と直線から同じ距離にある点を集めると、知っている 2 次関数のグラフになる？ 焦点と準線は、式のどこに隠れている？",
   },
   {
     series: M3CV_TANGENT_SERIES,
@@ -2417,7 +2417,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "接線の公式（円の接線を伸ばす）— 陰関数の微分で出した接線は、x² を x₀x、y² を y₀y に置きかえた 1 行にまとまる。係数はそのまま運び、放物線の 1 次の項は (x + x₀)/2 に。右辺がそろうのは接点が曲線の上にあるから",
+      "接線の公式（円の接線を伸ばす）— 円の接線を 1 行で書いた置きかえは、楕円・双曲線・放物線でもそのまま効く？ 効くなら、なぜ効く？",
   },
   {
     series: M3CV_TANGENT_FROM_SERIES,
@@ -2425,7 +2425,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "外の点から引く接線（接点を文字で置く）— 接点を文字で置き「外の点を通る」「曲線の上」の 2 条件で決める。公式に外の点を入れた直線は接線でなく、2 つの接点を通る直線",
+      "外の点から引く接線（接点を文字で置く）— 曲線の外の点から引く接線は、どう決める？ 接線の公式に外の点をそのまま入れると、何が出てくる？",
   },
   {
     series: M3CV_CONIC_SERIES,
@@ -2433,7 +2433,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "2 次曲線（式の形から曲線を見分ける）— 平方完成で標準形にもどし、右辺まで見て決める（係数の符号だけでは 1 点・何もない が混ざる）。焦点と準線からの距離の比で 3 つの曲線が並ぶ",
+      "2 次曲線（式の形から曲線を見分ける）— x と y の 2 次式は、どこを見れば楕円・双曲線・放物線のどれと分かる？ 3 つの曲線を 1 つの数で並べられる？",
   },
   {
     series: M3CV_POLAR_SERIES,
@@ -2441,7 +2441,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "極座標（向きと距離で点を指す）— x = r cos θ、y = r sin θ で直交座標と行き来する。角は 2π、r の符号は角 π と組で取りかえられ、書き方は 1 つでない。範囲を決めれば 1 つ",
+      "極座標（距離と角で点を指す）— 点を極からの距離と角で指すと、直交座標と何が変わる？ 同じ点の書き方が 1 つに決まらないのは、困ることか、使えることか？",
   },
   {
     series: M3CV_POLAR_EQ_SERIES,
@@ -2449,7 +2449,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "極方程式（直交座標に読みかえる）— 両辺に r をかけて x = r cos θ などで直交座標へ。r = k cos θ は直径 k の円、r cos(θ − α) = p は極から距離 p の直線。焦点を極にとると楕円も 1 行",
+      "極方程式（直交座標に読みかえる）— r と θ の式は、直交座標に移すとどんな図形になる？ 式の数字は、極から見た図形の何を語っている？",
   },
   {
     series: M3CV_POLAR_CURVE_SERIES,
@@ -2457,7 +2457,7 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     subjectLabel: "高校数学Ⅲ・C",
     topicGroup: "いろいろな曲線",
     shortDescription:
-      "極方程式のまま調べる（x = r cos θ で微分する）— x = r cos θ、y = r sin θ と書けば θ を媒介変数とする曲線。接線の傾きは (dy/dθ)/(dx/dθ)。r 最大の点と y 最大の点は別",
+      "極方程式のまま調べる（θ を媒介変数にする）— 極方程式の曲線の接線やいちばん高い点を、直交座標に移さずに調べられる？",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
