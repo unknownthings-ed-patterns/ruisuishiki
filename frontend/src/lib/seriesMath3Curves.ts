@@ -2144,6 +2144,310 @@ $3$ つの曲線が、**$1$ つの数の大小**で並ぶ。
 $3$ つの曲線を $1$ つの物差しで並べるなら、焦点からの距離と準線までの距離の比を測る。比が $1$ より小さいと楕円、$1$ なら放物線、大きいと双曲線。`,
 };
 
+/** M3CV8: 極座標——向きと距離で点を指す。
+ *  step1 (6, 5π/6) の x：−3√3／step2 (8, 7π/4) の y：−4√2
+ *  step3（逆）(−2√3, 2) の r：4／step4（逆）(3, −3√3) の θ（0 ≤ θ < 2π）：5π/3
+ *  山場 step5（C12 ②）(−6, π/3) を r > 0・0 ≤ θ < 2π で書き直した θ：4π/3（素朴に π/3 のまま）
+ *  step6 (5, 17π/6) の書き直しの θ：5π/6
+ *  step7（＋α・C13 余弦定理 algebra1_trig_cosine_app_01）A(4, π/6)・B(6, π/2) の距離 2√7（直交座標に直しても同じ＝Q3）
+ *  step8（複合・C13 三角形の面積 algebra1_trig_area_cosine_01）O・A(6, π/12)・B(10, 3π/4) の面積 15√3
+ *  step9（＋α・C13 第10章 回転 math3_cpx_rotate_01）点 (2√3, 2) を O のまわりに 5π/12 回した点の x：√2 − √6（加法定理）
+ *  step10（複合・逆）直交 A(3, √3)・B(−1, √3) → 偏角 π/6 と 2π/3 → ∠AOB = π/2
+ *  原典 練7 の (2, π/6)・(5, 3π/4)・(−1, −1)・(−√2, √6)、p.333 の (4, π/3)・(2, 5π/4) は使っていない。 */
+export const M3CV_POLAR_SERIES: LearnerSeries = {
+  id: "math3_cv_polar_01",
+  title: "極座標——向きと距離で点を指す",
+  subtitle:
+    "数Ⅲ・C いろいろな曲線より — 点の位置を「どの向きに、どれだけ進むか」で指すと、直交座標と何が変わるか。同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか。$10$ 問で確かめる。",
+  patternId: "M3CV8",
+  unit: "math_3",
+  revelationLabel:
+    "**$r$ が負なら、$\\theta$ の向きと反対へ進む**——同じ点は、角を $\\pi$ ずらして $r$ を正にしても書ける",
+  drivingQuestion:
+    "点の位置を『どの向きに、どれだけ進むか』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "原点 O を基準の点（**極**）、$x$ 軸の正の向きを基準の向き（**始線**）とします。始線から角 $\\theta$ だけ回った向きに、O から距離 $r$ だけ進んだ点を $(r,\\ \\theta)$ と書きます（[極座標]）。\n\n極座標で $\\left(6,\\ \\dfrac{5\\pi}{6}\\right)$ と表される点の $x$ 座標を求めましょう。",
+      answer: -3 * Math.sqrt(3),
+      answerDisplay: "-3√3",
+      unit: "",
+      unknownLabel: "$x$ 座標",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "向きと距離が分かっている点の $x$ 座標は、どんな三角関数で書ける？",
+        },
+        {
+          layer: 2,
+          text: "第10章で、複素数を「大きさと向き」で書いたとき、実部はどう出した？（[極形式]）",
+        },
+        {
+          layer: 3,
+          text: "$x = r\\cos\\theta = 6\\cos\\dfrac{5\\pi}{6} = 6 \\times \\left(-\\dfrac{\\sqrt3}{2}\\right) = -3\\sqrt3$。（$y = 6\\sin\\dfrac{5\\pi}{6} = 3$。）中心の問いへの最初の部分回答：**極座標 $(r,\\ \\theta)$ と直交座標は $x = r\\cos\\theta$、$y = r\\sin\\theta$ で行き来できる**。",
+        },
+      ],
+      formulaPreview: "x = 6 cos(5π/6) = −3√3",
+      figureMarker: "<<M3CV_POLAR_POINT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "極座標で $\\left(8,\\ \\dfrac{7\\pi}{4}\\right)$ と表される点の $y$ 座標を求めましょう。",
+      answer: -4 * Math.sqrt(2),
+      answerDisplay: "-4√2",
+      unit: "",
+      unknownLabel: "$y$ 座標",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが $x$ 座標でなく $y$ 座標であること。" },
+        {
+          layer: 3,
+          text: "$y = r\\sin\\theta = 8\\sin\\dfrac{7\\pi}{4} = 8 \\times \\left(-\\dfrac{\\sqrt2}{2}\\right) = -4\\sqrt2$。$\\dfrac{7\\pi}{4}$ の向きは第 $4$ 象限なので、$y$ 座標は負。中心の問いへ：**角の向きが、座標の符号を決める**。",
+        },
+      ],
+      formulaPreview: "y = 8 sin(7π/4) = −4√2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "直交座標で $(-2\\sqrt3,\\ 2)$ の点を極座標 $(r,\\ \\theta)$（$r > 0$）で表すときの $r$ を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "$r$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題は極座標から直交座標へ。今度は向きがどう変わった？" },
+        { layer: 2, text: "前題と変わったのは、直交座標が先に与えられて、極からの距離が問われていること。" },
+        {
+          layer: 3,
+          text: "$r$ は O からの距離なので $r = \\sqrt{(-2\\sqrt3)^2 + 2^2} = \\sqrt{12 + 4} = 4$。中心の問いへ：**$r = \\sqrt{x^2 + y^2}$。距離は、直交座標から三平方の定理で戻せる**。",
+        },
+      ],
+      formulaPreview: "r = √(12 + 4) = 4",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "直交座標で $(3,\\ -3\\sqrt3)$ の点を極座標 $(r,\\ \\theta)$（$r > 0$、$0 \\le \\theta < 2\\pi$）で表すときの $\\theta$ を求めましょう。",
+      answer: (5 * Math.PI) / 3,
+      answerDisplay: "5π/3",
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが距離でなく、向き（角）であること。" },
+        {
+          layer: 3,
+          text: "$r = \\sqrt{9 + 27} = 6$。$\\cos\\theta = \\dfrac{3}{6} = \\dfrac12$、$\\sin\\theta = \\dfrac{-3\\sqrt3}{6} = -\\dfrac{\\sqrt3}{2}$。$0 \\le \\theta < 2\\pi$ で $\\cos\\theta = \\dfrac12$ になるのは $\\dfrac{\\pi}{3}$ と $\\dfrac{5\\pi}{3}$。$\\sin\\theta < 0$ なのは $\\dfrac{5\\pi}{3}$。（$\\tan\\theta = -\\sqrt3$ だけで決めようとすると、$\\dfrac{2\\pi}{3}$ と $\\dfrac{5\\pi}{3}$ の $2$ つが残る——点がどの象限にあるかで選ぶ。）中心の問いへ：**向きは、$\\cos$ と $\\sin$ の両方（点の象限）を見て決める**。",
+        },
+      ],
+      formulaPreview: "cos θ = 1/2、sin θ = −√3/2 → θ = 5π/3",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "極座標では $r$ が負の数のときも、「$\\theta$ の向きと反対の向きに $|r|$ だけ進んだ点」と約束して $(r,\\ \\theta)$ と書くことがあります。\n\n極座標で $\\left(-6,\\ \\dfrac{\\pi}{3}\\right)$ と表される点を、$r > 0$、$0 \\le \\theta < 2\\pi$ の範囲で表し直したときの $\\theta$ を求めましょう。",
+      answer: (4 * Math.PI) / 3,
+      answerDisplay: "4π/3",
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。この極座標は、これまでとどこが違う？" },
+        { layer: 2, text: "前題と変わったのは、$r$ が負の数であること。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{\\pi}{3}$ の向きと反対の向きは、$\\dfrac{\\pi}{3} + \\pi = \\dfrac{4\\pi}{3}$ の向き。そちらへ $6$ 進むので、同じ点は $\\left(6,\\ \\dfrac{4\\pi}{3}\\right)$。$\\theta = \\dfrac{4\\pi}{3}$。確かめ：$x = -6\\cos\\dfrac{\\pi}{3} = -3$、$y = -6\\sin\\dfrac{\\pi}{3} = -3\\sqrt3$ で、第 $3$ 象限の点。**$\\theta$ を $\\dfrac{\\pi}{3}$ のままにして $\\left(6,\\ \\dfrac{\\pi}{3}\\right)$ とすると、反対側の点になって外れる**。中心の問いへ：**同じ点は、角を $\\pi$ ずらして $r$ の符号を変えても書ける。書き方は $1$ つではない**。",
+        },
+      ],
+      formulaPreview: "π/3 の反対の向き → π/3 + π = 4π/3（π/3 のままではない）",
+      figureMarker: "<<M3CV_POLAR_NEG>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "極座標で $\\left(5,\\ \\dfrac{17\\pi}{6}\\right)$ と表される点を、$r > 0$、$0 \\le \\theta < 2\\pi$ の範囲で表し直したときの $\\theta$ を求めましょう。",
+      answer: (5 * Math.PI) / 6,
+      answerDisplay: "5π/6",
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$r$ は正で、角が $2\\pi$ をこえていること。" },
+        {
+          layer: 3,
+          text: "$2\\pi$ 回ると同じ向きにもどるので、$\\dfrac{17\\pi}{6} - 2\\pi = \\dfrac{5\\pi}{6}$。$\\theta = \\dfrac{5\\pi}{6}$。中心の問いへ：**角は $2\\pi$ ずつ、$r$ の符号は角 $\\pi$ と組で取りかえられる。範囲を決めれば $1$ つに決まる**。",
+        },
+      ],
+      formulaPreview: "17π/6 − 2π = 5π/6",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "極座標で A$\\left(4,\\ \\dfrac{\\pi}{6}\\right)$、B$\\left(6,\\ \\dfrac{\\pi}{2}\\right)$ と表される $2$ 点のあいだの距離 AB を求めましょう。",
+      answer: 2 * Math.sqrt(7),
+      answerDisplay: "2√7",
+      unit: "",
+      unknownLabel: "AB",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題までは $1$ 点だった。今度は何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、点が $2$ つになり、そのあいだの距離が問われていること。" },
+        {
+          layer: 3,
+          text: "三角形 OAB で、OA $= 4$、OB $= 6$、$\\angle$AOB $= \\dfrac{\\pi}{2} - \\dfrac{\\pi}{6} = \\dfrac{\\pi}{3}$。[余弦定理] で $\\mathrm{AB}^2 = 16 + 36 - 2 \\cdot 4 \\cdot 6 \\cos\\dfrac{\\pi}{3} = 52 - 24 = 28$、$\\mathrm{AB} = 2\\sqrt7$。（直交座標に直すと A$(2\\sqrt3,\\ 2)$、B$(0,\\ 6)$ で、$\\sqrt{12 + 16} = 2\\sqrt7$ と同じ。）中心の問いへ：**極座標のまま、$2$ つの距離と角の差から、余弦定理で距離が出る**。",
+        },
+      ],
+      formulaPreview: "AB² = 16 + 36 − 48 cos(π/3) = 28 → 2√7",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "極座標で A$\\left(6,\\ \\dfrac{\\pi}{12}\\right)$、B$\\left(10,\\ \\dfrac{3\\pi}{4}\\right)$ と表される点と、極 O でできる三角形 OAB の面積を求めましょう。",
+      answer: 15 * Math.sqrt(3),
+      answerDisplay: "15√3",
+      unit: "",
+      unknownLabel: "三角形 OAB の面積",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で使った三角形 OAB は、ここでも使える？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが辺の長さでなく、三角形の面積であること。" },
+        {
+          layer: 3,
+          text: "$\\angle$AOB $= \\dfrac{3\\pi}{4} - \\dfrac{\\pi}{12} = \\dfrac{2\\pi}{3}$。三角形の面積 $= \\dfrac12 \\cdot \\mathrm{OA} \\cdot \\mathrm{OB} \\cdot \\sin\\angle\\mathrm{AOB} = \\dfrac12 \\cdot 6 \\cdot 10 \\cdot \\dfrac{\\sqrt3}{2} = 15\\sqrt3$。中心の問いへ：**極から測った距離と角は、極を頂点とする三角形の $2$ 辺とその間の角そのもの**。",
+        },
+      ],
+      formulaPreview: "∠AOB = 2π/3 → (1/2)·6·10·sin(2π/3) = 15√3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "直交座標で $(2\\sqrt3,\\ 2)$ の点を、原点 O のまわりに $\\dfrac{5\\pi}{12}$ だけ（反時計回りに）回した点の $x$ 座標を求めましょう。",
+      answer: Math.sqrt(2) - Math.sqrt(6),
+      answerDisplay: "√2-√6",
+      unit: "",
+      unknownLabel: "回した点の $x$ 座標",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "step1 と比べてみよう。step1 の見方は、ここで使える？" },
+        { layer: 2, text: "step1 と変わったのは、点の向きが回されて変わること。" },
+        {
+          layer: 3,
+          text: "$(2\\sqrt3,\\ 2)$ は極座標で $\\left(4,\\ \\dfrac{\\pi}{6}\\right)$。回すと $\\theta$ だけが $\\dfrac{5\\pi}{12}$ 増えて $\\left(4,\\ \\dfrac{7\\pi}{12}\\right)$。$x = 4\\cos\\dfrac{7\\pi}{12}$。[加法定理] で $\\cos\\dfrac{7\\pi}{12} = \\cos\\left(\\dfrac{\\pi}{3} + \\dfrac{\\pi}{4}\\right) = \\dfrac12\\cdot\\dfrac{\\sqrt2}{2} - \\dfrac{\\sqrt3}{2}\\cdot\\dfrac{\\sqrt2}{2} = \\dfrac{\\sqrt2 - \\sqrt6}{4}$。$x = \\sqrt2 - \\sqrt6$。（第10章の複素数で $(2\\sqrt3 + 2i)\\left(\\cos\\dfrac{5\\pi}{12} + i\\sin\\dfrac{5\\pi}{12}\\right)$ の実部を出しても同じ。）中心の問いへ：**極座標では、回転は $\\theta$ を足すだけ。$r$ は変わらない**。",
+        },
+      ],
+      formulaPreview: "(4, π/6) → (4, 7π/12) → x = 4 cos(7π/12) = √2 − √6",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "直交座標で A$(3,\\ \\sqrt3)$、B$(-1,\\ \\sqrt3)$ の $2$ 点があります。$\\angle$AOB（O は原点、$0 \\le \\angle\\mathrm{AOB} \\le \\pi$）を求めましょう。",
+      answer: Math.PI / 2,
+      answerDisplay: "π/2",
+      unit: "",
+      unknownLabel: "$\\angle$AOB",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。step4 で角を読み戻した手つきは、ここで使える？" },
+        { layer: 2, text: "step4 と変わったのは、点が $2$ つになり、そのあいだの角が問われていること。" },
+        {
+          layer: 3,
+          text: "A は $r = \\sqrt{9 + 3} = 2\\sqrt3$、$\\cos\\theta = \\dfrac{\\sqrt3}{2}$、$\\sin\\theta = \\dfrac12$ で $\\theta = \\dfrac{\\pi}{6}$。B は $r = 2$、$\\cos\\theta = -\\dfrac12$、$\\sin\\theta = \\dfrac{\\sqrt3}{2}$ で $\\theta = \\dfrac{2\\pi}{3}$。$\\angle$AOB $= \\dfrac{2\\pi}{3} - \\dfrac{\\pi}{6} = \\dfrac{\\pi}{2}$。（内積 $3 \\cdot (-1) + \\sqrt3 \\cdot \\sqrt3 = 0$ でも直交が分かる。）中心の問いへ：**極座標に直すと、$2$ 点のあいだの角は、角の差として読める**。",
+        },
+      ],
+      formulaPreview: "A の θ = π/6、B の θ = 2π/3 → ∠AOB = π/2",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 点の位置を『どの向きに、どれだけ進むか』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**
+
+────────
+
+## 向きと距離で点を指す
+
+極 O と始線を決め、点 P を「始線から回った角 $\\theta$」と「O からの距離 $r$」の組 $(r,\\ \\theta)$ で表す。これが [極座標] である。直交座標とは
+
+$$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r = \\sqrt{x^2 + y^2}$$
+
+で行き来できる（step1〜4）。角は、$\\cos\\theta$ と $\\sin\\theta$ の両方を見て（点の象限を見て）決める。
+
+## ここが胚細胞：書き方は $1$ つでない——範囲を決めれば $1$ つ
+
+- 角は $2\\pi$ ずつずらしても同じ向き（step6）
+- $r$ が負なら反対の向きへ進む。だから $(r,\\ \\theta)$ と $(-r,\\ \\theta + \\pi)$ は同じ点（step5）
+- $r > 0$、$0 \\le \\theta < 2\\pi$ と決めれば、O 以外の点の書き方は $1$ つに決まる（O は $r = 0$ で、$\\theta$ は決まらない）
+
+困ることもある（同じ点かどうかを確かめる手間）が、使えることもある：**極を頂点とする三角形の $2$ 辺と間の角がそのまま見え**（step7・8）、**回転は角を足すだけ**（step9）、**$2$ 点のあいだの角は角の差**（step10）。
+
+## Step の道筋
+
+- **step1・2**：極座標から直交座標へ（第10章の極形式と合流）
+- **step3・4**：直交座標から極座標へ。角は象限まで見る
+- **step5（質的変化・山場）**：$r$ が負の極座標を書き直す
+- **step6**：$2\\pi$ をこえた角を書き直す
+- **step7・8**：$2$ 点の距離・三角形の面積（数Ⅰの余弦定理・面積と合流）
+- **step9**：回転は角を足すだけ（第10章の回転と合流）
+- **step10**：$2$ 点のあいだの角
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $x = r\\cos\\theta$、$y = r\\sin\\theta$ は、単位円の上の点 $(\\cos\\theta,\\ \\sin\\theta)$ を $r$ 倍しただけ。三角関数の定義そのものである。
+
+**どちらの座標が便利か。** 円の中心から測る量（回転・角の差・中心からの距離）は極座標が、平行移動や縦横の長さは直交座標が書きやすい。問題によって座標の取り方を選べばよい。
+
+**この先の景色。** 極座標を使うと、$r$ を $\\theta$ の式で表した曲線（極方程式）が描ける。直交座標では書きにくい渦巻きや花びらの形も、極方程式なら $1$ 行で書けることがある。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第8章「極座標」の構成（極と始線・直交座標との変換・極座標の表し方は $1$ つでない・$r < 0$ の約束）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+向きと距離で点を指すと、角は $2\\pi$ ずつ、$r$ の符号は角 $\\pi$ と組で取りかえられ、同じ点の書き方は $1$ つに決まらない。範囲（$r > 0$、$0 \\le \\theta < 2\\pi$）を決めれば $1$ つになる。
+
+その代わり、極から見た距離と角がそのまま見えるので、距離・面積・回転・角の差を、極を中心にした量として直接扱える。`,
+};
+
 export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_ELLIPSE_SERIES,
   M3CV_STRETCH_SERIES,
@@ -2152,4 +2456,5 @@ export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_TANGENT_SERIES,
   M3CV_TANGENT_FROM_SERIES,
   M3CV_CONIC_SERIES,
+  M3CV_POLAR_SERIES,
 ];

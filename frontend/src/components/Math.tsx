@@ -16221,6 +16221,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_POLAR_POINT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvPolarPoint />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_POLAR_NEG>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvPolarNeg />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43007,6 +43021,69 @@ function M3cvRatioAsk() {
       <text x={(px + lx) / 2} y={py - 8} fontSize="13" fill={accent}>?</text>
       <text x="200" y="226" fontSize="11" fill={accent} textAnchor="middle">
         PF と PH の比が 1 より大きいまま P を動かすと、どんな曲線？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列8 step1: 極 O と始線、角 θ 回った向きに距離 r 進んだ点 P。
+ *  ★座標は書かない★ r と θ はラベルだけ（値なし）。x 座標・y 座標は描かない（step の答え）。点は第 2 象限の模式。 */
+function M3cvPolarPoint() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 200, oy = 150, R = 130, th = 2.5;
+  const px = ox + R * Math.cos(th), py = oy - R * Math.sin(th);
+  return (
+    <svg
+      viewBox="0 0 360 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="極 O から右へ始線が伸びている。始線から角 θ だけ回った向きに、O から距離 r 進んだ点 P がある。P の座標は書かれていない"
+    >
+      <path d={`M ${ox} ${oy} L 345 ${oy}`} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="320" y={oy + 18} fontSize="12" fill={stroke}>始線</text>
+      <path d={`M ${ox} ${oy} L ${px} ${py}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${ox + 30} ${oy} A 30 30 0 0 0 ${ox + 30 * Math.cos(th)} ${oy - 30 * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="1.5" />
+      <text x={ox + 18} y={oy - 30} fontSize="13" fill={muted}>θ</text>
+      <text x={(ox + px) / 2 - 4} y={(oy + py) / 2 + 18} fontSize="13" fill={accent}>r</text>
+      <circle cx={ox} cy={oy} r="4" fill={stroke} />
+      <circle cx={px} cy={py} r="4.5" fill={accent} />
+      <text x={ox - 6} y={oy + 20} fontSize="13" fill={stroke}>O</text>
+      <text x={px - 22} y={py - 6} fontSize="13" fill={accent}>P</text>
+      <text x="180" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        P の x 座標は、r と θ でどう書ける？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列8 step5: 極 O と始線、角 θ の向きの半直線と、その反対の向きの半直線（破線）。
+ *  ★点は描かない★（r が負の点を描くと、どちらの向きに進むかという step の答えを見せる）。角の値・長さは書かない。 */
+function M3cvPolarNeg() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 180, oy = 110, th = 1.05, L = 95;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="極 O から右へ始線。角 θ の向きの半直線と、O をはさんで反対向きの破線の半直線が引かれている。点は描かれていない"
+    >
+      <path d={`M ${ox} ${oy} L 345 ${oy}`} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x="318" y={oy + 18} fontSize="12" fill={stroke}>始線</text>
+      <path d={`M ${ox} ${oy} L ${ox + L * Math.cos(th)} ${oy - L * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="2" />
+      <path d={`M ${ox} ${oy} L ${ox - L * Math.cos(th)} ${oy + L * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="2" strokeDasharray="5 4" />
+      <path d={`M ${ox + 28} ${oy} A 28 28 0 0 0 ${ox + 28 * Math.cos(th)} ${oy - 28 * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="1.5" />
+      <text x={ox + 30} y={oy - 14} fontSize="13" fill={muted}>θ</text>
+      <circle cx={ox} cy={oy} r="4" fill={stroke} />
+      <text x={ox - 18} y={oy - 6} fontSize="13" fill={stroke}>O</text>
+      <text x="180" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        r が負のとき、点はどちらの半直線の上？
       </text>
     </svg>
   );
