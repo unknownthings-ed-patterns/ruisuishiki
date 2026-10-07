@@ -16242,13 +16242,6 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
-        if (trimmed === "<<M3CV_ROSE_PETAL>>") {
-          return (
-            <div key={i} className="my-6 flex justify-center">
-              <M3cvRosePetal />
-            </div>
-          );
-        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43132,42 +43125,6 @@ function M3cvPolarLine() {
       <text x="170" y="214" fontSize="11" fill={accent} textAnchor="middle">
         垂線の長さと向きは、式のどこに見える？
       </text>
-    </svg>
-  );
-}
-
-/** いろいろな曲線 系列10 step1: 第 1 象限の花びら（r = 2 sin 2θ の形）と、極から角 θ の向きの半直線と、その上の曲線の点。
- *  ★値は書かない★ 目盛り・θ の値・座標なし。接線も描かない（step3 の答え）。 */
-function M3cvRosePetal() {
-  const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
-  const muted = "var(--muted)";
-  const ox = 70, oy = 200, S = 75;
-  const pts: string[] = [];
-  for (let k = 0; k <= 80; k++) {
-    const t = (Math.PI / 2) * (k / 80);
-    const r = 2 * Math.sin(2 * t);
-    pts.push(`${(ox + S * r * Math.cos(t)).toFixed(1)},${(oy - S * r * Math.sin(t)).toFixed(1)}`);
-  }
-  const th = Math.PI / 6, r0 = 2 * Math.sin(2 * th);
-  const px = ox + S * r0 * Math.cos(th), py = oy - S * r0 * Math.sin(th);
-  return (
-    <svg
-      viewBox="0 0 300 230"
-      className="w-full h-auto"
-      style={{ maxWidth: 320 }}
-      role="img"
-      aria-label="極から右に始線、上に縦の軸。第 1 象限に、極から出て極にもどる花びらの形の曲線がある。極から角 θ の向きに半直線が引かれ、曲線との交点に点がある。値と目盛りは書かれていない"
-    >
-      <path d={`M ${ox} ${oy} L 290 ${oy}`} fill="none" stroke={muted} strokeWidth="1" />
-      <path d={`M ${ox} ${oy} L ${ox} 12`} fill="none" stroke={muted} strokeWidth="1" />
-      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
-      <path d={`M ${ox} ${oy} L ${ox + 230 * Math.cos(th)} ${oy - 230 * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
-      <path d={`M ${ox + 30} ${oy} A 30 30 0 0 0 ${ox + 30 * Math.cos(th)} ${oy - 30 * Math.sin(th)}`} fill="none" stroke={muted} strokeWidth="1.2" />
-      <text x={ox + 34} y={oy - 6} fontSize="12" fill={muted}>θ</text>
-      <circle cx={px} cy={py} r="4.5" fill={accent} />
-      <text x={px + 8} y={py + 16} fontSize="12" fill={accent}>(x, y) は θ の式</text>
-      <text x={ox - 14} y={oy + 16} fontSize="12" fill={stroke}>O</text>
     </svg>
   );
 }

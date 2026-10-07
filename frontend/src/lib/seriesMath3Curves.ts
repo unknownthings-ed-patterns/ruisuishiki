@@ -147,7 +147,7 @@ export const M3CV_ELLIPSE_SERIES: LearnerSeries = {
       variationFromPrevious: "inverse",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。前題は $2$ 点から式を作った。今度は向きがどう変わった？" },
+        { layer: 1, text: "前題と比べてみよう。前題は式を変形して分母を出した。今度は向きがどう変わった？" },
         { layer: 2, text: "前題と変わったのは、式が先に与えられて、$2$ 点の位置が問われていること。" },
         {
           layer: 3,
@@ -332,9 +332,9 @@ $2$ 点からの距離の和が一定の点の集まりは、$\\dfrac{x^2}{a^2} 
  *  山場 step6（C12 ②・C14）x²/36 + y²/4 の θ = π/6 の点 (3√3, 1)：OP の tan は √3/9。素朴に tan θ = √3/3 と読むと外れる（R1 I1-11：step5 と別の θ・別の楕円）
  *  step7（逆）x²/64 + y²/9 の点 (−4, 3√3/2) の θ = 2π/3（cos θ = −1/2 の解は 2π/3 と 4π/3。sin > 0 で 1 つ）
  *  step8（複合・C13 2倍角 trig_double_half_01）x²/50 + y²/8 に内接する長方形の最大 2ab = 40
- *  step9（複合・C13 合成 trig_composition_01）x²/12 + y²/4 の上で x + 3y の最大 4√3
+ *  step9（複合・C13 合成 trig_composition_01）x²/10 + y²/6 の上で x + 3y の最大 8（R2：初版 x²/12 + y²/4 は原典 練1(1)(i) の楕円の 2 倍＝比 √3 : 1 だった）
  *  step10（＋α）x²/16 + y²/25 の x ≥ 2 の部分の面積 20π/3 − 5√3（円に縮めて扇形 − 三角形、5/4 倍で戻す。sympy の積分と一致）
- *  答え：25・49・5/3・18π・2√3・√3/9・2π/3・40・4√3・20π/3 − 5√3（すべて相異なる）。
+ *  答え：25・49・5/3・18π・2√3・√3/9・2π/3・40・8・20π/3 − 5√3（すべて相異なる）。
  *  形（比）は 2:5・7:3・3:5・1:3・7:4・3:1・8:3・5:2・√3:1・4:5。原典 応1 の比 2:1・第5章の 3:2（x²/9 + y²/4・(2cos t, sin t)）とその入れかえは使っていない。 */
 export const M3CV_STRETCH_SERIES: LearnerSeries = {
   id: "math3_cv_stretch_01",
@@ -366,7 +366,7 @@ export const M3CV_STRETCH_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "数Ⅱで、グラフをずらしたとき、式の $x$ や $y$ を何に置きかえた？（[平行移動]）",
+          text: "数Ⅱで、グラフをずらしたとき、もとのグラフの式とずらした後の式は、どんな関係になった？（[平行移動]）",
         },
         {
           layer: 3,
@@ -519,7 +519,7 @@ export const M3CV_STRETCH_SERIES: LearnerSeries = {
       variationFromPrevious: "composite",
       compareWithStepId: "step7",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。前題で使った点の表し方は、ここでも使える？" },
+        { layer: 1, text: "前題と比べてみよう。前題で使ったものは、ここでも使える？" },
         { layer: 2, text: "前題と変わったのは、点 $1$ つでなく、長方形の面積の最大を問われていること。" },
         {
           layer: 3,
@@ -532,12 +532,11 @@ export const M3CV_STRETCH_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "点 $(x,\\ y)$ が楕円 $\\dfrac{x^2}{12} + \\dfrac{y^2}{4} = 1$ の上を動くとき、$x + 3y$ の最大値を求めましょう。",
-      answer: 4 * Math.sqrt(3),
-      answerDisplay: "4√3",
+        "点 $(x,\\ y)$ が楕円 $\\dfrac{x^2}{10} + \\dfrac{y^2}{6} = 1$ の上を動くとき、$x + 3y$ の最大値を求めましょう。",
+      answer: 8,
+      answerDisplay: "8",
       unit: "",
       unknownLabel: "$x + 3y$ の最大値",
-      inputAffordances: ["sqrt"],
       variationFromPrevious: "composite",
       compareWithStepId: "step8",
       hints: [
@@ -545,10 +544,10 @@ export const M3CV_STRETCH_SERIES: LearnerSeries = {
         { layer: 2, text: "前題と変わったのは、最大にするものが面積でなく、$x$ と $y$ の $1$ 次式であること。" },
         {
           layer: 3,
-          text: "$(x,\\ y) = (2\\sqrt3\\cos\\theta,\\ 2\\sin\\theta)$ とおくと $x + 3y = 2\\sqrt3\\cos\\theta + 6\\sin\\theta$。[三角関数の合成] で $\\sqrt{(2\\sqrt3)^2 + 6^2}\\sin(\\theta + \\alpha) = \\sqrt{48}\\sin(\\theta + \\alpha) = 4\\sqrt3\\sin(\\theta + \\alpha)$。最大値は $4\\sqrt3$。中心の問いへ：**楕円の上を動く点も、角 $\\theta$ $1$ つで表せば、$1$ 変数の三角関数の最大になる**。",
+          text: "$(x,\\ y) = (\\sqrt{10}\\cos\\theta,\\ \\sqrt6\\sin\\theta)$ とおくと $x + 3y = \\sqrt{10}\\cos\\theta + 3\\sqrt6\\sin\\theta$。[三角関数の合成] で $\\sqrt{10 + 54}\\sin(\\theta + \\alpha) = 8\\sin(\\theta + \\alpha)$。最大値は $8$。中心の問いへ：**楕円の上を動く点も、角 $\\theta$ $1$ つで表せば、$1$ 変数の三角関数の最大になる**。",
         },
       ],
-      formulaPreview: "2√3 cos θ + 6 sin θ = 4√3 sin(θ + α) → 最大 4√3",
+      formulaPreview: "√10 cos θ + 3√6 sin θ = 8 sin(θ + α) → 最大 8",
     },
     {
       id: "step10",
@@ -981,7 +980,6 @@ export const M3CV_PARABOLA_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "PF = √(15² + 20²) = 25",
-      figureMarker: "<<M3CV_PIN_AND_LINE>>",
     },
     {
       id: "step2",
@@ -1081,7 +1079,7 @@ export const M3CV_PARABOLA_SERIES: LearnerSeries = {
       compareWithStepId: "step5",
       hints: [
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
-        { layer: 2, text: "前題と変わったのは、$y$ の係数が負であること。" },
+        { layer: 2, text: "前題と変わったのは、放物線が下に開いていること（$y$ の係数が負）。" },
         {
           layer: 3,
           text: "$x^2 = 4py$ と見くらべて $4p = -6$、$p = -\\dfrac32$。焦点は $\\left(0,\\ -\\dfrac32\\right)$（下にある）、準線は $y = -p = \\dfrac32$。放物線は下に開く。中心の問いへ：**$p$ の符号が、焦点が頂点のどちら側にあるか＝曲線の開く向きを語る。準線はいつも反対側**。",
@@ -1214,7 +1212,7 @@ $y^2 = 4px$ は、$x$ と $y$ の役を入れかえると $x^2 = 4py$、つま�
 
 **楕円・双曲線とくらべると。** 楕円と双曲線は焦点が $2$ つ、放物線は焦点 $1$ つと準線 $1$ 本。それでも「焦点からの距離」で決まる点は同じである。準線を楕円や双曲線にも考えると、$3$ つの曲線を $1$ つの数でならべられる——数Ⅲ・C「いろいろな曲線」の $2$ 次曲線の系列で確かめる。
 
-**この先の景色。** 投げ上げたボールの軌道は放物線で、その焦点の高さは、投げる速さと向きで決まる。放物線の形をした鏡やアンテナでは、軸に平行に入ってきた光や電波が反射して焦点に集まる。
+**この先の景色。** 投げ上げたボールの軌道は（空気の抵抗を考えなければ）放物線で、その焦点の位置は、投げる速さと向きで決まる。
 
 **出典**
 
@@ -1270,7 +1268,7 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "第5章で、$x$ と $y$ の関係式の両辺を $x$ で微分して傾きを出したのは、どんな方法だった？（[陰関数]）",
+          text: "第5章で、$y$ を $x$ の式に解かずに傾きを出したのは、どんな方法だった？（[陰関数]）",
         },
         {
           layer: 3,
@@ -1305,7 +1303,7 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "数Ⅱで、円 $x^2 + y^2 = r^2$ の上の点 $(x_0,\\ y_0)$ における接線は $x_0x + y_0y = r^2$ と書けました。円の式から接線の式を作ったのと同じやり方を、楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の点 $(3,\\ 4)$ にまねてあてはめ、$1$ 行の直線の式を作りましょう。その直線の $y$ 切片を求めましょう。",
+        "数Ⅱで、円 $x^2 + y^2 = r^2$ の上の点 $(x_0,\\ y_0)$ における接線は $x_0x + y_0y = r^2$ と書けました。これは円の式の $x^2$ を $x_0x$ に、$y^2$ を $y_0y$ に置きかえた形です。楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の式でも同じように、$x^2$ を $3x$ に、$y^2$ を $4y$ に置きかえた直線を作ります。この直線の $y$ 切片を求めましょう。",
       answer: 6,
       answerDisplay: "6",
       unit: "",
@@ -1313,8 +1311,8 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。同じ接線を、別の道で出すと？" },
-        { layer: 2, text: "前題と変わったのは、微分の代わりに、円の接線の式を書きかえた $1$ 行を使うこと。" },
+        { layer: 1, text: "前題と比べてみよう。前題は微分して直線を出した。今度はどんな道？" },
+        { layer: 2, text: "前題と変わったのは、微分の代わりに、楕円の式を置きかえた $1$ 行を使うこと。" },
         {
           layer: 3,
           text: "$\\dfrac{3x}{27} + \\dfrac{4y}{24} = 1$、つまり $\\dfrac{x}{9} + \\dfrac{y}{6} = 1$。$x = 0$ とおくと $y = 6$——前題と同じ。**なぜ同じになるか**：陰関数の微分で出した接線 $y - y_0 = -\\dfrac{24x_0}{27y_0}(x - x_0)$ の両辺に $\\dfrac{y_0}{24}$ をかけて整理すると $\\dfrac{x_0x}{27} + \\dfrac{y_0y}{24} = \\dfrac{x_0^2}{27} + \\dfrac{y_0^2}{24}$。右辺は、接点が楕円の上にあるので $1$。中心の問いへ：**楕円の式の $x^2$ を $x_0x$、$y^2$ を $y_0y$ に置きかえると接線になる。右辺が $1$ にそろうのは、接点が曲線の上にあるから**。",
@@ -1374,10 +1372,10 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
       unit: "",
       unknownLabel: "接線の傾き",
       variationFromPrevious: "qualitative",
-      compareWithStepId: "step5",
+      compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。楕円で使った置きかえは、ここでも効く？" },
-        { layer: 2, text: "前題と変わったのは、曲線が楕円から双曲線になったこと。" },
+        { layer: 1, text: "step4 と比べてみよう。楕円で使った置きかえは、ここでも効く？" },
+        { layer: 2, text: "step4 と変わったのは、曲線が楕円から双曲線になったこと。" },
         {
           layer: 3,
           text: "陰関数の微分：$\\dfrac{2x}{4} - \\dfrac{2y}{12}y' = 0$、$y' = \\dfrac{12x}{4y} = \\dfrac{3x}{y}$。点 $(4,\\ 6)$ で $2$。同じ整理をすると、接線は $\\dfrac{x_0x}{4} - \\dfrac{y_0y}{12} = 1$——楕円と同じ置きかえで、符号もそのまま運ばれる。$(4, 6)$ なら $x - \\dfrac{y}{2} = 1$、傾き $2$。中心の問いへ：**双曲線でも、$x^2 \\to x_0x$、$y^2 \\to y_0y$ の置きかえで接線になる。$-$ の符号は式の一部としてそのまま残る**。",
@@ -1513,7 +1511,7 @@ $$\\frac{x_0x}{a^2} + \\frac{y_0y}{b^2} = 1$$
 
 **もっと深く**
 
-**忘れても導ける。** 置きかえの $1$ 行を忘れても、陰関数の微分→点と傾き→右辺に「接点が曲線の上」を使う、の $3$ 段で必ずもどってこられる（step3 の L3）。$1$ 行は、この $3$ 段を畳んだものである。
+**忘れても導ける。** 置きかえの $1$ 行を忘れても、陰関数の微分→点と傾き→右辺に「接点が曲線の上」を使う、の $3$ 段でもどってこられる（step3 の L3。$y_0 = 0$ の点は接線が縦の $x = \\pm a$ なので別に見る）。$1$ 行は、この $3$ 段を畳んだものである。
 
 **この $1$ 行は、接点が曲線の上にあるときだけの式。** 右辺が $1$ にそろったのは、接点が曲線の上にあるからだった。では、曲線の外の点を同じ形に入れると、何が描けるだろう——数Ⅲ・C「いろいろな曲線」の次の系列で確かめる。
 
@@ -1681,7 +1679,7 @@ export const M3CV_TANGENT_FROM_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。同じ直線かもしれない？" },
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
         { layer: 2, text: "前題と変わったのは、接点の座標を使わずに、Q の座標だけで直線を書くこと。" },
         {
           layer: 3,
@@ -1838,12 +1836,12 @@ Q を通る条件 $\\dfrac{ps}{a^2} + \\dfrac{qt}{b^2} = 1$ は、見方を変�
 };
 
 /** M3CV7: 2 次曲線——式の形から曲線を見分ける。（R1 F1-6・F1-7・F1-9 で作り直した背骨のとおり）
- *  step1・2 3x² − 18x + 8y² + 16y − 13 = 0 ＝ (x−3)²/16 + (y+1)²/6 = 1：中心の x 3・長軸 8
+ *  step1・2 11x² + 110x + 25y² − 50y + 25 = 0 ＝ (x+5)²/25 + (y−1)²/11 = 1：中心の x −5・長軸 10（R2 C：初版 (x−3)²/16 + (y+1)²/6 は原典 練1(1)(iii) と a² = 16・中心の x 3・長軸 8 が同じ＝定数だけ違う）
  *  step3（＋α）5x² − 10x − 4y² + 8y − 19 = 0 ＝ (x−1)²/4 − (y−1)²/5 = 1：焦点の x の大きいほう 4
  *  山場 step4（C12 ②）5 本のうち楕円を表すもの：正答 2（右辺 0＝1 点・右辺 負＝何もない を混ぜた）。x² と y² の係数の符号だけで数えると 4
  *  step5・6 x²/25 + y²/16 = 1、焦点 F(3, 0)、直線 x = 25/3：P(−4, 12/5) で PF/PH = (37/5)/(37/3) = 3/5（重い）→ 端 (5, 0) で 2/(10/3) = 3/5（軽い・追補13）
  *  step7（逆）焦点 (1, 0)・直線 x = 9・比 1/3 → x²/9 + y²/8 = 1 の □ = 9
- *  step8（質）焦点 (3, 0)・直線 x = 4/3・比 3/2 → x²/4 − y²/5 = 1 の △ = 5
+ *  step8（質）焦点 (3, 0)・直線 x = 4/3・比 3/2 → 5x² + qy² = 20 の q = −4（R2 B・C：初版は答えの形を x²/□ − y²/△ = 1 と書き、双曲線になるという発見を問題文が渡していた）
  *  step9（複合・C13 系列3）step8 の双曲線の漸近線の傾き（正）√5/2
  *  step10（複合・C13 数Ⅱ 判別式）x² + 3y² = 72 と y² = 2x の共有点の x 座標：{6}（代入で出る −12 は y² < 0 で捨てる。初版は {2} で step4 の答え 2 と同じだったので替えた）
  *  原典 練1(1)(iii)（7x² − 42x + 16y² − 49 = 0）・(16, 7)・(16, 12)・比 2:1・第5章の (9, 4) は使っていない。語「離心率」は derivation の「もっと深く」だけ（Q5）。 */
@@ -1863,9 +1861,9 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "曲線 $3x^2 - 18x + 8y^2 + 16y - 13 = 0$ は楕円です。この楕円の中心の $x$ 座標を求めましょう。",
-      answer: 3,
-      answerDisplay: "3",
+        "曲線 $11x^2 + 110x + 25y^2 - 50y + 25 = 0$ は楕円です。この楕円の中心の $x$ 座標を求めましょう。",
+      answer: -5,
+      answerDisplay: "-5",
       unit: "",
       unknownLabel: "中心の $x$ 座標",
       variationFromPrevious: null,
@@ -1881,18 +1879,18 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "$3(x^2 - 6x) + 8(y^2 + 2y) - 13 = 0$、$3\\{(x-3)^2 - 9\\} + 8\\{(y+1)^2 - 1\\} - 13 = 0$、$3(x-3)^2 + 8(y+1)^2 = 48$。両辺を $48$ で割って $\\dfrac{(x-3)^2}{16} + \\dfrac{(y+1)^2}{6} = 1$。中心は $(3,\\ -1)$、$x$ 座標は $3$。中心の問いへの最初の部分回答：**$xy$ の項のない $2$ 次式は、$x$ と $y$ をそれぞれ平方完成すれば、標準形にもどせる**。",
+          text: "$11(x^2 + 10x) + 25(y^2 - 2y) + 25 = 0$、$11\\{(x+5)^2 - 25\\} + 25\\{(y-1)^2 - 1\\} + 25 = 0$、$11(x+5)^2 + 25(y-1)^2 = 275$。両辺を $275$ で割って $\\dfrac{(x+5)^2}{25} + \\dfrac{(y-1)^2}{11} = 1$。中心は $(-5,\\ 1)$、$x$ 座標は $-5$。中心の問いへの最初の部分回答：**$xy$ の項のない $2$ 次式は、$x$ と $y$ をそれぞれ平方完成すれば、標準形にもどせる**。",
         },
       ],
-      formulaPreview: "3(x − 3)² + 8(y + 1)² = 48 → (x−3)²/16 + (y+1)²/6 = 1 → 中心 (3, −1)",
+      formulaPreview: "11(x + 5)² + 25(y − 1)² = 275 → (x+5)²/25 + (y−1)²/11 = 1 → 中心 (−5, 1)",
     },
     {
       id: "step2",
       position: 2,
       questionText:
-        "前題の楕円 $3x^2 - 18x + 8y^2 + 16y - 13 = 0$ の長軸の長さを求めましょう。",
-      answer: 8,
-      answerDisplay: "8",
+        "前題の楕円 $11x^2 + 110x + 25y^2 - 50y + 25 = 0$ の長軸の長さを求めましょう。",
+      answer: 10,
+      answerDisplay: "10",
       unit: "",
       unknownLabel: "長軸の長さ",
       variationFromPrevious: "same",
@@ -1902,10 +1900,10 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
         { layer: 2, text: "前題と変わったのは、問われているのが中心でなく、長いほうの軸の長さであること。" },
         {
           layer: 3,
-          text: "$\\dfrac{(x-3)^2}{16} + \\dfrac{(y+1)^2}{6} = 1$ の大きいほうの分母は $16$ で、$x$ の向き。中心から端まで $4$ なので、長軸の長さは $8$。中心の問いへ：**標準形にもどせば、楕円の系列で読んだものがすべて読める**。",
+          text: "$\\dfrac{(x+5)^2}{25} + \\dfrac{(y-1)^2}{11} = 1$ の大きいほうの分母は $25$ で、$x$ の向き。中心から端まで $5$ なので、長軸の長さは $10$。中心の問いへ：**標準形にもどせば、楕円の系列で読んだものがすべて読める**。",
         },
       ],
-      formulaPreview: "大きいほうの分母 16 → 端まで 4 → 長軸 8",
+      formulaPreview: "大きいほうの分母 25 → 端まで 5 → 長軸 10",
     },
     {
       id: "step3",
@@ -1940,7 +1938,7 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step3",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。係数の符号を見るだけで、見分けは終わる？" },
+        { layer: 1, text: "前題と比べてみよう。前題は 1 つの式だった。今度の 5 つの式を、何で見分ける？" },
         { layer: 2, text: "前題と変わったのは、$1$ つの式を読むのでなく、$5$ つの式を見分けること。" },
         {
           layer: 3,
@@ -2016,11 +2014,11 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
       id: "step8",
       position: 8,
       questionText:
-        "点 F$(3,\\ 0)$ からの距離と、直線 $x = \\dfrac43$ までの距離の比が $3 : 2$ である点 P の集まりを考えます。その方程式を $\\dfrac{x^2}{\\square} - \\dfrac{y^2}{\\triangle} = 1$ の形に書いたときの △ を求めましょう。",
-      answer: 5,
-      answerDisplay: "5",
+        "点 F$(3,\\ 0)$ からの距離と、直線 $x = \\dfrac43$ までの距離の比が $3 : 2$ である点 P の集まりを考えます。その方程式を $5x^2 + qy^2 = 20$ の形に書いたときの $q$ を求めましょう。",
+      answer: -4,
+      answerDisplay: "-4",
       unit: "",
-      unknownLabel: "△（$y^2$ の分母）",
+      unknownLabel: "$q$",
       variationFromPrevious: "qualitative",
       compareWithStepId: "step7",
       hints: [
@@ -2028,10 +2026,10 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
         { layer: 2, text: "前題と変わったのは、比が $1$ より大きくなったこと。" },
         {
           layer: 3,
-          text: "$2\\,\\mathrm{PF} = 3\\,\\mathrm{PH}$。$2$ 乗して $4\\{(x-3)^2 + y^2\\} = 9\\left(x - \\dfrac43\\right)^2$。展開して $4x^2 - 24x + 36 + 4y^2 = 9x^2 - 24x + 16$、$5x^2 - 4y^2 = 20$、$\\dfrac{x^2}{4} - \\dfrac{y^2}{5} = 1$。△ $= 5$。[双曲線] になった（焦点までの距離 $\\sqrt{4 + 5} = 3$ も合う）。中心の問いへ：**比が $1$ より大きいと双曲線。比がちょうど $1$ なら、焦点と準線から等距離の放物線**。",
+          text: "$2\\,\\mathrm{PF} = 3\\,\\mathrm{PH}$。$2$ 乗して $4\\{(x-3)^2 + y^2\\} = 9\\left(x - \\dfrac43\\right)^2$。展開して $4x^2 - 24x + 36 + 4y^2 = 9x^2 - 24x + 16$、$5x^2 - 4y^2 = 20$。$q = -4$。$y^2$ の係数が負——$\\dfrac{x^2}{4} - \\dfrac{y^2}{5} = 1$ の [双曲線] になった（焦点までの距離 $\\sqrt{4 + 5} = 3$ も合う）。中心の問いへ：**比が $1$ より大きいと双曲線。比がちょうど $1$ なら、焦点と準線から等距離の放物線**。",
         },
       ],
-      formulaPreview: "4{(x − 3)² + y²} = 9(x − 4/3)² → 5x² − 4y² = 20 → △ = 5",
+      formulaPreview: "4{(x − 3)² + y²} = 9(x − 4/3)² → 5x² − 4y² = 20 → q = −4（双曲線）",
       figureMarker: "<<M3CV_RATIO_ASK>>",
     },
     {
@@ -2092,7 +2090,7 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
 
 平方完成したあとの形で見分ける：
 
-| $A,\\ C$ の符号 | 右辺が正 | 右辺が $0$ | 右辺が負 |
+| $A,\\ C$ の符号（$A > 0$ にそろえる） | 右辺が正 | 右辺が $0$ | 右辺が負 |
 |---|---|---|---|
 | 同じ符号 | 楕円（$A = C$ なら円） | $1$ 点 | 何もない |
 | 逆の符号 | 双曲線 | 交わる $2$ 直線 | 双曲線（向きが変わる） |
@@ -2149,22 +2147,22 @@ $3$ つの曲線を $1$ つの物差しで並べるなら、焦点からの距�
  *  step3（逆）(−2√3, 2) の r：4／step4（逆）(3, −3√3) の θ（0 ≤ θ < 2π）：5π/3
  *  山場 step5（C12 ②）(−6, π/3) を r > 0・0 ≤ θ < 2π で書き直した θ：4π/3（素朴に π/3 のまま）
  *  step6 (5, 17π/6) の書き直しの θ：5π/6
- *  step7（＋α・C13 余弦定理 algebra1_trig_cosine_app_01）A(4, π/6)・B(6, π/2) の距離 2√7（直交座標に直しても同じ＝Q3）
+ *  step7（＋α・C13 余弦定理 algebra1_trig_cosine_app_01）A(4, π/4)・B(6, 7π/12) の距離 2√7（R2 C：初版 A(4, π/6) は原典 練7(1)(i) (2, π/6) の r を 2 倍した点）
  *  step8（複合・C13 三角形の面積 algebra1_trig_area_cosine_01）O・A(6, π/12)・B(10, 3π/4) の面積 15√3
- *  step9（＋α・C13 第10章 回転 math3_cpx_rotate_01）点 (2√3, 2) を O のまわりに 5π/12 回した点の x：√2 − √6（加法定理）
+ *  step9（＋α・C13 第10章 回転 math3_cpx_rotate_01）点 (3, 3√3) を O のまわりに π/4 回した点の x：(3√2 − 3√6)/2（加法定理。同上の理由で点を替えた）
  *  step10（複合・逆）直交 A(3, √3)・B(−1, √3) → 偏角 π/6 と 2π/3 → ∠AOB = π/2
  *  原典 練7 の (2, π/6)・(5, 3π/4)・(−1, −1)・(−√2, √6)、p.333 の (4, π/3)・(2, 5π/4) は使っていない。 */
 export const M3CV_POLAR_SERIES: LearnerSeries = {
   id: "math3_cv_polar_01",
   title: "極座標——向きと距離で点を指す",
   subtitle:
-    "数Ⅲ・C いろいろな曲線より — 点の位置を「どの向きに、どれだけ進むか」で指すと、直交座標と何が変わるか。同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか。$10$ 問で確かめる。",
+    "数Ⅲ・C いろいろな曲線より — 点の位置を「極からの距離と、始線から回った角」で指すと、直交座標と何が変わるか。同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか。$10$ 問で確かめる。",
   patternId: "M3CV8",
   unit: "math_3",
   revelationLabel:
     "**$r$ が負なら、$\\theta$ の向きと反対へ進む**——同じ点は、角を $\\pi$ ずらして $r$ を正にしても書ける",
   drivingQuestion:
-    "点の位置を『どの向きに、どれだけ進むか』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**",
+    "点の位置を『極からの距離と、始線から回った角』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**",
   steps: [
     {
       id: "step1",
@@ -2309,7 +2307,7 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
       id: "step7",
       position: 7,
       questionText:
-        "極座標で A$\\left(4,\\ \\dfrac{\\pi}{6}\\right)$、B$\\left(6,\\ \\dfrac{\\pi}{2}\\right)$ と表される $2$ 点のあいだの距離 AB を求めましょう。",
+        "極座標で A$\\left(4,\\ \\dfrac{\\pi}{4}\\right)$、B$\\left(6,\\ \\dfrac{7\\pi}{12}\\right)$ と表される $2$ 点のあいだの距離 AB を求めましょう。",
       answer: 2 * Math.sqrt(7),
       answerDisplay: "2√7",
       unit: "",
@@ -2322,7 +2320,7 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
         { layer: 2, text: "前題と変わったのは、点が $2$ つになり、そのあいだの距離が問われていること。" },
         {
           layer: 3,
-          text: "三角形 OAB で、OA $= 4$、OB $= 6$、$\\angle$AOB $= \\dfrac{\\pi}{2} - \\dfrac{\\pi}{6} = \\dfrac{\\pi}{3}$。[余弦定理] で $\\mathrm{AB}^2 = 16 + 36 - 2 \\cdot 4 \\cdot 6 \\cos\\dfrac{\\pi}{3} = 52 - 24 = 28$、$\\mathrm{AB} = 2\\sqrt7$。（直交座標に直すと A$(2\\sqrt3,\\ 2)$、B$(0,\\ 6)$ で、$\\sqrt{12 + 16} = 2\\sqrt7$ と同じ。）中心の問いへ：**極座標のまま、$2$ つの距離と角の差から、余弦定理で距離が出る**。",
+          text: "三角形 OAB で、OA $= 4$、OB $= 6$、$\\angle$AOB $= \\dfrac{7\\pi}{12} - \\dfrac{\\pi}{4} = \\dfrac{\\pi}{3}$。[余弦定理] で $\\mathrm{AB}^2 = 16 + 36 - 2 \\cdot 4 \\cdot 6 \\cos\\dfrac{\\pi}{3} = 52 - 24 = 28$、$\\mathrm{AB} = 2\\sqrt7$。（直交座標に直して距離を出しても同じ値になる。）中心の問いへ：**極座標のまま、$2$ つの距離と角の差から、余弦定理で距離が出る**。",
         },
       ],
       formulaPreview: "AB² = 16 + 36 − 48 cos(π/3) = 28 → 2√7",
@@ -2353,9 +2351,9 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
       id: "step9",
       position: 9,
       questionText:
-        "直交座標で $(2\\sqrt3,\\ 2)$ の点を、原点 O のまわりに $\\dfrac{5\\pi}{12}$ だけ（反時計回りに）回した点の $x$ 座標を求めましょう。",
-      answer: Math.sqrt(2) - Math.sqrt(6),
-      answerDisplay: "√2-√6",
+        "直交座標で $(3,\\ 3\\sqrt3)$ の点を、原点 O のまわりに $\\dfrac{\\pi}{4}$ だけ（反時計回りに）回した点の $x$ 座標を求めましょう。",
+      answer: (3 * Math.sqrt(2) - 3 * Math.sqrt(6)) / 2,
+      answerDisplay: "(3√2-3√6)/2",
       unit: "",
       unknownLabel: "回した点の $x$ 座標",
       inputAffordances: ["sqrt"],
@@ -2366,10 +2364,10 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
         { layer: 2, text: "step1 と変わったのは、点の向きが回されて変わること。" },
         {
           layer: 3,
-          text: "$(2\\sqrt3,\\ 2)$ は極座標で $\\left(4,\\ \\dfrac{\\pi}{6}\\right)$。回すと $\\theta$ だけが $\\dfrac{5\\pi}{12}$ 増えて $\\left(4,\\ \\dfrac{7\\pi}{12}\\right)$。$x = 4\\cos\\dfrac{7\\pi}{12}$。[加法定理] で $\\cos\\dfrac{7\\pi}{12} = \\cos\\left(\\dfrac{\\pi}{3} + \\dfrac{\\pi}{4}\\right) = \\dfrac12\\cdot\\dfrac{\\sqrt2}{2} - \\dfrac{\\sqrt3}{2}\\cdot\\dfrac{\\sqrt2}{2} = \\dfrac{\\sqrt2 - \\sqrt6}{4}$。$x = \\sqrt2 - \\sqrt6$。（第10章の複素数で $(2\\sqrt3 + 2i)\\left(\\cos\\dfrac{5\\pi}{12} + i\\sin\\dfrac{5\\pi}{12}\\right)$ の実部を出しても同じ。）中心の問いへ：**極座標では、回転は $\\theta$ を足すだけ。$r$ は変わらない**。",
+          text: "$(3,\\ 3\\sqrt3)$ は極座標で $\\left(6,\\ \\dfrac{\\pi}{3}\\right)$。回すと $\\theta$ だけが $\\dfrac{\\pi}{4}$ 増えて $\\left(6,\\ \\dfrac{7\\pi}{12}\\right)$。$x = 6\\cos\\dfrac{7\\pi}{12}$。[加法定理] で $\\cos\\dfrac{7\\pi}{12} = \\cos\\left(\\dfrac{\\pi}{3} + \\dfrac{\\pi}{4}\\right) = \\dfrac12\\cdot\\dfrac{\\sqrt2}{2} - \\dfrac{\\sqrt3}{2}\\cdot\\dfrac{\\sqrt2}{2} = \\dfrac{\\sqrt2 - \\sqrt6}{4}$。$x = \\dfrac{3\\sqrt2 - 3\\sqrt6}{2}$。（第10章の複素数で $(3 + 3\\sqrt3\\,i)\\left(\\cos\\dfrac{\\pi}{4} + i\\sin\\dfrac{\\pi}{4}\\right)$ の実部を出しても同じ。）中心の問いへ：**極座標では、回転は $\\theta$ を足すだけ。$r$ は変わらない**。",
         },
       ],
-      formulaPreview: "(4, π/6) → (4, 7π/12) → x = 4 cos(7π/12) = √2 − √6",
+      formulaPreview: "(6, π/3) → (6, 7π/12) → x = 6 cos(7π/12) = (3√2 − 3√6)/2",
     },
     {
       id: "step10",
@@ -2394,7 +2392,7 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
       formulaPreview: "A の θ = π/6、B の θ = 2π/3 → ∠AOB = π/2",
     },
   ],
-  derivation: `**中心の問い** ｜ 点の位置を『どの向きに、どれだけ進むか』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**
+  derivation: `**中心の問い** ｜ 点の位置を『極からの距離と、始線から回った角』で指すと、直交座標と何が変わる？——**同じ点の書き方が $1$ つに決まらないのは、困ることか、使えることか？**
 
 ────────
 
@@ -2499,7 +2497,6 @@ export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "r = 3 + cos(2π/3) = 5/2 → x = (5/2)·(1/2) = 5/4",
-      figureMarker: "<<M3CV_POLAR_POINT>>",
     },
     {
       id: "step2",
@@ -2535,7 +2532,7 @@ export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step2",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。点を $1$ つずつ移す代わりに、式全体を直交座標に移せる？" },
+        { layer: 1, text: "前題と比べてみよう。前題までは何を求めた？ 今度は何が問われている？" },
         { layer: 2, text: "前題と変わったのは、$1$ 点でなく、曲線全体が問われていること。" },
         {
           layer: 3,
@@ -2804,7 +2801,6 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "dx/dθ = 4 cos 2θ cos θ − 2 sin 2θ sin θ → θ = π/6 で √3/2",
-      figureMarker: "<<M3CV_ROSE_PETAL>>",
     },
     {
       id: "step2",
@@ -2884,7 +2880,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step4",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。前題と同じように、$\\theta$ で微分して調べられる？" },
+        { layer: 1, text: "前題と比べてみよう。前題は接線の向きを調べた。今度は何を調べる？" },
         { layer: 2, text: "前題と変わったのは、問われているのが接線の向きでなく、$y$ 座標の最大値であること。" },
         {
           layer: 3,
@@ -3023,7 +3019,7 @@ $$\\frac{dy}{dx} = \\frac{dy/d\\theta}{dx/d\\theta}$$
 
 ## ここが胚細胞：$r$ の最大と $y$ の最大は別
 
-$y = r\\sin\\theta$ は、$r$ と $\\sin\\theta$ の**積**である。$r$ が最大の点を過ぎて $r$ が少し減りはじめても、$\\sin\\theta$ がまだ増えていれば、$y$ は増えつづける。だから **$y$ の最大は、$y$ を $\\theta$ の関数として微分して求める**（step5・6）。$r$ がいちばん大きい点を「いちばん高い点」と読むと外れる。
+$y = r\\sin\\theta$ は、$r$ と $\\sin\\theta$ の**積**である。$r$ が最大の点を過ぎて $r$ が少し減りはじめても、$\\sin\\theta$ がまだ増えていれば、$y$ は増えつづける。だから **$y$ の最大は、$y$ を $\\theta$ の関数として微分して求める**（step5・6）。この花びらで、$r$ がいちばん大きい点を「いちばん高い点」と読むと外れる（円 $r = 2\\sin\\theta$ のように、$r$ が最大の点がいちばん高い曲線もある）。
 
 ## Step の道筋
 
