@@ -130,6 +130,7 @@ import {
   M3CV_STRETCH_SERIES,
   M3CV_HYPERBOLA_SERIES,
   M3CV_PARABOLA_SERIES,
+  M3CV_TANGENT_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
 import {
@@ -2404,6 +2405,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな曲線",
     shortDescription:
       "放物線（点と直線から同じ距離）— 焦点と準線から等距離は y² = 4px。x と y を入れかえれば 2 次関数 y = ax² のグラフで、焦点は (0, 1/(4a))。焦点からの距離は準線までの距離 x + p に置きかえられる",
+  },
+  {
+    series: M3CV_TANGENT_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな曲線",
+    shortDescription:
+      "接線の公式（円の接線を伸ばす）— 陰関数の微分で出した接線は、x² を x₀x、y² を y₀y に置きかえた 1 行にまとまる。係数はそのまま運び、放物線の 1 次の項は (x + x₀)/2 に。右辺がそろうのは接点が曲線の上にあるから",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列

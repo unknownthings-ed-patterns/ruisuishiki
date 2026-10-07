@@ -16186,6 +16186,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_ELLIPSE_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvEllipseTangent />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_HYPERBOLA_TANGENT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvHyperbolaTangent />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42800,6 +42814,76 @@ function M3cvParabolaFocusAsk() {
       <text x="170" y="236" fontSize="11" fill={accent} textAnchor="middle">
         焦点は、軸の上のどの高さ？
       </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列5 step1: 楕円と、その上の接点と、接線。
+ *  ★傾きは描かない★ 目盛り・座標を書かない（正確な尺度だと傾き −2/3 が目で読める＝R1 I5-2）。楕円の縦横比も問題の値とずらした模式。
+ *  接線は接点の近くだけ短く描く（y 切片を見せない＝step2 の答え）。 */
+function M3cvEllipseTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 120, A = 120, B = 70;
+  const t = 0.9;
+  const px = cx + A * Math.cos(t), py = cy - B * Math.sin(t);
+  const dx = -A * Math.sin(t), dy = -B * Math.cos(t);
+  const n = Math.hypot(dx, dy), L = 60;
+  return (
+    <svg
+      viewBox="0 0 330 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横長の楕円と、その上の接点、接点で楕円に接する短い直線。直線の傾きは疑問符。座標と目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 315 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 228 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" />
+      <ellipse cx={cx} cy={cy} rx={A} ry={B} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${px - (dx / n) * L} ${py - (dy / n) * L} L ${px + (dx / n) * L} ${py + (dy / n) * L}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={px + 10} y={py - 10} fontSize="13" fill={accent}>傾きは？</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列5 step6: 双曲線（右の枝）と、その上の接点と、接線。
+ *  ★傾きは描かない★ 目盛り・座標・漸近線なし。接線は接点の近くだけ。左の枝は薄く。 */
+function M3cvHyperbolaTangent() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 170, cy = 120, A = 45, B = 60;
+  const br = (sg: number) => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 50; k++) {
+      const u = -1.5 + (3 * k) / 50;
+      pts.push(`${(cx + sg * A * Math.cosh(u)).toFixed(1)},${(cy - B * Math.sinh(u)).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  const u0 = 0.8;
+  const px = cx + A * Math.cosh(u0), py = cy - B * Math.sinh(u0);
+  const dx = A * Math.sinh(u0), dy = -B * Math.cosh(u0);
+  const n = Math.hypot(dx, dy), L = 55;
+  return (
+    <svg
+      viewBox="0 0 340 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左右に分かれた双曲線のうち右の曲線の上の接点と、接点で接する短い直線。直線の傾きは疑問符。座標・目盛り・漸近線は書かれていない"
+    >
+      <path d={`M 15 ${cy} L 330 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 228 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={br(1)} fill="none" stroke={stroke} strokeWidth="2" />
+      <polyline points={br(-1)} fill="none" stroke={muted} strokeWidth="1.5" />
+      <path d={`M ${px - (dx / n) * L} ${py - (dy / n) * L} L ${px + (dx / n) * L} ${py + (dy / n) * L}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={px + 12} y={py + 4} fontSize="13" fill={accent}>傾きは？</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
     </svg>
   );
 }

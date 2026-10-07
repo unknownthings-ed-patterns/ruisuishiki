@@ -1230,9 +1230,311 @@ $y^2 = 4px$ は、$x$ と $y$ の役を入れかえると $x^2 = 4py$、つま�
 式の、$2$ 乗されていない文字の係数の $\\dfrac14$ が、頂点から焦点までの距離を語っている。`,
 };
 
+/** M3CV5: 接線の公式——円の接線を伸ばす。
+ *  step1〜3：x²/27 + y²/24 = 1 の点 (3, 4)。陰関数の微分で傾き −2/3 → 点と傾きから y 切片 6（重い）→ 公式 3x/27 + 4y/24 = 1 で y 切片 6（軽い・追補13）
+ *  山場 step4（C12 ②・R1 I1-12）3x² + 2y² = 35 の点 (3, 2)：傾き −9/4。係数を分母と取り違えると −1、係数を落とすと −3/2
+ *  step5（逆）x²/40 + y²/15 = 1 の接線 x + 2y = 10 の接点の x 座標 4（連立の解は 1 つ）
+ *  step6（質）x²/4 − y²/12 = 1 の点 (4, 6)：傾き 2／step7（＋α）(x−2)²/30 + (y−1)²/24 = 1 の点 (7, 3)：y 切片 17
+ *  step8（質）y² = 6x の点 (6, 6)：傾き 1/2（y₀y = 2p(x + x₀)。1 次の項は (x + x₀)/2 に置きかわる＝R1 I3-1）
+ *  step9（＋α）x²/21 + y²/4 = 1 の傾き 1 の接線の y 切片 {5, −5}（判別式で確かめた）
+ *  step10（複合・C13 系列2）x²/16 + y²/9 = 1 の θ = π/3 の点の接線の x 切片 8（= 4/cos θ。θ から点を作る仕事が要る）
+ *  形：27:24・3:2 の係数・40:15・30:24・21:4・16:9。第5章の x²/9 + y²/4 とその定数倍、比 2:1、原典 p.323〜324 の例
+ *  （x²/4 + y²/6 の (√2, √3)・x²/2 − y² の (−2, 1)・y² = 8x の (2, 4)）は使っていない。 */
+export const M3CV_TANGENT_SERIES: LearnerSeries = {
+  id: "math3_cv_tangent_01",
+  title: "接線の公式——円の接線を伸ばす",
+  subtitle:
+    "数Ⅲ・C いろいろな曲線より — 円の接線は、接点が分かれば $1$ 行で書けた。楕円・双曲線・放物線でも、接点から $1$ 行で書けるか。円の公式のどこを書きかえればよいか。$10$ 問で確かめる。",
+  patternId: "M3CV5",
+  unit: "math_3",
+  revelationLabel:
+    "**$Ax^2 + By^2 = k$ のままなら、接線は $Ax_0x + By_0y = k$**——係数は分母でなく、係数のまま運ぶ",
+  drivingQuestion:
+    "円の接線は、接点が分かれば $1$ 行で書けた。楕円や、仲間の双曲線・放物線でも、接点から $1$ 行で書ける？——**円の公式のどこを書きかえればよい？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の上の点 $(3,\\ 4)$ における接線の傾きを求めましょう。",
+      answer: -2 / 3,
+      answerDisplay: "-2/3",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$y$ を $x$ の式に解かなくても、曲線の式のまま接線の傾きを出す方法があった。どうやった？",
+        },
+        {
+          layer: 2,
+          text: "第5章で、$x$ と $y$ の関係式の両辺を $x$ で微分して傾きを出したのは、どんな方法だった？（[陰関数]）",
+        },
+        {
+          layer: 3,
+          text: "両辺を $x$ で微分すると $\\dfrac{2x}{27} + \\dfrac{2y}{24}\\,y' = 0$、$y' = -\\dfrac{24x}{27y}$。点 $(3,\\ 4)$ で $y' = -\\dfrac{24 \\cdot 3}{27 \\cdot 4} = -\\dfrac{72}{108} = -\\dfrac23$。中心の問いへの最初の部分回答：**楕円でも、陰関数の微分で接点の傾きが出る。あとは点と傾きから直線を書けばよい**。",
+        },
+      ],
+      formulaPreview: "y′ = −24x/(27y) → (3, 4) で −2/3",
+      figureMarker: "<<M3CV_ELLIPSE_TANGENT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題の接線（点 $(3,\\ 4)$ を通り、傾き $-\\dfrac23$）の $y$ 切片を求めましょう。",
+      answer: 6,
+      answerDisplay: "6",
+      unit: "",
+      unknownLabel: "接線の $y$ 切片",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で出したものを、どう使う？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが傾きでなく、接線が $y$ 軸と交わる高さであること。" },
+        {
+          layer: 3,
+          text: "$y - 4 = -\\dfrac23(x - 3)$ より $y = -\\dfrac23x + 2 + 4 = -\\dfrac23x + 6$。$y$ 切片は $6$。中心の問いへ：**接点と傾きから接線が書けた。ただし、微分して、点と傾きの式を整理して——と $2$ 段かかった**。",
+        },
+      ],
+      formulaPreview: "y − 4 = −(2/3)(x − 3) → y = −(2/3)x + 6",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "数Ⅱで、円 $x^2 + y^2 = r^2$ の上の点 $(x_0,\\ y_0)$ における接線は $x_0x + y_0y = r^2$ と書けました。楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の上の点 $(x_0,\\ y_0)$ における接線は、これを書きかえた形\n\n$$\\frac{x_0x}{27} + \\frac{y_0y}{24} = 1$$\n\nになることが知られています。この式で、前題と同じ点 $(3,\\ 4)$ における接線の $y$ 切片を求めましょう。",
+      answer: 6,
+      answerDisplay: "6",
+      unit: "",
+      unknownLabel: "接線の $y$ 切片",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。同じ接線を、別の道で出すと？" },
+        { layer: 2, text: "前題と変わったのは、微分の代わりに、円の接線の式を書きかえた $1$ 行を使うこと。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{3x}{27} + \\dfrac{4y}{24} = 1$、つまり $\\dfrac{x}{9} + \\dfrac{y}{6} = 1$。$x = 0$ とおくと $y = 6$——前題と同じ。**なぜ同じになるか**：陰関数の微分で出した接線 $y - y_0 = -\\dfrac{24x_0}{27y_0}(x - x_0)$ の両辺に $\\dfrac{y_0}{24}$ をかけて整理すると $\\dfrac{x_0x}{27} + \\dfrac{y_0y}{24} = \\dfrac{x_0^2}{27} + \\dfrac{y_0^2}{24}$。右辺は、接点が楕円の上にあるので $1$。中心の問いへ：**楕円の式の $x^2$ を $x_0x$、$y^2$ を $y_0y$ に置きかえると接線になる。右辺が $1$ にそろうのは、接点が曲線の上にあるから**。",
+        },
+      ],
+      formulaPreview: "x/9 + y/6 = 1 → y 切片 6（前題と同じ）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "楕円 $3x^2 + 2y^2 = 35$ の上の点 $(3,\\ 2)$ における接線の傾きを求めましょう。",
+      answer: -9 / 4,
+      answerDisplay: "-9/4",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の $1$ 行は、ここでも使える？" },
+        { layer: 2, text: "前題と変わったのは、楕円の式が「分母の形・右辺 $1$」になっていないこと。" },
+        {
+          layer: 3,
+          text: "$x^2$ を $x_0x$ に、$y^2$ を $y_0y$ に置きかえるので、係数はそのまま残る：$3 \\cdot 3x + 2 \\cdot 2y = 35$、つまり $9x + 4y = 35$。傾きは $-\\dfrac94$。（陰関数の微分でも $6x + 4yy' = 0$、$y' = -\\dfrac{3x}{2y} = -\\dfrac94$。）**係数 $3,\\ 2$ を分母と取り違えて $\\dfrac{3x}{3} + \\dfrac{2y}{2} = \\cdots$ とすると傾き $-1$ になって外れる**——分母の形にするなら $\\dfrac{x^2}{35/3} + \\dfrac{y^2}{35/2} = 1$ で、分母は $3$ や $2$ ではない。中心の問いへ：**置きかえは式の形を選ばない。$Ax^2 + By^2 = k$ なら $Ax_0x + By_0y = k$**。",
+        },
+      ],
+      formulaPreview: "9x + 4y = 35 → 傾き −9/4（係数を分母と取り違えると −1）",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "直線 $x + 2y = 10$ は、楕円 $\\dfrac{x^2}{40} + \\dfrac{y^2}{15} = 1$ の接線です。接点の $x$ 座標を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
+      unit: "",
+      unknownLabel: "接点の $x$ 座標",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題は接点から接線を書いた。今度は向きがどう変わった？" },
+        { layer: 2, text: "前題と変わったのは、接線が先に与えられて、接点が問われていること。" },
+        {
+          layer: 3,
+          text: "接点を $(x_0,\\ y_0)$ とすると、接線は $\\dfrac{x_0x}{40} + \\dfrac{y_0y}{15} = 1$。$x + 2y = 10$ の両辺を $10$ で割ると $\\dfrac{x}{10} + \\dfrac{y}{5} = 1$。係数をくらべて $\\dfrac{x_0}{40} = \\dfrac1{10}$、$\\dfrac{y_0}{15} = \\dfrac15$。$x_0 = 4$（$y_0 = 3$）。確かめ：$\\dfrac{16}{40} + \\dfrac{9}{15} = 1$ で、接点は楕円の上。（連立して $x$ の $2$ 次方程式にすると重解 $x = 4$ が $1$ つだけ出る。）中心の問いへ：**接線の式の係数は、接点の座標をそのまま運んでいる——だから係数から接点が読み戻せる**。",
+        },
+      ],
+      formulaPreview: "x/10 + y/5 = 1 と x₀x/40 + y₀y/15 = 1 → x₀ = 4",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "双曲線 $\\dfrac{x^2}{4} - \\dfrac{y^2}{12} = 1$ の上の点 $(4,\\ 6)$ における接線の傾きを求めましょう。",
+      answer: 2,
+      answerDisplay: "2",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。楕円で使った置きかえは、ここでも効く？" },
+        { layer: 2, text: "前題と変わったのは、曲線が楕円から双曲線になったこと。" },
+        {
+          layer: 3,
+          text: "陰関数の微分：$\\dfrac{2x}{4} - \\dfrac{2y}{12}y' = 0$、$y' = \\dfrac{12x}{4y} = \\dfrac{3x}{y}$。点 $(4,\\ 6)$ で $2$。同じ整理をすると、接線は $\\dfrac{x_0x}{4} - \\dfrac{y_0y}{12} = 1$——楕円と同じ置きかえで、符号もそのまま運ばれる。$(4, 6)$ なら $x - \\dfrac{y}{2} = 1$、傾き $2$。中心の問いへ：**双曲線でも、$x^2 \\to x_0x$、$y^2 \\to y_0y$ の置きかえで接線になる。$-$ の符号は式の一部としてそのまま残る**。",
+        },
+      ],
+      formulaPreview: "4x/4 − 6y/12 = 1 → x − y/2 = 1 → 傾き 2",
+      figureMarker: "<<M3CV_HYPERBOLA_TANGENT>>",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "楕円 $\\dfrac{(x-2)^2}{30} + \\dfrac{(y-1)^2}{24} = 1$ の上の点 $(7,\\ 3)$ における接線の $y$ 切片を求めましょう。",
+      answer: 17,
+      answerDisplay: "17",
+      unit: "",
+      unknownLabel: "接線の $y$ 切片",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 の $1$ 行は、そのまま書ける？" },
+        { layer: 2, text: "step3 と変わったのは、楕円の中心が原点からずれていること。" },
+        {
+          layer: 3,
+          text: "中心 $(2,\\ 1)$ から測った座標 $X = x - 2$、$Y = y - 1$ で見れば $\\dfrac{X^2}{30} + \\dfrac{Y^2}{24} = 1$、接点は $(X_0,\\ Y_0) = (5,\\ 2)$。接線は $\\dfrac{5X}{30} + \\dfrac{2Y}{24} = 1$、つまり $\\dfrac{x-2}{6} + \\dfrac{y-1}{12} = 1$。$x = 0$ とおくと $-\\dfrac13 + \\dfrac{y-1}{12} = 1$、$y - 1 = 16$、$y = 17$。中心の問いへ：**中心がずれていても、中心から測った座標で置きかえれば $1$ 行で書ける**。",
+        },
+      ],
+      formulaPreview: "(x − 2)/6 + (y − 1)/12 = 1 → x = 0 で y = 17",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "放物線 $y^2 = 6x$ の上の点 $(6,\\ 6)$ における接線の傾きを求めましょう。",
+      answer: 1 / 2,
+      answerDisplay: "1/2",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step6",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題までの置きかえは、ここでもそのまま使える？" },
+        { layer: 2, text: "前題と変わったのは、曲線が放物線で、$x$ が $2$ 乗されていないこと。" },
+        {
+          layer: 3,
+          text: "陰関数の微分：$2yy' = 6$、$y' = \\dfrac3y$。点 $(6, 6)$ で $\\dfrac12$。接線は $y - 6 = \\dfrac12(x - 6)$、整理すると $6y = 3x + 18 = 3(x + 6)$。$y^2 = 6x$ の $y^2$ は $y_0y = 6y$ に、$1$ 次の $6x$ は $6 \\cdot \\dfrac{x + x_0}{2} = 3(x + 6)$ に置きかわっている。中心の問いへ：**$2$ 乗の項は $x_0x$・$y_0y$ に、$1$ 次の項 $x$ は $\\dfrac{x + x_0}{2}$ に置きかえる。$2$ 乗の項だけの規則では放物線に届かない**。",
+        },
+      ],
+      formulaPreview: "6y = 3(x + 6) → 傾き 1/2（1 次の項 x は (x + 6)/2 に）",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "楕円 $\\dfrac{x^2}{21} + \\dfrac{y^2}{4} = 1$ の接線のうち、傾きが $1$ のものは $2$ 本あります。$2$ 本の接線の $y$ 切片をすべて求めましょう（カンマで区切って入力）。",
+      answer: 5,
+      answerDisplay: "5, -5",
+      solutionSet: [5, -5],
+      unit: "",
+      unknownLabel: "$y$ 切片（$2$ つ）",
+      inputAffordances: ["multi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。step5 では接線から接点を読んだ。今度は何が与えられている？" },
+        { layer: 2, text: "step5 と変わったのは、接線そのものでなく、傾きだけが与えられていること。" },
+        {
+          layer: 3,
+          text: "接点を $(x_0,\\ y_0)$ とすると接線は $\\dfrac{x_0x}{21} + \\dfrac{y_0y}{4} = 1$、傾きは $-\\dfrac{4x_0}{21y_0} = 1$ から $x_0 = -\\dfrac{21}{4}y_0$。楕円の式に入れて $\\dfrac{21}{16}y_0^2 + \\dfrac{y_0^2}{4} = 1$、$\\dfrac{25}{16}y_0^2 = 1$、$y_0 = \\pm\\dfrac45$。$y$ 切片は $\\dfrac{4}{y_0} = \\pm5$。（別の道：$y = x + c$ を代入して重解の条件から $c^2 = 21 + 4 = 25$、$c = \\pm5$。）中心の問いへ：**傾きが決まると、接点は楕円の上に $2$ つ、原点について反対側にできる**。",
+        },
+      ],
+      formulaPreview: "y₀ = ±4/5 → y 切片 4/y₀ = ±5",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "楕円 $\\dfrac{x^2}{16} + \\dfrac{y^2}{9} = 1$ の上の点を $(4\\cos\\theta,\\ 3\\sin\\theta)$ と表します。$\\theta = \\dfrac{\\pi}{3}$ の点における接線が $x$ 軸と交わる点の $x$ 座標を求めましょう。",
+      answer: 8,
+      answerDisplay: "8",
+      unit: "",
+      unknownLabel: "接線の $x$ 切片",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 の $1$ 行は、ここでも使える？" },
+        { layer: 2, text: "step3 と変わったのは、接点が座標でなく、角 $\\theta$ で与えられていること。" },
+        {
+          layer: 3,
+          text: "接点は $\\left(4\\cos\\dfrac{\\pi}{3},\\ 3\\sin\\dfrac{\\pi}{3}\\right) = \\left(2,\\ \\dfrac{3\\sqrt3}{2}\\right)$。接線は $\\dfrac{2x}{16} + \\dfrac{3\\sqrt3}{2}\\cdot\\dfrac{y}{9} = 1$。$y = 0$ とおくと $\\dfrac{x}{8} = 1$、$x = 8$。$\\theta$ のまま書くと接線は $\\dfrac{x\\cos\\theta}{4} + \\dfrac{y\\sin\\theta}{3} = 1$ で、$x$ 切片は $\\dfrac{4}{\\cos\\theta}$。中心の問いへ：**系列2 の $(a\\cos\\theta,\\ b\\sin\\theta)$ を置きかえの $1$ 行に入れれば、接線も $\\theta$ で書ける**。",
+        },
+      ],
+      formulaPreview: "接点 (2, 3√3/2) → x/8 + (√3/6)y = 1 → x 切片 8",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 円の接線は、接点が分かれば $1$ 行で書けた。楕円や、仲間の双曲線・放物線でも、接点から $1$ 行で書ける？——**円の公式のどこを書きかえればよい？**
+
+────────
+
+## 微分して、点と傾きで書く
+
+接点 $(x_0,\\ y_0)$ がわかれば、曲線の式のまま両辺を $x$ で微分して（[陰関数] の微分）傾きを出し、点と傾きから接線が書ける（step1・2）。
+
+## ここが胚細胞：置きかえの $1$ 行と、右辺がそろう理由
+
+楕円 $\\dfrac{x^2}{a^2} + \\dfrac{y^2}{b^2} = 1$ で微分した接線を整理すると
+
+$$\\frac{x_0x}{a^2} + \\frac{y_0y}{b^2} = \\frac{x_0^2}{a^2} + \\frac{y_0^2}{b^2}$$
+
+右辺は、**接点が曲線の上にあるから** $1$。だから
+
+$$\\frac{x_0x}{a^2} + \\frac{y_0y}{b^2} = 1$$
+
+数Ⅱの円の [接線] $x_0x + y_0y = r^2$ と同じく、**$x^2$ を $x_0x$、$y^2$ を $y_0y$ に置きかえる**（step3）。
+
+- **係数はそのまま運ぶ**：$Ax^2 + By^2 = k$ なら $Ax_0x + By_0y = k$（step4）
+- **双曲線も同じ**：$\\dfrac{x_0x}{a^2} - \\dfrac{y_0y}{b^2} = 1$（step6）
+- **放物線は $1$ 次の項に注意**：$y^2 = 4px$ なら $y_0y = 2p(x + x_0)$。$1$ 次の項 $x$ は $\\dfrac{x + x_0}{2}$ に置きかわる（step8）
+- **中心がずれていれば**、中心から測った座標で置きかえる（step7）
+
+## Step の道筋
+
+- **step1・2**：陰関数の微分と、点と傾き（第5章と合流）
+- **step3（質的変化）**：円の接線を書きかえた $1$ 行。同じ値になる
+- **step4（山場）**：$Ax^2 + By^2 = k$ のまま置きかえる
+- **step5**：接線から接点を読み戻す
+- **step6・8**：双曲線・放物線
+- **step7**：中心がずれた楕円
+- **step9**：傾きから接線（$2$ 本）
+- **step10**：角 $\\theta$ で与えた接点（系列2 と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 置きかえの $1$ 行を忘れても、陰関数の微分→点と傾き→右辺に「接点が曲線の上」を使う、の $3$ 段で必ずもどってこられる（step3 の L3）。$1$ 行は、この $3$ 段を畳んだものである。
+
+**この $1$ 行は、接点が曲線の上にあるときだけの式。** 右辺が $1$ にそろったのは、接点が曲線の上にあるからだった。では、曲線の外の点を同じ形に入れると、何が描けるだろう——数Ⅲ・C「いろいろな曲線」の次の系列で確かめる。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第8章「接線の方程式」の構成（陰関数の微分で楕円の接線を導き、接点が曲線上にあることから右辺が $1$ になる・双曲線と放物線の接線の公式）を参考。問題の値・曲線はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+楕円・双曲線の接線は、曲線の式の $x^2$ を $x_0x$ に、$y^2$ を $y_0y$ に置きかえた $1$ 行になる。放物線では $1$ 次の項 $x$ を $\\dfrac{x + x_0}2$ に置きかえる。係数はそのまま運ぶ。
+
+右辺がそろうのは、接点が曲線の上にあるから。だからこの $1$ 行は、曲線の上の点のための式である。`,
+};
+
 export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_ELLIPSE_SERIES,
   M3CV_STRETCH_SERIES,
   M3CV_HYPERBOLA_SERIES,
   M3CV_PARABOLA_SERIES,
+  M3CV_TANGENT_SERIES,
 ];
