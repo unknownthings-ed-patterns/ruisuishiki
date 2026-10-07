@@ -127,6 +127,7 @@ import {
 } from "./seriesMath3IntegralApp";
 import {
   M3CV_ELLIPSE_SERIES,
+  M3CV_STRETCH_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
 import {
@@ -2377,6 +2378,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな曲線",
     shortDescription:
       "楕円（2 点からの距離の和を式にする）— 和の条件を 2 乗 2 回で式にすると、分母が和の半分と焦点の位置を語る。焦点は分母の大きいほうの軸の上",
+  },
+  {
+    series: M3CV_STRETCH_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな曲線",
+    shortDescription:
+      "楕円を円から読む（一方向に伸ばした円）— 伸ばすと式の文字が置きかわり、面積は倍率どおり。円の角 θ で点を (a cos θ, b sin θ) と表せるが、θ は原点から見た角ではない",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
