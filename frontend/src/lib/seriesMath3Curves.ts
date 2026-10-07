@@ -772,7 +772,7 @@ export const M3CV_HYPERBOLA_SERIES: LearnerSeries = {
       answer: 4 * Math.sqrt(2),
       answerDisplay: "4√2",
       unit: "",
-      unknownLabel: "上の頂点の $y$ 座標",
+      unknownLabel: "$y$ 軸と交わる点の $y$ 座標（大きいほう）",
       inputAffordances: ["sqrt"],
       variationFromPrevious: "qualitative",
       compareWithStepId: "step5",
