@@ -2753,6 +2753,314 @@ $x = r\\cos\\theta$、$y = r\\sin\\theta$、$r^2 = x^2 + y^2$ で、極方程式
 極を基準に測ると、極を通る円は直径が、直線は極からの距離が、式にそのまま見える。焦点を極にとれば、楕円も $1$ 行の極方程式になる。`,
 };
 
+/** M3CV10: 極方程式のまま調べる——x = r cos θ で微分する。
+ *  step1〜3 r = 2 sin 2θ・θ = π/6：dx/dθ = √3/2・dy/dθ = 5/2・dy/dx = 5√3/3
+ *  step4（逆）r = 4 cos θ の接線が x 軸に平行になる θ（0 < θ < π/2）：π/4
+ *  山場 step5（C12 ②）r = 2 sin 2θ（0 ≤ θ ≤ π/2）の y の最大 8√3/9（tan²θ = 2）。素朴に「r 最大（θ = π/4）で y も最大」と読むと √2
+ *  step6 r = 2 cos 2θ（0 ≤ θ ≤ π/4）の y の最大 2√6/9（r 最大の θ = 0 では y = 0）
+ *  step7（＋α）r = 2 sin 2θ と r = 1（円）の交点の θ（0 < θ < π/2・ともに r > 0）：{π/12, 5π/12}
+ *  step8（逆）r = 2 sin 2θ で極からの距離 √3 の点の θ（0 < θ < π/2）：{π/6, π/3}
+ *  step9（複合・C13 第4章 合成関数の微分）r = 4 sin 3θ・θ = π/6（r′ = 0）の接線の傾き −√3
+ *  step10（複合・Q3・C13 系列9・数Ⅱ 円の接線）r = 10 cos θ・tan θ = 1/2 の点 (8, 4) の接線の傾き −3/4（極の道 −cot 2θ と、中心 (5, 0) から見た半径に垂直）
+ *  step5 の図は置かない（正確な尺度の花びらは、いちばん高い点が 45° の向きでないことを目で見せる＝層8 の補足・PNG で確かめて外した）。
+ *  原典 応2・練8 の r = 1 + cos θ（カージオイド）とその回転、r = θ、第7章の対数らせんは使っていない。
+ *  筋書き（x = r cos θ・y = r sin θ にして微分）は原典 応2 と同じ＝極方程式の曲線を調べる定番の道具（背骨 §7-4 の残す判断）。 */
+export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
+  id: "math3_cv_polar_curve_01",
+  title: "極方程式のまま調べる——x = r cos θ で微分する",
+  subtitle:
+    "数Ⅲ・C いろいろな曲線より — 直交座標に直しにくい極方程式の曲線で、いちばん高い点や接線の傾きを知るにはどうするか。$r$ がいちばん大きい点は、いちばん高い点か。$10$ 問で確かめる。",
+  patternId: "M3CV10",
+  unit: "math_3",
+  revelationLabel:
+    "**$r$ がいちばん大きい点と、$y$ がいちばん大きい点は別**——$y = r\\sin\\theta$ は、$r$ と $\\sin\\theta$ の積だから",
+  drivingQuestion:
+    "直交座標に直しにくい極方程式の曲線で、いちばん高い点や接線の傾きを知るには？——**$r$ がいちばん大きい点は、いちばん高い点？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "極方程式 $r = 2\\sin2\\theta$ の曲線の点の $x$ 座標は $x = r\\cos\\theta = 2\\sin2\\theta\\cos\\theta$ と、$\\theta$ の式で書けます。$\\theta = \\dfrac{\\pi}{6}$ における $\\dfrac{dx}{d\\theta}$ の値を求めましょう。",
+      answer: Math.sqrt(3) / 2,
+      answerDisplay: "√3/2",
+      unit: "",
+      unknownLabel: "$\\dfrac{dx}{d\\theta}$ の値",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$x$ が $\\theta$ の式で書けた。$\\theta$ で微分するには、この式のどこに気をつける？",
+        },
+        {
+          layer: 2,
+          text: "第5章で、$x$ も $y$ も $t$ の式で書かれた曲線を扱ったとき、まず何を $t$ で微分した？（[媒介変数表示]）",
+        },
+        {
+          layer: 3,
+          text: "積の微分：$\\dfrac{dx}{d\\theta} = 4\\cos2\\theta\\cos\\theta - 2\\sin2\\theta\\sin\\theta$。$\\theta = \\dfrac{\\pi}{6}$ で $4 \\cdot \\dfrac12 \\cdot \\dfrac{\\sqrt3}{2} - 2 \\cdot \\dfrac{\\sqrt3}{2} \\cdot \\dfrac12 = \\sqrt3 - \\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{2}$。中心の問いへの最初の部分回答：**$x = r\\cos\\theta$、$y = r\\sin\\theta$ と書けば、極方程式の曲線は $\\theta$ を媒介変数とする曲線になる。第5章の道具で微分できる**。",
+        },
+      ],
+      formulaPreview: "dx/dθ = 4 cos 2θ cos θ − 2 sin 2θ sin θ → θ = π/6 で √3/2",
+      figureMarker: "<<M3CV_ROSE_PETAL>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題と同じ曲線 $r = 2\\sin2\\theta$ で、$y = r\\sin\\theta$ とします。$\\theta = \\dfrac{\\pi}{6}$ における $\\dfrac{dy}{d\\theta}$ の値を求めましょう。",
+      answer: 5 / 2,
+      answerDisplay: "5/2",
+      unit: "",
+      unknownLabel: "$\\dfrac{dy}{d\\theta}$ の値",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、微分するのが $x$ でなく $y$ であること。" },
+        {
+          layer: 3,
+          text: "$y = 2\\sin2\\theta\\sin\\theta$。$\\dfrac{dy}{d\\theta} = 4\\cos2\\theta\\sin\\theta + 2\\sin2\\theta\\cos\\theta$。$\\theta = \\dfrac{\\pi}{6}$ で $4 \\cdot \\dfrac12 \\cdot \\dfrac12 + 2 \\cdot \\dfrac{\\sqrt3}{2} \\cdot \\dfrac{\\sqrt3}{2} = 1 + \\dfrac32 = \\dfrac52$。中心の問いへ：**$x$ と $y$ をそれぞれ $\\theta$ で微分できた。あとは $2$ つを組み合わせる**。",
+        },
+      ],
+      formulaPreview: "dy/dθ = 4 cos 2θ sin θ + 2 sin 2θ cos θ → θ = π/6 で 5/2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "前題までと同じ曲線 $r = 2\\sin2\\theta$ の、$\\theta = \\dfrac{\\pi}{6}$ の点における接線の傾きを求めましょう。",
+      answer: (5 * Math.sqrt(3)) / 3,
+      answerDisplay: "5√3/3",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前の $2$ 問で出した値を、どう使う？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが $\\theta$ についての変化でなく、$x$ についての $y$ の変化（接線の傾き）であること。" },
+        {
+          layer: 3,
+          text: "$\\dfrac{dy}{dx} = \\dfrac{dy/d\\theta}{dx/d\\theta} = \\dfrac{5/2}{\\sqrt3/2} = \\dfrac{5}{\\sqrt3} = \\dfrac{5\\sqrt3}{3}$。（$\\dfrac{dx}{d\\theta} \\ne 0$ の点なので、この割り算ができる。）中心の問いへ：**極方程式の曲線の接線の傾きは、$\\dfrac{dy/d\\theta}{dx/d\\theta}$。直交座標の式に直さなくても出る**。",
+        },
+      ],
+      formulaPreview: "dy/dx = (5/2) ÷ (√3/2) = 5√3/3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "極方程式 $r = 4\\cos\\theta$ の曲線（円）の上で、接線が $x$ 軸に平行になる点の $\\theta$ を、$0 < \\theta < \\dfrac{\\pi}{2}$ の範囲で求めましょう。",
+      answer: Math.PI / 4,
+      answerDisplay: "π/4",
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題は $\\theta$ から傾きを出した。今度は向きがどう変わった？" },
+        { layer: 2, text: "前題と変わったのは、傾きが先に決まっていて（$x$ 軸に平行）、$\\theta$ が問われていること。" },
+        {
+          layer: 3,
+          text: "$y = 4\\cos\\theta\\sin\\theta = 2\\sin2\\theta$、$\\dfrac{dy}{d\\theta} = 4\\cos2\\theta$。$x$ 軸に平行なのは $\\dfrac{dy}{d\\theta} = 0$（かつ $\\dfrac{dx}{d\\theta} \\ne 0$）のとき。$\\cos2\\theta = 0$、$0 < \\theta < \\dfrac{\\pi}{2}$ で $\\theta = \\dfrac{\\pi}{4}$（$\\dfrac{dx}{d\\theta} = -4\\sin2\\theta = -4 \\ne 0$）。点は $(2,\\ 2)$——円 $(x - 2)^2 + y^2 = 4$ のいちばん上。中心の問いへ：**接線が水平になるのは $\\dfrac{dy}{d\\theta} = 0$ の点**。",
+        },
+      ],
+      formulaPreview: "dy/dθ = 4 cos 2θ = 0 → θ = π/4",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "極方程式 $r = 2\\sin2\\theta$（$0 \\le \\theta \\le \\dfrac{\\pi}{2}$）の曲線は、第 $1$ 象限にある花びらの形です。この曲線の上の点の $y$ 座標の最大値を求めましょう。",
+      answer: (8 * Math.sqrt(3)) / 9,
+      answerDisplay: "8√3/9",
+      unit: "",
+      unknownLabel: "$y$ 座標の最大値",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題と同じように、$\\theta$ で微分して調べられる？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが接線の向きでなく、$y$ 座標の最大値であること。" },
+        {
+          layer: 3,
+          text: "$y = 2\\sin2\\theta\\sin\\theta = 4\\sin^2\\theta\\cos\\theta$。$\\dfrac{dy}{d\\theta} = 8\\sin\\theta\\cos^2\\theta - 4\\sin^3\\theta = 4\\sin\\theta(2\\cos^2\\theta - \\sin^2\\theta)$。$0 < \\theta < \\dfrac{\\pi}{2}$ で $0$ になるのは $\\tan^2\\theta = 2$ のとき。$\\cos^2\\theta = \\dfrac13$、$\\sin^2\\theta = \\dfrac23$ で、$y = 4 \\cdot \\dfrac23 \\cdot \\dfrac{1}{\\sqrt3} = \\dfrac{8}{3\\sqrt3} = \\dfrac{8\\sqrt3}{9}$（その前後で $\\dfrac{dy}{d\\theta}$ は正から負へ）。**$r$ がいちばん大きい $\\theta = \\dfrac{\\pi}{4}$（$r = 2$）の点で $y = 2\\sin\\dfrac{\\pi}{4} = \\sqrt2$ と答えると外れる**——$\\sqrt2 \\approx 1.414$ より $\\dfrac{8\\sqrt3}{9} \\approx 1.540$ のほうが大きい。中心の問いへ：**$y = r\\sin\\theta$ は $r$ と $\\sin\\theta$ の積。$r$ が少し減っても $\\sin\\theta$ が増えれば、$y$ はまだ大きくなる**。",
+        },
+      ],
+      formulaPreview: "y = 4 sin²θ cos θ、tan²θ = 2 → y = 8√3/9（r 最大の点の √2 ではない）",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "極方程式 $r = 2\\cos2\\theta$（$0 \\le \\theta \\le \\dfrac{\\pi}{4}$）の曲線の上の点の $y$ 座標の最大値を求めましょう。",
+      answer: (2 * Math.sqrt(6)) / 9,
+      answerDisplay: "2√6/9",
+      unit: "",
+      unknownLabel: "$y$ 座標の最大値",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の手順は、ここでも通る？" },
+        { layer: 2, text: "前題と変わったのは、$\\sin2\\theta$ が $\\cos2\\theta$ になり、$\\theta$ の範囲が変わったこと。" },
+        {
+          layer: 3,
+          text: "$y = 2\\cos2\\theta\\sin\\theta = 2(1 - 2\\sin^2\\theta)\\sin\\theta$。$s = \\sin\\theta$（$0 \\le s \\le \\dfrac{1}{\\sqrt2}$）とおくと $y = 2s - 4s^3$、$\\dfrac{dy}{ds} = 2 - 12s^2 = 0$ で $s = \\dfrac{1}{\\sqrt6}$。$y = \\dfrac{2}{\\sqrt6} - \\dfrac{4}{6\\sqrt6} = \\dfrac{4}{3\\sqrt6} = \\dfrac{2\\sqrt6}{9}$。（$r$ がいちばん大きい $\\theta = 0$ の点では $y = 0$。）中心の問いへ：**$y$ の最大は、$y = r\\sin\\theta$ を $\\theta$ の関数として調べて出す**。",
+        },
+      ],
+      formulaPreview: "y = 2s − 4s³（s = sin θ）→ s = 1/√6 → y = 2√6/9",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "極方程式 $r = 2\\sin2\\theta$ の曲線と、円 $r = 1$ が交わる点の $\\theta$ を、$0 < \\theta < \\dfrac{\\pi}{2}$ の範囲ですべて求めましょう（この範囲では、どちらの曲線も $r > 0$。カンマで区切って入力）。",
+      answer: Math.PI / 12,
+      answerDisplay: "π/12, 5π/12",
+      solutionSet: [Math.PI / 12, (5 * Math.PI) / 12],
+      unit: "",
+      unknownLabel: "交わる点の $\\theta$",
+      inputAffordances: ["pi", "multi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。同じ曲線に、何が加わった？" },
+        { layer: 2, text: "step5 と変わったのは、もう $1$ つの曲線（円）が加わり、$2$ つの交わる点が問われていること。" },
+        {
+          layer: 3,
+          text: "同じ $\\theta$ で同じ $r$ なら同じ点。$2\\sin2\\theta = 1$、$\\sin2\\theta = \\dfrac12$。$0 < 2\\theta < \\pi$ で $2\\theta = \\dfrac{\\pi}{6},\\ \\dfrac{5\\pi}{6}$、$\\theta = \\dfrac{\\pi}{12},\\ \\dfrac{5\\pi}{12}$。（極座標の書き方は $1$ つでないので、範囲と $r > 0$ を決めてから比べる。）中心の問いへ：**$2$ つの極方程式の交点は、同じ $\\theta$ での $r$ の一致として求められる——範囲と符号を決めておけば**。",
+        },
+      ],
+      formulaPreview: "sin 2θ = 1/2 → θ = π/12, 5π/12",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "極方程式 $r = 2\\sin2\\theta$ の曲線の上で、極からの距離が $\\sqrt3$ である点の $\\theta$ を、$0 < \\theta < \\dfrac{\\pi}{2}$ の範囲ですべて求めましょう（カンマで区切って入力）。",
+      answer: Math.PI / 6,
+      answerDisplay: "π/6, π/3",
+      solutionSet: [Math.PI / 6, Math.PI / 3],
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi", "multi"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、相手の円の代わりに、極からの距離の値が与えられていること。" },
+        {
+          layer: 3,
+          text: "極からの距離は $r$（この範囲で $r > 0$）。$2\\sin2\\theta = \\sqrt3$、$\\sin2\\theta = \\dfrac{\\sqrt3}{2}$、$2\\theta = \\dfrac{\\pi}{3},\\ \\dfrac{2\\pi}{3}$、$\\theta = \\dfrac{\\pi}{6},\\ \\dfrac{\\pi}{3}$。花びらは $\\theta = \\dfrac{\\pi}{4}$ について対称なので、$2$ つの点も対称な位置にある。中心の問いへ：**極からの距離の条件は、$r$ の値の条件。直交座標の距離 $\\sqrt{x^2 + y^2}$ を計算しなくてよい**。",
+        },
+      ],
+      formulaPreview: "sin 2θ = √3/2 → θ = π/6, π/3",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "極方程式 $r = 4\\sin3\\theta$ の曲線の、$\\theta = \\dfrac{\\pi}{6}$ の点における接線の傾きを求めましょう。",
+      answer: -Math.sqrt(3),
+      answerDisplay: "-√3",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 の手順は、ここでも通る？" },
+        { layer: 2, text: "step3 と変わったのは、$\\sin$ の中が $3\\theta$ であること。" },
+        {
+          layer: 3,
+          text: "$r = 4\\sin3\\theta$、$\\dfrac{dr}{d\\theta} = 12\\cos3\\theta$（[合成関数の微分法]）。$x = r\\cos\\theta$、$y = r\\sin\\theta$ を積の微分で：$\\dfrac{dx}{d\\theta} = r'\\cos\\theta - r\\sin\\theta$、$\\dfrac{dy}{d\\theta} = r'\\sin\\theta + r\\cos\\theta$。$\\theta = \\dfrac{\\pi}{6}$ では $r = 4\\sin\\dfrac{\\pi}{2} = 4$、$r' = 12\\cos\\dfrac{\\pi}{2} = 0$。$\\dfrac{dx}{d\\theta} = -4 \\cdot \\dfrac12 = -2$、$\\dfrac{dy}{d\\theta} = 4 \\cdot \\dfrac{\\sqrt3}{2} = 2\\sqrt3$。傾きは $\\dfrac{2\\sqrt3}{-2} = -\\sqrt3$。（$r' = 0$ の点では、接線は極からの向きに垂直になる。）中心の問いへ：**$r$ が合成関数でも、$r'$ を出してから $x,\\ y$ の微分に入れれば、同じ道で傾きが出る**。",
+        },
+      ],
+      formulaPreview: "r = 4、r′ = 0 → dx/dθ = −2、dy/dθ = 2√3 → 傾き −√3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "極方程式 $r = 10\\cos\\theta$ の曲線（円）の上で、$\\tan\\theta = \\dfrac12$（$0 < \\theta < \\dfrac{\\pi}{2}$）の点における接線の傾きを求めましょう。",
+      answer: -3 / 4,
+      answerDisplay: "-3/4",
+      unit: "",
+      unknownLabel: "接線の傾き",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。同じ種類の曲線を、ほかの道でも調べられる？" },
+        { layer: 2, text: "step4 と変わったのは、接線の向きが決まっていなくて、点が $\\tan\\theta$ で与えられていること。" },
+        {
+          layer: 3,
+          text: "**極の道**：$x = 10\\cos^2\\theta = 5 + 5\\cos2\\theta$、$y = 10\\cos\\theta\\sin\\theta = 5\\sin2\\theta$。$\\dfrac{dx}{d\\theta} = -10\\sin2\\theta$、$\\dfrac{dy}{d\\theta} = 10\\cos2\\theta$、傾き $= -\\dfrac{\\cos2\\theta}{\\sin2\\theta}$。$\\tan\\theta = \\dfrac12$ から $\\tan2\\theta = \\dfrac{1}{1 - \\frac14} = \\dfrac43$ なので傾き $-\\dfrac34$。**直交座標の道**：点は $r = 10 \\cdot \\dfrac{2}{\\sqrt5} = 4\\sqrt5$ で $(8,\\ 4)$。円は $(x - 5)^2 + y^2 = 25$ で、中心 $(5,\\ 0)$ から点へ向かう半径の傾きは $\\dfrac{4}{3}$。接線はそれに垂直なので $-\\dfrac34$。$2$ つの道で同じ値。中心の問いへ：**直交座標に直せる曲線なら、極の道と直交座標の道で確かめあえる**。",
+        },
+      ],
+      formulaPreview: "傾き = −cot 2θ、tan 2θ = 4/3 → −3/4（円の半径 (3, 4) に垂直）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 直交座標に直しにくい極方程式の曲線で、いちばん高い点や接線の傾きを知るには？——**$r$ がいちばん大きい点は、いちばん高い点？**
+
+────────
+
+## 極方程式の曲線は、$\\theta$ を媒介変数とする曲線
+
+[極方程式] $r = f(\\theta)$ の曲線の点は
+
+$$x = f(\\theta)\\cos\\theta,\\qquad y = f(\\theta)\\sin\\theta$$
+
+と、どちらも $\\theta$ の式で書ける。つまり $\\theta$ を媒介変数とする曲線（[媒介変数表示]）で、第5章の道具がそのまま使える：$\\dfrac{dx}{d\\theta} \\ne 0$ の点で
+
+$$\\frac{dy}{dx} = \\frac{dy/d\\theta}{dx/d\\theta}$$
+
+（step1〜3）。接線が水平になるのは $\\dfrac{dy}{d\\theta} = 0$ の点（step4）。
+
+## ここが胚細胞：$r$ の最大と $y$ の最大は別
+
+$y = r\\sin\\theta$ は、$r$ と $\\sin\\theta$ の**積**である。$r$ が最大の点を過ぎて $r$ が少し減りはじめても、$\\sin\\theta$ がまだ増えていれば、$y$ は増えつづける。だから **$y$ の最大は、$y$ を $\\theta$ の関数として微分して求める**（step5・6）。$r$ がいちばん大きい点を「いちばん高い点」と読むと外れる。
+
+## Step の道筋
+
+- **step1〜3**：$x,\\ y$ を $\\theta$ で微分し、接線の傾きを出す（第5章の媒介変数と合流）
+- **step4**：接線が水平になる $\\theta$
+- **step5（質的変化・山場）**：$y$ の最大は $r$ の最大の点ではない
+- **step6**：もう $1$ つの花びらで同じことを確かめる
+- **step7・8**：交点・極からの距離は、$r$ の値の条件として解く
+- **step9**：$r$ が合成関数でも同じ道（第4章の微分と合流）
+- **step10**：円で、極の道と直交座標の道を確かめあう（系列9・数Ⅱの円の接線と合流）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $x = r\\cos\\theta$、$y = r\\sin\\theta$ と書いて、積の微分をするだけ。$\\dfrac{dx}{d\\theta} = r'\\cos\\theta - r\\sin\\theta$、$\\dfrac{dy}{d\\theta} = r'\\sin\\theta + r\\cos\\theta$ を覚えておく必要はない。
+
+**$r' = 0$ の点では。** $r$ が最大や最小になる点（$r' = 0$）では、接線は極から見た向き（動径）に垂直になる（step9）。円 $r = $ 一定 なら、どの点でもそうなる。
+
+**$\\dfrac{dx}{d\\theta} = 0$ の点。** 接線が縦になる点や、極で曲線が折り返す点では割り算ができない。そこは別に調べる。
+
+**この先の景色。** 極方程式の曲線で囲まれた部分の面積は、扇形を細かく足し集めて $\\displaystyle\\frac12\\int r^2\\,d\\theta$ と書ける（大学の範囲）。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第8章「極方程式」の応用問題2 の構成（極方程式を $x = r\\cos\\theta$、$y = r\\sin\\theta$ の媒介変数表示に直して微分し、$y$ の最大を調べる）を参考。曲線（花びらの形・円）と問う量はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$x = r\\cos\\theta$、$y = r\\sin\\theta$ と書けば、極方程式の曲線は $\\theta$ を媒介変数とする曲線になり、接線の傾きも最大・最小も、$\\theta$ で微分して調べられる。
+
+$r$ がいちばん大きい点は、いちばん高い点とは限らない。$y$ は $r$ と $\\sin\\theta$ の積なので、$y$ そのものを $\\theta$ の関数として調べる。`,
+};
+
 export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_ELLIPSE_SERIES,
   M3CV_STRETCH_SERIES,
@@ -2763,4 +3071,5 @@ export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_CONIC_SERIES,
   M3CV_POLAR_SERIES,
   M3CV_POLAR_EQ_SERIES,
+  M3CV_POLAR_CURVE_SERIES,
 ];
