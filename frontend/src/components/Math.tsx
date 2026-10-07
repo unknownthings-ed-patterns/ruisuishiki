@@ -16214,6 +16214,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_RATIO_ASK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvRatioAsk />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42964,6 +42971,42 @@ function M3cvOutsideAsk() {
       <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
       <text x="165" y="244" fontSize="11" fill={accent} textAnchor="middle">
         Q を接線の公式に入れた直線は、どこを通る？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列7 step8: 点 F と縦の直線（準線）と、点 P 1 つ。PF と PH の 2 本。
+ *  ★曲線は描かない・比の値は描かない★（比が 1 より大きいとき何が描かれるかが step の発見。2 つの点を並べて比をくらべさせない＝R1 I5-3）。
+ *  長さは「?」。座標・目盛りなし。 */
+function M3cvRatioAsk() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const oy = 140, fx = 230, lx = 130;
+  const px = 172, py = 62;
+  return (
+    <svg
+      viewBox="0 0 360 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 360 }}
+      role="img"
+      aria-label="点 F と、その左にある縦の直線。直線の右にある点 P から、F へ 1 本の線分と、直線へ水平な垂線が引かれていて、どちらの長さも疑問符。曲線は描かれていない"
+    >
+      <path d={`M 20 ${oy} L 345 ${oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${lx} 15 L ${lx} 205`} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${px} ${py} L ${fx} ${oy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${px} ${py} L ${lx} ${py}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${lx} ${py + 8} L ${lx + 8} ${py + 8} L ${lx + 8} ${py}`} fill="none" stroke={accent} strokeWidth="1.2" />
+      <circle cx={fx} cy={oy} r="4" fill={stroke} />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={fx - 4} y={oy + 20} fontSize="13" fill={stroke}>F</text>
+      <text x={px + 8} y={py - 4} fontSize="13" fill={accent}>P</text>
+      <text x={lx - 20} y={py + 5} fontSize="13" fill={accent}>H</text>
+      <text x={(px + fx) / 2 + 10} y={(py + oy) / 2 + 8} fontSize="13" fill={accent}>?</text>
+      <text x={(px + lx) / 2} y={py - 8} fontSize="13" fill={accent}>?</text>
+      <text x="200" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        PF と PH の比が 1 より大きいまま P を動かすと、どんな曲線？
       </text>
     </svg>
   );
