@@ -16235,6 +16235,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_POLAR_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvPolarLine />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43084,6 +43091,39 @@ function M3cvPolarNeg() {
       <text x={ox - 18} y={oy - 6} fontSize="13" fill={stroke}>O</text>
       <text x="180" y="224" fontSize="11" fill={accent} textAnchor="middle">
         r が負のとき、点はどちらの半直線の上？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列9 step7: 極 O と始線、O から角 α の向きに引いた垂線と、その先で垂線に垂直な直線。
+ *  ★値は書かない★ 垂線の長さ・角の大きさはラベルだけ（「?」）。直線と y 軸の交点（step の答え）は描かない＝y 軸を描かない。 */
+function M3cvPolarLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 90, oy = 170, a = 1.0, p = 110;
+  const fx = ox + p * Math.cos(a), fy = oy - p * Math.sin(a);
+  const ux = Math.sin(a), uy = Math.cos(a);
+  return (
+    <svg
+      viewBox="0 0 340 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="極 O から右へ始線。O から斜め上の向きに垂線が引かれ、その先の点で垂線に垂直に交わる直線がある。垂線の長さと角は疑問符"
+    >
+      <path d={`M ${ox} ${oy} L 330 ${oy}`} fill="none" stroke={muted} strokeWidth="1.5" />
+      <text x="300" y={oy + 18} fontSize="12" fill={muted}>始線</text>
+      <path d={`M ${ox} ${oy} L ${fx} ${fy}`} fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 4" />
+      <path d={`M ${fx - 120 * ux} ${fy - 120 * uy} L ${fx + 90 * ux} ${fy + 90 * uy}`} fill="none" stroke={stroke} strokeWidth="2.5" />
+      <path d={`M ${ox + 26} ${oy} A 26 26 0 0 0 ${ox + 26 * Math.cos(a)} ${oy - 26 * Math.sin(a)}`} fill="none" stroke={muted} strokeWidth="1.2" />
+      <text x={ox + 30} y={oy - 10} fontSize="12" fill={muted}>?</text>
+      <text x={(ox + fx) / 2 - 18} y={(oy + fy) / 2} fontSize="13" fill={accent}>?</text>
+      <circle cx={ox} cy={oy} r="4" fill={stroke} />
+      <text x={ox - 18} y={oy + 16} fontSize="13" fill={stroke}>O</text>
+      <text x="170" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        垂線の長さと向きは、式のどこに見える？
       </text>
     </svg>
   );

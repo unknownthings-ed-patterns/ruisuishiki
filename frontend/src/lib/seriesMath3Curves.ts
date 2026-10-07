@@ -2448,6 +2448,311 @@ $$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r = \\sqrt{x^2 + y^2}$$
 その代わり、極から見た距離と角がそのまま見えるので、距離・面積・回転・角の差を、極を中心にした量として直接扱える。`,
 };
 
+/** M3CV9: 極方程式——直交座標に読みかえる。
+ *  step1・2 r = 3 + cos 2θ：θ = π/3 の x 5/4・θ = 3π/4 の y 3√2/2
+ *  山場 step3（C12 ②・R1 F2-1 で step10 から移した）r = 10 cos θ の円の半径 5。素朴に「r = 定数の円」から 10 と読むと外れる
+ *  step4 r = −6 sin θ の円の中心の y：−3（係数が負なら反対側）
+ *  step5（＋α）r = 4 cos θ + 2 sin θ の円の半径 √5（初版 2 cos θ + 4 sin θ は collide の r = 2cos θ に前方一致したので係数を入れかえた）
+ *  derivation と辞書の r = θ（渦巻き）は原典 p.337 の例と同じ式だが、「直交座標の多項式に直せない曲線」の名前として挙げるだけ（問題にしない・定番の曲線）
+ *  step6（逆）円 x² + y² = −14x を r = □ cos θ に：□ = −14
+ *  step7（質）r cos(θ − π/3) = 4 の直線の y 切片 8√3/3（加法定理で x/2 + √3y/2 = 4）
+ *  step8（＋α）r = 10 cos(θ − π/6) の円の中心の y：5/2（r = 10 cos θ を π/6 回した）
+ *  step9（逆）直線 x + √3y = 6 を r cos(θ − α) = p（p > 0）に：p = 3（O から直線までの距離）
+ *  step10（複合・C13 系列4・系列7・Q3）r = 12/(3 + cos θ)＝極が焦点の楕円の長軸 9（θ = 0, π で 3 と 6／直交座標で 8x² + 24x + 9y² = 144 → a = 9/2）。
+ *    R1 F2-1：放物線版 r = k/(1 + cos θ) は準線が分子そのもので②も③も作れなかった。初案 r = 6/(2 + cos θ) は (x+2)²/16 + y²/12＝原典 練1(2) の楕円だったので替えた
+ *  原典の r = 2 cos θ・sin θ・sin(θ − π/4)・1/cos θ・r = θ・1 + cos θ は使っていない。r = a cos θ 族は §7-4 で「定番の道具」として残した。 */
+export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
+  id: "math3_cv_polar_eq_01",
+  title: "極方程式——直交座標に読みかえる",
+  subtitle:
+    "数Ⅲ・C いろいろな曲線より — $r$ を $\\theta$ の式で書いた曲線は、直交座標で書くと何になるか。知っている円や直線は、極を基準に測るとどんな式になるか。$10$ 問で確かめる。",
+  patternId: "M3CV9",
+  unit: "math_3",
+  revelationLabel:
+    "**$r = k\\cos\\theta$ は、極を通る直径 $k$ の円**——両辺に $r$ をかければ、直交座標の円の式にもどる",
+  drivingQuestion:
+    "$r$ を $\\theta$ の式で書いた曲線は、直交座標で書くと何になる？——**知っている円や直線は、極を基準に測るとどんな式になる？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "極座標 $(r,\\ \\theta)$ で、$r$ を $\\theta$ の式で表したものを [極方程式] といいます。各 $\\theta$ に $r$ を $1$ つ決めると点が $1$ つ決まり、$\\theta$ を動かすと点は曲線を描きます。\n\n極方程式 $r = 3 + \\cos2\\theta$ の曲線の上で、$\\theta = \\dfrac{\\pi}{3}$ の点の $x$ 座標を求めましょう。",
+      answer: 5 / 4,
+      answerDisplay: "5/4",
+      unit: "",
+      unknownLabel: "$x$ 座標",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "$\\theta$ を決めると $r$ が決まる。$r$ と $\\theta$ が分かった点の $x$ 座標は、どう出せる？",
+        },
+        {
+          layer: 2,
+          text: "前の系列で、極座標 $(r,\\ \\theta)$ の点の $x$ 座標はどう書いた？（[極座標]）",
+        },
+        {
+          layer: 3,
+          text: "$\\theta = \\dfrac{\\pi}{3}$ で $r = 3 + \\cos\\dfrac{2\\pi}{3} = 3 - \\dfrac12 = \\dfrac52$。$x = r\\cos\\theta = \\dfrac52 \\times \\dfrac12 = \\dfrac54$。中心の問いへの最初の部分回答：**極方程式の曲線も、$1$ 点ずつなら $x = r\\cos\\theta$、$y = r\\sin\\theta$ で直交座標に移せる**。",
+        },
+      ],
+      formulaPreview: "r = 3 + cos(2π/3) = 5/2 → x = (5/2)·(1/2) = 5/4",
+      figureMarker: "<<M3CV_POLAR_POINT>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "前題と同じ曲線 $r = 3 + \\cos2\\theta$ の上で、$\\theta = \\dfrac{3\\pi}{4}$ の点の $y$ 座標を求めましょう。",
+      answer: (3 * Math.sqrt(2)) / 2,
+      answerDisplay: "3√2/2",
+      unit: "",
+      unknownLabel: "$y$ 座標",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$\\theta$ の値と、問われているのが $y$ 座標であること。" },
+        {
+          layer: 3,
+          text: "$r = 3 + \\cos\\dfrac{3\\pi}{2} = 3 + 0 = 3$。$y = r\\sin\\theta = 3 \\times \\dfrac{\\sqrt2}{2} = \\dfrac{3\\sqrt2}{2}$。中心の問いへ：**点を $1$ つずつ移すことはできる。では、曲線全体の式は、直交座標でどうなるか**。",
+        },
+      ],
+      formulaPreview: "r = 3 + cos(3π/2) = 3 → y = 3 sin(3π/4) = 3√2/2",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "極方程式 $r = 10\\cos\\theta$ の曲線は円です。この円の半径を求めましょう。",
+      answer: 5,
+      answerDisplay: "5",
+      unit: "",
+      unknownLabel: "円の半径",
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。点を $1$ つずつ移す代わりに、式全体を直交座標に移せる？" },
+        { layer: 2, text: "前題と変わったのは、$1$ 点でなく、曲線全体が問われていること。" },
+        {
+          layer: 3,
+          text: "両辺に $r$ をかけて $r^2 = 10r\\cos\\theta$。$r^2 = x^2 + y^2$、$r\\cos\\theta = x$ なので $x^2 + y^2 = 10x$、$(x - 5)^2 + y^2 = 25$。中心 $(5,\\ 0)$、半径 $5$ の円。**$r = 10$ のように「$r$ が一定なら半径 $10$ の円」の読みを持ちこむと外れる**——$r = 10\\cos\\theta$ は $\\theta = 0$ で $r = 10$、$\\theta = \\pm\\dfrac{\\pi}{2}$ で $r = 0$。極 O と点 $(10,\\ 0)$ を直径の両端とする円である。（両辺に $r$ をかけると $r = 0$ の極が加わるが、極はもともと $\\theta = \\dfrac{\\pi}{2}$ で円の上にあるので、点は増えも減りもしない。）中心の問いへ：**$r = k\\cos\\theta$ は、極を通る直径 $k$ の円。$k$ は半径でなく直径**。",
+        },
+      ],
+      formulaPreview: "r² = 10r cos θ → x² + y² = 10x → (x − 5)² + y² = 25 → 半径 5（10 ではない）",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "極方程式 $r = -6\\sin\\theta$ の曲線は円です。この円の中心の $y$ 座標を求めましょう。",
+      answer: -3,
+      answerDisplay: "-3",
+      unit: "",
+      unknownLabel: "円の中心の $y$ 座標",
+      variationFromPrevious: "same",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、$\\cos\\theta$ が $\\sin\\theta$ になり、係数が負であること。" },
+        {
+          layer: 3,
+          text: "両辺に $r$ をかけて $r^2 = -6r\\sin\\theta$、$x^2 + y^2 = -6y$、$x^2 + (y + 3)^2 = 9$。中心 $(0,\\ -3)$、半径 $3$。中心の $y$ 座標は $-3$。中心の問いへ：**$\\sin\\theta$ なら直径は $y$ 軸の上。係数が負なら、極から反対側に円ができる**。",
+        },
+      ],
+      formulaPreview: "x² + y² = −6y → x² + (y + 3)² = 9 → 中心の y = −3",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "極方程式 $r = 4\\cos\\theta + 2\\sin\\theta$ の曲線は円です。この円の半径を求めましょう。",
+      answer: Math.sqrt(5),
+      answerDisplay: "√5",
+      unit: "",
+      unknownLabel: "円の半径",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、$\\cos\\theta$ と $\\sin\\theta$ の両方の項があること。" },
+        {
+          layer: 3,
+          text: "両辺に $r$ をかけて $r^2 = 4r\\cos\\theta + 2r\\sin\\theta$、$x^2 + y^2 = 4x + 2y$。平方完成して $(x - 2)^2 + (y - 1)^2 = 5$。半径 $\\sqrt5$。（極 O もこの円の上にある：$4 + 1 = 5$。）中心の問いへ：**$r = p\\cos\\theta + q\\sin\\theta$ は、極を通る円。中心は $\\left(\\dfrac p2,\\ \\dfrac q2\\right)$**。",
+        },
+      ],
+      formulaPreview: "x² + y² = 4x + 2y → (x − 2)² + (y − 1)² = 5 → 半径 √5",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "直交座標で $x^2 + y^2 = -14x$ と表される円を、極方程式 $r = \\square\\cos\\theta$ の形で表します。□ を求めましょう。",
+      answer: -14,
+      answerDisplay: "-14",
+      unit: "",
+      unknownLabel: "□",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 は極方程式から直交座標へ。今度は向きがどう変わった？" },
+        { layer: 2, text: "step3 と変わったのは、直交座標の式が先に与えられて、極方程式を作る側になったこと。" },
+        {
+          layer: 3,
+          text: "$x^2 + y^2 = r^2$、$x = r\\cos\\theta$ を入れて $r^2 = -14r\\cos\\theta$。$r \\ne 0$ の点では両辺を $r$ で割って $r = -14\\cos\\theta$（極は $\\theta = \\dfrac{\\pi}{2}$ のときに含まれる）。□ $= -14$。円は中心 $(-7,\\ 0)$、半径 $7$——極の左側にある。中心の問いへ：**直交座標から極方程式へは、$x = r\\cos\\theta$ などを入れて $r$ について解く**。",
+        },
+      ],
+      formulaPreview: "r² = −14r cos θ → r = −14 cos θ",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "極方程式 $r\\cos\\left(\\theta - \\dfrac{\\pi}{3}\\right) = 4$ の曲線は直線です。この直線の $y$ 切片を求めましょう。",
+      answer: (8 * Math.sqrt(3)) / 3,
+      answerDisplay: "8√3/3",
+      unit: "",
+      unknownLabel: "直線の $y$ 切片",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題までと比べてみよう。この極方程式は、これまでと形がどう違う？" },
+        { layer: 2, text: "前題までと変わったのは、$\\cos$ の中が $\\theta$ でなく $\\theta - \\dfrac{\\pi}{3}$ で、$r$ がかけてあること。" },
+        {
+          layer: 3,
+          text: "[加法定理] で $r\\left(\\cos\\theta\\cos\\dfrac{\\pi}{3} + \\sin\\theta\\sin\\dfrac{\\pi}{3}\\right) = 4$、$\\dfrac12 r\\cos\\theta + \\dfrac{\\sqrt3}{2}r\\sin\\theta = 4$、$\\dfrac12x + \\dfrac{\\sqrt3}{2}y = 4$。$x = 0$ とおくと $y = \\dfrac{8}{\\sqrt3} = \\dfrac{8\\sqrt3}{3}$。この直線は、極から $\\dfrac{\\pi}{3}$ の向きに $4$ 進んだ点で、その向きに垂直に交わる直線。中心の問いへ：**$r\\cos(\\theta - \\alpha) = p$ は直線。$p$ は極から直線までの距離、$\\alpha$ はその垂線の向き**。",
+        },
+      ],
+      formulaPreview: "(1/2)x + (√3/2)y = 4 → y 切片 8/√3 = 8√3/3",
+      figureMarker: "<<M3CV_POLAR_LINE>>",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "極方程式 $r = 10\\cos\\left(\\theta - \\dfrac{\\pi}{6}\\right)$ の曲線は円です。この円の中心の $y$ 座標を求めましょう。",
+      answer: 5 / 2,
+      answerDisplay: "5/2",
+      unit: "",
+      unknownLabel: "円の中心の $y$ 座標",
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 の円と、どんな関係にある？" },
+        { layer: 2, text: "step3 と変わったのは、$\\theta$ が $\\theta - \\dfrac{\\pi}{6}$ に置きかわっていること。" },
+        {
+          layer: 3,
+          text: "$\\theta = \\varphi + \\dfrac{\\pi}{6}$ と置くと $r = 10\\cos\\varphi$——step3 の円（中心は極から $0$ の向きに $5$）を、極のまわりに $\\dfrac{\\pi}{6}$ 回したもの。中心は極座標で $\\left(5,\\ \\dfrac{\\pi}{6}\\right)$、直交座標で $\\left(\\dfrac{5\\sqrt3}{2},\\ \\dfrac52\\right)$。$y$ 座標は $\\dfrac52$。（加法定理で $r = 5\\sqrt3\\cos\\theta + 5\\sin\\theta$ とし、step5 と同じ道で中心 $\\left(\\dfrac{5\\sqrt3}{2},\\ \\dfrac52\\right)$ を出しても同じ。）中心の問いへ：**極方程式で $\\theta$ を $\\theta - \\alpha$ に置きかえると、曲線は極のまわりに $\\alpha$ 回る**。",
+        },
+      ],
+      formulaPreview: "step3 の円を π/6 回す → 中心 (5, π/6) → y = 5/2",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "直交座標で $x + \\sqrt3\\,y = 6$ と表される直線を、極方程式 $r\\cos(\\theta - \\alpha) = p$（$p > 0$）の形で表します。$p$ を求めましょう。",
+      answer: 3,
+      answerDisplay: "3",
+      unit: "",
+      unknownLabel: "$p$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "step7 と比べてみよう。step7 は極方程式から直線へ。今度は向きがどう変わった？" },
+        { layer: 2, text: "step7 と変わったのは、直線の式が先に与えられて、$p$ を読む側になったこと。" },
+        {
+          layer: 3,
+          text: "$r\\cos(\\theta - \\alpha) = x\\cos\\alpha + y\\sin\\alpha$ なので、$x$ と $y$ の係数が $\\cos\\alpha$・$\\sin\\alpha$（$2$ 乗の和が $1$）になるようにそろえる。$x + \\sqrt3y = 6$ の両辺を $\\sqrt{1 + 3} = 2$ で割って $\\dfrac12x + \\dfrac{\\sqrt3}{2}y = 3$。$\\alpha = \\dfrac{\\pi}{3}$、$p = 3$。$p$ は原点から直線までの距離（数Ⅱの点と直線の距離 $\\dfrac{\\lvert -6\\rvert}{\\sqrt{1 + 3}} = 3$ と同じ）。中心の問いへ：**直線を極方程式に書くと、極から直線までの距離 $p$ が式にそのまま見える**。",
+        },
+      ],
+      formulaPreview: "両辺を 2 で割る → (1/2)x + (√3/2)y = 3 → p = 3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "極方程式 $r = \\dfrac{12}{3 + \\cos\\theta}$ の曲線は楕円です。この楕円の長軸の長さを求めましょう。",
+      answer: 9,
+      answerDisplay: "9",
+      unit: "",
+      unknownLabel: "長軸の長さ",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "step3 と比べてみよう。step3 の手つきは、ここでも使える？" },
+        { layer: 2, text: "step3 と変わったのは、$\\cos\\theta$ が分母にあること。" },
+        {
+          layer: 3,
+          text: "**道1（直交座標に直す）**：分母を払って $3r + r\\cos\\theta = 12$、$3r = 12 - x$。$2$ 乗して $9(x^2 + y^2) = (12 - x)^2$、$8x^2 + 24x + 9y^2 = 144$、$8\\left(x + \\dfrac32\\right)^2 + 9y^2 = 162$、$\\dfrac{\\left(x + \\frac32\\right)^2}{\\frac{81}{4}} + \\dfrac{y^2}{18} = 1$。長いほうの分母 $\\dfrac{81}{4}$ から端まで $\\dfrac92$、長軸の長さは $9$。**道2（極方程式のまま）**：長軸は始線の上にあり、$\\theta = 0$ で $r = 3$、$\\theta = \\pi$ で $r = 6$。極をはさんで反対側の端までなので $3 + 6 = 9$。$2$ つの道で同じ値。（$3r = 12 - x$ は「極からの距離 $r$」と「直線 $x = 12$ までの距離 $12 - x$」の比が $1 : 3$ ということ——系列7 の、焦点と準線からの距離の比。極がこの楕円の焦点。）中心の問いへ：**焦点を極にとると、楕円は分母に $\\cos\\theta$ をもつ $1$ 行の極方程式になる**。",
+        },
+      ],
+      formulaPreview: "θ = 0 で r = 3、θ = π で r = 6 → 長軸 9（直交座標でも 2·(9/2) = 9）",
+    },
+  ],
+  derivation: `**中心の問い** ｜ $r$ を $\\theta$ の式で書いた曲線は、直交座標で書くと何になる？——**知っている円や直線は、極を基準に測るとどんな式になる？**
+
+────────
+
+## $3$ つの式で行き来する
+
+$r$ を $\\theta$ の式で表したものが [極方程式]。直交座標とは
+
+$$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r^2 = x^2 + y^2$$
+
+の $3$ つで行き来できる。$r\\cos\\theta$ や $r^2$ の形を作るために、**両辺に $r$ をかける**のがよく使う手である（step3〜5）。
+
+## ここが胚細胞：極を基準にすると、式に何が見えるか
+
+| 極方程式 | 直交座標 | 式に見えるもの |
+|---|---|---|
+| $r = k\\cos\\theta$ | $\\left(x - \\dfrac k2\\right)^2 + y^2 = \\dfrac{k^2}{4}$ | 極を通る円の**直径** $k$（半径ではない＝step3） |
+| $r = p\\cos\\theta + q\\sin\\theta$ | 中心 $\\left(\\dfrac p2,\\ \\dfrac q2\\right)$ の円 | 極を通る円 |
+| $r\\cos(\\theta - \\alpha) = p$ | $x\\cos\\alpha + y\\sin\\alpha = p$ | 極から直線までの**距離** $p$ と垂線の向き $\\alpha$ |
+| $r = f(\\theta - \\alpha)$ | — | $r = f(\\theta)$ を極のまわりに $\\alpha$ 回した曲線 |
+
+そして、焦点を極にとると、$2$ 次曲線は $r = \\dfrac{\\ell}{m + n\\cos\\theta}$ の形になる（step10）。
+
+## Step の道筋
+
+- **step1・2**：極方程式の曲線の上の点を、$1$ つずつ直交座標へ
+- **step3（質的変化・山場）**：$r = k\\cos\\theta$ は直径 $k$ の円
+- **step4・5**：$\\sin\\theta$・係数が負・両方の項
+- **step6**：直交座標の円を極方程式へ
+- **step7（質的変化）**：$r\\cos(\\theta - \\alpha) = p$ は直線（数Ⅱの加法定理と合流）
+- **step8**：$\\theta - \\alpha$ は回転
+- **step9**：直交座標の直線を極方程式へ。$p$ は距離
+- **step10**：極が焦点の楕円（系列4・系列7 と合流・$2$ つの道）
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** 表を覚えなくても、$x = r\\cos\\theta$、$y = r\\sin\\theta$、$r^2 = x^2 + y^2$ の $3$ つと「両辺に $r$ をかける」で、直交座標の式にもどせるかを試せる（円・直線・$2$ 次曲線はもどせる）。
+
+**両辺に $r$ をかけるときの注意。** $r = 0$（極）が新しく加わることがある。極方程式の曲線がもともと極を通っていれば（$r = k\\cos\\theta$ は $\\theta = \\dfrac{\\pi}{2}$ で $r = 0$）、点は増えない。
+
+**直交座標に直しにくい曲線もある。** $r = \\theta$（渦巻き）のような曲線は、$x,\\ y$ の多項式の式には直せない。そういう曲線は、極方程式のまま調べる——数Ⅲ・C「いろいろな曲線」の次の系列。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第8章「極方程式」の構成（極方程式の定義・両辺に $r$ をかけて直交座標に直す・$\\theta$ を $\\theta - \\alpha$ に置きかえると回転）を参考。極方程式の円の族（$r = k\\cos\\theta$ など）は極方程式の定番の例として使い、問う量と値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+$x = r\\cos\\theta$、$y = r\\sin\\theta$、$r^2 = x^2 + y^2$ で、極方程式は直交座標の式にもどる。
+
+極を基準に測ると、極を通る円は直径が、直線は極からの距離が、式にそのまま見える。焦点を極にとれば、楕円も $1$ 行の極方程式になる。`,
+};
+
 export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_ELLIPSE_SERIES,
   M3CV_STRETCH_SERIES,
@@ -2457,4 +2762,5 @@ export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [
   M3CV_TANGENT_FROM_SERIES,
   M3CV_CONIC_SERIES,
   M3CV_POLAR_SERIES,
+  M3CV_POLAR_EQ_SERIES,
 ];

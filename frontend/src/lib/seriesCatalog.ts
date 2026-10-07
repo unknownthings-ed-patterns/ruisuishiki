@@ -134,6 +134,7 @@ import {
   M3CV_TANGENT_FROM_SERIES,
   M3CV_CONIC_SERIES,
   M3CV_POLAR_SERIES,
+  M3CV_POLAR_EQ_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
 import {
@@ -2440,6 +2441,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "いろいろな曲線",
     shortDescription:
       "極座標（向きと距離で点を指す）— x = r cos θ、y = r sin θ で直交座標と行き来する。角は 2π、r の符号は角 π と組で取りかえられ、書き方は 1 つでない。範囲を決めれば 1 つ",
+  },
+  {
+    series: M3CV_POLAR_EQ_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな曲線",
+    shortDescription:
+      "極方程式（直交座標に読みかえる）— 両辺に r をかけて x = r cos θ などで直交座標へ。r = k cos θ は直径 k の円、r cos(θ − α) = p は極から距離 p の直線。焦点を極にとると楕円も 1 行",
   },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
