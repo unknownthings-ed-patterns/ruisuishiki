@@ -28,9 +28,10 @@ export const ANSWER_TOL = 1e-6;
  * - 全角ピリオド／句点 ． 。 → 半角 .
  * - 全角コンマ／読点 ， 、 → 半角 ,
  * - 全角スラッシュ ／ → 半角 /
- * - 全角マイナス／長音／ダッシュ ー − – — → 半角 -
+ * - 全角マイナス／長音／ダッシュ ー − – — － → 半角 -
  * - 全角プラス ＋ → 半角 +
- * - 全角アスタリスク ＊ → 半角 *
+ * - 全角アスタリスク ＊・かけ算の記号 × → 半角 *
+ * - わり算の記号 ÷ → 半角 /（2026-10-07 先生の裁定。小学校の習慣で打つ学習者が正答で落ちないように）
  * - 全角丸括弧 （ ） → 半角 ( )
  */
 export function normalizeInput(input: string): string {
@@ -39,9 +40,10 @@ export function normalizeInput(input: string): string {
     .replace(/[．。]/g, ".")
     .replace(/[，、]/g, ",")
     .replace(/／/g, "/")
-    .replace(/[ー−–—―]/g, "-")
+    .replace(/[ー−–—―－]/g, "-")
     .replace(/＋/g, "+")
-    .replace(/＊/g, "*")
+    .replace(/[＊×]/g, "*")
+    .replace(/÷/g, "/")
     .replace(/（/g, "(")
     .replace(/）/g, ")");
 }
