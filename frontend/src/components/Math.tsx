@@ -16172,6 +16172,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_PIN_AND_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvPinAndLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_PARABOLA_FOCUS_ASK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvParabolaFocusAsk />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42708,6 +42722,83 @@ function M3cvHyperbolaAsk() {
       <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
       <text x="190" y="236" fontSize="11" fill={accent} textAnchor="middle">
         2 つの焦点は、頂点の内側？ 外側？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列4 step1: 点 F と縦の直線 l、曲線の上の点 P。P から F への線分と、P から l への垂線。
+ *  ★図に答えを描かない★ 長さはどちらも「?」。座標・目盛りなし。曲線は破線で一部だけ。
+ *  2 本の長さが目で比べられないよう、P の位置は模式（step1 の値の尺度ではない）。 */
+function M3cvPinAndLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ox = 150, oy = 140, s = 18;
+  const pts: string[] = [];
+  for (let k = 0; k <= 40; k++) {
+    const yy = -3.6 + (9.1 * k) / 40;
+    pts.push(`${(ox + s * (yy * yy) / 4).toFixed(1)},${(oy - s * yy).toFixed(1)}`);
+  }
+  const fx = ox + s * 1, lx = ox - s * 1;
+  const py = 4.4, px = ox + s * (py * py) / 4, pyy = oy - s * py;
+  return (
+    <svg
+      viewBox="0 0 400 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="点 F と、その左にある縦の直線 l。破線でかいた曲線の上の点 P から、F へ 1 本の線分と、l へ水平な垂線が引かれていて、どちらの長さも疑問符。座標や目盛りは書かれていない"
+    >
+      <path d={`M 20 ${oy} L 390 ${oy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${lx} 15 L ${lx} 212`} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={lx - 16} y="28" fontSize="13" fill={stroke}>l</text>
+      <polyline points={pts.join(" ")} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <path d={`M ${px} ${pyy} L ${fx} ${oy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${px} ${pyy} L ${lx} ${pyy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${lx} ${pyy + 8} L ${lx + 8} ${pyy + 8} L ${lx + 8} ${pyy}`} fill="none" stroke={accent} strokeWidth="1.2" />
+      <circle cx={fx} cy={oy} r="4" fill={stroke} />
+      <circle cx={px} cy={pyy} r="4" fill={accent} />
+      <text x={fx - 4} y={oy + 20} fontSize="13" fill={stroke}>F</text>
+      <text x={px + 8} y={pyy - 4} fontSize="13" fill={accent}>P</text>
+      <text x={lx - 20} y={pyy + 5} fontSize="13" fill={accent}>H</text>
+      <text x={(px + fx) / 2 + 10} y={(pyy + oy) / 2 + 8} fontSize="13" fill={accent}>?</text>
+      <text x={(px + lx) / 2} y={pyy - 8} fontSize="13" fill={accent}>?</text>
+      <text x="230" y="234" fontSize="11" fill={accent} textAnchor="middle">
+        点までの距離と、直線までの距離をくらべると？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列4 step5: 上に開く放物線（2 次関数のグラフ）と、その軸。
+ *  ★焦点の点は描かない★ 軸の上に「?」だけを置き、高さは描かない（正確な尺度で焦点を描くと、素朴な読み 3/4 と正答 1/12 が目で区別できる＝R1 I5-2）。
+ *  目盛り・座標なし。キャプションは問いで終える。 */
+function M3cvParabolaFocusAsk() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 170, cy = 190;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const u = -1.4 + (2.8 * k) / 60;
+    pts.push(`${(cx + 90 * u).toFixed(1)},${(cy - 85 * u * u).toFixed(1)}`);
+  }
+  return (
+    <svg
+      viewBox="0 0 340 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上に開く放物線と、その中心を通る縦の軸。焦点は軸の上のどこかにあるが、点は描かれず疑問符だけが軸の横にある。目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 320 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 222 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
+      <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={cx + 8} y="110" fontSize="14" fill={accent}>?</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+      <text x="170" y="236" fontSize="11" fill={accent} textAnchor="middle">
+        焦点は、軸の上のどの高さ？
       </text>
     </svg>
   );
