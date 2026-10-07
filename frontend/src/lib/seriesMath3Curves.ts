@@ -823,7 +823,7 @@ export const M3CV_HYPERBOLA_SERIES: LearnerSeries = {
       compareWithStepId: "step1",
       hints: [
         { layer: 1, text: "step1 と比べてみよう。step1 と同じ仕事は、ここでもできる？" },
-        { layer: 2, text: "step1 と変わったのは、曲線が第1章で見た $y = \\dfrac{k}{x}$ の形で、$2$ 点が斜めに並んでいること。" },
+        { layer: 2, text: "step1 と変わったのは、曲線が第1章で見た $y = \\dfrac{k}{x}$ のグラフであること。" },
         {
           layer: 3,
           text: "$\\mathrm{PF}^2 = (2 - 2\\sqrt3)^2 + (3 - 2\\sqrt3)^2 = (16 - 8\\sqrt3) + (21 - 12\\sqrt3) = 37 - 20\\sqrt3$、$\\mathrm{PF'}^2 = 37 + 20\\sqrt3$。差を $d$ とおくと $d^2 = \\mathrm{PF'}^2 + \\mathrm{PF}^2 - 2\\,\\mathrm{PF'}\\cdot\\mathrm{PF} = 74 - 2\\sqrt{37^2 - 1200} = 74 - 2\\sqrt{169} = 48$。$d = 4\\sqrt3$。頂点 $(\\sqrt6,\\ \\sqrt6)$ で測っても、F・F′ と同じ直線 $y = x$ の上なので $\\sqrt2(2\\sqrt3 + \\sqrt6) - \\sqrt2(2\\sqrt3 - \\sqrt6) = 2\\sqrt{12} = 4\\sqrt3$ で同じ値。$y = \\dfrac6x$ を $45^\\circ$ 回すと $x^2 - y^2 = 12$ の形の双曲線になり、F・F′ はその焦点。中心の問いへ：**第1章の $y = \\dfrac kx$ のグラフも、$2$ 点からの距離の差が一定の曲線——漸近線が直交している双曲線**。",
@@ -1305,7 +1305,7 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
       id: "step3",
       position: 3,
       questionText:
-        "数Ⅱで、円 $x^2 + y^2 = r^2$ の上の点 $(x_0,\\ y_0)$ における接線は $x_0x + y_0y = r^2$ と書けました。楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の上の点 $(x_0,\\ y_0)$ における接線は、これを書きかえた形\n\n$$\\frac{x_0x}{27} + \\frac{y_0y}{24} = 1$$\n\nになることが知られています。この式で、前題と同じ点 $(3,\\ 4)$ における接線の $y$ 切片を求めましょう。",
+        "数Ⅱで、円 $x^2 + y^2 = r^2$ の上の点 $(x_0,\\ y_0)$ における接線は $x_0x + y_0y = r^2$ と書けました。円の式から接線の式を作ったのと同じやり方を、楕円 $\\dfrac{x^2}{27} + \\dfrac{y^2}{24} = 1$ の点 $(3,\\ 4)$ にまねてあてはめ、$1$ 行の直線の式を作りましょう。その直線の $y$ 切片を求めましょう。",
       answer: 6,
       answerDisplay: "6",
       unit: "",
@@ -1419,8 +1419,8 @@ export const M3CV_TANGENT_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step6",
       hints: [
-        { layer: 1, text: "前題と比べてみよう。前題までの置きかえは、ここでもそのまま使える？" },
-        { layer: 2, text: "前題と変わったのは、曲線が放物線で、$x$ が $2$ 乗されていないこと。" },
+        { layer: 1, text: "step6 と比べてみよう。step6 までの置きかえは、ここでもそのまま使える？" },
+        { layer: 2, text: "step6 と変わったのは、曲線が、$x$ が $2$ 乗されていない放物線になったこと。" },
         {
           layer: 3,
           text: "陰関数の微分：$2yy' = 6$、$y' = \\dfrac3y$。点 $(6, 6)$ で $\\dfrac12$。接線は $y - 6 = \\dfrac12(x - 6)$、整理すると $6y = 3x + 18 = 3(x + 6)$。$y^2 = 6x$ の $y^2$ は $y_0y = 6y$ に、$1$ 次の $6x$ は $6 \\cdot \\dfrac{x + x_0}{2} = 3(x + 6)$ に置きかわっている。中心の問いへ：**$2$ 乗の項は $x_0x$・$y_0y$ に、$1$ 次の項 $x$ は $\\dfrac{x + x_0}{2}$ に置きかえる。$2$ 乗の項だけの規則では放物線に届かない**。",
@@ -1772,7 +1772,7 @@ export const M3CV_TANGENT_FROM_SERIES: LearnerSeries = {
       compareWithStepId: "step9",
       hints: [
         { layer: 1, text: "前題と比べてみよう。前題の道は、ここで使える？" },
-        { layer: 2, text: "前題と変わったのは、2 本の傾きでなく、その関係（直交）が与えられ、点の位置が問われていること。" },
+        { layer: 2, text: "前題と変わったのは、$2$ 本の傾きの値でなく、$2$ 本の関係（直交）だけが与えられていること。" },
         {
           layer: 3,
           text: "Q を通る傾き $m$ の直線 $y = m(x - 2) + v$ が楕円に接する条件は、前題と同じ整理で $(v - 2m)^2 = 20m^2 + 16$、つまり $16m^2 + 4vm + 16 - v^2 = 0$。$2$ 本の傾きはこの $2$ 解で、直交するので積が $-1$：解と係数の関係から $\\dfrac{16 - v^2}{16} = -1$、$v^2 = 32$、$v = 4\\sqrt2$。（$2^2 + v^2 = 36 = 20 + 16$。直交する $2$ 本の接線を引ける点は、どれも円 $x^2 + y^2 = 20 + 16$ の上にある。）中心の問いへ：**傾きを文字で置く道なら、$2$ 本の接線の関係（積・和）を、接点を求めずに使える**。",
@@ -1873,7 +1873,7 @@ export const M3CV_CONIC_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "$x$ の $1$ 次の項があるのは、中心が原点からずれているから。ずれを読むには、式をどんな形にすればいい？",
+          text: "$x$ や $y$ の $1$ 次の項があると、楕円の何が読みにくくなる？ 読めるようにするには、式をどんな形にすればいい？",
         },
         {
           layer: 2,
@@ -2297,7 +2297,7 @@ export const M3CV_POLAR_SERIES: LearnerSeries = {
       compareWithStepId: "step5",
       hints: [
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
-        { layer: 2, text: "前題と変わったのは、$r$ は正で、角が $2\\pi$ をこえていること。" },
+        { layer: 2, text: "前題と変わったのは、書き直す理由が $r$ の符号でなく、角の大きさ（$2\\pi$ をこえる）であること。" },
         {
           layer: 3,
           text: "$2\\pi$ 回ると同じ向きにもどるので、$\\dfrac{17\\pi}{6} - 2\\pi = \\dfrac{5\\pi}{6}$。$\\theta = \\dfrac{5\\pi}{6}$。中心の問いへ：**角は $2\\pi$ ずつ、$r$ の符号は角 $\\pi$ と組で取りかえられる。範囲を決めれば $1$ つに決まる**。",
@@ -2451,7 +2451,7 @@ $$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r = \\sqrt{x^2 + y^2}$$
 /** M3CV9: 極方程式——直交座標に読みかえる。
  *  step1・2 r = 3 + cos 2θ：θ = π/3 の x 5/4・θ = 3π/4 の y 3√2/2
  *  山場 step3（C12 ②・R1 F2-1 で step10 から移した）r = 10 cos θ の円の半径 5。素朴に「r = 定数の円」から 10 と読むと外れる
- *  step4 r = −6 sin θ の円の中心の y：−3（係数が負なら反対側）
+ *  step4 r = 8 sin θ の円の中心の y：4（初版 r = −6 sin θ は step3 から 2 点〔sin・負の係数〕変わっていたので、負の係数は step6 に任せた）
  *  step5（＋α）r = 4 cos θ + 2 sin θ の円の半径 √5（初版 2 cos θ + 4 sin θ は collide の r = 2cos θ に前方一致したので係数を入れかえた）
  *  derivation と辞書の r = θ（渦巻き）は原典 p.337 の例と同じ式だが、「直交座標の多項式に直せない曲線」の名前として挙げるだけ（問題にしない・定番の曲線）
  *  step6（逆）円 x² + y² = −14x を r = □ cos θ に：□ = −14
@@ -2515,7 +2515,7 @@ export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
       compareWithStepId: "step1",
       hints: [
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
-        { layer: 2, text: "前題と変わったのは、$\\theta$ の値と、問われているのが $y$ 座標であること。" },
+        { layer: 2, text: "前題と変わったのは、問われているのが $x$ 座標でなく $y$ 座標であること。" },
         {
           layer: 3,
           text: "$r = 3 + \\cos\\dfrac{3\\pi}{2} = 3 + 0 = 3$。$y = r\\sin\\theta = 3 \\times \\dfrac{\\sqrt2}{2} = \\dfrac{3\\sqrt2}{2}$。中心の問いへ：**点を $1$ つずつ移すことはできる。では、曲線全体の式は、直交座標でどうなるか**。",
@@ -2548,22 +2548,22 @@ export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
       id: "step4",
       position: 4,
       questionText:
-        "極方程式 $r = -6\\sin\\theta$ の曲線は円です。この円の中心の $y$ 座標を求めましょう。",
-      answer: -3,
-      answerDisplay: "-3",
+        "極方程式 $r = 8\\sin\\theta$ の曲線は円です。この円の中心の $y$ 座標を求めましょう。",
+      answer: 4,
+      answerDisplay: "4",
       unit: "",
       unknownLabel: "円の中心の $y$ 座標",
       variationFromPrevious: "same",
       compareWithStepId: "step3",
       hints: [
         { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
-        { layer: 2, text: "前題と変わったのは、$\\cos\\theta$ が $\\sin\\theta$ になり、係数が負であること。" },
+        { layer: 2, text: "前題と変わったのは、$\\cos\\theta$ が $\\sin\\theta$ になったこと。" },
         {
           layer: 3,
-          text: "両辺に $r$ をかけて $r^2 = -6r\\sin\\theta$、$x^2 + y^2 = -6y$、$x^2 + (y + 3)^2 = 9$。中心 $(0,\\ -3)$、半径 $3$。中心の $y$ 座標は $-3$。中心の問いへ：**$\\sin\\theta$ なら直径は $y$ 軸の上。係数が負なら、極から反対側に円ができる**。",
+          text: "両辺に $r$ をかけて $r^2 = 8r\\sin\\theta$、$x^2 + y^2 = 8y$、$x^2 + (y - 4)^2 = 16$。中心 $(0,\\ 4)$、半径 $4$。中心の $y$ 座標は $4$。中心の問いへ：**$\\sin\\theta$ なら、極を通る直径は $y$ 軸の上にある**。",
         },
       ],
-      formulaPreview: "x² + y² = −6y → x² + (y + 3)² = 9 → 中心の y = −3",
+      formulaPreview: "x² + y² = 8y → x² + (y − 4)² = 16 → 中心の y = 4",
     },
     {
       id: "step5",
@@ -2621,8 +2621,8 @@ export const M3CV_POLAR_EQ_SERIES: LearnerSeries = {
       variationFromPrevious: "qualitative",
       compareWithStepId: "step5",
       hints: [
-        { layer: 1, text: "前題までと比べてみよう。この極方程式は、これまでと形がどう違う？" },
-        { layer: 2, text: "前題までと変わったのは、$\\cos$ の中が $\\theta$ でなく $\\theta - \\dfrac{\\pi}{3}$ で、$r$ がかけてあること。" },
+        { layer: 1, text: "step5 と比べてみよう。この極方程式は、step5 と形がどう違う？" },
+        { layer: 2, text: "step5 と変わったのは、式が「$r = $（$\\theta$ の式）」の形でなく、$r\\cos\\left(\\theta - \\dfrac{\\pi}{3}\\right) = 4$ の形であること。" },
         {
           layer: 3,
           text: "[加法定理] で $r\\left(\\cos\\theta\\cos\\dfrac{\\pi}{3} + \\sin\\theta\\sin\\dfrac{\\pi}{3}\\right) = 4$、$\\dfrac12 r\\cos\\theta + \\dfrac{\\sqrt3}{2}r\\sin\\theta = 4$、$\\dfrac12x + \\dfrac{\\sqrt3}{2}y = 4$。$x = 0$ とおくと $y = \\dfrac{8}{\\sqrt3} = \\dfrac{8\\sqrt3}{3}$。この直線は、極から $\\dfrac{\\pi}{3}$ の向きに $4$ 進んだ点で、その向きに垂直に交わる直線。中心の問いへ：**$r\\cos(\\theta - \\alpha) = p$ は直線。$p$ は極から直線までの距離、$\\alpha$ はその垂線の向き**。",
@@ -2722,7 +2722,7 @@ $$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r^2 = x^2 + y^2$$
 
 - **step1・2**：極方程式の曲線の上の点を、$1$ つずつ直交座標へ
 - **step3（質的変化・山場）**：$r = k\\cos\\theta$ は直径 $k$ の円
-- **step4・5**：$\\sin\\theta$・係数が負・両方の項
+- **step4・5**：$\\sin\\theta$ の円・両方の項がある円
 - **step6**：直交座標の円を極方程式へ
 - **step7（質的変化）**：$r\\cos(\\theta - \\alpha) = p$ は直線（数Ⅱの加法定理と合流）
 - **step8**：$\\theta - \\alpha$ は回転
@@ -2781,7 +2781,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "極方程式 $r = 2\\sin2\\theta$ の曲線の点の $x$ 座標は $x = r\\cos\\theta = 2\\sin2\\theta\\cos\\theta$ と、$\\theta$ の式で書けます。$\\theta = \\dfrac{\\pi}{6}$ における $\\dfrac{dx}{d\\theta}$ の値を求めましょう。",
+        "極方程式 $r = 2\\sin2\\theta$ の曲線の上で、角 $\\theta$ の点の $x$ 座標を $\\theta$ の関数とみます。$\\theta = \\dfrac{\\pi}{6}$ における $\\dfrac{dx}{d\\theta}$ の値を求めましょう。",
       answer: Math.sqrt(3) / 2,
       answerDisplay: "√3/2",
       unit: "",
@@ -2792,7 +2792,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
       hints: [
         {
           layer: 1,
-          text: "$x$ が $\\theta$ の式で書けた。$\\theta$ で微分するには、この式のどこに気をつける？",
+          text: "角 $\\theta$ の点の $x$ 座標は、$r$ と $\\theta$ でどう書けた？ それを $\\theta$ の式として見ると、どう微分できる？",
         },
         {
           layer: 2,
@@ -2800,7 +2800,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
         },
         {
           layer: 3,
-          text: "積の微分：$\\dfrac{dx}{d\\theta} = 4\\cos2\\theta\\cos\\theta - 2\\sin2\\theta\\sin\\theta$。$\\theta = \\dfrac{\\pi}{6}$ で $4 \\cdot \\dfrac12 \\cdot \\dfrac{\\sqrt3}{2} - 2 \\cdot \\dfrac{\\sqrt3}{2} \\cdot \\dfrac12 = \\sqrt3 - \\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{2}$。中心の問いへの最初の部分回答：**$x = r\\cos\\theta$、$y = r\\sin\\theta$ と書けば、極方程式の曲線は $\\theta$ を媒介変数とする曲線になる。第5章の道具で微分できる**。",
+          text: "$x = r\\cos\\theta = 2\\sin2\\theta\\cos\\theta$。積の微分：$\\dfrac{dx}{d\\theta} = 4\\cos2\\theta\\cos\\theta - 2\\sin2\\theta\\sin\\theta$。$\\theta = \\dfrac{\\pi}{6}$ で $4 \\cdot \\dfrac12 \\cdot \\dfrac{\\sqrt3}{2} - 2 \\cdot \\dfrac{\\sqrt3}{2} \\cdot \\dfrac12 = \\sqrt3 - \\dfrac{\\sqrt3}{2} = \\dfrac{\\sqrt3}{2}$。中心の問いへの最初の部分回答：**$x = r\\cos\\theta$、$y = r\\sin\\theta$ と書けば、極方程式の曲線は $\\theta$ を媒介変数とする曲線になる。第5章の道具で微分できる**。",
         },
       ],
       formulaPreview: "dx/dθ = 4 cos 2θ cos θ − 2 sin 2θ sin θ → θ = π/6 で √3/2",
@@ -2907,7 +2907,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
       compareWithStepId: "step5",
       hints: [
         { layer: 1, text: "前題と比べてみよう。前題の手順は、ここでも通る？" },
-        { layer: 2, text: "前題と変わったのは、$\\sin2\\theta$ が $\\cos2\\theta$ になり、$\\theta$ の範囲が変わったこと。" },
+        { layer: 2, text: "前題と変わったのは、$\\sin2\\theta$ が $\\cos2\\theta$ になったこと。" },
         {
           layer: 3,
           text: "$y = 2\\cos2\\theta\\sin\\theta = 2(1 - 2\\sin^2\\theta)\\sin\\theta$。$s = \\sin\\theta$（$0 \\le s \\le \\dfrac{1}{\\sqrt2}$）とおくと $y = 2s - 4s^3$、$\\dfrac{dy}{ds} = 2 - 12s^2 = 0$ で $s = \\dfrac{1}{\\sqrt6}$。$y = \\dfrac{2}{\\sqrt6} - \\dfrac{4}{6\\sqrt6} = \\dfrac{4}{3\\sqrt6} = \\dfrac{2\\sqrt6}{9}$。（$r$ がいちばん大きい $\\theta = 0$ の点では $y = 0$。）中心の問いへ：**$y$ の最大は、$y = r\\sin\\theta$ を $\\theta$ の関数として調べて出す**。",
@@ -2996,7 +2996,7 @@ export const M3CV_POLAR_CURVE_SERIES: LearnerSeries = {
       compareWithStepId: "step4",
       hints: [
         { layer: 1, text: "step4 と比べてみよう。同じ種類の曲線を、ほかの道でも調べられる？" },
-        { layer: 2, text: "step4 と変わったのは、接線の向きが決まっていなくて、点が $\\tan\\theta$ で与えられていること。" },
+        { layer: 2, text: "step4 と変わったのは、接線の向きを決めて点を探すのでなく、点を決めて接線の向きを問う向きになったこと。" },
         {
           layer: 3,
           text: "**極の道**：$x = 10\\cos^2\\theta = 5 + 5\\cos2\\theta$、$y = 10\\cos\\theta\\sin\\theta = 5\\sin2\\theta$。$\\dfrac{dx}{d\\theta} = -10\\sin2\\theta$、$\\dfrac{dy}{d\\theta} = 10\\cos2\\theta$、傾き $= -\\dfrac{\\cos2\\theta}{\\sin2\\theta}$。$\\tan\\theta = \\dfrac12$ から $\\tan2\\theta = \\dfrac{1}{1 - \\frac14} = \\dfrac43$ なので傾き $-\\dfrac34$。**直交座標の道**：点は $r = 10 \\cdot \\dfrac{2}{\\sqrt5} = 4\\sqrt5$ で $(8,\\ 4)$。円は $(x - 5)^2 + y^2 = 25$ で、中心 $(5,\\ 0)$ から点へ向かう半径の傾きは $\\dfrac{4}{3}$。接線はそれに垂直なので $-\\dfrac34$。$2$ つの道で同じ値。中心の問いへ：**直交座標に直せる曲線なら、極の道と直交座標の道で確かめあえる**。",
