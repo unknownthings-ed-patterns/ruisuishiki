@@ -16158,6 +16158,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_TWO_PINS_DIFF>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvTwoPinsDiff />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_HYPERBOLA_ASK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvHyperbolaAsk />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42615,6 +42629,86 @@ function M3cvParamLift() {
       <circle cx={ux} cy={vy} r="4.5" fill={accent} />
       <text x={ux + 8} y={vy + 4} fontSize="13" fill={accent}>y 座標は？</text>
       <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列3 step1: 2 点 F・F′ と、ある曲線（2 本に分かれた曲線の右の 1 本）の上の点 P。PF と PF′ の 2 本。
+ *  ★図に答えを描かない★ 長さは「?」。座標・目盛りは書かない。曲線は破線で右の 1 本の一部だけ（左の 1 本は描かない＝step2 の頂点の話を先取りしない）。 */
+function M3cvTwoPinsDiff() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 200, cy = 130, A = 70, B = 80;
+  const pts: string[] = [];
+  for (let k = 0; k <= 50; k++) {
+    const u = -0.85 + (1.9 * k) / 50;
+    pts.push(`${(cx + A * Math.cosh(u)).toFixed(1)},${(cy - B * Math.sinh(u)).toFixed(1)}`);
+  }
+  const fx = 115;
+  const u0 = 0.75;
+  const px = cx + A * Math.cosh(u0), py = cy - B * Math.sinh(u0);
+  return (
+    <svg
+      viewBox="0 0 400 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="横に並んだ 2 つの点 F と F′ と、右側にある曲線の上の点 P。P から F へ 1 本、P から F′ へ 1 本の線分が引かれていて、どちらの長さも疑問符。座標や目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 380 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <path d={`M ${px} ${py} L ${cx + fx} ${cy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${px} ${py} L ${cx - fx} ${cy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <circle cx={cx + fx} cy={cy} r="4" fill={stroke} />
+      <circle cx={cx - fx} cy={cy} r="4" fill={stroke} />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={cx + fx - 4} y={cy + 20} fontSize="13" fill={stroke}>F</text>
+      <text x={cx - fx - 6} y={cy + 20} fontSize="13" fill={stroke}>F′</text>
+      <text x={px + 8} y={py - 4} fontSize="13" fill={accent}>P</text>
+      <text x={(px + cx + fx) / 2 + 8} y={(py + cy) / 2 + 4} fontSize="13" fill={accent}>?</text>
+      <text x={(px + cx - fx) / 2 - 4} y={(py + cy) / 2 - 10} fontSize="13" fill={accent}>?</text>
+      <text x="200" y="232" fontSize="11" fill={accent} textAnchor="middle">
+        長いほうから短いほうを引くと？　曲線の上の別の点でも、同じになる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列3 step3: 左右に分かれた双曲線と、x 軸上の 2 つの頂点。
+ *  ★焦点は描かない★（焦点を頂点の外に描くと「焦点は頂点より外＝楕円の式を持ち込むと外れる」という山場の発見を先に見せる＝層8 の補足）。
+ *  漸近線・長方形・外接円も描かない（原典の作図の型を使わない・漸近線は step5 の発見）。目盛り・座標なし。 */
+function M3cvHyperbolaAsk() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 190, cy = 120, A = 55, B = 50;
+  const branch = (sgn: number) => {
+    const pts: string[] = [];
+    for (let k = 0; k <= 50; k++) {
+      const u = -1.35 + (2.7 * k) / 50;
+      pts.push(`${(cx + sgn * A * Math.cosh(u)).toFixed(1)},${(cy - B * Math.sinh(u)).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  return (
+    <svg
+      viewBox="0 0 380 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 400 }}
+      role="img"
+      aria-label="左右に分かれた 2 本の曲線と、それぞれが x 軸と交わる点。焦点は描かれていない。目盛りも書かれていない"
+    >
+      <path d={`M 15 ${cy} L 365 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 214 L ${cx} 10`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={branch(1)} fill="none" stroke={stroke} strokeWidth="2" />
+      <polyline points={branch(-1)} fill="none" stroke={stroke} strokeWidth="2" />
+      <circle cx={cx + A} cy={cy} r="3.5" fill={stroke} />
+      <circle cx={cx - A} cy={cy} r="3.5" fill={stroke} />
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+      <text x="190" y="236" fontSize="11" fill={accent} textAnchor="middle">
+        2 つの焦点は、頂点の内側？ 外側？
+      </text>
     </svg>
   );
 }
