@@ -16130,6 +16130,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_TWO_PINS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvTwoPins />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_TALL_ELLIPSE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvTallEllipse />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42449,3 +42463,76 @@ function M3iaUpperMove() {
   );
 }
 
+/** いろいろな曲線 系列1 step1: 2 点 F・F′ と、ある曲線の上の点 P。PF と PF′ の 2 本の線分。
+ *  ★図に答えを描かない★ 線分の長さは「?」。座標・目盛りは書かない（尺度を読んで長さの比から和を出させない＝R1 I5-2）。
+ *  曲線は破線で一部だけ（形の名前は出さない）。F・F′・P の位置は模式（step1 の値と同じ尺度ではない）。
+ *  この図から読めるもの：2 点から 1 点までの距離を 2 本測って足す、という仕事の形だけ。 */
+function M3cvTwoPins() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 200, cy = 120, A = 150, B = 82;
+  const pts: string[] = [];
+  for (let k = 0; k <= 60; k++) {
+    const t = (Math.PI * 0.08) + (Math.PI * 0.84 * k) / 60;
+    pts.push(`${(cx + A * Math.cos(t)).toFixed(1)},${(cy - B * Math.sin(t)).toFixed(1)}`);
+  }
+  const fx = 118;
+  const px = cx + A * Math.cos(1.05), py = cy - B * Math.sin(1.05);
+  return (
+    <svg
+      viewBox="0 0 400 190"
+      className="w-full h-auto"
+      style={{ maxWidth: 420 }}
+      role="img"
+      aria-label="横に並んだ 2 つの点 F と F′ と、破線でかいた曲線の上の点 P。P から F へ 1 本、P から F′ へ 1 本の線分が引かれていて、どちらの長さも疑問符。座標や目盛りは書かれていない"
+    >
+      <path d={`M 30 ${cy} L 370 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <polyline points={pts.join(" ")} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <path d={`M ${px} ${py} L ${cx + fx} ${cy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <path d={`M ${px} ${py} L ${cx - fx} ${cy}`} fill="none" stroke={accent} strokeWidth="2.5" />
+      <circle cx={cx + fx} cy={cy} r="4" fill={stroke} />
+      <circle cx={cx - fx} cy={cy} r="4" fill={stroke} />
+      <circle cx={px} cy={py} r="4" fill={accent} />
+      <text x={cx + fx - 4} y={cy + 20} fontSize="13" fill={stroke}>F</text>
+      <text x={cx - fx - 6} y={cy + 20} fontSize="13" fill={stroke}>F′</text>
+      <text x={px + 6} y={py - 8} fontSize="13" fill={accent}>P</text>
+      <text x={(px + cx + fx) / 2 + 8} y={(py + cy) / 2} fontSize="13" fill={accent}>?</text>
+      <text x={(px + cx - fx) / 2 - 4} y={(py + cy) / 2 - 10} fontSize="13" fill={accent}>?</text>
+      <text x="200" y="178" fontSize="11" fill={accent} textAnchor="middle">
+        2 本の長さを足すと？　曲線の上の別の点でも、同じになる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列1 step8: y² の分母のほうが大きい楕円と、x 軸上の点 A だけ。
+ *  ★焦点は描かない★（焦点を y 軸上に描くと「焦点は長いほうの軸の上」という山場の発見そのものを見せる＝R1 F1-3・層8 の補足）。
+ *  目盛り・端の座標も書かない（縦横の比から分母が読めないよう、比は模式）。キャプションは問いで終える。 */
+function M3cvTallEllipse() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 170, cy = 120;
+  return (
+    <svg
+      viewBox="0 0 340 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="原点を中心とする縦長の楕円と、x 軸の上で楕円の外にある点 A。焦点は描かれていない。目盛りも書かれていない"
+    >
+      <path d={`M 20 ${cy} L 320 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 218 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" />
+      <ellipse cx={cx} cy={cy} rx="52" ry="92" fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+      <text x="312" y={cy - 6} fontSize="12" fill={muted}>x</text>
+      <text x={cx + 6} y="22" fontSize="12" fill={muted}>y</text>
+      <circle cx={cx + 110} cy={cy} r="4" fill={accent} />
+      <text x={cx + 104} y={cy + 20} fontSize="13" fill={accent}>A</text>
+      <text x="170" y="236" fontSize="11" fill={accent} textAnchor="middle">
+        2 つの焦点は、この図のどこにある？
+      </text>
+    </svg>
+  );
+}

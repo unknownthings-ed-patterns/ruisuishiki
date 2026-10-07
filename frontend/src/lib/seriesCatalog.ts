@@ -126,6 +126,10 @@ import {
   MATH3_INTEGRAL_APP_SERIES_LIST,
 } from "./seriesMath3IntegralApp";
 import {
+  M3CV_ELLIPSE_SERIES,
+  MATH3_CURVES_SERIES_LIST,
+} from "./seriesMath3Curves";
+import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
   M3V_TRANSFORM_SERIES,
@@ -2365,6 +2369,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "上端が動く定積分（微積分の基本定理のその先）— 上端が x の式なら、中身に上端を入れた値に上端の導関数が掛かる。中に x があれば外へ出してから微分する",
   },
+  /* 第8章 いろいろな曲線（背骨：docs/math3c_curves_design.md・2026-10-07 凍結） */
+  {
+    series: M3CV_ELLIPSE_SERIES,
+    subject: "secondary3",
+    subjectLabel: "高校数学Ⅲ・C",
+    topicGroup: "いろいろな曲線",
+    shortDescription:
+      "楕円（2 点からの距離の和を式にする）— 和の条件を 2 乗 2 回で式にすると、分母が和の半分と焦点の位置を語る。焦点は分母の大きいほうの軸の上",
+  },
   /* 第9章 ベクトル（背骨：docs/math3c_vector_design.md）
    * 旧課程では数B・新課程では数C の単元。旧 topicGroup「ベクトル（数B 旧／数C 新）」の 2 系列
    * （algebra2_vec_mag_01・algebra2_dot_01）は、吸収先の系列6・8 を実装した時点で
@@ -2644,6 +2657,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_DIFF_APP_SERIES_LIST,
   ...MATH3_INTEGRAL_SERIES_LIST,
   ...MATH3_INTEGRAL_APP_SERIES_LIST,
+  ...MATH3_CURVES_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
   ...PROOF_SERIES_LIST,

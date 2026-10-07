@@ -42,7 +42,7 @@ close(evaluateAnswer("2√3"), 2 * Math.sqrt(3), "implicit number*sqrt");
 assert.equal(evaluateAnswer("2 3"), null, "space-separated num num is invalid");
 assert.equal(evaluateAnswer("2(3)"), null, "implicit num*(numeric group) is invalid");
 assert.equal(evaluateAnswer("(2)(3)"), null, "implicit group*group numeric is invalid");
-assert.equal(evaluateAnswer("2×3"), null, "multiplication sign num×num is invalid");
+assert.equal(evaluateAnswer("2×3"), 6, "multiplication sign × is accepted (2026-10-07 先生の裁定・1c9d584)");
 
 // パース不能・境界事例。
 assert.equal(evaluateAnswer(""), null, "empty input is invalid");
