@@ -325,4 +325,307 @@ $2$ 点からの距離の和が一定の点の集まりは、$\\dfrac{x^2}{a^2} 
 式は条件の書きかえだから、数字を読めば条件が戻ってくる。`,
 };
 
-export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [M3CV_ELLIPSE_SERIES];
+/** M3CV2: 楕円を円から読む——一方向に伸ばした円。
+ *  step1〜3：円 x² + y² = r² を一方向に k 倍した式（y → x²/4 + y²/25 の 25／x → x²/49 + y²/9 の 49／逆：x²/18 + y²/50 は円 x² + y² = 18 の y を 5/3 倍）
+ *  step4（＋α）x²/6 + y²/54 の面積 18π（円 6π を y の向きに 3 倍。第7章の積分でも同じ値＝Q3）
+ *  step5（質）円の角 θ の点を y だけ 4/7 倍して x²/49 + y²/16 の上へ。θ = π/3 で y = 2√3
+ *  山場 step6（C12 ②・C14）x²/36 + y²/4 の θ = π/6 の点 (3√3, 1)：OP の tan は √3/9。素朴に tan θ = √3/3 と読むと外れる（R1 I1-11：step5 と別の θ・別の楕円）
+ *  step7（逆）x²/64 + y²/9 の点 (−4, 3√3/2) の θ = 2π/3（cos θ = −1/2 の解は 2π/3 と 4π/3。sin > 0 で 1 つ）
+ *  step8（複合・C13 2倍角 trig_double_half_01）x²/50 + y²/8 に内接する長方形の最大 2ab = 40
+ *  step9（複合・C13 合成 trig_composition_01）x²/12 + y²/4 の上で x + 3y の最大 4√3
+ *  step10（＋α）x²/16 + y²/25 の x ≥ 2 の部分の面積 20π/3 − 5√3（円に縮めて扇形 − 三角形、5/4 倍で戻す。sympy の積分と一致）
+ *  答え：25・49・5/3・18π・2√3・√3/9・2π/3・40・4√3・20π/3 − 5√3（すべて相異なる）。
+ *  形（比）は 2:5・7:3・3:5・1:3・7:4・3:1・8:3・5:2・√3:1・4:5。原典 応1 の比 2:1・第5章の 3:2（x²/9 + y²/4・(2cos t, sin t)）とその入れかえは使っていない。 */
+export const M3CV_STRETCH_SERIES: LearnerSeries = {
+  id: "math3_cv_stretch_01",
+  title: "楕円を円から読む——一方向に伸ばした円",
+  subtitle:
+    "数Ⅲ・C いろいろな曲線より — 円を一方向にだけ伸ばすと楕円になる。円で知っていること（点の表し方・面積・最大値）は、楕円ではどう書きかわるか。$10$ 問で確かめる。",
+  patternId: "M3CV2",
+  unit: "math_3",
+  revelationLabel:
+    "**$\\theta$ は円の上で測った角。楕円の上の点を原点から見た角とは、伸ばしたぶんだけずれる**",
+  drivingQuestion:
+    "楕円が円を一方向に伸ばしたものなら、円で知っていること（点の表し方・面積・最大値）は、楕円ではどう書きかわる？——**伸ばしても変わらないものは何？**",
+  steps: [
+    {
+      id: "step1",
+      position: 1,
+      questionText:
+        "円 $x^2 + y^2 = 4$ の上の各点を、$x$ 座標はそのままに、$y$ 座標だけ $\\dfrac52$ 倍した点に移します。移った点の集まりは、曲線\n\n$$\\frac{x^2}{\\square} + \\frac{y^2}{\\triangle} = 1$$\n\nになります。△ を求めましょう。",
+      answer: 25,
+      answerDisplay: "25",
+      unit: "",
+      unknownLabel: "△（$y^2$ の分母）",
+      variationFromPrevious: null,
+      compareWithStepId: null,
+      hints: [
+        {
+          layer: 1,
+          text: "移る前の点と、移った後の点は、座標どうしがどんな関係にある？ その関係から、移った点の集まりの式は作れるかな？",
+        },
+        {
+          layer: 2,
+          text: "数Ⅱで、グラフをずらしたとき、式の $x$ や $y$ を何に置きかえた？（[平行移動]）",
+        },
+        {
+          layer: 3,
+          text: "円の上の点を $(X,\\ Y)$、移った点を $(x,\\ y)$ とすると $x = X$、$y = \\dfrac52Y$。逆に $Y = \\dfrac25y$。$(X, Y)$ は円の上なので $X^2 + Y^2 = 4$、つまり $x^2 + \\left(\\dfrac25y\\right)^2 = 4$。$x^2 + \\dfrac{4}{25}y^2 = 4$ の両辺を $4$ で割って $\\dfrac{x^2}{4} + \\dfrac{y^2}{25} = 1$。△ $= 25$。中心の問いへの最初の部分回答：**$y$ の向きに $\\dfrac52$ 倍すると、式の $y$ が $\\dfrac25y$ に置きかわる。円が楕円になり、$y^2$ の分母は半径 $2$ の $\\dfrac52$ 倍の $2$ 乗になる**。",
+        },
+      ],
+      formulaPreview: "Y = (2/5)y を円の式へ → x²/4 + y²/25 = 1",
+      figureMarker: "<<M3CV_CIRCLE_STRETCH>>",
+    },
+    {
+      id: "step2",
+      position: 2,
+      questionText:
+        "円 $x^2 + y^2 = 9$ の上の各点を、$y$ 座標はそのままに、$x$ 座標だけ $\\dfrac73$ 倍した点に移します。移った点の集まりを $\\dfrac{x^2}{\\square} + \\dfrac{y^2}{\\triangle} = 1$ と書いたときの □ を求めましょう。",
+      answer: 49,
+      answerDisplay: "49",
+      unit: "",
+      unknownLabel: "□（$x^2$ の分母）",
+      variationFromPrevious: "same",
+      compareWithStepId: "step1",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、伸ばす向きが $x$ の向きになったこと。" },
+        {
+          layer: 3,
+          text: "移る前を $(X, Y)$ とすると $x = \\dfrac73X$、$y = Y$。$X = \\dfrac37x$ を $X^2 + Y^2 = 9$ に入れて $\\dfrac{9}{49}x^2 + y^2 = 9$、両辺を $9$ で割って $\\dfrac{x^2}{49} + \\dfrac{y^2}{9} = 1$。□ $= 49$。中心の問いへ：**伸ばした向きの文字が、倍率の逆数倍に置きかわる。分母は「その向きの端までの長さ」の $2$ 乗**。",
+        },
+      ],
+      formulaPreview: "X = (3/7)x → x²/49 + y²/9 = 1",
+    },
+    {
+      id: "step3",
+      position: 3,
+      questionText:
+        "楕円 $\\dfrac{x^2}{18} + \\dfrac{y^2}{50} = 1$ は、円 $x^2 + y^2 = 18$ を、$x$ 座標はそのままに $y$ 座標だけ $k$ 倍したものです（$k > 0$）。$k$ を求めましょう。",
+      answer: 5 / 3,
+      answerDisplay: "5/3",
+      unit: "",
+      unknownLabel: "$k$",
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step2",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題は倍率から式を作った。今度は向きがどう変わった？" },
+        { layer: 2, text: "前題と変わったのは、式が先に与えられて、倍率が問われていること。" },
+        {
+          layer: 3,
+          text: "円の $y$ の向きの端は $(0,\\ \\sqrt{18})$、楕円の $y$ の向きの端は $(0,\\ \\sqrt{50})$。$k$ 倍で端が移るので $k = \\dfrac{\\sqrt{50}}{\\sqrt{18}} = \\dfrac{5\\sqrt2}{3\\sqrt2} = \\dfrac53$。確かめ：$Y = \\dfrac35y$ を円の式に入れると $x^2 + \\dfrac{9}{25}y^2 = 18$、両辺を $18$ で割ると $\\dfrac{x^2}{18} + \\dfrac{y^2}{50} = 1$。中心の問いへ：**楕円の $2$ つの分母の比の平方根が、円から伸ばした倍率**。",
+        },
+      ],
+      formulaPreview: "k = √50 / √18 = 5/3",
+    },
+    {
+      id: "step4",
+      position: 4,
+      questionText:
+        "楕円 $\\dfrac{x^2}{6} + \\dfrac{y^2}{54} = 1$ で囲まれた部分の面積を求めましょう。",
+      answer: 18 * Math.PI,
+      answerDisplay: "18π",
+      unit: "",
+      unknownLabel: "囲まれた部分の面積",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step3",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が加わった？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが式や倍率でなく、囲まれた部分の面積であること。" },
+        {
+          layer: 3,
+          text: "この楕円は、円 $x^2 + y^2 = 6$ を $y$ の向きに $\\dfrac{\\sqrt{54}}{\\sqrt6} = 3$ 倍したもの。図形を細い縦の帯に切ると、どの帯も高さだけが $3$ 倍になり、幅は変わらない。だから面積も $3$ 倍で、円の面積 $6\\pi$ の $3$ 倍の $18\\pi$。（第7章のように楕円の上半分 $y = 3\\sqrt{6 - x^2}$ を積分しても $2\\displaystyle\\int_{-\\sqrt6}^{\\sqrt6}3\\sqrt{6 - x^2}\\,dx = 3 \\times 6\\pi = 18\\pi$ で同じ値。）中心の問いへ：**一方向に $k$ 倍すると、面積も $k$ 倍。楕円の面積は $\\pi \\times$（$2$ つの端までの長さの積）**。",
+        },
+      ],
+      formulaPreview: "円 x² + y² = 6（面積 6π）を y の向きに 3 倍 → 18π",
+    },
+    {
+      id: "step5",
+      position: 5,
+      questionText:
+        "円 $x^2 + y^2 = 49$ の上で、$x$ 軸の正の向きから角 $\\theta$ だけ回った点は $(7\\cos\\theta,\\ 7\\sin\\theta)$ です。この点を、$x$ 座標はそのままに $y$ 座標だけ $\\dfrac47$ 倍して、楕円 $\\dfrac{x^2}{49} + \\dfrac{y^2}{16} = 1$ の上に移します。$\\theta = \\dfrac{\\pi}{3}$ のとき、移った点の $y$ 座標を求めましょう。",
+      answer: 2 * Math.sqrt(3),
+      answerDisplay: "2√3",
+      unit: "",
+      unknownLabel: "移った点の $y$ 座標",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "qualitative",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題までは曲線全体を伸ばした。今度は何を伸ばしている？" },
+        { layer: 2, text: "前題と変わったのは、伸ばすものが曲線全体でなく、角で指定した $1$ つの点になったこと。" },
+        {
+          layer: 3,
+          text: "移る前の点は $\\left(7\\cos\\dfrac{\\pi}{3},\\ 7\\sin\\dfrac{\\pi}{3}\\right) = \\left(\\dfrac72,\\ \\dfrac{7\\sqrt3}{2}\\right)$。$y$ だけ $\\dfrac47$ 倍して $\\dfrac{7\\sqrt3}{2} \\times \\dfrac47 = 2\\sqrt3$。移った点は $\\left(\\dfrac72,\\ 2\\sqrt3\\right)$——つまり $(7\\cos\\theta,\\ 4\\sin\\theta)$ の形。確かめ：$\\dfrac{49/4}{49} + \\dfrac{12}{16} = \\dfrac14 + \\dfrac34 = 1$。中心の問いへ：**楕円の上の点は、円の角 $\\theta$ を使って $(a\\cos\\theta,\\ b\\sin\\theta)$ と書ける（[媒介変数表示]）。$\\theta$ は、伸ばす前の円の上で測った角**。",
+        },
+      ],
+      formulaPreview: "(7cos θ, 7sin θ) → (7cos θ, 4sin θ)、θ = π/3 で y = 2√3",
+      figureMarker: "<<M3CV_PARAM_LIFT>>",
+    },
+    {
+      id: "step6",
+      position: 6,
+      questionText:
+        "楕円 $\\dfrac{x^2}{36} + \\dfrac{y^2}{4} = 1$ の上の点を、前題と同じように $(6\\cos\\theta,\\ 2\\sin\\theta)$ と表します。$\\theta = \\dfrac{\\pi}{6}$ の点を P とし、線分 OP が $x$ 軸の正の向きとなす角を $\\varphi$ とします（O は原点）。$\\tan\\varphi$ を求めましょう。",
+      answer: Math.sqrt(3) / 9,
+      answerDisplay: "√3/9",
+      unit: "",
+      unknownLabel: "$\\tan\\varphi$",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "same",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。何が同じで、何が違う？" },
+        { layer: 2, text: "前題と変わったのは、問われているのが点の座標でなく、原点から見た点の向きであること。" },
+        {
+          layer: 3,
+          text: "P $= \\left(6\\cos\\dfrac{\\pi}{6},\\ 2\\sin\\dfrac{\\pi}{6}\\right) = (3\\sqrt3,\\ 1)$。$\\tan\\varphi = \\dfrac{1}{3\\sqrt3} = \\dfrac{\\sqrt3}{9}$。**$\\tan\\dfrac{\\pi}{6} = \\dfrac{\\sqrt3}{3}$ と答えると外れる**——$\\theta$ は、伸ばす（ここでは縮める）前の円 $x^2 + y^2 = 36$ の上で測った角で、$y$ だけを $\\dfrac13$ 倍した P は、原点から見ると角が浅くなる。$\\tan\\varphi = \\dfrac{2}{6}\\tan\\theta$。中心の問いへ：**伸ばしても、$x$ 座標と「$\\theta$ の目盛り」は変わらない。変わるのは、点を原点から見た向き**。",
+        },
+      ],
+      formulaPreview: "P = (3√3, 1) → tan φ = 1/(3√3) = √3/9（tan θ = √3/3 ではない）",
+    },
+    {
+      id: "step7",
+      position: 7,
+      questionText:
+        "楕円 $\\dfrac{x^2}{64} + \\dfrac{y^2}{9} = 1$ の上の点 $\\left(-4,\\ \\dfrac{3\\sqrt3}{2}\\right)$ を $(8\\cos\\theta,\\ 3\\sin\\theta)$ と表すときの $\\theta$ を、$0 \\le \\theta < 2\\pi$ の範囲で求めましょう。",
+      answer: (2 * Math.PI) / 3,
+      answerDisplay: "2π/3",
+      unit: "",
+      unknownLabel: "$\\theta$",
+      inputAffordances: ["pi"],
+      variationFromPrevious: "inverse",
+      compareWithStepId: "step5",
+      hints: [
+        { layer: 1, text: "step5 と比べてみよう。step5 は角から点を出した。今度は向きがどう変わった？" },
+        { layer: 2, text: "step5 と変わったのは、点が先に与えられて、角 $\\theta$ が問われていること。" },
+        {
+          layer: 3,
+          text: "$8\\cos\\theta = -4$ より $\\cos\\theta = -\\dfrac12$、$3\\sin\\theta = \\dfrac{3\\sqrt3}{2}$ より $\\sin\\theta = \\dfrac{\\sqrt3}{2}$。$0 \\le \\theta < 2\\pi$ で $\\cos\\theta = -\\dfrac12$ になるのは $\\dfrac{2\\pi}{3}$ と $\\dfrac{4\\pi}{3}$ の $2$ つで、$\\sin\\theta > 0$ なのは $\\dfrac{2\\pi}{3}$ だけ。$\\theta = \\dfrac{2\\pi}{3}$。（原点から見た点の向きは $\\tan\\varphi = \\dfrac{3\\sqrt3/2}{-4}$ で、$\\dfrac{2\\pi}{3}$ の向きとは違う。）中心の問いへ：**$\\theta$ は、$x$ 座標と $y$ 座標をそれぞれの端までの長さで割って、円の角として読み戻す**。",
+        },
+      ],
+      formulaPreview: "cos θ = −1/2、sin θ = √3/2 → θ = 2π/3",
+    },
+    {
+      id: "step8",
+      position: 8,
+      questionText:
+        "楕円 $\\dfrac{x^2}{50} + \\dfrac{y^2}{8} = 1$ に内接し、辺が座標軸に平行な長方形を考えます（$4$ つの頂点が楕円の上にある）。この長方形の面積の最大値を求めましょう。",
+      answer: 40,
+      answerDisplay: "40",
+      unit: "",
+      unknownLabel: "長方形の面積の最大値",
+      variationFromPrevious: "composite",
+      compareWithStepId: "step7",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題で使った点の表し方は、ここでも使える？" },
+        { layer: 2, text: "前題と変わったのは、点 $1$ つでなく、長方形の面積の最大を問われていること。" },
+        {
+          layer: 3,
+          text: "第 $1$ 象限の頂点を $(5\\sqrt2\\cos\\theta,\\ 2\\sqrt2\\sin\\theta)$（$0 < \\theta < \\dfrac{\\pi}{2}$）とおくと、長方形の横は $10\\sqrt2\\cos\\theta$、縦は $4\\sqrt2\\sin\\theta$。面積 $= 80\\sin\\theta\\cos\\theta = 40\\sin2\\theta$（[2倍角の公式]）。$\\sin2\\theta$ の最大は $1$（$\\theta = \\dfrac{\\pi}{4}$）なので、最大値は $40$。（円で考えると：円に内接する長方形の最大は正方形。それを伸ばしても「最大」は保たれる。）中心の問いへ：**円の角 $\\theta$ で点を表せば、楕円の上の問題も、三角関数の最大・最小にもどせる**。",
+        },
+      ],
+      formulaPreview: "面積 = 80 sin θ cos θ = 40 sin 2θ → 最大 40",
+    },
+    {
+      id: "step9",
+      position: 9,
+      questionText:
+        "点 $(x,\\ y)$ が楕円 $\\dfrac{x^2}{12} + \\dfrac{y^2}{4} = 1$ の上を動くとき、$x + 3y$ の最大値を求めましょう。",
+      answer: 4 * Math.sqrt(3),
+      answerDisplay: "4√3",
+      unit: "",
+      unknownLabel: "$x + 3y$ の最大値",
+      inputAffordances: ["sqrt"],
+      variationFromPrevious: "composite",
+      compareWithStepId: "step8",
+      hints: [
+        { layer: 1, text: "前題と比べてみよう。前題の手つきは、ここでも使える？" },
+        { layer: 2, text: "前題と変わったのは、最大にするものが面積でなく、$x$ と $y$ の $1$ 次式であること。" },
+        {
+          layer: 3,
+          text: "$(x,\\ y) = (2\\sqrt3\\cos\\theta,\\ 2\\sin\\theta)$ とおくと $x + 3y = 2\\sqrt3\\cos\\theta + 6\\sin\\theta$。[三角関数の合成] で $\\sqrt{(2\\sqrt3)^2 + 6^2}\\sin(\\theta + \\alpha) = \\sqrt{48}\\sin(\\theta + \\alpha) = 4\\sqrt3\\sin(\\theta + \\alpha)$。最大値は $4\\sqrt3$。中心の問いへ：**楕円の上を動く点も、角 $\\theta$ $1$ つで表せば、$1$ 変数の三角関数の最大になる**。",
+        },
+      ],
+      formulaPreview: "2√3 cos θ + 6 sin θ = 4√3 sin(θ + α) → 最大 4√3",
+    },
+    {
+      id: "step10",
+      position: 10,
+      questionText:
+        "楕円 $\\dfrac{x^2}{16} + \\dfrac{y^2}{25} = 1$ の内側で、直線 $x = 2$ より右にある部分の面積を求めましょう。",
+      answer: (20 * Math.PI) / 3 - 5 * Math.sqrt(3),
+      answerDisplay: "20π/3-5√3",
+      unit: "",
+      unknownLabel: "直線 $x = 2$ より右の部分の面積",
+      inputAffordances: ["pi", "sqrt"],
+      variationFromPrevious: "plus_alpha",
+      compareWithStepId: "step4",
+      hints: [
+        { layer: 1, text: "step4 と比べてみよう。step4 の考え方は、ここでも使える？" },
+        { layer: 2, text: "step4 と変わったのは、楕円全体でなく、直線で切った一部分の面積であること。" },
+        {
+          layer: 3,
+          text: "$y$ の向きに $\\dfrac45$ 倍して、円 $x^2 + y^2 = 16$ にもどす。直線 $x = 2$ はそのまま。円で $x \\ge 2$ の部分：交点は $(2,\\ \\pm2\\sqrt3)$ で、中心角は $\\dfrac{2\\pi}{3}$。扇形 $\\dfrac12 \\cdot 16 \\cdot \\dfrac{2\\pi}{3} = \\dfrac{16\\pi}{3}$ から三角形 $\\dfrac12 \\cdot 4 \\cdot 4 \\cdot \\sin\\dfrac{2\\pi}{3} = 4\\sqrt3$ を引いて $\\dfrac{16\\pi}{3} - 4\\sqrt3$。$y$ の向きに $\\dfrac54$ 倍してもどすと、面積も $\\dfrac54$ 倍で $\\dfrac{20\\pi}{3} - 5\\sqrt3$。中心の問いへ：**楕円の問題は、円に縮めて解き、伸ばしてもどせる。面積は倍率どおりに伸び、直線は直線のまま**。",
+        },
+      ],
+      formulaPreview: "円で (16π/3 − 4√3) → ×5/4 → 20π/3 − 5√3",
+    },
+  ],
+  derivation: `**中心の問い** ｜ 楕円が円を一方向に伸ばしたものなら、円で知っていること（点の表し方・面積・最大値）は、楕円ではどう書きかわる？——**伸ばしても変わらないものは何？**
+
+────────
+
+## 一方向に伸ばすと、式の文字が置きかわる
+
+円 $x^2 + y^2 = r^2$ の上の点を、$x$ 座標はそのままに $y$ 座標だけ $k$ 倍すると、移った点 $(x,\\ y)$ のもとの点は $\\left(x,\\ \\dfrac{y}{k}\\right)$。だから式の $y$ が $\\dfrac yk$ に置きかわり
+
+$$x^2 + \\left(\\frac{y}{k}\\right)^2 = r^2 \\quad\\Longleftrightarrow\\quad \\frac{x^2}{r^2} + \\frac{y^2}{(kr)^2} = 1$$
+
+前の系列で「$2$ 点からの距離の和」から作った [楕円] と同じ形である（step1〜3）。
+
+## ここが胚細胞：伸ばしても変わらないもの、変わるもの
+
+- **面積**：縦の帯の高さがすべて $k$ 倍になるので、面積も $k$ 倍（step4・10）。楕円 $\\dfrac{x^2}{a^2} + \\dfrac{y^2}{b^2} = 1$ の面積は $\\pi ab$
+- **点の表し方**：円の上の角 $\\theta$ の点 $(a\\cos\\theta,\\ a\\sin\\theta)$ を伸ばすと $(a\\cos\\theta,\\ b\\sin\\theta)$（step5）。$\\theta$ の目盛りは伸ばしても変わらない
+- **原点から見た角**：$y$ だけを伸ばすので、原点から見た点の向きは変わる。$\\tan\\varphi = \\dfrac ba\\tan\\theta$（step6・7）
+- **最大・最小**：$\\theta$ $1$ つで点を表せば、三角関数の最大・最小にもどせる（step8・9）
+
+## Step の道筋
+
+- **step1〜3**：円を一方向に伸ばした式と、その逆
+- **step4**：面積は倍率どおりに伸びる
+- **step5（質的変化）**：円の角 $\\theta$ で、楕円の上の点を表す
+- **step6（山場）**：$\\theta$ は原点から見た角ではない
+- **step7**：点から $\\theta$ を読み戻す
+- **step8・9**：$\\theta$ で表して、三角関数の最大へ（数Ⅱ の $2$ 倍角・合成と合流）
+- **step10**：円に縮めて扇形で解き、伸ばしてもどす
+
+────────
+
+**もっと深く**
+
+**忘れても導ける。** $(a\\cos\\theta,\\ b\\sin\\theta)$ を覚えていなくても、「円の上の点を一方向に伸ばした」と思い出せば書ける。面積 $\\pi ab$ も、半径 $a$ の円の面積を $\\dfrac ba$ 倍したものである。
+
+**伸ばしても保たれるもの。** 直線は直線に、線分の中点は中点に、平行な $2$ 直線は平行なままに移る。円の接線は楕円の接線に移る（接するという「$1$ 点だけを共有する」性質は伸ばしても変わらない）。だから、円で解ける問題は、楕円に移しても解ける。**一般には保たれないもの**は、長さ・角・直交（伸ばす向きに平行な線分の長さは $k$ 倍、垂直な線分は変わらない）。
+
+**周の長さは、倍率を掛けるだけでは出ない。** 面積は倍率どおりに伸びるのに、周の長さは、周のどの部分も同じ割合で伸びるわけではない（$y$ の向きに伸ばすと、曲線が横向きに走る部分はほとんど伸びず、縦向きに走る部分ほど大きく伸びる）。楕円の周の長さは高校で学ぶ関数では式に書けず、大学で「楕円積分」という新しい関数を使う（第7章「曲線の長さ」の系列の「この先の景色」）。
+
+**この先の景色。** 一方向に伸ばす・回す・ずらす、をまとめて扱うのが大学の「線形変換」（行列）である。円を線形変換で移すと、楕円になる（つぶれてしまう変換なら線分か点）。
+
+**出典**
+
+- 池田洋介（2024）『数学Ⅲ・C 入門問題精講』旺文社
+  — 第8章「楕円の方程式」のコメント（楕円を円の一方向への拡大としてみる）と応用問題1 の精講・注意（楕円の点を $(a\\cos\\theta, b\\sin\\theta)$ と表す・$\\theta$ は原点から見た角ではない〔step6 は同じ点を問う形にした〕）を参考。問題の値はすべてオリジナル。
+
+────────
+
+**問いに戻ると**
+
+円を一方向に $k$ 倍すると、式ではその向きの文字が $\\dfrac1k$ 倍に置きかわり、面積は $k$ 倍になる。円の上の角 $\\theta$ は、伸ばしたあとも点の目盛りとして使えて、楕円の上の点は $(a\\cos\\theta,\\ b\\sin\\theta)$。
+
+変わるのは、原点から見た点の向き。$\\theta$ は円の上で測った角で、楕円の点の見える角とは伸ばしたぶんだけずれる。`,
+};
+
+export const MATH3_CURVES_SERIES_LIST: LearnerSeries[] = [M3CV_ELLIPSE_SERIES, M3CV_STRETCH_SERIES];

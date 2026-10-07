@@ -16144,6 +16144,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_CIRCLE_STRETCH>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvCircleStretch />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_PARAM_LIFT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvParamLift />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42533,6 +42547,74 @@ function M3cvTallEllipse() {
       <text x="170" y="236" fontSize="11" fill={accent} textAnchor="middle">
         2 つの焦点は、この図のどこにある？
       </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列2 step1: 円と、それを y の向きにだけ伸ばした曲線。
+ *  ★倍率は描かない★ 矢印に倍率の数を付けない（付けると △ が読める＝背骨 D4）。端の座標・目盛りも書かない。
+ *  円の上の点 1 つが真上に移る様子だけを矢印で示す（「x はそのまま、y だけ」という操作の見取り図）。 */
+function M3cvCircleStretch() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 170, cy = 125, R = 46, K = 2.1;
+  const px = cx + R * Math.cos(1.0), py = cy - R * Math.sin(1.0);
+  const qy = cy - K * R * Math.sin(1.0);
+  return (
+    <svg
+      viewBox="0 0 340 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="原点を中心とする円と、それを縦の向きにだけ伸ばした縦長の曲線。円の上の点が、x 座標を変えずに真上へ移って、伸ばした曲線の上に来る様子を矢印で示している。倍率と目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 320 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 240 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" />
+      <circle cx={cx} cy={cy} r={R} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <ellipse cx={cx} cy={cy} rx={R} ry={K * R} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${px} ${py - 4} L ${px} ${qy + 8}`} fill="none" stroke={accent} strokeWidth="2" />
+      <path d={`M ${px - 5} ${qy + 14} L ${px} ${qy + 6} L ${px + 5} ${qy + 14}`} fill="none" stroke={accent} strokeWidth="2" />
+      <circle cx={px} cy={py} r="3.5" fill={muted} />
+      <circle cx={px} cy={qy} r="4" fill={accent} />
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+      <text x={px + 26} y={(py + qy) / 2 + 4} fontSize="13" fill={accent}>?倍</text>
+      <text x="170" y="246" fontSize="11" fill={accent} textAnchor="middle">
+        x はそのまま、y だけ伸ばすと、式のどこが変わる？
+      </text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列2 step5: 円の上の角 θ の点と、それを y だけ縮めて楕円の上に移した点。
+ *  ★原点からの線分は引かない★（円の上の点に半径を引くと、その線が楕円を P と別の場所で横切り、「OP の角は θ と違う」という step6 の発見を先に見せる＝背骨 D4・PNG で確かめて外した）。
+ *  座標・目盛りは書かない。θ はラベルだけで値は書かない。 */
+function M3cvParamLift() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 175, cy = 130, A = 110, B = 63;
+  const th = 1.05;
+  const ux = cx + A * Math.cos(th), uy = cy - A * Math.sin(th);
+  const vy = cy - B * Math.sin(th);
+  return (
+    <svg
+      viewBox="0 0 350 260"
+      className="w-full h-auto"
+      style={{ maxWidth: 350 }}
+      role="img"
+      aria-label="原点を中心とする円と、それを縦の向きに縮めた楕円。円の上の、角 θ の点から真下に下ろした先が楕円の上の点になっている。座標と目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 335 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 250 L ${cx} 10`} fill="none" stroke={muted} strokeWidth="1" />
+      <circle cx={cx} cy={cy} r={A} fill="none" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+      <ellipse cx={cx} cy={cy} rx={A} ry={B} fill="none" stroke={stroke} strokeWidth="2" />
+      <text x={ux + 8} y={uy - 6} fontSize="12" fill={muted}>円の上の角 θ の点</text>
+      <path d={`M ${ux} ${uy + 4} L ${ux} ${vy - 6}`} fill="none" stroke={accent} strokeWidth="1.8" strokeDasharray="4 3" />
+      <circle cx={ux} cy={uy} r="3.5" fill={muted} />
+      <circle cx={ux} cy={vy} r="4.5" fill={accent} />
+      <text x={ux + 8} y={vy + 4} fontSize="13" fill={accent}>y 座標は？</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
     </svg>
   );
 }
