@@ -16200,6 +16200,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<M3CV_OUTSIDE_TANGENTS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvOutsideTangents />
+            </div>
+          );
+        }
+        if (trimmed === "<<M3CV_OUTSIDE_ASK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <M3cvOutsideAsk />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -42884,6 +42898,73 @@ function M3cvHyperbolaTangent() {
       <circle cx={px} cy={py} r="4" fill={accent} />
       <text x={px + 12} y={py + 4} fontSize="13" fill={accent}>傾きは？</text>
       <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列6 step1: 楕円と外の点 Q と、Q から引いた 2 本の接線。
+ *  ★接点どうしを結ぶ線は描かない★（描くと step5・6 の発見＝「公式に Q を入れた直線は 2 つの接点を通る」を先に見せる＝背骨 D4）。
+ *  接点の位置は「?」。座標・目盛りなし。楕円の比は模式。 */
+function M3cvOutsideTangents() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 150, cy = 140, A = 110, B = 70;
+  const qx = 205, qy = 22;
+  const tangentPt = (th: number) => [cx + A * Math.cos(th), cy - B * Math.sin(th)];
+  // 接点は Q の極線と楕円の交点（計算で求める）
+  const X = (qx - cx) / A, Y = (cy - qy) / B;
+  const r = Math.hypot(X, Y), phi = Math.atan2(Y, X), d = Math.acos(1 / r);
+  const t1 = tangentPt(phi + d), t2 = tangentPt(phi - d);
+  const ext = (p: number[]) => [qx + (p[0] - qx) * 1.35, qy + (p[1] - qy) * 1.35];
+  const e1 = ext(t1), e2 = ext(t2);
+  return (
+    <svg
+      viewBox="0 0 330 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横長の楕円と、その右上の外にある点 Q。Q から楕円に 2 本の接線が引かれていて、2 つの接点の位置は疑問符。座標と目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 315 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 240 L ${cx} 10`} fill="none" stroke={muted} strokeWidth="1" />
+      <ellipse cx={cx} cy={cy} rx={A} ry={B} fill="none" stroke={stroke} strokeWidth="2" />
+      <path d={`M ${qx} ${qy} L ${e1[0]} ${e1[1]}`} fill="none" stroke={accent} strokeWidth="2" />
+      <path d={`M ${qx} ${qy} L ${e2[0]} ${e2[1]}`} fill="none" stroke={accent} strokeWidth="2" />
+      <circle cx={qx} cy={qy} r="4" fill={accent} />
+      <text x={qx + 8} y={qy + 4} fontSize="13" fill={accent}>Q</text>
+      <text x={t1[0] - 16} y={t1[1] - 8} fontSize="13" fill={accent}>?</text>
+      <text x={t2[0] + 8} y={t2[1] + 4} fontSize="13" fill={accent}>?</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+    </svg>
+  );
+}
+
+/** いろいろな曲線 系列6 step6: 楕円と外の点 Q だけ。
+ *  ★直線は描かない★（公式に Q を入れた直線を描くと、楕円を横切る＝「接線ではない」が見える。2 つの接点を結ぶ線と重なることも見える＝R1 F5-1）。
+ *  キャプションは問いで終える。 */
+function M3cvOutsideAsk() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 150, cy = 140;
+  return (
+    <svg
+      viewBox="0 0 330 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横長の楕円と、その上の外にある点 Q。直線は描かれていない。座標と目盛りは書かれていない"
+    >
+      <path d={`M 20 ${cy} L 315 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
+      <path d={`M ${cx} 225 L ${cx} 10`} fill="none" stroke={muted} strokeWidth="1" />
+      <ellipse cx={cx} cy={cy} rx="110" ry="70" fill="none" stroke={stroke} strokeWidth="2" />
+      <circle cx="185" cy="28" r="4" fill={accent} />
+      <text x="193" y="32" fontSize="13" fill={accent}>Q</text>
+      <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
+      <text x="165" y="244" fontSize="11" fill={accent} textAnchor="middle">
+        Q を接線の公式に入れた直線は、どこを通る？
+      </text>
     </svg>
   );
 }
