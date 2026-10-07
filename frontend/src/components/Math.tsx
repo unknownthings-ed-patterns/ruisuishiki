@@ -42846,12 +42846,11 @@ function M3cvParabolaFocusAsk() {
       className="w-full h-auto"
       style={{ maxWidth: 340 }}
       role="img"
-      aria-label="上に開く放物線と、その中心を通る縦の軸。焦点は軸の上のどこかにあるが、点は描かれず疑問符だけが軸の横にある。目盛りは書かれていない"
+      aria-label="上に開く放物線と、その中心を通る縦の軸。焦点は軸の上のどこかにあるが、点も印も描かれていない。目盛りは書かれていない"
     >
       <path d={`M 20 ${cy} L 320 ${cy}`} fill="none" stroke={muted} strokeWidth="1" />
       <path d={`M ${cx} 222 L ${cx} 12`} fill="none" stroke={muted} strokeWidth="1" strokeDasharray="4 3" />
       <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="2" />
-      <text x={cx + 8} y="110" fontSize="14" fill={accent}>?</text>
       <text x={cx - 14} y={cy + 16} fontSize="12" fill={stroke}>O</text>
       <text x="170" y="236" fontSize="11" fill={accent} textAnchor="middle">
         焦点は、軸の上のどの高さ？
@@ -42906,7 +42905,7 @@ function M3cvHyperbolaTangent() {
     }
     return pts.join(" ");
   };
-  const u0 = 0.8;
+  const u0 = 1.1; // R2 C：0.8 だと画面上の傾きが答えと同じ 2.0 になっていた。1.1 で約 1.66
   const px = cx + A * Math.cosh(u0), py = cy - B * Math.sinh(u0);
   const dx = A * Math.sinh(u0), dy = -B * Math.cosh(u0);
   const n = Math.hypot(dx, dy), L = 55;

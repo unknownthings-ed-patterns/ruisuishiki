@@ -5081,7 +5081,7 @@ $3$ つの曲線は、どれも $2$ 次式で書けて、平方完成すれば�
 
 $$x = r\\cos\\theta,\\qquad y = r\\sin\\theta,\\qquad r = \\sqrt{x^2 + y^2}$$
 
-**数値で確かめる（低い床）**：極座標 $\\left(2\\sqrt2,\\ \\dfrac{3\\pi}{4}\\right)$ の点は、$x = 2\\sqrt2\\cos\\dfrac{3\\pi}{4} = -2$、$y = 2\\sqrt2\\sin\\dfrac{3\\pi}{4} = 2$ で、直交座標では $(-2,\\ 2)$。
+**数値で確かめる（低い床）**：極座標 $\\left(2\\sqrt2,\\ \\dfrac{5\\pi}{4}\\right)$ の点は、$x = 2\\sqrt2\\cos\\dfrac{5\\pi}{4} = -2$、$y = 2\\sqrt2\\sin\\dfrac{5\\pi}{4} = -2$ で、直交座標では $(-2,\\ -2)$。
 
 <<M3CV_POLAR_POINT>>
 
