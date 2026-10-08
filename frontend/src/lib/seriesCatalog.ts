@@ -138,7 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
-import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
+import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -2677,6 +2677,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "圏論入門（第1弾）",
     shortDescription:
       "合成と恒等（つなぐ・何もしない表）— 二枚の表をつないだ表から、もとの表の何が分かる？ 「何もしない表」は、何によって一つに決まる？",
+  },
+  {
+    series: CAT_CLOSURE_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "閉じる（世界としての圏）— つないだ結果がいつも世界の中にいるには、射をどれだけ足せばよい？ 足すと世界はどこまで大きくなる？",
   },
 ];
 

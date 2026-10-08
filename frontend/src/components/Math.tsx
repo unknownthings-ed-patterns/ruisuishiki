@@ -16270,6 +16270,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_ONE_POINT_LOOPS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatOnePointLoops />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_ROUTE_FIVE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatRouteFive />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43313,6 +43327,88 @@ function CatFixImage() {
       ))}
       <text x="160" y="218" fontSize="11" fill={accent} textAnchor="middle">
         f の後ろにつないでも f を変えない g は、何通り？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列3 step1: 点が 1 つの世界に、射のループを 3 本（+0・+3・+5）。ループの数は問題文と同じ 3。
+ *  ★つないだ結果の射は描かない★（描くと世界の外に出る射が見える）。キャプションは問いで終える。 */
+function CatOnePointLoops() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 110;
+  const loops = [
+    { a: -90, label: "+0", col: muted },
+    { a: 30, label: "+3", col: accent },
+    { a: 150, label: "+5", col: accent },
+  ];
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="中央に点が 1 つ。その点から出て同じ点に戻るループが 3 本あり、+0、+3、+5 と名前が付いている"
+    >
+      {loops.map((l, i) => {
+        const r = (l.a * Math.PI) / 180;
+        const ox = cx + 46 * Math.cos(r), oy = cy + 46 * Math.sin(r);
+        return (
+          <g key={i}>
+            <circle cx={ox} cy={oy} r="40" fill="none" stroke={l.col} strokeWidth="2" />
+            <text x={cx + 98 * Math.cos(r)} y={cy + 98 * Math.sin(r) + 5} fontSize="14" fill={l.col} textAnchor="middle">{l.label}</text>
+          </g>
+        );
+      })}
+      <circle cx={cx} cy={cy} r="6" fill={stroke} />
+      <text x="160" y="222" fontSize="11" fill={accent} textAnchor="middle">
+        2 本をつないだ結果は、どれもこの 3 本の中にいる？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列3 step6: 5 駅 A〜E と一方通行の線路 7 本（A→B, B→C, C→D, D→E, A→C, B→D, C→E）。駅 5・線路 7 は問題文と同じ。
+ *  ★道は描かない★（数える対象）。急行の 3 本は上下に弧で描いて、交差を減らす。キャプションは問いで終える。 */
+function CatRouteFive() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const xs = [40, 100, 160, 220, 280], y = 110;
+  const names = ["A", "B", "C", "D", "E"];
+  const arc = (i: number, j: number, up: boolean) => {
+    const mx = (xs[i] + xs[j]) / 2, my = up ? y - 62 : y + 62;
+    return `M ${xs[i] + 4} ${y + (up ? -5 : 5)} Q ${mx} ${my} ${xs[j] - 4} ${y + (up ? -5 : 5)}`;
+  };
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="横一列に駅 A・B・C・D・E。となりの駅へ進む線路が A→B・B→C・C→D・D→E の 4 本、1 駅とばす線路が A→C・B→D・C→E の 3 本。どれも一方通行"
+    >
+      <defs>
+        <marker id="catRouteArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      {[0, 1, 2, 3].map((i) => (
+        <path key={`s${i}`} d={`M ${xs[i] + 7} ${y} L ${xs[i + 1] - 9} ${y}`} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catRouteArrow)" />
+      ))}
+      <path d={arc(0, 2, true)} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catRouteArrow)" />
+      <path d={arc(2, 4, true)} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catRouteArrow)" />
+      <path d={arc(1, 3, false)} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catRouteArrow)" />
+      {xs.map((x, i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r="5" fill={stroke} />
+          <text x={x} y={y + 24} fontSize="13" fill={stroke} textAnchor="middle">{names[i]}</text>
+        </g>
+      ))}
+      <text x="160" y="210" fontSize="11" fill={muted} textAnchor="middle">
+        道は全部で何本？（長さ 0 の道も数える）
       </text>
     </svg>
   );
