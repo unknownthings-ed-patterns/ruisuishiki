@@ -16361,6 +16361,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_SPAN_V>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatSpanV />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43923,6 +43930,42 @@ function CatDivisorProduct() {
       })}
       <text x="160" y="238" fontSize="11" fill={accent} textAnchor="middle">
         20 へも 30 へも射が出る数のうち、「?」に入るのは？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列10 step1: スパン B ← A → C と、貼り合わせた名簿への 2 本の表（V 字を上で閉じる形）。★人数は描かない★（貼り合わせは ?）。 */
+function CatSpanV() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="下に両方に入っている人の名簿 A、左上に名簿 B、右上に名簿 C。A から B と C へ実線の矢印。B と C から、上の貼り合わせた名簿（疑問符）へ破線の矢印"
+    >
+      <defs>
+        <marker id="catSpanArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={stroke} />
+        </marker>
+        <marker id="catSpanArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x="160" y="172" fontSize="13" fill={stroke} textAnchor="middle">A（両方に入っている人）</text>
+      <text x="60" y="110" fontSize="13" fill={stroke} textAnchor="middle">B</text>
+      <text x="260" y="110" fontSize="13" fill={stroke} textAnchor="middle">C</text>
+      <text x="160" y="40" fontSize="15" fill={accent} textAnchor="middle">?</text>
+      <line x1="140" y1="156" x2="72" y2="118" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catSpanArrow)" />
+      <line x1="180" y1="156" x2="248" y2="118" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catSpanArrow)" />
+      <line x1="72" y1="96" x2="146" y2="46" stroke={accent} strokeWidth="1.5" strokeDasharray="5 4" markerEnd="url(#catSpanArrowA)" />
+      <line x1="248" y1="96" x2="174" y2="46" stroke={accent} strokeWidth="1.5" strokeDasharray="5 4" markerEnd="url(#catSpanArrowA)" />
+      <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
+        A の人だけを同じ人として貼ると、何人？
       </text>
     </svg>
   );
