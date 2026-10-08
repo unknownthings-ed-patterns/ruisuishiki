@@ -138,7 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
-import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
+import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CAT_ISO_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -2693,6 +2693,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "圏論入門（第1弾）",
     shortDescription:
       "結合法則と約数の圏 — 「どうつないでも同じ」は、どんなつなぎ方で破れる？ 射が高々一本の世界では、なぜひとりでに守られる？",
+  },
+  {
+    series: CAT_ISO_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "同型（行きと帰り）— 「名前を付け替えただけで同じ」と言うには、何を何本持ってくればよい？ 片方の向きだけで戻れる帰り道は、一本に決まる？",
   },
 ];
 

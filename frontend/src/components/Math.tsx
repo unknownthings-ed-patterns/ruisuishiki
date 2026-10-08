@@ -16291,6 +16291,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_GO_AND_BACK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatGoAndBack />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_SHARED_DUTIES>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatSharedDuties />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43445,6 +43459,92 @@ function CatDivisors24() {
       ))}
       <text x="160" y="200" fontSize="11" fill={accent} textAnchor="middle">
         割り切るときだけ射を引くと、射は全部で何本？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列5 step1: 旧番号と新番号の 2 列。行きの矢印 g（実線）と帰りの矢印 h（破線）を、1 組だけ描く見取り図。
+ *  ★問題の表は描かない★（点の数は模式・図の注に書く）。帰りの行き先は `?`。キャプションは問いで終える。 */
+function CatGoAndBack() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const ys = [60, 100, 140];
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に旧番号、右に新番号の点が 3 つずつ。旧番号の 1 点から新番号の 1 点へ実線の矢印 g、その新番号から旧番号の側へ破線の矢印 h が戻っていて、戻り先は疑問符。点の数は模式"
+    >
+      <defs>
+        <marker id="catGoArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x="70" y="30" fontSize="12" fill={muted} textAnchor="middle">旧番号</text>
+      <text x="250" y="30" fontSize="12" fill={muted} textAnchor="middle">新番号</text>
+      {ys.map((y, i) => (
+        <g key={i}>
+          <circle cx="70" cy={y} r="4" fill={muted} />
+          <circle cx="250" cy={y} r="4" fill={muted} />
+        </g>
+      ))}
+      <path d="M 78 100 Q 160 70 242 62" fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catGoArrow)" />
+      <path d="M 242 66 Q 160 120 80 104" fill="none" stroke={accent} strokeWidth="2" strokeDasharray="5 4" markerEnd="url(#catGoArrow)" />
+      <text x="160" y="66" fontSize="14" fill={accent} textAnchor="middle">g</text>
+      <text x="160" y="128" fontSize="14" fill={accent} textAnchor="middle">h</text>
+      <text x="40" y="104" fontSize="14" fill={accent}>?</text>
+      <text x="160" y="178" fontSize="10" fill={muted} textAnchor="middle">（点の数は模式）</text>
+      <text x="160" y="202" fontSize="11" fill={accent} textAnchor="middle">
+        行って、帰ると、どこに着く？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列5 step6: 7 人（1〜7 番）を 3 つの係に分ける表 f の矢印（1・2 → 1 号、3・4 → 2 号、5・6・7 → 3 号）。点の数は問題文と同じ 7 と 3。
+ *  ★帰りの表 g は描かない★ 係ごとの人数を色・枠で強調しない（R1 6-B）。キャプションは問いで終える。 */
+function CatSharedDuties() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const L = [30, 56, 82, 108, 134, 160, 186], R = [56, 108, 160];
+  const map = [0, 0, 1, 1, 2, 2, 2];
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に 7 人の点（1 番から 7 番）、右に 3 つの係（1 号から 3 号）。1 番と 2 番が 1 号へ、3 番と 4 番が 2 号へ、5 番・6 番・7 番が 3 号へ、矢印が 1 本ずつ"
+    >
+      <defs>
+        <marker id="catSharedArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x="60" y="16" fontSize="12" fill={muted} textAnchor="middle">人</text>
+      <text x="252" y="16" fontSize="12" fill={muted} textAnchor="middle">係</text>
+      {map.map((t, i) => (
+        <path key={i} d={`M 72 ${L[i]} L 230 ${R[t]}`} fill="none" stroke={accent} strokeWidth="1.6" markerEnd="url(#catSharedArrow)" />
+      ))}
+      {L.map((y, i) => (
+        <g key={`l${i}`}>
+          <circle cx="66" cy={y} r="4" fill={stroke} />
+          <text x="54" y={y + 4} fontSize="12" fill={stroke} textAnchor="end">{i + 1} 番</text>
+        </g>
+      ))}
+      {R.map((y, j) => (
+        <g key={`r${j}`}>
+          <circle cx="238" cy={y} r="4" fill={stroke} />
+          <text x="250" y={y + 4} fontSize="12" fill={stroke}>{j + 1} 号</text>
+        </g>
+      ))}
+      <text x="160" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        係から人へ戻る表は、何通り作れる？
       </text>
     </svg>
   );
