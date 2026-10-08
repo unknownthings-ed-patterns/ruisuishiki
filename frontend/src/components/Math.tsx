@@ -16305,6 +16305,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_CLOCK_NINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatClockNine />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_MULT_CLOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatMultClock />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43545,6 +43559,82 @@ function CatSharedDuties() {
       ))}
       <text x="160" y="226" fontSize="11" fill={accent} textAnchor="middle">
         係から人へ戻る表は、何通り作れる？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列6 step1: 時計 9 の文字盤（目盛り 0〜8）。対象は文字盤 1 つ。★答えの目盛りに印をしない★ 射 5 の弧だけ描く。 */
+function CatClockNine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 110, r = 72;
+  const pt = (k: number, rr: number) => {
+    const a = (-90 + (360 / 9) * k) * (Math.PI / 180);
+    return [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+  };
+  const [x0, y0] = pt(0, r - 14), [x5, y5] = pt(5, r - 14);
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="目盛り 0 から 8 の 9 つの時計の文字盤。0 から 5 まで、5 目盛り進める弧の矢印が描かれている"
+    >
+      <defs>
+        <marker id="catClockArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={stroke} strokeWidth="1.5" />
+      {Array.from({ length: 9 }, (_, k) => {
+        const [x, y] = pt(k, r), [tx, ty] = pt(k, r + 14);
+        return (
+          <g key={k}>
+            <circle cx={x} cy={y} r="3" fill={stroke} />
+            <text x={tx} y={ty + 4} fontSize="12" fill={stroke} textAnchor="middle">{k}</text>
+          </g>
+        );
+      })}
+      <path d={`M ${x0} ${y0} A ${r - 14} ${r - 14} 0 1 1 ${x5} ${y5}`} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catClockArrow)" />
+      <text x={cx} y={cy + 5} fontSize="13" fill={accent} textAnchor="middle">射 5</text>
+      <text x="160" y="218" fontSize="11" fill={accent} textAnchor="middle">
+        続けて 7 目盛り進めると、針はどこ？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列6 step6: かけ算の時計 36 の文字盤（目盛り 0〜35）。★戻り道の矢印も、戻れる目盛りの印も描かない★（印をすると 12 が数えられる）。 */
+function CatMultClock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const cx = 160, cy = 112, r = 78;
+  return (
+    <svg
+      viewBox="0 0 320 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="目盛り 0 から 35 の 36 個の点が円に並んだ、かけ算の時計の文字盤。矢印や印は描かれていない"
+    >
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={muted} strokeWidth="1" />
+      {Array.from({ length: 36 }, (_, k) => {
+        const a = (-90 + 10 * k) * (Math.PI / 180);
+        return (
+          <g key={k}>
+            <circle cx={cx + r * Math.cos(a)} cy={cy + r * Math.sin(a)} r="2.2" fill={stroke} />
+            <text x={cx + (r + 11) * Math.cos(a)} y={cy + (r + 11) * Math.sin(a) + 3} fontSize="7.5" fill={stroke} textAnchor="middle">{k}</text>
+          </g>
+        );
+      })}
+      <text x={cx} y={cy - 4} fontSize="12" fill={muted} textAnchor="middle">掛けて 36 で</text>
+      <text x={cx} y={cy + 12} fontSize="12" fill={muted} textAnchor="middle">割ったあまり</text>
+      <text x="160" y="226" fontSize="11" fill={accent} textAnchor="middle">
+        掛けると 1 に戻れる相手がいる目盛りは、どれ？
       </text>
     </svg>
   );
