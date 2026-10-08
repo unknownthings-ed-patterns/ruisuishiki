@@ -16284,6 +16284,13 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_DIVISORS_24>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatDivisors24 />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43409,6 +43416,35 @@ function CatRouteFive() {
       ))}
       <text x="160" y="210" fontSize="11" fill={muted} textAnchor="middle">
         道は全部で何本？（長さ 0 の道も数える）
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列4 step6: 24 の約数 8 個を 2 段に置いた点。点の数は問題文と同じ 8。★「右へ 2 倍・上へ 3 倍」の注は書かない★（step7 の山場の考え方＝指数を別々に選ぶ、を先に見せる＝層8 の補足）。
+ *  ★射は描かない★（描くと 30 本が数えられる）。キャプションは問いで終える。 */
+function CatDivisors24() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const pts: { x: number; y: number; v: number }[] = [];
+  for (let j = 0; j <= 1; j++) for (let i = 0; i <= 3; i++) pts.push({ x: 50 + i * 70, y: 140 - j * 80, v: 2 ** i * 3 ** j });
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="24 の約数 1, 2, 4, 8 が下の段に、3, 6, 12, 24 が上の段に、点として並んでいる。射の矢印は描かれていない"
+    >
+      {pts.map((p, k) => (
+        <g key={k}>
+          <circle cx={p.x} cy={p.y} r="5" fill={stroke} />
+          <text x={p.x} y={p.y + 22} fontSize="13" fill={stroke} textAnchor="middle">{p.v}</text>
+        </g>
+      ))}
+      <text x="160" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        割り切るときだけ射を引くと、射は全部で何本？
       </text>
     </svg>
   );
