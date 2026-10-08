@@ -138,6 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
+import { CAT_MAP_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -387,6 +388,7 @@ export type SeriesSubject =
   | "secondary"
   | "secondary2"
   | "secondary3"
+  | "university"
   | "tertiary"
   | "advanced";
 
@@ -397,6 +399,7 @@ export const SUBJECT_ORDER: SeriesSubject[] = [
   "secondary",
   "secondary2",
   "secondary3",
+  "university",
   "tertiary",
   "advanced",
 ];
@@ -408,6 +411,7 @@ export const SUBJECT_GROUP_LABEL: Record<SeriesSubject, string> = {
   secondary: "高校数学Ⅰ・A",
   secondary2: "高校数学Ⅱ・B",
   secondary3: "高校数学Ⅲ・C",
+  university: "大学への橋",
   tertiary: "統計・データ分析",
   // 将来用：高校数学を「分野別」（方程式・図形・関数 等）で
   // ハイレベル課題に取り組むコース。池田洋介『方程式・図形・関数からとらえる
@@ -2657,6 +2661,15 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     shortDescription:
       "軌跡と円の方程式 — $\\lvert z - \\alpha \\rvert = r$ は「$\\alpha$ からの距離が $r$」という日本語そのもの。条件を式に訳せば図形が出て、式を距離に巻き戻せば図形が読める",
   },
+  /* 大学への橋・圏論（背骨：docs/kenron_unit1_design.md・2026-10-08 凍結） */
+  {
+    series: CAT_MAP_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "写像（割り当て表）— 「出発の全員に、行き先がちょうど一つ」という約束は、どんな表を許し、何について黙っている？",
+  },
 ];
 
 /**
@@ -2741,6 +2754,7 @@ export const ALL_STATIC_SERIES: LearnerSeries[] = [
   ...MATH3_CURVES_SERIES_LIST,
   ...MATH3_VECTOR_SERIES_LIST,
   ...MATH3_COMPLEX_SERIES_LIST,
+  ...CATEGORY_SERIES_LIST,
   ...PROOF_SERIES_LIST,
   ...CALCULUS_SERIES_LIST,
   ...SEQUENCE_SERIES_LIST,

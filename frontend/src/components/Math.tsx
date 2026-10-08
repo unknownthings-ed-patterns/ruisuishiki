@@ -16242,6 +16242,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_MAP_ARROWS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatMapArrows />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_MAP_SHARED>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatMapShared />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43123,6 +43137,82 @@ function M3cvPolarLine() {
       <text x={ox - 18} y={oy + 16} fontSize="13" fill={stroke}>O</text>
       <text x="170" y="214" fontSize="11" fill={accent} textAnchor="middle">
         垂線の長さと向きは、式のどこに見える？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列1 step1: 4 人（1 番〜4 番）から 3 つの係（1 号〜3 号）への写像を矢印で描く。
+ *  描くのは step1・2 で判定する 10 枚のどれとも違う表（1→3, 2→1, 3→3, 4→2）。4 人→3 係なので、どの写像にも必ずかぶりがある。
+ *  ★図に答えを描かない★ 判定する表は描かない。キャプションは問いで終える（点の数は問題文と同じ 4 と 3）。 */
+function CatMapArrows() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const L = [40, 80, 120, 160], R = [60, 100, 140];
+  const map = [2, 0, 2, 1];
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に 4 人の点（1 番から 4 番）、右に 3 つの係の点（1 号から 3 号）。1 番から 3 号、2 番から 1 号、3 番から 3 号、4 番から 2 号へ、矢印が 1 本ずつ引かれている"
+    >
+      <text x="60" y="20" fontSize="12" fill={muted} textAnchor="middle">人</text>
+      <text x="250" y="20" fontSize="12" fill={muted} textAnchor="middle">係</text>
+      {map.map((t, i) => (
+        <g key={i}>
+          <path d={`M 72 ${L[i]} L 232 ${R[t]}`} fill="none" stroke={accent} strokeWidth="1.8" />
+          <path d={`M 232 ${R[t]} l -9 -3 l 2 3 l -2 3 z`} fill={accent} transform={`rotate(${(Math.atan2(R[t] - L[i], 160) * 180) / Math.PI} 232 ${R[t]})`} />
+        </g>
+      ))}
+      {L.map((y, i) => (
+        <g key={`l${i}`}>
+          <circle cx="66" cy={y} r="4" fill={stroke} />
+          <text x="54" y={y + 4} fontSize="12" fill={stroke} textAnchor="end">{i + 1} 番</text>
+        </g>
+      ))}
+      {R.map((y, j) => (
+        <g key={`r${j}`}>
+          <circle cx="238" cy={y} r="4" fill={stroke} />
+          <text x="250" y={y + 4} fontSize="12" fill={stroke}>{j + 1} 号</text>
+        </g>
+      ))}
+      <text x="160" y="200" fontSize="11" fill={accent} textAnchor="middle">
+        どの人からも、矢印は何本出ている？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列1 step7: 2 人が同じ係に来ている様子だけを描いた局所図（★一部だけを描いた図＝図の中にもそう書く★）。
+ *  人数・係の数は描かない（問題文は 4 人・8 係。全体を描くと数えられる）。番号も書かない。キャプションは問いで終える。 */
+function CatMapShared() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 300 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 320 }}
+      role="img"
+      aria-label="写像の一部だけを描いた図。左の 2 人の点から、右の同じ 1 つの係の点へ、矢印が 1 本ずつ来ている。ほかの人と係は描かれていない"
+    >
+      <path d="M 72 50 L 218 79" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 72 110 L 218 81" fill="none" stroke={accent} strokeWidth="2" />
+      <path d="M 222 80 l -10 -6 l 1 6 z" fill={accent} transform="rotate(11 222 80)" />
+      <path d="M 222 80 l -10 6 l 1 -6 z" fill={accent} transform="rotate(-11 222 80)" />
+      <circle cx="66" cy="50" r="4" fill={stroke} />
+      <circle cx="66" cy="110" r="4" fill={stroke} />
+      <circle cx="228" cy="80" r="5" fill={accent} />
+      <text x="54" y="54" fontSize="12" fill={stroke} textAnchor="end">人</text>
+      <text x="54" y="114" fontSize="12" fill={stroke} textAnchor="end">人</text>
+      <text x="240" y="84" fontSize="12" fill={accent}>係</text>
+      <text x="150" y="20" fontSize="11" fill={muted} textAnchor="middle">（写像の一部だけを描いた図）</text>
+      <text x="150" y="158" fontSize="11" fill={accent} textAnchor="middle">
+        2 人が同じ係に来る写像は、どれくらいある？
       </text>
     </svg>
   );
