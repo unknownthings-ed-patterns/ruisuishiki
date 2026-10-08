@@ -138,7 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
-import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CAT_ISO_SERIES, CAT_MONOID_SERIES, CAT_FUNCTOR_SERIES, CAT_NAT_SERIES, CAT_PRODUCT_SERIES, CAT_PUSHOUT_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
+import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CAT_ISO_SERIES, CAT_MONOID_SERIES, CAT_FUNCTOR_SERIES, CAT_NAT_SERIES, CAT_PRODUCT_SERIES, CAT_PUSHOUT_SERIES, CAT_ADJOINT_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -2741,6 +2741,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "圏論入門（第1弾）",
     shortDescription:
       "押し出し（貼り合わせ）— 重なりのある二つの名簿を、二重にもまとめすぎにもならずに貼ると何人？ いちばんよい貼り合わせが世界に見つからないのは、どんなとき？",
+  },
+  {
+    series: CAT_ADJOINT_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "随伴（比べ方を変えない丸め）— どの整数と比べても答えが変わらない丸め方はどれ？ いちばん近い整数への丸めは、なぜその条件を満たさない？",
   },
 ];
 

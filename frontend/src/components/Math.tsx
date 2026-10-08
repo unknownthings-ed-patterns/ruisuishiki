@@ -16368,6 +16368,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_FLOOR_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatFloorLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_ROUND_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatRoundLine />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43966,6 +43980,66 @@ function CatSpanV() {
       <line x1="248" y1="96" x2="174" y2="46" stroke={accent} strokeWidth="1.5" strokeDasharray="5 4" markerEnd="url(#catSpanArrowA)" />
       <text x="160" y="214" fontSize="11" fill={accent} textAnchor="middle">
         A の人だけを同じ人として貼ると、何人？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列11 step1: 数直線と整数の目盛り 5〜10。x の位置は「?」の範囲だけ（★x の点も、切り捨ての行き先も描かない★）。 */
+function CatFloorLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (v: number) => 30 + (v - 5) * 52;
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="5 から 10 までの整数の目盛りがある数直線。上に、x はどこ、という疑問符"
+    >
+      <line x1="16" y1="90" x2="304" y2="90" stroke={stroke} strokeWidth="1.5" />
+      {[5, 6, 7, 8, 9, 10].map((v) => (
+        <g key={v}>
+          <line x1={X(v)} y1="82" x2={X(v)} y2="98" stroke={stroke} strokeWidth="1.5" />
+          <text x={X(v)} y="118" fontSize="13" fill={stroke} textAnchor="middle">{v}</text>
+        </g>
+      ))}
+      <text x="160" y="56" fontSize="15" fill={accent} textAnchor="middle">x = 47/6 は、どこ？</text>
+      <text x="160" y="156" fontSize="11" fill={accent} textAnchor="middle">
+        x を超えない整数のうち、いちばん右はどれ？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列11 step6: 3.0〜6.4 の数直線（整数と 0.5 の目盛り）。★条件を破る区間を塗らない★ 四捨五入の矢印も描かない。 */
+function CatRoundLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const X = (t: number) => 26 + (t - 30) * 7.8;
+  return (
+    <svg
+      viewBox="0 0 320 170"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="3.0 から 6.4 までの数直線。0.1 ごとに小さな目盛り、整数に大きな目盛り"
+    >
+      <line x1={X(30) - 6} y1="80" x2={X(64) + 6} y2="80" stroke={stroke} strokeWidth="1.5" />
+      {Array.from({ length: 35 }, (_, i) => {
+        const t = 30 + i;
+        const big = t % 10 === 0;
+        return <line key={t} x1={X(t)} y1={big ? 70 : 75} x2={X(t)} y2={big ? 90 : 85} stroke={big ? stroke : muted} strokeWidth={big ? 1.5 : 1} />;
+      })}
+      {[3, 4, 5, 6].map((v) => (
+        <text key={v} x={X(v * 10)} y="110" fontSize="13" fill={stroke} textAnchor="middle">{v}</text>
+      ))}
+      <text x="160" y="40" fontSize="11" fill={muted} textAnchor="middle">小数第 1 位までの数 35 個</text>
+      <text x="160" y="150" fontSize="11" fill={accent} textAnchor="middle">
+        四捨五入した値と比べたとき、答えが変わる数は？
       </text>
     </svg>
   );
