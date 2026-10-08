@@ -138,7 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
-import { CAT_MAP_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
+import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -2669,6 +2669,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "圏論入門（第1弾）",
     shortDescription:
       "写像（割り当て表）— 「出発の全員に、行き先がちょうど一つ」という約束は、どんな表を許し、何について黙っている？",
+  },
+  {
+    series: CAT_COMPOSE_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "合成と恒等（つなぐ・何もしない表）— 二枚の表をつないだ表から、もとの表の何が分かる？ 「何もしない表」は、何によって一つに決まる？",
   },
 ];
 

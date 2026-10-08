@@ -16256,6 +16256,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_COMPOSE_TWO>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatComposeTwo />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_FIX_IMAGE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatFixImage />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43213,6 +43227,92 @@ function CatMapShared() {
       <text x="150" y="20" fontSize="11" fill={muted} textAnchor="middle">（写像の一部だけを描いた図）</text>
       <text x="150" y="158" fontSize="11" fill={accent} textAnchor="middle">
         2 人が同じ係に来る写像は、どれくらいある？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列2 step1: 「人 → 席 → 場所」の 3 列と、f・g の 2 本の矢印でたどる道すじの見取り図。
+ *  ★問題の表は描かない★（描くと 4 番の行き先が図から読める）。列ごとの点の数も模式で、問題文の 5・4・3 とは合わせない（図の注に書く）。
+ *  1 人の道すじだけを、到着の場所を `?` にして描く。キャプションは問いで終える。 */
+function CatComposeTwo() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const xs = [50, 160, 270];
+  const ys = [60, 100, 140];
+  return (
+    <svg
+      viewBox="0 0 320 220"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左から人・席・場所の 3 列の点。ある 1 人から f の矢印で席へ、その席から g の矢印で場所へたどる道すじが描かれ、着いた場所には疑問符。点の数は模式で、問題の人数とは違う"
+    >
+      <defs>
+        <marker id="catComposeArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x={xs[0]} y="28" fontSize="12" fill={muted} textAnchor="middle">人</text>
+      <text x={xs[1]} y="28" fontSize="12" fill={muted} textAnchor="middle">席</text>
+      <text x={xs[2]} y="28" fontSize="12" fill={muted} textAnchor="middle">場所</text>
+      {xs.map((x, c) => ys.map((y, r) => <circle key={`${c}-${r}`} cx={x} cy={y} r="4" fill={muted} />))}
+      <path d={`M ${xs[0] + 6} ${ys[2]} L ${xs[1] - 8} ${ys[0] + 3}`} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catComposeArrow)" />
+      <path d={`M ${xs[1] + 6} ${ys[0]} L ${xs[2] - 8} ${ys[1] - 2}`} fill="none" stroke={accent} strokeWidth="2" markerEnd="url(#catComposeArrow)" />
+      <circle cx={xs[0]} cy={ys[2]} r="5" fill={stroke} />
+      <circle cx={xs[1]} cy={ys[0]} r="5" fill={stroke} />
+      <text x={(xs[0] + xs[1]) / 2 - 14} y={(ys[2] + ys[0]) / 2 + 2} fontSize="14" fill={accent}>f</text>
+      <text x={(xs[1] + xs[2]) / 2 + 4} y={(ys[0] + ys[1]) / 2 - 6} fontSize="14" fill={accent}>g</text>
+      <text x={xs[2] + 10} y={ys[1] + 5} fontSize="14" fill={accent}>?</text>
+      <text x="160" y="182" fontSize="10" fill={muted} textAnchor="middle">（点の数は模式）</text>
+      <text x="160" y="205" fontSize="11" fill={accent} textAnchor="middle">
+        f のあとに g——人から場所まで、何をたどる？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列2 step7: 5 人から 4 つの席への表 f（1→2, 2→4, 3→2, 4→4, 5→2）の矢印。点の数は問題文と同じ 5 と 4。
+ *  ★g は描かない★ 誰も来ない席 1・3 を色・記号・間隔で強調しない（R1 6-B：指数が図から読めると発見の半分を渡す）。キャプションは問いで終える。 */
+function CatFixImage() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const L = [40, 75, 110, 145, 180], R = [55, 95, 135, 175];
+  const map = [1, 3, 1, 3, 1];
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に 5 人の点（1 番から 5 番）、右に 4 つの席の点（席 1 から席 4）。1 番・3 番・5 番から席 2 へ、2 番・4 番から席 4 へ、矢印が 1 本ずつ引かれている"
+    >
+      <defs>
+        <marker id="catFixArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x="60" y="20" fontSize="12" fill={muted} textAnchor="middle">人</text>
+      <text x="252" y="20" fontSize="12" fill={muted} textAnchor="middle">席</text>
+      {map.map((t, i) => (
+        <path key={i} d={`M 72 ${L[i]} L 230 ${R[t]}`} fill="none" stroke={accent} strokeWidth="1.8" markerEnd="url(#catFixArrow)" />
+      ))}
+      {L.map((y, i) => (
+        <g key={`l${i}`}>
+          <circle cx="66" cy={y} r="4" fill={stroke} />
+          <text x="54" y={y + 4} fontSize="12" fill={stroke} textAnchor="end">{i + 1} 番</text>
+        </g>
+      ))}
+      {R.map((y, j) => (
+        <g key={`r${j}`}>
+          <circle cx="238" cy={y} r="4" fill={stroke} />
+          <text x="250" y={y + 4} fontSize="12" fill={stroke}>席 {j + 1}</text>
+        </g>
+      ))}
+      <text x="160" y="218" fontSize="11" fill={accent} textAnchor="middle">
+        f の後ろにつないでも f を変えない g は、何通り？
       </text>
     </svg>
   );
