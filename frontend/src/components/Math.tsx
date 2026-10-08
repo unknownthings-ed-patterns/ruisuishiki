@@ -16333,6 +16333,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_NAT_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatNatSquare />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_ROUTE_SQUARE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatRouteSquare />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43739,6 +43753,86 @@ function CatWrapClock() {
       <text x={cx} y={cy + 4} fontSize="11" fill={muted} textAnchor="middle">時計 11</text>
       <text x="160" y="228" fontSize="11" fill={accent} textAnchor="middle">
         つないでから巻くのと、巻いてからつなぐのと、同じ？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列8 step1: 自然変換の四角。4 つの角（1 組の人・1 組の班・2 組の人・2 組の班）と 4 辺の名前（F(s)・G(s)・α_X・α_Y）だけ。
+ *  ★行き先の番号は描かない★（描くと可換かどうかが読める＝R1 6-C）。右まわり・左まわりの道筋を 2 色の破線で示す。 */
+function CatNatSquare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 230"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="四角の左上に 1 組の人、右上に 1 組の班、左下に 2 組の人、右下に 2 組の班。上の辺 F(s)、下の辺 G(s)、左の辺 α_X、右の辺 α_Y。左上から右下へ、上と右を通る道と、左と下を通る道がある"
+    >
+      <defs>
+        <marker id="catNatArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={stroke} />
+        </marker>
+      </defs>
+      <text x="70" y="44" fontSize="12" fill={stroke} textAnchor="middle">1 組の人</text>
+      <text x="250" y="44" fontSize="12" fill={stroke} textAnchor="middle">1 組の班</text>
+      <text x="70" y="176" fontSize="12" fill={stroke} textAnchor="middle">2 組の人</text>
+      <text x="250" y="176" fontSize="12" fill={stroke} textAnchor="middle">2 組の班</text>
+      <line x1="112" y1="40" x2="204" y2="40" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catNatArrow)" />
+      <line x1="112" y1="172" x2="204" y2="172" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catNatArrow)" />
+      <line x1="70" y1="54" x2="70" y2="156" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catNatArrow)" />
+      <line x1="250" y1="54" x2="250" y2="156" stroke={stroke} strokeWidth="1.5" markerEnd="url(#catNatArrow)" />
+      <text x="158" y="30" fontSize="13" fill={stroke} textAnchor="middle">F(s)</text>
+      <text x="158" y="194" fontSize="13" fill={stroke} textAnchor="middle">G(s)</text>
+      <text x="56" y="110" fontSize="13" fill={stroke} textAnchor="end">α<tspan baselineShift="sub" fontSize="9">X</tspan></text>
+      <text x="264" y="110" fontSize="13" fill={stroke}>α<tspan baselineShift="sub" fontSize="9">Y</tspan></text>
+      <path d="M 96 56 L 226 56 L 232 150" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 86 62 L 92 156 L 222 156" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <text x="180" y="72" fontSize="10" fill={accent} textAnchor="middle">右まわり</text>
+      <text x="140" y="148" fontSize="10" fill={muted} textAnchor="middle">左まわり</text>
+      <text x="160" y="220" fontSize="11" fill={accent} textAnchor="middle">
+        2 本の道は、同じ班に着く？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列8 step10: 一方通行の路線 1→2, 1→3, 2→4, 3→4（材料の世界）。駅と線路だけ。★名簿・表・行き先は描かない★ */
+function CatRouteSquare() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const P: Record<number, [number, number]> = { 1: [60, 110], 2: [160, 46], 3: [160, 174], 4: [260, 110] };
+  const E: [number, number][] = [[1, 2], [1, 3], [2, 4], [3, 4]];
+  return (
+    <svg
+      viewBox="0 0 320 236"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="駅 1 から駅 2 と駅 3 へ、駅 2 と駅 3 から駅 4 へ、一方通行の線路が 4 本。駅 1 から駅 4 への道は 2 本ある"
+    >
+      <defs>
+        <marker id="catRouteSqArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={stroke} />
+        </marker>
+      </defs>
+      {E.map(([a, b], i) => {
+        const [x1, y1] = P[a], [x2, y2] = P[b];
+        const d = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / d, uy = (y2 - y1) / d;
+        return <line key={i} x1={x1 + ux * 10} y1={y1 + uy * 10} x2={x2 - ux * 12} y2={y2 - uy * 12} stroke={stroke} strokeWidth="1.5" markerEnd="url(#catRouteSqArrow)" />;
+      })}
+      {Object.entries(P).map(([k, [x, y]]) => (
+        <g key={k}>
+          <circle cx={x} cy={y} r="6" fill={stroke} />
+          <text x={x} y={y + (Number(k) === 3 ? 24 : Number(k) === 2 ? -14 : 24)} fontSize="12" fill={stroke} textAnchor="middle">駅 {k}</text>
+        </g>
+      ))}
+      <text x="160" y="224" fontSize="11" fill={accent} textAnchor="middle">
+        駅ごとに名簿、線路ごとに表を決める
       </text>
     </svg>
   );
