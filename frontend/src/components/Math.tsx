@@ -16347,6 +16347,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_TWO_LISTS>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatTwoLists />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_DIVISOR_PRODUCT>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatDivisorProduct />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43833,6 +43847,82 @@ function CatRouteSquare() {
       ))}
       <text x="160" y="224" fontSize="11" fill={accent} textAnchor="middle">
         駅ごとに名簿、線路ごとに表を決める
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列9 step1: 色の名簿（3 点）と形の名簿（4 点）を、離して並べただけ。★組のますは描かない★（描くと 12 が数えられる＝R1 6-A） */
+function CatTwoLists() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="左に色の名簿の点が 3 つ（1 番から 3 番）、右に形の名簿の点が 4 つ（1 番から 4 番）、縦に並んでいる"
+    >
+      <text x="80" y="26" fontSize="12" fill={muted} textAnchor="middle">色</text>
+      <text x="240" y="26" fontSize="12" fill={muted} textAnchor="middle">形</text>
+      {[0, 1, 2].map((i) => (
+        <g key={`c${i}`}>
+          <circle cx="80" cy={56 + i * 38} r="5" fill={stroke} />
+          <text x="94" y={60 + i * 38} fontSize="12" fill={stroke}>{i + 1} 番</text>
+        </g>
+      ))}
+      {[0, 1, 2, 3].map((i) => (
+        <g key={`s${i}`}>
+          <rect x="235" y={44 + i * 30} width="10" height="10" fill={stroke} />
+          <text x="252" y={53 + i * 30} fontSize="12" fill={stroke}>{i + 1} 番</text>
+        </g>
+      ))}
+      <text x="160" y="188" fontSize="11" fill={accent} textAnchor="middle">
+        色と形を 1 つずつ組にすると、組は何個？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列9 step6: 60 の約数 12 個の点（射は描かない）。20 と 30 を強調し、「?」から 20・30 へ射を 2 本。
+ *  ★答えの点（10）に印をしない★ 点は公約数以外も含む（R1 6-C）。 */
+function CatDivisorProduct() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const D = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60];
+  const pos = (i: number): [number, number] => [34 + (i % 6) * 50, 60 + Math.floor(i / 6) * 60];
+  const p20 = pos(D.indexOf(20)), p30 = pos(D.indexOf(30));
+  return (
+    <svg
+      viewBox="0 0 320 250"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="60 の約数 12 個の点が 2 段に並び、20 と 30 が強調されている。下の疑問符から、20 と 30 へ射が 1 本ずつ出ている"
+    >
+      <defs>
+        <marker id="catDivProdArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={accent} />
+        </marker>
+      </defs>
+      <text x={(p20[0] + p30[0]) / 2} y="200" fontSize="16" fill={accent} textAnchor="middle">?</text>
+      <line x1={(p20[0] + p30[0]) / 2 - 6} y1="186" x2={p20[0] + 4} y2={p20[1] + 24} stroke={accent} strokeWidth="1.5" markerEnd="url(#catDivProdArrow)" />
+      <line x1={(p20[0] + p30[0]) / 2 + 6} y1="186" x2={p30[0] - 4} y2={p30[1] + 24} stroke={accent} strokeWidth="1.5" markerEnd="url(#catDivProdArrow)" />
+      {D.map((d, i) => {
+        const [x, y] = pos(i);
+        const hi = d === 20 || d === 30;
+        return (
+          <g key={d}>
+            <circle cx={x} cy={y} r={hi ? 5 : 4} fill={hi ? accent : stroke} />
+            <text x={x} y={y + 18} fontSize="12" fill={hi ? accent : stroke} textAnchor="middle">{d}</text>
+          </g>
+        );
+      })}
+      <text x="160" y="238" fontSize="11" fill={accent} textAnchor="middle">
+        20 へも 30 へも射が出る数のうち、「?」に入るのは？
       </text>
     </svg>
   );
