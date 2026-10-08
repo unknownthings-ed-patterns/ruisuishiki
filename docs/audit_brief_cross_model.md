@@ -32,6 +32,7 @@
 | **複素数平面（11 系列 110 問・数Ⅲ・C 第10章）** | `frontend/src/lib/seriesMath3Complex.ts` | `docs/math3c_complex_design.md` | `~/ruisuishiki-refs/第１０章　複素数平面/source_notes.md` | `M3c*`（新規 22 枚・流用 0） | `~/ruisuishiki-refs/audit_math3c_ch10_grok.md`（Round 2）／`..._backbone_grok.md`（Round 1・実施済み）／`..._recheck_grok.md`（Round 3） |
 | **いろいろな関数の微分（9 系列 90 問・数Ⅲ・C 第4章）** | `frontend/src/lib/seriesMath3VariousDiff.ts`（予定） | `docs/math3c_various_diff_design.md` | `~/ruisuishiki-refs/第４章　いろいろな関数の微分_jpeg/source_notes.md` | `M3VD*`（新規 18 枚予定） | `~/ruisuishiki-refs/audit_math3c_ch4_backbone_codex.md`（Round 1）／`..._impl_codex.md`（Round 2・最後） |
 | **微分法の応用（11 系列 110 問・数Ⅲ・C 第5章）** | `frontend/src/lib/seriesMath3DiffApp.ts` | `docs/math3c_diff_app_design.md` | `~/ruisuishiki-refs/第５章　微分法の応用_jpeg/source_notes.md`＋`collide.txt`（式と文） | `M3DA*`（新規 22 枚） | `~/ruisuishiki-refs/audit_math3c_ch5_backbone_sonnet.md`（Round 1・**Sonnet 5.5**）／`..._impl_sonnet.md`（Round 2・3 体を束ねたもの・最後） |
+| **圏論（11 系列 110 問・大学への橋・第1弾）** | `frontend/src/lib/seriesCategory.ts`（予定） | `docs/kenron_unit1_design.md` | `~/ruisuishiki-refs/kenron_unit1/source_notes.md`＋`collide.txt`（原典＝先生の自著『教育者のための圏論入門』） | `CAT*`（新規 20 枚前後） | `~/ruisuishiki-refs/audit_kenron_unit1_backbone_sonnet.md`（Round 1・Sonnet 5.5）／`..._impl_sonnet.md`（Round 2・3 体を束ねたもの・最後） |
 
 **渡す前に、機械 5 本を先に通す**（`python3 scripts/audit_cross_refs.py <対象ファイル>`）。
 機械で拾えるものを潰してから渡すと、モデルの時間が**判断の要る読み**に寄る。
