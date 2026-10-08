@@ -138,7 +138,7 @@ import {
   M3CV_POLAR_CURVE_SERIES,
   MATH3_CURVES_SERIES_LIST,
 } from "./seriesMath3Curves";
-import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CAT_ISO_SERIES, CAT_MONOID_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
+import { CAT_MAP_SERIES, CAT_COMPOSE_SERIES, CAT_CLOSURE_SERIES, CAT_LAWS_SERIES, CAT_ISO_SERIES, CAT_MONOID_SERIES, CAT_FUNCTOR_SERIES, CATEGORY_SERIES_LIST } from "./seriesCategory";
 import {
   MATH3_VECTOR_SERIES_LIST,
   M3V_QUANTITY_SERIES,
@@ -2709,6 +2709,14 @@ export const STATIC_CATALOG: CatalogEntry[] = [
     topicGroup: "圏論入門（第1弾）",
     shortDescription:
       "モノイド（点が一つの世界）— 同じ射をくり返すとどこへ行き、どの射に戻り道があるかは、何が決める？",
+  },
+  {
+    series: CAT_FUNCTOR_SERIES,
+    subject: "university",
+    subjectLabel: "大学への橋・圏論",
+    topicGroup: "圏論入門（第1弾）",
+    shortDescription:
+      "関手（世界から世界への翻訳）— 翻訳が守るべき約束は何で、その約束はどこまで値を決めてしまう？",
   },
 ];
 

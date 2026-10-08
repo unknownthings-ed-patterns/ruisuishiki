@@ -16319,6 +16319,20 @@ export function MathBody({ text }: { text: string }) {
             </div>
           );
         }
+        if (trimmed === "<<CAT_SKIP_LINE>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatSkipLine />
+            </div>
+          );
+        }
+        if (trimmed === "<<CAT_WRAP_CLOCK>>") {
+          return (
+            <div key={i} className="my-6 flex justify-center">
+              <CatWrapClock />
+            </div>
+          );
+        }
         if (trimmed === "<<M3F_NAMED_RULE>>") {
           return (
             <div key={i} className="my-6 flex justify-center">
@@ -43635,6 +43649,96 @@ function CatMultClock() {
       <text x={cx} y={cy + 12} fontSize="12" fill={muted} textAnchor="middle">割ったあまり</text>
       <text x="160" y="226" fontSize="11" fill={accent} textAnchor="middle">
         掛けると 1 に戻れる相手がいる目盛りは、どれ？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列7 step1: 駅 1〜9 の一方通行。下に各駅の線路（k → k+1）、上にとばし線路（k → k+2）。点の数は問題文と同じ 9。★道は描かない★ */
+function CatSkipLine() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const x = (k: number) => 24 + (k - 1) * 34;
+  const y = 120;
+  return (
+    <svg
+      viewBox="0 0 320 210"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="駅 1 から駅 9 が左から右へ一列に並ぶ。下側に、となりの駅へ進む矢印が 8 本、上側に、1 駅とばして進む弧の矢印が 7 本"
+    >
+      <defs>
+        <marker id="catSkipArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={muted} />
+        </marker>
+      </defs>
+      {Array.from({ length: 7 }, (_, i) => {
+        const k = i + 1;
+        const lift = k % 2 === 1 ? 34 : 54;
+        return <path key={`s${k}`} d={`M ${x(k) + 3} ${y - 6} Q ${x(k + 1)} ${y - lift} ${x(k + 2) - 3} ${y - 6}`} fill="none" stroke={muted} strokeWidth="1.3" markerEnd="url(#catSkipArrow)" />;
+      })}
+      {Array.from({ length: 8 }, (_, i) => (
+        <path key={`l${i}`} d={`M ${x(i + 1) + 6} ${y + 8} L ${x(i + 2) - 6} ${y + 8}`} fill="none" stroke={stroke} strokeWidth="1.3" markerEnd="url(#catSkipArrow)" />
+      ))}
+      {Array.from({ length: 9 }, (_, i) => (
+        <g key={i}>
+          <circle cx={x(i + 1)} cy={y} r="4" fill={stroke} />
+          <text x={x(i + 1)} y={y + 28} fontSize="12" fill={stroke} textAnchor="middle">{i + 1}</text>
+        </g>
+      ))}
+      <text x="160" y="40" fontSize="10" fill={muted} textAnchor="middle">上：とばし線路　下：各駅の線路</text>
+      <text x="160" y="196" fontSize="11" fill={accent} textAnchor="middle">
+        とばし線路を 3 回使うと、線路は全部で何本？
+      </text>
+    </svg>
+  );
+}
+
+/** 圏論 系列7 step5: 足し算の世界（数直線 0〜22）を時計 11 に巻きつける。0・11・22 が同じ目盛り 0 へ行く破線だけ描く。★答えの位置は描かない★ */
+function CatWrapClock() {
+  const stroke = "var(--foreground)";
+  const accent = "var(--accent)";
+  const muted = "var(--muted)";
+  const nx = (n: number) => 20 + n * 12.8;
+  const cx = 160, cy = 150, r = 44;
+  const pt = (k: number, rr: number) => {
+    const a = (-90 + (360 / 11) * k) * (Math.PI / 180);
+    return [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+  };
+  const [z0x, z0y] = pt(0, r);
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      className="w-full h-auto"
+      style={{ maxWidth: 340 }}
+      role="img"
+      aria-label="上に 0 から 22 までの数直線、下に目盛り 0 から 10 の時計 11 の文字盤。数直線の 0・11・22 から、文字盤の 0 へ破線が集まっている"
+    >
+      <line x1={nx(0)} y1="40" x2={nx(22)} y2="40" stroke={stroke} strokeWidth="1.3" />
+      {Array.from({ length: 23 }, (_, n) => (
+        <g key={n}>
+          <line x1={nx(n)} y1="36" x2={nx(n)} y2="44" stroke={stroke} strokeWidth="1" />
+          {n % 11 === 0 && <text x={nx(n)} y="30" fontSize="11" fill={accent} textAnchor="middle">{n}</text>}
+        </g>
+      ))}
+      {[0, 11, 22].map((n) => (
+        <line key={n} x1={nx(n)} y1="46" x2={z0x} y2={z0y - 4} stroke={accent} strokeWidth="1" strokeDasharray="4 3" />
+      ))}
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={stroke} strokeWidth="1.3" />
+      {Array.from({ length: 11 }, (_, k) => {
+        const [px, py] = pt(k, r), [tx, ty] = pt(k, r + 11);
+        return (
+          <g key={k}>
+            <circle cx={px} cy={py} r="2.5" fill={stroke} />
+            <text x={tx} y={ty + 3.5} fontSize="9" fill={stroke} textAnchor="middle">{k}</text>
+          </g>
+        );
+      })}
+      <text x={cx} y={cy + 4} fontSize="11" fill={muted} textAnchor="middle">時計 11</text>
+      <text x="160" y="228" fontSize="11" fill={accent} textAnchor="middle">
+        つないでから巻くのと、巻いてからつなぐのと、同じ？
       </text>
     </svg>
   );
