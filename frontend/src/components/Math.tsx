@@ -43452,7 +43452,7 @@ function CatOnePointLoops() {
     >
       {loops.map((l, i) => {
         const r = (l.a * Math.PI) / 180;
-        const ox = cx + 46 * Math.cos(r), oy = cy + 46 * Math.sin(r);
+        const ox = cx + 40 * Math.cos(r), oy = cy + 40 * Math.sin(r);
         return (
           <g key={i}>
             <circle cx={ox} cy={oy} r="40" fill="none" stroke={l.col} strokeWidth="2" />
@@ -43576,7 +43576,7 @@ function CatGoAndBack() {
       <text x="40" y="104" fontSize="14" fill={accent}>?</text>
       <text x="160" y="178" fontSize="10" fill={muted} textAnchor="middle">（点の数は模式）</text>
       <text x="160" y="202" fontSize="11" fill={accent} textAnchor="middle">
-        行って、帰ると、どこに着く？
+        帰りの矢印は、旧番号のどこへ着く？
       </text>
     </svg>
   );
@@ -43824,8 +43824,8 @@ function CatNatSquare() {
       <text x="158" y="194" fontSize="13" fill={stroke} textAnchor="middle">G(s)</text>
       <text x="56" y="110" fontSize="13" fill={stroke} textAnchor="end">α<tspan baselineShift="sub" fontSize="9">X</tspan></text>
       <text x="264" y="110" fontSize="13" fill={stroke}>α<tspan baselineShift="sub" fontSize="9">Y</tspan></text>
-      <path d="M 96 56 L 226 56 L 232 150" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
-      <path d="M 86 62 L 92 156 L 222 156" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 96 56 L 232 56 L 232 152" fill="none" stroke={accent} strokeWidth="1.2" strokeDasharray="4 3" />
+      <path d="M 88 62 L 88 152 L 232 152" fill="none" stroke={muted} strokeWidth="1.2" strokeDasharray="4 3" />
       <text x="180" y="72" fontSize="10" fill={accent} textAnchor="middle">右まわり</text>
       <text x="140" y="148" fontSize="10" fill={muted} textAnchor="middle">左まわり</text>
       <text x="160" y="220" fontSize="11" fill={accent} textAnchor="middle">
@@ -44014,7 +44014,7 @@ function CatFloorLine() {
   );
 }
 
-/** 圏論 系列11 step6: 3.0〜6.4 の数直線（整数と 0.5 の目盛り）。★条件を破る区間を塗らない★ 四捨五入の矢印も描かない。 */
+/** 圏論 系列11 step6: 3.0〜6.4 の数直線（整数の大きな目盛りと 0.1 の小さな目盛り。0.5 は区別しない＝境界を見せない）。★条件を破る区間を塗らない★ 四捨五入の矢印も描かない。 */
 function CatRoundLine() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
