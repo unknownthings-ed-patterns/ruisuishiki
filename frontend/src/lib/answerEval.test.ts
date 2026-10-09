@@ -92,4 +92,26 @@ assert.equal(judgeSolutionSet("5pi/6, pi/6", [Math.PI / 6, (5 * Math.PI) / 6]), 
 assert.equal(judgeSolutionSet("pi/6", [Math.PI / 6, (5 * Math.PI) / 6]), false);
 assert.equal(judgeSolutionSet("pi/6, pi/6", [Math.PI / 6, (5 * Math.PI) / 6]), false);
 
+// 末尾の単位は外す（2026-10-09 先生の裁定）。先頭・途中の日本語は外さない。
+close(evaluateAnswer("13人"), 13, "trailing japanese unit");
+close(evaluateAnswer("30 本"), 30, "spaced unit");
+close(evaluateAnswer("５ｃｍ".replace("ｃｍ", "cm")), 5, "full-width digit with unit");
+close(evaluateAnswer("12cm²"), 12, "squared unit");
+close(evaluateAnswer("1.5m^2"), 1.5, "caret squared unit");
+close(evaluateAnswer("60km/時"), 60, "compound unit");
+close(evaluateAnswer("2√3cm"), 2 * Math.sqrt(3), "symbolic value with unit");
+close(evaluateAnswer("1/2cm"), 0.5, "fraction with unit");
+assert.equal(evaluateAnswer("約13"), null, "leading japanese stays invalid");
+assert.equal(evaluateAnswer("13と5"), null, "japanese between numbers stays invalid");
+assert.equal(judgeSolutionSet("2, 3 cm", [2, 3]), true);
+assert.equal(judgeSolutionSet("2cm, 3cm", [2, 3]), true);
+
+// カンマは桁区切りだけを外す（2026-10-09）。「3,2」を 32 として通さない。
+close(evaluateAnswer("7,560"), 7560, "comma thousands 2");
+close(evaluateAnswer("1,000,000"), 1000000, "comma millions");
+assert.equal(evaluateAnswer("3,2"), null, "non-thousands comma is invalid");
+assert.equal(evaluateAnswer("1,7,2,8"), null, "digit-by-digit commas are invalid");
+assert.equal(evaluateAnswer("12,34"), null, "two-digit group is invalid");
+assert.equal(judgeSingle("3,2", 32), false);
+
 console.log("answerEval: all regression tests passed");

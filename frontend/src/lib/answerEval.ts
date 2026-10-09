@@ -343,14 +343,41 @@ class Parser {
  * 後方互換：整数・小数・`a/b` は従来の parseFloat ベースと同値。
  * パース不能・空文字・不正な構文は null。
  */
+/**
+ * 末尾の単位を外す（2026-10-09 先生の裁定）。
+ * 画面は入力欄の横に単位を出しているが、学習者が「13人」「30本」「5cm」と単位まで打つのは自然で、
+ * 従来はパース不能＝無反応（試行にも数えない）になっていた。
+ * 外すのは**末尾**の「日本語の語（かな・漢字。長音は 2 文字目以降だけ）」か「既知の単位記号」だけ。
+ * 先頭や途中の日本語（「約13」「13と5」）は外さず、従来どおりパース不能。
+ * 長音「ー」は normalizeInput でマイナスに変わるので、正規化の前に外す。
+ */
+// 単位 1 つ＝日本語の語か単位記号に、2 乗・3 乗（² ³ ^2 ^3）がついてもよい。
+// 「km/時」「m/秒」のように「/」で 2 つつないだ形も外す。
+const UNIT_WORD =
+  "(?:[ぁ-ゖァ-ヺ一-龠々〆〇][ぁ-ゖァ-ヺー一-龠々〆〇]*|[%％°℃]|mm|cm|km|mg|kg|ml|mL|dL|dl|m|g|L|ℓ|㎜|㎝|㎞|㎡|㎥)(?:\\^[23]|[²³])?";
+const UNIT_SUFFIX = new RegExp(`\\s*${UNIT_WORD}(?:\\s*\\/\\s*${UNIT_WORD})?\\s*$`);
+export function stripUnit(input: string): string {
+  return input.replace(UNIT_SUFFIX, "");
+}
+
+/**
+ * 桁区切りのカンマだけを外す（2026-10-09 先生の裁定）。
+ * 従来はカンマを一律に除去していたので、「3,2」が 32、「1,7,2,8」が 1728 として通っていた。
+ * 外すのは「数字のあとで、ちょうど 3 桁の数字が続くカンマ」だけ（「1,080」「30,000」「1,000,000」）。
+ * それ以外のカンマは残し、tokenizer がパース不能として返す。
+ */
+function stripThousandsCommas(s: string): string {
+  return s.replace(/(\d),(?=\d{3}(?!\d))/g, "$1");
+}
+
 export function evaluateAnswer(input: string): number | null {
   if (input == null) return null;
-  // 後方互換：旧 parseAnswer はカンマを除去してから解釈していた
-  // （桁区切り「1,080」「30,000」を学習者が打っても通る）。同じ前処理を踏襲する。
+  // 旧 parseAnswer は桁区切り「1,080」「30,000」を通していた。その後方互換は保ち、
+  // 桁区切りでないカンマ（「3,2」）だけを弾くように絞った（2026-10-09）。
   // 空白は除去せず tokenizer に任せる。これにより "2 3" を "23" に畳まず、
   // num×num の隣接ミスとして弾ける。
   // 複数解パス（judgeSolutionSet）は先にカンマで分割してから各片を渡すので無影響。
-  const normalized = normalizeInput(input).replace(/,/g, "");
+  const normalized = stripThousandsCommas(normalizeInput(stripUnit(input)));
   const tokens = tokenize(normalized);
   if (tokens === null || tokens.length === 0) return null;
   try {
@@ -390,7 +417,8 @@ export function judgeSolutionSet(
   tol: number = ANSWER_TOL,
 ): boolean {
   // 空白も区切りに含めず、純粋に "," で分割（空白は evaluateAnswer 側で無視）。
-  const pieces = normalizeInput(input)
+  // 末尾の単位（「2, 3 cm」）は分割の前に外す。各片の単位（「2cm, 3cm」）は evaluateAnswer が外す。
+  const pieces = normalizeInput(stripUnit(input))
     .split(",")
     .map((p) => p.trim())
     .filter((p) => p.length > 0);
