@@ -673,7 +673,7 @@ export const COUNT_SUBTRACT_SERIES: LearnerSeries = {
       id: "step1",
       position: 1,
       questionText:
-        "マラソン大会で、ゼッケン番号（[背番号]）が $24$ 番から $52$ 番までの選手が同じチームです。このチームの選手は全部で何人でしょう？",
+        "マラソン大会で、ゼッケン番号（背番号）が $24$ 番から $52$ 番までの選手が同じチームです。このチームの選手は全部で何人でしょう？",
       answer: 29,
       unit: "人",
       unknownLabel: "チームの選手の人数",
