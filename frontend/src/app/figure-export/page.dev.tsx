@@ -76,14 +76,42 @@ function FigureExportBody() {
       html.style.setProperty(k, v);
     }
 
-    const root = document.getElementById("figure-capture-root");
-    const hasSvg = Boolean(root?.querySelector("svg"));
-    const leftover = Boolean(root?.textContent?.includes("<<"));
-    html.dataset.figureReady = marker ? "1" : "index";
-    html.dataset.figureUnknown = marker && (!hasSvg || leftover) ? "1" : "0";
-    if (root) {
-      root.dataset.unknown = html.dataset.figureUnknown;
+    // 図の本体（Figures.tsx）は遅延読み込みなので、読み込みと描画を待ってから「撮ってよい」の合図を出す。
+    // 待たずに合図を出すと、撮影スクリプトが図の出る前の空の枠を撮ってしまう（2026-10-11 バンドル分割）。
+    let alive = true;
+    const markReady = () => {
+      const root = document.getElementById("figure-capture-root");
+      const hasSvg = Boolean(root?.querySelector("svg"));
+      const leftover = Boolean(root?.textContent?.includes("<<"));
+      html.dataset.figureReady = marker ? "1" : "index";
+      html.dataset.figureUnknown = marker && (!hasSvg || leftover) ? "1" : "0";
+      if (root) {
+        root.dataset.unknown = html.dataset.figureUnknown;
+      }
+    };
+    if (!marker) {
+      markReady();
+      return;
     }
+    delete html.dataset.figureReady;
+    void import("@/components/Figures").then(({ FIGURES }) => {
+      const known = `<<${marker}>>` in FIGURES;
+      let frames = 0;
+      const waitForSvg = () => {
+        if (!alive) return;
+        const root = document.getElementById("figure-capture-root");
+        // 表にある図なら SVG が出るまで待つ（最大 2 秒ほど）。表に無いマーカーは待たずに「未知」と合図する。
+        if (!known || root?.querySelector("svg") || frames++ > 120) {
+          markReady();
+          return;
+        }
+        requestAnimationFrame(waitForSvg);
+      };
+      waitForSvg();
+    });
+    return () => {
+      alive = false;
+    };
   }, [marker]);
 
   if (!marker) {
@@ -122,7 +150,7 @@ function FigureExportBody() {
           図版エクスポート
         </h1>
         <p style={{ lineHeight: 1.8, fontSize: 15 }}>
-          既存の <code>figureMarker</code>（Math.tsx のマーカー）を、白背景に単体で描画します。撮影は{" "}
+          既存の <code>figureMarker</code>（Figures.tsx の FIGURES 表のマーカー）を、白背景に単体で描画します。撮影は{" "}
           <code>~/book-math1a/tools/capture_figures.py</code> が Chrome headless
           で行います。
         </p>
