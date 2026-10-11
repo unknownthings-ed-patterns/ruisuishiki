@@ -18,6 +18,7 @@ export default function TeachIndex() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage はマウント後にしか読めない（static export）
     setSeries(listTeacherSeries());
     setHasHydrated(true);
   }, []);

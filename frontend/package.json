@@ -7,18 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "npm run test:math && npm run test:mora && npm run test:stats",
+    "test": "npm run test:math && npm run test:mora && npm run test:stats && npm run test:data",
     "test:math": "tsc src/lib/answerEval.ts src/lib/answerEval.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/answerEval.test.js",
     "test:mora": "tsc src/lib/moraCount.ts src/lib/moraCount.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/moraCount.test.js",
-    "test:stats": "tsc src/lib/storage.ts src/lib/storage.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/storage.test.js"
+    "test:stats": "tsc src/lib/storage.ts src/lib/storage.test.ts --outDir .test-tmp --target es2020 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/storage.test.js",
+    "test:data": "tsc src/lib/dataIntegrity.test.ts --outDir .test-tmp --target es2021 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --strict && node .test-tmp/dataIntegrity.test.js"
   },
   "dependencies": {
-    "@types/react-katex": "^3.0.4",
-    "katex": "^0.17.0",
-    "next": "16.2.9",
+    "katex": "^0.19.0",
+    "next": "16.4.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-katex": "^3.1.0"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -26,7 +25,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

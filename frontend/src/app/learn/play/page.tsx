@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from "react";
 import { MathBody, MathText } from "@/components/Math";
 import {
   ANSWER_TOL,
@@ -23,6 +23,7 @@ import {
   saveSeriesCompletion,
   saveStepRecord,
 } from "@/lib/storage";
+import { toPlainText } from "@/lib/plainText";
 import { getTeacherSeries } from "@/lib/teacherStorage";
 import type { LearnerSeries, LearnerStep } from "@/lib/types";
 
@@ -69,6 +70,7 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
     lastPointRef.current = null;
     activePointerIdRef.current = null;
     activeTouchIdRef.current = null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetKey（問題）が変わったら手書きを消す
     setEnabled(false);
     clearInk();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -254,6 +256,8 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
         <button
           type="button"
           aria-pressed={enabled}
+          aria-label="問題に手書きで線を引く"
+          title="問題に手書きで線を引く"
           onClick={() => setEnabled((current) => !current)}
           className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-3 transition-colors"
           style={{
@@ -270,6 +274,8 @@ function ProblemInkLayer({ resetKey }: { resetKey: string }) {
           <button
             type="button"
             onClick={clearInk}
+            aria-label="手書きの線を消す"
+            title="手書きの線を消す"
             className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
           >
@@ -323,6 +329,12 @@ export default function Play() {
   const [showingDerivation, setShowingDerivation] = useState(false);
   /** 解答入力欄への参照（π・√ パレットをカーソル位置に挿入するため）。 */
   const inputRef = useRef<HTMLInputElement>(null);
+  /**
+   * 解答欄のラベル（unknownLabel）の id。unknownLabel は `$N$` のような数式を含むので、
+   * aria-label に生の文字列を渡すと読み上げが「ドル N ドル」になる。
+   * 画面に見えている KaTeX 描画済みのラベル（MathML つき）を aria-labelledby で指す。
+   */
+  const answerLabelId = useId();
 
   const step = series.steps[stepIndex];
   const totalSteps = series.steps.length;
@@ -370,6 +382,7 @@ export default function Play() {
       const staticSeries = findStaticSeries(seriesIdParam);
       if (staticSeries) {
         activeSeries = staticSeries;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- URL・localStorage はマウント後にしか読めない（static export）
         setSeries(staticSeries);
       } else {
         const teacherSeries = getTeacherSeries(seriesIdParam);
@@ -418,6 +431,7 @@ export default function Play() {
       series.steps.map((s) => s.id),
     );
     if (resume >= series.steps.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- 系列が決まったら localStorage の履歴から再開位置を復元する
       setStatus("completed");
       setShowingDerivation(false);
       setShowQualRevelation(false);
@@ -453,12 +467,14 @@ export default function Play() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage はマウント後にしか読めない（static export）
     setMyProblem(loadMyProblem(series.id));
   }, [series.id]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (step.variationFromPrevious !== "qualitative") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- step が変わったら気づきメモを localStorage から復元する
       setQualNote("");
       return;
     }
@@ -724,9 +740,9 @@ export default function Play() {
             <span
               className="text-muted truncate"
               style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-              title={series.title}
+              title={toPlainText(series.title)}
             >
-              {series.title}
+              <MathText text={series.title} />
             </span>
           </div>
         </nav>
@@ -914,9 +930,9 @@ export default function Play() {
           <span
             className="text-muted truncate"
             style={{ fontSize: "12px", letterSpacing: "0.08em" }}
-            title={series.title}
+            title={toPlainText(series.title)}
           >
-            {series.title}
+            <MathText text={series.title} />
           </span>
         </div>
       </nav>
@@ -1285,6 +1301,7 @@ export default function Play() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex items-baseline gap-3">
                 <span
+                  id={answerLabelId}
                   className="text-muted shrink-0"
                   style={{ fontSize: "13px", letterSpacing: "0.1em" }}
                 >
@@ -1298,7 +1315,7 @@ export default function Play() {
                   onChange={handleAnswerChange}
                   autoFocus
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xl tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
-                  aria-label={step.unknownLabel}
+                  aria-labelledby={answerLabelId}
                   placeholder={
                     showLogButton || showEButton
                       ? "例：log 3, 1-2/e"

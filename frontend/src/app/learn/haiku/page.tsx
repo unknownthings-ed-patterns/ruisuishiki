@@ -242,13 +242,14 @@ function MoraMeter({
   // 五・七・五の区切り表示（●=入力ずみ ○=あきわく ｜=くぎり）。色でなく形で示す。
   if (segments && segments.length > 0) {
     const total = segments.reduce((a, b) => a + b, 0);
-    let rem = n;
-    const parts = segments.map((seg) => {
-      const filled = Math.min(rem, seg);
-      rem -= filled;
+    // 前のかたまりから順に埋める。i 番目のかたまりに残っている音数は
+    // 「全体 − それより前のかたまりの合計」（負なら 0）。
+    const parts = segments.map((seg, i) => {
+      const before = segments.slice(0, i).reduce((a, b) => a + b, 0);
+      const filled = Math.max(0, Math.min(n - before, seg));
       return { seg, filled };
     });
-    const extra = rem; // 字余り分
+    const extra = Math.max(0, n - total); // 字余り分
     const note =
       n === total
         ? `${total}音ぴったり`
@@ -531,6 +532,7 @@ export default function HaikuPlay() {
     const params = new URLSearchParams(window.location.search);
     const sid = params.get("seriesId");
     const resolved = (sid && resolveKokugoSeries(sid)) || KOKUGO_ALL_SERIES[0];
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- URL・localStorage はマウント後にしか読めない（static export）
     setSeries(resolved);
     if (params.get("fresh") === "1") {
       clearSeriesHistory(resolved.id);
@@ -549,12 +551,13 @@ export default function HaikuPlay() {
       if (resume >= resolved.steps.length) setCompleted(true);
       else if (resume > 0) setStepIndex(resume);
     }
-    setAuthorName(window.localStorage.getItem("kokugo_author") ?? "");
+    setAuthorName(readLocal("kokugo_author") ?? "");
     setHydrated(true);
   }, []);
 
   // step（または系列）が変わるたびに入力状態をリセット
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- step が変わったときの入力リセット（保存済みの句の復元を含む）
     setHintsOpened(0);
     setChoice(null);
     setOrder([]);
@@ -579,17 +582,9 @@ export default function HaikuPlay() {
         ? new Array(step.creationCheck.selfChecklist.length).fill(false)
         : [],
     );
-    setNote(
-      typeof window !== "undefined"
-        ? window.localStorage.getItem(noteKey(series.id, step.id)) ?? ""
-        : "",
-    );
+    setNote(readLocal(noteKey(series.id, step.id)) ?? "");
     if (step.pickViewpoints) {
-      const saved =
-        typeof window !== "undefined"
-          ? window.localStorage.getItem(vpKey(series.id, step.id))
-          : null;
-      const chosen: string[] = saved ? JSON.parse(saved) : [];
+      const chosen = parseStringArray(readLocal(vpKey(series.id, step.id)));
       setVpChecked(shownViewpoints.map((it) => chosen.includes(it.text)));
     } else {
       setVpChecked([]);
@@ -1002,7 +997,7 @@ export default function HaikuPlay() {
                     setVpChecked((c) => {
                       const next = [...c];
                       next[i] = !next[i];
-                      window.localStorage.setItem(
+                      writeLocal(
                         vpKey(series.id, step.id),
                         JSON.stringify(
                           shownViewpoints
@@ -1031,7 +1026,7 @@ export default function HaikuPlay() {
                 value={note}
                 onChange={(e) => {
                   setNote(e.target.value);
-                  window.localStorage.setItem(noteKey(series.id, step.id), e.target.value);
+                  writeLocal(noteKey(series.id, step.id), e.target.value);
                 }}
                 rows={3}
                 placeholder={
@@ -2113,7 +2108,7 @@ function HaikuCardOverlay({
             value={authorName}
             onChange={(e) => {
               setAuthorName(e.target.value);
-              window.localStorage.setItem("kokugo_author", e.target.value);
+              writeLocal("kokugo_author", e.target.value);
             }}
             placeholder="名前（任意）"
             className="rounded-md border px-3 py-1"
@@ -2152,6 +2147,36 @@ function HaikuCardOverlay({
   );
 }
 
+/**
+ * localStorage の読み書き。プライベートモード・容量超過・ストレージ無効化で例外になっても、
+ * 作品づくりは続ける（数学側の「localStorage 不可でも学習は続ける」と同じ方針）。
+ * とくに観点チェックは state の更新関数の中で保存するので、例外がそのまま描画を落とす。
+ */
+function readLocal(key: string): string | null {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+function writeLocal(key: string, value: string): void {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // 保存できなくても続ける
+  }
+}
+/** 保存済みの文字列配列（JSON）を読む。壊れていれば空。 */
+function parseStringArray(raw: string | null): string[] {
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
 /** 気づきメモの localStorage キー。 */
 function noteKey(seriesId: string, stepId: string): string {
   return `kokugo_note:${seriesId}:${stepId}`;
@@ -2167,7 +2192,7 @@ function fillInKey(seriesId: string, stepId: string): string {
   return `kokugo_fillin:${seriesId}:${stepId}`;
 }
 function saveFillInSlots(seriesId: string, stepId: string, slots: string[]): void {
-  window.localStorage.setItem(fillInKey(seriesId, stepId), JSON.stringify(slots));
+  writeLocal(fillInKey(seriesId, stepId), JSON.stringify(slots));
 }
 function loadFillInSlots(seriesId: string, stepId: string): string[] | null {
   try {
@@ -2184,7 +2209,7 @@ function haikuKey(seriesId: string, stepId: string): string {
   return `kokugo_haiku:${seriesId}:${stepId}`;
 }
 function saveHaiku(seriesId: string, stepId: string, work: string, reading: string): void {
-  window.localStorage.setItem(haikuKey(seriesId, stepId), JSON.stringify({ work, reading }));
+  writeLocal(haikuKey(seriesId, stepId), JSON.stringify({ work, reading }));
 }
 function loadHaiku(seriesId: string, stepId: string): { work: string; reading: string } | null {
   try {
@@ -2246,19 +2271,11 @@ function collectFootprints(series: KokugoSeries): {
       if (op && OP_LABEL_JA[op]) hard.push({ op: OP_LABEL_JA[op] });
     }
   }
-  let chosen: string[] = [];
   const pvStep = series.steps.find((s) => s.pickViewpoints);
-  if (pvStep) {
-    try {
-      const raw = window.localStorage.getItem(vpKey(series.id, pvStep.id));
-      if (raw) chosen = JSON.parse(raw);
-    } catch {
-      chosen = [];
-    }
-  }
+  const chosen = pvStep ? parseStringArray(readLocal(vpKey(series.id, pvStep.id))) : [];
   let noteCount = 0;
   for (const s of series.steps) {
-    const n = window.localStorage.getItem(noteKey(series.id, s.id));
+    const n = readLocal(noteKey(series.id, s.id));
     if (n && n.trim()) noteCount++;
   }
   return { walked, hard, chosen, noteCount };

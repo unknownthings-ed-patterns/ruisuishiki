@@ -67,6 +67,7 @@ export default function SeriesPreview() {
     if (seriesId) {
       const teacherSeries = getTeacherSeries(seriesId);
       const activeSeries = teacherSeries ?? findStaticSeries(seriesId);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- URL・localStorage はマウント後にしか読めない（static export）
       setSeries(activeSeries);
       setIsTeacherOwned(Boolean(teacherSeries));
       if (activeSeries) {
@@ -212,13 +213,13 @@ export default function SeriesPreview() {
             className="font-serif text-foreground"
             style={{ fontSize: "clamp(28px, 3vw, 36px)", letterSpacing: "0.06em" }}
           >
-            {series.title}
+            <MathText text={series.title} />
           </h1>
           <p
             className="text-muted"
             style={{ fontSize: "14px", lineHeight: 2 }}
           >
-            {series.subtitle}
+            <MathText text={series.subtitle} />
           </p>
         </header>
 

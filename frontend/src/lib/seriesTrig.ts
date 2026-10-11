@@ -3169,7 +3169,7 @@ export const TRIG_COMPOSITION_SERIES: LearnerSeries = {
           text: "中身 $\\theta + \\dfrac{\\pi}{4}$ は $\\dfrac{\\pi}{4}$〜$\\dfrac{3\\pi}{4}$ を動く。この弧の上で $\\sin$（高さ）は、真上 $\\dfrac{\\pi}{2}$ で最大 $1$、両端 $\\dfrac{\\pi}{4}$・$\\dfrac{3\\pi}{4}$ で最小 $\\dfrac{1}{\\sqrt{2}}$。$\\sqrt{2}$ 倍して最大値 $\\sqrt{2}$（$\\theta = \\dfrac{\\pi}{4}$）・最小値 $1$（$\\theta = 0, \\dfrac{\\pi}{2}$）。**変域があるときは端点まで吟味**——[単位円] の弧で読むのが確実。",
         },
       ],
-      formulaPreview: "中身 ∈ [π/4, 3π/4] → sin ∈ [1/√2, 1] → y ∈ [1, √2]",
+      formulaPreview: "中身 $\\in [\\pi/4,\\ 3\\pi/4]$ → sin $\\in [1/\\sqrt{2},\\ 1]$ → y $\\in [1,\\ \\sqrt{2}]$",
     },
   ],
   derivation: `**中心の問い** ｜ ずれた $2$ つの波 $\\sin\\theta$ と $\\cos\\theta$ を足しても、ばらばらにならず、また $1$ つのきれいな波に戻るのはなぜ？——係数の組 $(a, b)$ を平面の $1$ 点と見ると、その『長さ』と『向き』が、新しい波の高さとずれそのものだとしたら？

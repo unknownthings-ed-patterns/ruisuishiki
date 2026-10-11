@@ -21,7 +21,6 @@ from .models import (
     ContextCategory,
     Problem,
     ProblemSource,
-    VerificationLog,
 )
 from .patterns import ALL_PATTERNS, get_pattern
 from .verification import VerificationFailure, verify_problem

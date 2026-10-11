@@ -39,7 +39,7 @@ class Settings(BaseModel):
     log_level: str = "INFO"
 
     @classmethod
-    def from_env(cls) -> "Settings":
+    def from_env(cls) -> Settings:
         key = os.environ.get("ANTHROPIC_API_KEY", "")
         if not key or not key.startswith("sk-ant-"):
             raise RuntimeError(

@@ -41,10 +41,7 @@ import {
   SEQ_RECUR_LINEAR_SERIES,
   SEQ_INDUCTION_SERIES,
 } from "./seriesSequence";
-import {
-  ALGEBRA_2_SERIES_LIST,
-  ALGEBRA2_DIFF_SERIES,
-} from "./seriesAlgebra2";
+import { ALGEBRA_2_SERIES_LIST } from "./seriesAlgebra2";
 import {
   MATH3_LIMITS_SERIES_LIST,
   M3L_INTRO_SERIES,

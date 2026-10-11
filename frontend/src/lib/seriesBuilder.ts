@@ -13,7 +13,6 @@ import type {
   LearnerSeries,
   LearnerStep,
   StepRecord,
-  VariationOp,
 } from "./types";
 import { type MaterialCandidate, verifyCandidate } from "./verification";
 
@@ -63,14 +62,8 @@ export function buildSeries(input: BuilderInput): BuildResult {
     const position = steps.length + 1;
     const id = `step${position}`;
     const isFirst = position === 1;
-    const isLast =
-      input.lastIsQualitative === true &&
-      // 質的変化は2問目以降のみ意味がある
-      steps.length > 0 &&
-      // 検証可能な残り候補がないことを後で判定するため一旦保留：
-      // ここでは候補すべてが検証通過と仮定し、最終位置を確定するために
-      // この時点では false にしておき、後で書き換える
-      false;
+    // 最終 step の「質的変化」マークは、検証を通った候補の数が確定してから
+    // ループの後で付け替える（lastIsQualitative）。
 
     const step: LearnerStep = {
       id,
@@ -219,7 +212,3 @@ function substituteFormulaForHint(
   }
   return formula;
 }
-
-// 念のため：未使用 import を抑える
-void ({} as { StepRecord: unknown }).StepRecord;
-void ({} as { VariationOp: unknown }).VariationOp;

@@ -138,7 +138,7 @@ class OpComposite(BaseModel):
     """複合——複数オペレータの組み合わせ。"""
 
     type: Literal["COMPOSITE"] = "COMPOSITE"
-    ops: list["VariationOperator"]
+    ops: list[VariationOperator]
 
 
 VariationOperator = Annotated[

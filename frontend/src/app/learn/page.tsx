@@ -129,6 +129,7 @@ export default function LearnIndex() {
         total: entry.series.steps.length,
       };
     });
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- 学習履歴（localStorage）はマウント後にしか読めない（static export）
     setCatalog(withProgress);
 
     const kokugoWithProgress = STATIC_KOKUGO_CATALOG.map((entry) => {
@@ -339,7 +340,7 @@ export default function LearnIndex() {
                 className="font-serif text-foreground"
                 style={{ fontSize: "19px", letterSpacing: "0.05em" }}
               >
-                {item.entry.series.title}
+                <MathText text={item.entry.series.title} />
               </h2>
               <p className="text-muted" style={{ fontSize: "14px", lineHeight: 1.9 }}>
                 この系列を歩いてから {revisit.daysSinceCompletion}日。
@@ -656,7 +657,7 @@ export default function LearnIndex() {
                       className="font-serif text-foreground"
                       style={{ fontSize: "17px", letterSpacing: "0.06em" }}
                     >
-                      {s.title}
+                      <MathText text={s.title} />
                     </p>
                     <p
                       className="mt-1.5 text-muted truncate"
@@ -722,7 +723,7 @@ function KokugoCatalogCard({
                 letterSpacing: "0.06em",
               }}
             >
-              {entry.series.title}
+              <MathText text={entry.series.title} />
             </span>
             {entry.badge && (
               <span
@@ -827,7 +828,7 @@ function CatalogCard({
               letterSpacing: "0.06em",
             }}
           >
-            {entry.series.title}
+            <MathText text={entry.series.title} />
           </p>
           {isCompleted && (
             <span

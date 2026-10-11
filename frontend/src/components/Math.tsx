@@ -2,7 +2,7 @@
 
 import "katex/dist/katex.min.css";
 import React, { useState } from "react";
-import { BlockMath, InlineMath } from "react-katex";
+import { BlockMath, InlineMath } from "@/components/Katex";
 import { GLOSSARY, type GlossaryEntry, type VerifyResult } from "@/lib/glossary";
 import { seriesHref } from "@/lib/seriesCatalog";
 
@@ -369,6 +369,7 @@ function TryExample({
       const stored = window.localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage はマウント後にしか読めない（static export）
         if (Array.isArray(parsed)) setFoundExamples(parsed);
       }
     } catch {
@@ -1087,7 +1088,6 @@ export function BundleStep8() {
  * では「(1, 1)」と位置として示し、問題で問うているのは x 座標）。
  */
 export function BundleStep10() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const Ox = 130;
@@ -1223,7 +1223,6 @@ export function ComplexStep1() {
  * 実軸に関して対称な 2 点。答え（積 = 2）は描かない。
  */
 export function ComplexStep4() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const Ox = 140;
@@ -1578,7 +1577,6 @@ export function FactorStep4() {
  * 複素平面で 2 つの共役解を accent ドットで表示。値（α β = 8）は描かない。
  */
 export function FactorStep5() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const Ox = 140;
@@ -2497,7 +2495,6 @@ export function ParametricStep4() {
  * 答え（軌跡の頂点 x = 3）は具体的には描かない。
  */
 export function ParametricStep6() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const Ox = 160;
@@ -3170,7 +3167,6 @@ export function LPStep6() {
  * 答え (N = 9) は描かない。
  */
 export function LPStep9() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillRegion = "color-mix(in oklch, var(--accent) 10%, transparent)";
@@ -3179,7 +3175,6 @@ export function LPStep9() {
   const xs = 24;
   const ys = 3;
   const Px = (x: number) => Ox + x * xs;
-  const Py = (y: number) => Oy + (-y) * ys; // y は下向き（放物線が下に開く感じだが、ここでは y=x² なので上向き）
 
   // 実際は、y = x² の下側を通過領域として描く。SVG では y 軸が下向きなので、
   // (x, x²) は数学座標で y が大きい = SVG では下の値
@@ -3779,7 +3774,6 @@ export function ExpLogMirror() {
  */
 export function LogNegMiss() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const warn = "color-mix(in oklch, var(--accent) 70%, red 30%)";
   const ox = 50;
@@ -3825,7 +3819,7 @@ export function LogNegMiss() {
         y = −25
       </text>
       <text x="180" y="210" fontSize="11" fill={muted} textAnchor="middle">
-        交点はいくつ？——真数が負なら [対数] は？
+        交点はいくつ？——真数が負なら対数は？
       </text>
     </svg>
   );
@@ -3932,10 +3926,10 @@ export function LogAxisAdd() {
       </text>
 
       <text x="180" y="210" fontSize="11" fill={muted} textAnchor="middle">
-        [対数] の外側の和 ↔ 真数の中の積——指数法則の逆読み？
+        対数の外側の和 ↔ 真数の中の積——指数法則の逆読み？
       </text>
       <text x="180" y="230" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        底をそろえた [対数] の和は、何を指している？
+        底をそろえた対数の和は、何を指している？
       </text>
     </svg>
   );
@@ -3962,12 +3956,12 @@ export function LogBaseMix() {
         log₅ M · log₇ N
       </text>
       <text x="180" y="118" fontSize="11" fill={muted} textAnchor="middle" fontStyle="italic">
-        底 5 と底 7——[対数法則] だけではそろわない
+        底 5 と底 7——対数法則だけではそろわない
       </text>
 
       <line x1="100" y1="160" x2="260" y2="160" stroke={accent} strokeWidth="1.2" strokeDasharray="6,4" />
       <text x="180" y="182" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        [底の変換公式] で底を 1 つに？
+        底の変換公式で底を 1 つに？
       </text>
       <text x="180" y="204" fontSize="11" fill={muted} textAnchor="middle">
         底がバラバラの積——変換なしでは法則が使えない
@@ -9236,7 +9230,6 @@ export function DecimalDivisionPureStep1() {
 /** 小5「商を概数で表す」Step 1：1.66...を1.7へ丸める数直線。 */
 export function DecimalDivisionRoundingStep1() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 8%, transparent)";
   return (
@@ -10194,7 +10187,7 @@ export function LogGraphReflect() {
         (1, ?)
       </text>
       <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
-        指数のグラフを y = x で折り返すと——[対数関数]？
+        指数のグラフを y = x で折り返すと——対数関数？
       </text>
     </svg>
   );
@@ -10260,7 +10253,7 @@ export function LogGraphDec() {
         右端
       </text>
       <text x="180" y="222" fontSize="11" fill={muted} textAnchor="middle">
-        0 &lt; a &lt; 1 — 真数が大きいほど [対数] は小さい？
+        0 &lt; a &lt; 1 — 真数が大きいほど対数は小さい？
       </text>
     </svg>
   );
@@ -10270,7 +10263,6 @@ export function LogGraphDec() {
  * 対数方程式 系列8 Step 1・5：真数条件の数直線（解の値は書かない）。
  */
 export function LogDomainLine() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 10%, transparent)";
@@ -10308,7 +10300,7 @@ export function LogDomainLine() {
         log の真数が正——境界はどこ？
       </text>
       <text x="180" y="186" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        [真数条件] を先に書かないと何が起きうる？
+        真数条件を先に書かないと何が起きうる？
       </text>
     </svg>
   );
@@ -10371,7 +10363,7 @@ export function LogTBand() {
         x &gt; 0
       </text>
       <text x="180" y="236" fontSize="11" fill={muted} textAnchor="middle">
-        2次を解いたあと——[真数条件] で残る x は？
+        2次を解いたあと——真数条件で残る x は？
       </text>
     </svg>
   );
@@ -10502,7 +10494,7 @@ export function Log10Shoulder() {
         仮数を 0 ≦ 仮数 &lt; 1 に揃えると…
       </text>
       <text x="180" y="214" fontSize="11" fill={accent} textAnchor="middle" fontWeight="600">
-        [桁数] と最高位が同時に読める？
+        桁数と最高位が同時に読める？
       </text>
     </svg>
   );
@@ -11168,7 +11160,6 @@ export function IneqBalanceStep1() {
  * 境界の値は書かず、向きと塗りだけを示す。
  */
 export function IneqNumlineFlip() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
@@ -11265,7 +11256,6 @@ export function IneqNumlineAnd() {
  * 距離の値や座標は書かず、「いくつあるか」を問う。
  */
 export function QuadPmStep1() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const y = 120;
@@ -11814,7 +11804,6 @@ export function QuadIneqSign() {
 
 /** 系列7 step7：交わらない上側。 */
 export function AlwaysAbove() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
@@ -12906,7 +12895,6 @@ export function M3fDivideToCenter() {
  */
 export function M3fClearDenom() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
   const paper = "var(--background)";
@@ -19539,7 +19527,6 @@ export function ProbExpectBalance() {
 export function CountVenn() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const fillA = "color-mix(in oklch, var(--accent) 10%, transparent)";
   const fillB = "color-mix(in oklch, var(--accent) 10%, transparent)";
   const fillOverlap = "color-mix(in oklch, var(--accent) 26%, transparent)";
@@ -20369,7 +20356,6 @@ export function CountSameBundle() {
 export function CountBlock() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
   const chip = (x: number, label: string, key: string) => (
     <g key={key}>
@@ -34378,7 +34364,6 @@ export function M3cThreePointRatio() {
 export function M3cRatioTransform() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   return (
     <svg
       viewBox="0 0 320 168"
@@ -36240,7 +36225,6 @@ function M3vdChordArc() {
  *  ★層8★ 目盛りも値も書かない。壁が向かう高さは「?」のまま（そろう先が 1 か別の数かが、この step の発見）。
  *  描くのは「上の壁は水平・下の壁は山形・その間に曲線」という仕組みだけ。 */
 function M3vdSqueezeWalls() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const cx = 180;
@@ -36917,7 +36901,6 @@ function M3vdTwoRules() {
  *  ★層8 の補足★ x<0 側が −x に等しいことは描かない——それがこの step の発見そのもの。
  *  描くのは「原点で折れた V の字である」という形だけ。式も値も目盛りも書かない。 */
 function M3dSqrtSquareV() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   return (
@@ -37297,7 +37280,6 @@ export function M3lTugOfWar() {
  *  ★5 件が読み取れる並びにしない（1 つの分数だけを描く）。 */
 export function M3lDivideByTop() {
   const stroke = "var(--foreground)";
-  const accent = "var(--accent)";
   const muted = "var(--muted)";
   const warm = "var(--accent-warm)";
   const fillColor = "color-mix(in oklch, var(--accent) 6%, transparent)";
@@ -38511,7 +38493,6 @@ export function M3vAddJoin() {
 export function M3vSubDirection() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   return (
     <svg
       viewBox="0 0 360 160"
@@ -39380,18 +39361,6 @@ export function M3vParallelogramD() {
   );
 }
 
-const headPath = (x1: number, y1: number, x2: number, y2: number, color: string, w: number, k: string) => {
-  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
-  const ex = dx / L, ey = dy / L;
-  const hx = x2 - ex * 8, hy = y2 - ey * 8;
-  const nx = -ey * 4.2, ny = ex * 4.2;
-  return (
-    <g key={k}>
-      <path d={`M ${x1} ${y1} L ${hx} ${hy}`} fill="none" stroke={color} strokeWidth={w} />
-      <path d={`M ${hx + nx} ${hy + ny} L ${x2} ${y2} L ${hx - nx} ${hy - ny} Z`} fill={color} />
-    </g>
-  );
-};
 
 /** ベクトル 系列9 step1: 直線のベクトル方程式（始点ベクトル ＋ t × 方向ベクトル）。
  *  t を動かすと P が直線の上を走る「帯」を描く。
@@ -40381,7 +40350,7 @@ function M3daInflectTwoTypes() {
         <text x={ox + 34} y="40" fontSize="12" fill={accent} textAnchor="middle">{change ? "−" : "+"}</text>
         <text x={ox + 60} y="40" fontSize="11" fill={muted} textAnchor="middle">0</text>
         <text x={ox + 86} y="40" fontSize="12" fill={accent} textAnchor="middle">+</text>
-        <text x={ox + 60} y="56" fontSize="9.5" fill={muted} textAnchor="middle">f'' の符号</text>
+        <text x={ox + 60} y="56" fontSize="9.5" fill={muted} textAnchor="middle">{"f'' の符号"}</text>
         <polyline points={pts.join(" ")} fill="none" stroke={stroke} strokeWidth="1.8" />
         <circle cx={ox + 60} cy="118" r="3" fill={accent} />
         <text x={ox + 60} y="168" fontSize="10.5" fill={stroke} textAnchor="middle">
@@ -40400,9 +40369,9 @@ function M3daInflectTwoTypes() {
     >
       {panel(34, true)}
       {panel(170, false)}
-      <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">どちらも f'' = 0 になる点</text>
+      <text x="160" y="14" fontSize="11" fill={muted} textAnchor="middle">{"どちらも f'' = 0 になる点"}</text>
       <text x="160" y="190" fontSize="11" fill={accent} textAnchor="middle">
-        f'' = 0 の点は、それぞれどちらの型？
+        {"f'' = 0 の点は、それぞれどちらの型？"}
       </text>
     </svg>
   );
@@ -40509,11 +40478,10 @@ function M3daEndTowardZero() {
 function M3daTwoWalls() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const X = (u: number) => 30 + u * 27;
   const up = (u: number) => 150 - 34 * Math.sqrt(u + 0.2);
   const mid = (u: number) => 152 - 22 * Math.log(1 + u) - 4 * Math.sin(u * 2.2);
-  const lo = (u: number) => 158;
+  const lo = (_u: number) => 158;
   const path = (fn: (u: number) => number) => {
     const pts: string[] = [];
     for (let k = 0; k <= 60; k++) {
@@ -42378,7 +42346,6 @@ function M3iaArcPiece() {
 /** 積分法の応用 系列6 step5: 曲線を小さな線分の折れ線で近似する図（区切りが細かいほど曲線に近づく）。
  *  ★図に答えを描かない★ 目盛り・曲線の式・長さの値は書かない。折れ線の本数に意味を持たせない（模式）。 */
 function M3iaArcSum() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const f = (u: number) => 170 - 140 * Math.pow(u, 3);
@@ -43517,7 +43484,6 @@ function CatRouteFive() {
 function CatDivisors24() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const pts: { x: number; y: number; v: number }[] = [];
   for (let j = 0; j <= 1; j++) for (let i = 0; i <= 3; i++) pts.push({ x: 50 + i * 70, y: 140 - j * 80, v: 2 ** i * 3 ** j });
   return (
@@ -43544,7 +43510,6 @@ function CatDivisors24() {
 /** 圏論 系列5 step1: 旧番号と新番号の 2 列。行きの矢印 g（実線）と帰りの矢印 h（破線）を、1 組だけ描く見取り図。
  *  ★問題の表は描かない★（点の数は模式・図の注に書く）。帰りの行き先は `?`。キャプションは問いで終える。 */
 function CatGoAndBack() {
-  const stroke = "var(--foreground)";
   const accent = "var(--accent)";
   const muted = "var(--muted)";
   const ys = [60, 100, 140];
@@ -43631,7 +43596,6 @@ function CatSharedDuties() {
 function CatClockNine() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const cx = 160, cy = 110, r = 72;
   const pt = (k: number, rr: number) => {
     const a = (-90 + (360 / 9) * k) * (Math.PI / 180);
@@ -43839,7 +43803,6 @@ function CatNatSquare() {
 function CatRouteSquare() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const P: Record<number, [number, number]> = { 1: [60, 110], 2: [160, 46], 3: [160, 174], 4: [260, 110] };
   const E: [number, number][] = [[1, 2], [1, 3], [2, 4], [3, 4]];
   return (
@@ -43912,7 +43875,6 @@ function CatTwoLists() {
 function CatDivisorProduct() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const D = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60];
   const pos = (i: number): [number, number] => [34 + (i % 6) * 50, 60 + Math.floor(i / 6) * 60];
   const p20 = pos(D.indexOf(20)), p30 = pos(D.indexOf(30));
@@ -43953,7 +43915,6 @@ function CatDivisorProduct() {
 function CatSpanV() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   return (
     <svg
       viewBox="0 0 320 230"
@@ -43989,7 +43950,6 @@ function CatSpanV() {
 function CatFloorLine() {
   const stroke = "var(--foreground)";
   const accent = "var(--accent)";
-  const muted = "var(--muted)";
   const X = (v: number) => 30 + (v - 5) * 52;
   return (
     <svg
