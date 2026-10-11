@@ -9,7 +9,7 @@ import {
   StructuredDictionaryPage,
 } from "@/components/Math";
 import { GLOSSARY } from "@/lib/glossary";
-import { seriesHref } from "@/lib/seriesCatalog";
+import { seriesHref } from "@/lib/catalogMeta";
 
 /**
  * 辞書ページ専用ルート。

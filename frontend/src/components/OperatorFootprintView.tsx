@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MathText } from "@/components/Math";
-import { findStaticSeries, seriesHref } from "@/lib/seriesCatalog";
+import { resolveSeriesId, seriesHref } from "@/lib/catalogMeta";
 import type {
   LearningStats,
   OperatorViewData,
@@ -18,15 +18,19 @@ export const OPERATOR_LABELS: Record<VariationOp, string> = {
 export function OperatorFootprintView({
   data,
   stats,
+  findTitle,
 }: {
   data: OperatorViewData;
   stats?: LearningStats;
+  /** 系列 id → タイトル（カタログの索引から引く。全系列の本文は持たない）。 */
+  findTitle: (seriesId: string) => string | undefined;
 }) {
   const focusLabel = data.focusOp ? OPERATOR_LABELS[data.focusOp] : null;
   const focusSeries = data.focusSeries[0];
-  const focusSeriesData = focusSeries
-    ? findStaticSeries(focusSeries.seriesId)
-    : null;
+  const focusId = focusSeries ? resolveSeriesId(focusSeries.seriesId) : null;
+  const focusTitle = focusId ? findTitle(focusId) : undefined;
+  const focusSeriesData =
+    focusId && focusTitle !== undefined ? { id: focusId, title: focusTitle } : null;
 
   return (
     <div className="flex flex-col gap-5">

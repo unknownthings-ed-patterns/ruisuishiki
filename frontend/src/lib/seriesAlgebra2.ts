@@ -190,12 +190,7 @@ $$a_n = a + (n - 1) d$$
 **数列を順に書いてみる**
 
 $$\\begin{aligned}
-a_1 &= a \\\\
-a_2 &= a + d \\\\
-a_3 &= a + 2d \\\\
-a_4 &= a + 3d \\\\
-&\\,\\,\\vdots
-\\end{aligned}$$
+a_1 &= a \\\\ a_2 &= a + d \\\\ a_3 &= a + 2d \\\\ a_4 &= a + 3d \\\\&\\,\\,\\vdots \\end{aligned}$$
 
 並べてみると **「公差 $d$ を何回足したか」が項番号より 1 つ少ない** ことに気づきます。
 
@@ -343,9 +338,7 @@ $$S = (a + l) \\times \\frac{n}{2} = \\frac{n(a + l)}{2}$$
 別の見方もできます。
 
 $$\\begin{aligned}
-S &= a + (a + d) + (a + 2d) + \\cdots + l \\\\
-S &= l + (l - d) + (l - 2d) + \\cdots + a \\quad \\text{（逆順）}
-\\end{aligned}$$
+S &= a + (a + d) + (a + 2d) + \\cdots + l \\\\ S &= l + (l - d) + (l - 2d) + \\cdots + a \\quad \\text{（逆順）} \\end{aligned}$$
 
 この2つを足し算すると、各項のペアがすべて $a + l$ になります。$n$ 個のペアができるので：
 
@@ -720,12 +713,7 @@ $$a_n = a \\cdot r^{n - 1}$$
 **数列を順に書いてみる**
 
 $$\\begin{aligned}
-a_1 &= a \\\\
-a_2 &= a \\cdot r \\\\
-a_3 &= a \\cdot r^2 \\\\
-a_4 &= a \\cdot r^3 \\\\
-&\\,\\,\\vdots
-\\end{aligned}$$
+a_1 &= a \\\\ a_2 &= a \\cdot r \\\\ a_3 &= a \\cdot r^2 \\\\ a_4 &= a \\cdot r^3 \\\\&\\,\\,\\vdots \\end{aligned}$$
 
 「公比 $r$ を何回掛けたか」が項番号より 1 つ少ない。等差数列とまったく同じ理屈です（「足す」が「掛ける」になっただけ）。
 
@@ -805,9 +793,7 @@ $$rS = ar + ar^2 + ar^3 + \\cdots + ar^{n-1} + ar^n$$
 これと元の $S$ を **並べて比べる**：
 
 $$\\begin{aligned}
-S &= a + ar + ar^2 + \\cdots + ar^{n-1} \\\\
-rS &= \\phantom{a +\\ } ar + ar^2 + \\cdots + ar^{n-1} + ar^n
-\\end{aligned}$$
+S &= a + ar + ar^2 + \\cdots + ar^{n-1} \\\\ rS &= \\phantom{a +\\ } ar + ar^2 + \\cdots + ar^{n-1} + ar^n \\end{aligned}$$
 
 **真ん中の項がそっくり同じ**！
 

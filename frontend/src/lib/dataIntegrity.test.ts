@@ -12,7 +12,7 @@
  * - 系列・step の id 重複、position の飛び、前題参照（compareWithStepId）の宙づり
  * - ヒントが 3 層（L1・L2・L3）そろっていない
  * - 答えが有限の数でない／solutionSet に answer が入っていない／answerDisplay が別の値を指す
- * - 図マーカーが Math.tsx に無い（`<<...>>` がそのまま見える）・段落の途中に置かれている
+ * - 図マーカーが Figures.tsx の FIGURES 表に無い（`<<...>>` がそのまま見える）・段落の途中に置かれている
  * - KaTeX が構文エラーで赤字になる数式
  * - 数式の外の `$`・閉じていない `**`（記号がそのまま見える）
  * - 数式の外に書いた区間 `[1, 25]` や Obsidian 記法 `[[...]]`（用語リンクに食われて括弧が消える）
@@ -30,20 +30,28 @@ import { evaluateAnswer, judgeSingle, judgeSolutionSet } from "./answerEval";
 import { GLOSSARY } from "./glossary";
 import { STATIC_KOKUGO_CATALOG } from "./kokugoCatalog";
 import { KOKUGO_MENTOR_TEXTS } from "./mentorTexts";
-import { SERIES_REDIRECTS, STATIC_CATALOG } from "./seriesCatalog";
+import { buildStepOpIndexFromSummaries } from "./catalogIndex";
+import {
+  buildKokugoCatalogIndex,
+  buildMathCatalogIndex,
+  buildSeriesFileMap,
+} from "./catalogIndex.server";
+import { buildGlossaryIndex } from "./glossaryIndex";
+import { buildStepOpIndex, SERIES_REDIRECTS, STATIC_CATALOG } from "./seriesCatalog";
+import { loadStaticSeries } from "./seriesLoaders";
 
 const problems: string[] = [];
 const fail = (msg: string) => problems.push(msg);
 
-// ── 図マーカー（Math.tsx の MathBody が知っているもの） ─────────────────
-const mathSrc = fs.readFileSync(
-  path.join(__dirname, "..", "src", "components", "Math.tsx"),
+// ── 図マーカー（Figures.tsx の FIGURES 表にあるもの） ─────────────────
+const figuresSrc = fs.readFileSync(
+  path.join(__dirname, "..", "src", "components", "Figures.tsx"),
   "utf8",
 );
 const knownMarkers = new Set(
-  [...mathSrc.matchAll(/trimmed === "(<<[^"]+>>)"/g)].map((m) => m[1]),
+  [...figuresSrc.matchAll(/^ {2}"(<<[A-Za-z0-9_]+>>)": \w+,$/gm)].map((m) => m[1]),
 );
-assert.ok(knownMarkers.size > 100, "Math.tsx から図マーカーを読めなかった");
+assert.ok(knownMarkers.size > 100, "Figures.tsx の FIGURES から図マーカーを読めなかった");
 
 // ── MathText / MathBody の写し ──────────────────────────────────────
 const glossaryTerms = new Set(Object.keys(GLOSSARY));
@@ -260,10 +268,55 @@ for (const [src, where] of mathSpans) {
   }
 }
 
-if (problems.length > 0) {
-  console.error(problems.map((p) => `  ✗ ${p}`).join("\n"));
-  assert.fail(`教材データに ${problems.length} 件の欠陥`);
+// ── バンドル分割の索引・ローダー（2026-10-11）が、全データ版と同じものを返すか ─────────
+// 学習者ページは軽い索引と系列ファイル単位の遅延読み込みで描く。索引やローダーが
+// 全データ版（seriesCatalog・glossary）とずれると、カタログや作戦ビューが黙って欠ける。
+async function checkSplitIndexes(): Promise<void> {
+  const files = await buildSeriesFileMap(); // カタログに読み込み先の無い系列があれば例外
+  for (const entry of STATIC_CATALOG) {
+    const loaded = await loadStaticSeries(entry.series.id, files);
+    if (loaded !== entry.series) {
+      fail(`${entry.series.id}: seriesLoaders で読み込んだ系列がカタログの系列と同じものでない`);
+    }
+  }
+  const mathIndex = buildMathCatalogIndex();
+  assert.equal(mathIndex.length, STATIC_CATALOG.length);
+  const fromSummaries = buildStepOpIndexFromSummaries(mathIndex.map((e) => e.series));
+  const fromFull = buildStepOpIndex();
+  for (const entry of STATIC_CATALOG) {
+    for (const step of entry.series.steps) {
+      const key = `${entry.series.id}::${step.id}`;
+      if (fromSummaries.get(key) !== fromFull.get(key)) {
+        fail(`${key}: 索引のオペレータが全データ版と違う`);
+      }
+    }
+  }
+  assert.equal(buildKokugoCatalogIndex().length, STATIC_KOKUGO_CATALOG.length);
+  const glossaryIndex = buildGlossaryIndex(GLOSSARY);
+  for (const [term, entry] of Object.entries(GLOSSARY)) {
+    const lite = glossaryIndex[term];
+    if (
+      !lite ||
+      lite.short !== entry.short ||
+      lite.hasDetail !== Boolean(entry.easy || entry.meaning) ||
+      lite.relatedSeriesId !== entry.relatedSeriesId
+    ) {
+      fail(`辞書[${term}]: 索引が辞書本体と違う`);
+    }
+  }
 }
-console.log(
-  `dataIntegrity: 数学 ${mathIds.size} 系列・国語 ${kokugoIds.size} 系列・辞書 ${glossaryTerms.size} 語・数式 ${mathSpans.size} 種を検査、欠陥なし`,
-);
+
+checkSplitIndexes()
+  .then(() => {
+    if (problems.length > 0) {
+      console.error(problems.map((p) => `  ✗ ${p}`).join("\n"));
+      assert.fail(`教材データに ${problems.length} 件の欠陥`);
+    }
+    console.log(
+      `dataIntegrity: 数学 ${mathIds.size} 系列・国語 ${kokugoIds.size} 系列・辞書 ${glossaryTerms.size} 語・数式 ${mathSpans.size} 種を検査、欠陥なし`,
+    );
+  })
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });

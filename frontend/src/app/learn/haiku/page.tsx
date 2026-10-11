@@ -20,7 +20,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { MathBody, MathText } from "@/components/Math";
 import { countMora } from "@/lib/moraCount";
 import { getMentorText } from "@/lib/mentorTexts";
-import { catalogFocusHref, rememberCatalogFocus } from "@/lib/seriesCatalog";
+import { catalogFocusHref, rememberCatalogFocus } from "@/lib/catalogMeta";
 import { KOKUGO_HAIKU_SERIES_LIST } from "@/lib/seriesKokugoHaiku";
 import { KOKUGO_HANASHI_SERIES_LIST } from "@/lib/seriesKokugoHanashi";
 import { KOKUGO_NIKKI_SERIES_LIST } from "@/lib/seriesKokugoNikki";

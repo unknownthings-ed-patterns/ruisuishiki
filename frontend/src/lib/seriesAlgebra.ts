@@ -34,11 +34,7 @@ $(x + a)(x + b)$ を展開したとき、$x$ の係数は **$a + b$**、定数�
 $(x + a)(x + b)$ は「$(x + a)$ という塊」に「$(x + b)$ という塊」をかけたもの。分配法則を2回使って広げると：
 
 $$\\begin{aligned}
-(x + a)(x + b) &= x(x + b) + a(x + b) \\\\
-&= x \\cdot x + x \\cdot b + a \\cdot x + a \\cdot b \\\\
-&= x^2 + bx + ax + ab \\\\
-&= x^2 + (a + b)x + ab
-\\end{aligned}$$
+(x + a)(x + b) &= x(x + b) + a(x + b) \\\\&= x \\cdot x + x \\cdot b + a \\cdot x + a \\cdot b \\\\&= x^2 + bx + ax + ab \\\\&= x^2 + (a + b)x + ab \\end{aligned}$$
 
 途中で $bx$ と $ax$ が出てきて、最後にまとめて $(a + b)x$ になります。これが「$x$ の係数は $a + b$」の理由。
 
@@ -47,8 +43,7 @@ $$\\begin{aligned}
 中学・高校では「**たすき掛け**」という覚え方をします。
 
 $$
-\\begin{array}{c}
-(x + \\overset{a}{\\nearrow})(\\overset{x}{\\nwarrow} + b)
+\\begin{array}{c} (x + \\overset{a}{\\nearrow})(\\overset{x}{\\nwarrow} + b)
 \\end{array}
 $$
 
@@ -233,10 +228,7 @@ $(x + a)^2$ を展開したとき、なぜ真ん中に **$2ax$**（係数が $2a
 $(x + a)^2 = (x + a)(x + a)$ を分配法則で広げます：
 
 $$\\begin{aligned}
-(x + a)(x + a) &= x \\cdot x + x \\cdot a + a \\cdot x + a \\cdot a \\\\
-&= x^2 + ax + ax + a^2 \\\\
-&= x^2 + 2ax + a^2
-\\end{aligned}$$
+(x + a)(x + a) &= x \\cdot x + x \\cdot a + a \\cdot x + a \\cdot a \\\\&= x^2 + ax + ax + a^2 \\\\&= x^2 + 2ax + a^2 \\end{aligned}$$
 
 途中で $ax$ が **2回** 出てきます——これが「$2ax$」の正体。$x \\cdot a$（前の塊の $x$ と後ろの塊の $a$）と、$a \\cdot x$（前の塊の $a$ と後ろの塊の $x$）の **2つの経路** から生まれるからです。
 
@@ -245,13 +237,7 @@ $$\\begin{aligned}
 $(x + a)^2$ は、1辺が $(x + a)$ の正方形の面積です。この正方形を4つに分けると：
 
 $$
-\\begin{array}{|c|c|}
-\\hline
-\\text{大正方形 } x^2 & \\text{長方形 } ax \\\\
-\\hline
-\\text{長方形 } ax & \\text{小正方形 } a^2 \\\\
-\\hline
-\\end{array}
+\\begin{array}{|c|c|} \\hline \\text{大正方形 } x^2 & \\text{長方形 } ax \\\\\\hline \\text{長方形 } ax & \\text{小正方形 } a^2 \\\\\\hline \\end{array}
 $$
 
 - 左上：1辺 $x$ の正方形 → 面積 $x^2$
@@ -999,9 +985,7 @@ $x = \\alpha$ または $x = \\beta$ のときだけ左辺が $0$ になる—�
 $(x - \\alpha)(x - \\beta)$ を展開すると：
 
 $$\\begin{aligned}
-(x - \\alpha)(x - \\beta) &= x^2 - \\beta x - \\alpha x + \\alpha\\beta \\\\
-&= x^2 - (\\alpha + \\beta)x + \\alpha\\beta
-\\end{aligned}$$
+(x - \\alpha)(x - \\beta) &= x^2 - \\beta x - \\alpha x + \\alpha\\beta \\\\&= x^2 - (\\alpha + \\beta)x + \\alpha\\beta \\end{aligned}$$
 
 つまり：
 
@@ -1851,8 +1835,7 @@ $$P(n, 2) = n \\times (n - 1)$$
 
 **ステップごとに考える**
 
-1 番目に並べる人を選ぶ：$n$ 通り
-2 番目に並べる人を選ぶ：残りから $n - 1$ 通り
+1 番目に並べる人を選ぶ：$n$ 通り 2 番目に並べる人を選ぶ：残りから $n - 1$ 通り
 
 両方を **同時に** 選ぶ場合の数は、それぞれの選び方を **掛け算**：
 
@@ -2137,10 +2120,7 @@ $$\\text{分散} = \\frac{(x_1 - \\bar{x})^2 + (x_2 - \\bar{x})^2 + \\cdots + (x
 
 データ：$1, 2, 3, 4, 5$（平均 $3$）
 
-偏差：$-2, -1, 0, 1, 2$
-偏差の 2 乗：$4, 1, 0, 1, 4$
-合計：$10$
-分散：$10 / 5 = 2$
+偏差：$-2, -1, 0, 1, 2$ 偏差の 2 乗：$4, 1, 0, 1, 4$ 合計：$10$ 分散：$10 / 5 = 2$
 
 データ：$3, 3, 3, 3, 3$（全部同じ）の場合、偏差はすべて $0$、分散も $0$。**散らばりがない** ことを意味します。
 

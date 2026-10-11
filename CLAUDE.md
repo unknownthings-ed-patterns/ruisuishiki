@@ -62,7 +62,7 @@
 2. **5 オペレータ**すべて（同・逆・＋α・質的変化・複合）→ `audit_hints.py` で ⚠ なし
 3. **ヒント 3 層**（L1 比較指さし／L2 差異 1 つ名指し／L3 完全 worked example）→ 下「ヒント 3 層」節
 4. **公式の景色（derivation）** が中心の問い（胚細胞）を軸に組まれている（中心の問い → ──── → 本文 → もっと深く → 問いに戻ると）
-5. **辞書連動**：使う主要用語が GLOSSARY に worksheet 形式で存在し、本文で `[用語]` リンク、用語側に `relatedSeriesId`（双方向）。各エントリの §1 には **数値を入れた具体例を 1 つ＋図** を置く（低い床。図は系列の問題部の既存マーカー `<<...>>` を転用可＝新規 SVG 不要。マーカー一覧は Math.tsx）
+5. **辞書連動**：使う主要用語が GLOSSARY に worksheet 形式で存在し、本文で `[用語]` リンク、用語側に `relatedSeriesId`（双方向）。各エントリの §1 には **数値を入れた具体例を 1 つ＋図** を置く（低い床。図は系列の問題部の既存マーカー `<<...>>` を転用可＝新規 SVG 不要。マーカー一覧は `frontend/src/components/Figures.tsx` 末尾の `FIGURES` 表）
 6. **図**：Step 1 と質的変化 Step のみ・答えを書かない
 7. **出典**：APA・構成は借り値はオリジナル（memory `copyright-credit-vs-copy`）
 
@@ -211,6 +211,8 @@ cd frontend && npm run test:data   # npm test にも含まれる。詳細は doc
 | `aria-label` 等の HTML 属性 | 素の文字列 | **数式を書かない**（読み上げ用のプレーンな日本語にする） |
 
 `$$...$$` と `unknownLabel` はどちらも「MathText を通っていない／扱えない」ために **裸の `$` が学習者に見えていた**（実測 135 + 44 箇所）。いずれもエンジン側を直したので authored 側は不変でよいが、**新しい表示箇所を足すときは MathText を通すこと**。
+
+**学習者ページは系列を遅延読み込みする**（2026-10-11 バンドル分割・`docs/audit_overall_2026-10-11.md`）。新しい系列ファイル（`series*.ts`）を作ったら `frontend/src/lib/seriesLoaders.ts` の `SERIES_FILE_LOADERS` に 1 行足す（足し忘れはビルドで落ちる）。図は `components/Figures.tsx` に書き、末尾の `FIGURES` 表に `"<<NAME>>": Component,` を 1 行足す。クライアントのコード（`"use client"`）から `seriesCatalog.ts`・`kokugoCatalog.ts`・`glossary.ts` を import しない（全系列・辞書全体がそのページに載る。辞書ページ `/learn/glossary` だけは辞書全体が要るので例外）。軽い部品は `catalogMeta.ts`・`kokugoCatalogMeta.ts`・`catalogIndex.ts`・`glossaryIndex.ts` にある。
 
 ## 国語ユニット（俳句）——国語版の正典とお手本条件
 

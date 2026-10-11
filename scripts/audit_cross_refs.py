@@ -314,7 +314,10 @@ def _owner_map(src):
     """<text> の位置 → それを含むコンポーネント名 → 図マーカー名。"""
     funcs = [(m.start(), m.group(1))
              for m in re.finditer(r"^(?:export )?function (\w+)\s*\(", src, re.M)]
+    # 図マーカー → コンポーネント。現行は Figures.tsx の FIGURES 表（"<<NAME>>": Component,）、
+    # 2026-10-11 より前は Math.tsx の MathBody の分岐（trimmed === "<<NAME>>" … <Component />）。
     disp = dict(re.findall(r'trimmed === "<<([A-Z_0-9]+)>>"[^;]*?<(\w+)\s*/?>', src, re.S))
+    disp.update(re.findall(r'^  "<<([A-Z_0-9]+)>>": (\w+),$', src, re.M))
     comp2mark = {c: m for m, c in disp.items()}
     def owner(at):
         name = None

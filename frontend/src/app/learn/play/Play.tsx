@@ -1,0 +1,1709 @@
+"use client";
+
+import Link from "next/link";
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from "react";
+import { MathBody, MathText, preloadFigures } from "@/components/Math";
+import {
+  ANSWER_TOL,
+  evaluateAnswer,
+  judgeSolutionSet,
+} from "@/lib/answerEval";
+import { PolyaQuestionsPanel } from "@/components/PolyaQuestions";
+import { RATIO_BASIC_SERIES } from "@/lib/seriesData";
+import {
+  catalogFocusHref,
+  rememberCatalogFocus,
+  resolveSeriesId,
+} from "@/lib/catalogMeta";
+import { loadStaticSeries, type SeriesFileMap } from "@/lib/seriesLoaders";
+import {
+  clearSeriesHistory,
+  getResumeIndex,
+  loadSeriesHistory,
+  saveSeriesCompletion,
+  saveStepRecord,
+} from "@/lib/storage";
+import { toPlainText } from "@/lib/plainText";
+import { getTeacherSeries } from "@/lib/teacherStorage";
+import type { LearnerSeries, LearnerStep } from "@/lib/types";
+
+type Status = "answering" | "correct" | "incorrect" | "skipped" | "completed";
+type MyProblemKind = "similar" | "inverse" | "condition";
+
+type MyProblemRecord = {
+  kind: MyProblemKind;
+  text: string;
+  updatedAt: string;
+};
+
+type InkPoint = {
+  x: number;
+  y: number;
+};
+
+const MY_PROBLEM_OPTIONS: { kind: MyProblemKind; label: string }[] = [
+  { kind: "similar", label: "にている問題（数をかえる）" },
+  { kind: "inverse", label: "さかさま問題（きくものをかえる）" },
+  { kind: "condition", label: "条件をたす問題" },
+];
+
+// 入力の正規化・数値評価・複数解判定は @/lib/answerEval に集約（テスト可能・後方互換）。
+
+/**
+ * 正解・スキップ表示用に、人が読める答え文字列を返す。
+ * step.answerDisplay があればそれ（例 "π/6, 5π/6"・"π/2"）、無ければ生値＋単位。
+ * answer が π・無理数・複数解のとき、生の小数（1.5707…）を見せないため。
+ */
+function displayAnswer(step: LearnerStep): string {
+  return step.answerDisplay ?? `${step.answer}${step.unit}`;
+}
+
+function ProblemInkLayer({ resetKey }: { resetKey: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lastPointRef = useRef<InkPoint | null>(null);
+  const activePointerIdRef = useRef<number | null>(null);
+  const activeTouchIdRef = useRef<number | null>(null);
+  const [enabled, setEnabled] = useState(false);
+  const [hasInk, setHasInk] = useState(false);
+
+  useEffect(() => {
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetKey（問題）が変わったら手書きを消す
+    setEnabled(false);
+    clearInk();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetKey]);
+
+  useEffect(() => {
+    prepareCanvas();
+    window.addEventListener("resize", clearInk);
+    return () => {
+      window.removeEventListener("resize", clearInk);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverscroll = html.style.overscrollBehavior;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyTouchAction = body.style.touchAction;
+
+    function preventPageDrag(event: TouchEvent) {
+      event.preventDefault();
+    }
+
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.touchAction = "none";
+    document.addEventListener("touchmove", preventPageDrag, { passive: false });
+
+    return () => {
+      html.style.overscrollBehavior = previousHtmlOverscroll;
+      body.style.overflow = previousBodyOverflow;
+      body.style.touchAction = previousBodyTouchAction;
+      document.removeEventListener("touchmove", preventPageDrag);
+    };
+  }, [enabled]);
+
+  function configureContext(ctx: CanvasRenderingContext2D) {
+    const foreground = getComputedStyle(document.documentElement)
+      .getPropertyValue("--foreground")
+      .trim();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = foreground || "#111111";
+    ctx.fillStyle = foreground || "#111111";
+  }
+
+  function prepareCanvas(): CanvasRenderingContext2D | null {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    configureContext(ctx);
+    return ctx;
+  }
+
+  function clearInk() {
+    const canvas = canvasRef.current;
+    const ctx = prepareCanvas();
+    if (!canvas || !ctx) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+    setHasInk(false);
+  }
+
+  function pointFromClient(clientX: number, clientY: number): InkPoint | null {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) return null;
+    return {
+      x: Math.min(rect.width, Math.max(0, clientX - rect.left)),
+      y: Math.min(rect.height, Math.max(0, clientY - rect.top)),
+    };
+  }
+
+  function startStroke(clientX: number, clientY: number) {
+    const point = pointFromClient(clientX, clientY);
+    if (!point) return false;
+    const ctx = prepareCanvas();
+    if (!ctx) return false;
+    lastPointRef.current = point;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 1.2, 0, Math.PI * 2);
+    ctx.fill();
+    setHasInk(true);
+    return true;
+  }
+
+  function continueStroke(clientX: number, clientY: number) {
+    const point = pointFromClient(clientX, clientY);
+    const last = lastPointRef.current;
+    if (!point || !last) return;
+    const dx = point.x - last.x;
+    const dy = point.y - last.y;
+    if (dx * dx + dy * dy < 0.25) return;
+    const ctx = prepareCanvas();
+    if (!ctx) return;
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+    lastPointRef.current = point;
+  }
+
+  function handlePointerDown(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!enabled) return;
+    if (e.pointerType === "touch") return;
+    e.preventDefault();
+    if (startStroke(e.clientX, e.clientY)) {
+      activePointerIdRef.current = e.pointerId;
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+  }
+
+  function handlePointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!enabled || activePointerIdRef.current !== e.pointerId) return;
+    if (e.pointerType === "touch") return;
+    e.preventDefault();
+    const nativeEvents = e.nativeEvent.getCoalescedEvents();
+    const pointerEvents = nativeEvents.length > 0 ? nativeEvents : [e.nativeEvent];
+    for (const pointerEvent of pointerEvents) {
+      continueStroke(pointerEvent.clientX, pointerEvent.clientY);
+    }
+  }
+
+  function finishStroke() {
+    lastPointRef.current = null;
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+  }
+
+  function changedTouchById(touches: React.TouchList, touchId: number) {
+    for (let index = 0; index < touches.length; index += 1) {
+      const touch = touches.item(index);
+      if (touch && touch.identifier === touchId) return touch;
+    }
+    return null;
+  }
+
+  function handleTouchStart(e: React.TouchEvent<HTMLCanvasElement>) {
+    if (!enabled || activeTouchIdRef.current !== null) return;
+    const touch = e.changedTouches.item(0);
+    if (!touch) return;
+    e.preventDefault();
+    if (startStroke(touch.clientX, touch.clientY)) {
+      activeTouchIdRef.current = touch.identifier;
+    }
+  }
+
+  function handleTouchMove(e: React.TouchEvent<HTMLCanvasElement>) {
+    const touchId = activeTouchIdRef.current;
+    if (!enabled || touchId === null || !lastPointRef.current) return;
+    const touch = changedTouchById(e.changedTouches, touchId);
+    if (!touch) return;
+    e.preventDefault();
+    continueStroke(touch.clientX, touch.clientY);
+  }
+
+  function handleTouchEnd(e: React.TouchEvent<HTMLCanvasElement>) {
+    const touchId = activeTouchIdRef.current;
+    if (touchId === null || !changedTouchById(e.changedTouches, touchId)) return;
+    e.preventDefault();
+    finishStroke();
+  }
+
+  return (
+    <>
+      <div className="fixed right-4 top-4 z-50 flex items-center gap-1 print:hidden">
+        <button
+          type="button"
+          aria-pressed={enabled}
+          aria-label="問題に手書きで線を引く"
+          title="問題に手書きで線を引く"
+          onClick={() => setEnabled((current) => !current)}
+          className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-3 transition-colors"
+          style={{
+            borderColor: enabled ? "var(--foreground)" : "var(--border)",
+            background: enabled ? "var(--foreground)" : "var(--surface)",
+            color: enabled ? "var(--background)" : "var(--foreground)",
+            fontSize: "12px",
+            letterSpacing: "0.08em",
+          }}
+        >
+          線
+        </button>
+        {hasInk && (
+          <button
+            type="button"
+            onClick={clearInk}
+            aria-label="手書きの線を消す"
+            title="手書きの線を消す"
+            className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-surface px-3 text-muted transition-colors hover:text-foreground hover:border-foreground/30"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+          >
+            消す
+          </button>
+        )}
+      </div>
+
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 z-40 h-screen w-screen touch-none print:hidden"
+        aria-hidden
+        style={{
+          pointerEvents: enabled ? "auto" : "none",
+          touchAction: "none",
+          userSelect: "none",
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={finishStroke}
+        onPointerCancel={finishStroke}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      />
+    </>
+  );
+}
+
+/**
+ * 学習者ビュー（数学）。系列の本文は、いま歩く系列のファイルだけを読み込む
+ * （seriesFiles＝系列 → 系列ファイルの表。page.tsx がビルド時に作って渡す）。
+ */
+export default function Play({ seriesFiles }: { seriesFiles: SeriesFileMap }) {
+  const [series, setSeries] = useState<LearnerSeries>(RATIO_BASIC_SERIES);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [attempts, setAttempts] = useState(0);
+  const [hintsOpened, setHintsOpened] = useState<0 | 1 | 2 | 3>(0);
+  const [status, setStatus] = useState<Status>("answering");
+  const [myProblem, setMyProblem] = useState<MyProblemRecord>({
+    kind: "similar",
+    text: "",
+    updatedAt: "",
+  });
+  const [qualNote, setQualNote] = useState("");
+  const [showQualRevelation, setShowQualRevelation] = useState(false);
+  /**
+   * 「公式の景色」（derivation）を mid-series で見ているか。
+   * ヒント 3 でも理解できなかった学習者の脱出口（F4 予防）。
+   * 戻ると元のステップに戻る。
+   */
+  const [showingDerivation, setShowingDerivation] = useState(false);
+  /** 解答入力欄への参照（π・√ パレットをカーソル位置に挿入するため）。 */
+  const inputRef = useRef<HTMLInputElement>(null);
+  /**
+   * 解答欄のラベル（unknownLabel）の id。unknownLabel は `$N$` のような数式を含むので、
+   * aria-label に生の文字列を渡すと読み上げが「ドル N ドル」になる。
+   * 画面に見えている KaTeX 描画済みのラベル（MathML つき）を aria-labelledby で指す。
+   */
+  const answerLabelId = useId();
+
+  const step = series.steps[stepIndex];
+  const totalSteps = series.steps.length;
+  const isLast = stepIndex === totalSteps - 1;
+
+  // 入力補助 UI の出し分け（無指定＝従来の素の数値入力・ローフロア維持）。
+  const affordances = step.inputAffordances ?? [];
+  const showPiButton = affordances.includes("pi");
+  const showSqrtButton = affordances.includes("sqrt");
+  const showLogButton = affordances.includes("log");
+  const showEButton = affordances.includes("e");
+  const showPalette =
+    showPiButton || showSqrtButton || showLogButton || showEButton;
+  const showMultiHint = affordances.includes("multi");
+
+  // 「比較せよ」のヒント表示用に、前題を取得
+  const comparedStep: LearnerStep | null = useMemo(() => {
+    if (!step.compareWithStepId) return null;
+    return series.steps.find((s) => s.id === step.compareWithStepId) ?? null;
+  }, [step.compareWithStepId, series.steps]);
+
+  // 初回マウント時：URLパラメータで系列を選び、履歴から復元（or ?fresh=1 でクリア）
+  useEffect(() => {
+    let alive = true;
+    void restore();
+    return () => {
+      alive = false;
+    };
+
+    async function restore(): Promise<void> {
+      const params = new URLSearchParams(window.location.search);
+
+      // 系列を選ぶ：?seriesId=xxx で
+      // 0) 廃止系列の旧 seriesId なら現行 seriesId へ読み替え（static export 対応の
+      //    クライアント側リダイレクト）。URL も正規の seriesId に書き換える。
+      // 1) 静的カタログにあるか確認、2) なければ教師作成系列を localStorage から探す、
+      // 3) どちらにもなければ既定の RATIO_BASIC_SERIES
+      const rawSeriesIdParam = params.get("seriesId");
+      const seriesIdParam = rawSeriesIdParam
+        ? resolveSeriesId(rawSeriesIdParam)
+        : null;
+      if (rawSeriesIdParam && seriesIdParam && seriesIdParam !== rawSeriesIdParam) {
+        params.set("seriesId", seriesIdParam);
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + "?" + params.toString(),
+        );
+      }
+      let activeSeries: LearnerSeries = RATIO_BASIC_SERIES;
+      if (seriesIdParam) {
+        const staticSeries = await loadStaticSeries(seriesIdParam, seriesFiles);
+        if (!alive) return;
+        if (staticSeries) {
+          activeSeries = staticSeries;
+          setSeries(staticSeries);
+        } else {
+          const teacherSeries = getTeacherSeries(seriesIdParam);
+          if (teacherSeries) {
+            activeSeries = teacherSeries;
+            setSeries(teacherSeries);
+          }
+        }
+      }
+
+      if (params.get("fresh") === "1") {
+        clearSeriesHistory(activeSeries.id);
+        // URL から fresh パラメータを取り除く（リロード時に常時クリアにならないように）
+        const cleanQuery = seriesIdParam ? `?seriesId=${seriesIdParam}` : "";
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + cleanQuery,
+        );
+        setStepIndex(0);
+      } else {
+        const history = loadSeriesHistory(activeSeries.id);
+        const resume = getResumeIndex(
+          history,
+          activeSeries.steps.map((s) => s.id),
+        );
+        if (resume >= activeSeries.steps.length) {
+          // 全問正答済み → 完了画面へ
+          setStatus("completed");
+        } else if (resume > 0) {
+          setStepIndex(resume);
+        }
+      }
+      // 図のある系列なら、図のチャンクを先に読み始める（最初の図が出るまでの待ちを短くする）
+      if (
+        activeSeries.steps.some((s) => s.figureMarker) ||
+        activeSeries.derivation?.includes("<<")
+      ) {
+        preloadFigures();
+      }
+      setHasHydrated(true);
+    }
+    // seriesFiles はビルド時に決まる表（ページの寿命の間は変わらない）
+  }, [seriesFiles]);
+
+  // 問題や系列が変わるたびに状態を更新。
+  // 「← 前へ」で戻ったときは履歴から状態を復元する（correct / skipped を見える形に）。
+  // 「次へ」で前進したときは新規 step なので初期状態（answering / 空入力）に。
+  // 初回表示では既定系列から URL 指定系列へ差し替わるため、series 変更でも必ず走らせる。
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const history = loadSeriesHistory(series.id);
+    const resume = getResumeIndex(
+      history,
+      series.steps.map((s) => s.id),
+    );
+    if (resume >= series.steps.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- 系列が決まったら localStorage の履歴から再開位置を復元する
+      setStatus("completed");
+      setShowingDerivation(false);
+      setShowQualRevelation(false);
+      return;
+    }
+    const record = history.find((r) => r.stepId === step.id);
+    if (record) {
+      // 既に取り組んだ step に来た（戻ったか、再訪）
+      setAttempts(record.attempts);
+      setHintsOpened(record.hintsOpened);
+      if (record.skipped) {
+        setStatus("skipped");
+        setUserAnswer("");
+      } else if (record.correct) {
+        setStatus("correct");
+        // 複数解 step は単数値を入れ戻すと誤解を生むので空のまま。
+        setUserAnswer(step.solutionSet ? "" : String(step.answer));
+      } else {
+        setStatus("answering");
+        setUserAnswer("");
+      }
+    } else {
+      // 未到達の step（前進してきた）
+      setUserAnswer("");
+      setAttempts(0);
+      setHintsOpened(0);
+      setStatus("answering");
+    }
+    setShowingDerivation(false);
+    setShowQualRevelation(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [series.id, series.steps, step.id, stepIndex]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage はマウント後にしか読めない（static export）
+    setMyProblem(loadMyProblem(series.id));
+  }, [series.id]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (step.variationFromPrevious !== "qualitative") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- step が変わったら気づきメモを localStorage から復元する
+      setQualNote("");
+      return;
+    }
+    setQualNote(loadQualNote(series.id, step.id));
+  }, [series.id, step.id, step.variationFromPrevious]);
+
+  // 正答時・スキップ時に Enter キーで「次の問題へ」を押せるようにする
+  useEffect(() => {
+    if (status !== "correct" && status !== "skipped") return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Enter") return;
+      // テキスト入力エリアにフォーカスがある場合は除外（IME変換確定の Enter を奪わない）
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+      handleNext();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, isLast]);
+
+  // 解答中・誤答中に h キーでヒントを順に開く
+  useEffect(() => {
+    if (status === "correct" || status === "completed") return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "h" && e.key !== "H") return;
+      // 入力欄にフォーカスがある時は無視（h を打鍵したいことがあるかもしれない）
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+      handleOpenHint();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, hintsOpened]);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // 正答後は再評価しない（次へボタンで進む）
+    if (status === "correct") return;
+
+    let isCorrect: boolean;
+    if (step.solutionSet) {
+      // 複数解："," 区切りで分割し、多重集合一致（順不同・過不足なし・TOL=1e-6）。
+      if (userAnswer.trim() === "") return;
+      isCorrect = judgeSolutionSet(userAnswer, step.solutionSet);
+    } else {
+      // 単数解：従来通り。評価不能（null）は再評価しない（試行に数えない）。
+      const parsed = evaluateAnswer(userAnswer);
+      if (parsed === null) return;
+      isCorrect = Math.abs(parsed - step.answer) < ANSWER_TOL;
+    }
+
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
+
+    if (isCorrect) {
+      setStatus("correct");
+      // 履歴に保存（F8予防：文型×オペレータ軸の素材を集計可能な形で）
+      saveStepRecord(series.id, {
+        stepId: step.id,
+        attempts: nextAttempts,
+        hintsOpened,
+        correct: true,
+        answeredAt: new Date().toISOString(),
+      });
+    } else {
+      setStatus("incorrect");
+    }
+  }
+
+  function handleNext() {
+    if (isLast) {
+      saveSeriesCompletion(series.id);
+      setStatus("completed");
+    } else {
+      setStepIndex((i) => i + 1);
+    }
+  }
+
+  function handlePrev() {
+    // 前 step に戻る。useEffect が履歴から状態を復元する。
+    if (stepIndex > 0) {
+      setStepIndex((i) => i - 1);
+    }
+  }
+
+  function handleSkip() {
+    // 「歩く」体験のためのスキップ。formulaPreview を表示して次へ進めるよう
+    // 記録を残す（skipped: true）。正答率には数えない（getResumeIndex は
+    // 進める方向で扱う）。戸田の「答のみで自得」と整合：答を見せて進む。
+    if (status === "correct" || status === "skipped") return;
+    saveStepRecord(series.id, {
+      stepId: step.id,
+      attempts,
+      hintsOpened,
+      correct: false,
+      skipped: true,
+      answeredAt: new Date().toISOString(),
+    });
+    setStatus("skipped");
+  }
+
+  function handleOpenHint() {
+    if (hintsOpened < 3) {
+      setHintsOpened((h) => (h + 1) as 0 | 1 | 2 | 3);
+    }
+  }
+
+  /**
+   * 「公式の景色」を mid-series で開く。
+   * ステップを越えて開いたことを localStorage に記録（教師の振り返り用）。
+   */
+  function handleViewDerivation() {
+    if (typeof window !== "undefined") {
+      try {
+        const key = `ruisuishiki:derivation_viewed:${series.id}`;
+        const stored = window.localStorage.getItem(key);
+        const list: number[] = stored ? JSON.parse(stored) : [];
+        if (!list.includes(stepIndex)) {
+          list.push(stepIndex);
+          window.localStorage.setItem(key, JSON.stringify(list));
+        }
+      } catch {
+        // ignore
+      }
+    }
+    setShowingDerivation(true);
+    // スクロールを上に戻して、景色の冒頭から読めるように
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function handleReturnFromDerivation() {
+    setShowingDerivation(false);
+  }
+
+  function handleSkipFromDerivation() {
+    setShowingDerivation(false);
+    handleNext();
+  }
+
+  function handleAnswerChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserAnswer(e.target.value);
+    // 入力を書き換えた瞬間、誤答メッセージは消す（書き直し中の摩擦を減らす）
+    if (status === "incorrect") {
+      setStatus("answering");
+    }
+  }
+
+  function handleMyProblemKindChange(kind: MyProblemKind) {
+    const next = {
+      ...myProblem,
+      kind,
+      updatedAt: new Date().toISOString(),
+    };
+    setMyProblem(next);
+    saveMyProblem(series.id, next);
+  }
+
+  function handleMyProblemTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const next = {
+      ...myProblem,
+      text: e.target.value,
+      updatedAt: new Date().toISOString(),
+    };
+    setMyProblem(next);
+    saveMyProblem(series.id, next);
+  }
+
+  function handleQualNoteChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const next = e.target.value;
+    setQualNote(next);
+    saveQualNote(series.id, step.id, next);
+  }
+
+  /**
+   * π・√ パレットボタン：記号をカーソル位置に挿入する。
+   * 選択範囲があれば置き換え、挿入後はキャレットを挿入文字の直後へ。
+   */
+  function insertAtCursor(text: string) {
+    const el = inputRef.current;
+    if (!el) {
+      setUserAnswer((v) => v + text);
+    } else {
+      const start = el.selectionStart ?? userAnswer.length;
+      const end = el.selectionEnd ?? userAnswer.length;
+      const next = userAnswer.slice(0, start) + text + userAnswer.slice(end);
+      setUserAnswer(next);
+      const caret = start + text.length;
+      // setState 反映後にキャレットを復元（フォーカスも戻す）
+      requestAnimationFrame(() => {
+        el.focus();
+        el.setSelectionRange(caret, caret);
+      });
+    }
+    if (status === "incorrect") {
+      setStatus("answering");
+    }
+  }
+
+  // hydration 前の描画ちらつき防止（短時間の読み込み中表示）
+  if (!hasHydrated) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center px-6">
+        <p
+          className="text-muted"
+          style={{ fontSize: "13px", letterSpacing: "0.2em" }}
+        >
+          読み込んでいます…
+        </p>
+      </main>
+    );
+  }
+
+  // 完了画面
+  if (status === "completed") {
+    return (
+      <main className="flex min-h-screen flex-col">
+        <nav
+          className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+          style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+          aria-label="サイト全体のナビゲーション"
+        >
+          <div className="mx-auto w-full max-w-2xl px-6 py-2 flex items-center justify-between gap-4">
+            <div
+              className="flex items-baseline gap-3"
+              style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+            >
+              <Link
+                href="/learn/"
+                className="text-muted hover:text-foreground transition-colors"
+              >
+                ← 学ぶ
+              </Link>
+              <span className="text-muted opacity-30" aria-hidden>
+                /
+              </span>
+              <Link
+                href="/"
+                className="text-muted hover:text-foreground transition-colors"
+              >
+                ホーム
+              </Link>
+            </div>
+            <span
+              className="text-muted truncate"
+              style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+              title={toPlainText(series.title)}
+            >
+              <MathText text={series.title} />
+            </span>
+          </div>
+        </nav>
+        <div className="flex-1 flex flex-col items-center px-6 py-16">
+        <div className="w-full max-w-2xl flex flex-col items-center gap-10">
+          <h1
+            className="font-serif text-foreground text-center"
+            style={{ fontSize: "clamp(32px, 4vw, 48px)", letterSpacing: "0.08em" }}
+          >
+            おわり
+          </h1>
+          <p
+            className="text-muted text-center"
+            style={{ fontSize: "16px", lineHeight: 2 }}
+          >
+            {totalSteps} 問すべて解けました。
+            <br />
+            気づいたことはありましたか？
+          </p>
+
+          {/* 公式の景色（系列に derivation がある時のみ） */}
+          {series.derivation && (
+            <details
+              className="w-full rounded-lg border border-border p-6 sm:p-8"
+              style={{
+                background: "var(--surface)",
+              }}
+            >
+              <summary
+                className="cursor-pointer font-serif text-foreground"
+                style={{
+                  fontSize: "16px",
+                  letterSpacing: "0.08em",
+                  listStyle: "none",
+                }}
+              >
+                <span className="text-accent mr-2">▸</span>
+                公式の景色 — この公式はどこから？
+              </summary>
+              <div
+                className="mt-6 text-foreground/85"
+                style={{ fontSize: "15px" }}
+              >
+                <MathBody text={series.derivation} />
+              </div>
+            </details>
+          )}
+
+          <section
+            className="w-full rounded-lg border border-border p-6 sm:p-8"
+            style={{ background: "var(--surface)" }}
+            aria-label="じぶんの問題"
+          >
+            <h2
+              className="font-serif text-foreground"
+              style={{ fontSize: "16px", letterSpacing: "0.08em" }}
+            >
+              じぶんの問題をつくってみよう（かけたらでOK）
+            </h2>
+            <div
+              className="mt-4 flex flex-wrap gap-2"
+              role="radiogroup"
+              aria-label="やり方"
+            >
+              {MY_PROBLEM_OPTIONS.map((option) => {
+                const selected = myProblem.kind === option.kind;
+                return (
+                  <button
+                    key={option.kind}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    onClick={() => handleMyProblemKindChange(option.kind)}
+                    className="inline-flex items-center justify-center rounded-lg border px-4 py-2 transition-colors"
+                    style={{
+                      borderColor: selected ? "var(--accent)" : "var(--border)",
+                      color: selected ? "var(--accent)" : "var(--muted)",
+                      background: selected
+                        ? "color-mix(in oklch, var(--surface) 75%, var(--accent-soft) 25%)"
+                        : "transparent",
+                      fontSize: "13px",
+                      letterSpacing: "0.03em",
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+            <textarea
+              value={myProblem.text}
+              onChange={handleMyProblemTextChange}
+              rows={4}
+              className="mt-4 w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-foreground focus-visible:outline-none focus-visible:border-accent transition-colors"
+              style={{ fontSize: "14px", lineHeight: 1.8 }}
+              placeholder="もんだい文をかいてみよう（こたえも書いていい）"
+              aria-label="じぶんの問題"
+            />
+          </section>
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            {/* アプリ内でリセット（画面遷移しないので、同一ページのクライアント遷移でも
+                マウント時 useEffect に頼らず確実にやり直せる）。俳句側と同型。 */}
+            <button
+              type="button"
+              onClick={() => {
+                clearSeriesHistory(series.id);
+                setStepIndex(0);
+                setUserAnswer("");
+                setAttempts(0);
+                setHintsOpened(0);
+                setShowingDerivation(false);
+                setShowQualRevelation(false);
+                setStatus("answering");
+              }}
+              className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg bg-accent text-background"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              もう一度
+            </button>
+            <Link
+              href={catalogFocusHref(series.id)}
+              scroll={false}
+              onClick={() => rememberCatalogFocus(series.id)}
+              className="inline-flex items-center justify-center min-w-[160px] px-10 py-4 rounded-lg border border-accent text-accent"
+              style={{ letterSpacing: "0.2em" }}
+            >
+              系列カタログ
+            </Link>
+          </div>
+        </div>
+        </div>
+
+        <style jsx global>{`
+          details[open] summary span:first-of-type {
+            display: inline-block;
+            transform: rotate(90deg);
+          }
+          details summary span:first-of-type {
+            display: inline-block;
+            transition: transform 0.2s var(--ease-smooth);
+          }
+        `}</style>
+      </main>
+    );
+  }
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      {/* ポリアの「問題解決のための質問」パネル（岩井先生が 15 年以上かけて
+          算数授業用に精選したもの）。問題と向き合うすべての瞬間に使える
+          ドメイン汎用のメタ認知スキャフォールド。
+          公式の景色を見ているときは隠す（読みに集中するため） */}
+      {!showingDerivation && <PolyaQuestionsPanel />}
+
+      {/* 上部 sticky ナビ：いつでも「学ぶ（系列カタログ）」「ホーム」に戻れる
+          子どもにも大人にも「いつでもやめられる」安心感を担保（戸田の自得を
+          縛りに変えない設計）。 */}
+      <nav
+        className="sticky top-0 z-10 border-b border-border backdrop-blur-sm"
+        style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+        aria-label="サイト全体のナビゲーション"
+      >
+        {/* 右上に固定の「線」「消す」ボタン（ProblemInkLayer）があるので、狭い画面ではその幅だけ右を空けて
+            系列タイトルが下に潜らないようにする。lg 以上は中央の列の外に出るので不要。 */}
+        <div className="mx-auto w-full max-w-2xl pl-6 pr-28 lg:pr-6 py-2 flex items-center justify-between gap-4">
+          <div
+            className="flex items-baseline gap-3"
+            style={{ fontSize: "12px", letterSpacing: "0.05em" }}
+          >
+            <Link
+              href="/learn/"
+              className="text-muted hover:text-foreground transition-colors"
+            >
+              ← 学ぶ
+            </Link>
+            <span className="text-muted opacity-30" aria-hidden>
+              /
+            </span>
+            <Link
+              href="/"
+              className="text-muted hover:text-foreground transition-colors"
+            >
+              ホーム
+            </Link>
+          </div>
+          <span
+            className="text-muted truncate"
+            style={{ fontSize: "12px", letterSpacing: "0.08em" }}
+            title={toPlainText(series.title)}
+          >
+            <MathText text={series.title} />
+          </span>
+        </div>
+      </nav>
+
+      {/* 上部：スクロール可能エリア（進度バー・問題文・ヒント）
+          フォームは画面下部に sticky 固定なので、ここがどれだけ長くなっても
+          メインアクション（解答送信）は常に視野に入る */}
+      <div className="flex-1 flex flex-col items-center px-6 pt-6 pb-6">
+        <div className="w-full max-w-2xl flex flex-col gap-6">
+          {/* 中心の問い（駆動質問）——全問題の上部に常駐し、いま自分が何の問いに
+              向かって 1 歩進んでいるかを意識させる。教育パタン・ランゲージ Wiki の
+              「胚細胞モデル」「熟慮的問い（駆動質問）」と整合 */}
+          {series.drivingQuestion && !showingDerivation && (
+            <section
+              className="rounded-lg border border-accent/30 px-5 py-3"
+              style={{
+                background:
+                  "color-mix(in oklch, var(--surface) 85%, var(--accent) 15%)",
+              }}
+              aria-label="中心の問い"
+            >
+              <span
+                className="block text-muted mb-1"
+                style={{ fontSize: "10px", letterSpacing: "0.25em" }}
+              >
+                中心の問い
+              </span>
+              <p
+                className="text-foreground"
+                style={{ fontSize: "13px", lineHeight: 1.7, letterSpacing: "0.02em" }}
+              >
+                <MathText text={series.drivingQuestion} />
+              </p>
+            </section>
+          )}
+
+          {/* 進度表示（文型タグは出さない・第2弾失敗モードF1の予防） */}
+          <header className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {series.steps.map((_, i) => (
+              <span
+                key={i}
+                className="block rounded-full transition-colors duration-300"
+                style={{
+                  width: 8,
+                  height: 8,
+                  background:
+                    i < stepIndex
+                      ? "var(--accent)"
+                      : i === stepIndex
+                      ? "var(--accent)"
+                      : "var(--border)",
+                  opacity: i < stepIndex ? 0.5 : 1,
+                }}
+                aria-hidden
+              />
+            ))}
+          </div>
+            <span
+              className="text-muted tnum"
+              style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+            >
+              Step {stepIndex + 1} / 全 {totalSteps} 問
+            </span>
+          </header>
+
+          {/* 問題文（mid-series で公式の景色を読んでいる時は隠す） */}
+          {!showingDerivation && (
+            <section
+              className="relative overflow-hidden p-6 sm:p-10 rounded-lg border border-border transition-colors duration-500"
+              style={{
+                minHeight: "clamp(300px, 44vh, 460px)",
+                background:
+                  status === "correct" ? "color-mix(in oklch, var(--surface) 70%, var(--accent-warm) 30%)" : "var(--surface)",
+              }}
+            >
+              <p
+                className="text-foreground"
+                style={{
+                  fontSize: "clamp(17px, 1.25rem, 20px)",
+                  lineHeight: 1.9,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                <MathText text={step.questionText} />
+              </p>
+              {/* 問題理解の足場図（Step 1 や 質的変化のステップだけに置く、
+                  フェードアウトする足場のパタン）。答えは見せず、配置・関係だけを示す。 */}
+              {step.figureMarker && (
+                <div className="mt-5 -mx-2 sm:-mx-4">
+                  <MathBody text={step.figureMarker} />
+                </div>
+              )}
+              <ProblemInkLayer resetKey={`${series.id}:${step.id}`} />
+            </section>
+          )}
+
+          {/* 質的変化の正答時：「同じ仕組みだった」の発見演出
+              桝田の言う「喜びのグレードアップ」を、これまでの全式を並べることで支える */}
+          {status === "correct" &&
+            step.variationFromPrevious === "qualitative" &&
+            !showQualRevelation && (
+              <section
+                className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in"
+                style={{
+                  background:
+                    "color-mix(in oklch, var(--surface) 78%, var(--accent-warm) 22%)",
+                }}
+                aria-label="質的変化のメモ"
+              >
+                <label
+                  className="block font-serif text-foreground"
+                  style={{ fontSize: "16px", letterSpacing: "0.08em" }}
+                  htmlFor="qual-note"
+                >
+                  まえの問題と、なにがかわった？（ひとことでOK）
+                </label>
+                <textarea
+                  id="qual-note"
+                  value={qualNote}
+                  onChange={handleQualNoteChange}
+                  rows={3}
+                  className="mt-4 w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-foreground focus-visible:outline-none focus-visible:border-accent transition-colors"
+                  style={{ fontSize: "14px", lineHeight: 1.8 }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowQualRevelation(true)}
+                  className="mt-4 inline-flex items-center justify-center rounded-lg bg-accent px-6 py-2.5 text-background transition-transform duration-150 hover:scale-[1.02]"
+                  style={{ fontSize: "13px", letterSpacing: "0.15em" }}
+                >
+                  たねあかしを見る
+                </button>
+              </section>
+            )}
+
+          {status === "correct" &&
+            step.variationFromPrevious === "qualitative" &&
+            showQualRevelation && (
+              <section
+                className="rounded-lg border border-accent-warm p-6 sm:p-8 animate-fade-in-slow"
+                style={{
+                  background:
+                    "color-mix(in oklch, var(--surface) 75%, var(--accent-warm) 25%)",
+                }}
+                aria-label="同じ仕組みだった"
+              >
+                <p
+                  className="font-serif text-foreground text-center"
+                  style={{
+                    fontSize: "clamp(20px, 1.5rem, 24px)",
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  気づいたかな?
+                </p>
+                <p
+                  className="mt-4 text-foreground/85 text-center"
+                  style={{ fontSize: "14px", lineHeight: 2 }}
+                >
+                  ここまでの問題はすべて
+                  <br />
+                  <span className="font-serif">
+                    「<MathText text={series.revelationLabel ?? "同じ仕組み"} />」
+                  </span>
+                  <br />
+                  という同じ仕組みでした。
+                </p>
+                <ol
+                  className="mt-6 flex flex-col gap-2.5 max-w-sm mx-auto tnum"
+                  aria-label="解いた問題の式の一覧"
+                >
+                  {series.steps.slice(0, stepIndex + 1).map((s, i) => (
+                    <li
+                      key={s.id}
+                      className="flex items-baseline justify-between animate-revelation-row"
+                      style={{
+                        animationDelay: `${300 + i * 120}ms`,
+                        opacity: 0,
+                        animationFillMode: "forwards",
+                      }}
+                    >
+                      <span
+                        className="text-muted shrink-0"
+                        style={{ fontSize: "11px", letterSpacing: "0.15em" }}
+                      >
+                        {s.position}.
+                      </span>
+                      <span
+                        className="flex-1 px-3 text-foreground text-center"
+                        style={{ fontSize: "15px" }}
+                      >
+                        <MathText text={s.formulaPreview} />
+                      </span>
+                      <span
+                        className="text-muted shrink-0"
+                        style={{ fontSize: "12px" }}
+                      >
+                        ({s.unit})
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
+          {/* ヒント表示（問題文の真下に積層） */}
+          {hintsOpened > 0 && !showingDerivation && (
+            <section
+              className="flex flex-col gap-3"
+              aria-label="ヒント"
+            >
+              {step.hints.slice(0, hintsOpened).map((hint) => (
+                <Fragment key={hint.layer}>
+                  <div
+                    className="px-5 py-4 rounded-lg border border-accent-soft animate-fade-in"
+                    style={{
+                      background: "color-mix(in oklch, var(--surface) 80%, var(--accent-soft) 20%)",
+                    }}
+                  >
+                    <span
+                      className="text-muted"
+                      style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+                    >
+                      ヒント {hint.layer}
+                    </span>
+                    <p
+                      className="mt-1.5 text-foreground"
+                      style={{ fontSize: "15px", lineHeight: 1.8 }}
+                    >
+                      <MathText text={hint.text} />
+                    </p>
+                  </div>
+
+                  {/* ヒント1 の直後に、前題カードをスライドインで表示
+                      「比較せよ」を視覚で支える——推理式の核 */}
+                  {hint.layer === 1 && comparedStep && (
+                    <article
+                      className="relative px-5 py-4 rounded-lg border border-border animate-slide-in-left ml-4 sm:ml-8"
+                      style={{
+                        background: "var(--surface)",
+                      }}
+                      aria-label="前の問題（比較対象）"
+                    >
+                      {/* 左側の接続線（前題が「ここ」と紐づいている感を出す） */}
+                      <span
+                        className="absolute -left-4 sm:-left-8 top-1/2 block"
+                        style={{
+                          width: "1rem",
+                          borderTop: "1px solid var(--border)",
+                          transform: "translateY(-50%)",
+                        }}
+                        aria-hidden
+                      />
+                      <span
+                        className="text-muted"
+                        style={{ fontSize: "11px", letterSpacing: "0.2em" }}
+                      >
+                        前の問題
+                      </span>
+                      <p
+                        className="mt-1.5 text-foreground/85"
+                        style={{ fontSize: "14px", lineHeight: 1.8 }}
+                      >
+                        <MathText text={comparedStep.questionText} />
+                      </p>
+                      <p
+                        className="mt-2 text-muted tnum"
+                        style={{ fontSize: "13px", letterSpacing: "0.05em" }}
+                      >
+                        → <MathText text={comparedStep.unknownLabel} />は{" "}
+                        <span className="text-foreground">
+                          {displayAnswer(comparedStep)}
+                        </span>
+                      </p>
+                    </article>
+                  )}
+                </Fragment>
+              ))}
+
+              {/* ヒント 3 まで開いてもよく分からない学習者のための脱出口：
+                  「公式の景色（考え方）を見る」へのリンク（F4 予防）。
+                  控えめに表示し、戸田の自得階段を全部上ってから降りる設計。 */}
+              {hintsOpened === 3 && series.derivation && (
+                <button
+                  type="button"
+                  onClick={handleViewDerivation}
+                  className="self-start mt-2 text-muted hover:text-accent transition-colors"
+                  style={{
+                    fontSize: "12px",
+                    letterSpacing: "0.05em",
+                    lineHeight: 1.7,
+                    textAlign: "left",
+                  }}
+                >
+                  それでもよくわからない時は →{" "}
+                  <span className="underline underline-offset-2" style={{ textDecorationStyle: "dotted" }}>
+                    公式の景色（考え方）を見てみる
+                  </span>
+                </button>
+              )}
+            </section>
+          )}
+
+          {/* 公式の景色（mid-series 閲覧モード） */}
+          {showingDerivation && series.derivation && (
+            <article
+              className="rounded-lg border border-border p-6 sm:p-8 animate-fade-in"
+              style={{ background: "var(--surface)" }}
+              aria-label="公式の景色（考え方）"
+            >
+              <header className="mb-4 flex items-baseline justify-between gap-4">
+                <span
+                  className="font-serif text-foreground"
+                  style={{ fontSize: "18px", letterSpacing: "0.08em" }}
+                >
+                  公式の景色 — 考え方
+                </span>
+                <span
+                  className="text-muted shrink-0"
+                  style={{ fontSize: "11px", letterSpacing: "0.1em" }}
+                >
+                  問題 {stepIndex + 1} の途中で開いた
+                </span>
+              </header>
+              <div className="text-foreground/85" style={{ fontSize: "14px" }}>
+                <MathBody text={series.derivation} />
+              </div>
+            </article>
+          )}
+        </div>
+      </div>
+
+      {/* 下部：sticky フォーム or 正答時 CTA
+          画面下端に固定し、メインアクションを常に視野に置く */}
+      <div
+        className="sticky bottom-0 border-t border-border backdrop-blur-sm"
+        style={{ background: "color-mix(in oklch, var(--background) 92%, transparent)" }}
+      >
+        <div className="mx-auto w-full max-w-2xl px-6 py-4">
+          {/* 公式の景色を mid-series で見ている時の戻り方 */}
+          {showingDerivation && (
+            <section className="flex flex-wrap items-center justify-end gap-3 animate-fade-in">
+              <button
+                type="button"
+                onClick={handleReturnFromDerivation}
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
+                style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+              >
+                ← 問題に戻る
+              </button>
+              <button
+                type="button"
+                onClick={handleSkipFromDerivation}
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02]"
+                style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+              >
+                {isLast ? "おわりへ →" : "次の問題へ →"}
+              </button>
+            </section>
+          )}
+
+          {/* 解答フォーム（answering / incorrect のみ。skipped/correct は別セクションで表示） */}
+          {!showingDerivation &&
+            (status === "answering" || status === "incorrect") && (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <div className="flex items-baseline gap-3">
+                <span
+                  id={answerLabelId}
+                  className="text-muted shrink-0"
+                  style={{ fontSize: "13px", letterSpacing: "0.1em" }}
+                >
+                  <MathText text={step.unknownLabel} />
+                </span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  inputMode="text"
+                  value={userAnswer}
+                  onChange={handleAnswerChange}
+                  autoFocus
+                  className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xl tnum focus-visible:outline-none focus-visible:border-accent transition-colors"
+                  aria-labelledby={answerLabelId}
+                  placeholder={
+                    showLogButton || showEButton
+                      ? "例：log 3, 1-2/e"
+                      : showPalette
+                        ? "例：√3/2, pi/6"
+                        : "例：3 / 0.5 / 1/2"
+                  }
+                />
+                <span
+                  className="text-foreground shrink-0"
+                  style={{ fontSize: "16px", letterSpacing: "0.05em" }}
+                >
+                  {step.unit}
+                </span>
+              </div>
+
+              {/* π・√ 挿入パレット（その step が記号を使うときだけ）。
+                  既存の素の問題には何も足さない＝ローフロア維持。 */}
+              {showPalette && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {showPiButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("π")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="π を挿入"
+                    >
+                      π
+                    </button>
+                  )}
+                  {showSqrtButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("√")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="√（ルート）を挿入"
+                    >
+                      √
+                    </button>
+                  )}
+                  {showLogButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("log")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="log（自然対数）を挿入"
+                    >
+                      log
+                    </button>
+                  )}
+                  {showEButton && (
+                    <button
+                      type="button"
+                      onClick={() => insertAtCursor("e")}
+                      className="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-1.5 rounded-md border border-border text-foreground transition-colors duration-150 hover:border-accent hover:text-accent"
+                      style={{ fontSize: "16px" }}
+                      aria-label="e（自然対数の底）を挿入"
+                    >
+                      e
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* 記法ヘルプ：素の step は分数の書き方だけ。π/√ step は記号ヘルプに差し替え。 */}
+              {showLogButton || showEButton ? (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  {showLogButton && (
+                    <>
+                      自然対数は <span className="tnum">log</span>（
+                      <span className="tnum">log 3</span>・
+                      <span className="tnum">log(3/2)</span>・
+                      <span className="tnum">2log3</span>）。
+                    </>
+                  )}
+                  {showEButton && (
+                    <>
+                      e はそのまま <span className="tnum">e</span>（
+                      <span className="tnum">e-1</span>・
+                      <span className="tnum">1-2/e</span>）。
+                    </>
+                  )}
+                  {(showPiButton || showSqrtButton) && (
+                    <>
+                      π は <span className="tnum">pi</span>、√ は{" "}
+                      <span className="tnum">sqrt</span> でも書けます。
+                    </>
+                  )}
+                </p>
+              ) : showPalette ? (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  √は <span className="tnum">√</span> ボタンか{" "}
+                  <span className="tnum">sqrt</span>、πは{" "}
+                  <span className="tnum">π</span> ボタンか{" "}
+                  <span className="tnum">pi</span>。例：
+                  <span className="tnum">√3/2, pi/6</span>
+                </p>
+              ) : (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em" }}
+                >
+                  分数は <span className="tnum">1/2</span> のように書けます
+                </p>
+              )}
+
+              {/* 複数解ヒント（multi の step のみ）。個数を言わずに「全部入れてね」。 */}
+              {showMultiHint && (
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "11px", letterSpacing: "0.05em", lineHeight: 1.7 }}
+                >
+                  解が複数あるときは{" "}
+                  <span className="tnum">&quot;,&quot;</span>{" "}
+                  で区切って全部入れてね（例：
+                  <span className="tnum">π/6, 5π/6</span>）
+                </p>
+              )}
+
+              {status === "incorrect" && (
+                <p
+                  className="text-warning"
+                  style={{ fontSize: "13px", letterSpacing: "0.05em" }}
+                  role="status"
+                >
+                  {attempts >= 2 && step.compareWithStepId !== null
+                    ? "まえの問題ではうまくいった。なにがおなじで、なにがちがうか、もういちどくらべてみよう。"
+                    : "ちがうみたい。ヒントを見るか、もう一度考えてみよう。"}
+                </p>
+              )}
+
+              <div className="flex flex-wrap gap-3 items-center">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  disabled={!userAnswer.trim()}
+                  className="inline-flex items-center justify-center px-7 py-2.5 rounded-lg bg-accent text-background disabled:opacity-40 disabled:cursor-not-allowed transition-transform duration-150 hover:scale-[1.02]"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  答えを送る
+                </button>
+                {hintsOpened < 3 && (
+                  <button
+                    type="button"
+                    onClick={handleOpenHint}
+                    className="inline-flex items-center justify-center px-7 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40"
+                    style={{ letterSpacing: "0.15em" }}
+                  >
+                    ヒント
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleSkip}
+                  className="inline-flex items-center justify-center px-7 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30 ml-auto"
+                  style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                  aria-label="この問題をスキップして次へ進む"
+                >
+                  スキップ →
+                </button>
+              </div>
+            </form>
+          )}
+
+          {/* スキップ時：答えを軽く見せて次へ */}
+          {!showingDerivation && status === "skipped" && (
+            <section className="flex flex-col gap-4 animate-fade-in">
+              <div className="flex flex-col gap-1">
+                <p
+                  className="text-muted"
+                  style={{ fontSize: "14px", letterSpacing: "0.05em" }}
+                >
+                  → スキップ。<MathText text={step.unknownLabel} /> は{" "}
+                  {displayAnswer(step)}。
+                </p>
+                {step.formulaPreview && (
+                  <p
+                    className="text-muted/80 tnum"
+                    style={{ fontSize: "12px" }}
+                  >
+                    <MathText text={step.formulaPreview} />
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center gap-3 flex-wrap">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg border border-accent text-accent transition-colors duration-150 hover:bg-accent-soft/40 ml-auto"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  {isLast ? "おわりへ" : "次の問題へ →"}
+                </button>
+              </div>
+            </section>
+          )}
+
+          {/* 正答時 */}
+          {!showingDerivation && status === "correct" && (
+            <section className="flex flex-col gap-4 animate-fade-in">
+              <div className="flex flex-col gap-1">
+                <p
+                  className="text-success font-medium"
+                  style={{ fontSize: "14px", letterSpacing: "0.1em" }}
+                >
+                  ✓ 正解。<MathText text={step.unknownLabel} />は{" "}
+                  {displayAnswer(step)}。
+                </p>
+                {attempts > 1 && (
+                  <p
+                    className="text-muted"
+                    style={{ fontSize: "12px" }}
+                  >
+                    {attempts}回目で見つけられたね。
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center gap-3 flex-wrap">
+                {stepIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-border text-muted transition-colors duration-150 hover:text-foreground hover:border-foreground/30"
+                    style={{ letterSpacing: "0.15em", fontSize: "13px" }}
+                    aria-label="前の問題へ戻る"
+                  >
+                    ← 前へ
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-lg bg-accent text-background transition-transform duration-150 hover:scale-[1.02] ml-auto"
+                  style={{ letterSpacing: "0.15em" }}
+                >
+                  {isLast ? "おわりへ" : "次の問題へ →"}
+                </button>
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slide-in-left {
+          from { opacity: 0; transform: translateX(-24px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-in-slow {
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes revelation-row {
+          from { opacity: 0; transform: translateX(-12px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 300ms var(--ease-smooth);
+        }
+        .animate-slide-in-left {
+          animation: slide-in-left 500ms var(--ease-smooth);
+        }
+        .animate-fade-in-slow {
+          animation: fade-in-slow 700ms var(--ease-smooth);
+        }
+        .animate-revelation-row {
+          animation: revelation-row 400ms var(--ease-smooth);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-fade-in,
+          .animate-slide-in-left,
+          .animate-fade-in-slow,
+          .animate-revelation-row {
+            animation: none;
+            opacity: 1 !important;
+          }
+        }
+      `}</style>
+    </main>
+  );
+}
+
+function myProblemKey(seriesId: string): string {
+  return `ruisuishiki:my_problem:${seriesId}`;
+}
+
+function qualNoteKey(seriesId: string, stepId: string): string {
+  return `ruisuishiki:qual_note:${seriesId}:${stepId}`;
+}
+
+function saveMyProblem(seriesId: string, record: MyProblemRecord): void {
+  try {
+    window.localStorage.setItem(myProblemKey(seriesId), JSON.stringify(record));
+  } catch {
+    // localStorage 不可でも学習は続ける。
+  }
+}
+
+function loadMyProblem(seriesId: string): MyProblemRecord {
+  try {
+    const raw = window.localStorage.getItem(myProblemKey(seriesId));
+    if (!raw) return { kind: "similar", text: "", updatedAt: "" };
+    const parsed = JSON.parse(raw) as Partial<MyProblemRecord>;
+    const kind: MyProblemKind =
+      parsed.kind === "similar" ||
+      parsed.kind === "inverse" ||
+      parsed.kind === "condition"
+        ? parsed.kind
+        : "similar";
+    return {
+      kind,
+      text: typeof parsed.text === "string" ? parsed.text : "",
+      updatedAt:
+        typeof parsed.updatedAt === "string" ? parsed.updatedAt : "",
+    };
+  } catch {
+    return { kind: "similar", text: "", updatedAt: "" };
+  }
+}
+
+function saveQualNote(seriesId: string, stepId: string, text: string): void {
+  try {
+    window.localStorage.setItem(qualNoteKey(seriesId, stepId), text);
+  } catch {
+    // localStorage 不可でも学習は続ける。
+  }
+}
+
+function loadQualNote(seriesId: string, stepId: string): string {
+  try {
+    return window.localStorage.getItem(qualNoteKey(seriesId, stepId)) ?? "";
+  } catch {
+    return "";
+  }
+}

@@ -96,7 +96,7 @@ export const TEMPLATE_SERIES: LearnerSeries = {
         },
       ],
       formulaPreview: "○○ → N = 0", // 完了画面で表示される短い式
-      figureMarker: "<<TEMPLATE_STEP1>>", // Math.tsx に対応する図がある場合のみ。Step 1 にあるのが望ましい
+      figureMarker: "<<TEMPLATE_STEP1>>", // Figures.tsx の FIGURES に対応する図がある場合のみ。Step 1 にあるのが望ましい
     },
 
     // ============================================================
@@ -495,7 +495,7 @@ $$x = f(t), \\quad y = g(t)$$
  *    - **Layer 2 は「同じ／違う」の問いかけ**——直接計算を書かない
  *    - **Layer 3 で初めて worked example + 差 1 つ**
  *
- * 5. 図（figureMarker）を Step 1 / 質的変化 Step に対応する SVG を Math.tsx
+ * 5. 図（figureMarker）を Step 1 / 質的変化 Step に対応する SVG を Figures.tsx（末尾の FIGURES 表に 1 行足す）
  *    に追加し、マーカー文字列をフィールドに入れる
  *
  * 6. derivation を実際の内容で埋める（テンプレの○○を全部置換）
