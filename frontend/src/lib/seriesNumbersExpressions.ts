@@ -47,7 +47,7 @@ export const NE_NUMBER_EXPANSION_SERIES: LearnerSeries = {
         },
         {
           layer: 2,
-          text: "小数点以下の桁数が、分数の分母の大きさにどう効くか。分子と分母に共通する数は、どこまで切れそう？",
+          text: "小数点以下の桁数が、分数の分母の大きさにどう効くか。分子と分母を同じ数で割る作業は、どこまで続けられそう？",
         },
         {
           layer: 3,
