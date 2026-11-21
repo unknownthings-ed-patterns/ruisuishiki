@@ -9584,13 +9584,13 @@ export function IrrationalDiagonal() {
       />
       <circle cx={Ox + unit * 1.414} cy={Oy} r="4" fill={accent} />
 
-      <text x="240" y="60" fontSize="11" fill={muted}>
+      <text x="200" y="60" fontSize="11" fill={muted}>
         対角線を数直線に倒すと、
       </text>
-      <text x="240" y="78" fontSize="11" fill={muted}>
+      <text x="200" y="78" fontSize="11" fill={muted}>
         どの目盛りにも重ならない
       </text>
-      <text x="240" y="100" fontSize="18" fill={accent} fontWeight="700">
+      <text x="200" y="100" fontSize="18" fill={accent} fontWeight="700">
         ?
       </text>
 
