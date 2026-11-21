@@ -11187,13 +11187,12 @@ export function IneqNumlineFlip() {
 
       <line x1="30" y1={y} x2="330" y2={y} stroke={muted} strokeWidth="1.2" />
       <path d="M 320 104 L 332 110 L 320 116" fill="none" stroke={muted} strokeWidth="1.2" />
-      <path d="M 40 104 L 28 110 L 40 116" fill="none" stroke={muted} strokeWidth="1.2" />
 
       <rect x="40" y={y - 14} width="140" height="28" fill={fillColor} stroke="none" />
-      <line x1="40" y1={y} x2="180" y2={y} stroke={accent} strokeWidth="3" />
+      <line x1="38" y1={y} x2="174" y2={y} stroke={accent} strokeWidth="3" />
       <circle cx="180" cy={y} r="6" fill="none" stroke={accent} strokeWidth="1.6" />
-      <path d="M 52 92 L 40 110" fill="none" stroke={accent} strokeWidth="1.4" />
-      <path d="M 48 100 L 40 110 L 56 108" fill="none" stroke={accent} strokeWidth="1.4" />
+      {/* 範囲が左へずっと続くことを示す矢じり（太線の向きにそろえる） */}
+      <path d="M 44 102 L 32 110 L 44 118" fill="none" stroke={accent} strokeWidth="2.4" strokeLinejoin="round" />
 
       <text x="180" y="150" fontSize="11" fill={muted} textAnchor="middle">
         境界（値は伏せる）
@@ -11341,9 +11340,9 @@ export function QuadSplitStep4() {
       </text>
 
       <path d="M 140 72 L 100 110" fill="none" stroke={accent} strokeWidth="1.4" />
-      <path d="M 108 104 L 98 112 L 112 112" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 110.7 106.7 L 100 110 L 103.8 99.5" fill="none" stroke={accent} strokeWidth="1.4" strokeLinejoin="round" />
       <path d="M 220 72 L 260 110" fill="none" stroke={accent} strokeWidth="1.4" />
-      <path d="M 248 112 L 262 112 L 252 104" fill="none" stroke={accent} strokeWidth="1.4" />
+      <path d="M 249.3 106.7 L 260 110 L 256.2 99.5" fill="none" stroke={accent} strokeWidth="1.4" strokeLinejoin="round" />
 
       <rect x="40" y="120" width="120" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.3" />
       <text x="100" y="146" fontSize="14" fill={stroke} textAnchor="middle" fontStyle="italic">
